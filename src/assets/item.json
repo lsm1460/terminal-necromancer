@@ -1,0 +1,46 @@
+{
+  "carrot": {
+    "id": "carrot",
+    "label": "당근",
+    "type": "food",
+    "healAmount": 5,
+    "description": "신선한 당근입니다. 소량의 체력을 회복할 수 있습니다."
+  },
+  "potion_small": {
+    "id": "potion_small",
+    "label": "작은 포션",
+    "type": "consumable",
+    "healAmount": 20,
+    "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다."
+  },
+  "potion_large": {
+    "id": "potion_large",
+    "label": "큰 포션",
+    "type": "consumable",
+    "healAmount": 50,
+    "description": "강력한 체력 회복 포션으로, 위급할 때 사용하면 큰 효과를 볼 수 있습니다."
+  },
+  "iron_sword": {
+    "id": "iron_sword",
+    "label": "철검",
+    "type": "weapon",
+    "atk": 10,
+    "crit": 0.05,
+    "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다."
+  },
+  "leather_armor": {
+    "id": "leather_armor",
+    "label": "가죽 갑옷",
+    "type": "armor",
+    "def": 5,
+    "evasion": 0.02,
+    "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다."
+  },
+  "nut": {
+    "id": "nut",
+    "label": "도토리",
+    "type": "food",
+    "healAmount": 2,
+    "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다."
+  }
+}

@@ -1,0 +1,17 @@
+[
+  [
+    {"theme": "grass", "event": "none", "dialogue": "푸른 풀밭이 펼쳐져 있다."},
+    {"theme": "forest", "event": "none", "dialogue": "작은 나무숲이다. 뭔가 반짝인다!"},
+    {"theme": "water", "event": "none", "dialogue": "얕은 연못이 있다. 발을 헛디디지 않도록 주의!"}
+  ],
+  [
+    {"theme": "mountain", "event": "none", "dialogue": "작은 산이 있다. 멋진 풍경!"},
+    {"theme": "cave", "event": "monster-group-level-1", "dialogue": "동굴 입구다. 어둠 속에서 무언가 움직인다."},
+    {"theme": "desert", "event": "none", "dialogue": "모래가 반짝이는 사막 한가운데다."}
+  ],
+  [
+    {"theme": "village", "event": "npc", "dialogue": "작은 마을이 있다. 누군가 말을 걸어올지도 모른다."},
+    {"theme": "castle", "event": "none", "dialogue": "성문 앞이다. 강력한 적이 기다리고 있다!"},
+    {"theme": "forest", "event": "none", "dialogue": "다시 숲 속이다. 뭔가를 발견할 수 있을 것 같다."}
+  ]
+]

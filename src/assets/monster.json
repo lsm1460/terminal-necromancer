@@ -1,0 +1,26 @@
+{
+  "monster-group-level-1": [
+    {
+      "name": "토끼",
+      "hp": 20,
+      "atk": 5,
+      "def": 2,
+      "eva": 10,
+      "exp": 10,
+      "encounterRate": 55,
+      "dropTableId": "rabbit",
+      "description": "빠르고 귀여운 토끼. 공격력은 약하지만 회피율이 높아 쉽게 맞추기 어렵다."
+    },
+    {
+      "name": "다람쥐",
+      "hp": 15,
+      "atk": 7,
+      "def": 1,
+      "eva": 15,
+      "exp": 15,
+      "encounterRate": 45,
+      "dropTableId": "squirrel",
+      "description": "민첩한 다람쥐. 공격력은 토끼보다 높지만 방어력은 낮다. 회피 능력이 뛰어나다."
+    }
+  ]
+}

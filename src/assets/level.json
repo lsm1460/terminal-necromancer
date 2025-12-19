@@ -1,0 +1,7 @@
+[
+  { "level": 1, "expRequired": 0, "bonusAtk": 0, "bonusDef": 0 },
+  { "level": 2, "expRequired": 50, "bonusAtk": 2, "bonusDef": 1 },
+  { "level": 3, "expRequired": 120, "bonusAtk": 3, "bonusDef": 2 },
+  { "level": 4, "expRequired": 200, "bonusAtk": 5, "bonusDef": 3 },
+  { "level": 5, "expRequired": 300, "bonusAtk": 7, "bonusDef": 5 }
+]

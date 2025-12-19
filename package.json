@@ -1,0 +1,19 @@
+{
+  "name": "terminal-tester",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && cpx \"src/assets/**/*\" dist/assets",
+    "start": "node dist/game.js",
+    "dev": "ts-node src/game.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^25.0.2",
+    "cpx": "^1.5.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
