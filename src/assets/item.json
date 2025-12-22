@@ -24,16 +24,16 @@
     "id": "iron_sword",
     "label": "철검",
     "type": "weapon",
-    "atk": 10,
-    "crit": 0.05,
+    "atk": [5,10],
+    "crit": [0, 0.05],
     "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다."
   },
   "leather_armor": {
     "id": "leather_armor",
     "label": "가죽 갑옷",
     "type": "armor",
-    "def": 5,
-    "evasion": 0.02,
+    "def": [2,5],
+    "evasion": [0.01, 0.03],
     "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다."
   },
   "nut": {

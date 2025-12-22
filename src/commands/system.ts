@@ -1,5 +1,5 @@
-import { COMMAND_GROUPS } from "../consts"
-import { CommandFunction } from "../types"
+import { COMMAND_GROUPS } from '../consts'
+import { CommandFunction, GameMode } from '../types'
 
 // --- Respawn ---
 export const respawnCommand: CommandFunction = (player, args, context) => {
@@ -15,6 +15,8 @@ export const respawnCommand: CommandFunction = (player, args, context) => {
 export const exitCommand: CommandFunction = (player, args, context) => {
   context.save.save({
     player,
+    sceneId: context.map.currentSceneId,
+    npcs: context.npcs.getSaveData(),
     drop: context.world.lootBags, // World에서 모든 드롭 수집
   })
 
@@ -36,6 +38,6 @@ export const helpCommand: CommandFunction = (player, args, context) => {
 export const clearCommand: CommandFunction = (player, args, context) => {
   console.clear()
   context.rl.prompt()
-  
+
   return false
 }

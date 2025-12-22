@@ -10,6 +10,8 @@ import { LootFactory } from './core/LootFactory'
 import { printStatus } from './statusPrinter'
 import { createCLI } from './cli'
 import { DropSystem } from './systems/DropSystem'
+import { NPCManager } from './core/NpcManager'
+import { GameContext, GameMode } from './types'
 
 // ---------- 데이터 로드 ----------
 const assets = path.join(__dirname, 'assets')
@@ -19,22 +21,26 @@ const statePath = path.join(assets, 'state.json')
 const levelPath = path.join(assets, 'level.json')
 const itemPath = path.join(assets, 'item.json')
 const dropPath = path.join(assets, 'drop.json')
+const npcPath = path.join(assets, 'npc.json')
 
 // ---------- 초기화 ----------
 const save = new SaveSystem(statePath)
 const drop = new DropSystem(itemPath, dropPath)
-const monster = new MonsterFactory(monsterData, drop)
+const monster = new MonsterFactory(monsterData)
 const saved = save.load()
 const player = new Player(levelPath, saved.player)
-const map = new MapManager(mapPath)
+const map = new MapManager(mapPath, saved.sceneId)
+const npcs = new NPCManager(npcPath, saved.npcs)
 const world = new World(map)
-const events = new EventSystem(monster)
+const events = new EventSystem(monster, npcs)
 
 if (saved.drops?.length) {
   for (const drop of saved.drops) {
     world.addLootBag(drop)
   }
 }
+
+const context = { mode: GameMode.EXPLORE, map, world, events, npcs, drop, save }
 
 player.onDeath = () => {
   console.log('나는 사망했다...')
@@ -45,12 +51,14 @@ player.onDeath = () => {
   player.y = 0
   player.hp = 1
 
-  printStatus(player, map, world)  
+  context.mode = GameMode.EXPLORE
+
+  printStatus(player, context as GameContext)
 }
 
 // ---------- 게임 시작 ----------
 console.log('=== 게임 시작 ===')
-printStatus(player, map, world)
+printStatus(player, context as GameContext)
 
 // ---------- CLI 시작 ----------
-createCLI(player, { map, world, events, save })
+createCLI(player, context)

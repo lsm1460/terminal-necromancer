@@ -5,7 +5,6 @@ import { Tile, Monster } from '../types'
 export class MonsterFactory {
   constructor(
     private data: Record<string, Monster[]>,
-    private dropSystem: DropSystem
   ) {}
 
   spawn(tile: Tile): Monster | null {
@@ -39,8 +38,7 @@ export class MonsterFactory {
     if (!selected) return null
 
     const baseMonster = { ...selected }
-    const { gold, drops } = this.dropSystem.generateDrops(baseMonster.dropTableId ?? 'none')
 
-    return { ...baseMonster, gold, drops }
+    return baseMonster
   }
 }

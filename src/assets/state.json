@@ -2,51 +2,23 @@
   "player": {
     "x": 1,
     "y": 1,
-    "maxHp": 10,
-    "hp": 1,
+    "maxHp": 100,
+    "hp": 100,
     "atk": 10,
     "def": 5,
-    "gold": 84,
-    "totalExp": 180,
-    "level": 3,
+    "gold": 0,
+    "totalExp": 0,
+    "level": 1,
     "inventory": [],
     "equipped": {
       "weapon": null,
       "armor": null
     }
   },
-  "drops": [
-    {
-      "id": "c8fa69ffeba73135",
-      "x": 1,
-      "y": 1,
-      "drops": [
-        {
-          "id": "carrot",
-          "label": "당근",
-          "type": "food",
-          "healAmount": 5,
-          "quantity": 4,
-          "x": 1,
-          "y": 1
-        },
-        {
-          "id": "nut",
-          "label": "도토리",
-          "type": "food",
-          "healAmount": 2,
-          "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다.",
-          "quantity": 9,
-          "x": 1,
-          "y": 1
-        }
-      ]
-    },
-    {
-      "id": "e89b370a1bd55473",
-      "x": 1,
-      "y": 1,
-      "drops": []
-    }
-  ]
+  "sceneId": "B1_Subway_Entrance",
+  "npcs": {
+    "states": {},
+    "factionHostility": {}
+  },
+  "drop": null
 }

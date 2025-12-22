@@ -1,9 +1,11 @@
 import { DIRECTIONS } from "../consts"
-import { CommandFunction } from "../types"
+import { CommandFunction, GameMode } from "../types"
 
 export // --- 공통 이동 함수 ---
 const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
   return (player, args, context) => {
+    context.mode = GameMode.EXPLORE
+    
     const { map } = context
     const { dx, dy } = DIRECTIONS[direction]
     const { x, y } = player.pos

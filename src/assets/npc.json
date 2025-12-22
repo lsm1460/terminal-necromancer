@@ -1,0 +1,36 @@
+{
+  "kane_leader": {
+    "id": "kane_leader",
+    "name": "대장 케인",
+    "faction": "resistance",
+    "hp": 150,
+    "maxHp": 150,
+    "atk": 25,
+    "def": 10,
+    "eva": 30,
+    "exp": 100,
+    "isAlive": true,
+    "lines": ["복수를 시작할 준비가 되었나?"],
+    "deathLine": "케인이 끝까지 검을 놓지 않은 채 쓰러졌습니다.",
+    "description": "이 레지스탕스의 대장",
+    "gold": 1000,
+    "dropTableId": "resistance"
+  },
+  "maya_tech": {
+    "id": "maya_tech",
+    "name": "기술자 마야",
+    "faction": "resistance",
+    "hp": 80,
+    "maxHp": 80,
+    "atk": 15,
+    "def": 5,
+    "eva": 10,
+    "exp": 50,
+    "isAlive": true,
+    "lines": ["고철은 좀 가져왔어?"],
+    "deathLine": "마야가 공구를 떨어뜨리며 숨을 거둡니다.",
+    "description": "고철을 구입하여 무기로 탈바꿈 시키는 장인",
+    "gold": 300,
+    "dropTableId": "resistance"
+  }
+}

@@ -1,5 +1,6 @@
 import { Player } from '../core/Player'
-import { LootBag, Monster } from '../types'
+import { DropSystem } from '../systems/DropSystem'
+import { BattleTarget, LootBag, Monster } from '../types'
 import { generateId } from '../utils'
 
 export class LootFactory {
@@ -28,10 +29,9 @@ export class LootFactory {
   }
 
   /** 몬스터 처치 보상 */
-  static fromMonster(monster: Monster) {
-    return {
-      gold: monster.gold ?? 0,
-      drops: monster.drops ?? [],
-    }
+  static fromTarget(target: BattleTarget, drop: DropSystem) {
+    const _drop = drop.generateDrops(target.dropTableId ?? 'none')
+
+    return _drop
   }
 }

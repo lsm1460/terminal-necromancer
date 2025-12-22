@@ -77,11 +77,11 @@ const lookSomething = (name: string, items: Drop[], monster?: Monster) => {
 
 // lookCommand에서는 args에 따라 호출
 export const lookCommand: CommandFunction = (player, args, context) => {
-  printTileStatus(player, context.map)
+  printTileStatus(player, context)
 
   const { x, y } = player.pos
   const { map, world } = context
-  const tile = map.tile(x, y)
+  const tile = map.getTile(x, y)
 
   const monster = tile.currentMonster
   const items = world.getDropsAt(x, y)

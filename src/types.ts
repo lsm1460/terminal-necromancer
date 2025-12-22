@@ -1,9 +1,18 @@
-import { MapManager } from "./core/MapManager"
-import { Player } from "./core/Player"
-import { World } from "./core/World"
-import { EventSystem } from "./systems/EventSystem"
+import { MapManager } from './core/MapManager'
+import { NPCManager } from './core/NpcManager'
+import { Player } from './core/Player'
+import { World } from './core/World'
+import { DropSystem } from './systems/DropSystem'
+import { EventSystem } from './systems/EventSystem'
 
-export interface Monster {
+export enum GameMode {
+  EXPLORE = 'explore',
+  DIALOGUE = 'dialogue',
+  GLOBAL = 'global',
+  BATTLE = 'battle',
+}
+
+export interface BattleTarget {
   name: string
   hp: number
   atk: number
@@ -17,12 +26,18 @@ export interface Monster {
   drops: Item[]
 }
 
+export interface Monster extends BattleTarget {
+  encounterRate: number // ← 개별 몬스터 출현 확률 (%)
+  drops: Item[]
+}
+
 export interface Tile {
   theme: string
   event: string
   dialogue: string
+  npcIds?: string[] // npc용
+  spawn_limit?: number // monster용
   currentMonster?: Monster
-  encounterRate?: number
 }
 
 export interface MapData {
@@ -90,6 +105,10 @@ export type Item = GenericItem | WeaponItem | ArmorItem | FoodItem | ConsumableI
 export type Drop = {
   x: number
   y: number
+  atk: number[]
+  def: number[]
+  crit: number[]
+  evasion: number[]
 } & Item
 
 export type LootBag = {
@@ -101,10 +120,23 @@ export type LootBag = {
 
 export interface GameContext {
   map: MapManager
+  npcs: NPCManager
   world: World
   events: EventSystem
+  drop: DropSystem
   save: any
   rl: any
+
+  mode: GameMode
+  pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
 export type CommandFunction = (player: Player, args: string[], context: GameContext) => boolean | string
+
+export interface NPC extends BattleTarget {
+  id: string
+  faction: string
+  isAlive: boolean
+  lines: string[]
+  deathLine: string
+} 
