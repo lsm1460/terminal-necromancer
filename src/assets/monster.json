@@ -31,7 +31,21 @@
       "exp": 15,
       "encounterRate": 45,
       "dropTableId": "mob",
-      "description": "고블린 테스트"
+      "description": "고블린 테스트",
+      "preemptive": true
+    },
+    {
+      "name": "늑대",
+      "hp": 5,
+      "atk": 1,
+      "def": 5,
+      "eva": 15,
+      "exp": 15,
+      "encounterRate": 15,
+      "dropTableId": "wolf",
+      "description": "늑대 테스트",
+      "preemptive": true,
+      "noEscape": true
     }
   ]
 }

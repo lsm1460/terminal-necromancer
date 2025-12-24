@@ -1,12 +1,17 @@
 import { DIRECTIONS } from "../consts"
-import { CommandFunction, GameMode } from "../types"
+import { CommandFunction } from "../types"
 
-export // --- 공통 이동 함수 ---
-const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
+// --- 공통 이동 함수 ---
+export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
   return (player, args, context) => {
-    context.mode = GameMode.EXPLORE
-    
     const { map } = context
+    const {currentMonster: monster} = map.getTile(player.pos.x, player.pos.y)
+
+    if (monster) {
+      console.log(monster.name + '이(가) 주시하고 있어 도망칠 수 없다.')
+      return false
+    }
+
     const { dx, dy } = DIRECTIONS[direction]
     const { x, y } = player.pos
 

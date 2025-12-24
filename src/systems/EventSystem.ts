@@ -1,8 +1,9 @@
 // systems/EventSystem.ts
-import { Player } from '../core/Player'
-import { GameContext, GameMode, Tile } from '../types'
+import { Battle } from '../core/Battle'
 import { MonsterFactory } from '../core/MonsterFactory'
 import { NPCManager } from '../core/NpcManager'
+import { Player } from '../core/Player'
+import { GameContext, Tile } from '../types'
 
 export class EventSystem {
   constructor(
@@ -22,14 +23,24 @@ export class EventSystem {
           const monster = this.monsterFactory.spawn(tile)
 
           if (monster) {
-            context.mode = GameMode.BATTLE
             tile.currentMonster = monster
-            console.log(`야생의 ${monster.name} 등장!`)
+            console.log(`${monster.name} 등장!`)
+
+            if (monster.preemptive) {
+              // 선공몹
+              console.log(`${monster.name}의 기습!`)
+              const counterDmg = Battle.calculateDamage(player, monster)
+              player.damage(counterDmg)
+            }
           }
         } else {
-          context.mode = GameMode.BATTLE
-          console.log(`야생의 ${tile.currentMonster.name}(이)가 있다.`)
+          console.log(`${tile.currentMonster.name}(이)가 있다.`)
         }
+        break
+
+      case 'npc':
+        // 적대 세력은 선공한다
+        Battle.executeGroupCounter(player, context)
         break
     }
   }

@@ -1,6 +1,6 @@
 // core/MonsterFactory.ts
-import { DropSystem } from '../systems/DropSystem'
-import { Tile, Monster } from '../types'
+import { Monster, Tile } from '../types'
+import { generateId } from '../utils'
 
 export class MonsterFactory {
   constructor(
@@ -37,7 +37,10 @@ export class MonsterFactory {
 
     if (!selected) return null
 
-    const baseMonster = { ...selected }
+    const baseMonster = { 
+      ...selected,
+      id: generateId(selected.name),
+    }
 
     return baseMonster
   }

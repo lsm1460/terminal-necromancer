@@ -43,9 +43,9 @@ const lookAll = (items: Drop[], monster?: Monster) => {
   const entities: string[] = []
 
   if (monster) entities.push(monster.name)
-
+  
   const itemCounts: Record<string, number> = {}
-  items.forEach(item => {
+  items.forEach((item) => {
     const qty = item.quantity ?? 1
     itemCounts[item.label] = (itemCounts[item.label] || 0) + qty
   })
@@ -66,7 +66,7 @@ const lookSomething = (name: string, items: Drop[], monster?: Monster) => {
     return
   }
 
-  const item = items.find(i => i.label.toLowerCase() === filterName)
+  const item = items.find((i) => i.label.toLowerCase() === filterName)
   if (item) {
     console.log(item.description ?? item.label)
     return
@@ -87,6 +87,6 @@ export const lookCommand: CommandFunction = (player, args, context) => {
   const items = world.getDropsAt(x, y)
 
   if (!args[0]) lookAll(items, monster)
-  else lookSomething(args[0], items, monster)
+  else lookSomething(args[0], [...items, ...player.inventory] as Drop[], monster)
   return false
 }

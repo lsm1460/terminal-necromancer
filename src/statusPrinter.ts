@@ -6,7 +6,7 @@ export function printTileStatus(player: Player, { map, npcs }: GameContext) {
   const tile = map.getTile(x, y)
 
   console.log(tile.dialogue)
-
+  
   const names = (tile.npcIds || [])
     .map((_id) => npcs.getNPC(_id))
     .filter(Boolean)
@@ -14,7 +14,10 @@ export function printTileStatus(player: Player, { map, npcs }: GameContext) {
     .map((npc) => npc?.name)
     .join(', ')
 
-  console.log(`주면에 있는 사람들: ${names}`)
+  if ((tile.npcIds || []).length > 0) {
+    const isSingular = (tile.npcIds || []).length === 1
+    console.log(`주변에 있는 사람${isSingular?'' : '들'}: ${names}`)
+  }
 
   // 이동 가능한 방향 계산
   const directions: string[] = []

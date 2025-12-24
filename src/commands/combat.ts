@@ -1,6 +1,6 @@
 import { Battle } from "../core/Battle"
 import { LootFactory } from "../core/LootFactory"
-import { BattleTarget, CommandFunction, Drop, GameMode } from "../types"
+import { BattleTarget, CommandFunction, Drop } from "../types"
 
 // --- 공격 함수 ---
 export const attackCommand: CommandFunction = (player, args, context) => {
@@ -10,7 +10,6 @@ export const attackCommand: CommandFunction = (player, args, context) => {
   const tile = map.getTile(x, y)
   let target: BattleTarget | null = null
   const monster = tile.currentMonster
-  console.log(tile.npcIds, args[0])
   const npc = context.npcs.findNPC(tile.npcIds || [], args[0])
 
   if (npc) {
@@ -45,10 +44,6 @@ export const attackCommand: CommandFunction = (player, args, context) => {
       const qtyText = d.quantity !== undefined ? ` ${d.quantity}개` : ''
       console.log(`${target.name}은(는) ${d.label}${qtyText}을(를) 떨구었다.`)
     })
-
-    map.getTile(x, y).currentMonster = undefined
-
-    context.mode = GameMode.EXPLORE
   }
 
   return false

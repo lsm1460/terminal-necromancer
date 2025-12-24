@@ -1,5 +1,6 @@
+import { printPrompt } from '../cli'
 import { COMMAND_GROUPS } from '../consts'
-import { CommandFunction, GameMode } from '../types'
+import { CommandFunction } from '../types'
 
 // --- Respawn ---
 export const respawnCommand: CommandFunction = (player, args, context) => {
@@ -36,8 +37,7 @@ export const helpCommand: CommandFunction = (player, args, context) => {
 }
 
 export const clearCommand: CommandFunction = (player, args, context) => {
-  console.clear()
-  context.rl.prompt()
+  printPrompt(context)
 
   return false
 }

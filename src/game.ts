@@ -1,17 +1,17 @@
 import fs from 'fs'
 import path from 'path'
-import { Player } from './core/Player'
-import { MapManager } from './core/MapManager'
-import { World } from './core/World'
-import { EventSystem } from './systems/EventSystem'
-import { MonsterFactory } from './core/MonsterFactory'
-import { SaveSystem } from './systems/SaveSystem'
-import { LootFactory } from './core/LootFactory'
-import { printStatus } from './statusPrinter'
 import { createCLI } from './cli'
-import { DropSystem } from './systems/DropSystem'
+import { LootFactory } from './core/LootFactory'
+import { MapManager } from './core/MapManager'
+import { MonsterFactory } from './core/MonsterFactory'
 import { NPCManager } from './core/NpcManager'
-import { GameContext, GameMode } from './types'
+import { Player } from './core/Player'
+import { World } from './core/World'
+import { printStatus } from './statusPrinter'
+import { DropSystem } from './systems/DropSystem'
+import { EventSystem } from './systems/EventSystem'
+import { SaveSystem } from './systems/SaveSystem'
+import { GameContext } from './types'
 
 // ---------- 데이터 로드 ----------
 const assets = path.join(__dirname, 'assets')
@@ -40,7 +40,7 @@ if (saved.drops?.length) {
   }
 }
 
-const context = { mode: GameMode.EXPLORE, map, world, events, npcs, drop, save }
+const context = { map, world, events, npcs, drop, save }
 
 player.onDeath = () => {
   console.log('나는 사망했다...')
@@ -50,8 +50,6 @@ player.onDeath = () => {
   player.x = 0
   player.y = 0
   player.hp = 1
-
-  context.mode = GameMode.EXPLORE
 
   printStatus(player, context as GameContext)
 }

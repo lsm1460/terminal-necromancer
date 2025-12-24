@@ -19,5 +19,12 @@
       { "itemId": "leather_armor", "chance": 0.6, "quantity": [1, 1] }
     ]
   },
+  "resistance": {
+    "gold": [50, 100],
+    "items": [
+      { "itemId": "iron_sword", "chance": 0.6, "quantity": [1, 1] },
+      { "itemId": "leather_armor", "chance": 0.6, "quantity": [1, 1] }
+    ]
+  },
   "none": { "gold": [0, 0], "items": [] }
 }

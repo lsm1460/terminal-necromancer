@@ -5,14 +5,8 @@ import { World } from './core/World'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 
-export enum GameMode {
-  EXPLORE = 'explore',
-  DIALOGUE = 'dialogue',
-  GLOBAL = 'global',
-  BATTLE = 'battle',
-}
-
 export interface BattleTarget {
+  id: string
   name: string
   hp: number
   atk: number
@@ -23,7 +17,9 @@ export interface BattleTarget {
   dropTableId: string
   gold: number
   encounterRate: number // ← 개별 몬스터 출현 확률 (%)
-  drops: Item[]
+  isAlive: boolean
+  preemptive?: boolean
+  noEscape?: boolean
 }
 
 export interface Monster extends BattleTarget {
@@ -127,7 +123,6 @@ export interface GameContext {
   save: any
   rl: any
 
-  mode: GameMode
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
@@ -139,4 +134,4 @@ export interface NPC extends BattleTarget {
   isAlive: boolean
   lines: string[]
   deathLine: string
-} 
+}
