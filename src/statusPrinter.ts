@@ -1,22 +1,28 @@
 import { Player } from './core/Player'
-import { GameContext } from './types'
+import { GameContext, NPC } from './types'
 
 export function printTileStatus(player: Player, { map, npcs }: GameContext) {
   const { x, y } = player.pos
   const tile = map.getTile(x, y)
 
   console.log(tile.dialogue)
-  
-  const names = (tile.npcIds || [])
-    .map((_id) => npcs.getNPC(_id))
-    .filter(Boolean)
-    .filter((npc) => npc?.isAlive)
-    .map((npc) => npc?.name)
-    .join(', ')
 
-  if ((tile.npcIds || []).length > 0) {
-    const isSingular = (tile.npcIds || []).length === 1
-    console.log(`주변에 있는 사람${isSingular?'' : '들'}: ${names}`)
+  const npcList = (tile.npcIds || []).map((_id) => npcs.getNPC(_id)).filter((npc): npc is NPC => npc !== null)
+
+  const alive = npcList.filter((npc) => npc.isAlive)
+  const dead = npcList.filter((npc) => !npc.isAlive)
+
+  if (alive.length > 0) {
+    const isSingular = alive.length === 1
+    const aliveNames = alive.map((_npc) => _npc.name).join(', ')
+
+    console.log(`주변에 있는 사람${isSingular ? '' : '들'}: ${aliveNames}`)
+  }
+
+  if (dead.length > 0) {
+    const deadNames = dead.map((_npc) => `${_npc.name}의 시체`).join(', ')
+
+    console.log(`주변의 시체: ${deadNames}`)
   }
 
   // 이동 가능한 방향 계산

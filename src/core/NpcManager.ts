@@ -56,12 +56,15 @@ export class NPCManager {
   }
 
   findNPC(npcIds: string[], npcName: string): NPC | null {
+    if (!npcName) {
+      return this.getNPC(npcIds[0])
+    }
+
     // 1. 전달받은 ID 목록을 순회하며 데이터 병합
     for (const id of npcIds) {
       const npc = this.getNPC(id)
 
       // 2. NPC 데이터가 존재하고, 이름이 입력값과 일치하는지 확인
-      // (입력값의 공백 제거 및 소문자 변환을 통해 검색 정확도를 높입니다)
       if (npc && npc.name.replace(/\s+/g, '') === npcName.replace(/\s+/g, '')) {
         return npc
       }

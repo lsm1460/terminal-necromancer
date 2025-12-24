@@ -28,7 +28,7 @@ export class Battle {
 
     // 2. 주 타겟 사망 시 보상 처리를 위해 여기서 반환하지 않고,
     // 살아있는 다른 적들의 '집단 반격'을 먼저 처리합니다.
-    isTargetDead = this.executeGroupCounter(player, context, isTargetDead, target)
+    this.executeGroupCounter(player, context, isTargetDead, target)
 
     return isTargetDead // 최종적으로 타겟이 죽었는지만 알려줌
   }

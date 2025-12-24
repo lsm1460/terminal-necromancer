@@ -3,7 +3,7 @@ import { Battle } from '../core/Battle'
 import { MonsterFactory } from '../core/MonsterFactory'
 import { NPCManager } from '../core/NpcManager'
 import { Player } from '../core/Player'
-import { GameContext, Tile } from '../types'
+import { GameContext, NPC, Tile } from '../types'
 
 export class EventSystem {
   constructor(
@@ -12,6 +12,8 @@ export class EventSystem {
   ) {}
 
   handle(tile: Tile, player: Player, context: GameContext) {
+    const { npcs } = context
+
     switch (tile.event) {
       case 'item': {
         break
@@ -19,7 +21,14 @@ export class EventSystem {
 
       case 'monster':
       case 'monster-group-level-1':
-        if (!tile.currentMonster) {
+        if (tile.currentMonster) {
+          const { isAlive } = tile.currentMonster
+          if (isAlive) {
+            console.log(`${tile.currentMonster.name}(이)가 있다.`)
+          } else {
+            console.log(`${tile.currentMonster.name} 시체가 있다.`)
+          }
+        } else {
           const monster = this.monsterFactory.spawn(tile)
 
           if (monster) {
@@ -28,13 +37,11 @@ export class EventSystem {
 
             if (monster.preemptive) {
               // 선공몹
-              console.log(`${monster.name}의 기습!`)
-              const counterDmg = Battle.calculateDamage(player, monster)
-              player.damage(counterDmg)
+              const dmg = Battle.calculateDamage(player, monster)
+              console.log(`🏹 ${monster.name}의 기습! ${dmg} 피해`)
+              player.damage(dmg)
             }
           }
-        } else {
-          console.log(`${tile.currentMonster.name}(이)가 있다.`)
         }
         break
 

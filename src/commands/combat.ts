@@ -12,11 +12,11 @@ export const attackCommand: CommandFunction = (player, args, context) => {
   const monster = tile.currentMonster
   const npc = context.npcs.findNPC(tile.npcIds || [], args[0])
 
-  if (npc) {
+  if (npc && npc.isAlive) {
     target = npc
   }
 
-  if (monster) {
+  if (monster && monster.isAlive) {
     target = monster
   }
 
@@ -26,6 +26,8 @@ export const attackCommand: CommandFunction = (player, args, context) => {
   }
 
   if (Battle.attack(player, target, context)) {
+    target.isAlive = false
+    
     const { gold, drops } = LootFactory.fromTarget(target, context.drop)
 
     player.gainExp(target.exp)

@@ -7,7 +7,7 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
     const { map } = context
     const {currentMonster: monster} = map.getTile(player.pos.x, player.pos.y)
 
-    if (monster) {
+    if (monster?.noEscape) {
       console.log(monster.name + '이(가) 주시하고 있어 도망칠 수 없다.')
       return false
     }
