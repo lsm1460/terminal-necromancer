@@ -4,6 +4,7 @@ import { NPC } from '../types'
 interface NPCState {
   hp: number
   isAlive: boolean
+  reborn: boolean
   relation: number // 호감도 등 확장용
 }
 
@@ -32,6 +33,7 @@ export class NPCManager {
       this.states[id] = {
         hp: data.hp ?? data.maxHp ?? 100,
         isAlive: data.isAlive ?? true,
+        reborn: data.reborn ?? false,
         relation: 0,
       }
     })
@@ -45,7 +47,8 @@ export class NPCManager {
     const state = this.states[id]
 
     if (!base || !state) return null
-
+    if (state.reborn) return null
+    
     return {
       id,
       ...base,
@@ -100,6 +103,14 @@ export class NPCManager {
     }
 
     return { isDead: false, faction: npc.faction }
+  }
+
+  reborn(id: string) {
+    if (!this.states[id]) {
+      return
+    }
+
+    this.states[id].reborn = true
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Direction, Vector } from "./types"
+import { Direction, SKILL_IDS, SkillId, Vector } from "./types"
 
 export const COMMAND_GROUPS: Record<string, string[]> = {
   up: ['up', '위', 'u', 't', '위로', '올라가기', '북', '북쪽', 'north', 'n'],
@@ -13,6 +13,7 @@ export const COMMAND_GROUPS: Record<string, string[]> = {
   status: ['status', '스탯', '상태', 'stat', '정보', '정보창'],
   look: ['look', '보기', '보다', '확인', '조사', '관찰'],
   clear: ['clear', 'cls', '화면지우기'],
+  skill: ['skill', '스킬', '마법', 'sk'],
 }
 
 export const DIRECTIONS: Record<Direction, Vector> = {
@@ -21,3 +22,9 @@ export const DIRECTIONS: Record<Direction, Vector> = {
   left: { dx: -1, dy: 0 },
   right: { dx: 1, dy: 0 },
 }
+
+export const SKILL_GROUPS: Record<SkillId, string[]> = {
+  [SKILL_IDS.RAISE_SKELETON]: ['스켈레톤', 'skeleton', 'sk', '강령', '되살리기'],
+  [SKILL_IDS.CORPSE_EXPLOSION]: ['시체폭발', 'explosion', 'ex', '시폭', '터뜨리기'],
+  [SKILL_IDS.SOUL_HARVEST]: ['영혼수확', 'harvest', '영흡', '정수흡수'],
+};

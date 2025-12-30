@@ -1,9 +1,10 @@
-import { Drop, LootBag } from "../types"
+import { Corpse, Drop, LootBag } from "../types"
 import { MapManager } from "./MapManager"
 
 export class World {
   lootBags: LootBag | null = null
   drops: Drop[] = []
+  corpses: Corpse[] = []
     
   constructor(
     public map: MapManager
@@ -43,5 +44,22 @@ export class World {
 
   removeLootBag() {
     this.lootBags = null
+  }
+
+  addCorpse(corpse: Corpse) {
+    this.corpses.push(corpse)
+  }
+
+  getCorpsesAt(x: number, y: number): Corpse[] {
+    return this.corpses.filter(d => d.x === x && d.y === y)
+  }
+
+  removeCorpse(corpseId: string) {
+    const idx = this.corpses.findIndex(c => c.id === corpseId)
+    if (idx === -1) return undefined
+
+    // 배열에서 제거하고 반환
+    const [picked] = this.corpses.splice(idx, 1)
+    return picked
   }
 }

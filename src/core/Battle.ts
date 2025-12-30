@@ -2,10 +2,6 @@ import { Player } from './Player'
 import { BattleTarget, GameContext } from '../types'
 
 export class Battle {
-  /**
-   * 공격 로직 수행 (NPCManager 및 집단 반격 연동)
-   * @returns {boolean} 주 타겟의 사망 여부 (보상 처리를 위해 반환)
-   */
   static attack(player: Player, target: BattleTarget, context: GameContext): boolean {
     const { npcs } = context
     const p = player.computed
@@ -13,24 +9,38 @@ export class Battle {
 
     console.log(`\n⚔️  당신의 공격!`)
 
-    // 1. 주 타겟 데미지 처리
+    // 1. 플레이어 본체 공격
     if (npcs.getNPC(target.id)) {
-      // 대상이 NPC인 경우
       const result = npcs.takeDamage(target.id, p.atk)
       isTargetDead = result.isDead
     } else {
-      // 대상이 일반 몬스터인 경우
       const damage = Math.max(p.atk - target.def, 1)
       target.hp -= damage
       console.log(`${target.name}에게 ${damage} 데미지 (남은 HP: ${Math.max(0, target.hp)})`)
       if (target.hp <= 0) isTargetDead = true
     }
 
-    // 2. 주 타겟 사망 시 보상 처리를 위해 여기서 반환하지 않고,
-    // 살아있는 다른 적들의 '집단 반격'을 먼저 처리합니다.
+    // 2. 소환수(스켈레톤)들의 합동 공격 (타겟이 살아있을 경우에만)
+    if (!isTargetDead && player.skeleton.length > 0) {
+      console.log(`\n💀 소환수들이 일제히 달려듭니다!`)
+      for (const minion of player.skeleton) {
+        if (isTargetDead) break; // 공격 도중 죽으면 중단
+
+        const mDamage = Math.max(minion.atk - target.def, 1)
+        target.hp -= mDamage
+        console.log(`🦴 ${minion.name}의 공격! ${mDamage} 데미지 (남은 HP: ${Math.max(0, target.hp)})`)
+        
+        if (target.hp <= 0) {
+          isTargetDead = true
+          console.log(`💀 ${target.name}이(가) 소환수들의 공격에 쓰러졌습니다.`)
+        }
+      }
+    }
+
+    // 3. 반격 처리 (주 타겟이 죽었더라도 주변 동료가 있다면 실행됨)
     this.executeGroupCounter(player, context, isTargetDead, target)
 
-    return isTargetDead // 최종적으로 타겟이 죽었는지만 알려줌
+    return isTargetDead
   }
 
   /**
@@ -41,20 +51,18 @@ export class Battle {
     context: GameContext,
     isPrimaryDead?: boolean,
     primaryTarget?: BattleTarget
-  ) {
+  ): boolean {
     const tile = context.map.getTile(player.pos.x, player.pos.y)
     const enemies: BattleTarget[] = []
 
-    // 반격 리스트 구성
     if (!isPrimaryDead && primaryTarget) enemies.push(primaryTarget)
 
-    // 타일에 있는 다른 '적대적' NPC 추가
     ;(tile?.npcIds || []).forEach((id: string) => {
       const npc = context.npcs.getNPC(id)
       if (npc && npc.isAlive && context.npcs.isHostile(id) && npc.id !== primaryTarget?.id) {
         enemies.push(npc)
       }
-    })
+    });
 
     if (enemies.length === 0) return false
 
@@ -63,25 +71,34 @@ export class Battle {
     }
 
     for (const enemy of enemies) {
-      // 플레이어 회피 판정 (플레이어의 eva 스탯 사용)
-      // if (Math.random() * 100 < player.computed.eva) {
-      //   console.log(`💨 ${enemy.name}의 공격을 가볍게 피했습니다!`);
-      //   continue;
-      // }
-
       const counterDmg = this.calculateDamage(player, enemy)
-      const isPlayerDead = player.damage(counterDmg)
 
-      console.log(`🏹 ${enemy.name}의 반격! ${counterDmg} 피해`)
+      // 소환수가 대신 맞기
+      if (player.skeleton.length > 0) {
+        const minion = player.skeleton[0]
+        const minionFinalDmg = Math.max(enemy.atk - minion.def, 1)
+        minion.hp -= minionFinalDmg
 
-      if (isPlayerDead) {
-        console.log('💀 당신은 무릎을 꿇었습니다...')
-        return true
+        console.log(`🛡️  [방어] ${minion.name}(이)가 대신 공격을 막았습니다! (-${minionFinalDmg} HP)`)
+
+        if (minion.hp <= 0) {
+          console.log(`💀 [파괴] ${minion.name}(이)가 산산조각 났습니다.`)
+          player.skeleton.shift() 
+        }
+      } 
+      else {
+        console.log(`🏹 ${enemy.name}의 공격! ${counterDmg} 피해`)
+        const isPlayerDead = player.damage(counterDmg)
+
+        if (isPlayerDead) {
+          console.log('💀 당신은 무릎을 꿇었습니다...')
+          return true
+        }
       }
     }
 
     if (player.hp > 0) {
-      console.log(`🩸 남은 HP: ${player.hp}`)
+      console.log(`🩸 플레이어 남은 HP: ${player.hp}`)
     }
 
     return false

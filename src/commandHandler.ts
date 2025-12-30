@@ -50,6 +50,7 @@ const COMMANDS: Record<string, CommandFunction> = {
   status: Commands.statusCommand,
   look: Commands.lookCommand,
   clear: Commands.clearCommand,
+  skill: Commands.skillCommand
 }
 
 // --- handleCommand ---

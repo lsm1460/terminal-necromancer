@@ -1,7 +1,7 @@
 import { Player } from './core/Player'
-import { GameContext, NPC } from './types'
+import { Corpse, GameContext, NPC } from './types'
 
-export function printTileStatus(player: Player, { map, npcs }: GameContext) {
+export function printTileStatus(player: Player, { map, npcs, world }: GameContext) {
   const { x, y } = player.pos
   const tile = map.getTile(x, y)
 
@@ -10,7 +10,8 @@ export function printTileStatus(player: Player, { map, npcs }: GameContext) {
   const npcList = (tile.npcIds || []).map((_id) => npcs.getNPC(_id)).filter((npc): npc is NPC => npc !== null)
 
   const alive = npcList.filter((npc) => npc.isAlive)
-  const dead = npcList.filter((npc) => !npc.isAlive)
+
+  const corpses = world.getCorpsesAt(x, y)
 
   if (alive.length > 0) {
     const isSingular = alive.length === 1
@@ -19,8 +20,8 @@ export function printTileStatus(player: Player, { map, npcs }: GameContext) {
     console.log(`주변에 있는 사람${isSingular ? '' : '들'}: ${aliveNames}`)
   }
 
-  if (dead.length > 0) {
-    const deadNames = dead.map((_npc) => `${_npc.name}의 시체`).join(', ')
+  if (corpses.length > 0) {
+    const deadNames = corpses.map((_corpse) => `${_corpse.name}의 시체`).join(', ')
 
     console.log(`주변의 시체: ${deadNames}`)
   }

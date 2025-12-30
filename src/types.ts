@@ -5,7 +5,7 @@ import { World } from './core/World'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 
-export interface BattleTarget {
+export type BattleTarget = {
   id: string
   name: string
   hp: number
@@ -107,11 +107,16 @@ export type Drop = {
   evasion: number[]
 } & Item
 
+export type Corpse = {
+  x?: number
+  y?: number
+} & BattleTarget
+
 export type LootBag = {
   id: string
   x: number
   y: number
-  drops: Item[]
+  exp: number
 }
 
 export interface GameContext {
@@ -131,7 +136,25 @@ export type CommandFunction = (player: Player, args: string[], context: GameCont
 export interface NPC extends BattleTarget {
   id: string
   faction: string
-  isAlive: boolean
+  reborn: boolean
   lines: string[]
   deathLine: string
+}
+
+export const SKILL_IDS = {
+  RAISE_SKELETON: 'RAISE_SKELETON',
+  CORPSE_EXPLOSION: 'CORPSE_EXPLOSION',
+  SOUL_HARVEST: 'SOUL_HARVEST',
+} as const;
+
+// 2. 위 객체의 값들만 모아서 타입으로 추출
+export type SkillId = typeof SKILL_IDS[keyof typeof SKILL_IDS];
+
+// 3. 스킬 인터페이스 정의
+export interface Skill {
+  id: SkillId;
+  name: string;
+  description: string;
+  cost: number;
+  execute: (player: Player, context: GameContext, args: string[]) => void;
 }

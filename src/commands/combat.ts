@@ -26,6 +26,7 @@ export const attackCommand: CommandFunction = (player, args, context) => {
   }
 
   if (Battle.attack(player, target, context)) {
+    tile.currentMonster = undefined
     target.isAlive = false
     
     const { gold, drops } = LootFactory.fromTarget(target, context.drop)
@@ -35,7 +36,7 @@ export const attackCommand: CommandFunction = (player, args, context) => {
 
     let logMessage = `${target.name} 처치! EXP +${target.exp}`
     if (gold > 0) {
-      logMessage += `, Gold +${gold}`
+      logMessage += `, 골드 +${gold}`
     }
 
     // 전투 결과 출력
@@ -46,6 +47,14 @@ export const attackCommand: CommandFunction = (player, args, context) => {
       const qtyText = d.quantity !== undefined ? ` ${d.quantity}개` : ''
       console.log(`${target.name}은(는) ${d.label}${qtyText}을(를) 떨구었다.`)
     })
+
+    context.world.addCorpse({
+      ...target,
+      x,
+      y
+    })
+
+    console.log(`${target.name}의 시체`)
   }
 
   return false

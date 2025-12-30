@@ -1,12 +1,13 @@
 // core/Player.ts
 import fs from 'fs'
-import { Item, LevelData } from '../types'
+import { BattleTarget, Item, LevelData, SKILL_IDS, SkillId } from '../types'
 
 export class Player {
   x = 0
   y = 0
   maxHp = 100
   hp = 100
+  mp = 100
   atk = 10
   def = 5
   gold = 0
@@ -14,6 +15,10 @@ export class Player {
   level = 1
   inventory: Item[] = []
   equipped = { weapon: null as Item | null, armor: null as Item | null }
+
+  public unlockedSkills: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
+  public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
+  public maxSkeleton: number = 3 // 최대 소환 가능 수
 
   onDeath?: () => void
 
@@ -119,10 +124,29 @@ export class Player {
     }
   }
 
-  expToNextLevel(): number | null {
+  expToNextLevel(): number {
     const nextLevel = this.level + 1
     const nextLevelData = this.levelTable.find((l) => l.level === nextLevel)
-    if (!nextLevelData) return null // 최고 레벨
+    if (!nextLevelData) return 0 // 최고 레벨
     return nextLevelData.expRequired - this.totalExp
+  }
+
+  unlockSkill(skillId: SkillId) {
+    if (!this.hasSkill(skillId)) {
+      this.unlockedSkills.push(skillId)
+    }
+  }
+
+  hasSkill(skillId: SkillId): boolean {
+    return this.unlockedSkills.includes(skillId)
+  }
+
+  addSkeleton(minion: BattleTarget) {
+    if (this.skeleton.length < this.maxSkeleton) {
+      this.skeleton.push(minion)
+      return true
+    }
+
+    return false
   }
 }

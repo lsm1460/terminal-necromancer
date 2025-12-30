@@ -1,19 +1,25 @@
 {
   "player": {
-    "x": 0,
+    "x": 1,
     "y": 1,
     "maxHp": 100,
-    "hp": 100,
+    "hp": 88,
+    "mp": 100,
     "atk": 10,
     "def": 5,
-    "gold": 0,
-    "totalExp": 0,
-    "level": 1,
+    "gold": 97,
+    "totalExp": 80,
+    "level": 2,
     "inventory": [],
     "equipped": {
       "weapon": null,
       "armor": null
-    }
+    },
+    "unlockedSkills": [
+      "RAISE_SKELETON"
+    ],
+    "skeleton": [],
+    "maxSkeleton": 3
   },
   "sceneId": "B1_Subway_Entrance",
   "npcs": {
@@ -21,15 +27,19 @@
       "kane_leader": {
         "hp": 150,
         "isAlive": true,
+        "reborn": false,
         "relation": 0
       },
       "maya_tech": {
-        "hp": 80,
-        "isAlive": true,
+        "hp": 0,
+        "isAlive": false,
+        "reborn": false,
         "relation": 0
       }
     },
-    "factionHostility": {}
+    "factionHostility": {
+      "resistance": true
+    }
   },
   "drop": null
 }
