@@ -2,16 +2,6 @@ import { printPrompt } from '../cli'
 import { COMMAND_GROUPS } from '../consts'
 import { CommandFunction } from '../types'
 
-// --- Respawn ---
-export const respawnCommand: CommandFunction = (player, args, context) => {
-  if (player.hp < 1) {
-    player.move(0, 0)
-    return true
-  }
-  console.log('산 자는 할 수 없다.')
-  return false
-}
-
 // --- Exit ---
 export const exitCommand: CommandFunction = (player, args, context) => {
   context.save.save({

@@ -42,7 +42,6 @@ const COMMANDS: Record<string, CommandFunction> = {
   right: Commands.moveCommand('right'),
   attack: Commands.attackCommand,
   equip: Commands.equipCommand,
-  respawn: Commands.respawnCommand,
   exit: Commands.exitCommand,
   pick: Commands.pickCommand,
   help: Commands.helpCommand,

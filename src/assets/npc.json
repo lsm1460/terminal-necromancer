@@ -34,5 +34,24 @@
     "description": "고철을 구입하여 무기로 탈바꿈 시키는 장인",
     "gold": 300,
     "dropTableId": "resistance"
+  },
+  "death": {
+    "id": "death",
+    "name": "사신",
+    "faction": "god",
+    "hp": 3000,
+    "maxHp": 3000,
+    "atk": 1,
+    "def": 50,
+    "eva": 10,
+    "exp": 5000,
+    "isAlive": true,
+    "reborn": false,
+    "lines": ["영혼으로 스킬을 해금하거나 레벨을 올릴 수 있습니다."],
+    "deathLine": "TODO: 엔딩",
+    "description": "최종보스입니다",
+    "gold": 3000,
+    "dropTableId": "",
+    "noEscape": true
   }
 }

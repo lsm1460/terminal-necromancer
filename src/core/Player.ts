@@ -86,12 +86,17 @@ export class Player {
 
   gainExp(exp: number) {
     this.totalExp += exp
+  }
 
+  levelUp() {
     const newLevel = this.calculateLevel(this.totalExp)
     if (newLevel > this.level) {
-      console.log(`레벨 업! LV ${this.level} → LV ${newLevel}`)
       this.level = newLevel
+
+      return true
     }
+
+    return false
   }
 
   gainGold(gold: number) {

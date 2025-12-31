@@ -91,7 +91,6 @@ export class Battle {
         const isPlayerDead = player.damage(counterDmg)
 
         if (isPlayerDead) {
-          console.log('💀 당신은 무릎을 꿇었습니다...')
           return true
         }
       }

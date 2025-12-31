@@ -139,6 +139,8 @@ export interface NPC extends BattleTarget {
   reborn: boolean
   lines: string[]
   deathLine: string
+  isHostile: boolean
+  noEscape?: boolean
 }
 
 export const SKILL_IDS = {

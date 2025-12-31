@@ -6,7 +6,6 @@ export const COMMAND_GROUPS: Record<string, string[]> = {
   left: ['left', '왼쪽', 'l', '좌', '좌측', '서', '서쪽', 'west', 'w'],
   right: ['right', '오른쪽', 'r', 'e', '우', '우측', '동', '동쪽', 'east'],
   attack: ['attack', '공격', 'a', 'hit', '때리기', '공격하기'],
-  respawn: ['respawn', '부활', 'resp', '다시살아나기'],
   pick: ['pick', 'p', '줍기', '획득', '집기', '들기'],
   help: ['help', '도움말', '/?', '도움', '명령', '명령어'],
   inventory: ['inventory', 'inven', 'i', '인벤토리', '가방', '아이템', '소지품'],

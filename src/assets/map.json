@@ -10,7 +10,7 @@
       ],
       [
         { "theme": "tiled_floor", "event": "monster-group-level-1", "spawn_limit": 2, "dialogue": "바닥에 핏자국이 선연합니다." },
-        { "theme": "tiled_floor", "event": "npc", "npcIds": ["maya_tech"], "dialogue": "누군가 고철을 만지고 있습니다." },
+        { "theme": "tiled_floor", "event": "npc", "npcIds": ["death"], "dialogue": "누군가 고철을 만지고 있습니다." },
         { "theme": "tiled_floor", "event": "none", "dialogue": "어두운 구석에서 으르렁거리는 소리가 들립니다." }
       ],
       [

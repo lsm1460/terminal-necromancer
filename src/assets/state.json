@@ -3,7 +3,7 @@
     "x": 1,
     "y": 1,
     "maxHp": 100,
-    "hp": 88,
+    "hp": 100,
     "mp": 100,
     "atk": 10,
     "def": 5,
@@ -31,14 +31,19 @@
         "relation": 0
       },
       "maya_tech": {
-        "hp": 0,
-        "isAlive": false,
+        "hp": 80,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "death": {
+        "hp": 3000,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       }
     },
     "factionHostility": {
-      "resistance": true
     }
   },
   "drop": null
