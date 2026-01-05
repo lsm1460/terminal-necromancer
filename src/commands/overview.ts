@@ -2,10 +2,10 @@ import { printTileStatus } from '../statusPrinter'
 import { CommandFunction, Drop, ItemType, Monster } from '../types'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
-  const { atk, def, hp, maxHp, gold, level, totalExp, equipped } = player
+  const { atk, def, hp, maxHp, gold, level, exp, equipped } = player
 
   console.log('🛡️ 상태창')
-  console.log(`레벨: ${level} (경험치: ${totalExp})`)
+  console.log(`레벨: ${level} (경험치: ${exp})`)
 
   const expNeeded = player.expToNextLevel()
   if (expNeeded !== null) {

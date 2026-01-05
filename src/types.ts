@@ -147,16 +147,17 @@ export const SKILL_IDS = {
   RAISE_SKELETON: 'RAISE_SKELETON',
   CORPSE_EXPLOSION: 'CORPSE_EXPLOSION',
   SOUL_HARVEST: 'SOUL_HARVEST',
-} as const;
+} as const
 
 // 2. 위 객체의 값들만 모아서 타입으로 추출
-export type SkillId = typeof SKILL_IDS[keyof typeof SKILL_IDS];
+export type SkillId = (typeof SKILL_IDS)[keyof typeof SKILL_IDS]
 
 // 3. 스킬 인터페이스 정의
 export interface Skill {
-  id: SkillId;
-  name: string;
-  description: string;
-  cost: number;
-  execute: (player: Player, context: GameContext, args: string[]) => void;
+  id: SkillId
+  name: string
+  description: string
+  cost: number
+  requiredLevel: number
+  execute: (player: Player, context: GameContext, args: string[]) => void
 }

@@ -1,21 +1,22 @@
 import readline from 'readline'
 import { handleCommand } from './commandHandler'
-import { GameContext } from './types'
 
-export function createCLI(player: any, context: any) {
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-  context.rl = rl
-
-  rl.setPrompt('명령(명령어 리스트: 도움말): ')
-  console.log()
-  rl.prompt()
-
-  rl.on('line', (line: string) => {
-    handleCommand(line, player, context)
-  })
+// 헬퍼: 한 번의 입력을 받고 rl을 닫는 함수
+async function askQuestion(query: string): Promise<string> {
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise((resolve) => {
+    console.log('')
+    rl.question(query, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+  });
 }
 
-export const printPrompt = (context: GameContext) => {
-  console.log()
-  context.rl.prompt()
+export async function createCLI(player: any, context: any) {
+  while (true) {
+    const line = await askQuestion('명령(명령어 리스트: 도움말) > ');
+    const shouldExit = await handleCommand(line, player, context);
+    if (shouldExit === 'exit') break;
+  }
 }

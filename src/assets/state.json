@@ -3,20 +3,21 @@
     "x": 1,
     "y": 1,
     "maxHp": 100,
-    "hp": 100,
+    "hp": 99,
     "mp": 100,
     "atk": 10,
     "def": 5,
     "gold": 97,
-    "totalExp": 80,
-    "level": 2,
+    "exp": 40,
+    "level": 3,
     "inventory": [],
     "equipped": {
       "weapon": null,
       "armor": null
     },
     "unlockedSkills": [
-      "RAISE_SKELETON"
+      "RAISE_SKELETON",
+      "CORPSE_EXPLOSION"
     ],
     "skeleton": [],
     "maxSkeleton": 3
@@ -43,8 +44,7 @@
         "relation": 0
       }
     },
-    "factionHostility": {
-    }
+    "factionHostility": {}
   },
   "drop": null
 }

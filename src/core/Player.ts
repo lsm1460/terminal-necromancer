@@ -11,7 +11,7 @@ export class Player {
   atk = 10
   def = 5
   gold = 0
-  totalExp = 0
+  exp = 0
   level = 1
   inventory: Item[] = []
   equipped = { weapon: null as Item | null, armor: null as Item | null }
@@ -85,14 +85,16 @@ export class Player {
   }
 
   gainExp(exp: number) {
-    this.totalExp += exp
+    this.exp += exp
   }
 
   levelUp() {
-    const newLevel = this.calculateLevel(this.totalExp)
-    if (newLevel > this.level) {
-      this.level = newLevel
-
+    const newLevelExp = this.expToNextLevel()
+    if (this.exp >= newLevelExp) {
+      this.level += 1
+      this.exp = this.exp - newLevelExp
+      this.hp = this.maxHp
+      
       return true
     }
 
@@ -133,7 +135,7 @@ export class Player {
     const nextLevel = this.level + 1
     const nextLevelData = this.levelTable.find((l) => l.level === nextLevel)
     if (!nextLevelData) return 0 // 최고 레벨
-    return nextLevelData.expRequired - this.totalExp
+    return nextLevelData.expRequired - this.exp
   }
 
   unlockSkill(skillId: SkillId) {

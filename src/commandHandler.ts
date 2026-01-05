@@ -1,15 +1,20 @@
-import { printPrompt } from './cli'
 import * as Commands from './commands'
-import { COMMAND_GROUPS } from './consts'
+import { COMMAND_GROUPS, CommandKey } from './consts'
 import { Player } from './core/Player'
 import { printStatus } from './statusPrinter'
 import { GameContext } from './types'
 
-type CommandFunction = (player: Player, args: string[], context: GameContext) => boolean | string
+type CommandFunction = (
+  player: Player,
+  args: string[],
+  context: GameContext
+) => (boolean | string) | Promise<boolean | string>
 
 const mapInput = (cmd: string) => {
   const trimmed = cmd.trim()
-  return Object.entries(COMMAND_GROUPS).find(([_, arr]) => arr.includes(trimmed))?.[0] ?? trimmed
+
+  const _cmd = Object.entries(COMMAND_GROUPS).find(([_, arr]) => arr.includes(trimmed))?.[0] ?? trimmed
+  return _cmd as CommandKey
 }
 
 const parseCommand = (rawCmd: string) => {
@@ -35,7 +40,7 @@ const parseCommand = (rawCmd: string) => {
 }
 
 // --- COMMANDS 객체 ---
-const COMMANDS: Record<string, CommandFunction> = {
+const COMMANDS: Record<CommandKey, CommandFunction> = {
   up: Commands.moveCommand('up'),
   down: Commands.moveCommand('down'),
   left: Commands.moveCommand('left'),
@@ -49,49 +54,39 @@ const COMMANDS: Record<string, CommandFunction> = {
   status: Commands.statusCommand,
   look: Commands.lookCommand,
   clear: Commands.clearCommand,
-  skill: Commands.skillCommand
+  skill: Commands.skillCommand,
+  talk: Commands.talkCommand,
 }
 
 // --- handleCommand ---
-export function handleCommand(rawCmd: string, player: Player, context: GameContext) {
+export async function handleCommand(rawCmd: string, player: Player, context: GameContext): Promise<string | boolean> {
   const trimmed = rawCmd.trim()
-  if (!trimmed) return context.rl.prompt()
+  if (!trimmed) return false
 
-  // --- [1] DIALOGUE 모드 우선 처리 ---
-  // 대화 모드일 때는 COMMAND_GROUPS를 거치지 않고 pendingAction에 모든 입력을 넘깁니다.
-  if (context.pendingAction) {
-    context.pendingAction(trimmed)
-    return
-  }
-
-  // --- [2] 명령어 파싱 및 유효성 검사 ---
   const { cmd: rawCmdName, args } = parseCommand(trimmed)
   const cmd = mapInput(rawCmdName)
 
-  // 존재하지 않는 명령인 경우
   if (!cmd || !COMMANDS[cmd]) {
     console.log(`\n유효하지 않은 명령입니다.`)
-    printPrompt(context)
-    return
+    return false
   }
 
-  // --- [3] 명령어 실행 ---
   const fn = COMMANDS[cmd]
-  const result = fn(player, args, context)
 
-  if (result === 'exit') return // 종료 커맨드인 경우
+  try {
+    // 여기서 await을 통해 talkCommand 등의 메뉴 선택이 끝날 때까지 대기합니다.
+    const result = await fn(player, args, context)
+    if (result === 'exit') return 'exit'
 
-  // --- [4] 후속 처리 (이벤트 및 상태 저장) ---
-  if (result) {
-    const { map, world, events } = context
-    const currentTile = map.getTile(player.pos.x, player.pos.y)
-    printStatus(player, context)
+    if (result) {
+      const { map, events } = context
+      const currentTile = map.getTile(player.pos.x, player.pos.y)
+      printStatus(player, context)
+      events.handle(currentTile, player, context)
+    }
+  } catch (e) {}
 
-    // 타일 이벤트 핸들링 (전투 돌입, NPC 대화 시작 등 모드 변경이 여기서 발생)
-    events.handle(currentTile, player, context)
-  }
-
-  // 자동 세이브 (NPC 상태 및 플레이어 데이터)
+  // 자동 세이브
   context.save.save({
     player,
     sceneId: context.map.currentSceneId,
@@ -99,5 +94,5 @@ export function handleCommand(rawCmd: string, player: Player, context: GameConte
     drop: context.world.lootBags,
   })
 
-  printPrompt(context)
+  return false
 }
