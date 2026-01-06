@@ -8,10 +8,11 @@ import { EventSystem } from './systems/EventSystem'
 export type BattleTarget = {
   id: string
   name: string
+  maxHp: number
   hp: number
   atk: number
   def: number
-  eva: number
+  agi: number
   exp: number
   description: string
   dropTableId: string
@@ -20,6 +21,7 @@ export type BattleTarget = {
   isAlive: boolean
   preemptive?: boolean
   noEscape?: boolean
+  isMinion?: boolean
 }
 
 export interface Monster extends BattleTarget {
@@ -33,7 +35,7 @@ export interface Tile {
   dialogue: string
   npcIds?: string[] // npc용
   spawn_limit?: number // monster용
-  currentMonster?: Monster
+  monsters?: Monster[]
 }
 
 export interface MapData {
@@ -131,7 +133,7 @@ export interface GameContext {
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
-export type CommandFunction = (player: Player, args: string[], context: GameContext) => boolean | string
+export type CommandFunction = (player: Player, args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
 
 export interface NPC extends BattleTarget {
   id: string

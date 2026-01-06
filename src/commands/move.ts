@@ -5,17 +5,21 @@ import { CommandFunction } from '../types'
 export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
   return (player, args, context) => {
     const { map, npcs } = context
-    const { currentMonster: monster, npcIds } = map.getTile(player.pos.x, player.pos.y)
+    const { monsters, npcIds } = map.getTile(player.pos.x, player.pos.y)
 
-    const npc = (npcIds || [])
-      .map((_id) => npcs.getNPC(_id))
-      .filter((_npc) => _npc !== null)
-      .find((item) => item.isHostile && item.noEscape)
+    // 1. 길을 막고 있는 몬스터 찾기
+    const blockingMonster = monsters?.find((m) => m.isAlive && m.noEscape)
 
-    const target = monster || npc
+    // 2. 길을 막고 있는 NPC 찾기 (적대적 + 살아있음 + 도망불가)
+    const blockingNPC = (npcIds || [])
+      .map((id) => npcs.getNPC(id))
+      .find((npc) => npc && npc.isAlive && npc.isHostile && npc.noEscape)
 
-    if (target?.noEscape) {
-      console.log(target.name + '이(가) 주시하고 있어 도망칠 수 없다.')
+    // 3. 둘 중 하나라도 존재하면 해당 타겟을 변수에 담기
+    const target = blockingMonster || blockingNPC
+
+    if (target) {
+      console.log(`\n🚫 ${target.name}이(가) 주시하고 있어 도망칠 수 없다.`)
       return false
     }
 

@@ -39,6 +39,7 @@ export class MonsterFactory {
 
     const baseMonster = { 
       ...selected,
+      maxHp: selected.hp,
       isAlive: true,
       id: generateId(selected.name),
     }

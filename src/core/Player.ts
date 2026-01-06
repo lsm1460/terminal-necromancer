@@ -10,6 +10,7 @@ export class Player {
   mp = 100
   atk = 10
   def = 5
+  agi = 5
   gold = 0
   exp = 0
   level = 1
@@ -19,6 +20,9 @@ export class Player {
   public unlockedSkills: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
   public maxSkeleton: number = 3 // 최대 소환 가능 수
+
+  public golem: BattleTarget | undefined = undefined
+  public knight: BattleTarget | undefined = undefined
 
   onDeath?: () => void
 
@@ -54,6 +58,16 @@ export class Player {
     return { ...this, atk, def }
   }
 
+  get minions(): BattleTarget[] {
+    return [this.golem, ...this.skeleton, this.knight]
+      .filter((_minion) => !!_minion)
+      .filter((_minion) => _minion.isAlive)
+  }
+
+  get isAlive() {
+    return this.hp > 0
+  }
+
   move(dx: number, dy: number) {
     this.x += dx
     this.y += dy
@@ -73,17 +87,6 @@ export class Player {
     return false // 아직 살아있음
   }
 
-  private calculateLevel(exp: number): number {
-    let current = this.levelTable[0]
-
-    for (const lvl of this.levelTable) {
-      if (exp >= lvl.expRequired) current = lvl
-      else break
-    }
-
-    return current.level
-  }
-
   gainExp(exp: number) {
     this.exp += exp
   }
@@ -94,7 +97,7 @@ export class Player {
       this.level += 1
       this.exp = this.exp - newLevelExp
       this.hp = this.maxHp
-      
+
       return true
     }
 
@@ -135,7 +138,7 @@ export class Player {
     const nextLevel = this.level + 1
     const nextLevelData = this.levelTable.find((l) => l.level === nextLevel)
     if (!nextLevelData) return 0 // 최고 레벨
-    return nextLevelData.expRequired - this.exp
+    return Math.max(nextLevelData.expRequired - this.exp, 0)
   }
 
   unlockSkill(skillId: SkillId) {
@@ -149,11 +152,32 @@ export class Player {
   }
 
   addSkeleton(minion: BattleTarget) {
+    
     if (this.skeleton.length < this.maxSkeleton) {
       this.skeleton.push(minion)
       return true
     }
 
     return false
+  }
+
+  removeMinion(minionId: string) {
+    this.skeleton = this.skeleton.filter((_minion) => _minion.id !== minionId)
+
+    console.log('this.skeleton',this.skeleton)
+
+    if (this.golem && this.golem.id === minionId) {
+      this.golem = {
+        ...this.golem,
+        isAlive: false,
+      }
+    }
+
+    if (this.knight && this.knight.id === minionId) {
+      this.knight = {
+        ...this.knight,
+        isAlive: false,
+      }
+    }
   }
 }

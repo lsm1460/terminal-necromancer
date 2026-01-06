@@ -25,7 +25,7 @@ export const COMMAND_GROUPS: Record<CommandKey, string[]> = {
   [COMMAND_KEYS.DOWN]: ['down', '아래', 'd', 'b', '아래로', '내려가기', '남', '남쪽', 'south'],
   [COMMAND_KEYS.LEFT]: ['left', '왼쪽', 'l', '좌', '좌측', '서', '서쪽', 'west', 'w'],
   [COMMAND_KEYS.RIGHT]: ['right', '오른쪽', 'r', 'e', '우', '우측', '동', '동쪽', 'east'],
-  [COMMAND_KEYS.ATTACK]: ['attack', '공격', 'a', 'hit', '때리기', '공격하기'],
+  [COMMAND_KEYS.ATTACK]: ['attack', '공격', 'atk', 'hit', '때리기', '공격하기'],
   [COMMAND_KEYS.PICK]: ['pick', 'p', '줍기', '획득', '집기', '들기'],
   [COMMAND_KEYS.HELP]: ['help', '도움말', '/?', '도움', '명령', '명령어'],
   [COMMAND_KEYS.INVENTORY]: ['inventory', 'inven', 'i', '인벤토리', '가방', '아이템', '소지품'],

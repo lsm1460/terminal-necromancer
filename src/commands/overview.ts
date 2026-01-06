@@ -36,14 +36,42 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   console.log(`무기: ${weaponText}`)
   console.log(`방어구: ${armorText}`)
 
+  console.log('\n💀 [ 소환수 군단 상태 ]')
+
+  if (player.minions.length === 0) {
+    console.log('   (현재 소환된 미니언이 없습니다.)')
+  } else {
+    player.minions.forEach((minion, index) => {
+      // HP 비율 계산 (체력 바 표시용)
+      const hpPercent = Math.max(0, (minion.hp / minion.maxHp) * 10)
+      const hpBar = '■'.repeat(Math.floor(hpPercent)) + '□'.repeat(10 - Math.floor(hpPercent))
+
+      // 상태에 따른 아이콘 (살아있음/죽음 등)
+      const statusIcon = minion.isAlive ? '🟢' : '🔴'
+
+      console.log(
+        `   ${index + 1}. [${minion.name}] ${statusIcon}\n` +
+          `      HP: ${hpBar} (${minion.hp}/${minion.maxHp})\n` +
+          `      ATK: ${minion.atk} | AGI: ${minion.agi}`
+      )
+    })
+  }
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+
   return false
 }
 
-const lookAll = (items: Drop[], monster?: Monster) => {
+const lookAll = (items: Drop[], monsters?: Monster[]) => {
   const entities: string[] = []
 
-  if (monster) entities.push(monster.name)
-  
+  if (monsters) {
+    monsters
+      .filter((_monster) => _monster.isAlive)
+      .forEach((_monster) => {
+        entities.push(_monster.name)
+      })
+  }
+
   const itemCounts: Record<string, number> = {}
   items.forEach((item) => {
     const qty = item.quantity ?? 1
@@ -59,11 +87,16 @@ const lookAll = (items: Drop[], monster?: Monster) => {
   else console.log('주변에 몬스터나 아이템이 없습니다.')
 }
 
-const lookSomething = (name: string, items: Drop[], monster?: Monster) => {
+const lookSomething = (name: string, items: Drop[], monsters?: Monster[]) => {
   const filterName = name.toLowerCase()
-  if (monster && monster.name.toLowerCase() === filterName) {
-    console.log(monster.description ?? monster.name)
-    return
+
+  if (monsters) {
+    const monster = monsters.find((_monster) => _monster.name === filterName)
+
+    if (monster) {
+      console.log(monster.description ?? monster.name)
+      return
+    }
   }
 
   const item = items.find((i) => i.label.toLowerCase() === filterName)
@@ -83,10 +116,9 @@ export const lookCommand: CommandFunction = (player, args, context) => {
   const { map, world } = context
   const tile = map.getTile(x, y)
 
-  const monster = tile.currentMonster
   const items = world.getDropsAt(x, y)
 
-  if (!args[0]) lookAll(items, monster)
-  else lookSomething(args[0], [...items, ...player.inventory] as Drop[], monster)
+  if (!args[0]) lookAll(items, tile.monsters)
+  else lookSomething(args[0], [...items, ...player.inventory] as Drop[], tile.monsters)
   return false
 }

@@ -1,14 +1,15 @@
 {
   "player": {
-    "x": 1,
+    "x": 0,
     "y": 1,
     "maxHp": 100,
-    "hp": 99,
-    "mp": 100,
+    "hp": 80,
+    "mp": 0,
     "atk": 10,
     "def": 5,
-    "gold": 97,
-    "exp": 40,
+    "agi": 5,
+    "gold": 170,
+    "exp": 395,
     "level": 3,
     "inventory": [],
     "equipped": {
@@ -19,7 +20,56 @@
       "RAISE_SKELETON",
       "CORPSE_EXPLOSION"
     ],
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1767678997700",
+        "name": "스켈레톤(토끼)",
+        "maxHp": 30,
+        "hp": 9,
+        "atk": 9,
+        "def": 1,
+        "agi": 1,
+        "exp": 0,
+        "description": "토끼의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "gold": 0,
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true
+      },
+      {
+        "id": "skeleton_1767679145142",
+        "name": "스켈레톤(다람쥐)",
+        "maxHp": 7,
+        "hp": 7,
+        "atk": 5,
+        "def": 0,
+        "agi": 2,
+        "exp": 0,
+        "description": "다람쥐의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "gold": 0,
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true
+      },
+      {
+        "id": "skeleton_1767679151384",
+        "name": "스켈레톤(토끼)",
+        "maxHp": 10,
+        "hp": 10,
+        "atk": 4,
+        "def": 1,
+        "agi": 1,
+        "exp": 0,
+        "description": "토끼의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "gold": 0,
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true
+      }
+    ],
     "maxSkeleton": 3
   },
   "sceneId": "B1_Subway_Entrance",

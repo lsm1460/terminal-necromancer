@@ -1,15 +1,14 @@
 import enquirer from 'enquirer'
 import { DeathHandler } from '../npc/death'
 import { NPCHandler } from '../npc/NPCHandler'
-import { GameContext } from '../types'
-import { Player } from '../core/Player'
+import { CommandFunction } from '../types'
 
 // 핸들러 등록 관리
 const npcHandlers: Record<string, NPCHandler> = {
   death: DeathHandler,
 }
 
-export const talkCommand = async (player: Player, args: string[], context: GameContext) => {
+export const talkCommand: CommandFunction = async (player, args, context) => {
   const targetName = args[0]
   const tile = context.map.getTile(player.pos.x, player.pos.y)
   const npcId = (tile?.npcIds || []).find((id) => context.npcs.getNPC(id)?.name === targetName)
