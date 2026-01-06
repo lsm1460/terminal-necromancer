@@ -184,7 +184,9 @@ export class Battle {
     // 1. 기본 사망 상태 설정
     target.hp = 0
     target.isAlive = false
+
     console.log(`\n💀 ${target.name}이(가) 쓰러졌습니다!`)
+    target.deathLine && console.log(`${target.name}: ${target.deathLine}`)
 
     // 2. 전리품 및 경험치 처리 (플레이어 진영이 죽인 경우만 해당될 수 있음)
     // NPC나 몬스터가 죽었을 때만 실행

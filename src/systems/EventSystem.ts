@@ -3,7 +3,7 @@ import { Battle } from '../core/Battle'
 import { MonsterFactory } from '../core/MonsterFactory'
 import { NPCManager } from '../core/NpcManager'
 import { Player } from '../core/Player'
-import { BattleTarget, GameContext, Monster, NPC, Tile } from '../types'
+import { GameContext, Monster, Tile } from '../types'
 
 export class EventSystem {
   constructor(

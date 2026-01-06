@@ -1,9 +1,8 @@
 import { Player } from '../core/Player'
-import { SKILL_LIST } from '../core/skill'
 import { NPCHandler } from './NPCHandler'
 
 import enquirer from 'enquirer'
-import { SkillUtils } from '../core/skill'
+import { SKILL_LIST, SkillUtils } from '../core/skill'
 import { SkillId } from '../types'
 
 export const DeathHandler: NPCHandler = {

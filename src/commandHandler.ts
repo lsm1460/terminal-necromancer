@@ -82,7 +82,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
       const { map, events } = context
       const currentTile = map.getTile(player.pos.x, player.pos.y)
       printStatus(player, context)
-      events.handle(currentTile, player, context)
+      await events.handle(currentTile, player, context)
     }
   } catch (e) {}
 

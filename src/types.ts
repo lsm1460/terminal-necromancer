@@ -22,6 +22,7 @@ export type BattleTarget = {
   preemptive?: boolean
   noEscape?: boolean
   isMinion?: boolean
+  deathLine?: string
 }
 
 export interface Monster extends BattleTarget {
@@ -119,6 +120,7 @@ export type LootBag = {
   x: number
   y: number
   exp: number
+  gold: number
 }
 
 export interface GameContext {
@@ -140,7 +142,6 @@ export interface NPC extends BattleTarget {
   faction: string
   reborn: boolean
   lines: string[]
-  deathLine: string
   isHostile: boolean
   noEscape?: boolean
 }

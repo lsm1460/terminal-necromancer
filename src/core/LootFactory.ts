@@ -1,6 +1,6 @@
 import { Player } from '../core/Player'
 import { DropSystem } from '../systems/DropSystem'
-import { BattleTarget, LootBag, Monster } from '../types'
+import { BattleTarget, LootBag } from '../types'
 import { generateId } from '../utils'
 
 export class LootFactory {
@@ -9,7 +9,8 @@ export class LootFactory {
       id: generateId(),
       x: player.x,
       y: player.y,
-      exp: player.expToNextLevel()
+      exp: player.expToNextLevel(),
+      gold: player.gold
     }
   }
 
