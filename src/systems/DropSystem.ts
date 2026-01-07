@@ -101,7 +101,6 @@ export class DropSystem {
           id: generateId(item.id), 
           def: finalDef,
           label: this.getPrefix(finalDef, min, max) + item.label,
-          evasion: this.finalizeStat(item.evasion),
         }
       })
 

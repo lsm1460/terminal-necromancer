@@ -49,6 +49,7 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   equip: Commands.equipCommand,
   exit: Commands.exitCommand,
   pick: Commands.pickCommand,
+  drop: Commands.dropCommand,
   help: Commands.helpCommand,
   inventory: Commands.inventoryCommand,
   status: Commands.statusCommand,
@@ -56,6 +57,7 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   clear: Commands.clearCommand,
   skill: Commands.skillCommand,
   talk: Commands.talkCommand,
+  use: Commands.useCommand
 }
 
 // --- handleCommand ---

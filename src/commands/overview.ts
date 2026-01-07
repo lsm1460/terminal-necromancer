@@ -2,8 +2,7 @@ import { printTileStatus } from '../statusPrinter'
 import { CommandFunction, Drop, ItemType, Monster } from '../types'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
-  const { atk, def, hp, maxHp, gold, level, exp, equipped } = player
-
+  const { atk, def, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
   console.log('🛡️ 상태창')
   console.log(`레벨: ${level} (경험치: ${exp})`)
 
@@ -15,6 +14,7 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   }
 
   console.log(`HP: ${hp} / ${maxHp}`)
+  console.log(`MP: ${mp} / ${maxMp}`)
   console.log(`공격력: ${atk}`)
   console.log(`방어력: ${def}`)
   console.log(`골드: ${gold}`)

@@ -1,28 +1,28 @@
 {
   "B1_Subway_Entrance": {
     "displayName": "지하철 입구 - B1",
-    "start_pos": { "x": 1, "y": 2 },
+    "start_pos": { "x": 0, "y": 0 },
     "tiles": [
       [
         { "theme": "start", "event": "none", "dialogue": "시작 공간입니다." },
-        { "theme": "iron_gate", "event": "none", "dialogue": "녹슨 철문이 아래층으로 이어집니다." },
+        null,
         null
       ],
       [
         { "theme": "tiled_floor", "event": "monster-group-level-1", "spawn_limit": 2, "dialogue": "바닥에 핏자국이 선연합니다." },
-        { "theme": "tiled_floor", "event": "npc", "npcIds": ["death"], "dialogue": "누군가 고철을 만지고 있습니다." },
-        { "theme": "tiled_floor", "event": "none", "dialogue": "어두운 구석에서 으르렁거리는 소리가 들립니다." }
+        { "theme": "tiled_floor", "event": "npc", "npcIds": ["death"], "dialogue": "이 터미널의 관리자실" },
+        { "theme": "tiled_floor", "event": "npc", "npcIds": ["maya_tech"], "dialogue": "누군가 고철을 만지고 있습니다." }
       ],
       [
         null,
-        { "theme": "tiled_floor", "event": "none", "dialogue": "지상으로 나가는 계단이 무너져 있습니다." },
+        { "theme": "tiled_floor", "event": "none", "dialogue": "더 깊은 곳으로 내려가는 엘리베이터가 있습니다." },
         null
       ]
     ]
   },
   "B2_Transit_Area": {
     "displayName": "환승 구역 - B2",
-    "start_pos": { "x": 1, "y": 0 },
+    "start_pos": { "x": 0, "y": 0 },
     "tiles": [
       [
         { "theme": "iron_gate", "dialogue": "다시 위층으로 올라가는 문입니다." },

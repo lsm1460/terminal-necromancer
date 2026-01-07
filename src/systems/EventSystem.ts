@@ -11,7 +11,7 @@ export class EventSystem {
     private npcManager: NPCManager
   ) {}
 
-  handle(tile: Tile, player: Player, context: GameContext) {
+  async handle(tile: Tile, player: Player, context: GameContext) {
     const { npcs } = context
 
     switch (tile.event) {
@@ -54,15 +54,38 @@ export class EventSystem {
         const finalAlive = tile.monsters.filter((m) => m.isAlive)
         if (finalAlive.length > 0) {
           console.log(`⚠️  현재 적: ${finalAlive.map((m) => m.name).join(', ')}`)
+
+          const preemptiveEnemy = finalAlive.find((_monster) => _monster.preemptive)
+
+          if (preemptiveEnemy) {
+            console.log(`⚠️  적: ${preemptiveEnemy.name}의 기습!`)
+            await Battle.runCombatLoop(player, finalAlive, context)
+          }
         }
 
         break
       }
 
-      case 'npc':
+      case 'npc': {
         // 적대 세력은 선공한다
         Battle.executeGroupCounter(player, context)
+        const { map, npcs } = context
+        const tile = map.getTile(player.pos.x, player.pos.y)
+
+        const npcAlive = (tile.npcIds || [])
+          .map((id: string) => npcs.getNPC(id))
+          .filter((_npc) => !!_npc)
+          .filter((_npc) => _npc.isAlive)
+
+        const preemptiveEnemies = npcAlive.filter((_npc) => npcs.isHostile(_npc!.id))
+
+        if (preemptiveEnemies.length > 0) {
+          console.log(`⚠️  npc: ${preemptiveEnemies[0].name}의 기습!`)
+          await Battle.runCombatLoop(player, preemptiveEnemies, context)
+        }
+
         break
+      }
     }
   }
 }

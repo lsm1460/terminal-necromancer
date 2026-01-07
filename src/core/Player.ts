@@ -1,12 +1,13 @@
 // core/Player.ts
 import fs from 'fs'
-import { BattleTarget, Item, LevelData, SKILL_IDS, SkillId } from '../types'
+import { ArmorItem, BattleTarget, Item, ItemType, LevelData, SKILL_IDS, SkillId, WeaponItem } from '../types'
 
 export class Player {
   x = 0
   y = 0
-  maxHp = 100
+  _maxHp = 100
   hp = 100
+  _maxMp = 100
   mp = 100
   atk = 10
   def = 5
@@ -14,6 +15,7 @@ export class Player {
   gold = 0
   exp = 0
   level = 1
+  inventoryMax = 15
   inventory: Item[] = []
   equipped = { weapon: null as Item | null, armor: null as Item | null }
 
@@ -22,7 +24,7 @@ export class Player {
   public maxSkeleton: number = 3 // 최대 소환 가능 수
 
   public golem: BattleTarget | undefined = undefined
-  public knight: BattleTarget | undefined = undefined
+  public _knight: BattleTarget | undefined = undefined
 
   onDeath?: () => void
 
@@ -48,14 +50,32 @@ export class Player {
     return rest
   }
 
+  get maxHp() {
+    return this._maxHp
+  }
+
+  get maxMp() {
+    return this._maxMp
+  }
+
   get computed() {
     let atk = this.atk
     let def = this.def
 
-    if (this.equipped.weapon) atk += 5
-    if (this.equipped.armor) def += 3
+    if (this.equipped.weapon) atk += (this.equipped.weapon as WeaponItem).atk
+    if (this.equipped.armor) def += (this.equipped.armor as ArmorItem).def
 
-    return { ...this, atk, def }
+    return { 
+      ...this, 
+      maxHp: this.maxHp,
+      maxMp: this.maxMp,
+      atk, 
+      def 
+    }
+  }
+
+  get knight() {
+    return this._knight
   }
 
   get minions(): BattleTarget[] {
@@ -96,7 +116,19 @@ export class Player {
     if (this.exp >= newLevelExp) {
       this.level += 1
       this.exp = this.exp - newLevelExp
+
+      const levelData = this.levelTable.find((_data) => _data.level === this.level)
+      if (levelData) {
+        const { hp, mp, atk, def } = levelData
+
+        this._maxHp += hp
+        this._maxMp += mp
+        this.atk += atk
+        this.def += def
+      }
+
       this.hp = this.maxHp
+      this.mp = this.maxMp
 
       return true
     }
@@ -108,15 +140,48 @@ export class Player {
     this.gold += gold
   }
 
-  equip(_item: Item) {
-    if (this.inventory.includes(_item)) {
-      // this.equipped.weapon = '검'
-      console.log(_item + '을(를) 장착했다!')
-
-      return true
+  equip(newItem: Item): boolean {
+    const itemIndex = this.inventory.findIndex((i) => i.id === newItem.id)
+    if (itemIndex === -1) {
+      console.log('❌ 인벤토리에 해당 아이템이 없습니다.')
+      return false
     }
 
-    return false
+    const slotMap: Record<string, keyof typeof this.equipped> = {
+      [ItemType.WEAPON]: 'weapon',
+      [ItemType.ARMOR]: 'armor',
+      // [ItemType.RING]: 'ring' 등 추가 가능
+    }
+
+    const slot = slotMap[newItem.type]
+    if (!slot) {
+      console.log('⚠️ 장착할 수 없는 아이템 타입입니다.')
+      return false
+    }
+
+    const oldItem = this.equipped[slot]
+    this.equipped[slot] = newItem
+
+    const updatedInventory = this.inventory.filter((i) => i.id !== newItem.id)
+
+    if (oldItem) {
+      updatedInventory.push(oldItem)
+    }
+
+    this.inventory = updatedInventory
+    console.log(`⚔️ [${newItem.label}]을(를) 장착했습니다.`)
+
+    return true
+  }
+
+  unEquip(slot: keyof typeof this.equipped): boolean {
+    const item = this.equipped[slot]
+    if (!item) return false
+
+    this.equipped[slot] = null
+    this.inventory.push(item)
+
+    return true
   }
 
   clearEquipment() {
@@ -152,7 +217,6 @@ export class Player {
   }
 
   addSkeleton(minion: BattleTarget) {
-    
     if (this.skeleton.length < this.maxSkeleton) {
       this.skeleton.push(minion)
       return true
@@ -164,8 +228,6 @@ export class Player {
   removeMinion(minionId: string) {
     this.skeleton = this.skeleton.filter((_minion) => _minion.id !== minionId)
 
-    console.log('this.skeleton',this.skeleton)
-
     if (this.golem && this.golem.id === minionId) {
       this.golem = {
         ...this.golem,
@@ -173,11 +235,39 @@ export class Player {
       }
     }
 
-    if (this.knight && this.knight.id === minionId) {
-      this.knight = {
-        ...this.knight,
+    if (this._knight && this._knight.id === minionId) {
+      this._knight = {
+        ...this._knight,
         isAlive: false,
       }
     }
+  }
+
+  removeItem(itemId: string, amount: number = 1): boolean {
+    const itemIndex = this.inventory.findIndex((item) => item.id === itemId)
+
+    if (itemIndex === -1) {
+      console.log('❌ 인벤토리에 해당 아이템이 없습니다.')
+      return false
+    }
+
+    const targetItem = this.inventory[itemIndex]
+
+    // 1. 수량이 없는 아이템이거나, 전체 제거(-1) 요청인 경우
+    if (!targetItem.quantity || amount === -1) {
+      this.inventory.splice(itemIndex, 1)
+      return true
+    }
+
+    // 2. 수량이 있는 아이템인 경우
+    if (targetItem.quantity > amount) {
+      // 수량만 감소
+      targetItem.quantity -= amount
+    } else {
+      // 요청 수량이 보유 수량보다 많거나 같으면 리스트에서 삭제
+      this.inventory.splice(itemIndex, 1)
+    }
+
+    return true
   }
 }

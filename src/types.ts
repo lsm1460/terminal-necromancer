@@ -46,6 +46,10 @@ export interface MapData {
 export type LevelData = {
   level: number
   expRequired: number
+  atk: number
+  def: number
+  hp: number
+  mp: number
 }
 
 export type Direction = 'up' | 'down' | 'left' | 'right'
@@ -83,20 +87,19 @@ export type WeaponItem = BaseItem & {
 export type ArmorItem = BaseItem & {
   type: ItemType.ARMOR
   def: number
-  evasion: number
 }
 
 // 음식
 export type FoodItem = BaseItem & {
   type: ItemType.FOOD
-  healAmount: number
+  hpHeal: number
 }
 
 // 소비 아이템 (포션 등)
 export type ConsumableItem = BaseItem & {
   type: ItemType.CONSUMABLE
-  healAmount: number
-  // 필요하면 버프, 지속 효과 등 추가 가능
+  hpHeal?: number
+  mpHeal?: number
 }
 
 export type Item = GenericItem | WeaponItem | ArmorItem | FoodItem | ConsumableItem
@@ -107,7 +110,6 @@ export type Drop = {
   atk: number[]
   def: number[]
   crit: number[]
-  evasion: number[]
 } & Item
 
 export type Corpse = {

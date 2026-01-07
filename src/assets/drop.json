@@ -2,8 +2,9 @@
   "rabbit": {
     "gold": [0, 3],
     "items": [
-      { "itemId": "carrot", "chance": 0.6, "quantity": [1, 2] },
-      { "itemId": "potion_small", "chance": 0.1 }
+      { "itemId": "carrot", "chance": 0.1, "quantity": [1, 2] },
+      { "itemId": "potion_small", "chance": 0.5, "quantity": [1, 1] },
+      { "itemId": "mana_potion_small", "chance": 0.5, "quantity": [1, 1] }
     ]
   },
   "squirrel": {

@@ -4,14 +4,18 @@ import { BattleTarget, Drop, GameContext } from '../types'
 import { LootFactory } from './LootFactory'
 import { SkillManager } from './skill'
 
-interface IUnit {
+interface CombatStatus {
+  atk: number
+  def: number
+  agi: number
+}
+
+interface IUnit extends CombatStatus {
   id?: string
   name?: string
   hp: number
   maxHp?: number
-  atk: number
-  def: number
-  agi: number
+  computed?: CombatStatus
   isAlive: boolean
   minions?: any[] // 플레이어만 가질 수 있음
 }
@@ -190,7 +194,7 @@ export class Battle {
 
     // 2. 전리품 및 경험치 처리 (플레이어 진영이 죽인 경우만 해당될 수 있음)
     // NPC나 몬스터가 죽었을 때만 실행
-    
+
     if (target.isMinion) {
       player.removeMinion(target.id)
     } else if (!target.isMinion && (target.exp || target.dropTableId)) {
@@ -227,7 +231,7 @@ export class Battle {
     const damage = Math.max(1, atk - Math.floor(def / 2))
     defender.hp -= damage
 
-    console.log(`💥 ${attacker?.name || '플레이어'}의 공격! ${defender.name || '플레이어'}에게 ${damage}의 피해!`)
+    console.log(`💥 ${attacker?.name || '플레이어'}의 공격! ${defender.name || '플레이어'}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, defender.hp)})`)
 
     if (defender.hp <= 0) {
       this.handleUnitDeath(player, defender as BattleTarget, context)
@@ -242,9 +246,9 @@ export class Battle {
       stats: {
         hp: unit.hp,
         maxHp: unit.maxHp || unit.hp,
-        agi: unit.agi || 0,
-        atk: unit.atk || 0,
-        def: unit.def || 0,
+        atk: unit.computed?.atk || unit.atk || 0,
+        def: unit.computed?.def || unit.def || 0,
+        agi: unit.computed?.agi || unit.agi || 0,
       },
       isAlive: unit.isAlive,
       ref: unit as BattleTarget,
