@@ -1,38 +1,84 @@
 import enquirer from 'enquirer'
 import { DeathHandler } from '../npc/death'
+import { MayaHandler } from '../npc/maya'
 import { NPCHandler } from '../npc/NPCHandler'
 import { CommandFunction } from '../types'
 
 // 핸들러 등록 관리
 const npcHandlers: Record<string, NPCHandler> = {
   death: DeathHandler,
+  maya_tech: MayaHandler,
 }
 
 export const talkCommand: CommandFunction = async (player, args, context) => {
-  const targetName = args[0]
   const tile = context.map.getTile(player.pos.x, player.pos.y)
-  const npcId = (tile?.npcIds || []).find((id) => context.npcs.getNPC(id)?.name === targetName)
+  const npcIds = tile?.npcIds || []
 
-  if (!npcId) {
-    console.log(`\n[알림] 이곳에 '${targetName}'은(는) 없습니다.`)
+  const availableNpcs = npcIds
+    .map((id) => context.npcs.getNPC(id))
+    .filter((npc) => !!npc)
+    .filter((npc) => npc.isAlive)
+
+  if (availableNpcs.length < 1) {
+    console.log(`\n[알림] 이곳에는 대화할 상대가 없습니다.`)
     return false
   }
 
-  const npc = context.npcs.getNPC(npcId)!
+  let selectedNpcId: string | undefined
+
+  // 1. 인자(args)가 있는 경우: 이름으로 직접 찾기
+  if (args.length > 0) {
+    const targetName = args[0]
+    selectedNpcId = npcIds.find((id) => context.npcs.getNPC(id)?.name === targetName)
+
+    if (!selectedNpcId) {
+      console.log(`\n[알림] 이곳에 '${targetName}'은(는) 없습니다.`)
+      return false
+    }
+  }
+  // 2. 인자가 없는 경우: Enquirer 선택창 띄우기
+  else {
+    const { npcId } = (await enquirer.prompt({
+      type: 'select',
+      name: 'npcId',
+      message: '누구와 대화하시겠습니까?',
+      choices: [
+        ...availableNpcs.map((npc) => ({
+          name: npc.id,
+          message: npc.name,
+        })),
+        { name: 'cancel', message: '🔙 돌아가기' },
+      ],
+      format(value) {
+        if (value === 'cancel') return '취소'
+        const target = availableNpcs.find((n) => n.id === value)
+        return target ? target.name : value
+      },
+    })) as { npcId: string }
+
+    if (npcId === 'cancel') return false
+    selectedNpcId = npcId
+  }
+
+  const npc = context.npcs.getNPC(selectedNpcId)!
   const handler = npcHandlers[npc.id]
 
   if (!handler) {
-    console.log(`\n[${npc.name}]: "할 말이 없군."`)
+    console.log(`\n[${npc.name}]: "..."`)
     return false
   }
 
-  const menuChoices = handler.getChoices()
+  const menuChoices = handler.getChoices(context)
   const choiceMap = new Map(menuChoices.map((c) => [c.name, c.message]))
 
-  // 대화 시작 메시지 (루프 밖에서 한 번만 출력)
-  console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  console.log(` 💬 [${npc.name}]: "${npc.description}"`)
-  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+
+  const dialect = context.npcs.getDialectType(npc.factionHostility)
+
+  // 2. 대화 인터페이스 출력
+  console.log(`\n──────────────────────────────────────────────────`);
+  console.log(`  👤 [${npc.name}] - ${npc.description}`);
+  console.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`);
+  console.log(`──────────────────────────────────────────────────`);
 
   try {
     // 유저가 'exit'를 선택할 때까지 무한 반복
@@ -50,11 +96,11 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
 
       // 1. 종료 조건 체크
       if (action === 'exit') {
-        console.log(`\n[${npc.name}]: "그럼 이만."`)
+        console.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
         break // 루프 탈출 -> 대화 종료
       }
 
-      await handler.handle(action, player, context)
+      await handler.handle(action, player, npc, context)
     }
   } catch (e) {
   } finally {

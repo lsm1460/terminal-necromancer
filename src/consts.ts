@@ -54,3 +54,5 @@ export const SKILL_GROUPS: Record<SkillId, string[]> = {
   [SKILL_IDS.CORPSE_EXPLOSION]: ['시체폭발', 'explosion', 'ex', '시폭', '터뜨리기'],
   [SKILL_IDS.SOUL_HARVEST]: ['영혼수확', 'harvest', '영흡', '정수흡수'],
 }
+
+export const HOSTILITY_LIMIT = 100

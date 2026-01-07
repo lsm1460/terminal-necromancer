@@ -1,19 +1,30 @@
 {
   "player": {
-    "x": 0,
+    "x": 2,
     "y": 1,
     "_maxHp": 100,
-    "hp": 85,
+    "hp": 63,
     "_maxMp": 100,
-    "mp": 70,
+    "mp": 50,
     "atk": 10,
     "def": 5,
     "agi": 5,
-    "gold": 232,
-    "exp": 650,
+    "gold": 237,
+    "exp": 690,
     "level": 3,
     "inventoryMax": 3,
-    "inventory": [],
+    "inventory": [
+      {
+        "id": "mana_potion_small",
+        "label": "작은 마나 포션",
+        "type": "consumable",
+        "hpHeal": 20,
+        "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
+        "quantity": 2,
+        "x": 0,
+        "y": 1
+      }
+    ],
     "equipped": {
       "weapon": {
         "id": "iron_sword_a289733182c3fd1f",
@@ -41,24 +52,7 @@
       "RAISE_SKELETON",
       "CORPSE_EXPLOSION"
     ],
-    "skeleton": [
-      {
-        "id": "skeleton_1767763335792",
-        "name": "스켈레톤(토끼)",
-        "maxHp": 5,
-        "hp": 3,
-        "atk": 0,
-        "def": 1,
-        "agi": 1,
-        "exp": 0,
-        "description": "토끼의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "gold": 0,
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true
-      }
-    ],
+    "skeleton": [],
     "maxSkeleton": 3
   },
   "sceneId": "B1_Subway_Entrance",
@@ -83,7 +77,10 @@
         "relation": 0
       }
     },
-    "factionHostility": {}
+    "factionHostility": {
+      "resistance": 100
+    },
+    "factionContribution": {}
   },
   "drop": null
 }

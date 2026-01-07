@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { NPC } from '../types'
+import { HOSTILITY_LIMIT } from '../consts'
 
 interface NPCState {
   hp: number
@@ -11,7 +12,8 @@ interface NPCState {
 export class NPCManager {
   private baseData: Record<string, any> // npc.json 원본
   private states: Record<string, NPCState> = {} // 가변 상태 데이터
-  private factionHostility: Record<string, boolean> = {} // 소속별 적대 여부
+  private factionHostility: Record<string, number> = {} // 소속별 적대도
+  private factionContribution: Record<string, number> = {} // 소속별 기여도
 
   constructor(path: string, savedData?: any) {
     // 1. 원본 JSON 로드
@@ -23,6 +25,7 @@ export class NPCManager {
     if (hasValidSaveData) {
       this.states = savedData.states || {}
       this.factionHostility = savedData.factionHostility || {}
+      this.factionContribution = savedData.factionContribution || {}
     } else {
       this.initializeStates()
     }
@@ -48,13 +51,15 @@ export class NPCManager {
 
     if (!base || !state) return null
     if (state.reborn) return null
-    
+
     return {
       id,
       ...base,
       ...state,
       // 현재 소속이 적대적이라면 강제로 role을 변경하거나 상태 반영 가능
-      isHostile: this.factionHostility[base.faction] || false,
+      isHostile: this.isHostile(id),
+      factionHostility: this.factionHostility[base.faction] || 0,
+      factionContribution: this.factionContribution[base.faction] || 0,
     }
   }
 
@@ -77,34 +82,6 @@ export class NPCManager {
     return null
   }
 
-  /**
-   * 데미지를 입히고, 해당 소속 전체를 적대 상태로 전환합니다.
-   */
-  takeDamage(id: string, damage: number): { isDead: boolean; faction: string } {
-    const npc = this.getNPC(id)
-    if (!npc || !npc.isAlive) return { isDead: false, faction: '' }
-
-    // 방어력 적용 (최소 1 데미지)
-    const actualDamage = Math.max(1, damage - (npc.def || 0))
-    this.states[id].hp -= actualDamage
-
-    console.log(`\n[전투] ${npc.name}에게 ${actualDamage}의 피해! (남은 HP: ${Math.max(0, this.states[id].hp)})`)
-
-    // 피격 시 해당 소속 전체가 적대적으로 변함
-    if (npc.faction) {
-      this.setFactionHostile(npc.faction)
-    }
-
-    // 사망 체크
-    if (this.states[id].hp <= 0) {
-      this.states[id].hp = 0
-      this.states[id].isAlive = false
-      return { isDead: true, faction: npc.faction }
-    }
-
-    return { isDead: false, faction: npc.faction }
-  }
-
   reborn(id: string) {
     if (!this.states[id]) {
       return
@@ -116,10 +93,32 @@ export class NPCManager {
   /**
    * 특정 소속을 적대적으로 설정
    */
-  private setFactionHostile(faction: string) {
-    if (!this.factionHostility[faction]) {
-      this.factionHostility[faction] = true
-      console.log(`\n⚠️  [경고] ${faction} 소속원들이 당신을 적대하기 시작했습니다!`)
+  public updateFactionContribution(faction: string, amount: number) {
+    this.factionContribution[faction] = (this.factionContribution[faction] || 0) + amount
+  }
+
+  public updateFactionHostility(faction: string, amount: number) {
+    // 1. 이미 최대 적대치(100)에 도달했다면 변화 없이 리턴
+    if (this.factionHostility[faction] >= HOSTILITY_LIMIT) {
+      return
+    }
+
+    // 2. 수치 가산
+    this.factionHostility[faction] = (this.factionHostility[faction] || 0) + amount
+
+    // 3. 100 도달 시 처리 (고정 및 알림)
+    if (this.factionHostility[faction] >= HOSTILITY_LIMIT) {
+      this.factionHostility[faction] = HOSTILITY_LIMIT
+      console.log(`\n🚫 [영구 적대] ${faction} 소속과는 이제 돌이킬 수 없는 강을 건넜습니다.`)
+      console.log(`🛡️ 해당 소속원들이 당신을 발견하는 즉시 공격할 것입니다!`)
+      return
+    }
+
+    // 4. 최초 적대 시 알림 (기존 로직 유지)
+    if (this.factionHostility[faction] > 0 && amount > 0) {
+      console.log(
+        `\n⚠️ [경고] ${faction} 소속과의 관계가 악화되었습니다. (현재: ${this.factionHostility[faction]}/${HOSTILITY_LIMIT})`
+      )
     }
   }
 
@@ -128,7 +127,13 @@ export class NPCManager {
    */
   isHostile(id: string): boolean {
     const npc = this.baseData[id]
-    return this.factionHostility[npc?.faction] || false
+    return this.factionHostility[npc?.faction] ? this.factionHostility[npc?.faction] >= HOSTILITY_LIMIT : false
+  }
+
+  getDialectType(hostility: number) {
+    if (hostility <= -20) return 'friendly'
+    if (hostility >= 40) return 'hostile'
+    return 'normal'
   }
 
   /**
@@ -138,6 +143,7 @@ export class NPCManager {
     return {
       states: this.states,
       factionHostility: this.factionHostility,
+      factionContribution: this.factionContribution,
     }
   }
 }

@@ -1,24 +1,33 @@
 import { Player } from '../core/Player'
-import { NPCHandler } from './NPCHandler'
+import { handleTalk, NPCHandler } from './NPCHandler'
 
 import enquirer from 'enquirer'
 import { SKILL_LIST, SkillUtils } from '../core/skill'
-import { SkillId } from '../types'
+import { NPC, SkillId } from '../types'
 
 export const DeathHandler: NPCHandler = {
   npcId: 'death',
   getChoices() {
     return [
+      { name: 'talk', message: '💬 잡담' },
       { name: 'levelUp', message: '✨ 레벨업' },
       { name: 'skillUnlock', message: '🔮 기술 전수' },
       { name: 'exit', message: '🏃 떠나기' },
     ]
   },
-  async handle(action, player, context) {
-    if (action === 'levelUp') {
-      handleLevelUp(player)
-    } else if (action === 'skillUnlock') {
-      await handleSkillMenu(player)
+  async handle(action, player, npc, context) {
+    switch (action) {
+      case 'talk':
+        handleTalk(npc)
+        break
+      case 'levelUp':
+        handleLevelUp(player)
+        break
+      case 'skillUnlock':
+        await handleSkillMenu(player)
+        break
+      default:
+        break
     }
   },
 }

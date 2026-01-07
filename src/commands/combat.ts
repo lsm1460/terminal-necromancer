@@ -1,5 +1,5 @@
 import { Battle } from '../core/Battle'
-import { BattleTarget, CommandFunction } from '../types'
+import { BattleTarget, CommandFunction, NPC } from '../types'
 
 export const attackCommand: CommandFunction = async (player, args, context) => {
   const { map, npcs } = context
@@ -35,7 +35,12 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
     }
   } else {
     // 이름이 없는 경우: 타일 내 모든 살아있는 몬스터를 적으로 간주
-    battleTargets = tile.monsters?.filter((m) => m.isAlive) || []
+    battleTargets = [
+      ...(tile.monsters?.filter((m) => m.isAlive) || []),
+      ...(tile.npcIds || [])
+        .map((id) => context.npcs.getNPC(id)) // ID로 NPC 객체 조회
+        .filter((npc): npc is NPC => !!npc && npc.isAlive),
+    ]
   }
 
   // 2. 공격 대상이 없으면 종료

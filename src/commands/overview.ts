@@ -1,5 +1,6 @@
+import { Player } from '../core/Player'
 import { printTileStatus } from '../statusPrinter'
-import { CommandFunction, Drop, ItemType, Monster } from '../types'
+import { BattleTarget, CommandFunction, Drop, ItemType, Monster } from '../types'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk, def, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
@@ -41,27 +42,29 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   if (player.minions.length === 0) {
     console.log('   (현재 소환된 미니언이 없습니다.)')
   } else {
-    player.minions.forEach((minion, index) => {
-      // HP 비율 계산 (체력 바 표시용)
-      const hpPercent = Math.max(0, (minion.hp / minion.maxHp) * 10)
-      const hpBar = '■'.repeat(Math.floor(hpPercent)) + '□'.repeat(10 - Math.floor(hpPercent))
-
-      // 상태에 따른 아이콘 (살아있음/죽음 등)
-      const statusIcon = minion.isAlive ? '🟢' : '🔴'
-
-      console.log(
-        `   ${index + 1}. [${minion.name}] ${statusIcon}\n` +
-          `      HP: ${hpBar} (${minion.hp}/${minion.maxHp})\n` +
-          `      ATK: ${minion.atk} | AGI: ${minion.agi}`
-      )
-    })
+    player.minions.forEach(printMinion)
   }
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
 
   return false
 }
 
-const lookAll = (items: Drop[], monsters?: Monster[]) => {
+const printMinion = (minion: BattleTarget, index?: number) => {
+  const hpPercent = Math.max(0, (minion.hp / minion.maxHp) * 10)
+  const hpBar = '■'.repeat(Math.floor(hpPercent)) + '□'.repeat(10 - Math.floor(hpPercent))
+  const statusIcon = minion.isAlive ? '🟢' : '🔴'
+
+  // index가 있으면 번호를 붙이고, 없으면 생략
+  const prefix = index !== undefined ? `${index + 1}. ` : ''
+
+  console.log(
+    `   ${prefix}[${minion.name}] ${statusIcon}\n` +
+      `      HP: ${hpBar} (${minion.hp}/${minion.maxHp})\n` +
+      `      ATK: ${minion.atk} | AGI: ${minion.agi}`
+  )
+}
+
+const lookAll = (player: Player, items: Drop[], monsters?: Monster[]) => {
   const entities: string[] = []
 
   if (monsters) {
@@ -78,6 +81,10 @@ const lookAll = (items: Drop[], monsters?: Monster[]) => {
     itemCounts[item.label] = (itemCounts[item.label] || 0) + qty
   })
 
+  player.minions.forEach((minion) => {
+    entities.push(minion.name)
+  })
+
   Object.entries(itemCounts).forEach(([label, qty]) => {
     if (qty > 1) entities.push(`${label} ${qty}개`)
     else entities.push(label)
@@ -87,7 +94,7 @@ const lookAll = (items: Drop[], monsters?: Monster[]) => {
   else console.log('주변에 몬스터나 아이템이 없습니다.')
 }
 
-const lookSomething = (name: string, items: Drop[], monsters?: Monster[]) => {
+const lookSomething = (name: string, items: Drop[], monsters?: BattleTarget[]) => {
   const filterName = name.toLowerCase()
 
   if (monsters) {
@@ -95,6 +102,9 @@ const lookSomething = (name: string, items: Drop[], monsters?: Monster[]) => {
 
     if (monster) {
       console.log(monster.description ?? monster.name)
+      if (monster.isMinion) {
+        printMinion(monster)
+      }
       return
     }
   }
@@ -110,15 +120,19 @@ const lookSomething = (name: string, items: Drop[], monsters?: Monster[]) => {
 
 // lookCommand에서는 args에 따라 호출
 export const lookCommand: CommandFunction = (player, args, context) => {
-  printTileStatus(player, context)
-
   const { x, y } = player.pos
   const { map, world } = context
   const tile = map.getTile(x, y)
 
   const items = world.getDropsAt(x, y)
 
-  if (!args[0]) lookAll(items, tile.monsters)
-  else lookSomething(args[0], [...items, ...player.inventory] as Drop[], tile.monsters)
+  if (!args[0]) {
+    printTileStatus(player, context)
+
+    lookAll(player, items, tile.monsters)
+  } else {
+    lookSomething(args[0], [...items, ...player.inventory] as Drop[], [...(tile.monsters || []), ...player.minions])
+  }
+
   return false
 }

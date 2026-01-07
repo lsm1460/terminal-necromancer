@@ -137,7 +137,16 @@ export interface GameContext {
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
-export type CommandFunction = (player: Player, args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
+export type CommandFunction = (
+  player: Player,
+  args: string[],
+  context: GameContext
+) => boolean | string | Promise<boolean | string>
+
+type NPCScripts = {
+  greeting: string
+  farewell: string
+}
 
 export interface NPC extends BattleTarget {
   id: string
@@ -145,7 +154,14 @@ export interface NPC extends BattleTarget {
   reborn: boolean
   lines: string[]
   isHostile: boolean
+  factionHostility: number
+  factionContribution: number
   noEscape?: boolean
+  scripts?: {
+    friendly: NPCScripts
+    normal: NPCScripts
+    hostile: NPCScripts
+  }
 }
 
 export const SKILL_IDS = {

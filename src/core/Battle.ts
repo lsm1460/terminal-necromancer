@@ -14,6 +14,7 @@ interface IUnit extends CombatStatus {
   id?: string
   name?: string
   hp: number
+  faction?: string
   maxHp?: number
   computed?: CombatStatus
   isAlive: boolean
@@ -230,11 +231,16 @@ export class Battle {
 
     const damage = Math.max(1, atk - Math.floor(def / 2))
     defender.hp -= damage
-
+    let hostility = 5
     console.log(`💥 ${attacker?.name || '플레이어'}의 공격! ${defender.name || '플레이어'}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, defender.hp)})`)
 
     if (defender.hp <= 0) {
+      hostility = 100
       this.handleUnitDeath(player, defender as BattleTarget, context)
+    }
+
+    if (defender.faction) {
+      context.npcs.updateFactionHostility(defender.faction, hostility)
     }
   }
 
