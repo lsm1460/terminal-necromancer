@@ -27,5 +27,12 @@
       { "itemId": "leather_armor", "chance": 0.6, "quantity": [1, 1] }
     ]
   },
+  "maya_shop": {
+    "gold": [0, 0],
+    "items": [
+      { "itemId": "potion_small", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "mana_potion_small", "chance": 1, "quantity": [1, 1] }
+    ]
+  },
   "none": { "gold": [0, 0], "items": [] }
 }

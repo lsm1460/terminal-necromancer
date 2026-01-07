@@ -46,7 +46,7 @@ async function handleSkillMenu(player: Player) {
   ]
 
   // 1. Enquirer Select 메뉴 생성
-  const response = await enquirer.prompt({
+  const { skillId } = await enquirer.prompt<{ skillId: SkillId | 'back' }>({
     type: 'select',
     name: 'skillId',
     message: '전수받을 기술을 선택하세요:',
@@ -58,17 +58,13 @@ async function handleSkillMenu(player: Player) {
     },
   })
 
-  const skillId = (response as { skillId: string }).skillId
-
   if (skillId === 'back') {
     return
   }
 
-  const _skillId = skillId as SkillId
-
-  if (SkillUtils.canLearn(player, _skillId)) {
-    player.unlockSkill(_skillId)
-    console.log(`\n💀 [습득] '${SKILL_LIST[_skillId].name}' 기술을 배웠습니다!`)
+  if (SkillUtils.canLearn(player, skillId)) {
+    player.unlockSkill(skillId)
+    console.log(`\n💀 [습득] '${SKILL_LIST[skillId].name}' 기술을 배웠습니다!`)
   } else {
     console.log(`\n[실패] 요구 조건을 충족하지 못했습니다.`)
   }

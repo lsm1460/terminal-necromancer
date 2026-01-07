@@ -69,6 +69,8 @@ type BaseItem = {
   label: string
   description: string
   quantity?: number
+  price: number
+  sellPrice: number
 }
 
 // 일반 아이템 (퀘스트용, 재료 등)

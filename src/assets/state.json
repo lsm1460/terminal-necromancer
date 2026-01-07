@@ -9,7 +9,7 @@
     "atk": 10,
     "def": 5,
     "agi": 5,
-    "gold": 237,
+    "gold": null,
     "exp": 690,
     "level": 3,
     "inventoryMax": 3,
@@ -20,9 +20,19 @@
         "type": "consumable",
         "hpHeal": 20,
         "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
-        "quantity": 2,
+        "quantity": 3,
         "x": 0,
         "y": 1
+      },
+      {
+        "id": "potion_small",
+        "label": "작은 포션",
+        "type": "consumable",
+        "hpHeal": 20,
+        "price": 50,
+        "sellPrice": 15,
+        "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
+        "quantity": 2
       }
     ],
     "equipped": {
