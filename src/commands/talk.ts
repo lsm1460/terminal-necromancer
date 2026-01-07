@@ -1,14 +1,6 @@
 import enquirer from 'enquirer'
-import { DeathHandler } from '../npc/death'
-import { MayaHandler } from '../npc/maya'
-import { NPCHandler } from '../npc/NPCHandler'
+import npcHandlers from '../npc'
 import { CommandFunction } from '../types'
-
-// 핸들러 등록 관리
-const npcHandlers: Record<string, NPCHandler> = {
-  death: DeathHandler,
-  maya_tech: MayaHandler,
-}
 
 export const talkCommand: CommandFunction = async (player, args, context) => {
   const tile = context.map.getTile(player.pos.x, player.pos.y)
@@ -45,7 +37,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
       choices: [
         ...availableNpcs.map((npc) => ({
           name: npc.id,
-          message: npc.name,
+          message: `👤 ${npc.name}`,
         })),
         { name: 'cancel', message: '🔙 돌아가기' },
       ],
@@ -68,17 +60,16 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     return false
   }
 
-  const menuChoices = handler.getChoices(context)
+  const menuChoices = [...handler.getChoices(npc, context), { name: 'exit', message: '🏃 떠나기' }]
   const choiceMap = new Map(menuChoices.map((c) => [c.name, c.message]))
-
 
   const dialect = context.npcs.getDialectType(npc.factionHostility)
 
   // 2. 대화 인터페이스 출력
-  console.log(`\n──────────────────────────────────────────────────`);
-  console.log(`  👤 [${npc.name}] - ${npc.description}`);
-  console.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`);
-  console.log(`──────────────────────────────────────────────────`);
+  console.log(`\n──────────────────────────────────────────────────`)
+  console.log(`  👤 [${npc.name}] - ${npc.description}`)
+  console.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`)
+  console.log(`──────────────────────────────────────────────────`)
 
   try {
     // 유저가 'exit'를 선택할 때까지 무한 반복

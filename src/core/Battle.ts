@@ -228,10 +228,10 @@ export class Battle {
   private static applyDamage(defender: IUnit, player: Player, context: GameContext, attacker?: BattleTarget) {
     const atk = attacker?.atk || player.atk
     const def = defender.def || 0
+    let hostility = 5
 
     const damage = Math.max(1, atk - Math.floor(def / 2))
     defender.hp -= damage
-    let hostility = 5
     console.log(`💥 ${attacker?.name || '플레이어'}의 공격! ${defender.name || '플레이어'}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, defender.hp)})`)
 
     if (defender.hp <= 0) {
@@ -267,64 +267,5 @@ export class Battle {
     } else {
       console.log(`\n💀 전투에서 패배했습니다...`)
     }
-  }
-
-  static executeGroupCounter(
-    player: Player,
-    context: GameContext,
-    isPrimaryDead?: boolean,
-    primaryTarget?: BattleTarget
-  ): boolean {
-    const tile = context.map.getTile(player.pos.x, player.pos.y)
-    const enemies: BattleTarget[] = []
-
-    if (!isPrimaryDead && primaryTarget) enemies.push(primaryTarget)
-    ;(tile?.npcIds || []).forEach((id: string) => {
-      const npc = context.npcs.getNPC(id)
-      if (npc && npc.isAlive && context.npcs.isHostile(id) && npc.id !== primaryTarget?.id) {
-        enemies.push(npc)
-      }
-    })
-
-    if (enemies.length === 0) return false
-
-    if (enemies.length > 1) {
-      console.log(`📢 주변의 적 ${enemies.length}명이 일제히 공격합니다!`)
-    }
-
-    for (const enemy of enemies) {
-      const counterDmg = this.calculateDamage(player, enemy)
-
-      // 소환수가 대신 맞기
-      if (player.skeleton.length > 0) {
-        const minion = player.skeleton[0]
-        const minionFinalDmg = Math.max(enemy.atk - minion.def, 1)
-        minion.hp -= minionFinalDmg
-
-        console.log(`🛡️  [방어] ${minion.name}(이)가 대신 공격을 막았습니다! (-${minionFinalDmg} HP)`)
-
-        if (minion.hp <= 0) {
-          console.log(`💀 [파괴] ${minion.name}(이)가 산산조각 났습니다.`)
-          player.skeleton.shift()
-        }
-      } else {
-        console.log(`🏹 ${enemy.name}의 공격! ${counterDmg} 피해`)
-        const isPlayerDead = player.damage(counterDmg)
-
-        if (isPlayerDead) {
-          return true
-        }
-      }
-    }
-
-    if (player.hp > 0) {
-      console.log(`🩸 플레이어 남은 HP: ${player.hp}`)
-    }
-
-    return false
-  }
-
-  static calculateDamage(player: Player, target: BattleTarget) {
-    return Math.max(target.atk - player.computed.def, 1)
   }
 }

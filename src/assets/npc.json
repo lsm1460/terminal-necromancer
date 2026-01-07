@@ -11,6 +11,7 @@
     "exp": 100,
     "isAlive": true,
     "reborn": false,
+    "noEscape": true,
     "lines": ["복수를 시작할 준비가 되었나?"],
     "scripts": {
       "friendly": {
@@ -43,15 +44,15 @@
     "exp": 50,
     "isAlive": true,
     "reborn": false,
-    "lines": ["고철은 좀 가져왔어?"],
+    "lines": ["뭐라도 좀 가져왔어?"],
     "scripts": {
       "friendly": {
         "greeting": "어, 왔어? 너 주려고 좋은 부품 좀 빼놨지.",
-        "farewell": "나중에 고철 많이 주워와! 특별히 잘 봐줄게."
+        "farewell": "나중에 많이 주워와! 특별히 잘 봐줄게."
       },
       "normal": {
         "greeting": "필요한 게 있으면 꺼내봐. 공짜는 없어.",
-        "farewell": "장비 탓 하지 말고 몸이나 사려."
+        "farewell": "장비 탓 하지 말고."
       },
       "hostile": {
         "greeting": "내 물건에 손대지 마. 손목을 날려버릴 테니까.",
@@ -59,7 +60,7 @@
       }
     },
     "deathLine": "마야가 공구를 떨어뜨리며 숨을 거둡니다.",
-    "description": "고철을 구입하여 무기로 탈바꿈 시키는 장인",
+    "description": "물건을 구입하여 무기로 탈바꿈 시키는 장인",
     "gold": 300,
     "dropTableId": "resistance"
   },

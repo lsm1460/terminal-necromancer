@@ -68,7 +68,6 @@ export class EventSystem {
 
       case 'npc': {
         // 적대 세력은 선공한다
-        Battle.executeGroupCounter(player, context)
         const { map, npcs } = context
         const tile = map.getTile(player.pos.x, player.pos.y)
 

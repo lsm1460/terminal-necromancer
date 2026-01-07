@@ -11,7 +11,7 @@
       [
         { "theme": "tiled_floor", "event": "monster-group-level-1", "spawn_limit": 2, "dialogue": "바닥에 핏자국이 선연합니다." },
         { "theme": "tiled_floor", "event": "npc", "npcIds": ["death"], "dialogue": "이 터미널의 관리자실" },
-        { "theme": "tiled_floor", "event": "npc", "npcIds": ["maya_tech"], "dialogue": "누군가 고철을 만지고 있습니다." }
+        { "theme": "tiled_floor", "event": "npc", "npcIds": ["maya_tech", "kane_leader"], "dialogue": "누군가 고철을 만지고 있습니다." }
       ],
       [
         null,
@@ -30,7 +30,7 @@
         null
       ],
       [
-        { "theme": "platform", "event": "npc", "npcIds": ["kane_leader"], "dialogue": "레지스탕스의 리더, 케인이 엄숙하게 서 있습니다." },
+        { "theme": "platform", "event": "none", "dialogue": "레지스탕스 본부" },
         { "theme": "platform", "event": "none", "dialogue": "부서진 비석이 있습니다. 영혼을 해방하시겠습니까?" },
         { "theme": "platform", "event": "none", "dialogue": "망령들의 무리가 승강장을 점거하고 있습니다!" }
       ]

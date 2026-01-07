@@ -3,7 +3,7 @@
     "x": 2,
     "y": 1,
     "_maxHp": 100,
-    "hp": 63,
+    "hp": 100,
     "_maxMp": 100,
     "mp": 50,
     "atk": 10,
@@ -78,7 +78,7 @@
       }
     },
     "factionHostility": {
-      "resistance": 100
+      "resistance": 0
     },
     "factionContribution": {}
   },

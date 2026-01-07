@@ -1,10 +1,9 @@
-import { Player } from '../core/Player';
-import { GameContext, NPC } from '../types';
+import { Player } from '../core/Player'
+import { GameContext, NPC } from '../types'
 
 export interface NPCHandler {
-  npcId: string;
-  getChoices(context: GameContext): { name: string; message: string }[];
-  handle(action: string, player: Player, npc: NPC, context: GameContext): Promise<void>;
+  getChoices(npc: NPC, context: GameContext): { name: string; message: string }[]
+  handle(action: string, player: Player, npc: NPC, context: GameContext): Promise<void>
 }
 
 export async function handleTalk(npc: NPC) {

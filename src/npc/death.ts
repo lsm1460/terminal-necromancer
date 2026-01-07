@@ -1,18 +1,15 @@
+import enquirer from 'enquirer'
 import { Player } from '../core/Player'
+import { SKILL_LIST, SkillUtils } from '../core/skill'
+import { SkillId } from '../types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
-import enquirer from 'enquirer'
-import { SKILL_LIST, SkillUtils } from '../core/skill'
-import { NPC, SkillId } from '../types'
-
-export const DeathHandler: NPCHandler = {
-  npcId: 'death',
+const DeathHandler: NPCHandler = {
   getChoices() {
     return [
       { name: 'talk', message: '💬 잡담' },
       { name: 'levelUp', message: '✨ 레벨업' },
       { name: 'skillUnlock', message: '🔮 기술 전수' },
-      { name: 'exit', message: '🏃 떠나기' },
     ]
   },
   async handle(action, player, npc, context) {
@@ -88,3 +85,5 @@ function handleLevelUp(player: Player) {
     console.log(`\n[실패] 경험치가 부족합니다. (현재: ${player.exp}/${nextExp})`)
   }
 }
+
+export default DeathHandler
