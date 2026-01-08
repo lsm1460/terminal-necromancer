@@ -16,7 +16,7 @@ import { GameContext } from './types'
 // ---------- 데이터 로드 ----------
 const assets = path.join(__dirname, 'assets')
 const mapPath = path.join(assets, 'map.json')
-const monsterData = JSON.parse(fs.readFileSync(path.join(assets, 'monster.json'), 'utf-8'))
+const monsterPath = path.join(assets, 'monster.json')
 const statePath = path.join(assets, 'state.json')
 const levelPath = path.join(assets, 'level.json')
 const itemPath = path.join(assets, 'item.json')
@@ -27,18 +27,16 @@ const eventPath = path.join(assets, 'events.json')
 // ---------- 초기화 ----------
 const save = new SaveSystem(statePath)
 const drop = new DropSystem(itemPath, dropPath)
-const monster = new MonsterFactory(monsterData)
+const monster = new MonsterFactory(monsterPath)
 const saved = save.load()
-const player = new Player(levelPath, saved.player)
-const map = new MapManager(mapPath, saved.sceneId)
-const npcs = new NPCManager(npcPath, saved.npcs)
+const player = new Player(levelPath, saved?.player)
+const map = new MapManager(mapPath, saved?.sceneId)
+const npcs = new NPCManager(npcPath, saved?.npcs)
 const world = new World(map)
-const events = new EventSystem(eventPath, monster, npcs)
+const events = new EventSystem(eventPath, monster, saved?.completedEvents)
 
-if (saved.drops?.length) {
-  for (const drop of saved.drops) {
-    world.addLootBag(drop)
-  }
+if (saved?.drop) {
+  world.addLootBag(saved.drop)
 }
 
 const context = { map, world, events, npcs, drop, save }

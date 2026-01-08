@@ -1,18 +1,18 @@
+import { MAP_IDS } from '../consts'
 import { Player } from '../core/Player'
+import { printTileStatus } from '../statusPrinter'
 import { GameContext } from '../types'
 import { NPCHandler } from './NPCHandler'
+import enquirer from 'enquirer'
 
 const ElevatorHandler: NPCHandler = {
-  getChoices(npc, context) {
-    return [
-      { name: 'elevate', message: '💬 층 간 이동' },
-    ]
+  getChoices() {
+    return [{ name: 'elevate', message: '💬 층 간 이동' }]
   },
   async handle(action, player, npc, context) {
     switch (action) {
       case 'elevate':
-        await handleElevate(player, context)
-        break
+        return await handleElevate(player, context)
       default:
         break
     }
@@ -20,7 +20,76 @@ const ElevatorHandler: NPCHandler = {
 }
 
 async function handleElevate(player: Player, context: GameContext) {
+  const { map } = context
 
+  const currentSceneId = context.map.currentSceneId
+
+  const choices: {
+    name: string
+    message: string
+  }[] = Object.entries(MAP_IDS)
+    .filter(([_, value]) => value !== currentSceneId) // 현재 있는 층은 목록에서 제외
+    .map(([_, value]) => {
+      const mapData = map.getMap(value)
+
+      return {
+        name: value,
+        message: `🛗 ${mapData.displayName}`,
+      }
+    })
+
+  choices.push({ name: 'cancel', message: '🔙 그대로 머물기' })
+
+  const { sceneId } = await enquirer.prompt<{ sceneId: string }>({
+    type: 'select',
+    name: 'sceneId',
+    message: '어느 층으로 이동하시겠습니까?',
+    choices: choices,
+    format(value) {
+      const selected = choices.find((c) => c.name === value)
+      return selected ? selected.message : value
+    },
+  })
+
+  if (sceneId === 'cancel') {
+    return true
+  }
+
+  // (또는 현재 층이 b1이 아닌 상태에서 다른 곳으로 떠나려 할 때)
+  let enterMessage = ''
+  if (currentSceneId !== MAP_IDS.B1_SUBWAY) {
+    enterMessage = '⚠️ 이 구역을 벗어나면 지형이 변합니다. 정말 이동하시겠습니까?'
+  } else {
+    enterMessage = '⚠️ 안전구역을 벗어납니다. 정말 이동하시겠습니까?'
+  }
+
+  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
+    type: 'confirm',
+    name: 'proceed', // 반환 객체의 키값이 됩니다.
+    message: enterMessage,
+    initial: false, // 기본 선택값 (default 대신 initial 사용)
+  })
+
+  if (!proceed) {
+    console.log('❌ 이동을 취소했습니다.')
+    return true
+  }
+
+  const targetMapData = map.getMap(sceneId)
+
+  if (targetMapData) {
+    console.log(`\n⚙️ 엘리베이터가 작동합니다. 웅성거리는 기계음과 함께 층이 바뀝니다...`)
+
+    // 맵 시스템의 changeScene을 호출하여 플레이어 이동 및 맵 데이터 갱신
+    await context.map.changeScene(sceneId, player)
+
+    console.log(`✨ [도착] ${targetMapData.displayName}에 도착했습니다.\n`)
+
+    printTileStatus(player, context)
+    return true
+  } else {
+    console.error(`\n❌ 오류: ${sceneId} 데이터를 찾을 수 없습니다.`)
+  }
 }
 
 export default ElevatorHandler

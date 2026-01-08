@@ -2,6 +2,7 @@
   "B1_Subway_Entrance": {
     "displayName": "지하철 입구 - B1",
     "start_pos": { "x": 0, "y": 0 },
+    "move_pos": { "x": 1, "y": 2 },
     "tiles": [
       [
         { "theme": "start", "event": "none", "dialogue": "시작 공간입니다." },
@@ -25,13 +26,13 @@
     "start_pos": { "x": 0, "y": 0 },
     "tiles": [
       [
-        { "theme": "iron_gate", "dialogue": "다시 위층으로 올라가는 문입니다." },
+        { "theme": "iron_gate", "event": "npc", "npcIds": ["elevator"], "dialogue": "다시 위층으로 올라가는 문입니다." },
         { "theme": "platform", "event": "none", "dialogue": "넓은 승강장이 나타납니다." },
         null
       ],
       [
         { "theme": "platform", "event": "none", "dialogue": "레지스탕스 본부" },
-        { "theme": "platform", "event": "none", "dialogue": "부서진 비석이 있습니다. 영혼을 해방하시겠습니까?" },
+        { "theme": "platform", "event": "boss", "dialogue": "부서진 비석이 있습니다. 영혼을 해방하시겠습니까?" },
         { "theme": "platform", "event": "none", "dialogue": "망령들의 무리가 승강장을 점거하고 있습니다!" }
       ]
     ]

@@ -1,7 +1,7 @@
 {
   "player": {
-    "x": 1,
-    "y": 2,
+    "x": 0,
+    "y": 0,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
@@ -65,7 +65,7 @@
     "skeleton": [],
     "maxSkeleton": 3
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -100,5 +100,6 @@
       "resistance": 10
     }
   },
-  "drop": null
+  "drop": null,
+  "completedEvents": []
 }

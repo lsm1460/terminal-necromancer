@@ -1,14 +1,18 @@
 import fs from 'fs'
 import { Tile } from '../types'
 import { Player } from './Player'
+import _ from 'lodash'
+import { MAP_IDS } from '../consts'
 
 interface SceneData {
   displayName: string
   start_pos: { x: number; y: number }
+  move_pos?: { x: number; y: number }
   tiles: Tile[][]
 }
 
 export class MapManager {
+  private originMapData: Record<string, SceneData>
   private mapData: Record<string, SceneData>
   public currentSceneId: string
 
@@ -16,50 +20,42 @@ export class MapManager {
     // 1. map.json 데이터 로드
     const data = fs.readFileSync(path, 'utf-8')
     this.mapData = JSON.parse(data)
-    
+    this.originMapData = JSON.parse(data)
+
     // 2. 초기 씬 ID 설정
     if (initialSceneId && this.mapData[initialSceneId]) {
       // 인자로 전달받은 ID가 있고, 실제 데이터에도 존재할 때
-      this.currentSceneId = initialSceneId;
+      this.currentSceneId = initialSceneId
     } else {
       // 인자가 없거나 잘못된 경우, JSON의 첫 번째 키를 기본값으로 설정
-      const sceneKeys = Object.keys(this.mapData);
-      
+      const sceneKeys = Object.keys(this.mapData)
+
       if (sceneKeys.length === 0) {
-        throw new Error("map.json 파일에 설정된 씬 데이터가 없습니다.");
+        throw new Error('map.json 파일에 설정된 씬 데이터가 없습니다.')
       }
-      
-      this.currentSceneId = sceneKeys[0];
+
+      this.currentSceneId = sceneKeys[0]
     }
   }
 
-  /**
-   * 현재 활성화된 씬 데이터를 반환
-   */
   get currentScene(): SceneData {
     return this.mapData[this.currentSceneId]
   }
 
-  /**
-   * 특정 좌표의 타일 정보 가져오기
-   */
   getTile(x: number, y: number): Tile {
     return this.currentScene.tiles?.[y]?.[x]
   }
 
-  /**
-   * 해당 좌표로 이동 가능한지 확인
-   */
   canMove(x: number, y: number): boolean {
-
     const tile = this.getTile(x, y)
 
     return !!tile
   }
 
-  /**
-   * 장면 전환 (Portal 이벤트 발생 시 호출)
-   */
+  getMap(sceneId: string) {
+    return this.mapData[sceneId]
+  }
+
   changeScene(targetSceneId: string, player: Player) {
     if (!this.mapData[targetSceneId]) {
       console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
@@ -69,12 +65,84 @@ export class MapManager {
     this.currentSceneId = targetSceneId
     const newScene = this.currentScene
 
+    if (targetSceneId !== MAP_IDS.B1_SUBWAY) {
+      this.shuffleTiles(targetSceneId)
+    }
+
     // 플레이어 위치를 새 맵의 시작 지점으로 이동
-    player.x = newScene.start_pos.x
-    player.y = newScene.start_pos.y
+    const { x, y } = newScene.move_pos || newScene.start_pos
+    player.x = x
+    player.y = y
 
     console.log(`\n------------------------------------------`)
     console.log(`📍 새로운 지역 진입: ${newScene.displayName}`)
     console.log(`------------------------------------------`)
+  }
+
+  private shuffleTiles(sceneId: string) {
+    const scene = this.originMapData[sceneId]
+    const { width, height } = { width: scene.tiles[0].length, height: scene.tiles.length }
+    const start = scene.start_pos
+
+    // 1. 타일 데이터 추출 및 분류
+    let allTiles = _.compact(_.flatten(scene.tiles)) // undefined 제거 및 1차원화
+
+    // 시작 타일과 보스 타일 식별 및 리스트에서 제거
+    const startTile = scene.tiles[start.y][start.x]
+    const bossTile = _.remove(allTiles, (t) => t.event === 'boss')[0]
+    _.remove(allTiles, (t) => t === startTile)
+
+    // 나머지 타일 셔플
+    allTiles = _.shuffle(allTiles)
+
+    // 2. 새로운 그리드 초기화
+    const newGrid: (Tile | undefined)[][] = Array.from({ length: height }, () => Array(width).fill(undefined))
+    newGrid[start.y][start.x] = startTile
+
+    // 인접 후보지 관리용 셋
+    const candidates: string[] = []
+    const getNeighbors = (x: number, y: number) =>
+      [
+        { x: x + 1, y },
+        { x: x - 1, y },
+        { x, y: y + 1 },
+        { x, y: y - 1 },
+      ].filter((p) => p.x >= 0 && p.x < width && p.y >= 0 && p.y < height)
+
+    const updateCandidates = (x: number, y: number) => {
+      getNeighbors(x, y).forEach((p) => {
+        const key = `${p.x},${p.y}`
+        if (!newGrid[p.y][p.x] && !candidates.includes(key)) {
+          candidates.push(key)
+        }
+      })
+    }
+
+    updateCandidates(start.x, start.y)
+
+    // 3. 확산 배치 로직
+    const minBossDist = Math.floor((width + height) / 2)
+    let bossPlaced = false
+
+    while ((allTiles.length > 0 || !bossPlaced) && candidates.length > 0) {
+      // lodash를 사용하여 랜덤하게 후보지 하나 선택 및 제거
+      const targetKey = _.pullAt(candidates, _.random(0, candidates.length - 1))[0]
+      const [cx, cy] = targetKey.split(',').map(Number)
+      const dist = Math.abs(cx - start.x) + Math.abs(cy - start.y)
+
+      // 보스 배치 조건 (거리가 멀고 아직 안 놨을 때)
+      if (!bossPlaced && dist >= minBossDist) {
+        newGrid[cy][cx] = bossTile
+        bossPlaced = true
+      } else if (allTiles.length > 0) {
+        newGrid[cy][cx] = allTiles.pop()
+      } else {
+        continue // 보스 거리가 안맞고 남은 타일도 없으면 다음 루프로
+      }
+
+      updateCandidates(cx, cy)
+    }
+
+    this.mapData[sceneId].tiles = newGrid as Tile[][]
   }
 }

@@ -3,7 +3,7 @@ import { GameContext, NPC } from '../types'
 
 export interface NPCHandler {
   getChoices(npc: NPC, context: GameContext): { name: string; message: string }[]
-  handle(action: string, player: Player, npc: NPC, context: GameContext): Promise<void>
+  handle(action: string, player: Player, npc: NPC, context: GameContext): Promise<boolean | void>
 }
 
 export async function handleTalk(npc: NPC) {

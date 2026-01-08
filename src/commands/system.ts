@@ -11,6 +11,7 @@ export const exitCommand: CommandFunction = (player, args, context) => {
     sceneId: context.map.currentSceneId,
     npcs: context.npcs.getSaveData(),
     drop: context.world.lootBags,
+    completedEvents: context.events.getSaveData(),
   })
 
   console.log('✅ 저장 완료!')

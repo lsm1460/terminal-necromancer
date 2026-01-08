@@ -1,5 +1,5 @@
 import { Player } from './core/Player'
-import { Corpse, GameContext, NPC } from './types'
+import { GameContext, NPC } from './types'
 
 export function printTileStatus(player: Player, { map, npcs, world }: GameContext) {
   const { x, y } = player.pos

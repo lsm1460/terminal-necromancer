@@ -94,6 +94,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
     sceneId: context.map.currentSceneId,
     npcs: context.npcs.getSaveData(),
     drop: context.world.lootBags,
+    completedEvents: context.events.getSaveData(),
   })
 
   return false

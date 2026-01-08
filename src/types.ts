@@ -4,6 +4,7 @@ import { Player } from './core/Player'
 import { World } from './core/World'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
+import { SaveSystem } from './systems/SaveSystem'
 
 export type BattleTarget = {
   id: string
@@ -133,7 +134,7 @@ export interface GameContext {
   world: World
   events: EventSystem
   drop: DropSystem
-  save: any
+  save: SaveSystem
   rl: any
 
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
@@ -183,4 +184,17 @@ export interface Skill {
   cost: number
   requiredLevel: number
   execute: (player: Player, context: GameContext, args: string[]) => void
+}
+
+export interface NPCState {
+  hp: number
+  isAlive: boolean
+  reborn: boolean
+  relation: number // 호감도 등 확장용
+}
+
+export type GameEvent = {
+  id: string
+  name: string
+  description: string
 }

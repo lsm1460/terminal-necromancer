@@ -56,3 +56,8 @@ export const SKILL_GROUPS: Record<SkillId, string[]> = {
 }
 
 export const HOSTILITY_LIMIT = 100
+
+export const MAP_IDS = {
+  B1_SUBWAY: 'B1_Subway_Entrance',
+  B2_TRANSIT: 'B2_Transit_Area',
+} as const

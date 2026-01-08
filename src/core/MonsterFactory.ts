@@ -1,11 +1,15 @@
 // core/MonsterFactory.ts
 import { Monster, Tile } from '../types'
 import { generateId } from '../utils'
+import fs from 'fs'
+import path from 'path'
 
 export class MonsterFactory {
-  constructor(
-    private data: Record<string, Monster[]>,
-  ) {}
+  private data: Record<string, Monster[]> = {}
+
+  constructor(monsterJsonPath: string) {
+    this.data = JSON.parse(fs.readFileSync(path.resolve(monsterJsonPath), 'utf-8'))
+  }
 
   spawn(tile: Tile): Monster | null {
     if (!tile.event.startsWith('monster')) return null
@@ -37,7 +41,7 @@ export class MonsterFactory {
 
     if (!selected) return null
 
-    const baseMonster = { 
+    const baseMonster = {
       ...selected,
       maxHp: selected.hp,
       isAlive: true,

@@ -1,13 +1,6 @@
 import fs from 'fs'
-import { NPC } from '../types'
 import { HOSTILITY_LIMIT } from '../consts'
-
-interface NPCState {
-  hp: number
-  isAlive: boolean
-  reborn: boolean
-  relation: number // 호감도 등 확장용
-}
+import { NPC, NPCState } from '../types'
 
 export class NPCManager {
   private baseData: Record<string, any> // npc.json 원본

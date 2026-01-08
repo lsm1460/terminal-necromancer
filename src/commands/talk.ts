@@ -72,9 +72,11 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
   console.log(`──────────────────────────────────────────────────`)
 
   try {
+    const printFarewell = () => console.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
+    
     // 유저가 'exit'를 선택할 때까지 무한 반복
     while (true) {
-      const response = await enquirer.prompt({
+      const { action } = await enquirer.prompt<{ action: string }>({
         type: 'select',
         name: 'action',
         message: '무엇을 하시겠습니까?',
@@ -83,15 +85,17 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
         result: (val) => val,
       })
 
-      const { action } = response as { action: string }
-
       // 1. 종료 조건 체크
       if (action === 'exit') {
-        console.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
+        printFarewell()
         break // 루프 탈출 -> 대화 종료
       }
 
-      await handler.handle(action, player, npc, context)
+      const isEscape = await handler.handle(action, player, npc, context)
+
+      if (isEscape) {
+        break // 루프 탈출 -> 대화 종료
+      }
     }
   } catch (e) {
   } finally {

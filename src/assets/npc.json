@@ -77,6 +77,20 @@
     "isAlive": true,
     "reborn": false,
     "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "이동 하실 층계를 선택해주십시오.",
+        "farewell": "문이 닫힙니다. 안녕히 가십시오."
+      },
+      "normal": {
+        "greeting": "이동 하실 층계를 선택해주십시오.",
+        "farewell": "문이 닫힙니다. 안녕히 가십시오."
+      },
+      "hostile": {
+        "greeting": "이동 하실 층계를 선택해주십시오.",
+        "farewell": "문이 닫힙니다. 안녕히 가십시오."
+      }
+    },
     "deathLine": "...",
     "description": "이보다 더 지하가 있습니다",
     "gold": 30000,
