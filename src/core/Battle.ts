@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import { Player } from './Player'
-import { BattleTarget, Drop, GameContext } from '../types'
+import { BattleTarget, Drop, GameContext, NPC } from '../types'
 import { LootFactory } from './LootFactory'
 import { SkillManager } from './skill'
 
@@ -199,12 +199,16 @@ export class Battle {
     if (target.isMinion) {
       player.removeMinion(target.id)
     } else if (!target.isMinion && (target.exp || target.dropTableId)) {
-      const { gold, drops } = LootFactory.fromTarget(target, dropTable)
+      // npc
+      const npc = target as NPC
+      npc.faction && context.npcs.setFactionHostility(npc.faction, 100)
+      
+      const { gold, drops } = LootFactory.fromTarget(npc, dropTable)
 
-      player.gainExp(target.exp || 0)
+      player.gainExp(npc.exp || 0)
       player.gainGold(gold)
 
-      let logMessage = `✨ ${target.name} 처치! EXP +${target.exp || 0}`
+      let logMessage = `✨ ${npc.name} 처치! EXP +${npc.exp || 0}`
       if (gold > 0) logMessage += `, 골드 +${gold}`
       console.log(logMessage)
 
@@ -212,12 +216,12 @@ export class Battle {
       drops.forEach((d) => {
         world.addDrop({ ...d, x, y } as Drop)
         const qtyText = d.quantity !== undefined ? ` ${d.quantity}개` : ''
-        console.log(`📦 ${target.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
+        console.log(`📦 ${npc.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
       })
 
       // 시체 생성 (네크로맨서의 핵심!)
       world.addCorpse({
-        ...target,
+        ...npc,
         x,
         y,
       })
@@ -235,8 +239,9 @@ export class Battle {
     console.log(`💥 ${attacker?.name || '플레이어'}의 공격! ${defender.name || '플레이어'}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, defender.hp)})`)
 
     if (defender.hp <= 0) {
-      hostility = 100
       this.handleUnitDeath(player, defender as BattleTarget, context)
+      
+      return
     }
 
     if (defender.faction) {

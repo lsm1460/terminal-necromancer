@@ -122,6 +122,17 @@ export class NPCManager {
     }
   }
 
+  public setFactionHostility(faction: string, amount: number) {
+    if (this.factionHostility[faction] >= HOSTILITY_LIMIT) {
+      return
+    }
+
+    this.factionHostility[faction] = amount
+
+    // 로그 공유
+    this.updateFactionHostility(faction, 0)
+  }
+
   /**
    * 특정 NPC가 적대적인지 확인 (소속 기반)
    */

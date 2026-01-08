@@ -6,10 +6,18 @@ import { Player } from '../core/Player'
 import { GameContext, Monster, Tile } from '../types'
 
 export class EventSystem {
+  private completedEvents: Set<string> = new Set();
+
   constructor(
+    path: string, 
     private monsterFactory: MonsterFactory,
-    private npcManager: NPCManager
-  ) {}
+    private npcManager: NPCManager,
+    savedData?: string[]
+  ) {
+    if (savedData) {
+      this.completedEvents = new Set(savedData);
+    }
+  }
 
   async handle(tile: Tile, player: Player, context: GameContext) {
     const { npcs } = context
@@ -86,5 +94,22 @@ export class EventSystem {
         break
       }
     }
+  }
+
+  /** 이벤트 완료 처리 */
+  public completeEvent(eventId: string) {
+    if (!this.completedEvents.has(eventId)) {
+      this.completedEvents.add(eventId);
+    }
+  }
+
+  /** 이벤트 완료 여부 확인 */
+  public isCompleted(eventId: string): boolean {
+    return this.completedEvents.has(eventId);
+  }
+
+  /** 세이브를 위한 데이터 추출 */
+  public getSaveData(): string[] {
+    return Array.from(this.completedEvents);
   }
 }

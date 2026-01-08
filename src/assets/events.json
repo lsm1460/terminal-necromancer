@@ -1,0 +1,17 @@
+{
+  "FIRST_BOSS_CLEAR": {
+    "id": "FIRST_BOSS_CLEAR",
+    "name": "첫 번째 시련 극복",
+    "description": "숲의 지배자를 처치했습니다."
+  },
+  "GOLEM_UNLOCKED": {
+    "id": "GOLEM_UNLOCKED",
+    "name": "골렘 해금",
+    "description": "사신에게 골렘의 정수를 획득하시오."
+  },
+  "KNIGHT_UNLOCKED": {
+    "id": "KNIGHT_UNLOCKED",
+    "name": "기사와의 계약",
+    "description": "이 다크나이트는 이제부터 당신을 추종합니다."
+  }
+}

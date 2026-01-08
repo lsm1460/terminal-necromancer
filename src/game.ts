@@ -22,6 +22,7 @@ const levelPath = path.join(assets, 'level.json')
 const itemPath = path.join(assets, 'item.json')
 const dropPath = path.join(assets, 'drop.json')
 const npcPath = path.join(assets, 'npc.json')
+const eventPath = path.join(assets, 'events.json')
 
 // ---------- 초기화 ----------
 const save = new SaveSystem(statePath)
@@ -32,7 +33,7 @@ const player = new Player(levelPath, saved.player)
 const map = new MapManager(mapPath, saved.sceneId)
 const npcs = new NPCManager(npcPath, saved.npcs)
 const world = new World(map)
-const events = new EventSystem(monster, npcs)
+const events = new EventSystem(eventPath, monster, npcs)
 
 if (saved.drops?.length) {
   for (const drop of saved.drops) {

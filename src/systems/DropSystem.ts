@@ -106,4 +106,8 @@ export class DropSystem {
 
     return { gold, drops }
   }
+
+  getItem(_itemId: string) {
+    return this.items[_itemId] as Item
+  }
 }

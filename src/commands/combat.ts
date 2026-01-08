@@ -14,7 +14,7 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
     const targetNPC = npcs.findNPC(tile.npcIds || [], targetName)
     const targetMonster = tile.monsters?.find((m) => m.name === targetName && m.isAlive)
 
-    if (targetNPC && targetNPC.isAlive) {
+    if (targetNPC && targetNPC.isAlive && targetNPC.faction !== 'untouchable') {
       // 2. 공격받은 대상이 NPC인 경우
       if (targetNPC.faction) {
         // 해당 타일의 모든 NPC 중에서 같은 팩션을 가진 살아있는 NPC들을 모두 모집
@@ -39,7 +39,7 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
       ...(tile.monsters?.filter((m) => m.isAlive) || []),
       ...(tile.npcIds || [])
         .map((id) => context.npcs.getNPC(id)) // ID로 NPC 객체 조회
-        .filter((npc): npc is NPC => !!npc && npc.isAlive),
+        .filter((npc): npc is NPC => !!npc && npc.isAlive && npc.faction !== 'untouchable'),
     ]
   }
 

@@ -1,7 +1,7 @@
 {
   "player": {
-    "x": 2,
-    "y": 1,
+    "x": 1,
+    "y": 2,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
@@ -9,7 +9,7 @@
     "atk": 10,
     "def": 5,
     "agi": 5,
-    "gold": null,
+    "gold": 33,
     "exp": 690,
     "level": 3,
     "inventoryMax": 3,
@@ -20,7 +20,7 @@
         "type": "consumable",
         "hpHeal": 20,
         "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
-        "quantity": 3,
+        "quantity": 2,
         "x": 0,
         "y": 1
       },
@@ -32,7 +32,7 @@
         "price": 50,
         "sellPrice": 15,
         "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
-        "quantity": 2
+        "quantity": 1
       }
     ],
     "equipped": {
@@ -80,6 +80,12 @@
         "reborn": false,
         "relation": 0
       },
+      "elevator": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
       "death": {
         "hp": 3000,
         "isAlive": true,
@@ -88,9 +94,11 @@
       }
     },
     "factionHostility": {
-      "resistance": 0
+      "resistance": -1
     },
-    "factionContribution": {}
+    "factionContribution": {
+      "resistance": 10
+    }
   },
   "drop": null
 }

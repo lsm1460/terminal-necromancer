@@ -92,7 +92,7 @@ async function handleBuy(player: Player, npc: NPC, context: GameContext) {
       const actualItem = goods.find((d) => d.id === itemId)
 
       npcs.updateFactionHostility(npc.faction, -1)
-      npcs.updateFactionContribution(npc.faction, 10)
+      npcs.updateFactionContribution(npc.faction, 5)
 
       if (actualItem) {
         player.addItem(actualItem)
@@ -114,16 +114,19 @@ async function handleSell(player: Player, npc: NPC, context: GameContext) {
     const contribution = npc.factionContribution || 0
     const bonusRate = Math.min(0.2, contribution * 0.0005)
 
-    const choices = player.inventory.map((item, index) => {
-      const finalSellPrice = Math.floor(item.sellPrice * (1 + bonusRate))
-      return {
-        name: `${index}`,
-        message: `${item.label.padEnd(10)} | 💰 개당 +${finalSellPrice}G | 보유: ${item.quantity}개`,
-        label: item.label,
-        price: finalSellPrice,
-        originalIndex: index,
-      }
-    })
+    const choices = player.inventory
+      .map((item, index) => {
+        const itemOrigin = context.drop.getItem(item.id)
+        const finalSellPrice = Math.floor(itemOrigin.sellPrice * (1 + bonusRate))
+        
+        return {
+          name: `${index}`,
+          message: `${item.label.padEnd(10)} | 💰 개당 +${finalSellPrice}G | 보유: ${item.quantity}개`,
+          label: item.label,
+          price: finalSellPrice,
+          originalIndex: index,
+        }
+      })
 
     choices.push({ name: 'cancel', message: '🔙 돌아가기', label: '취소', price: 0, originalIndex: -1 })
 
@@ -173,6 +176,9 @@ async function handleSell(player: Player, npc: NPC, context: GameContext) {
       // quantity 필드가 아예 없는 아이템은 '1개만 존재하는 아이템'으로 간주하여 즉시 제거
       player.inventory.splice(selected.originalIndex, 1)
     }
+
+    context.npcs.updateFactionHostility(npc.faction, -1)
+    context.npcs.updateFactionContribution(npc.faction, 10)
 
     console.log(`\n💰 [판매 완료] ${selected.label} x${sellCount}개를 판매했습니다! (+${totalEarned}G)`)
   }

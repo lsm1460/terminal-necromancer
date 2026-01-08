@@ -15,7 +15,7 @@
       ],
       [
         null,
-        { "theme": "tiled_floor", "event": "none", "dialogue": "더 깊은 곳으로 내려가는 엘리베이터가 있습니다." },
+        { "theme": "tiled_floor", "event": "npc", "npcIds": ["elevator"], "dialogue": "더 깊은 곳으로 내려가는 엘리베이터가 있습니다." },
         null
       ]
     ]
