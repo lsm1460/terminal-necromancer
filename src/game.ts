@@ -12,6 +12,7 @@ import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
+import { NpcSkillManager } from './core/skill/NpcSkillManger'
 
 // ---------- 데이터 로드 ----------
 const assets = path.join(__dirname, 'assets')
@@ -23,6 +24,7 @@ const itemPath = path.join(assets, 'item.json')
 const dropPath = path.join(assets, 'drop.json')
 const npcPath = path.join(assets, 'npc.json')
 const eventPath = path.join(assets, 'events.json')
+const npcSkillPath = path.join(assets, 'npcSkills.json')
 
 // ---------- 초기화 ----------
 const save = new SaveSystem(statePath)
@@ -34,6 +36,7 @@ const map = new MapManager(mapPath, saved?.sceneId)
 const npcs = new NPCManager(npcPath, saved?.npcs)
 const world = new World(map)
 const events = new EventSystem(eventPath, monster, saved?.completedEvents)
+const npcSkills = new NpcSkillManager(npcSkillPath)
 
 if (saved?.drop) {
   world.addLootBag(saved.drop)

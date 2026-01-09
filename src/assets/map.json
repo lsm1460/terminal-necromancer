@@ -32,7 +32,7 @@
       ],
       [
         { "theme": "platform", "event": "none", "dialogue": "레지스탕스 본부" },
-        { "theme": "platform", "event": "boss", "dialogue": "부서진 비석이 있습니다. 영혼을 해방하시겠습니까?" },
+        { "theme": "platform", "event": "boss", "npcIds": ["first_boss"], "dialogue": "부서진 비석이 있습니다. 영혼을 해방하시겠습니까?" },
         { "theme": "platform", "event": "none", "dialogue": "망령들의 무리가 승강장을 점거하고 있습니다!" }
       ]
     ]

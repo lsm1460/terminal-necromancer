@@ -29,7 +29,6 @@
     },
     "deathLine": "케인이 끝까지 검을 놓지 않은 채 쓰러졌습니다.",
     "description": "이 레지스탕스의 대장",
-    "gold": 1000,
     "dropTableId": "resistance"
   },
   "maya_tech": {
@@ -61,7 +60,6 @@
     },
     "deathLine": "마야가 공구를 떨어뜨리며 숨을 거둡니다.",
     "description": "물건을 구입하여 무기로 탈바꿈 시키는 장인",
-    "gold": 300,
     "dropTableId": "resistance"
   },
   "elevator": {
@@ -93,7 +91,6 @@
     },
     "deathLine": "...",
     "description": "이보다 더 지하가 있습니다",
-    "gold": 30000,
     "dropTableId": ""
   },
   "death": {
@@ -125,8 +122,39 @@
     },
     "deathLine": "TODO: 엔딩",
     "description": "최종보스입니다",
-    "gold": 3000,
     "dropTableId": "",
+    "noEscape": true
+  },
+  "first_boss": {
+    "id": "first_boss",
+    "name": "보스1",
+    "faction": "boss1",
+    "hp": 10,
+    "maxHp": 10,
+    "atk": 1,
+    "def": 50,
+    "eva": 10,
+    "exp": 5000,
+    "isAlive": true,
+    "reborn": false,
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "...",
+        "farewell": "..."
+      },
+      "normal": {
+        "greeting": "...",
+        "farewell": "..."
+      },
+      "hostile": {
+        "greeting": "...",
+        "farewell": "..."
+      }
+    },
+    "deathLine": "보스 1 사망",
+    "description": "보스1 입니다",
+    "dropTableId": "boss1",
     "noEscape": true
   }
 }

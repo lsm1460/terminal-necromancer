@@ -1,0 +1,50 @@
+{
+  "fire_breath": {
+    "id": "fire_breath",
+    "name": "화염 숨결",
+    "description": "전방에 강력한 불을 내뿜습니다.",
+    "chance": 0.3, 
+    "power": 2.0,
+    "targetType": "ENEMY_SINGLE"
+  },
+  "power_smash": {
+    "id": "power_smash",
+    "name": "강력한 내리치기",
+    "description": "무거운 무기로 적을 내리칩니다.",
+    "chance": 0.5,
+    "power": 1.4,
+    "targetType": "ENEMY_SINGLE"
+  },
+  "piercing_arrow": {
+    "id": "piercing_arrow",
+    "name": "관통 화살",
+    "chance": 0.4,
+    "power": 1.2,
+    "targetType": "ENEMY_BACK",
+    "description": "가장 뒤에 있는 적을 저격합니다."
+  },
+  "dark_heal": {
+    "id": "dark_heal",
+    "name": "어둠의 치유",
+    "chance": 0.5,
+    "power": 40,
+    "targetType": "ALLY_LOWEST_HP",
+    "description": "가장 부상이 심한 아군을 회복시킵니다."
+  },
+  "volley_fire": {
+    "id": "volley_fire",
+    "name": "일제 사격",
+    "chance": 0.2,
+    "power": 0.8,
+    "targetType": "ENEMY_ALL",
+    "description": "모든 적에게 화살 비를 퍼붓습니다."
+  },
+  "holy_choir": {
+    "id": "holy_choir",
+    "name": "성스러운 합창",
+    "chance": 0.15,
+    "power": 25,
+    "targetType": "ALLY_ALL_HP",
+    "description": "모든 아군의 상처를 어루만집니다."
+  }
+}

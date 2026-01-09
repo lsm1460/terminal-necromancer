@@ -6,6 +6,7 @@ import { Player } from '../core/Player'
 import { GameContext, GameEvent, Tile } from '../types'
 import { MonsterEvent } from './events/MonsterEvent'
 import { NpcEvent } from './events/NpcEvent'
+import { BossEvent } from './events/BossEvent'
 
 export class EventSystem {
   private completedEvents: Set<string> = new Set()
@@ -28,12 +29,19 @@ export class EventSystem {
       case 'monster-group-level-1':
         await this.monsterEvent.handle(tile, player, context)
         break
+      case 'boss':
+        await BossEvent.handle(tile, player, context)
+        break
 
       case 'npc': {
         await NpcEvent.handle(tile, player, context)
         break
       }
     }
+  }
+
+  public getEventInfo(eventId: string) {
+    return this.eventData[eventId]
   }
 
   /** 이벤트 완료 처리 */

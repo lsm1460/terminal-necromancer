@@ -15,11 +15,12 @@ export type BattleTarget = {
   def: number
   agi: number
   exp: number
+  eva?: number
   description: string
   dropTableId: string
-  gold: number
   encounterRate: number // ← 개별 몬스터 출현 확률 (%)
   isAlive: boolean
+  skills?: string[]
   preemptive?: boolean
   noEscape?: boolean
   isMinion?: boolean
@@ -84,12 +85,17 @@ export type WeaponItem = BaseItem & {
   type: ItemType.WEAPON
   atk: number
   crit: number
+  hp?: number
+  mp?: number
 }
 
 // 방어구
 export type ArmorItem = BaseItem & {
   type: ItemType.ARMOR
   def: number
+  eva?: number
+  hp?: number
+  mp?: number
 }
 
 // 음식
@@ -197,4 +203,24 @@ export type GameEvent = {
   id: string
   name: string
   description: string
+  postTalk?: string[]
 }
+
+export type SkillTargetType = 
+  | 'ENEMY_SINGLE' 
+  | 'ENEMY_BACK' 
+  | 'ENEMY_ALL' 
+  | 'ALLY_SINGLE' 
+  | 'ALLY_LOWEST_HP' 
+  | 'ALLY_ALL_HP'
+  | 'SINGLE_BUFF'
+
+export type NpcSkill = {
+  id: string;
+  name: string;
+  description: string;
+  chance: number;
+  power: number;
+  targetType: SkillTargetType;
+  type: string; // "physical", "dark", "holy" 등 자유롭게 확장 가능
+};

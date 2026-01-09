@@ -34,5 +34,11 @@
       { "itemId": "mana_potion_small", "chance": 1, "quantity": [1, 1] }
     ]
   },
+  "boss1": {
+    "gold": [500, 700],
+    "items": [
+      { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1] }
+    ]
+  },
   "none": { "gold": [0, 0], "items": [] }
 }

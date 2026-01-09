@@ -12,6 +12,7 @@ export class Player {
   atk = 10
   def = 5
   agi = 5
+  eva = 0
   gold = 0
   exp = 0
   level = 1
@@ -51,26 +52,39 @@ export class Player {
   }
 
   get maxHp() {
-    return this._maxHp
+    let maxHp = this._maxHp
+
+    if (this.equipped.weapon) maxHp += (this.equipped.weapon as WeaponItem)?.hp || 0
+    if (this.equipped.armor) maxHp += (this.equipped.armor as ArmorItem)?.hp || 0
+
+    return maxHp
   }
 
   get maxMp() {
-    return this._maxMp
+    let maxMp = this._maxMp
+
+    if (this.equipped.weapon) maxMp += (this.equipped.weapon as WeaponItem)?.mp || 0
+    if (this.equipped.armor) maxMp += (this.equipped.armor as ArmorItem)?.mp || 0
+
+    return maxMp
   }
 
   get computed() {
     let atk = this.atk
     let def = this.def
+    let eva = this.eva
 
     if (this.equipped.weapon) atk += (this.equipped.weapon as WeaponItem).atk
     if (this.equipped.armor) def += (this.equipped.armor as ArmorItem).def
+    if (this.equipped.armor) eva += (this.equipped.armor as ArmorItem)?.eva || 0
 
     return { 
       ...this, 
       maxHp: this.maxHp,
       maxMp: this.maxMp,
       atk, 
-      def 
+      def,
+      eva
     }
   }
 
@@ -86,6 +100,10 @@ export class Player {
 
   get isAlive() {
     return this.hp > 0
+  }
+
+  set isAlive(_) {
+    this.hp = 0
   }
 
   move(dx: number, dy: number) {

@@ -35,7 +35,6 @@ export class SkillExecutor {
       exp: 0,
       description: `${selectedCorpse.name}의 유골로 만들어진 소환수입니다.`,
       dropTableId: '',
-      gold: 0,
       encounterRate: 0,
       isAlive: true,
       isMinion: true

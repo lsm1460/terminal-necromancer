@@ -1,8 +1,13 @@
 {
-  "FIRST_BOSS_CLEAR": {
-    "id": "FIRST_BOSS_CLEAR",
+  "first_boss": {
+    "id": "first_boss",
     "name": "첫 번째 시련 극복",
-    "description": "숲의 지배자를 처치했습니다."
+    "description": "지하 2층의 지배자를 처치했습니다.",
+    "postTalk": [
+      "키익... 산 녀석이 여기까지 오다니.",
+      "너의 고기는 아주 부드러워 보이는군...",
+      "여기서 내 간식거리가 되어라!"
+    ]
   },
   "GOLEM_UNLOCKED": {
     "id": "GOLEM_UNLOCKED",

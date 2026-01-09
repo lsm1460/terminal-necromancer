@@ -1,16 +1,17 @@
 {
   "player": {
     "x": 0,
-    "y": 0,
+    "y": 1,
     "_maxHp": 100,
-    "hp": 100,
+    "hp": 76,
     "_maxMp": 100,
-    "mp": 50,
+    "mp": 0,
     "atk": 10,
     "def": 5,
     "agi": 5,
-    "gold": 33,
-    "exp": 690,
+    "eva": 0,
+    "gold": 56,
+    "exp": 815,
     "level": 3,
     "inventoryMax": 3,
     "inventory": [
@@ -62,10 +63,26 @@
       "RAISE_SKELETON",
       "CORPSE_EXPLOSION"
     ],
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1767925507467",
+        "name": "스켈레톤(다람쥐)",
+        "maxHp": 15,
+        "hp": 15,
+        "atk": 5,
+        "def": 0,
+        "agi": 2,
+        "exp": 0,
+        "description": "다람쥐의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true
+      }
+    ],
     "maxSkeleton": 3
   },
-  "sceneId": "B2_Transit_Area",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
