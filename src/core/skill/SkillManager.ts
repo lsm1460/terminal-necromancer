@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
-import { GameContext, Skill, SKILL_IDS, SkillId } from '../../types'
-import { SKILL_LIST } from './skill'
+import { GameContext, SKILL_IDS, SkillId } from '../../types'
 import { Player } from '../Player'
+import { SKILL_LIST } from './skill'
 
 export class SkillManager {
   static async requestAndExecuteSkill(player: Player, context: GameContext): Promise<boolean> {
@@ -9,10 +9,10 @@ export class SkillManager {
     const { x, y } = player.pos
 
     // 1. 가능 스킬 필터링
-    const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.level >= skill.requiredLevel)
+    const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.hasSkill(skill.id))
 
     // 2. 스킬 선택 UI
-    const { skillId } = (await enquirer.prompt({
+    const { skillId } = await enquirer.prompt<{ skillId: string }>({
       type: 'select',
       name: 'skillId',
       message: `스킬 선택 (현재 MP: ${player.mp})`,
@@ -28,7 +28,7 @@ export class SkillManager {
         const selected = availableSkills.find((s) => s.id === value)
         return selected ? `[${selected.name}]` : value
       },
-    })) as { skillId: string }
+    })
 
     if (skillId === 'cancel') return false
 
@@ -60,7 +60,7 @@ export class SkillManager {
         { name: 'cancel', message: '🔙 취소하기' },
       ]
 
-      const { corpseId } = (await enquirer.prompt({
+      const { corpseId } = await enquirer.prompt<{ corpseId: string }>({
         type: 'select',
         name: 'corpseId',
         message: '어떤 시체를 소모하시겠습니까?',
@@ -71,7 +71,7 @@ export class SkillManager {
           const target = corpses.find((c, idx) => (c.id || idx.toString()) === value)
           return target ? `[${target.name}]` : value
         },
-      })) as { corpseId: string }
+      })
 
       if (corpseId === 'cancel') {
         console.log('\n💬 스킬 사용을 취소했습니다.')
@@ -84,7 +84,7 @@ export class SkillManager {
     if (!selectedCorpseId) {
       return false
     }
-    
+
     // 5. 실행 및 마력 소모
     targetSkill.execute(player, context, [selectedCorpseId])
     player.mp -= targetSkill.cost

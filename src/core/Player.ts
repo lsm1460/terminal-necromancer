@@ -13,6 +13,7 @@ export class Player {
   def = 5
   agi = 5
   eva = 0
+  crit = 0
   gold = 0
   exp = 0
   level = 1
@@ -22,7 +23,7 @@ export class Player {
 
   public unlockedSkills: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
-  public maxSkeleton: number = 3 // 최대 소환 가능 수
+  _maxSkeleton: number = 3 // 최대 소환 가능 수
 
   public golem: BattleTarget | undefined = undefined
   public _knight: BattleTarget | undefined = undefined
@@ -71,10 +72,12 @@ export class Player {
 
   get computed() {
     let atk = this.atk
+    let crit = this.crit
     let def = this.def
     let eva = this.eva
 
     if (this.equipped.weapon) atk += (this.equipped.weapon as WeaponItem).atk
+    if (this.equipped.weapon) crit += (this.equipped.weapon as WeaponItem).crit
     if (this.equipped.armor) def += (this.equipped.armor as ArmorItem).def
     if (this.equipped.armor) eva += (this.equipped.armor as ArmorItem)?.eva || 0
 
@@ -83,9 +86,19 @@ export class Player {
       maxHp: this.maxHp,
       maxMp: this.maxMp,
       atk, 
+      crit,
       def,
       eva
     }
+  }
+
+  get maxSkeleton() {
+    let maxSkeleton = this._maxSkeleton
+
+    if (this.equipped.weapon) maxSkeleton += (this.equipped.weapon as WeaponItem)?.maxSkeleton || 0
+    if (this.equipped.armor) maxSkeleton += (this.equipped.armor as ArmorItem).maxSkeleton || 0
+
+    return maxSkeleton
   }
 
   get knight() {
@@ -200,12 +213,6 @@ export class Player {
     this.inventory.push(item)
 
     return true
-  }
-
-  clearEquipment() {
-    this.inventory = []
-    this.equipped.weapon = null
-    this.equipped.armor = null
   }
 
   addItem(newItem: Item) {

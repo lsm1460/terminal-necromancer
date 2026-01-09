@@ -1,18 +1,18 @@
-import fs from 'fs'
 import path from 'path'
 import { createCLI } from './cli'
+import { MAP_IDS } from './consts'
 import { LootFactory } from './core/LootFactory'
 import { MapManager } from './core/MapManager'
 import { MonsterFactory } from './core/MonsterFactory'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
+import { NpcSkillManager } from './core/skill/NpcSkillManger'
 import { World } from './core/World'
 import { printStatus } from './statusPrinter'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
-import { NpcSkillManager } from './core/skill/NpcSkillManger'
 
 // ---------- 데이터 로드 ----------
 const assets = path.join(__dirname, 'assets')
@@ -42,19 +42,23 @@ if (saved?.drop) {
   world.addLootBag(saved.drop)
 }
 
-const context = { map, world, events, npcs, drop, save }
+const context = { map, world, events, npcs, drop, save, npcSkills }
 
 player.onDeath = () => {
   console.log('나는 사망했다...')
   world.addLootBag(LootFactory.fromPlayer(player))
 
-  player.clearEquipment()
   player.x = 0
   player.y = 0
   player.hp = 1
 
   printStatus(player, context as GameContext)
 }
+
+// 시작 위치 초기화
+map.currentSceneId = MAP_IDS.B1_SUBWAY
+player.x = 0
+player.y = 0
 
 // ---------- 게임 시작 ----------
 console.log('=== 게임 시작 ===')

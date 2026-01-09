@@ -1,12 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 import { BattleTarget, NpcSkill } from '../../types'
+import { CombatUnit } from '../Battle'
 
 type SkillExecutor<T = void> = (
   skillId: string,
-  attacker: BattleTarget,
-  ally: BattleTarget[],
-  enemies: BattleTarget[]
+  attacker: CombatUnit,
+  ally: CombatUnit[],
+  enemies: CombatUnit[]
 ) => T
 
 export class NpcSkillManager {
@@ -20,7 +21,7 @@ export class NpcSkillManager {
     return this.skillData[skillId]
   }
 
-  findTargets: SkillExecutor<BattleTarget[]> = (skillId, attacker, ally, enemies) => {
+  findTargets: SkillExecutor<CombatUnit[]> = (skillId, attacker, ally, enemies) => {
     const skill = this.getSkill(skillId)
 
     switch (skill.targetType) {
@@ -33,7 +34,7 @@ export class NpcSkillManager {
       case 'ENEMY_ALL':
         return enemies // 플레이어 파티가 있다면 확장
       case 'ALLY_LOWEST_HP':
-        const weakest = ally.reduce((p, c) => (p.hp / p.maxHp < c.hp / c.maxHp ? p : c))
+        const weakest = ally.reduce((p, c) => (p.ref.hp / p.ref.maxHp < c.ref.hp / c.ref.maxHp ? p : c))
         return [weakest]
       case 'ALLY_ALL_HP':
         return ally
@@ -62,12 +63,12 @@ export class NpcSkillManager {
     targets.forEach((target) => {
       if (isHeal) {
         const healAmount = skill.power
-        target.hp = Math.min(target.maxHp, target.hp + healAmount)
+        target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
         console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
       } else {
-        const damage = Math.floor(attacker.atk * skill.power)
-        target.hp -= damage
-        console.log(`💥 ${target.name}에게 ${damage}의 피해!`)
+        const damage = Math.floor(attacker.stats.atk * skill.power)
+        target.ref.hp -= damage
+        console.log(`💥 ${target.name}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, target.ref.hp)})`)
       }
     })
   }

@@ -1,17 +1,18 @@
 {
   "player": {
     "x": 0,
-    "y": 1,
+    "y": 0,
     "_maxHp": 100,
-    "hp": 76,
+    "hp": 61,
     "_maxMp": 100,
-    "mp": 0,
+    "mp": 75,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
-    "gold": 56,
-    "exp": 815,
+    "crit": 0,
+    "gold": 1300,
+    "exp": 11645,
     "level": 3,
     "inventoryMax": 3,
     "inventory": [
@@ -21,7 +22,7 @@
         "type": "consumable",
         "hpHeal": 20,
         "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
-        "quantity": 2,
+        "quantity": 1,
         "x": 0,
         "y": 1
       },
@@ -34,18 +35,31 @@
         "sellPrice": 15,
         "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
         "quantity": 1
-      }
-    ],
-    "equipped": {
-      "weapon": {
+      },
+      {
         "id": "iron_sword_a289733182c3fd1f",
         "label": "낡은 철검",
         "type": "weapon",
         "atk": 5,
-        "crit": 0.022,
+        "crit": 0.02,
         "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
         "quantity": 1,
         "x": 0,
+        "y": 1
+      }
+    ],
+    "equipped": {
+      "weapon": {
+        "id": "iron_sword_b919ce9e090c2f56",
+        "label": "장인의 철검",
+        "type": "weapon",
+        "atk": 10,
+        "crit": 0.03,
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "x": 1,
         "y": 1
       },
       "armor": {
@@ -65,22 +79,22 @@
     ],
     "skeleton": [
       {
-        "id": "skeleton_1767925507467",
-        "name": "스켈레톤(다람쥐)",
-        "maxHp": 15,
-        "hp": 15,
-        "atk": 5,
+        "id": "skeleton_1767940021840",
+        "name": "스켈레톤(보스1)",
+        "maxHp": 5,
+        "hp": 5,
+        "atk": 0,
         "def": 0,
-        "agi": 2,
+        "agi": null,
         "exp": 0,
-        "description": "다람쥐의 유골로 만들어진 소환수입니다.",
+        "description": "보스1의 유골로 만들어진 소환수입니다.",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true
       }
     ],
-    "maxSkeleton": 3
+    "_maxSkeleton": 3
   },
   "sceneId": "B1_Subway_Entrance",
   "npcs": {
@@ -108,15 +122,24 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "first_boss": {
+        "hp": 10,
+        "isAlive": true,
+        "reborn": true,
+        "relation": 0
       }
     },
     "factionHostility": {
-      "resistance": -1
+      "resistance": -1,
+      "boss1": 5
     },
     "factionContribution": {
       "resistance": 10
     }
   },
   "drop": null,
-  "completedEvents": []
+  "completedEvents": [
+    "first_boss"
+  ]
 }

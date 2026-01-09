@@ -19,19 +19,25 @@ export class NPCManager {
       this.states = savedData.states || {}
       this.factionHostility = savedData.factionHostility || {}
       this.factionContribution = savedData.factionContribution || {}
-    } else {
-      this.initializeStates()
     }
+
+    this.initializeStates()
   }
 
   private initializeStates() {
     Object.entries(this.baseData).forEach(([id, data]) => {
+      // 이미 상태 데이터가 존재한다면 건너뜁니다 (기존 데이터 보존)
+      if (this.states[id]) return
+
+      // 새로 추가된 NPC인 경우 초기값 주입
       this.states[id] = {
         hp: data.hp ?? data.maxHp ?? 100,
         isAlive: data.isAlive ?? true,
         reborn: data.reborn ?? false,
         relation: 0,
       }
+
+      console.log(`[NPCManager] New NPC detected and initialized: ${id}`)
     })
   }
 
@@ -41,7 +47,7 @@ export class NPCManager {
   getNPC(id: string): NPC | null {
     const base = this.baseData[id]
     const state = this.states[id]
-
+    
     if (!base || !state) return null
     if (state.reborn) return null
 

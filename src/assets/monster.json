@@ -3,6 +3,7 @@
     {
       "name": "토끼",
       "hp": 10,
+      "maxHp": 10,
       "atk": 1,
       "def": 2,
       "agi": 2,
@@ -13,11 +14,13 @@
     },
     {
       "name": "다람쥐",
-      "hp": 30,
-      "atk": 7,
+      "hp": 100,
+      "maxHp": 100,
+      "atk": 3,
       "def": 1,
       "agi": 5,
       "exp": 15,
+      "skills": ["power_smash"],
       "encounterRate": 100,
       "dropTableId": "squirrel",
       "description": "민첩한 다람쥐. 공격력은 토끼보다 높지만 방어력은 낮다. 회피 능력이 뛰어나다."
@@ -25,6 +28,7 @@
     {
       "name": "고블린",
       "hp": 5,
+      "maxHp": 5,
       "atk": 1,
       "def": 5,
       "agi": 4,
@@ -37,6 +41,7 @@
     {
       "name": "늑대",
       "hp": 5,
+      "maxHp": 10,
       "atk": 1,
       "def": 5,
       "agi": 6,

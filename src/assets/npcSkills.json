@@ -11,7 +11,7 @@
     "id": "power_smash",
     "name": "강력한 내리치기",
     "description": "무거운 무기로 적을 내리칩니다.",
-    "chance": 0.5,
+    "chance": 0.4,
     "power": 1.4,
     "targetType": "ENEMY_SINGLE"
   },

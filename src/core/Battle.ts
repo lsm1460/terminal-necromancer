@@ -9,6 +9,7 @@ interface CombatStatus {
   atk: number
   def: number
   agi: number
+  crit?: number
   eva?: number
 }
 
@@ -35,13 +36,9 @@ export interface CombatUnit<T = BattleTarget> {
   id: string
   name: string
   type: 'player' | 'minion' | 'monster' | 'npc'
-  stats: {
-    agi: number
-    atk: number
-    def: number
-    eva: number
-  }
+  stats: CombatStatus
   buff: Buff[]
+  deBuff: Buff[]
   ref: T // 원본 객체 참조 (데이터 직접 수정용)
 }
 
@@ -54,9 +51,20 @@ export class Battle {
     while (player.isAlive && enemies.some((e) => e.isAlive)) {
       // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
       const turnOrder = this.getTurnOrder(player, enemies)
-      const enemiesSide = _.chain(turnOrder)
+      let enemiesSide = _.chain(turnOrder)
         .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
         .sortBy((unit) => _.findIndex(player.minions, { id: unit.id }))
+        .value()
+
+      const playerSide = _.chain(turnOrder)
+        .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
+        .sortBy((unit) => {
+          if (unit.type === 'player') {
+            return Infinity // 플레이어는 가장 큰 값을 주어 무조건 마지막으로 보냄
+          }
+          // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
+          return _.findIndex(player.minions, { id: unit.id })
+        })
         .value()
 
       for (const unit of turnOrder) {
@@ -76,20 +84,12 @@ export class Battle {
             return
           }
         } else if (unit.type === 'minion') {
-          this.executeAutoAttack(unit, enemiesSide, player, context)
+          this.executeAutoAttack(unit, enemiesSide, playerSide, player, context)
         } else {
-          const playerSide = _.chain(turnOrder)
-            .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
-            .sortBy((unit) => {
-              if (unit.type === 'player') {
-                return Infinity // 플레이어는 가장 큰 값을 주어 무조건 마지막으로 보냄
-              }
-              // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
-              return _.findIndex(player.minions, { id: unit.id })
-            })
-            .value()
+          // npc라면 같은 faction만 ally로..
+          enemiesSide = enemiesSide.filter((e) => (e.ref as NPC).faction === (unit.ref as NPC).faction)
 
-          this.executeAutoAttack(unit, playerSide, player, context)
+          this.executeAutoAttack(unit, playerSide, enemiesSide, player, context)
         }
 
         // 가독성을 위한 짧은 지연
@@ -101,7 +101,6 @@ export class Battle {
   }
 
   // --- 내부 로직 함수들 ---
-
   private static getTurnOrder(player: Player, enemies: BattleTarget[]): CombatUnit[] {
     const units: CombatUnit[] = []
 
@@ -110,7 +109,7 @@ export class Battle {
 
     // 미니언 추가
     if (player.minions) {
-      player.minions.forEach((m: any) => {
+      player.minions.forEach((m) => {
         if (m.isAlive) units.push(this.toCombatUnit(m, 'minion'))
       })
     }
@@ -118,7 +117,7 @@ export class Battle {
     // 적(몬스터/NPC) 추가
     enemies.forEach((e) => {
       if (e.isAlive) {
-        const type = (e as any).encounterRate !== undefined ? 'monster' : 'npc'
+        const type = e.encounterRate !== undefined ? 'monster' : 'npc'
         units.push(this.toCombatUnit(e, type))
       }
     })
@@ -134,15 +133,15 @@ export class Battle {
   ): Promise<boolean> {
     const aliveEnemies = enemies.filter((e) => e.ref.isAlive)
 
-    const { action } = (await enquirer.prompt({
+    const { action } = await enquirer.prompt<{ action: string }>({
       type: 'select',
       name: 'action',
       message: '당신의 행동을 선택하세요:',
       choices: ['공격', '스킬', '도망'],
-    })) as any
+    })
 
     if (action === '공격') {
-      const { targetId } = (await enquirer.prompt({
+      const { targetId } = await enquirer.prompt<{ targetId: string }>({
         type: 'select',
         name: 'targetId',
         message: '누구를 공격하시겠습니까?',
@@ -158,7 +157,7 @@ export class Battle {
           const target = aliveEnemies.find((e) => e.id === value)
           return target ? target.name : value
         },
-      })) as any
+      })
 
       // 취소 선택 시 다시 행동 선택창으로 재귀 호출
       if (targetId === 'cancel') {
@@ -199,10 +198,22 @@ export class Battle {
     return false
   }
 
-  private static executeAutoAttack(attacker: CombatUnit, targets: CombatUnit[], player: Player, context: GameContext) {
+  private static executeAutoAttack(
+    attacker: CombatUnit,
+    targets: CombatUnit[],
+    ally: CombatUnit[],
+    player: Player,
+    context: GameContext
+  ) {
     if (targets.length === 0) return
     const target = targets[0]
-    this.applyDamage(target, attacker, player, context)
+
+    const autoSkillId = context.npcSkills.getRandomSkillId(attacker.ref.skills || [])
+    if (autoSkillId) {
+      context.npcSkills.execute(autoSkillId, attacker, ally, targets)
+    } else {
+      this.applyDamage(target, attacker, player, context)
+    }
   }
 
   private static handleUnitDeath(player: Player, target: BattleTarget, context: GameContext) {
@@ -260,19 +271,26 @@ export class Battle {
   ) {
     let hostility = 5
 
-    const { isEscape, damage } = this.calcDamage(attacker, defender)
+    const { isEscape, damage, isCritical } = this.calcDamage(attacker, defender)
     if (isEscape) {
       console.log(
-        `💥 ${attacker?.name || '플레이어'}의 공격! ${defender.name || '플레이어'}은/는 회피했다! (남은 HP: ${Math.max(0, defender.ref.hp)})`
+        `💥 ${attacker.name}의 공격! ${defender.name}은/는 회피했다! (남은 HP: ${Math.max(0, defender.ref.hp)})`
       )
     } else {
       defender.ref.hp -= damage
-      console.log(
-        `💥 ${attacker?.name || '플레이어'}의 공격! ${defender.name || '플레이어'}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, defender.ref.hp)})`
-      )
+
+      if (isCritical) {
+        console.log(
+          `⚡ CRITICAL HIT! ⚡ ${attacker.name}의 치명적인 일격! ${defender.name}에게 ${damage}의 강력한 피해! (남은 HP: ${Math.max(0, defender.ref.hp)})`
+        )
+      } else {
+        console.log(
+          `💥 ${attacker.name}의 공격! ${defender.name}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, defender.ref.hp)})`
+        )
+      }
     }
 
-    if (defender.ref.hp <= 0) {
+    if (defender.ref.hp <= 0 && defender.type !== 'player') {
       this.handleUnitDeath(player, defender.ref, context)
 
       return
@@ -295,8 +313,10 @@ export class Battle {
         def: unit.computed?.def || unit.def || 0,
         agi: unit.computed?.agi || unit.agi || 0,
         eva: unit.computed?.eva || unit.eva || 0,
+        crit: unit.computed?.crit || unit.crit || 0,
       },
       buff: [],
+      deBuff: [],
       ref: unit as BattleTarget,
     }
   }
@@ -306,6 +326,8 @@ export class Battle {
       console.log(`\n🏆 전투에서 승리했습니다!`)
     } else {
       console.log(`\n💀 전투에서 패배했습니다...`)
+
+      player?.onDeath && player.onDeath()
     }
   }
 
@@ -313,37 +335,53 @@ export class Battle {
     attacker: CombatUnit<BattleTarget | Player>,
     target: CombatUnit,
     options: {
-      skillAtkMult?: number // 스킬 공격력 배율 (기본값 1)
+      skillAtkMult?: number
       isIgnoreDef?: boolean
       isFixed?: boolean
       isSureHit?: boolean
     } = {}
   ) {
-    // 1. 공격자 최종 ATK 계산 (기본 ATK + 버프 ATK 합산)
+    // 1. 공격자의 최종 ATK 계산 (기본 + 버프 - 디버프)
     const attackerBuffAtk = attacker.buff.reduce((acc, b) => acc + (b.atk || 0), 0)
-    const finalAtk = (attacker.stats.atk + attackerBuffAtk) * (options.skillAtkMult || 1)
+    const attackerDeBuffAtk = attacker.deBuff?.reduce((acc, d) => acc + (d.atk || 0), 0) || 0
 
-    // 2. 방어자 최종 스탯 계산 (DEF, EVA 버프 합산)
+    let finalAtk = Math.max(0, attacker.stats.atk + attackerBuffAtk - attackerDeBuffAtk)
+    finalAtk *= options.skillAtkMult || 1
+
+    // 2. 방어자의 최종 DEF, EVA 계산 (기본 + 버프 - 디버프)
     const targetBuffDef = target.buff.reduce((acc, b) => acc + (b.def || 0), 0)
+    const targetDeBuffDef = target.deBuff?.reduce((acc, d) => acc + (d.def || 0), 0) || 0
+    const finalDef = Math.max(0, target.stats.def + targetBuffDef - targetDeBuffDef)
+
     const targetBuffEva = target.buff.reduce((acc, b) => acc + (b.eva || 0), 0)
+    const targetDeBuffEva = target.deBuff?.reduce((acc, d) => acc + (d.eva || 0), 0) || 0
+    const finalEva = Math.max(0, (target.stats?.eva || 0) + targetBuffEva - targetDeBuffEva)
 
-    const finalDef = Math.max(0, target.stats.def + targetBuffDef)
-    const finalEva = Math.max(0, target.stats.eva + targetBuffEva)
-
-    // 3. 회피 판정 (필중이 아닐 때만)
+    // 3. 회피 판정 (필중 무시)
     if (!options.isSureHit && Math.random() < finalEva) {
-      return { isEscape: true, damage: 0 }
+      return { isEscape: true, damage: 0, isCritical: false }
     }
 
-    // 4. 고정 데미지 처리 (버프가 합산된 ATK 그대로 적용)
+    // 4. 크리티컬 판정 (예: 10% 확률 또는 attacker stats에 크리티컬 확률이 있다면 활용)
+    // 여기서는 예시로 10% 확률로 설정하겠습니다.
+    const isCrit = Math.random() < (attacker.stats?.crit || 0)
+    if (isCrit) {
+      finalAtk *= 1.2
+    }
+
+    // 5. 데미지 계산 (고정 데미지 vs 일반 공식)
+    let damage: number
     if (options.isFixed) {
-      return { isEscape: false, damage: Math.floor(finalAtk) }
+      damage = Math.floor(finalAtk)
+    } else {
+      const effectiveDef = options.isIgnoreDef ? 0 : finalDef
+      damage = Math.max(1, Math.floor(finalAtk - Math.floor(effectiveDef / 2)))
     }
 
-    // 5. 방어력 계산 및 공식 적용
-    const effectiveDef = options.isIgnoreDef ? 0 : finalDef
-    const damage = Math.max(1, Math.floor(finalAtk - Math.floor(effectiveDef / 2)))
-
-    return { isEscape: false, damage }
+    return {
+      isEscape: false,
+      damage,
+      isCritical: isCrit,
+    }
   }
 }

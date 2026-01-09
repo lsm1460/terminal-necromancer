@@ -3,7 +3,7 @@ import { printTileStatus } from '../statusPrinter'
 import { BattleTarget, CommandFunction, Drop, ItemType, Monster } from '../types'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
-  const { atk, def, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
+  const { atk, def, crit, eva, agi, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
   console.log('🛡️ 상태창')
   console.log(`레벨: ${level} (경험치: ${exp})`)
 
@@ -19,6 +19,10 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   console.log(`공격력: ${atk}`)
   console.log(`방어력: ${def}`)
   console.log(`골드: ${gold}`)
+
+  console.log(`치명: ${Math.floor(crit * 100)}%`)
+  console.log(`민첩: ${agi}`)
+  console.log(`회피: ${Math.floor(eva * 100)}%`)
 
   // 장착 장비 출력 (타입 가드 + 구조 분해 활용)
   let weaponText = '없음'

@@ -1,6 +1,7 @@
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
+import { NpcSkillManager } from './core/skill/NpcSkillManger'
 import { World } from './core/World'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
@@ -16,6 +17,7 @@ export type BattleTarget = {
   agi: number
   exp: number
   eva?: number
+  crit?: number
   description: string
   dropTableId: string
   encounterRate: number // ← 개별 몬스터 출현 확률 (%)
@@ -80,22 +82,24 @@ export type GenericItem = BaseItem & {
   type: ItemType.ITEM
 }
 
+type ItemOptions = {
+  hp?: number
+  mp?: number
+  maxSkeleton?: number
+}
+
 // 무기
-export type WeaponItem = BaseItem & {
+export type WeaponItem = BaseItem & ItemOptions & {
   type: ItemType.WEAPON
   atk: number
   crit: number
-  hp?: number
-  mp?: number
 }
 
 // 방어구
-export type ArmorItem = BaseItem & {
+export type ArmorItem = BaseItem & ItemOptions & {
   type: ItemType.ARMOR
   def: number
   eva?: number
-  hp?: number
-  mp?: number
 }
 
 // 음식
@@ -137,6 +141,7 @@ export type LootBag = {
 export interface GameContext {
   map: MapManager
   npcs: NPCManager
+  npcSkills: NpcSkillManager
   world: World
   events: EventSystem
   drop: DropSystem
@@ -163,6 +168,7 @@ export interface NPC extends BattleTarget {
   reborn: boolean
   lines: string[]
   isHostile: boolean
+  isBoss: boolean
   factionHostility: number
   factionContribution: number
   noEscape?: boolean

@@ -51,6 +51,10 @@ export class EventSystem {
     }
   }
 
+  public getCompleted() {
+    return [...this.completedEvents]
+  }
+
   /** 이벤트 완료 여부 확인 */
   public isCompleted(eventId: string): boolean {
     return this.completedEvents.has(eventId)

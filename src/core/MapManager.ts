@@ -6,6 +6,7 @@ import { MAP_IDS } from '../consts'
 
 interface SceneData {
   displayName: string
+  unlocks?: string[]
   start_pos: { x: number; y: number }
   move_pos?: { x: number; y: number }
   tiles: Tile[][]
@@ -144,5 +145,11 @@ export class MapManager {
     }
 
     this.mapData[sceneId].tiles = newGrid as Tile[][]
+  }
+
+  isUnlocked(mapId: string, completed: string[]) {
+    const unlocks = this.mapData[mapId].unlocks || []
+
+    return unlocks.every((requirement: string) => completed.includes(requirement));
   }
 }

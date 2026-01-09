@@ -1,4 +1,4 @@
-import { Direction, SKILL_IDS, SkillId, Vector } from './types'
+import { Direction, Vector } from './types'
 
 export const COMMAND_KEYS = {
   UP: 'up',
@@ -49,15 +49,10 @@ export const DIRECTIONS: Record<Direction, Vector> = {
   right: { dx: 1, dy: 0 },
 }
 
-export const SKILL_GROUPS: Record<SkillId, string[]> = {
-  [SKILL_IDS.RAISE_SKELETON]: ['스켈레톤', 'skeleton', 'sk', '강령', '되살리기'],
-  [SKILL_IDS.CORPSE_EXPLOSION]: ['시체폭발', 'explosion', 'ex', '시폭', '터뜨리기'],
-  [SKILL_IDS.SOUL_HARVEST]: ['영혼수확', 'harvest', '영흡', '정수흡수'],
-}
-
 export const HOSTILITY_LIMIT = 100
 
 export const MAP_IDS = {
   B1_SUBWAY: 'B1_Subway_Entrance',
   B2_TRANSIT: 'B2_Transit_Area',
+  B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',
 } as const

@@ -10,6 +10,8 @@ export class BossEvent {
     // 1. 타일 정보에서 보스 NPC 아이디 추출
     const bossId = tile.npcIds?.[0]
     if (!bossId) return
+    
+    if (events.isCompleted(bossId)) return
 
     const bossNpc = npcs.getNPC(bossId)
     if (!bossNpc || !bossNpc.isAlive) return

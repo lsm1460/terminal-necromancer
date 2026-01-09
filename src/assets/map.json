@@ -36,5 +36,30 @@
         { "theme": "platform", "event": "none", "dialogue": "망령들의 무리가 승강장을 점거하고 있습니다!" }
       ]
     ]
-  }
+  },
+  "B3_Steel_Loading_Dock": {
+  "displayName": "강철 하역장 - B3",
+  "start_pos": { "x": 0, "y": 0 },
+  "unlocks": ["first_boss"],
+  "tiles": [
+    [
+      { "theme": "iron_gate", "event": "npc", "npcIds": ["elevator"], "dialogue": "위층으로 연결되는 엘리베이터입니다." },
+      { "theme": "platform", "event": "none", "dialogue": "기름 냄새가 진동하는 통로입니다." },
+      { "theme": "scrap_pile", "event": "none", "dialogue": "고철 더미가 길을 반쯤 막고 있습니다." },
+      null
+    ],
+    [
+      { "theme": "platform", "event": "none", "dialogue": "작업용 컨베이어 벨트가 멈춰 있습니다." },
+      { "theme": "platform", "event": "none", "dialogue": "좁은 틈새를 통해 반대편으로 건너갑니다." },
+      { "theme": "machinery", "event": "none", "dialogue": "거대한 엔진이 불규칙한 소음을 내뿜습니다." },
+      { "theme": "workshop", "event": "boss", "dialogue": "거대한 기계 골렘이 하역장을 지키고 있습니다. 가동하시겠습니까?" }
+    ],
+    [
+      { "theme": "cargo_area", "event": "none", "dialogue": "화물 상자들이 어지럽게 널브러져 있습니다." },
+      { "theme": "platform", "event": "none", "dialogue": "하역장 구석의 어두운 공간입니다." },
+      null,
+      null
+    ]
+  ]
+}
 }

@@ -20,15 +20,16 @@ const ElevatorHandler: NPCHandler = {
 }
 
 async function handleElevate(player: Player, context: GameContext) {
-  const { map } = context
-
-  const currentSceneId = context.map.currentSceneId
+  const { map, events } = context
+  const completed = events.getCompleted()
+  const currentSceneId = map.currentSceneId
 
   const choices: {
     name: string
     message: string
   }[] = Object.entries(MAP_IDS)
     .filter(([_, value]) => value !== currentSceneId) // 현재 있는 층은 목록에서 제외
+    .filter(([_, value]) => map.isUnlocked(value, completed))
     .map(([_, value]) => {
       const mapData = map.getMap(value)
 
