@@ -56,3 +56,94 @@ export const MAP_IDS = {
   B2_TRANSIT: 'B2_Transit_Area',
   B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',
 } as const
+
+export type Rarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'
+
+type SubClass = {
+  name: string
+  statMod: { atk: number; def: number; hp: number; agi: number }
+  skills: string[]
+  weight: number
+  orderWeight: number
+}
+
+export const RARITY_DATA: Record<Rarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
+  common: {
+    bonus: 0.8,
+    weight: 600,
+    subClasses: [{ name: '병사', orderWeight: 10, statMod: { atk: 1, def: 1, hp: 1, agi: 1 }, skills: [], weight: 1 }],
+  },
+  rare: {
+    bonus: 1.0,
+    weight: 250,
+    subClasses: [
+      {
+        name: '검사',
+        orderWeight: 15,
+        statMod: { atk: 1.2, def: 1, hp: 1, agi: 1.1 },
+        skills: ['power_smash'],
+        weight: 1,
+      },
+    ],
+  },
+  elite: {
+    bonus: 1.2,
+    weight: 100,
+    subClasses: [
+      {
+        name: '방패병',
+        orderWeight: 5,
+        statMod: { atk: 0.8, def: 1.5, hp: 1.3, agi: 0.7 },
+        skills: ['shield_Bash'],
+        weight: 4,
+      },
+      {
+        name: '궁수',
+        orderWeight: 25,
+        statMod: { atk: 1.3, def: 0.7, hp: 0.8, agi: 1.5 },
+        skills: ['piercing_arrow'],
+        weight: 3,
+      },
+      {
+        name: '사제',
+        orderWeight: 35,
+        statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
+        skills: ['dark_heal'],
+        weight: 3,
+      },
+    ],
+  },
+  epic: {
+    bonus: 1.5,
+    weight: 40,
+    subClasses: [
+      {
+        name: '워리어',
+        orderWeight: 7,
+        statMod: { atk: 1.5, def: 1.2, hp: 1.2, agi: 1.0 },
+        skills: ['whirlwind'],
+        weight: 7,
+      },
+      {
+        name: '사제',
+        orderWeight: 45,
+        statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
+        skills: ['holy_radiance'],
+        weight: 3,
+      },
+    ],
+  },
+  legendary: {
+    bonus: 2.0,
+    weight: 10,
+    subClasses: [
+      {
+        name: '해골 왕',
+        orderWeight: 55,
+        statMod: { atk: 2.0, def: 1.5, hp: 1.5, agi: 1.5 },
+        skills: ['death_aura'],
+        weight: 1,
+      },
+    ],
+  },
+}

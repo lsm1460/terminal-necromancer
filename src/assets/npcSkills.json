@@ -18,7 +18,7 @@
   "piercing_arrow": {
     "id": "piercing_arrow",
     "name": "관통 화살",
-    "chance": 0.4,
+    "chance": 1,
     "power": 1.2,
     "targetType": "ENEMY_BACK",
     "description": "가장 뒤에 있는 적을 저격합니다."
@@ -39,8 +39,8 @@
     "targetType": "ENEMY_ALL",
     "description": "모든 적에게 화살 비를 퍼붓습니다."
   },
-  "holy_choir": {
-    "id": "holy_choir",
+  "holy_radiance": {
+    "id": "holy_radiance",
     "name": "성스러운 합창",
     "chance": 0.15,
     "power": 25,

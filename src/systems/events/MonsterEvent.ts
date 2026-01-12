@@ -31,7 +31,6 @@ export class MonsterEvent {
 
       if (newlySpawned.length > 0) {
         tile.monsters.push(...newlySpawned)
-        console.log(`\n📢 ${tile.dialogue}`)
         newlySpawned.forEach((m) => console.log(`👾 ${m.name} 등장!`))
       }
     }

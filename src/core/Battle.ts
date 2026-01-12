@@ -21,6 +21,7 @@ interface IUnit extends CombatStatus {
   maxHp?: number
   computed?: CombatStatus
   isAlive: boolean
+  orderWeight?: number
   minions?: any[] // 플레이어만 가질 수 있음
 }
 
@@ -39,6 +40,7 @@ export interface CombatUnit<T = BattleTarget> {
   stats: CombatStatus
   buff: Buff[]
   deBuff: Buff[]
+  orderWeight: number
   ref: T // 원본 객체 참조 (데이터 직접 수정용)
 }
 
@@ -53,24 +55,24 @@ export class Battle {
       const turnOrder = this.getTurnOrder(player, enemies)
       let enemiesSide = _.chain(turnOrder)
         .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
-        .sortBy((unit) => _.findIndex(player.minions, { id: unit.id }))
-        .value()
-
-      const playerSide = _.chain(turnOrder)
-        .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
-        .sortBy((unit) => {
-          if (unit.type === 'player') {
-            return Infinity // 플레이어는 가장 큰 값을 주어 무조건 마지막으로 보냄
-          }
-          // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
-          return _.findIndex(player.minions, { id: unit.id })
-        })
+        .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
         .value()
 
       for (const unit of turnOrder) {
         // 전투 도중 누군가 죽었다면 체크
         if (!unit.ref.isAlive) continue
         if (!player.isAlive || !enemies.some((e) => e.isAlive)) break
+
+        const playerSide = _.chain(turnOrder)
+          .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
+          .sortBy((unit) => {
+            if (unit.type === 'player') {
+              return Infinity // 플레이어는 가장 큰 값을 주어 무조건 마지막으로 보냄
+            }
+            // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
+            return _.findIndex(player.minions, { id: unit.id })
+          })
+          .value()
 
         console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
 
@@ -210,7 +212,11 @@ export class Battle {
 
     const autoSkillId = context.npcSkills.getRandomSkillId(attacker.ref.skills || [])
     if (autoSkillId) {
-      context.npcSkills.execute(autoSkillId, attacker, ally, targets)
+      const resTargets = context.npcSkills.execute(autoSkillId, attacker, ally, targets)
+
+      resTargets
+        .filter((target) => target.ref.hp < 1)
+        .forEach((unit) => this.handleUnitDeath(player, unit.ref, context))
     } else {
       this.applyDamage(target, attacker, player, context)
     }
@@ -317,6 +323,7 @@ export class Battle {
       },
       buff: [],
       deBuff: [],
+      orderWeight: unit?.orderWeight || 0,
       ref: unit as BattleTarget,
     }
   }

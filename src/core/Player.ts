@@ -106,7 +106,9 @@ export class Player {
   }
 
   get minions(): BattleTarget[] {
-    return [this.golem, ...this.skeleton, this.knight]
+    const _skeletons = this.skeleton.sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
+    
+    return [this.golem, ..._skeletons, this.knight]
       .filter((_minion) => !!_minion)
       .filter((_minion) => _minion.isAlive)
   }

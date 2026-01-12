@@ -43,16 +43,16 @@ export class NpcSkillManager {
     }
   }
 
-  execute: SkillExecutor = (...params) => {
+  execute: SkillExecutor<CombatUnit[]> = (...params) => {
     const [skillId, attacker, ally, enemies] = params
 
     const skill = this.getSkill(skillId)
-    if (!skill) return
+    if (!skill) return []
 
     // 1. 타겟 배열 정의
     let targets = this.findTargets(...params)
 
-    if (targets.length === 0) return
+    if (targets.length === 0) return []
 
     console.log(`\n✨ ${attacker.name}의 [${skill.name}]!`)
     console.log(`💬 ${skill.description}`)
@@ -71,6 +71,8 @@ export class NpcSkillManager {
         console.log(`💥 ${target.name}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, target.ref.hp)})`)
       }
     })
+
+    return targets
   }
 
   getRandomSkillId(skills: string[]): string | null {

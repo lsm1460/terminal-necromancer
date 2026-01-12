@@ -1,3 +1,4 @@
+import { Rarity } from './consts'
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
@@ -27,6 +28,8 @@ export type BattleTarget = {
   noEscape?: boolean
   isMinion?: boolean
   deathLine?: string
+  minRarity?: Rarity
+  orderWeight?: number
 }
 
 export interface Monster extends BattleTarget {
