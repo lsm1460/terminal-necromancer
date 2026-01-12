@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
 import { Player } from '../core/Player'
 import { SKILL_LIST, SkillUtils } from '../core/skill'
-import { SkillId } from '../types'
+import { GameContext, SkillId } from '../types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const DeathHandler: NPCHandler = {
@@ -21,7 +21,7 @@ const DeathHandler: NPCHandler = {
         handleLevelUp(player)
         break
       case 'skillUnlock':
-        await handleSkillMenu(player)
+        await handleSkillMenu(player, context)
         break
       default:
         break
@@ -30,27 +30,39 @@ const DeathHandler: NPCHandler = {
 }
 
 // --- 서브 메뉴: 스킬 전수 ---
-async function handleSkillMenu(player: Player) {
+async function handleSkillMenu(player: Player, context: GameContext) {
+  const { events } = context
+  const completed = events.getCompleted()
+
   const lockableSkills = Object.values(SKILL_LIST).filter((s) => !player.hasSkill(s.id))
   if (lockableSkills.length === 0) {
     console.log('\n[알림] 이미 모든 기술을 터득하셨습니다.')
     return
   }
 
-  const choices = [
-    ...lockableSkills.map((s) => ({
-      name: s.id, // 내부 값
-      message: `${s.name} (LV ${SKILL_LIST[s.id].requiredLevel})`, // 표시될 이름
-    })),
-    { name: 'back', message: '🔙 뒤로 가기' },
-  ]
+  const choices = lockableSkills.map((s) => {
+    const skillData = SKILL_LIST[s.id]
+    // 해금 조건(unlocks)이 completed 배열에 있는지 확인
+    const isUnlocked = !skillData.unlocks || skillData.unlocks.every((req) => completed.includes(req))
+
+    return {
+      name: s.id,
+      message: isUnlocked
+        ? `${s.name} (LV ${skillData.requiredLevel})`
+        : `??? (해금 조건: ${skillData.unlockHint || '특정 조건 달성'}) 🔒`,
+      disabled: !isUnlocked || player.level < skillData.requiredLevel,
+    }
+  })
 
   // 1. Enquirer Select 메뉴 생성
   const { skillId } = await enquirer.prompt<{ skillId: SkillId | 'back' }>({
     type: 'select',
     name: 'skillId',
     message: '전수받을 기술을 선택하세요:',
-    choices,
+    choices: [
+      ...choices,
+      { name: 'back', message: '🔙 뒤로 가기' }
+    ],
     format: (value) => {
       const selected = choices.find((c) => c.name === value)
 

@@ -198,6 +198,8 @@ export interface Skill {
   description: string
   cost: number
   requiredLevel: number
+  unlocks: string[]
+  unlockHint: string
   execute: (player: Player, context: GameContext, args: string[]) => void
 }
 

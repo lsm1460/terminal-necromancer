@@ -1,6 +1,6 @@
 {
   "player": {
-    "x": 0,
+    "x": 1,
     "y": 1,
     "_maxHp": 100,
     "hp": 100,
@@ -175,7 +175,5 @@
     }
   },
   "drop": null,
-  "completedEvents": [
-    "first_boss"
-  ]
+  "completedEvents": []
 }
