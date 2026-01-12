@@ -1,4 +1,4 @@
-import { GameContext } from '../../../types'
+import { GameContext, SkillResult } from '../../../types'
 import { Battle, CombatUnit } from '../../Battle'
 import { Player } from '../../Player'
 
@@ -12,7 +12,7 @@ export const corpseExplosion = (
   context: GameContext,
   targetId: string,
   enemies: CombatUnit[] = []
-): boolean => {
+): SkillResult => {
   const { world } = context
   const { x, y } = player.ref.pos
 
@@ -22,7 +22,11 @@ export const corpseExplosion = (
 
   if (!selectedCorpse) {
     console.log('\n[실패] 폭발시킬 시체가 근처에 없습니다.')
-    return false
+    return {
+      isSuccess: false,
+      isAggressive: false,
+      gross: 0,
+    }
   }
 
   // 2. 기초 데미지(rawDamage) 계산
@@ -67,5 +71,9 @@ export const corpseExplosion = (
   // 4. 사용한 시체 제거
   world.removeCorpse(selectedCorpse.id)
 
-  return true
+  return {
+    isSuccess: true,
+    isAggressive: true,
+    gross: 70,
+  }
 }

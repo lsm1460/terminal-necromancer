@@ -1,9 +1,9 @@
 import { Rarity, RARITY_DATA } from '../../../consts'
-import { BattleTarget, GameContext } from '../../../types'
+import { BattleTarget, GameContext, SkillResult } from '../../../types'
 import { CombatUnit } from '../../Battle'
 import { Player } from '../../Player'
 
-export const raiseSkeleton = (player: CombatUnit<Player>, context: GameContext, targetId: string): boolean => {
+export const raiseSkeleton = (player: CombatUnit<Player>, context: GameContext, targetId: string): SkillResult => {
   const { world, npcs } = context
   const { x, y } = player.ref.pos
 
@@ -15,7 +15,11 @@ export const raiseSkeleton = (player: CombatUnit<Player>, context: GameContext, 
 
   if (!selectedCorpse) {
     console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
-    return false
+    return {
+      isSuccess: false,
+      isAggressive: false,
+      gross: 0,
+    }
   }
 
   // --- 1. 등급 결정 로직 ---
@@ -83,10 +87,18 @@ export const raiseSkeleton = (player: CombatUnit<Player>, context: GameContext, 
 
     console.log(`\n[강령술] ${selectedCorpse.name}의 뼈가 맞춰지며 일어섭니다!`)
     console.log(`${finalRarity} 등급의 스켈레톤이 부활했습니다! 💀`)
-    return true
+    return {
+      isSuccess: true,
+      isAggressive: false,
+      gross: 20,
+    }
   } else {
     console.log('\n[알림] 더 이상 해골병사를 부릴 수 없습니다.')
   }
 
-  return false
+  return {
+    isSuccess: false,
+    isAggressive: false,
+    gross: 0,
+  }
 }

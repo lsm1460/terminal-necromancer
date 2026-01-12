@@ -1,11 +1,21 @@
 import enquirer from 'enquirer'
-import { GameContext, SKILL_IDS, SkillId } from '../../types'
+import { GameContext, SKILL_IDS, SkillId, SkillResult } from '../../types'
 import { SKILL_LIST } from './skill'
 import { CombatUnit } from '../Battle'
 import { Player } from '../Player'
 
 export class SkillManager {
-  static async requestAndExecuteSkill(player: CombatUnit<Player>, context: GameContext, enemies?: CombatUnit[]): Promise<boolean> {
+  static async requestAndExecuteSkill(
+    player: CombatUnit<Player>,
+    context: GameContext,
+    enemies?: CombatUnit[]
+  ): Promise<SkillResult> {
+    const failResult = {
+      isSuccess: false,
+      isAggressive: false,
+      gross: 0,
+    }
+
     const { world } = context
     const { x, y } = player.ref.pos
 
@@ -31,14 +41,14 @@ export class SkillManager {
       },
     })
 
-    if (skillId === 'cancel') return false
+    if (skillId === 'cancel') return failResult
 
     const targetSkill = SKILL_LIST[skillId as SkillId]
 
     // 3. 자원 체크
     if (player.ref.mp < targetSkill.cost) {
       console.log(`\n🚫 마력이 부족합니다! (필요: ${targetSkill.cost} / 현재: ${player.ref.mp})`)
-      return false
+      return failResult
     }
 
     let selectedCorpseId: string | undefined
@@ -50,7 +60,7 @@ export class SkillManager {
       const corpses = world.getCorpsesAt(x, y)
       if (corpses.length === 0) {
         console.log('\n💬 주변에 활용할 시체가 없습니다.')
-        return false
+        return failResult
       }
 
       const corpseChoices = [
@@ -76,20 +86,19 @@ export class SkillManager {
 
       if (corpseId === 'cancel') {
         console.log('\n💬 스킬 사용을 취소했습니다.')
-        return false
+        return failResult
       }
 
       selectedCorpseId = corpseId
     }
 
     if (!selectedCorpseId) {
-      return false
+      return failResult
     }
 
     // 5. 실행 및 마력 소모
-    targetSkill.execute(player, context, [selectedCorpseId], enemies)
     player.ref.mp -= targetSkill.cost
 
-    return true
+    return targetSkill.execute(player, context, [selectedCorpseId], enemies)
   }
 }

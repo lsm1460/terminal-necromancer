@@ -193,6 +193,12 @@ export const SKILL_IDS = {
 // 2. 위 객체의 값들만 모아서 타입으로 추출
 export type SkillId = (typeof SKILL_IDS)[keyof typeof SKILL_IDS]
 
+export type SkillResult = {
+    isSuccess: boolean
+    isAggressive: boolean
+    gross: number
+  }
+
 // 3. 스킬 인터페이스 정의
 export interface Skill {
   id: SkillId
@@ -202,7 +208,7 @@ export interface Skill {
   requiredLevel: number
   unlocks: string[]
   unlockHint: string
-  execute: (player: CombatUnit<Player>, context: GameContext, args: string[], enemies?: CombatUnit[]) => void
+  execute: (player: CombatUnit<Player>, context: GameContext, args: string[], enemies?: CombatUnit[]) => SkillResult
 }
 
 export interface NPCState {

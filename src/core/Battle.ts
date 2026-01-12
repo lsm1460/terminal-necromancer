@@ -33,13 +33,13 @@ export type Buff = {
   hp?: number
 }
 
-export type CalcDamageOptions = NonNullable<Parameters<typeof Battle.calcDamage>[2]>;
-export type CalcDamageResult = ReturnType<typeof Battle.calcDamage>;
+export type CalcDamageOptions = NonNullable<Parameters<typeof Battle.calcDamage>[2]>
+export type CalcDamageResult = ReturnType<typeof Battle.calcDamage>
 
 // 전투 로그 출력을 위해 추가 정보가 포함된 확장 반환 타입
 export interface DamageResult extends CalcDamageResult {
-  currentHp: number;
-  isDead: boolean;
+  currentHp: number
+  isDead: boolean
 }
 
 export interface CombatUnit<T = BattleTarget> {
@@ -51,10 +51,7 @@ export interface CombatUnit<T = BattleTarget> {
   deBuff: Buff[]
   orderWeight: number
   ref: T // 원본 객체 참조 (데이터 직접 수정용)
-  takeDamage: <T extends BattleTarget | Player>(
-    attacker: CombatUnit<T>,
-    options?: CalcDamageOptions
-  ) => DamageResult;
+  takeDamage: <T extends BattleTarget | Player>(attacker: CombatUnit<T>, options?: CalcDamageOptions) => DamageResult
 }
 
 export class Battle {
@@ -186,8 +183,8 @@ export class Battle {
         target.takeDamage(playerUnit)
       }
     } else if (action === '스킬') {
-      const success = await SkillManager.requestAndExecuteSkill(playerUnit, context, aliveEnemies)
-      if (!success) {
+      const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, aliveEnemies)
+      if (!isSuccess) {
         // 스킬 사용을 취소했거나 실패했다면 다시 행동 선택으로
         return await this.handlePlayerAction(playerUnit, enemies, context)
       }

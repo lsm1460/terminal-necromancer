@@ -1,11 +1,11 @@
-import { GameContext } from '../../../types'
+import { GameContext, SkillResult } from '../../../types'
 import { CombatUnit } from '../../Battle'
 import { Player } from '../../Player'
 
 /**
  * 영혼 흡수: 적 대상으로부터 정수를 추출하여 마나를 회복
  */
-export const soulHarvest = (player: CombatUnit<Player>, context: GameContext, targetId: string): boolean => {
+export const soulHarvest = (player: CombatUnit<Player>, context: GameContext, targetId: string): SkillResult => {
   const { world } = context
   const { x, y } = player.ref.pos
 
@@ -17,7 +17,11 @@ export const soulHarvest = (player: CombatUnit<Player>, context: GameContext, ta
 
   if (!selectedCorpse) {
     console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
-    return false
+    return {
+      isSuccess: false,
+      isAggressive: false,
+      gross: 0,
+    }
   }
 
   // 2. 수치 결정
@@ -38,5 +42,9 @@ export const soulHarvest = (player: CombatUnit<Player>, context: GameContext, ta
   // (선택) 회복 스킬이라도 적에게 아주 미미한 데미지나 경직을 줄 수 있습니다.
   // target.takeDamage(5);
 
-  return true
+  return {
+    isSuccess: true,
+    isAggressive: false,
+    gross: 30,
+  }
 }

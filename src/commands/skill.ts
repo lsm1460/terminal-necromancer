@@ -6,15 +6,28 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
   const { map, npcs } = context
   const tile = map.getTile(player.pos.x, player.pos.y)
 
-  const enemies = [
-    ...(tile.monsters?.filter((m) => m.isAlive) || []).map((_target) => Battle.toCombatUnit(_target, 'monster')),
+  const battleTargets = [
+    ...(tile.monsters?.filter((m) => m.isAlive) || []),
     ...(tile.npcIds || [])
       .map((id) => npcs.getNPC(id)) // ID로 NPC 객체 조회
-      .filter((npc): npc is NPC => !!npc && npc.isAlive && npc.faction !== 'untouchable')
-      .map((_target) => Battle.toCombatUnit(_target, 'npc')),
+      .filter((npc): npc is NPC => !!npc && npc.isAlive && npc.faction !== 'untouchable'),
   ]
 
-  await SkillManager.requestAndExecuteSkill(Battle.toCombatUnit(player, 'player'), context, enemies as CombatUnit[])
+  const enemies = battleTargets.map((target) => {
+    const isNpc = !!(target as NPC).faction
+
+    return Battle.toCombatUnit(target, isNpc? 'npc' : 'monster')
+  })
+
+  const { isAggressive, gross } = await SkillManager.requestAndExecuteSkill(
+    Battle.toCombatUnit(player, 'player'),
+    context,
+    enemies as CombatUnit[]
+  )
+
+  if (isAggressive) {
+    await Battle.runCombatLoop(player, battleTargets, context)
+  }
 
   return false
 }
