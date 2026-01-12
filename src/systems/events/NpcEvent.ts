@@ -1,13 +1,13 @@
-import { Battle } from '../../core/Battle'
 import { Player } from '../../core/Player'
 import { GameContext, Tile } from '../../types'
+import { delay } from '../../utils'
 
 export class NpcEvent {
   constructor() {}
 
   static async handle(tile: Tile, player: Player, context: GameContext) {
     // 적대 세력은 선공한다
-    const { npcs } = context
+    const { npcs, battle } = context
 
     const npcAlive = (tile.npcIds || [])
       .map((id: string) => npcs.getNPC(id))
@@ -18,7 +18,10 @@ export class NpcEvent {
 
     if (preemptiveEnemies.length > 0) {
       console.log(`⚠️  npc: ${preemptiveEnemies[0].name}의 기습!`)
-      await Battle.runCombatLoop(player, preemptiveEnemies, context)
+
+      await delay()
+
+      await battle.runCombatLoop(preemptiveEnemies, context)
     }
   }
 }

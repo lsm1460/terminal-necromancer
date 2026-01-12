@@ -1,9 +1,15 @@
 import fs from 'fs'
 import path from 'path'
-import { BattleTarget, NpcSkill } from '../../types'
+import { GameContext, NpcSkill } from '../../types'
 import { CombatUnit } from '../Battle'
 
-type SkillExecutor<T = void> = (skillId: string, attacker: CombatUnit, ally: CombatUnit[], enemies: CombatUnit[]) => T
+type SkillExecutor<T = void> = (
+  skillId: string,
+  attacker: CombatUnit,
+  ally: CombatUnit[],
+  enemies: CombatUnit[],
+  context: GameContext
+) => T
 
 export class NpcSkillManager {
   private skillData: Record<string, NpcSkill>
@@ -38,8 +44,8 @@ export class NpcSkillManager {
     }
   }
 
-  execute: SkillExecutor<CombatUnit[]> = (...params) => {
-    const [skillId, attacker, ally, enemies] = params
+  execute: SkillExecutor = (...params) => {
+    const [skillId, attacker, ally, enemies, context] = params
 
     const skill = this.getSkill(skillId)
     if (!skill) return []
@@ -47,7 +53,7 @@ export class NpcSkillManager {
     // 1. 타겟 배열 정의
     let targets = this.findTargets(...params)
 
-    if (targets.length === 0) return []
+    if (targets.length === 0) return
 
     console.log(`\n✨ ${attacker.name}의 [${skill.name}]!`)
     console.log(`💬 ${skill.description}`)
@@ -61,14 +67,12 @@ export class NpcSkillManager {
         target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
         console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
       } else {
-        target.takeDamage(attacker, {
+        target.takeDamage(attacker, context, {
           skillAtkMult: skill.power, // 스킬의 위력(배율) 전달
           // 추가 옵션이 필요하다면 여기에 작성 (예: isIgnoreDef: skill.isIgnoreDef)
         })
       }
     })
-
-    return targets
   }
 
   getRandomSkillId(skills: string[]): string | null {

@@ -1,6 +1,7 @@
 import path from 'path'
 import { createCLI } from './cli'
 import { MAP_IDS } from './consts'
+import { Battle } from './core/Battle'
 import { LootFactory } from './core/LootFactory'
 import { MapManager } from './core/MapManager'
 import { MonsterFactory } from './core/MonsterFactory'
@@ -32,6 +33,7 @@ const drop = new DropSystem(itemPath, dropPath)
 const monster = new MonsterFactory(monsterPath)
 const saved = save.load()
 const player = new Player(levelPath, saved?.player)
+const battle = new Battle(player)
 const map = new MapManager(mapPath, saved?.sceneId)
 const npcs = new NPCManager(npcPath, saved?.npcs)
 const world = new World(map)
@@ -42,7 +44,7 @@ if (saved?.drop) {
   world.addLootBag(saved.drop)
 }
 
-const context = { map, world, events, npcs, drop, save, npcSkills }
+const context = { map, world, events, npcs, drop, save, npcSkills, battle }
 
 player.onDeath = () => {
   console.log('나는 사망했다...')

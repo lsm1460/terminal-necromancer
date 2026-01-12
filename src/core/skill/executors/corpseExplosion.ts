@@ -1,5 +1,5 @@
 import { GameContext, SkillResult } from '../../../types'
-import { Battle, CombatUnit } from '../../Battle'
+import { CombatUnit } from '../../Battle'
 import { Player } from '../../Player'
 
 /**
@@ -48,7 +48,7 @@ export const corpseExplosion = (
          * - rawDamage를 넘겼으므로 calcDamage는 공격자의 ATK 대신 이 값을 기초값으로 사용함
          * - 적의 DEF(방어력)에 의해 감쇄되며, 회피(EVA) 판정도 일어남
          */
-        enemy.takeDamage(player, {
+        enemy.takeDamage(player, context, {
           rawDamage: rawExplosionDamage,
           isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
           isSureHit: false, // 회피 불가능하게 하려면 true로 변경

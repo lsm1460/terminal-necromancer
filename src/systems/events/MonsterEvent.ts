@@ -1,7 +1,7 @@
-import { Battle } from '../../core/Battle'
 import { MonsterFactory } from '../../core/MonsterFactory'
 import { Player } from '../../core/Player'
 import { GameContext, Monster, Tile } from '../../types'
+import { delay } from '../../utils'
 
 export class MonsterEvent {
   constructor(private monsterFactory: MonsterFactory) {}
@@ -44,7 +44,10 @@ export class MonsterEvent {
 
       if (preemptiveEnemy) {
         console.log(`⚠️  적: ${preemptiveEnemy.name}의 기습!`)
-        await Battle.runCombatLoop(player, finalAlive, context)
+
+        await delay()
+
+        await context.battle.runCombatLoop(finalAlive, context)
       }
     }
   }

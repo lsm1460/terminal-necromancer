@@ -1,8 +1,7 @@
-import { Battle } from '../core/Battle'
 import { BattleTarget, CommandFunction, NPC } from '../types'
 
 export const attackCommand: CommandFunction = async (player, args, context) => {
-  const { map, npcs } = context
+  const { map, npcs, battle } = context
   const tile = map.getTile(player.pos.x, player.pos.y)
   const targetName = args[0]
 
@@ -50,7 +49,7 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
   }
 
   // 3. 다대다 전투 루프(combatLoop) 진입
-  await Battle.runCombatLoop(player, battleTargets, context)
+  await battle.runCombatLoop(battleTargets, context)
 
   return false
 }

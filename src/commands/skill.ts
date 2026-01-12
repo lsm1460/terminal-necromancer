@@ -1,9 +1,10 @@
-import { Battle, CombatUnit } from '../core/Battle'
+import { CombatUnit } from '../core/Battle'
 import { SkillManager } from '../core/skill'
 import { CommandFunction, NPC } from '../types'
+import { delay } from '../utils'
 
 export const skillCommand: CommandFunction = async (player, args, context) => {
-  const { map, npcs } = context
+  const { map, npcs, battle } = context
   const tile = map.getTile(player.pos.x, player.pos.y)
 
   const battleTargets = [
@@ -16,17 +17,19 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
   const enemies = battleTargets.map((target) => {
     const isNpc = !!(target as NPC).faction
 
-    return Battle.toCombatUnit(target, isNpc? 'npc' : 'monster')
+    return battle.toCombatUnit(target, isNpc ? 'npc' : 'monster')
   })
 
   const { isAggressive, gross } = await SkillManager.requestAndExecuteSkill(
-    Battle.toCombatUnit(player, 'player'),
+    battle.toCombatUnit(player, 'player'),
     context,
     enemies as CombatUnit[]
   )
 
   if (isAggressive) {
-    await Battle.runCombatLoop(player, battleTargets, context)
+    await delay()
+
+    await battle.runCombatLoop(battleTargets, context)
   }
 
   return false

@@ -1,12 +1,11 @@
 import enquirer from 'enquirer'
-import { Battle } from '../../core/Battle'
+import _ from 'lodash'
 import { Player } from '../../core/Player'
 import { GameContext, Tile } from '../../types'
-import _ from 'lodash'
 
 export class BossEvent {
   static async handle(tile: Tile, player: Player, context: GameContext) {
-    const { npcs, events } = context
+    const { npcs, events, battle } = context
 
     // 1. 타일 정보에서 보스 NPC 아이디 추출
     const bossId = tile.npcIds?.[0]
@@ -45,7 +44,7 @@ export class BossEvent {
 
     // 4. 전투 실행
     // bossNpc가 Hostile NPC라면 그대로 전달합니다.
-    await Battle.runCombatLoop(player, [bossNpc as any], context)
+    await battle.runCombatLoop([bossNpc as any], context)
 
     // 5. 승리 시 이벤트 처리
     if (!bossNpc.isAlive) {

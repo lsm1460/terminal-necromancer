@@ -1,5 +1,5 @@
 import { Rarity } from './consts'
-import { CombatUnit } from './core/Battle'
+import { Battle, CombatUnit } from './core/Battle'
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
@@ -93,18 +93,20 @@ type ItemOptions = {
 }
 
 // 무기
-export type WeaponItem = BaseItem & ItemOptions & {
-  type: ItemType.WEAPON
-  atk: number
-  crit: number
-}
+export type WeaponItem = BaseItem &
+  ItemOptions & {
+    type: ItemType.WEAPON
+    atk: number
+    crit: number
+  }
 
 // 방어구
-export type ArmorItem = BaseItem & ItemOptions & {
-  type: ItemType.ARMOR
-  def: number
-  eva?: number
-}
+export type ArmorItem = BaseItem &
+  ItemOptions & {
+    type: ItemType.ARMOR
+    def: number
+    eva?: number
+  }
 
 // 음식
 export type FoodItem = BaseItem & {
@@ -150,6 +152,7 @@ export interface GameContext {
   events: EventSystem
   drop: DropSystem
   save: SaveSystem
+  battle: Battle
   rl: any
 
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
@@ -194,10 +197,10 @@ export const SKILL_IDS = {
 export type SkillId = (typeof SKILL_IDS)[keyof typeof SKILL_IDS]
 
 export type SkillResult = {
-    isSuccess: boolean
-    isAggressive: boolean
-    gross: number
-  }
+  isSuccess: boolean
+  isAggressive: boolean
+  gross: number
+}
 
 // 3. 스킬 인터페이스 정의
 export interface Skill {
@@ -225,21 +228,21 @@ export type GameEvent = {
   postTalk?: string[]
 }
 
-export type SkillTargetType = 
-  | 'ENEMY_SINGLE' 
-  | 'ENEMY_BACK' 
-  | 'ENEMY_ALL' 
-  | 'ALLY_SINGLE' 
-  | 'ALLY_LOWEST_HP' 
+export type SkillTargetType =
+  | 'ENEMY_SINGLE'
+  | 'ENEMY_BACK'
+  | 'ENEMY_ALL'
+  | 'ALLY_SINGLE'
+  | 'ALLY_LOWEST_HP'
   | 'ALLY_ALL_HP'
   | 'SINGLE_BUFF'
 
 export type NpcSkill = {
-  id: string;
-  name: string;
-  description: string;
-  chance: number;
-  power: number;
-  targetType: SkillTargetType;
-  type: string; // "physical", "dark", "holy" 등 자유롭게 확장 가능
-};
+  id: string
+  name: string
+  description: string
+  chance: number
+  power: number
+  targetType: SkillTargetType
+  type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
+}

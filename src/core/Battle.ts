@@ -1,9 +1,10 @@
 import enquirer from 'enquirer'
-import { Player } from './Player'
-import { BattleTarget, Drop, GameContext, NPC } from '../types'
-import { LootFactory } from './LootFactory'
-import { SkillManager } from './skill'
 import _ from 'lodash'
+import { BattleTarget, Drop, GameContext, NPC } from '../types'
+import { delay } from '../utils'
+import { LootFactory } from './LootFactory'
+import { Player } from './Player'
+import { SkillManager } from './skill'
 
 interface CombatStatus {
   atk: number
@@ -51,27 +52,34 @@ export interface CombatUnit<T = BattleTarget> {
   deBuff: Buff[]
   orderWeight: number
   ref: T // 원본 객체 참조 (데이터 직접 수정용)
-  takeDamage: <T extends BattleTarget | Player>(attacker: CombatUnit<T>, options?: CalcDamageOptions) => DamageResult
+  takeDamage: <T extends BattleTarget | Player>(
+    attacker: CombatUnit<T>,
+    context: GameContext,
+    options?: CalcDamageOptions
+  ) => DamageResult
 }
 
 export class Battle {
-  static async runCombatLoop(player: Player, enemies: BattleTarget[], context: GameContext) {
+  constructor(public player: Player) {}
+
+  async runCombatLoop(enemies: BattleTarget[], context: GameContext) {
     console.clear()
     console.log(`\n⚔️  전투가 시작되었습니다!`)
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
-    while (player.isAlive && enemies.some((e) => e.isAlive)) {
-      // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
-      const turnOrder = this.getTurnOrder(player, enemies)
-      let enemiesSide = _.chain(turnOrder)
-        .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
-        .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
-        .value()
+    const turnOrder = this.getTurnOrder(this.player, enemies)
 
+    while (this.player.isAlive && enemies.some((e) => e.isAlive)) {
       for (const unit of turnOrder) {
+        // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
+        let enemiesSide = _.chain(turnOrder)
+          .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
+          .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
+          .value()
+
         // 전투 도중 누군가 죽었다면 체크
         if (!unit.ref.isAlive) continue
-        if (!player.isAlive || !enemies.some((e) => e.isAlive)) break
+        if (!this.player.isAlive || !enemies.some((e) => e.isAlive)) break
 
         const playerSide = _.chain(turnOrder)
           .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
@@ -80,7 +88,7 @@ export class Battle {
               return Infinity // 플레이어는 가장 큰 값을 주어 무조건 마지막으로 보냄
             }
             // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
-            return _.findIndex(player.minions, { id: unit.id })
+            return _.findIndex(this.player.minions, { id: unit.id })
           })
           .value()
 
@@ -96,24 +104,24 @@ export class Battle {
             return
           }
         } else if (unit.type === 'minion') {
-          this.executeAutoAttack(unit, enemiesSide, playerSide, player, context)
+          this.executeAutoAttack(unit, enemiesSide, playerSide, context)
         } else {
           // npc라면 같은 faction만 ally로..
           enemiesSide = enemiesSide.filter((e) => (e.ref as NPC).faction === (unit.ref as NPC).faction)
 
-          this.executeAutoAttack(unit, playerSide, enemiesSide, player, context)
+          this.executeAutoAttack(unit, playerSide, enemiesSide, context)
         }
 
         // 가독성을 위한 짧은 지연
-        await new Promise((resolve) => setTimeout(resolve, 800))
+        await delay()
       }
     }
 
-    this.printBattleResult(player)
+    this.printBattleResult()
   }
 
   // --- 내부 로직 함수들 ---
-  private static getTurnOrder(player: Player, enemies: BattleTarget[]): CombatUnit[] {
+  private getTurnOrder(player: Player, enemies: BattleTarget[]): CombatUnit[] {
     const units: CombatUnit[] = []
 
     // 플레이어 추가
@@ -138,7 +146,7 @@ export class Battle {
     return units.sort((a, b) => b.stats.agi - a.stats.agi)
   }
 
-  private static async handlePlayerAction(
+  private async handlePlayerAction(
     playerUnit: CombatUnit<Player>,
     enemies: CombatUnit[],
     context: GameContext
@@ -180,7 +188,7 @@ export class Battle {
 
       if (target) {
         // 공격 실행
-        target.takeDamage(playerUnit)
+        target.takeDamage(playerUnit, context)
       }
     } else if (action === '스킬') {
       const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, aliveEnemies)
@@ -210,31 +218,21 @@ export class Battle {
     return false
   }
 
-  private static executeAutoAttack(
-    attacker: CombatUnit,
-    targets: CombatUnit[],
-    ally: CombatUnit[],
-    player: Player,
-    context: GameContext
-  ) {
+  private executeAutoAttack(attacker: CombatUnit, targets: CombatUnit[], ally: CombatUnit[], context: GameContext) {
     if (targets.length === 0) return
     const target = targets[0]
 
     const autoSkillId = context.npcSkills.getRandomSkillId(attacker.ref.skills || [])
     if (autoSkillId) {
-      const resTargets = context.npcSkills.execute(autoSkillId, attacker, ally, targets)
-
-      resTargets
-        .filter((target) => target.ref.hp < 1)
-        .forEach((unit) => this.handleUnitDeath(player, unit.ref, context))
+      context.npcSkills.execute(autoSkillId, attacker, ally, targets, context)
     } else {
-      target.takeDamage(attacker)
+      target.takeDamage(attacker, context)
     }
   }
 
-  static handleUnitDeath(player: Player, target: BattleTarget, context: GameContext) {
+  private handleUnitDeath(target: BattleTarget, context: GameContext) {
     const { world, drop: dropTable, npcs } = context
-    const { x, y } = player.pos // 현재 위치
+    const { x, y } = this.player.pos // 현재 위치
 
     // 1. 기본 사망 상태 설정
     target.hp = 0
@@ -247,7 +245,7 @@ export class Battle {
     // NPC나 몬스터가 죽었을 때만 실행
 
     if (target.isMinion) {
-      player.removeMinion(target.id)
+      this.player.removeMinion(target.id)
     } else if (!target.isMinion && (target.exp || target.dropTableId)) {
       // npc
       const npc = target as NPC
@@ -258,8 +256,8 @@ export class Battle {
 
       const { gold, drops } = LootFactory.fromTarget(npc, dropTable)
 
-      player.gainExp(npc.exp || 0)
-      player.gainGold(gold)
+      this.player.gainExp(npc.exp || 0)
+      this.player.gainGold(gold)
 
       let logMessage = `✨ ${npc.name} 처치! EXP +${npc.exp || 0}`
       if (gold > 0) logMessage += `, 골드 +${gold}`
@@ -282,7 +280,7 @@ export class Battle {
     }
   }
 
-  static toCombatUnit<T extends BattleTarget | Player>(unit: IUnit, type: CombatUnit['type']): CombatUnit<T> {
+  public toCombatUnit<T extends BattleTarget | Player>(unit: IUnit, type: CombatUnit['type']): CombatUnit<T> {
     const combatUnit: CombatUnit<T> = {
       id: unit.id || 'player',
       name: unit.name || 'player',
@@ -298,8 +296,8 @@ export class Battle {
       deBuff: [],
       orderWeight: unit?.orderWeight || 0,
       ref: unit as T,
-      takeDamage: (attacker, options = {}) => {
-        const result = this.calcDamage(attacker, combatUnit, options)
+      takeDamage: (attacker, context, options = {}) => {
+        const result = Battle.calcDamage(attacker, combatUnit, options)
         const { isEscape, damage, isCritical } = result
 
         if (!isEscape) {
@@ -327,6 +325,12 @@ export class Battle {
           }
         }
 
+        const isDead = combatUnit.ref.hp <= 0
+
+        if (isDead) {
+          this.handleUnitDeath(unit as BattleTarget, context)
+        }
+
         return {
           ...result,
           currentHp: combatUnit.ref.hp,
@@ -338,13 +342,13 @@ export class Battle {
     return combatUnit
   }
 
-  private static printBattleResult(player: Player) {
-    if (player.isAlive) {
+  private printBattleResult() {
+    if (this.player.isAlive) {
       console.log(`\n🏆 전투에서 승리했습니다!`)
     } else {
       console.log(`\n💀 전투에서 패배했습니다...`)
 
-      player?.onDeath && player.onDeath()
+      this.player?.onDeath && this.player.onDeath()
     }
   }
 
