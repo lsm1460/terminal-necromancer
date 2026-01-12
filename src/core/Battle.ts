@@ -300,15 +300,31 @@ export class Battle {
       ref: unit as T,
       takeDamage: (attacker, options = {}) => {
         const result = this.calcDamage(attacker, combatUnit, options)
+        const { isEscape, damage, isCritical } = result
 
-        if (!result.isEscape) {
-          combatUnit.ref.hp = Math.max(0, combatUnit.ref.hp - result.damage)
+        if (!isEscape) {
+          combatUnit.ref.hp = Math.max(0, combatUnit.ref.hp - damage)
         }
 
         const _npc = combatUnit.ref as NPC
 
         if (_npc.faction) {
           _npc.updateHostility(5)
+        }
+
+        const defender = combatUnit
+        const currentHp = defender.ref.hp
+
+        if (isEscape) {
+          console.log(`💥 ${attacker.name}의 공격! ${defender.name}은/는 회피했다! (남은 HP: ${currentHp})`)
+        } else {
+          if (isCritical) {
+            console.log(
+              `⚡ CRITICAL HIT! ⚡ ${attacker.name}의 치명적인 일격! ${defender.name}에게 ${damage}의 강력한 피해! (남은 HP: ${currentHp})`
+            )
+          } else {
+            console.log(`💥 ${attacker.name}의 공격! ${defender.name}에게 ${damage}의 피해! (남은 HP: ${currentHp})`)
+          }
         }
 
         return {

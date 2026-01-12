@@ -61,18 +61,10 @@ export class NpcSkillManager {
         target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
         console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
       } else {
-        const result = target.takeDamage(attacker, {
+        target.takeDamage(attacker, {
           skillAtkMult: skill.power, // 스킬의 위력(배율) 전달
           // 추가 옵션이 필요하다면 여기에 작성 (예: isIgnoreDef: skill.isIgnoreDef)
         })
-
-        // 3. 결과 출력 (takeDamage의 반환값 활용)
-        if (result.isEscape) {
-          console.log(`💨 ${target.name}이(가) 공격을 날렵하게 회피했습니다!`)
-        } else {
-          const critMsg = result.isCritical ? ' ⭐크리티컬!' : ''
-          console.log(`💥 ${target.name}에게 ${result.damage}의 피해!${critMsg} (남은 HP: ${result.currentHp})`)
-        }
       }
     })
 

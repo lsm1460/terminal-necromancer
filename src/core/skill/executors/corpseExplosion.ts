@@ -48,22 +48,11 @@ export const corpseExplosion = (
          * - rawDamage를 넘겼으므로 calcDamage는 공격자의 ATK 대신 이 값을 기초값으로 사용함
          * - 적의 DEF(방어력)에 의해 감쇄되며, 회피(EVA) 판정도 일어남
          */
-        const result = enemy.takeDamage(player, {
+        enemy.takeDamage(player, {
           rawDamage: rawExplosionDamage,
           isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
           isSureHit: false, // 회피 불가능하게 하려면 true로 변경
         })
-
-        if (result.isEscape) {
-          console.log(` 💨 ${enemy.name}이(가) 폭발을 날렵하게 피했습니다!`)
-        } else {
-          const critMsg = result.isCritical ? ' ⭐크리티컬!' : ''
-          console.log(` └ 💥 ${enemy.name}: ${result.damage} 피해!${critMsg} (남은 HP: ${result.currentHp})`)
-
-          if (result.isDead) {
-            Battle.handleUnitDeath(player.ref, enemy.ref, context)
-          }
-        }
       }
     })
   }
