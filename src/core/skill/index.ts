@@ -1,3 +1,3 @@
 export * from './SkillManager'
 export * from './skill'
-export * from './SkillExecutor'
+export * from './executors'

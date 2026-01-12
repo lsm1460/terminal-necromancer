@@ -1,4 +1,5 @@
 import { Rarity } from './consts'
+import { CombatUnit } from './core/Battle'
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
@@ -174,6 +175,7 @@ export interface NPC extends BattleTarget {
   isBoss: boolean
   factionHostility: number
   factionContribution: number
+  updateHostility: (amount: number) => void
   noEscape?: boolean
   scripts?: {
     friendly: NPCScripts
@@ -200,7 +202,7 @@ export interface Skill {
   requiredLevel: number
   unlocks: string[]
   unlockHint: string
-  execute: (player: Player, context: GameContext, args: string[]) => void
+  execute: (player: CombatUnit<Player>, context: GameContext, args: string[], enemies?: CombatUnit[]) => void
 }
 
 export interface NPCState {

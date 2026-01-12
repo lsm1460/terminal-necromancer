@@ -51,7 +51,7 @@ export class NPCManager {
     if (!base || !state) return null
     if (state.reborn) return null
 
-    return {
+    const npc = {
       id,
       ...base,
       ...state,
@@ -59,7 +59,13 @@ export class NPCManager {
       isHostile: this.isHostile(id),
       factionHostility: this.factionHostility[base.faction] || 0,
       factionContribution: this.factionContribution[base.faction] || 0,
+      updateHostility: (_amount: number) => {
+
+        this.updateFactionHostility(base.faction, _amount)
+      }
     }
+
+    return npc
   }
 
   findNPC(npcIds: string[], npcName: string): NPC | null {

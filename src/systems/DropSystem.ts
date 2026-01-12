@@ -7,6 +7,7 @@ export interface DropEntry {
   itemId: string
   chance: number
   quantity?: [number, number]
+  minRarity?: 'common' | 'rare' | 'epic'
 }
 
 export interface DropTable {

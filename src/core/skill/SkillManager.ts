@@ -1,21 +1,22 @@
 import enquirer from 'enquirer'
 import { GameContext, SKILL_IDS, SkillId } from '../../types'
-import { Player } from '../Player'
 import { SKILL_LIST } from './skill'
+import { CombatUnit } from '../Battle'
+import { Player } from '../Player'
 
 export class SkillManager {
-  static async requestAndExecuteSkill(player: Player, context: GameContext): Promise<boolean> {
+  static async requestAndExecuteSkill(player: CombatUnit<Player>, context: GameContext, enemies?: CombatUnit[]): Promise<boolean> {
     const { world } = context
-    const { x, y } = player.pos
+    const { x, y } = player.ref.pos
 
     // 1. 가능 스킬 필터링
-    const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.hasSkill(skill.id))
+    const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.ref.hasSkill(skill.id))
 
     // 2. 스킬 선택 UI
     const { skillId } = await enquirer.prompt<{ skillId: string }>({
       type: 'select',
       name: 'skillId',
-      message: `스킬 선택 (현재 MP: ${player.mp})`,
+      message: `스킬 선택 (현재 MP: ${player.ref.mp})`,
       choices: [
         ...availableSkills.map((s) => ({
           name: s.id,
@@ -35,8 +36,8 @@ export class SkillManager {
     const targetSkill = SKILL_LIST[skillId as SkillId]
 
     // 3. 자원 체크
-    if (player.mp < targetSkill.cost) {
-      console.log(`\n🚫 마력이 부족합니다! (필요: ${targetSkill.cost} / 현재: ${player.mp})`)
+    if (player.ref.mp < targetSkill.cost) {
+      console.log(`\n🚫 마력이 부족합니다! (필요: ${targetSkill.cost} / 현재: ${player.ref.mp})`)
       return false
     }
 
@@ -86,8 +87,8 @@ export class SkillManager {
     }
 
     // 5. 실행 및 마력 소모
-    targetSkill.execute(player, context, [selectedCorpseId])
-    player.mp -= targetSkill.cost
+    targetSkill.execute(player, context, [selectedCorpseId], enemies)
+    player.ref.mp -= targetSkill.cost
 
     return true
   }

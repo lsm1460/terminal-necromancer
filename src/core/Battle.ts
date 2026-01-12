@@ -33,6 +33,15 @@ export type Buff = {
   hp?: number
 }
 
+export type CalcDamageOptions = NonNullable<Parameters<typeof Battle.calcDamage>[2]>;
+export type CalcDamageResult = ReturnType<typeof Battle.calcDamage>;
+
+// 전투 로그 출력을 위해 추가 정보가 포함된 확장 반환 타입
+export interface DamageResult extends CalcDamageResult {
+  currentHp: number;
+  isDead: boolean;
+}
+
 export interface CombatUnit<T = BattleTarget> {
   id: string
   name: string
@@ -42,6 +51,10 @@ export interface CombatUnit<T = BattleTarget> {
   deBuff: Buff[]
   orderWeight: number
   ref: T // 원본 객체 참조 (데이터 직접 수정용)
+  takeDamage: <T extends BattleTarget | Player>(
+    attacker: CombatUnit<T>,
+    options?: CalcDamageOptions
+  ) => DamageResult;
 }
 
 export class Battle {
@@ -170,10 +183,10 @@ export class Battle {
 
       if (target) {
         // 공격 실행
-        this.applyDamage(target, playerUnit, playerUnit.ref, context)
+        target.takeDamage(playerUnit)
       }
     } else if (action === '스킬') {
-      const success = await SkillManager.requestAndExecuteSkill(playerUnit.ref, context)
+      const success = await SkillManager.requestAndExecuteSkill(playerUnit, context, aliveEnemies)
       if (!success) {
         // 스킬 사용을 취소했거나 실패했다면 다시 행동 선택으로
         return await this.handlePlayerAction(playerUnit, enemies, context)
@@ -218,11 +231,11 @@ export class Battle {
         .filter((target) => target.ref.hp < 1)
         .forEach((unit) => this.handleUnitDeath(player, unit.ref, context))
     } else {
-      this.applyDamage(target, attacker, player, context)
+      target.takeDamage(attacker)
     }
   }
 
-  private static handleUnitDeath(player: Player, target: BattleTarget, context: GameContext) {
+  static handleUnitDeath(player: Player, target: BattleTarget, context: GameContext) {
     const { world, drop: dropTable, npcs } = context
     const { x, y } = player.pos // 현재 위치
 
@@ -243,7 +256,7 @@ export class Battle {
       const npc = target as NPC
 
       npcs.dead(npc.id)
-      
+
       npc.faction && context.npcs.setFactionHostility(npc.faction, 100)
 
       const { gold, drops } = LootFactory.fromTarget(npc, dropTable)
@@ -272,48 +285,8 @@ export class Battle {
     }
   }
 
-  private static applyDamage(
-    defender: CombatUnit,
-    attacker: CombatUnit<BattleTarget | Player>,
-    player: Player,
-    context: GameContext
-  ) {
-    let hostility = 5
-
-    const { isEscape, damage, isCritical } = this.calcDamage(attacker, defender)
-    if (isEscape) {
-      console.log(
-        `💥 ${attacker.name}의 공격! ${defender.name}은/는 회피했다! (남은 HP: ${Math.max(0, defender.ref.hp)})`
-      )
-    } else {
-      defender.ref.hp -= damage
-
-      if (isCritical) {
-        console.log(
-          `⚡ CRITICAL HIT! ⚡ ${attacker.name}의 치명적인 일격! ${defender.name}에게 ${damage}의 강력한 피해! (남은 HP: ${Math.max(0, defender.ref.hp)})`
-        )
-      } else {
-        console.log(
-          `💥 ${attacker.name}의 공격! ${defender.name}에게 ${damage}의 피해! (남은 HP: ${Math.max(0, defender.ref.hp)})`
-        )
-      }
-    }
-
-    if (defender.ref.hp <= 0 && defender.type !== 'player') {
-      this.handleUnitDeath(player, defender.ref, context)
-
-      return
-    }
-
-    const _npc = defender.ref as NPC
-
-    if (_npc.faction) {
-      context.npcs.updateFactionHostility(_npc.faction, hostility)
-    }
-  }
-
-  private static toCombatUnit(unit: IUnit, type: CombatUnit['type']): CombatUnit {
-    return {
+  static toCombatUnit<T extends BattleTarget | Player>(unit: IUnit, type: CombatUnit['type']): CombatUnit<T> {
+    const combatUnit: CombatUnit<T> = {
       id: unit.id || 'player',
       name: unit.name || 'player',
       type,
@@ -327,8 +300,29 @@ export class Battle {
       buff: [],
       deBuff: [],
       orderWeight: unit?.orderWeight || 0,
-      ref: unit as BattleTarget,
+      ref: unit as T,
+      takeDamage: (attacker, options = {}) => {
+        const result = this.calcDamage(attacker, combatUnit, options)
+
+        if (!result.isEscape) {
+          combatUnit.ref.hp = Math.max(0, combatUnit.ref.hp - result.damage)
+        }
+
+        const _npc = combatUnit.ref as NPC
+
+        if (_npc.faction) {
+          _npc.updateHostility(5)
+        }
+
+        return {
+          ...result,
+          currentHp: combatUnit.ref.hp,
+          isDead: combatUnit.ref.hp <= 0,
+        }
+      },
     }
+
+    return combatUnit
   }
 
   private static printBattleResult(player: Player) {
@@ -343,55 +337,49 @@ export class Battle {
 
   static calcDamage(
     attacker: CombatUnit<BattleTarget | Player>,
-    target: CombatUnit,
+    target: CombatUnit<BattleTarget | Player>,
     options: {
       skillAtkMult?: number
+      rawDamage?: number // 직접 계산된 데미지 (시체 폭발 등)
       isIgnoreDef?: boolean
       isFixed?: boolean
       isSureHit?: boolean
     } = {}
   ) {
-    // 1. 공격자의 최종 ATK 계산 (기본 + 버프 - 디버프)
-    const attackerBuffAtk = attacker.buff.reduce((acc, b) => acc + (b.atk || 0), 0)
-    const attackerDeBuffAtk = attacker.deBuff?.reduce((acc, d) => acc + (d.atk || 0), 0) || 0
+    // 1. 기초 데미지 설정
+    let baseAtk = 0
 
-    let finalAtk = Math.max(0, attacker.stats.atk + attackerBuffAtk - attackerDeBuffAtk)
-    finalAtk *= options.skillAtkMult || 1
+    if (options.rawDamage !== undefined) {
+      // 시체 폭발 등 이미 계산된 수치가 들어온 경우
+      baseAtk = options.rawDamage
+    } else {
+      // 일반적인 공격자 ATK 기반 계산
+      const attackerBuffAtk = attacker.buff.reduce((acc, b) => acc + (b.atk || 0), 0)
+      const attackerDeBuffAtk = attacker.deBuff?.reduce((acc, d) => acc + (d.atk || 0), 0) || 0
+      baseAtk = Math.max(0, attacker.stats.atk + attackerBuffAtk - attackerDeBuffAtk)
+      baseAtk *= options.skillAtkMult || 1
+    }
 
-    // 2. 방어자의 최종 DEF, EVA 계산 (기본 + 버프 - 디버프)
-    const targetBuffDef = target.buff.reduce((acc, b) => acc + (b.def || 0), 0)
-    const targetDeBuffDef = target.deBuff?.reduce((acc, d) => acc + (d.def || 0), 0) || 0
-    const finalDef = Math.max(0, target.stats.def + targetBuffDef - targetDeBuffDef)
-
+    // 2. 방어/회피 판정 (기존 로직 유지)
     const targetBuffEva = target.buff.reduce((acc, b) => acc + (b.eva || 0), 0)
     const targetDeBuffEva = target.deBuff?.reduce((acc, d) => acc + (d.eva || 0), 0) || 0
     const finalEva = Math.max(0, (target.stats?.eva || 0) + targetBuffEva - targetDeBuffEva)
 
-    // 3. 회피 판정 (필중 무시)
     if (!options.isSureHit && Math.random() < finalEva) {
       return { isEscape: true, damage: 0, isCritical: false }
     }
 
-    // 4. 크리티컬 판정 (예: 10% 확률 또는 attacker stats에 크리티컬 확률이 있다면 활용)
-    // 여기서는 예시로 10% 확률로 설정하겠습니다.
+    // 3. 크리티컬 및 방어력 적용
     const isCrit = Math.random() < (attacker.stats?.crit || 0)
-    if (isCrit) {
-      finalAtk *= 1.2
+    let finalDamage = isCrit ? baseAtk * 1.2 : baseAtk
+
+    if (!options.isFixed) {
+      const targetBuffDef = target.buff.reduce((acc, b) => acc + (b.def || 0), 0)
+      const targetDeBuffDef = target.deBuff?.reduce((acc, d) => acc + (d.def || 0), 0) || 0
+      const finalDef = options.isIgnoreDef ? 0 : Math.max(0, target.stats.def + targetBuffDef - targetDeBuffDef)
+      finalDamage = Math.max(1, finalDamage - Math.floor(finalDef / 2))
     }
 
-    // 5. 데미지 계산 (고정 데미지 vs 일반 공식)
-    let damage: number
-    if (options.isFixed) {
-      damage = Math.floor(finalAtk)
-    } else {
-      const effectiveDef = options.isIgnoreDef ? 0 : finalDef
-      damage = Math.max(1, Math.floor(finalAtk - Math.floor(effectiveDef / 2)))
-    }
-
-    return {
-      isEscape: false,
-      damage,
-      isCritical: isCrit,
-    }
+    return { isEscape: false, damage: Math.floor(finalDamage), isCritical: isCrit }
   }
 }
