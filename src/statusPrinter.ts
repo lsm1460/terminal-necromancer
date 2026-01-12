@@ -10,7 +10,6 @@ export function printTileStatus(player: Player, { map, npcs, world }: GameContex
   const npcList = (tile.npcIds || []).map((_id) => npcs.getNPC(_id)).filter((npc): npc is NPC => npc !== null)
 
   const alive = npcList.filter((npc) => npc.isAlive)
-
   const corpses = world.getCorpsesAt(x, y)
 
   if (alive.length > 0) {

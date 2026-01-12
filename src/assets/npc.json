@@ -93,6 +93,37 @@
     "description": "이보다 더 지하가 있습니다",
     "dropTableId": ""
   },
+  "portal": {
+    "id": "portal",
+    "name": "포탈",
+    "faction": "untouchable",
+    "hp": 8000,
+    "maxHp": 8000,
+    "atk": 15000,
+    "def": 5,
+    "eva": 1,
+    "exp": 5,
+    "isAlive": true,
+    "reborn": false,
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "이 층의 시작 위치로 이동합니다.",
+        "farewell": "전송됩니다.."
+      },
+      "normal": {
+        "greeting": "이 층의 시작 위치로 이동합니다.",
+        "farewell": "전송됩니다.."
+      },
+      "hostile": {
+        "greeting": "이 층의 시작 위치로 이동합니다.",
+        "farewell": "전송됩니다.."
+      }
+    },
+    "deathLine": "...",
+    "description": "사신의 작은 안배",
+    "dropTableId": ""
+  },
   "death": {
     "id": "death",
     "name": "사신",

@@ -81,6 +81,14 @@ export class NPCManager {
     return null
   }
 
+  dead(id: string) {
+    if (!this.states[id]) {
+      return
+    }
+
+    this.states[id].isAlive = false
+  }
+
   reborn(id: string) {
     if (!this.states[id]) {
       return

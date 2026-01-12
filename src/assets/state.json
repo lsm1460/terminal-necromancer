@@ -1,7 +1,7 @@
 {
   "player": {
     "x": 1,
-    "y": 1,
+    "y": 2,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
@@ -11,8 +11,8 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1325,
-    "exp": 11750,
+    "gold": 0,
+    "exp": 0,
     "level": 3,
     "inventoryMax": 3,
     "inventory": [
@@ -161,8 +161,14 @@
       },
       "first_boss": {
         "hp": 10,
+        "isAlive": false,
+        "reborn": false,
+        "relation": 0
+      },
+      "portal": {
+        "hp": 8000,
         "isAlive": true,
-        "reborn": true,
+        "reborn": false,
         "relation": 0
       }
     },
@@ -175,5 +181,7 @@
     }
   },
   "drop": null,
-  "completedEvents": []
+  "completedEvents": [
+    "first_boss"
+  ]
 }

@@ -223,7 +223,7 @@ export class Battle {
   }
 
   private static handleUnitDeath(player: Player, target: BattleTarget, context: GameContext) {
-    const { world, drop: dropTable } = context
+    const { world, drop: dropTable, npcs } = context
     const { x, y } = player.pos // 현재 위치
 
     // 1. 기본 사망 상태 설정
@@ -241,6 +241,9 @@ export class Battle {
     } else if (!target.isMinion && (target.exp || target.dropTableId)) {
       // npc
       const npc = target as NPC
+
+      npcs.dead(npc.id)
+      
       npc.faction && context.npcs.setFactionHostility(npc.faction, 100)
 
       const { gold, drops } = LootFactory.fromTarget(npc, dropTable)
