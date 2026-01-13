@@ -105,7 +105,7 @@ export const RARITY_DATA: Record<Rarity, { bonus: number; weight: number; subCla
         weight: 3,
       },
       {
-        name: '사제',
+        name: '수도자',
         orderWeight: 35,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
         skills: ['dark_heal'],

@@ -29,6 +29,7 @@ interface IUnit extends CombatStatus {
 export type Buff = {
   name: string
   duration: number
+  type: 'deBuff' | 'bind' | 'buff'
   atk?: number
   def?: number
   eva?: number
@@ -69,23 +70,23 @@ export class Battle {
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
     const turnOrder = this.getTurnOrder(this.player, enemies)
-    
+
     let turn = 0
     while (this.player.isAlive && enemies.some((e) => e.ref.isAlive)) {
       turn++
 
       console.log(`\n============== turn: ${turn} ==============`)
 
+      // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
       for (const unit of turnOrder) {
-        // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
+        // 전투 도중 누군가 죽었다면 체크
+        if (!unit.ref.isAlive) continue
+        if (!this.player.isAlive || !enemies.some((e) => e.ref.isAlive)) break
+
         let enemiesSide = _.chain(turnOrder)
           .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
           .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
           .value()
-
-        // 전투 도중 누군가 죽었다면 체크
-        if (!unit.ref.isAlive) continue
-        if (!this.player.isAlive || !enemies.some((e) => e.ref.isAlive)) break
 
         const playerSide = _.chain(turnOrder)
           .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
@@ -100,6 +101,18 @@ export class Battle {
 
         console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
         this.updateEffectsDuration(unit)
+
+        // 3. [추가] 속박(bind) 상태 체크
+        // updateEffectsDuration 후에도 bind가 남아있다면 이번 턴은 행동 불능입니다.
+        const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
+
+        if (bindEffect) {
+          console.log(
+            `\n⛓️  ${unit.name}은(는) ${bindEffect.name}에 갇혀 움직일 수 없습니다! (남은 기간: ${bindEffect.duration - 1}턴)`
+          )
+          // 행동을 수행하지 않고 다음 유닛으로 넘어갑니다.
+          continue
+        }
 
         if (unit.type === 'player') {
           // 플레이어 직접 조작
@@ -407,26 +420,26 @@ export class Battle {
   }
 
   private updateEffectsDuration(unit: CombatUnit) {
-  const effectTypes: ('buff' | 'deBuff')[] = ['buff', 'deBuff'];
+    const effectTypes: ('buff' | 'deBuff')[] = ['buff', 'deBuff']
 
-  effectTypes.forEach((type) => {
-    if (!unit[type]) return;
+    effectTypes.forEach((type) => {
+      if (!unit[type]) return
 
-    // 지속 시간 차감
-    unit[type].forEach((effect) => {
-      effect.duration--;
-    });
+      // 지속 시간 차감
+      unit[type].forEach((effect) => {
+        effect.duration--
+      })
 
-    // 만료된 효과 추출 (로그용)
-    const expiredEffects = unit[type].filter((e) => e.duration <= 0);
-    
-    expiredEffects.forEach((e) => {
-      const icon = type === 'buff' ? '✨' : '💢';
-      console.log(`[효과 만료] ${unit.name}의 ${icon} [${e.name}] 효과가 사라졌습니다.`);
-    });
+      // 만료된 효과 추출 (로그용)
+      const expiredEffects = unit[type].filter((e) => e.duration <= 0)
 
-    // 지속 시간이 남은 효과들만 유지
-    unit[type] = unit[type].filter((e) => e.duration > 0);
-  });
-}
+      expiredEffects.forEach((e) => {
+        const icon = type === 'buff' ? '✨' : '💢'
+        console.log(`[효과 만료] ${unit.name}의 ${icon} [${e.name}] 효과가 사라졌습니다.`)
+      })
+
+      // 지속 시간이 남은 효과들만 유지
+      unit[type] = unit[type].filter((e) => e.duration > 0)
+    })
+  }
 }

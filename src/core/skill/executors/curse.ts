@@ -61,6 +61,7 @@ export const curse = async (
 
     target.deBuff.push({
       name: '저주',
+      type: 'deBuff',
       atk: atkReduction,
       duration: duration + 1,
     })

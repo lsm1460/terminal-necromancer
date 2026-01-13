@@ -36,7 +36,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
   [SKILL_IDS.CURSE]: {
     id: SKILL_IDS.CURSE,
     name: '저주',
-    description: '대상을 약화시킵니다',
+    description: '대상을 약화시킵니다.',
     cost: 10,
     requiredLevel: 3,
     unlocks: ['first_boss'],
@@ -46,12 +46,22 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
   [SKILL_IDS.BONE_SPEAR]: {
     id: SKILL_IDS.BONE_SPEAR,
     name: '뼈 창',
-    description: '두 적을 동시에 공격합니다',
+    description: '두 적을 동시에 공격합니다.',
     cost: 12,
     requiredLevel: 3,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
     execute: (player, context, enemies) => SkillExecutor.boneSpear(player, context, enemies),
+  },
+  [SKILL_IDS.BONE_PRISON]: {
+    id: SKILL_IDS.BONE_PRISON,
+    name: '뼈 감옥',
+    description: '대상을 선택하여 움직임을 봉쇄합니다.',
+    cost: 20,
+    requiredLevel: 3,
+    unlocks: ['first_boss'],
+    unlockHint: '지하 2층 정화 완료',
+    execute: (player, context, enemies) => SkillExecutor.bonePrison(player, context, enemies),
   },
 }
 

@@ -5,14 +5,14 @@
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
-    "mp": 31,
+    "mp": 100,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 9,
-    "exp": 40,
+    "gold": 12,
+    "exp": 60,
     "level": 3,
     "inventoryMax": 3,
     "inventory": [
@@ -52,7 +52,7 @@
     "memorize": [
       "RAISE_SKELETON",
       "CURSE",
-      "BONE_SPEAR"
+      "BONE_PRISON"
     ],
     "equipped": {
       "weapon": {
@@ -83,14 +83,14 @@
       "RAISE_SKELETON",
       "CORPSE_EXPLOSION",
       "CURSE",
-      "BONE_SPEAR"
+      "BONE_PRISON"
     ],
     "skeleton": [
       {
         "id": "skeleton_1768178700024",
         "name": "[elite] 스켈레톤 사제",
         "maxHp": 18,
-        "hp": 17,
+        "hp": 18,
         "atk": 1,
         "def": 0,
         "agi": 3,
