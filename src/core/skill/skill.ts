@@ -43,6 +43,16 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     unlockHint: '지하 2층 정화 완료',
     execute: (player, context, enemies) => SkillExecutor.curse(player, context, enemies),
   },
+  [SKILL_IDS.BONE_SPEAR]: {
+    id: SKILL_IDS.BONE_SPEAR,
+    name: '뼈 창',
+    description: '두 적을 동시에 공격합니다',
+    cost: 12,
+    requiredLevel: 3,
+    unlocks: ['first_boss'],
+    unlockHint: '지하 2층 정화 완료',
+    execute: (player, context, enemies) => SkillExecutor.boneSpear(player, context, enemies),
+  },
 }
 
 export const SkillUtils = {

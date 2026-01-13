@@ -5,14 +5,14 @@
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
-    "mp": 75,
+    "mp": 31,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 4,
-    "exp": 20,
+    "gold": 9,
+    "exp": 40,
     "level": 3,
     "inventoryMax": 3,
     "inventory": [
@@ -51,7 +51,8 @@
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
-      "CURSE"
+      "CURSE",
+      "BONE_SPEAR"
     ],
     "equipped": {
       "weapon": {
@@ -81,32 +82,15 @@
     "unlockedSkills": [
       "RAISE_SKELETON",
       "CORPSE_EXPLOSION",
-      "CURSE"
+      "CURSE",
+      "BONE_SPEAR"
     ],
     "skeleton": [
-      {
-        "id": "skeleton_1768178026969",
-        "name": "[elite] 스켈레톤 궁수",
-        "maxHp": 14,
-        "hp": 13,
-        "atk": 13,
-        "def": 0,
-        "agi": 4,
-        "skills": [
-          "piercing_arrow"
-        ],
-        "exp": 0,
-        "description": "다람쥐의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true
-      },
       {
         "id": "skeleton_1768178700024",
         "name": "[elite] 스켈레톤 사제",
         "maxHp": 18,
-        "hp": 18,
+        "hp": 17,
         "atk": 1,
         "def": 0,
         "agi": 3,
@@ -121,14 +105,34 @@
         "isMinion": true
       },
       {
-        "id": "skeleton_1768288187700",
-        "name": "[common] 스켈레톤 병사",
-        "maxHp": 18,
-        "hp": 18,
+        "id": "skeleton_1768290312090",
+        "name": "[rare] 스켈레톤 검사",
+        "maxHp": 22,
+        "hp": 22,
         "atk": 0,
-        "def": 0,
-        "agi": 0,
-        "skills": [],
+        "def": 1,
+        "agi": 1,
+        "skills": [
+          "power_smash"
+        ],
+        "exp": 0,
+        "description": "토끼의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true
+      },
+      {
+        "id": "skeleton_1768290344524",
+        "name": "[epic] 스켈레톤 사제",
+        "maxHp": 33,
+        "hp": 33,
+        "atk": 0,
+        "def": 1,
+        "agi": 1,
+        "skills": [
+          "holy_radiance"
+        ],
         "exp": 0,
         "description": "토끼의 유골로 만들어진 소환수입니다.",
         "dropTableId": "",

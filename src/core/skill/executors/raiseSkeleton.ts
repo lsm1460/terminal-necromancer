@@ -89,7 +89,7 @@ export const raiseSkeleton = async (player: CombatUnit<Player>, context: GameCon
     npcs.reborn(selectedCorpse.id)
 
     console.log(`\n[강령술] ${selectedCorpse.name}의 뼈가 맞춰지며 일어섭니다!`)
-    console.log(`${finalRarity} 등급의 스켈레톤이 부활했습니다! 💀`)
+    console.log(`${finalRarity} 등급의 스켈레톤 ${selectedClass.name}으로 부활했습니다! 💀`)
     return {
       isSuccess: true,
       isAggressive: false,

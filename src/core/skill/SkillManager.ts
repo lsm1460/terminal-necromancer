@@ -17,7 +17,7 @@ export class SkillManager {
     }
 
     // 1. 가능 스킬 필터링
-    const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.ref.hasSkill(skill.id))
+    const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.ref.memorize.includes(skill.id))
 
     // 2. 스킬 선택 UI
     const { skillId } = await enquirer.prompt<{ skillId: string }>({

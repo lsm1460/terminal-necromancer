@@ -362,11 +362,11 @@ export class Battle {
     attacker: CombatUnit<BattleTarget | Player>,
     target: CombatUnit<BattleTarget | Player>,
     options: {
-      skillAtkMult?: number
+      skillAtkMult?: number // 데미지 배율
       rawDamage?: number // 직접 계산된 데미지 (시체 폭발 등)
-      isIgnoreDef?: boolean
-      isFixed?: boolean
-      isSureHit?: boolean
+      isIgnoreDef?: boolean // 방어력 무시
+      isFixed?: boolean // 고정 데미지
+      isSureHit?: boolean // 회피불가
     } = {}
   ) {
     // 1. 기초 데미지 설정

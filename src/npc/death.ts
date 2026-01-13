@@ -78,7 +78,7 @@ async function handleSkillMenu(player: Player, context: GameContext) {
 
   if (SkillUtils.canLearn(player, skillId)) {
     player.unlockSkill(skillId)
-    console.log(`\n💀 [습득] '${SKILL_LIST[skillId].name}' 기술을 배웠습니다!`)
+    console.log(`\n💀 [습득] '${SKILL_LIST[skillId].name}' 각인을 잊지말라구 끌끌..`)
   } else {
     console.log(`\n[실패] 요구 조건을 충족하지 못했습니다.`)
   }
@@ -111,7 +111,6 @@ async function handleMemorize(player: Player) {
   // 1. 선택지 구성 (ID를 명확히 찾기 위해 choices 변수 유지)
   const skillChoices = player.unlockedSkills.map((skillId) => {
     const skill = SKILL_LIST[skillId]
-
     return {
       name: skill.name, // multiselect의 기준 키
       message: `${skill.name.padEnd(12)} | 코스트: ${String(skill.cost).padStart(2)} | ${skill.description}`,

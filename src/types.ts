@@ -192,6 +192,7 @@ export const SKILL_IDS = {
   CORPSE_EXPLOSION: 'CORPSE_EXPLOSION',
   SOUL_HARVEST: 'SOUL_HARVEST',
   CURSE: 'CURSE',
+  BONE_SPEAR: 'BONE_SPEAR',
 } as const
 
 // 2. 위 객체의 값들만 모아서 타입으로 추출
