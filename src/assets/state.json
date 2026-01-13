@@ -1,18 +1,18 @@
 {
   "player": {
     "x": 0,
-    "y": 1,
+    "y": 0,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
-    "mp": 55,
+    "mp": 100,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 30,
-    "exp": 200,
+    "gold": 0,
+    "exp": 0,
     "level": 3,
     "inventoryMax": 3,
     "inventory": [
@@ -48,6 +48,11 @@
         "y": 1
       }
     ],
+    "_maxMemorize": 4,
+    "memorize": [
+      "RAISE_SKELETON",
+      "CURSE"
+    ],
     "equipped": {
       "weapon": {
         "id": "iron_sword_b919ce9e090c2f56",
@@ -75,7 +80,8 @@
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
-      "CORPSE_EXPLOSION"
+      "CORPSE_EXPLOSION",
+      "CURSE"
     ],
     "skeleton": [
       {

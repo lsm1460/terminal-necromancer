@@ -33,7 +33,16 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     unlockHint: '지하 2층 정화 완료',
     execute: (player, context, enemies) => SkillExecutor.corpseExplosion(player, context, enemies),
   },
-  
+  [SKILL_IDS.CURSE]: {
+    id: SKILL_IDS.CURSE,
+    name: '저주',
+    description: '대상을 약화시킵니다',
+    cost: 10,
+    requiredLevel: 3,
+    unlocks: ['first_boss'],
+    unlockHint: '지하 2층 정화 완료',
+    execute: (player, context, enemies) => SkillExecutor.curse(player, context, enemies),
+  },
 }
 
 export const SkillUtils = {

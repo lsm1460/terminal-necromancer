@@ -28,6 +28,7 @@ interface IUnit extends CombatStatus {
 
 export type Buff = {
   name: string
+  duration: number
   atk?: number
   def?: number
   eva?: number
@@ -68,8 +69,12 @@ export class Battle {
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
     const turnOrder = this.getTurnOrder(this.player, enemies)
-
+    let turn = 0
     while (this.player.isAlive && enemies.some((e) => e.ref.isAlive)) {
+      turn++
+
+      console.log(`\n============== turn: ${turn} ==============`)
+
       for (const unit of turnOrder) {
         // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
         let enemiesSide = _.chain(turnOrder)
@@ -93,6 +98,7 @@ export class Battle {
           .value()
 
         console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
+        this.updateEffectsDuration(unit)
 
         if (unit.type === 'player') {
           // 플레이어 직접 조작
@@ -398,4 +404,28 @@ export class Battle {
 
     return { isEscape: false, damage: Math.floor(finalDamage), isCritical: isCrit }
   }
+
+  private updateEffectsDuration(unit: CombatUnit) {
+  const effectTypes: ('buff' | 'deBuff')[] = ['buff', 'deBuff'];
+
+  effectTypes.forEach((type) => {
+    if (!unit[type]) return;
+
+    // 지속 시간 차감
+    unit[type].forEach((effect) => {
+      effect.duration--;
+    });
+
+    // 만료된 효과 추출 (로그용)
+    const expiredEffects = unit[type].filter((e) => e.duration <= 0);
+    
+    expiredEffects.forEach((e) => {
+      const icon = type === 'buff' ? '✨' : '💢';
+      console.log(`[효과 만료] ${unit.name}의 ${icon} [${e.name}] 효과가 사라졌습니다.`);
+    });
+
+    // 지속 시간이 남은 효과들만 유지
+    unit[type] = unit[type].filter((e) => e.duration > 0);
+  });
+}
 }
