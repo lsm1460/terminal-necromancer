@@ -69,6 +69,7 @@ export class Battle {
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
     const turnOrder = this.getTurnOrder(this.player, enemies)
+    
     let turn = 0
     while (this.player.isAlive && enemies.some((e) => e.ref.isAlive)) {
       turn++

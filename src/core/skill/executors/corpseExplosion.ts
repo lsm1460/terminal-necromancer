@@ -96,6 +96,12 @@ export const corpseExplosion = async (
   if (selectedCorpse.type === 'corpse') {
     world.removeCorpse(selectedCorpse.id)
   } else {
+    const skeleton = player.ref.skeleton.find((sk) => sk.id === selectedCorpse.id)
+    if (skeleton) {
+      skeleton.hp = 0
+      skeleton.isAlive = false
+    }
+    
     player.ref.removeMinion(selectedCorpse.id)
   }
 
