@@ -70,7 +70,7 @@ type SubClass = {
 export const RARITY_DATA: Record<Rarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
   common: {
     bonus: 0.8,
-    weight: 600,
+    weight: 625,
     subClasses: [{ name: '병사', orderWeight: 10, statMod: { atk: 1, def: 1, hp: 1, agi: 1 }, skills: [], weight: 1 }],
   },
   rare: {
@@ -95,47 +95,47 @@ export const RARITY_DATA: Record<Rarity, { bonus: number; weight: number; subCla
         orderWeight: 5,
         statMod: { atk: 0.8, def: 1.5, hp: 1.3, agi: 0.7 },
         skills: ['shield_Bash'],
-        weight: 4,
+        weight: 5,
       },
       {
         name: '궁수',
         orderWeight: 25,
         statMod: { atk: 1.3, def: 0.7, hp: 0.8, agi: 1.5 },
         skills: ['piercing_arrow'],
-        weight: 3,
+        weight: 4,
       },
       {
         name: '수도자',
         orderWeight: 35,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
         skills: ['dark_heal'],
-        weight: 3,
+        weight: 1,
       },
     ],
   },
   epic: {
     bonus: 1.5,
-    weight: 40,
+    weight: 20,
     subClasses: [
       {
         name: '워리어',
         orderWeight: 7,
         statMod: { atk: 1.5, def: 1.2, hp: 1.2, agi: 1.0 },
         skills: ['whirlwind'],
-        weight: 7,
+        weight: 9,
       },
       {
         name: '사제',
         orderWeight: 45,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
         skills: ['holy_radiance'],
-        weight: 3,
+        weight: 1,
       },
     ],
   },
   legendary: {
     bonus: 2.0,
-    weight: 10,
+    weight: 5,
     subClasses: [
       {
         name: '해골 왕',
