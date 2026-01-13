@@ -211,7 +211,7 @@ export interface Skill {
   requiredLevel: number
   unlocks: string[]
   unlockHint: string
-  execute: (player: CombatUnit<Player>, context: GameContext, args: string[], enemies?: CombatUnit[]) => SkillResult
+  execute: (player: CombatUnit<Player>, context: GameContext, enemies?: CombatUnit[]) => Promise<SkillResult>
 }
 
 export interface NPCState {

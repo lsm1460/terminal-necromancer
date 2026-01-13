@@ -11,7 +11,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredLevel: 1,
     unlocks: [],
     unlockHint: '',
-    execute: (player, context, args: string[]) => SkillExecutor.raiseSkeleton(player, context, args[0]),
+    execute: (player, context) => SkillExecutor.raiseSkeleton(player, context),
   },
   [SKILL_IDS.SOUL_HARVEST]: {
     id: SKILL_IDS.SOUL_HARVEST,
@@ -21,7 +21,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredLevel: 2,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
-    execute: (player, context, args: string[]) => SkillExecutor.soulHarvest(player, context, args[0]),
+    execute: (player, context) => SkillExecutor.soulHarvest(player, context),
   },
   [SKILL_IDS.CORPSE_EXPLOSION]: {
     id: SKILL_IDS.CORPSE_EXPLOSION,
@@ -31,7 +31,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredLevel: 3,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
-    execute: (player, context, args, enemies) => SkillExecutor.corpseExplosion(player, context, args[0], enemies),
+    execute: (player, context, enemies) => SkillExecutor.corpseExplosion(player, context, enemies),
   },
   
 }

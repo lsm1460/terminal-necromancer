@@ -14,7 +14,7 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
       .filter((npc): npc is NPC => !!npc && npc.isAlive && npc.faction !== 'untouchable'),
   ]
 
-  const enemies = battleTargets.map((target) => {
+  const enemies: CombatUnit[] = battleTargets.map((target) => {
     const isNpc = !!(target as NPC).faction
 
     return battle.toCombatUnit(target, isNpc ? 'npc' : 'monster')
@@ -23,13 +23,13 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
   const { isAggressive, gross } = await SkillManager.requestAndExecuteSkill(
     battle.toCombatUnit(player, 'player'),
     context,
-    enemies as CombatUnit[]
+    enemies
   )
 
   if (isAggressive) {
     await delay()
 
-    await battle.runCombatLoop(battleTargets, context)
+    await battle.runCombatLoop(enemies, context)
   }
 
   return false

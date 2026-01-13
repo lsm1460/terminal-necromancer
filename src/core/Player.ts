@@ -1,5 +1,6 @@
 // core/Player.ts
 import fs from 'fs'
+import { INIT_MAX_MEMORIZE_COUNT } from '../consts'
 import { ArmorItem, BattleTarget, Item, ItemType, LevelData, SKILL_IDS, SkillId, WeaponItem } from '../types'
 
 export class Player {
@@ -19,6 +20,8 @@ export class Player {
   level = 1
   inventoryMax = 15
   inventory: Item[] = []
+  _maxMemorize = INIT_MAX_MEMORIZE_COUNT
+  memorize: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
   equipped = { weapon: null as Item | null, armor: null as Item | null }
 
   public unlockedSkills: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
@@ -99,6 +102,10 @@ export class Player {
     if (this.equipped.armor) maxSkeleton += (this.equipped.armor as ArmorItem).maxSkeleton || 0
 
     return maxSkeleton
+  }
+
+  get maxMemorize() {
+    return this._maxMemorize
   }
 
   get knight() {

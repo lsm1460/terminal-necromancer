@@ -62,14 +62,14 @@ export interface CombatUnit<T = BattleTarget> {
 export class Battle {
   constructor(public player: Player) {}
 
-  async runCombatLoop(enemies: BattleTarget[], context: GameContext) {
+  async runCombatLoop(enemies: CombatUnit[], context: GameContext) {
     console.clear()
     console.log(`\n⚔️  전투가 시작되었습니다!`)
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
     const turnOrder = this.getTurnOrder(this.player, enemies)
 
-    while (this.player.isAlive && enemies.some((e) => e.isAlive)) {
+    while (this.player.isAlive && enemies.some((e) => e.ref.isAlive)) {
       for (const unit of turnOrder) {
         // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
         let enemiesSide = _.chain(turnOrder)
@@ -79,7 +79,7 @@ export class Battle {
 
         // 전투 도중 누군가 죽었다면 체크
         if (!unit.ref.isAlive) continue
-        if (!this.player.isAlive || !enemies.some((e) => e.isAlive)) break
+        if (!this.player.isAlive || !enemies.some((e) => e.ref.isAlive)) break
 
         const playerSide = _.chain(turnOrder)
           .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
@@ -121,7 +121,7 @@ export class Battle {
   }
 
   // --- 내부 로직 함수들 ---
-  private getTurnOrder(player: Player, enemies: BattleTarget[]): CombatUnit[] {
+  private getTurnOrder(player: Player, enemies: CombatUnit[]): CombatUnit[] {
     const units: CombatUnit[] = []
 
     // 플레이어 추가
@@ -136,9 +136,8 @@ export class Battle {
 
     // 적(몬스터/NPC) 추가
     enemies.forEach((e) => {
-      if (e.isAlive) {
-        const type = e.encounterRate !== undefined ? 'monster' : 'npc'
-        units.push(this.toCombatUnit(e, type))
+      if (e.ref.isAlive) {
+        units.push(e)
       }
     })
 

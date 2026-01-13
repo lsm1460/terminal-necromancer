@@ -1,3 +1,4 @@
+import { CombatUnit } from '../../core/Battle'
 import { Player } from '../../core/Player'
 import { GameContext, Tile } from '../../types'
 import { delay } from '../../utils'
@@ -21,7 +22,9 @@ export class NpcEvent {
 
       await delay()
 
-      await battle.runCombatLoop(preemptiveEnemies, context)
+      const units: CombatUnit[] = preemptiveEnemies.map((m) => context.battle.toCombatUnit(m, 'npc'))
+
+      await battle.runCombatLoop(units, context)
     }
   }
 }

@@ -147,3 +147,5 @@ export const RARITY_DATA: Record<Rarity, { bonus: number; weight: number; subCla
     ],
   },
 }
+
+export const INIT_MAX_MEMORIZE_COUNT = 4

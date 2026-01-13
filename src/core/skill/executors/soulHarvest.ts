@@ -1,13 +1,16 @@
 import { GameContext, SkillResult } from '../../../types'
 import { CombatUnit } from '../../Battle'
 import { Player } from '../../Player'
+import { SkillManager } from '../SkillManager'
 
 /**
  * 영혼 흡수: 적 대상으로부터 정수를 추출하여 마나를 회복
  */
-export const soulHarvest = (player: CombatUnit<Player>, context: GameContext, targetId: string): SkillResult => {
+export const soulHarvest = async (player: CombatUnit<Player>, context: GameContext): Promise<SkillResult> => {
   const { world } = context
   const { x, y } = player.ref.pos
+
+  const targetId = await SkillManager.selectCorpse(player.ref, context)
 
   // 1. 현재 위치의 시체 목록 가져오기
   const corpses = world.getCorpsesAt(x, y)

@@ -2,17 +2,20 @@ import { Rarity, RARITY_DATA } from '../../../consts'
 import { BattleTarget, GameContext, SkillResult } from '../../../types'
 import { CombatUnit } from '../../Battle'
 import { Player } from '../../Player'
+import { SkillManager } from '../SkillManager'
 
-export const raiseSkeleton = (player: CombatUnit<Player>, context: GameContext, targetId: string): SkillResult => {
+export const raiseSkeleton = async (player: CombatUnit<Player>, context: GameContext): Promise<SkillResult> => {
   const { world, npcs } = context
   const { x, y } = player.ref.pos
 
   // 1. 현재 위치의 시체 목록 가져오기
+  const targetId = await SkillManager.selectCorpse(player.ref, context)
+
   const corpses = world.getCorpsesAt(x, y)
 
-  // 2. 특정 시체 지정 또는 첫 번째 시체 선택
+  // 2. 특정 시체 지정
   const selectedCorpse = corpses.find((c) => c.id === targetId)
-
+  
   if (!selectedCorpse) {
     console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
     return {

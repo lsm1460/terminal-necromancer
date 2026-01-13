@@ -44,7 +44,7 @@ export class BossEvent {
 
     // 4. 전투 실행
     // bossNpc가 Hostile NPC라면 그대로 전달합니다.
-    await battle.runCombatLoop([bossNpc as any], context)
+    await battle.runCombatLoop([battle.toCombatUnit(bossNpc, 'npc')], context)
 
     // 5. 승리 시 이벤트 처리
     if (!bossNpc.isAlive) {

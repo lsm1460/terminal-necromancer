@@ -1,27 +1,62 @@
 import { GameContext, SkillResult } from '../../../types'
 import { CombatUnit } from '../../Battle'
 import { Player } from '../../Player'
+import enquirer from 'enquirer'
 
 /**
  * 시체 폭발 (Corpse Explosion)
- * : 현재 위치의 시체를 소모하여 주변 적들에게 광역 피해를 입힙니다.
+ * : 현재 위치의 시체 또는 스켈레톤을 소모하여 주변 적들에게 광역 피해를 입힙니다.
  * : 공격자의 스탯이 아닌 '시체의 최대 생명력'에 기반한 데미지를 전달합니다.
  */
-export const corpseExplosion = (
+export const corpseExplosion = async (
   player: CombatUnit<Player>,
   context: GameContext,
-  targetId: string,
   enemies: CombatUnit[] = []
-): SkillResult => {
+): Promise<SkillResult> => {
   const { world } = context
   const { x, y } = player.ref.pos
 
   // 1. 현재 위치의 시체 목록 확인
   const corpses = world.getCorpsesAt(x, y)
-  const selectedCorpse = corpses.find((c) => c.id === targetId)
+  const skeletons = player.ref.skeleton
+
+  const targets = [
+    ...corpses.map((corpse) => ({ id: corpse.id, name: corpse.name, type: 'corpse' as const, maxHp: corpse.maxHp })),
+    ...skeletons.map((sk) => ({ id: sk.id, name: sk.name, type: 'skeleton' as const, maxHp: sk.maxHp })),
+  ]
+
+  const { corpseId } = await enquirer.prompt<{ corpseId: string }>({
+    type: 'select',
+    name: 'corpseId',
+    message: '어떤 시체를 소모하시겠습니까?',
+    choices: [
+      ...targets.map((s) => ({
+        name: s.id,
+        message: s.name,
+      })),
+      { name: 'cancel', message: '🔙 취소하기' },
+    ],
+    format(value) {
+      if (value === 'cancel') return '취소됨'
+
+      const target = targets.find((c, idx) => (c.id || idx.toString()) === value)
+      return target ? `[${target.name}]` : value
+    },
+  })
+
+  if (corpseId === 'cancel') {
+    console.log('\n💬 스킬 사용을 취소했습니다.')
+    return {
+      isSuccess: false,
+      isAggressive: false,
+      gross: 0,
+    }
+  }
+
+  const selectedCorpse = targets.find((target) => target.id === corpseId)
 
   if (!selectedCorpse) {
-    console.log('\n[실패] 폭발시킬 시체가 근처에 없습니다.')
+    console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -58,7 +93,11 @@ export const corpseExplosion = (
   }
 
   // 4. 사용한 시체 제거
-  world.removeCorpse(selectedCorpse.id)
+  if (selectedCorpse.type === 'corpse') {
+    world.removeCorpse(selectedCorpse.id)
+  } else {
+    player.ref.removeMinion(selectedCorpse.id)
+  }
 
   return {
     isSuccess: true,

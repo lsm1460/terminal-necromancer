@@ -1,3 +1,4 @@
+import { CombatUnit } from '../../core/Battle'
 import { MonsterFactory } from '../../core/MonsterFactory'
 import { Player } from '../../core/Player'
 import { GameContext, Monster, Tile } from '../../types'
@@ -47,7 +48,9 @@ export class MonsterEvent {
 
         await delay()
 
-        await context.battle.runCombatLoop(finalAlive, context)
+        const units: CombatUnit[] = finalAlive.map((m) => context.battle.toCombatUnit(m, 'monster'))
+
+        await context.battle.runCombatLoop(units, context)
       }
     }
   }
