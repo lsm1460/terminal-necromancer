@@ -78,6 +78,13 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
       isIgnoreDef: false,
       isSureHit: false,
     })
+
+    target.deBuff.push({
+      name: '출혈',
+      type: 'dot', // Damage over Time
+      duration: 3 + 1, // 3턴 지속
+      atk: 5,
+    })
   })
 
   return {

@@ -5,6 +5,7 @@ import { soulTransfer } from './soulTransfer'
 import { curse } from './curse'
 import { boneSpear } from './boneSpear'
 import { bonePrison } from './bonePrison'
+import { boneStorm } from './boneStorm'
 
 export const SkillExecutor = {
   raiseSkeleton,
@@ -14,4 +15,5 @@ export const SkillExecutor = {
   curse,
   boneSpear,
   bonePrison,
+  boneStorm,
 }

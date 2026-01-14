@@ -113,6 +113,12 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
       console.log(` └ 🩸 사령술사 HP -${finalTransferAmount} ➡️ ${targetMinion.name} HP +${finalTransferAmount}`)
     } else {
       console.log(`\n⚠️ ${player.name}의 체력이 너무 낮아 더 이상 생명력을 나누어줄 수 없습니다!`)
+
+      return {
+        isSuccess: false,
+        isAggressive: false,
+        gross: 0,
+      }
     }
 
     totalGross = 5 // 자신의 살을 내어주는 숭고한(?) 행위이므로 낮게 설정

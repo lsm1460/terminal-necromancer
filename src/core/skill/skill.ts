@@ -37,7 +37,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     id: SKILL_IDS.SOUL_TRANSFER,
     name: '영혼 전달',
     description: '종속에게 이로운 효과를 부여합니다.',
-    cost: 15,
+    cost: 5,
     requiredLevel: 3,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
@@ -72,6 +72,16 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
     execute: (player, context, units) => SkillExecutor.bonePrison(player, context, units),
+  },
+  [SKILL_IDS.BONE_STORM]: {
+    id: SKILL_IDS.BONE_STORM,
+    name: '뼈 폭풍',
+    description: '모든 스켈레톤을 희생하고 스켈레톤 체력의 합에 비례하여 적에게 광역대미지를 입힌다',
+    cost: 60,
+    requiredLevel: 3,
+    unlocks: ['first_boss'],
+    unlockHint: '지하 2층 정화 완료',
+    execute: (player, context, units) => SkillExecutor.boneStorm(player, context, units),
   },
 }
 

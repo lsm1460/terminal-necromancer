@@ -29,7 +29,7 @@ interface IUnit extends CombatStatus {
 export type Buff = {
   name: string
   duration: number
-  type: 'deBuff' | 'bind' | 'buff'
+  type: 'deBuff' | 'bind' | 'buff' | 'dot'
   atk?: number
   def?: number
   eva?: number
@@ -83,6 +83,38 @@ export class Battle {
         if (!unit.ref.isAlive) continue
         if (!this.player.isAlive || !enemies.some((e) => e.ref.isAlive)) break
 
+        console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
+        this.updateEffectsDuration(unit)
+
+        // 2. [출혈/독 등] 지속 피해 적용
+        // 업데이트 후에도 남아있는 효과들에 대해서만 데미지 발생
+        const dotEffects = unit.deBuff.filter((d) => d.type === 'dot')
+        for (const effect of dotEffects) {
+          const damage = Math.max(1, effect.atk || 0)
+          unit.ref.hp -= damage
+          console.log(` └ 🩸 [${effect.name}] 피해: -${damage} (남은 지속: ${effect.duration}턴)`)
+
+          if (unit.ref.hp <= 0) {
+            unit.ref.isAlive = false
+            console.log(` └ 💀 ${unit.name}이(가) 출혈 과다로 사망했습니다.`)
+            break
+          }
+        }
+
+        if (!unit.ref.isAlive) continue
+
+        // 3. [추가] 속박(bind) 상태 체크
+        // updateEffectsDuration 후에도 bind가 남아있다면 이번 턴은 행동 불능입니다.
+        const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
+
+        if (bindEffect) {
+          console.log(
+            `\n⛓️  ${unit.name}은(는) ${bindEffect.name}에 갇혀 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`
+          )
+          // 행동을 수행하지 않고 다음 유닛으로 넘어갑니다.
+          continue
+        }
+
         let enemiesSide = _.chain(turnOrder)
           .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
           .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
@@ -98,21 +130,6 @@ export class Battle {
             return _.findIndex(this.player.minions, { id: unit.id })
           })
           .value()
-
-        console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
-        this.updateEffectsDuration(unit)
-
-        // 3. [추가] 속박(bind) 상태 체크
-        // updateEffectsDuration 후에도 bind가 남아있다면 이번 턴은 행동 불능입니다.
-        const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
-
-        if (bindEffect) {
-          console.log(
-            `\n⛓️  ${unit.name}은(는) ${bindEffect.name}에 갇혀 움직일 수 없습니다! (남은 기간: ${bindEffect.duration - 1}턴)`
-          )
-          // 행동을 수행하지 않고 다음 유닛으로 넘어갑니다.
-          continue
-        }
 
         if (unit.type === 'player') {
           // 플레이어 직접 조작
