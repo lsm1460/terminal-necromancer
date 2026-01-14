@@ -1,18 +1,12 @@
 import enquirer from 'enquirer'
-import { CombatUnit } from '../../Battle'
-import { Player } from '../../Player'
-import { GameContext, SkillResult } from '../../../types'
+import { ExecuteSkill } from '../../../types'
 
 /**
  * 뼈 창 (Bone Spear)
  * : 소환된 스켈레톤 하나를 희생시켜 날카로운 뼈의 창으로 부수어 날립니다.
  * : 전열의 적 최대 2명에게 0.6배율의 관통 피해를 입힙니다.
  */
-export const boneSpear = async (
-  player: CombatUnit<Player>,
-  context: GameContext,
-  enemies: CombatUnit[] = []
-): Promise<SkillResult> => {
+export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
   const skeletons = player.ref.skeleton // 현재 소환된 스켈레톤 목록
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
@@ -36,7 +30,7 @@ export const boneSpear = async (
     choices: [
       ...skeletons.map((sk) => ({
         name: sk.id,
-        message: `${sk.name} (현재 HP: ${sk.hp})`
+        message: `${sk.name} (현재 HP: ${sk.hp})`,
       })),
       { name: 'cancel', message: '🔙 취소하기', value: 'cancel' },
     ],

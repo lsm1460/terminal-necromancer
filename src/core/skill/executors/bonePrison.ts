@@ -1,18 +1,12 @@
 import enquirer from 'enquirer'
-import { CombatUnit } from '../../Battle'
-import { Player } from '../../Player'
-import { GameContext, SkillResult } from '../../../types'
+import { ExecuteSkill } from '../../../types'
 
 /**
  * 뼈 감옥 (Bone Prison)
  * : 대지에서 솟아오르는 뼈의 창살로 적 1명을 가둡니다.
  * : 대상에게 '뼈 감옥' [속박] 상태를 3턴 동안 부여합니다.
  */
-export const bonePrison = async (
-  player: CombatUnit<Player>,
-  context: GameContext,
-  enemies: CombatUnit[] = []
-): Promise<SkillResult> => {
+export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
   if (aliveEnemies.length === 0) {

@@ -85,9 +85,6 @@ async function handleSkillMenu(player: Player, context: GameContext) {
 }
 
 function handleLevelUp(player: Player) {
-  // 레벨업 로직...
-  console.log('\n[알림] 아직 레벨업 기능이 구현되지 않았습니다.')
-
   if (player.levelUp()) {
     console.log(`\n✨ 축하합니다! 레벨이 올랐습니다. (현재 LV.${player.level})`)
   } else {

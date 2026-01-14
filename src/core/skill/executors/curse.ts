@@ -1,17 +1,11 @@
-import { GameContext, SkillResult } from '../../../types'
-import { CombatUnit } from '../../Battle'
-import { Player } from '../../Player'
 import enquirer from 'enquirer'
+import { ExecuteSkill } from '../../../types'
 
 /**
  * 저주 (Curse)
  * : 1명을 선택하여 공격력 감소 [5% 나머지는 버림]를 3턴동안 부여
  */
-export const curse = async (
-  player: CombatUnit<Player>,
-  context: GameContext,
-  enemies: CombatUnit[] = []
-): Promise<SkillResult> => {
+export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
   const duration = 3
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
@@ -28,10 +22,10 @@ export const curse = async (
         name: e.id,
         message: e.name + (isAlreadyCursed ? ' (이미 저주 상태)' : ''),
         value: e.id,
-        disabled: isAlreadyCursed // 이미 저주 상태면 선택 불가하게 설정 (기호에 따라 생략 가능)
+        disabled: isAlreadyCursed, // 이미 저주 상태면 선택 불가하게 설정 (기호에 따라 생략 가능)
       }
     }),
-    { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' }
+    { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' },
   ]
 
   try {
@@ -42,9 +36,9 @@ export const curse = async (
       choices: choices,
       format(value) {
         if (value === 'cancel') return '시전을 취소합니다.'
-        const target = aliveEnemies.find(e => e.id === value)
+        const target = aliveEnemies.find((e) => e.id === value)
         return target ? target.name : ''
-      }
+      },
     })
 
     if (response.targetId === 'cancel') {

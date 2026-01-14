@@ -117,7 +117,7 @@ export class Battle {
         if (unit.type === 'player') {
           // 플레이어 직접 조작
           const playerUnit = unit as unknown as CombatUnit<Player>
-          const isEscaped = await this.handlePlayerAction(playerUnit, enemiesSide, context)
+          const isEscaped = await this.handlePlayerAction(playerUnit, playerSide, enemiesSide, context)
 
           if (isEscaped) {
             // 전투 종료
@@ -167,6 +167,7 @@ export class Battle {
 
   private async handlePlayerAction(
     playerUnit: CombatUnit<Player>,
+    playerSide: CombatUnit[],
     enemies: CombatUnit[],
     context: GameContext
   ): Promise<boolean> {
@@ -200,7 +201,7 @@ export class Battle {
 
       // 취소 선택 시 다시 행동 선택창으로 재귀 호출
       if (targetId === 'cancel') {
-        return await this.handlePlayerAction(playerUnit, enemies, context)
+        return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
       }
 
       const target = aliveEnemies.find((e) => e.id === targetId)
@@ -210,10 +211,14 @@ export class Battle {
         target.takeDamage(playerUnit, context)
       }
     } else if (action === '스킬') {
-      const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, aliveEnemies)
+      const ally = playerSide.filter((unit) => unit.type !== 'player')
+      const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, {
+        ally,
+        enemies: aliveEnemies,
+      })
       if (!isSuccess) {
         // 스킬 사용을 취소했거나 실패했다면 다시 행동 선택으로
-        return await this.handlePlayerAction(playerUnit, enemies, context)
+        return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
       }
     } else if (action === '도망') {
       const isEscapeBlocked = aliveEnemies.some((e) => e.ref.noEscape === true)

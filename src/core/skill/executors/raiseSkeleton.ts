@@ -1,10 +1,8 @@
 import { Rarity, RARITY_DATA } from '../../../consts'
-import { BattleTarget, GameContext, SkillResult } from '../../../types'
-import { CombatUnit } from '../../Battle'
-import { Player } from '../../Player'
+import { BattleTarget, ExecuteSkill } from '../../../types'
 import { SkillManager } from '../SkillManager'
 
-export const raiseSkeleton = async (player: CombatUnit<Player>, context: GameContext): Promise<SkillResult> => {
+export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   const { world, npcs } = context
   const { x, y } = player.ref.pos
 

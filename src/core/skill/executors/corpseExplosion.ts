@@ -1,18 +1,12 @@
-import { GameContext, SkillResult } from '../../../types'
-import { CombatUnit } from '../../Battle'
-import { Player } from '../../Player'
 import enquirer from 'enquirer'
+import { ExecuteSkill } from '../../../types'
 
 /**
  * 시체 폭발 (Corpse Explosion)
  * : 현재 위치의 시체 또는 스켈레톤을 소모하여 주변 적들에게 광역 피해를 입힙니다.
  * : 공격자의 스탯이 아닌 '시체의 최대 생명력'에 기반한 데미지를 전달합니다.
  */
-export const corpseExplosion = async (
-  player: CombatUnit<Player>,
-  context: GameContext,
-  enemies: CombatUnit[] = []
-): Promise<SkillResult> => {
+export const corpseExplosion: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
   const { world } = context
   const { x, y } = player.ref.pos
 
@@ -101,7 +95,7 @@ export const corpseExplosion = async (
       skeleton.hp = 0
       skeleton.isAlive = false
     }
-    
+
     player.ref.removeMinion(selectedCorpse.id)
   }
 

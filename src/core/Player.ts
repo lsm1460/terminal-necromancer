@@ -128,6 +128,10 @@ export class Player {
     this.hp = 0
   }
 
+  get affixes() {
+    return [] as string[]
+  }
+
   move(dx: number, dy: number) {
     this.x += dx
     this.y += dy

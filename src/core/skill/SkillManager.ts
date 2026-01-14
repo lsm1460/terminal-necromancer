@@ -1,15 +1,10 @@
 import enquirer from 'enquirer'
-import { GameContext, SkillId, SkillResult } from '../../types'
-import { CombatUnit } from '../Battle'
+import { ExecuteSkill, GameContext, SkillId } from '../../types'
 import { Player } from '../Player'
 import { SKILL_LIST } from './skill'
 
 export class SkillManager {
-  static async requestAndExecuteSkill(
-    player: CombatUnit<Player>,
-    context: GameContext,
-    enemies?: CombatUnit[]
-  ): Promise<SkillResult> {
+  static requestAndExecuteSkill: ExecuteSkill = async (player, context, units) => {
     const failResult = {
       isSuccess: false,
       isAggressive: false,
@@ -48,7 +43,7 @@ export class SkillManager {
       return failResult
     }
 
-    const result = await targetSkill.execute(player, context, enemies)
+    const result = await targetSkill.execute(player, context, units)
 
     // 4. 실행 및 마력 소모
     if (result.isSuccess) {

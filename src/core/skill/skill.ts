@@ -31,7 +31,17 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredLevel: 3,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
-    execute: (player, context, enemies) => SkillExecutor.corpseExplosion(player, context, enemies),
+    execute: (player, context, units) => SkillExecutor.corpseExplosion(player, context, units),
+  },
+  [SKILL_IDS.SOUL_TRANSFER]: {
+    id: SKILL_IDS.SOUL_TRANSFER,
+    name: '영혼 전달',
+    description: '종속에게 이로운 효과를 부여합니다.',
+    cost: 15,
+    requiredLevel: 3,
+    unlocks: ['first_boss'],
+    unlockHint: '지하 2층 정화 완료',
+    execute: (player, context, units) => SkillExecutor.soulTransfer(player, context, units),
   },
   [SKILL_IDS.CURSE]: {
     id: SKILL_IDS.CURSE,
@@ -41,7 +51,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredLevel: 3,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
-    execute: (player, context, enemies) => SkillExecutor.curse(player, context, enemies),
+    execute: (player, context, units) => SkillExecutor.curse(player, context, units),
   },
   [SKILL_IDS.BONE_SPEAR]: {
     id: SKILL_IDS.BONE_SPEAR,
@@ -51,7 +61,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredLevel: 3,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
-    execute: (player, context, enemies) => SkillExecutor.boneSpear(player, context, enemies),
+    execute: (player, context, units) => SkillExecutor.boneSpear(player, context, units),
   },
   [SKILL_IDS.BONE_PRISON]: {
     id: SKILL_IDS.BONE_PRISON,
@@ -61,7 +71,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredLevel: 3,
     unlocks: ['first_boss'],
     unlockHint: '지하 2층 정화 완료',
-    execute: (player, context, enemies) => SkillExecutor.bonePrison(player, context, enemies),
+    execute: (player, context, units) => SkillExecutor.bonePrison(player, context, units),
   },
 }
 

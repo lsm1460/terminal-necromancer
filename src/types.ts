@@ -189,8 +189,9 @@ export interface NPC extends BattleTarget {
 
 export const SKILL_IDS = {
   RAISE_SKELETON: 'RAISE_SKELETON',
-  CORPSE_EXPLOSION: 'CORPSE_EXPLOSION',
   SOUL_HARVEST: 'SOUL_HARVEST',
+  CORPSE_EXPLOSION: 'CORPSE_EXPLOSION',
+  SOUL_TRANSFER: 'SOUL_TRANSFER',
   CURSE: 'CURSE',
   BONE_SPEAR: 'BONE_SPEAR',
   BONE_PRISON: 'BONE_PRISON',
@@ -205,6 +206,15 @@ export type SkillResult = {
   gross: number
 }
 
+export type ExecuteSkill = (
+  player: CombatUnit<Player>,
+  context: GameContext,
+  units?: {
+    ally?: CombatUnit[]
+    enemies?: CombatUnit[]
+  }
+) => Promise<SkillResult>
+
 // 3. 스킬 인터페이스 정의
 export interface Skill {
   id: SkillId
@@ -214,7 +224,7 @@ export interface Skill {
   requiredLevel: number
   unlocks: string[]
   unlockHint: string
-  execute: (player: CombatUnit<Player>, context: GameContext, enemies?: CombatUnit[]) => Promise<SkillResult>
+  execute: ExecuteSkill
 }
 
 export interface NPCState {
