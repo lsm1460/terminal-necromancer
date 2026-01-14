@@ -1,4 +1,4 @@
-import { Rarity, RARITY_DATA } from '../../../consts'
+import { RARITY_DATA, SkeletonRarity } from '../../../consts'
 import { BattleTarget, ExecuteSkill } from '../../../types'
 import { SkillManager } from '../SkillManager'
 
@@ -24,7 +24,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   }
 
   // --- 1. 등급 결정 로직 ---
-  const rarities: Rarity[] = ['common', 'rare', 'elite', 'epic', 'legendary']
+  const rarities: SkeletonRarity[] = ['common', 'rare', 'elite', 'epic', 'legendary']
   // 시체에 저장된 최솟값 인덱스 (기본값 Rare)
   const minIdx = rarities.indexOf(selectedCorpse?.minRarity || 'common')
 
@@ -35,7 +35,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   const totalWeight = pool.reduce((sum, r) => sum + RARITY_DATA[r].weight, 0)
   let random = Math.random() * totalWeight
 
-  let finalRarity: Rarity = pool[0]
+  let finalRarity = pool[0]
   for (const r of pool) {
     if (random < RARITY_DATA[r].weight) {
       finalRarity = r

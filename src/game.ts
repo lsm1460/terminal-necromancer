@@ -14,6 +14,7 @@ import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
+import { ItemGenerator } from './core/item/ItemGenerator'
 
 // ---------- 데이터 로드 ----------
 const assets = path.join(__dirname, 'assets')

@@ -39,8 +39,8 @@
     "id": "iron_sword",
     "label": "철검",
     "type": "weapon",
-    "atk": [5, 10],
-    "crit": [0, 0.05],
+    "atkRange": [5, 10],
+    "critRange": [0, 0.05],
     "price": 500,
     "sellPrice": 120,
     "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다."
@@ -49,7 +49,8 @@
     "id": "leather_armor",
     "label": "가죽 갑옷",
     "type": "armor",
-    "def": [2, 5],
+    "defRange": [2, 5],
+    "evaRange": [0, 0.02],
     "price": 400,
     "sellPrice": 100,
     "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다."

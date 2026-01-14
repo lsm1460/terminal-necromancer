@@ -17,7 +17,7 @@ export class LootFactory {
   /** 몬스터 처치 보상 */
   static fromTarget(target: BattleTarget, drop: DropSystem) {
     const _drop = drop.generateDrops(target.dropTableId ?? 'none')
-
+    
     return _drop
   }
 }

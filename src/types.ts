@@ -1,5 +1,6 @@
-import { Rarity } from './consts'
+import { SkeletonRarity } from './consts'
 import { Battle, CombatUnit } from './core/Battle'
+import { ItemRarity } from './core/item/consts'
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
@@ -29,7 +30,7 @@ export type BattleTarget = {
   noEscape?: boolean
   isMinion?: boolean
   deathLine?: string
-  minRarity?: Rarity
+  minRarity?: SkeletonRarity
   orderWeight?: number
 }
 
@@ -79,6 +80,7 @@ type BaseItem = {
   quantity?: number
   price: number
   sellPrice: number
+  rarity?: ItemRarity
 }
 
 // 일반 아이템 (퀘스트용, 재료 등)
@@ -90,6 +92,7 @@ type ItemOptions = {
   hp?: number
   mp?: number
   maxSkeleton?: number
+  affix?: Affix
 }
 
 // 무기
@@ -126,9 +129,11 @@ export type Item = GenericItem | WeaponItem | ArmorItem | FoodItem | ConsumableI
 export type Drop = {
   x: number
   y: number
-  atk: number[]
-  def: number[]
-  crit: number[]
+  atkRange?: [number, number]
+  defRange?: [number, number]
+  critRange?: [number, number]
+  evaRange?: [number, number]
+  minRarity?: ItemRarity
 } & Item
 
 export type Corpse = {
@@ -259,4 +264,37 @@ export type NpcSkill = {
   power: number
   targetType: SkillTargetType
   type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
+}
+
+export type AffixId =
+  | 'SURPRISE_ATTACK'
+  | 'OVERLORD'
+  | 'ELITE_SQUAD'
+  | 'DOOMSDAY'
+  | 'FROSTBORNE'
+  | 'LEGION'
+  | 'THORNS'
+  | 'ROAR'
+  | 'TABOO'
+  | 'WARHORSE'
+  | 'CORROSION'
+  | 'WIDE_CURSE'
+  | 'CHAIN_EXPLOSION'
+  | 'VAMPIRISM'
+  | 'EXALTATION'
+  | 'BLOOD'
+  | 'RESURRECTION'
+  | 'MEMORY'
+  | 'CLEANSE'
+
+export interface Affix {
+  id: AffixId // 고유 식별자
+  name: string // 이름 (예: "군주", "군단")
+  description: string // 툴팁용 설명
+  valueRange?: [number, number]
+  value?: number
+  metadata?: {
+    needsConfirmOnUnequip?: boolean // 장비 해제 시 확인창 노출 여부 (기억 어픽스용)
+    [key: string]: any
+  }
 }

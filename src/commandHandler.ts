@@ -86,7 +86,8 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
       printStatus(player, context)
       await events.handle(currentTile, player, context)
     }
-  } catch (e) {}
+  } catch (e) {
+  }
 
   // 자동 세이브
   context.save.save({

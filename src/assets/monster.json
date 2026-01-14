@@ -2,8 +2,8 @@
   "monster-group-level-1": [
     {
       "name": "토끼",
-      "hp": 45,
-      "maxHp": 45,
+      "hp": 15,
+      "maxHp": 15,
       "atk": 1,
       "def": 2,
       "agi": 2,
@@ -25,8 +25,7 @@
       "encounterRate": 0,
       "dropTableId": "squirrel",
       "description": "민첩한 다람쥐. 공격력은 토끼보다 높지만 방어력은 낮다. 회피 능력이 뛰어나다.",
-      "orderWeight": 10,
-      "minRarity": "elite"
+      "orderWeight": 10
     },
     {
       "name": "고블린",

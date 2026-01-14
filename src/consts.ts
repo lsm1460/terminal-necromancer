@@ -57,7 +57,7 @@ export const MAP_IDS = {
   B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',
 } as const
 
-export type Rarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'
+export type SkeletonRarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'
 
 type SubClass = {
   name: string
@@ -67,7 +67,7 @@ type SubClass = {
   orderWeight: number
 }
 
-export const RARITY_DATA: Record<Rarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
+export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
   common: {
     bonus: 0.8,
     weight: 625,
