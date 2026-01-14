@@ -54,6 +54,7 @@ export interface CombatUnit<T = BattleTarget> {
   deBuff: Buff[]
   orderWeight: number
   ref: T // 원본 객체 참조 (데이터 직접 수정용)
+  onDeath?: (deathUnit: CombatUnit) => void
   takeDamage: <T extends BattleTarget | Player>(
     attacker: CombatUnit<T>,
     context: GameContext,
@@ -62,18 +63,23 @@ export interface CombatUnit<T = BattleTarget> {
 }
 
 export class Battle {
+  private unitCache = new Map<any, CombatUnit>()
+
   constructor(public player: Player) {}
 
   async runCombatLoop(enemies: CombatUnit[], context: GameContext) {
-    console.clear()
     console.log(`\n⚔️  전투가 시작되었습니다!`)
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
-    const turnOrder = this.getTurnOrder(this.player, enemies)
+    enemies.forEach((e) => {
+      e.onDeath = (u) => this.handleUnitDeath(u.ref, context)
+    })
 
     let turn = 0
     while (this.player.isAlive && enemies.some((e) => e.ref.isAlive)) {
       turn++
+
+      const turnOrder = this.getTurnOrder(enemies)
 
       console.log(`\n============== turn: ${turn} ==============`)
 
@@ -154,31 +160,41 @@ export class Battle {
       }
     }
 
-    this.printBattleResult()
+    this.handleBattleEnd()
   }
 
   // --- 내부 로직 함수들 ---
-  private getTurnOrder(player: Player, enemies: CombatUnit[]): CombatUnit[] {
+  private getTurnOrder(enemies: CombatUnit[]): CombatUnit[] {
     const units: CombatUnit[] = []
 
-    // 플레이어 추가
-    units.push(this.toCombatUnit(player, 'player'))
+    // 2. 플레이어 캐싱 및 콜백 주입
+    let pUnit = this.unitCache.get(this.player)
+    if (!pUnit) {
+      pUnit = this.toCombatUnit(this.player, 'player')
+      this.unitCache.set(this.player, pUnit)
+    }
+    units.push(pUnit)
 
-    // 미니언 추가
-    if (player.minions) {
-      player.minions.forEach((m) => {
-        if (m.isAlive) units.push(this.toCombatUnit(m, 'minion'))
+    // 3. 미니언 캐싱 및 콜백 주입 (새로 소환된 미니언 포함)
+    if (this.player.minions) {
+      this.player.minions.forEach((m) => {
+        if (m.isAlive) {
+          let mUnit = this.unitCache.get(m)
+          if (!mUnit) {
+            mUnit = this.toCombatUnit(m, 'minion')
+            mUnit.onDeath = (u) => this.handleMinionsDeath(u.ref, enemies)
+            this.unitCache.set(m, mUnit)
+          }
+          units.push(mUnit)
+        }
       })
     }
 
-    // 적(몬스터/NPC) 추가
+    // 4. 적군 추가
     enemies.forEach((e) => {
-      if (e.ref.isAlive) {
-        units.push(e)
-      }
+      if (e.ref.isAlive) units.push(e)
     })
 
-    // 민첩 내림차순 정렬
     return units.sort((a, b) => b.stats.agi - a.stats.agi)
   }
 
@@ -252,6 +268,7 @@ export class Battle {
       }
 
       console.log('\n🏃 전투에서 도망쳤습니다!')
+      this.unitCache.clear()
 
       return true
     }
@@ -271,6 +288,15 @@ export class Battle {
     }
   }
 
+  private handleMinionsDeath(target: BattleTarget, enemies: CombatUnit[]) {
+    target.hp = 0
+    target.isAlive = false
+
+    this.player.removeMinion(target.id)
+
+    this.player.hasAffix('DOOMSDAY')
+  }
+
   private handleUnitDeath(target: BattleTarget, context: GameContext) {
     const { world, drop: dropTable, npcs } = context
     const { x, y } = this.player.pos // 현재 위치
@@ -283,42 +309,36 @@ export class Battle {
     target.deathLine && console.log(`${target.name}: ${target.deathLine}`)
 
     // 2. 전리품 및 경험치 처리 (플레이어 진영이 죽인 경우만 해당될 수 있음)
-    // NPC나 몬스터가 죽었을 때만 실행
+    // 편의를 위해 더 큰 타입인 NPC로 처리
+    const npc = target as NPC
 
-    if (target.isMinion) {
-      this.player.removeMinion(target.id)
-    } else if (!target.isMinion && (target.exp || target.dropTableId)) {
-      // npc
-      const npc = target as NPC
+    npcs.dead(npc.id)
 
-      npcs.dead(npc.id)
+    npc.faction && context.npcs.setFactionHostility(npc.faction, 100)
 
-      npc.faction && context.npcs.setFactionHostility(npc.faction, 100)
+    const { gold, drops } = LootFactory.fromTarget(npc, dropTable)
 
-      const { gold, drops } = LootFactory.fromTarget(npc, dropTable)
+    this.player.gainExp(npc.exp || 0)
+    this.player.gainGold(gold)
 
-      this.player.gainExp(npc.exp || 0)
-      this.player.gainGold(gold)
+    let logMessage = `✨ ${npc.name} 처치! EXP +${npc.exp || 0}`
+    if (gold > 0) logMessage += `, 골드 +${gold}`
+    console.log(logMessage)
 
-      let logMessage = `✨ ${npc.name} 처치! EXP +${npc.exp || 0}`
-      if (gold > 0) logMessage += `, 골드 +${gold}`
-      console.log(logMessage)
+    // 아이템 드랍
+    drops.forEach((d) => {
+      world.addDrop({ ...d, x, y } as Drop)
+      const qtyText = d.quantity !== undefined ? ` ${d.quantity}개` : ''
+      console.log(`📦 ${npc.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
+    })
 
-      // 아이템 드랍
-      drops.forEach((d) => {
-        world.addDrop({ ...d, x, y } as Drop)
-        const qtyText = d.quantity !== undefined ? ` ${d.quantity}개` : ''
-        console.log(`📦 ${npc.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
-      })
-
-      // 시체 생성 (네크로맨서의 핵심!)
-      world.addCorpse({
-        ...npc,
-        x,
-        y,
-      })
-      console.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
-    }
+    // 시체 생성 (네크로맨서의 핵심!)
+    world.addCorpse({
+      ...npc,
+      x,
+      y,
+    })
+    console.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
   }
 
   public toCombatUnit<T extends BattleTarget | Player>(unit: IUnit, type: CombatUnit['type']): CombatUnit<T> {
@@ -338,6 +358,16 @@ export class Battle {
       orderWeight: unit?.orderWeight || 0,
       ref: unit as T,
       takeDamage: (attacker, context, options = {}) => {
+        if (!combatUnit.ref.isAlive) {
+          return {
+            isEscape: false,
+            damage: 0,
+            isCritical: false,
+            currentHp: 0,
+            isDead: true,
+          }
+        }
+
         const result = Battle.calcDamage(attacker, combatUnit, options)
         const { isEscape, damage, isCritical } = result
 
@@ -368,8 +398,8 @@ export class Battle {
 
         const isDead = combatUnit.ref.hp <= 0
 
-        if (isDead) {
-          this.handleUnitDeath(unit as BattleTarget, context)
+        if (isDead && combatUnit.onDeath) {
+          combatUnit.onDeath(combatUnit as CombatUnit)
         }
 
         return {
@@ -383,7 +413,9 @@ export class Battle {
     return combatUnit
   }
 
-  private printBattleResult() {
+  private handleBattleEnd() {
+    this.unitCache.clear()
+
     if (this.player.isAlive) {
       console.log(`\n🏆 전투에서 승리했습니다!`)
     } else {
