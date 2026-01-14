@@ -1,7 +1,7 @@
 // core/Player.ts
 import fs from 'fs'
 import { INIT_MAX_MEMORIZE_COUNT } from '../consts'
-import { ArmorItem, BattleTarget, Item, ItemType, LevelData, SKILL_IDS, SkillId, WeaponItem } from '../types'
+import { AffixId, ArmorItem, BattleTarget, Item, ItemType, LevelData, SKILL_IDS, SkillId, WeaponItem } from '../types'
 
 export class Player {
   x = 0
@@ -22,7 +22,7 @@ export class Player {
   inventory: Item[] = []
   _maxMemorize = INIT_MAX_MEMORIZE_COUNT
   memorize: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
-  equipped = { weapon: null as Item | null, armor: null as Item | null }
+  equipped = { weapon: null as WeaponItem | null, armor: null as ArmorItem | null }
 
   public unlockedSkills: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
@@ -58,8 +58,8 @@ export class Player {
   get maxHp() {
     let maxHp = this._maxHp
 
-    if (this.equipped.weapon) maxHp += (this.equipped.weapon as WeaponItem)?.hp || 0
-    if (this.equipped.armor) maxHp += (this.equipped.armor as ArmorItem)?.hp || 0
+    if (this.equipped.weapon) maxHp += this.equipped.weapon?.hp || 0
+    if (this.equipped.armor) maxHp += this.equipped.armor?.hp || 0
 
     return maxHp
   }
@@ -67,8 +67,8 @@ export class Player {
   get maxMp() {
     let maxMp = this._maxMp
 
-    if (this.equipped.weapon) maxMp += (this.equipped.weapon as WeaponItem)?.mp || 0
-    if (this.equipped.armor) maxMp += (this.equipped.armor as ArmorItem)?.mp || 0
+    if (this.equipped.weapon) maxMp += this.equipped.weapon?.mp || 0
+    if (this.equipped.armor) maxMp += this.equipped.armor?.mp || 0
 
     return maxMp
   }
@@ -79,29 +79,28 @@ export class Player {
     let def = this.def
     let eva = this.eva
 
-    if (this.equipped.weapon) atk += (this.equipped.weapon as WeaponItem).atk
-    if (this.equipped.weapon) crit += (this.equipped.weapon as WeaponItem).crit
-    if (this.equipped.armor) def += (this.equipped.armor as ArmorItem).def
-    if (this.equipped.armor) eva += (this.equipped.armor as ArmorItem)?.eva || 0
+    if (this.equipped.weapon) atk += this.equipped.weapon.atk
+    if (this.equipped.weapon) crit += this.equipped.weapon.crit
+    if (this.equipped.armor) def += this.equipped.armor.def
+    if (this.equipped.armor) eva += this.equipped.armor?.eva || 0
 
-    return { 
-      ...this, 
+    return {
+      ...this,
       maxHp: this.maxHp,
       maxMp: this.maxMp,
-      atk, 
+      atk,
       crit,
       def,
-      eva
+      eva,
     }
   }
 
   get maxSkeleton() {
     let maxSkeleton = this._maxSkeleton
 
-    if (this.equipped.weapon) maxSkeleton += (this.equipped.weapon as WeaponItem)?.maxSkeleton || 0
-    if (this.equipped.armor) maxSkeleton += (this.equipped.armor as ArmorItem).maxSkeleton || 0
+    const _val = this.getAffixValue('OVERLORD')
 
-    return maxSkeleton
+    return maxSkeleton + _val
   }
 
   get maxMemorize() {
@@ -114,10 +113,8 @@ export class Player {
 
   get minions(): BattleTarget[] {
     const _skeletons = this.skeleton.sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
-    
-    return [this.golem, ..._skeletons, this.knight]
-      .filter((_minion) => !!_minion)
-      .filter((_minion) => _minion.isAlive)
+
+    return [this.golem, ..._skeletons, this.knight].filter((_minion) => !!_minion).filter((_minion) => _minion.isAlive)
   }
 
   get isAlive() {
@@ -128,8 +125,24 @@ export class Player {
     this.hp = 0
   }
 
-  get affixes() {
-    return [] as string[]
+  get affixes(): AffixId[] {
+    return [this.equipped.weapon, this.equipped.armor]
+      .filter((item): item is WeaponItem | ArmorItem => !!item && !!item.affix)
+      .flatMap((item) => item.affix!.id) // ID만 추출하여 평탄화
+  }
+
+  public getAffixValue(affixId: AffixId): number {
+    const values = [this.equipped.weapon, this.equipped.armor]
+      .filter((item) => item?.affix?.id === affixId)
+      .map((item) => item!.affix!.value || 0)
+
+    // 장착된 아이템 중 해당 어픽스가 없으면 0, 있으면 최댓값 반환
+    return values.length > 0 ? Math.max(...values) : 0
+  }
+
+  public hasAffix(affixId: AffixId): boolean {
+    // any를 써서 검사하거나, getter를 활용
+    return this.affixes.includes(affixId)
   }
 
   move(dx: number, dy: number) {
@@ -204,7 +217,11 @@ export class Player {
     }
 
     const oldItem = this.equipped[slot]
-    this.equipped[slot] = newItem
+    if (slot === 'weapon') {
+      this.equipped.weapon = newItem as WeaponItem
+    } else if (slot === 'armor') {
+      this.equipped.armor = newItem as ArmorItem
+    }
 
     const updatedInventory = this.inventory.filter((i) => i.id !== newItem.id)
 
@@ -213,9 +230,24 @@ export class Player {
     }
 
     this.inventory = updatedInventory
-    console.log(`⚔️ [${newItem.label}]을(를) 장착했습니다.`)
+
+    this.updateSkeletonLimit()
 
     return true
+  }
+
+  public updateSkeletonLimit() {
+    const currentMax = this.maxSkeleton // [군주] 어픽스가 계산된 최신 Max값
+
+    // 현재 해골 수가 줄어든 최대치보다 많다면?
+    while (this.skeleton.length > currentMax) {
+      // 1. 가장 마지막에 추가된(최근 소환된) 해골을 제거
+      const removedSkeleton = this.skeleton.pop()
+
+      if (removedSkeleton) {
+        console.log(` └ ⚠️ 장비가 해제되어 ${removedSkeleton.name}이(가) 소멸했습니다.`)
+      }
+    }
   }
 
   unEquip(slot: keyof typeof this.equipped): boolean {

@@ -26,9 +26,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   // --- 1. 등급 결정 로직 ---
   const rarities: SkeletonRarity[] = ['common', 'rare', 'elite', 'epic', 'legendary']
   // 시체에 저장된 최솟값 인덱스 (기본값 Rare)
-  const minIdx = rarities.indexOf(selectedCorpse?.minRarity || 'common')
-
-  // TODO: 장비에 스켈레톤 등급 향상 옵션이 있다면 minIdx + 1
+  const minIdx = rarities.indexOf(selectedCorpse?.minRarity || 'common') + player.ref.getAffixValue('ELITE_SQUAD')
 
   // 가중치 기반으로 랜덤 등급 선택
   const pool = rarities.slice(Math.min(minIdx, rarities.length - 1)) // 최소 등급 이상만 필터링

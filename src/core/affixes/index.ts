@@ -16,6 +16,7 @@ export const AFFIX_LIST: Record<string, Affix> = {
     id: 'ELITE_SQUAD',
     name: '정예',
     description: '스켈레톤 생성 등급이 향상됩니다.',
+    valueRange: [1, 2], // 생성 시 1~2 랜덤 부여
   },
   DOOMSDAY: {
     id: 'DOOMSDAY',

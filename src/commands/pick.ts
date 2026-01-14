@@ -11,10 +11,8 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   }
 
   // 2. 현재 인벤토리 총 점유 수량 계산 (각 아이템의 quantity 합산)
-  const currentTotalQuantity = player.inventory.reduce((sum, item) => {
-    return sum + (item.quantity || 1)
-  }, 0)
-
+  const currentTotalQuantity = player.inventory.reduce((sum, item) => sum + (item.quantity || 1), 0)
+  
   // 3. 남은 공간 확인
   const availableSpace = player.inventoryMax - currentTotalQuantity
 

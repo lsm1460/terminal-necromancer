@@ -59,16 +59,24 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
-  // 5. 전열 2개 타겟팅 및 공격
-  // 선택 없이 가장 앞에 있는 적 최대 2명 선택
-  const targets = aliveEnemies.slice(0, 2)
+  // 5. 타겟팅 및 공격
+  const hasSurprise = player.ref.hasAffix('SURPRISE_ATTACK')
+  const targets = hasSurprise ? aliveEnemies.slice(-2).reverse() : aliveEnemies.slice(0, 2)
 
+  const logTemplate = hasSurprise
+    ? {
+        primary: (name: string) => ` └ 🧤 기습! 뼈 창이 그림자 속에서 가장 뒤의 ${name}의 등을 꿰뚫습니다!`,
+        secondary: (name: string) => ` └ ⚡ 연쇄 기습! 당황한 ${name}까지 창날에 휘말립니다!`,
+      }
+    : {
+        primary: (name: string) => ` └ 🚀 뼈 창이 전열의 ${name}에게 정면으로 격돌합니다!`,
+        secondary: (name: string) => ` └ ⚡ 창이 뒤에 있던 ${name}까지 깊숙이 관통합니다!`,
+      }
+
+  // 3. 실행 및 로그 출력
   targets.forEach((target, index) => {
-    if (index === 0) {
-      console.log(` └ 🚀 뼈 창이 ${target.name}에게 정면으로 격돌합니다!`)
-    } else {
-      console.log(` └ ⚡ 창이 뒤에 있던 ${target.name}까지 관통합니다!`)
-    }
+    const logMsg = index === 0 ? logTemplate.primary(target.name) : logTemplate.secondary(target.name)
+    console.log(logMsg)
 
     /**
      * skillAtkMult: 0.6 배율 적용

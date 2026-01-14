@@ -99,8 +99,7 @@ export class ItemGenerator {
     if (setting.hasAffix) {
       const _affix = this.pickRandomAffix()
       affix = _affix
-      const valueText = _affix.value ? ` ${_affix.value}` : ''
-      affixBracket = `[${_affix.name}${valueText}] `
+      affixBracket = `[${_affix.name}] `
     }
 
     // [라벨 조립]

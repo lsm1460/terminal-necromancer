@@ -3,6 +3,7 @@ import { printTileStatus } from '../statusPrinter'
 import { BattleTarget, CommandFunction, Drop, ItemType, Monster } from '../types'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
+  const {atk: originAtk, def: originDef, skeleton, maxSkeleton} = player
   const { atk, def, crit, eva, agi, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
   console.log('🛡️ 상태창')
   console.log(`레벨: ${level} (경험치: ${exp})`)
@@ -16,8 +17,8 @@ export const statusCommand: CommandFunction = (player, args, context) => {
 
   console.log(`HP: ${hp} / ${maxHp}`)
   console.log(`MP: ${mp} / ${maxMp}`)
-  console.log(`공격력: ${atk}`)
-  console.log(`방어력: ${def}`)
+  console.log(`공격력: ${atk} (+ ${atk - originAtk})`)
+  console.log(`방어력: ${def} (+ ${def - originDef})`)
   console.log(`골드: ${gold}`)
 
   console.log(`치명: ${Math.floor(crit * 100)}%`)
@@ -42,6 +43,7 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   console.log(`방어구: ${armorText}`)
 
   console.log('\n💀 [ 소환수 군단 상태 ]')
+  console.log(` └ 💀 해골 병사: ${skeleton.length} / ${maxSkeleton}`);
 
   if (player.minions.length === 0) {
     console.log('   (현재 소환된 미니언이 없습니다.)')

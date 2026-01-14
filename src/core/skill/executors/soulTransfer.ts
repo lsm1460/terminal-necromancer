@@ -53,7 +53,7 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
   let totalGross = 0
   let isSpecialEffectTriggered = false
 
-  const hasEmpower = affixes.includes('EMPOWER_SOUL')
+  const hasEmpower = affixes.includes('EXALTATION')
 
   // [A] 강화 (EMPOWER_SOUL) - 착취와 중첩 가능
   if (hasEmpower) {
