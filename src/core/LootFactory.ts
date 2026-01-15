@@ -2,10 +2,12 @@ import { Player } from '../core/Player'
 import { DropSystem } from '../systems/DropSystem'
 import { BattleTarget, LootBag } from '../types'
 import { generateId } from '../utils'
+import { MapManager } from './MapManager'
 
 export class LootFactory {
-  static fromPlayer(player: Player): LootBag {
+  static fromPlayer(player: Player, map: MapManager): LootBag {
     return {
+      scendId: map.currentSceneId,
       id: generateId(),
       x: player.x,
       y: player.y,

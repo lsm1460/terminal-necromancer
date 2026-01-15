@@ -47,6 +47,8 @@ export interface Tile {
   npcIds?: string[] // npc용
   spawn_limit?: number // monster용
   monsters?: Monster[]
+  isClear?: boolean
+  isSeen?: boolean
 }
 
 export interface MapData {
@@ -144,6 +146,7 @@ export type Corpse = {
 
 export type LootBag = {
   id: string
+  scendId: string
   x: number
   y: number
   exp: number
@@ -246,6 +249,7 @@ export type GameEvent = {
   name: string
   description: string
   postTalk?: string[]
+  defeatTalk?: string[]
 }
 
 export type SkillTargetType =

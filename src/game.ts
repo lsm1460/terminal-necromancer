@@ -49,7 +49,7 @@ const context = { map, world, events, npcs, drop, save, npcSkills, battle }
 
 player.onDeath = () => {
   console.log('나는 사망했다...')
-  world.addLootBag(LootFactory.fromPlayer(player))
+  world.addLootBag(LootFactory.fromPlayer(player, map))
 
   player.x = 0
   player.y = 0
@@ -60,8 +60,6 @@ player.onDeath = () => {
 
 // 시작 위치 초기화
 map.currentSceneId = MAP_IDS.B1_SUBWAY
-player.hp = player.maxHp
-player.mp = player.maxMp
 player.x = 0
 player.y = 0
 
@@ -70,4 +68,8 @@ console.log('=== 게임 시작 ===')
 printStatus(player, context as GameContext)
 
 // ---------- CLI 시작 ----------
-createCLI(player, context)
+
+const currentTile = map.getTile(player.pos.x, player.pos.y)
+events.handle(currentTile, player, context as GameContext).then(() => {
+  createCLI(player, context)
+})

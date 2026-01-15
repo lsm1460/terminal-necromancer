@@ -36,9 +36,9 @@ export function printTileStatus(player: Player, { map, npcs, world }: GameContex
   console.log(`이동 가능 방향: ${directions.join(', ')}`)
 }
 
-export function printLootStatus(player: Player, { world }: GameContext) {
+export function printLootStatus(player: Player, { world, map }: GameContext) {
   const { x, y } = player.pos
-  const bag = world.getLootBagAt(x, y)
+  const bag = world.getLootBagAt(map.currentSceneId, x, y)
   if (bag) console.log(`\n나의 시체를 발견했다.`)
 
   const drops = world.getDropsAt(x, y)

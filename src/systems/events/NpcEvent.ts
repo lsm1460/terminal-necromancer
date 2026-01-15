@@ -18,13 +18,15 @@ export class NpcEvent {
     const preemptiveEnemies = npcAlive.filter((_npc) => npcs.isHostile(_npc!.id))
 
     if (preemptiveEnemies.length > 0) {
+      tile.isClear = false
+
       console.log(`⚠️  npc: ${preemptiveEnemies[0].name}의 기습!`)
 
       await delay()
 
       const units: CombatUnit[] = preemptiveEnemies.map((m) => context.battle.toCombatUnit(m, 'npc'))
 
-      await battle.runCombatLoop(units, context)
+      tile.isClear = await battle.runCombatLoop(units, context)
     }
   }
 }

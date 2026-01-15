@@ -150,7 +150,7 @@ export class Battle {
 
           if (isEscaped) {
             // 전투 종료
-            return
+            return false
           }
         } else if (unit.type === 'minion') {
           await this.executeAutoAttack(unit, enemiesSide, playerSide, context)
@@ -167,6 +167,8 @@ export class Battle {
     }
 
     this.handleBattleEnd()
+
+    return true
   }
 
   // --- 내부 로직 함수들 ---

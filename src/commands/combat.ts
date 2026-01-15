@@ -51,7 +51,7 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
   }
 
   // 3. 다대다 전투 루프(combatLoop) 진입
-  await battle.runCombatLoop(battleTargets, context)
+  tile.isClear = await battle.runCombatLoop(battleTargets, context)
 
   return false
 }

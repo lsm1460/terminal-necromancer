@@ -8,6 +8,8 @@ export class MonsterEvent {
   constructor(private monsterFactory: MonsterFactory) {}
 
   async handle(tile: Tile, player: Player, context: GameContext) {
+    if (tile.isClear) return
+     
     if (!tile.monsters) tile.monsters = []
 
     // 1. 현재 살아있는 몬스터 수 확인
@@ -50,7 +52,7 @@ export class MonsterEvent {
 
         const units: CombatUnit[] = finalAlive.map((m) => context.battle.toCombatUnit(m, 'monster'))
 
-        await context.battle.runCombatLoop(units, context)
+        tile.isClear = await context.battle.runCombatLoop(units, context)
       }
     }
   }

@@ -1,18 +1,18 @@
 {
   "player": {
-    "x": 0,
-    "y": 1,
+    "x": 2,
+    "y": 0,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
-    "mp": 30,
+    "mp": 100,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 108,
-    "exp": 720,
+    "gold": 133,
+    "exp": 880,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [
@@ -124,10 +124,10 @@
     ],
     "skeleton": [
       {
-        "id": "skeleton_1768456228424",
+        "id": "skeleton_1768461983556",
         "name": "[rare] 스켈레톤 검사",
         "maxHp": 7,
-        "hp": 7,
+        "hp": 3,
         "atk": 0,
         "def": 1,
         "agi": 1,
@@ -143,14 +143,16 @@
         "isSkeleton": true
       },
       {
-        "id": "skeleton_1768456228425",
-        "name": "[common] 스켈레톤 병사",
-        "maxHp": 6,
-        "hp": 6,
-        "atk": 0,
+        "id": "skeleton_1768461983557",
+        "name": "[elite] 스켈레톤 궁수",
+        "maxHp": 7,
+        "hp": 7,
+        "atk": 1,
         "def": 0,
-        "agi": 0,
-        "skills": [],
+        "agi": 1,
+        "skills": [
+          "piercing_arrow"
+        ],
         "exp": 0,
         "description": "토끼의 유골로 만들어진 소환수입니다.",
         "dropTableId": "",
@@ -160,7 +162,7 @@
         "isSkeleton": true
       },
       {
-        "id": "skeleton_1768456228425",
+        "id": "skeleton_1768461983557",
         "name": "[common] 스켈레톤 병사",
         "maxHp": 6,
         "hp": 6,
@@ -179,7 +181,7 @@
     ],
     "_maxSkeleton": 3
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {

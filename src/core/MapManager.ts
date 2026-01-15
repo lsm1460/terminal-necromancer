@@ -81,7 +81,7 @@ export class MapManager {
   }
 
   private shuffleTiles(sceneId: string) {
-    const scene = this.originMapData[sceneId]
+    const scene = _.cloneDeep(this.originMapData[sceneId])
     const { width, height } = { width: scene.tiles[0].length, height: scene.tiles.length }
     const start = scene.start_pos
 

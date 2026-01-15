@@ -87,7 +87,7 @@ export const AFFIX_LIST: Record<string, Affix> = {
   RESURRECTION: {
     id: 'RESURRECTION',
     name: '부활',
-    description: '뼈 기술 사용 후 소모되었던 미니언을 즉시 부활시킵니다.',
+    description: '뼈 기술 사용 후 소모되었던 미니언을 10%의 체력으로 즉시 부활시킵니다.',
   },
   MEMORY: {
     id: 'MEMORY',

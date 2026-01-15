@@ -1,32 +1,29 @@
-import { Corpse, Drop, LootBag } from "../types"
-import { MapManager } from "./MapManager"
+import { Corpse, Drop, LootBag } from '../types'
+import { MapManager } from './MapManager'
 
 export class World {
   lootBags: LootBag | null = null
   drops: Drop[] = []
   corpses: Corpse[] = []
-    
-  constructor(
-    public map: MapManager
-  ) {}
 
+  constructor(public map: MapManager) {}
 
   addDrop(drop: Drop) {
-    const existing = this.drops.find(d => d.id === drop.id)
+    const existing = this.drops.find((d) => d.id === drop.id)
 
     if (existing && existing.quantity && drop.quantity) {
-        existing.quantity += drop.quantity
+      existing.quantity += drop.quantity
     } else {
       this.drops.push(drop)
     }
   }
 
   getDropsAt(x: number, y: number): Drop[] {
-    return this.drops.filter(d => d.x === x && d.y === y)
+    return this.drops.filter((d) => d.x === x && d.y === y)
   }
 
   removeDropById(dropId: string): Drop | undefined {
-    const idx = this.drops.findIndex(d => d.id === dropId)
+    const idx = this.drops.findIndex((d) => d.id === dropId)
     if (idx === -1) return undefined
 
     // 배열에서 제거하고 반환
@@ -38,8 +35,15 @@ export class World {
     this.lootBags = bag
   }
 
-  getLootBagAt(x: number, y: number): LootBag | undefined {
-    return this.lootBags && this.lootBags.x === x && this.lootBags.y === y && this.lootBags || undefined
+  getLootBagAt(scendId: string, x: number, y: number): LootBag | undefined {
+    return (
+      (this.lootBags &&
+        this.lootBags.scendId === scendId &&
+        this.lootBags.x === x &&
+        this.lootBags.y === y &&
+        this.lootBags) ||
+      undefined
+    )
   }
 
   removeLootBag() {
@@ -51,15 +55,20 @@ export class World {
   }
 
   getCorpsesAt(x: number, y: number): Corpse[] {
-    return this.corpses.filter(d => d.x === x && d.y === y)
+    return this.corpses.filter((d) => d.x === x && d.y === y)
   }
 
   removeCorpse(corpseId: string) {
-    const idx = this.corpses.findIndex(c => c.id === corpseId)
+    const idx = this.corpses.findIndex((c) => c.id === corpseId)
     if (idx === -1) return undefined
 
     // 배열에서 제거하고 반환
     const [picked] = this.corpses.splice(idx, 1)
     return picked
+  }
+
+  leaveFloor() {
+    this.drops = []
+    this.corpses = []
   }
 }

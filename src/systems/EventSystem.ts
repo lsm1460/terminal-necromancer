@@ -40,6 +40,11 @@ export class EventSystem {
         break
       }
     }
+
+    tile.isSeen = true
+    if (!(tile.event === 'boss' || tile.event.startsWith('monster'))) {
+      tile.isClear = true
+    }
   }
 
   public getEventInfo(eventId: string) {

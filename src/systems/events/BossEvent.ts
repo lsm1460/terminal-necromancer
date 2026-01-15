@@ -29,11 +29,11 @@ export class BossEvent {
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 
     // 3. 순차적 대화 노출 (사용자가 키를 누를 때마다 다음 문장)
-    for (const text of dialogues) {
+    for (const message of dialogues) {
       await enquirer.prompt({
         type: 'input',
         name: 'confirm',
-        message: `[${bossNpc.name}]: "${text}"`,
+        message,
         // 입력값은 필요 없고 진행을 위한 대기 용도
         result: () => '',
         format: () => ' (계속하려면 Enter)',
@@ -44,7 +44,7 @@ export class BossEvent {
 
     // 4. 전투 실행
     // bossNpc가 Hostile NPC라면 그대로 전달합니다.
-    await battle.runCombatLoop([battle.toCombatUnit(bossNpc, 'npc')], context)
+    tile.isClear = await battle.runCombatLoop([battle.toCombatUnit(bossNpc, 'npc')], context)
 
     // 5. 승리 시 이벤트 처리
     if (!bossNpc.isAlive) {
@@ -54,6 +54,17 @@ export class BossEvent {
       tile.npcIds = _.uniq([...(tile.npcIds || []), 'portal'])
       console.log(`\n[!] 공중이 유리처럼 갈라지더니, 푸른 빛을 내뿜는 [차원문]이 모습을 드러냅니다.`)
       console.log(`✨ 이제 이곳에서 시작 지점으로 즉시 귀환할 수 있습니다.`)
+
+      for (const message of eventData?.defeatTalk || []) {
+      await enquirer.prompt({
+        type: 'input',
+        name: 'confirm',
+        message,
+        // 입력값은 필요 없고 진행을 위한 대기 용도
+        result: () => '',
+        format: () => ' (계속하려면 Enter)',
+      })
+    }
     }
   }
 }

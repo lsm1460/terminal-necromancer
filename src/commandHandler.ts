@@ -57,7 +57,8 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   clear: Commands.clearCommand,
   skill: Commands.skillCommand,
   talk: Commands.talkCommand,
-  use: Commands.useCommand
+  use: Commands.useCommand,
+  map: Commands.mapCommand,
 }
 
 // --- handleCommand ---

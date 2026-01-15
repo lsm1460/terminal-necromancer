@@ -34,7 +34,7 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
   if (isAggressive) {
     await delay()
 
-    await battle.runCombatLoop(enemies, context)
+    tile.isClear = await battle.runCombatLoop(enemies, context)
   }
 
   return false
