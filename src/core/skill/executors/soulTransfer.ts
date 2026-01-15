@@ -60,7 +60,7 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
     const drainAmount = Math.floor(targetMinion.ref.hp * 0.2)
     targetMinion.ref.hp = Math.max(1, targetMinion.ref.hp - drainAmount)
 
-    targetMinion.buff.push({
+    targetMinion.applyBuff({
       name: '광폭화',
       type: 'buff',
       atk: 15,

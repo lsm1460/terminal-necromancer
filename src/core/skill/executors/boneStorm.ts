@@ -22,13 +22,11 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
 
   // 2. 데미지 계산 (희생될 모든 스켈레톤의 현재 HP 합산)
   const totalSkeletonHp = skeletons.reduce((sum, sk) => sum + sk.hp, 0)
-  const totalRawDamage = Math.floor(totalSkeletonHp * 0.3);
+  const totalRawDamage = Math.floor(totalSkeletonHp * 0.3)
   const sacrificeCount = skeletons.length
 
   console.log(`\n🌪️  ${player.name}이 모든 스켈레톤을 파괴하여 뼈의 폭풍을 일으킵니다!`)
-  console.log(
-    ` └ 🔥 총 ${sacrificeCount}구의 스켈레톤이 산산조각나며 파편이 휘몰아칩니다.`
-  )
+  console.log(` └ 🔥 총 ${sacrificeCount}구의 스켈레톤이 산산조각나며 파편이 휘몰아칩니다.`)
 
   // 3. 모든 스켈레톤 희생 처리
   // 배열을 순회하며 모두 파괴
@@ -41,15 +39,15 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
   // 4. 모든 적에게 데미지 및 [출혈] 부여
   for (const enemy of aliveEnemies) {
     console.log(` └ 🩸 날카로운 뼈 파편이 ${enemy.name}을 찢어발깁니다!`)
-  
+
     // 데미지 적용 (고정 데미지가 아니므로 적 방어력에 감쇄됨)
     await enemy.takeDamage(player, {
       rawDamage: totalRawDamage,
       isIgnoreDef: false,
     })
-  
+
     // [출혈] 디버프 추가 (지속 피해)
-    enemy.deBuff.push({
+    enemy.applyDeBuff({
       name: '출혈',
       type: 'dot', // Damage over Time
       duration: 3 + 1, // 3턴 지속

@@ -3,16 +3,16 @@
     "x": 0,
     "y": 1,
     "_maxHp": 100,
-    "hp": 80,
+    "hp": 100,
     "_maxMp": 100,
-    "mp": 78,
+    "mp": 30,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 78,
-    "exp": 500,
+    "gold": 108,
+    "exp": 720,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [
@@ -37,32 +37,8 @@
         "quantity": 1
       },
       {
-        "id": "iron_sword_a289733182c3fd1f",
-        "label": "낡은 철검",
-        "type": "weapon",
-        "atk": 5,
-        "crit": 0.02,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "iron_sword_b919ce9e090c2f56",
-        "label": "장인의 철검",
-        "type": "weapon",
-        "atk": 10,
-        "crit": 0.03,
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "x": 1,
-        "y": 1
-      },
-      {
-        "id": "iron_sword_d2c7f7ae7e4973e6",
-        "label": "\u001b[35m🟣 [기습] 금지된 낡은 철검\u001b[0m",
+        "id": "iron_sword_402a47d99388f239",
+        "label": "\u001b[35m🟣 [서리] 심연의 철검\u001b[0m",
         "type": "weapon",
         "atkRange": [
           5,
@@ -77,46 +53,13 @@
         "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
         "quantity": 1,
         "minRarity": "EPIC",
-        "atk": 8,
+        "atk": 12,
         "crit": 0,
         "rarity": "EPIC",
         "affix": {
-          "id": "SURPRISE_ATTACK",
-          "name": "기습",
-          "description": "뼈 창이 적 진형의 뒤에서 날아옵니다."
-        },
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "iron_sword_30d19166857f1a4a",
-        "label": "\u001b[35m🟣 [정예] 몰락한 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          5,
-          10
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "minRarity": "EPIC",
-        "atk": 14,
-        "crit": 0,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "ELITE_SQUAD",
-          "name": "정예",
-          "description": "스켈레톤 생성 등급이 향상됩니다.",
-          "valueRange": [
-            1,
-            2
-          ],
-          "value": 1
+          "id": "FROSTBORNE",
+          "name": "서리",
+          "description": "서리 서린 스켈레톤의 손길이 적의 발걸음을 무겁게 합니다."
         },
         "x": 0,
         "y": 1
@@ -125,14 +68,14 @@
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
-      "CURSE",
       "SOUL_TRANSFER",
-      "BONE_SPEAR"
+      "BONE_SPEAR",
+      "BONE_STORM"
     ],
     "equipped": {
       "weapon": {
-        "id": "iron_sword_fcdf5f6df33a3315",
-        "label": "\u001b[35m🟣 [종말] 필멸의 철검\u001b[0m",
+        "id": "iron_sword_2a7a46fc195c6769",
+        "label": "\u001b[35m🟣 [군단] 필멸의 철검\u001b[0m",
         "type": "weapon",
         "atkRange": [
           5,
@@ -147,13 +90,13 @@
         "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
         "quantity": 1,
         "minRarity": "EPIC",
-        "atk": 11,
+        "atk": 12,
         "crit": 0,
         "rarity": "EPIC",
         "affix": {
-          "id": "DOOMSDAY",
-          "name": "종말",
-          "description": "스켈레톤이 죽을 때 폭발하여 주변에 피해를 입힙니다."
+          "id": "LEGION",
+          "name": "군단",
+          "description": "스켈레톤 부활 시 사역 가능한 수만큼의 시체를 동시에 부활시킵니다."
         },
         "x": 0,
         "y": 1
@@ -179,7 +122,61 @@
       "SOUL_HARVEST",
       "BONE_STORM"
     ],
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1768456228424",
+        "name": "[rare] 스켈레톤 검사",
+        "maxHp": 7,
+        "hp": 7,
+        "atk": 0,
+        "def": 1,
+        "agi": 1,
+        "skills": [
+          "power_smash"
+        ],
+        "exp": 0,
+        "description": "토끼의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      },
+      {
+        "id": "skeleton_1768456228425",
+        "name": "[common] 스켈레톤 병사",
+        "maxHp": 6,
+        "hp": 6,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "skills": [],
+        "exp": 0,
+        "description": "토끼의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      },
+      {
+        "id": "skeleton_1768456228425",
+        "name": "[common] 스켈레톤 병사",
+        "maxHp": 6,
+        "hp": 6,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "skills": [],
+        "exp": 0,
+        "description": "토끼의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      }
+    ],
     "_maxSkeleton": 3
   },
   "sceneId": "B1_Subway_Entrance",

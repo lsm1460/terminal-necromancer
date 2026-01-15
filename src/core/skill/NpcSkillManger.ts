@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { GameContext, NpcSkill } from '../../types'
+import { NpcSkill } from '../../types'
 import { CombatUnit } from '../Battle'
 
 type SkillExecutor<T = void> = (
@@ -8,7 +8,7 @@ type SkillExecutor<T = void> = (
   attacker: CombatUnit,
   ally: CombatUnit[],
   enemies: CombatUnit[],
-  context: GameContext
+  callback?: () => void
 ) => T
 
 export class NpcSkillManager {
@@ -45,7 +45,7 @@ export class NpcSkillManager {
   }
 
   execute: SkillExecutor = async (...params) => {
-    const [skillId, attacker, ally, enemies, context] = params
+    const [skillId, attacker] = params
 
     const skill = this.getSkill(skillId)
     if (!skill) return []

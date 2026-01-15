@@ -29,6 +29,7 @@ export type BattleTarget = {
   preemptive?: boolean
   noEscape?: boolean
   isMinion?: boolean
+  isSkeleton?: boolean
   deathLine?: string
   minRarity?: SkeletonRarity
   orderWeight?: number

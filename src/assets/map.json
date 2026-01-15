@@ -5,7 +5,7 @@
     "move_pos": { "x": 1, "y": 2 },
     "tiles": [
       [
-        { "theme": "start", "event": "none", "dialogue": "시작 공간입니다." },
+        { "theme": "start", "event": "heal", "dialogue": "시작 공간입니다. 활력이 차오릅니다." },
         null,
         null
       ],

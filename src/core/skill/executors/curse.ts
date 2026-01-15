@@ -53,7 +53,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
 
     console.log(`\n💀 ${player.name}이(가) ${target.name}에게 어두운 저주를 내립니다!`)
 
-    target.deBuff.push({
+    target.applyDeBuff({
       name: '저주',
       type: 'deBuff',
       atk: atkReduction,

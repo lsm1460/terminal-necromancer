@@ -60,6 +60,8 @@ player.onDeath = () => {
 
 // 시작 위치 초기화
 map.currentSceneId = MAP_IDS.B1_SUBWAY
+player.hp = player.maxHp
+player.mp = player.maxMp
 player.x = 0
 player.y = 0
 

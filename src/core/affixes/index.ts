@@ -27,7 +27,7 @@ export const AFFIX_LIST: Record<string, Affix> = {
   FROSTBORNE: {
     id: 'FROSTBORNE',
     name: '서리',
-    description: '공격 시 적에게 한기 디버프를 부여합니다.',
+    description: '서리 서린 스켈레톤의 손길이 적의 발걸음을 무겁게 합니다.',
   },
   LEGION: {
     id: 'LEGION',

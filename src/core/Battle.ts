@@ -31,6 +31,7 @@ export type Buff = {
   duration: number
   type: 'deBuff' | 'bind' | 'buff' | 'dot'
   atk?: number
+  agi?: number
   def?: number
   eva?: number
   hp?: number
@@ -54,7 +55,10 @@ export interface CombatUnit<T = BattleTarget> {
   deBuff: Buff[]
   orderWeight: number
   ref: T // 원본 객체 참조 (데이터 직접 수정용)
-  onDeath?: (deathUnit: CombatUnit) => void
+  onDeath?: () => void
+  applyEffect: (_buff: Buff) => void
+  applyBuff: (_buff: Buff) => void
+  applyDeBuff: (_buff: Buff) => void
   takeDamage: <T extends BattleTarget | Player>(
     attacker: CombatUnit<T>,
     options?: CalcDamageOptions
@@ -71,7 +75,7 @@ export class Battle {
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
     enemies.forEach((e) => {
-      e.onDeath = (u) => this.handleUnitDeath(u.ref, context)
+      e.onDeath = () => this.handleUnitDeath(e.ref, context)
     })
 
     let turn = 0
@@ -102,6 +106,9 @@ export class Battle {
           if (unit.ref.hp <= 0) {
             unit.ref.isAlive = false
             console.log(` └ 💀 ${unit.name}이(가) 출혈 과다로 사망했습니다.`)
+            unit.onDeath && unit.onDeath()
+
+            await delay()
             break
           }
         }
@@ -181,7 +188,7 @@ export class Battle {
           let mUnit = this.unitCache.get(m)
           if (!mUnit) {
             mUnit = this.toCombatUnit(m, 'minion')
-            mUnit.onDeath = (u) => this.handleMinionsDeath(u, enemies)
+            mUnit.onDeath = () => this.handleMinionsDeath(mUnit!, enemies)
             this.unitCache.set(m, mUnit)
           }
           units.push(mUnit)
@@ -194,7 +201,33 @@ export class Battle {
       if (e.ref.isAlive) units.push(e)
     })
 
-    return units.sort((a, b) => b.stats.agi - a.stats.agi)
+    const getEffectiveAgi = (unit: CombatUnit): number => {
+      let finalAgi = unit.stats.agi
+
+      // 버프 배열: agi가 있으면 더함
+      unit.buff.forEach((b) => {
+        if (b.agi) finalAgi += b.agi
+      })
+
+      // 디버프 배열: agi가 있으면 뺌
+      unit.deBuff.forEach((d) => {
+        if (d.agi) finalAgi -= d.agi
+      })
+
+      return finalAgi
+    }
+
+    return units.sort((a, b) => {
+      const diff = getEffectiveAgi(b) - getEffectiveAgi(a)
+
+      // 민첩 수치가 같다면 플레이어 진영 우선 (안정적인 게임 경험을 위해)
+      if (diff === 0) {
+        const priority = (u: CombatUnit) => (['npc', 'monster'].includes(u.type) ? 1 : 0)
+        return priority(a) - priority(b)
+      }
+
+      return diff
+    })
   }
 
   private async handlePlayerAction(
@@ -286,7 +319,7 @@ export class Battle {
 
     const autoSkillId = context.npcSkills.getRandomSkillId(attacker.ref.skills || [])
     if (autoSkillId) {
-      await context.npcSkills.execute(autoSkillId, attacker, ally, targets, context)
+      await context.npcSkills.execute(autoSkillId, attacker, ally, targets)
     } else {
       await target.takeDamage(attacker)
     }
@@ -299,28 +332,6 @@ export class Battle {
     this.player.removeMinion(deathUnit.ref.id)
 
     console.log(`\n💀 ${deathUnit.ref.name}이(가) 쓰러졌습니다!`)
-
-    if (this.player.hasAffix('DOOMSDAY')) {
-      const rawExplosionDamage = Math.floor(deathUnit.ref.maxHp * 0.6)
-
-      console.log(`\n[🔥 종말]: ${deathUnit.name}의 시체가 폭발합니다!`)
-
-      await delay(500)
-
-      for (const enemy of enemies) {
-        if (enemy.ref.hp === 0) {
-          continue
-        }
-        
-        await enemy.takeDamage(deathUnit, {
-          rawDamage: rawExplosionDamage,
-          isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
-          isSureHit: false, // 회피 불가능하게 하려면 true로 변경
-        })
-
-        await delay(300)
-      }
-    }
   }
 
   private handleUnitDeath(target: BattleTarget, context: GameContext) {
@@ -383,6 +394,20 @@ export class Battle {
       deBuff: [],
       orderWeight: unit?.orderWeight || 0,
       ref: unit as T,
+      applyEffect: (newEffect: Buff) => {
+        // 1. 타입에 따라 대상 배열 결정 ('buff'면 buff, 나머지는 deBuff)
+        const targetArray = newEffect.type === 'buff' ? combatUnit.buff : combatUnit.deBuff
+
+        // 2. 중복 확인 및 처리
+        const existing = targetArray.find((e) => e.name === newEffect.name)
+        if (existing) {
+          existing.duration = Math.max(existing.duration, newEffect.duration)
+        } else {
+          targetArray.push(newEffect)
+        }
+      },
+      applyBuff: (b: Buff) => combatUnit.applyEffect(b),
+      applyDeBuff: (d: Buff) => combatUnit.applyEffect(d),
       takeDamage: async (attacker, options = {}) => {
         if (!combatUnit.ref.isAlive) {
           return {
@@ -424,9 +449,15 @@ export class Battle {
 
         const isDead = combatUnit.ref.hp <= 0
 
-        if (isDead && combatUnit.onDeath) {
-          await combatUnit.onDeath(combatUnit as CombatUnit)
+        if (isDead) {
+          if (combatUnit.onDeath) {
+            await combatUnit.onDeath()
+          }
+
+          await this.onAffix('death', attacker as CombatUnit, combatUnit as CombatUnit)
         }
+
+        if (!isDead && !isEscape) await this.onAffix('afterHit', attacker as CombatUnit, combatUnit as CombatUnit)
 
         return {
           ...result,
@@ -521,5 +552,67 @@ export class Battle {
       // 지속 시간이 남은 효과들만 유지
       unit[type] = unit[type].filter((e) => e.duration > 0)
     })
+  }
+
+  async onAffix(event: string, attacker: CombatUnit, defender: CombatUnit) {
+    // 미니언이 아닌 주체의 공격은 어픽스 로직을 타지 않음 (얼리 리턴)
+    if (!attacker.ref.isMinion) return
+
+    switch (event) {
+      case 'afterHit':
+        // 공격 후 발동하는 어픽스들
+        await this.handleAfterAttackAffixes(attacker, defender)
+        break
+
+      case 'death':
+        // 사망 시 발동하는 어픽스 (예: DOOMSDAY)
+        await this.handleOnDeathAffixes(attacker)
+        break
+
+      default:
+        break
+    }
+  }
+
+  private async handleOnDeathAffixes(deathUnit: CombatUnit) {
+    if (this.player.hasAffix('DOOMSDAY')) {
+      const enemies = Array.from(this.unitCache.values()).filter(
+        (u) => ['monster', 'npc'].includes(u.type) && u.ref.isAlive
+      )
+
+      const rawExplosionDamage = Math.floor(deathUnit.ref.maxHp * 0.6)
+
+      console.log(`\n[🔥 종말]: ${deathUnit.name}의 시체가 폭발합니다!`)
+
+      await delay(500)
+
+      for (const enemy of enemies) {
+        if (enemy.ref.hp === 0) {
+          continue
+        }
+
+        await enemy.takeDamage(deathUnit, {
+          rawDamage: rawExplosionDamage,
+          isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
+          isSureHit: false, // 회피 불가능하게 하려면 true로 변경
+        })
+
+        await delay(300)
+      }
+    }
+  }
+
+  private async handleAfterAttackAffixes(attacker: CombatUnit, defender: CombatUnit) {
+    // 1. FROSTBORNE (서리 서린 유해)
+    if (this.player.hasAffix('FROSTBORNE') && attacker.ref.isSkeleton) {
+      console.log(`[❄️] 스켈레톤이 머금은 심연의 한기가 대상(${defender.name})을 얼려버립니다.`)
+
+      defender.applyDeBuff({
+        name: '심연의 한기',
+        type: 'deBuff',
+        duration: 3,
+        agi: 5,
+      })
+    }
   }
 }

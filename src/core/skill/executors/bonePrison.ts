@@ -58,7 +58,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
     `\n💀 ${player.name}이(가) 차가운 마력을 뿜자, 거친 뼈 창살이 ${target.name}의 사지를 옥죄며 솟아오릅니다!`
   )
 
-  target.deBuff.push({
+  target.applyDeBuff({
     name: '뼈 감옥',
     type: 'bind',
     duration: duration + 1,

@@ -22,7 +22,9 @@ export class EventSystem {
 
   async handle(tile: Tile, player: Player, context: GameContext) {
     switch (tile.event) {
-      case 'item':
+      case 'heal':
+        player.hp = player.maxHp
+        player.mp = player.maxMp
         break
 
       case 'monster':
