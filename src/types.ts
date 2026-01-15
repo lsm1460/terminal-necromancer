@@ -300,6 +300,7 @@ export interface Affix {
   value?: number
   metadata?: {
     needsConfirmOnUnequip?: boolean // 장비 해제 시 확인창 노출 여부 (기억 어픽스용)
+    unEquipCaution?: string // 장비 해제 시 경고문
     [key: string]: any
   }
 }

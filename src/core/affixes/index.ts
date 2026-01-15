@@ -10,8 +10,12 @@ export const AFFIX_LIST: Record<string, Affix> = {
     id: 'OVERLORD',
     name: '군주',
     description: '스켈레톤 보유 수가 증가합니다.',
+
     valueRange: [1, 4], // 생성 시 1~4 랜덤 부여,
-    metadata: { needsConfirmOnUnequip: true },
+    metadata: {
+      needsConfirmOnUnequip: true,
+      unEquipCaution: '장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다.',
+    },
   },
   ELITE_SQUAD: {
     id: 'ELITE_SQUAD',
@@ -94,7 +98,7 @@ export const AFFIX_LIST: Record<string, Affix> = {
     name: '기억',
     description: '메모라이즈 슬롯 수가 증가합니다.',
     valueRange: [1, 2], // 생성 시 1~2 랜덤 부여
-    metadata: { needsConfirmOnUnequip: true },
+    metadata: { needsConfirmOnUnequip: true, unEquipCaution: '장비 해제 시 각인된 마법 일부가 사라집니다.' },
   },
   CLEANSE: {
     id: 'CLEANSE',

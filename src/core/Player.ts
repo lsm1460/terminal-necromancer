@@ -1,7 +1,19 @@
 // core/Player.ts
+import enquirer from 'enquirer'
 import fs from 'fs'
 import { INIT_MAX_MEMORIZE_COUNT } from '../consts'
-import { AffixId, ArmorItem, BattleTarget, Item, ItemType, LevelData, SKILL_IDS, SkillId, WeaponItem } from '../types'
+import {
+  Affix,
+  AffixId,
+  ArmorItem,
+  BattleTarget,
+  Item,
+  ItemType,
+  LevelData,
+  SKILL_IDS,
+  SkillId,
+  WeaponItem,
+} from '../types'
 
 export class Player {
   x = 0
@@ -125,10 +137,10 @@ export class Player {
     this.hp = 0
   }
 
-  get affixes(): AffixId[] {
+  get affixes(): Affix[] {
     return [this.equipped.weapon, this.equipped.armor]
       .filter((item): item is WeaponItem | ArmorItem => !!item && !!item.affix)
-      .flatMap((item) => item.affix!.id) // ID만 추출하여 평탄화
+      .flatMap((item) => item.affix!)
   }
 
   public getAffixValue(affixId: AffixId): number {
@@ -141,8 +153,9 @@ export class Player {
   }
 
   public hasAffix(affixId: AffixId): boolean {
-    // any를 써서 검사하거나, getter를 활용
-    return this.affixes.includes(affixId)
+    const affixes = this.affixes.map((affix) => affix.id)
+
+    return affixes.includes(affixId)
   }
 
   move(dx: number, dy: number) {
@@ -197,7 +210,7 @@ export class Player {
     this.gold += gold
   }
 
-  equip(newItem: Item): boolean {
+  async equip(newItem: Item) {
     const itemIndex = this.inventory.findIndex((i) => i.id === newItem.id)
     if (itemIndex === -1) {
       console.log('❌ 인벤토리에 해당 아이템이 없습니다.')
@@ -216,9 +229,26 @@ export class Player {
       return false
     }
 
-    // TODO: 장비를 바꾸기 전 어픽스 벨릳이션 추가해야함
-
     const oldItem = this.equipped[slot]
+
+    if (oldItem?.affix?.metadata?.needsConfirmOnUnequip) {
+      const caution = oldItem.affix
+      const warningMsg =
+        caution.metadata?.unEquipCaution || `⚠️ [${caution.name}] 어픽스가 해제됩니다. 진행하시겠습니까?`
+
+      // 사용자 확인 (confirm 시스템이 async라고 가정)
+      const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
+        type: 'confirm',
+        name: 'proceed', // 반환 객체의 키값이 됩니다.
+        message: warningMsg,
+        initial: false, // 기본 선택값 (default 대신 initial 사용)
+      })
+
+      if (!proceed) {
+        return false // 교체 중단
+      }
+    }
+
     if (slot === 'weapon') {
       this.equipped.weapon = newItem as WeaponItem
     } else if (slot === 'armor') {

@@ -9,7 +9,6 @@ import { ExecuteSkill } from '../../../types'
  */
 export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], enemies } = {}) => {
   const minions = ally.filter((target) => target.ref.isMinion)
-  const affixes = player.ref.affixes || []
 
   // 1. 소환수 존재 여부 체크
   if (minions.length === 0) {
@@ -53,7 +52,8 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
   let totalGross = 0
   let isSpecialEffectTriggered = false
 
-  const hasEmpower = affixes.includes('EXALTATION')
+  player.ref.hasAffix('EXALTATION')
+  const hasEmpower = player.ref.hasAffix('EXALTATION')
 
   // [A] 강화 (EMPOWER_SOUL) - 착취와 중첩 가능
   if (hasEmpower) {
