@@ -59,8 +59,8 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   }
 
   // 2. 기초 데미지(rawDamage) 계산
-  // 시체 maxHp의 20%를 폭발의 순수 위력으로 설정합니다.
-  const rawExplosionDamage = Math.floor(selectedCorpse.maxHp * 0.2)
+  // 시체 maxHp의 60%를 폭발의 순수 위력으로 설정합니다.
+  const rawExplosionDamage = Math.floor(selectedCorpse.maxHp * 0.6)
 
   console.log(`\n💥 ${player.name}이(가) 시체를 터뜨렸습니다! (기초 위력: ${rawExplosionDamage})`)
 
@@ -69,21 +69,15 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   if (enemies.length === 0) {
     console.log(' 주변에 휘말린 적이 없습니다.')
   } else {
-    enemies.forEach((enemy) => {
-      // 적군이 살아있는지 확인 (이미 죽은 적은 제외)
-      if (enemy.ref.hp > 0) {
-        /**
-         * 핵심: takeDamage 내부에서 calcDamage를 호출함
-         * - rawDamage를 넘겼으므로 calcDamage는 공격자의 ATK 대신 이 값을 기초값으로 사용함
-         * - 적의 DEF(방어력)에 의해 감쇄되며, 회피(EVA) 판정도 일어남
-         */
-        enemy.takeDamage(player, context, {
-          rawDamage: rawExplosionDamage,
-          isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
-          isSureHit: false, // 회피 불가능하게 하려면 true로 변경
-        })
-      }
-    })
+    for (const enemy of enemies) {
+      if (enemy.ref.hp === 0) continue
+
+      await enemy.takeDamage(player, {
+        rawDamage: rawExplosionDamage,
+        isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
+        isSureHit: false, // 회피 불가능하게 하려면 true로 변경
+      })
+    }
   }
 
   // 4. 사용한 시체 제거

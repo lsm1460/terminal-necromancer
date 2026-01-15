@@ -39,15 +39,15 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
   })
 
   // 4. 모든 적에게 데미지 및 [출혈] 부여
-  aliveEnemies.forEach((enemy) => {
+  for (const enemy of aliveEnemies) {
     console.log(` └ 🩸 날카로운 뼈 파편이 ${enemy.name}을 찢어발깁니다!`)
-
+  
     // 데미지 적용 (고정 데미지가 아니므로 적 방어력에 감쇄됨)
-    enemy.takeDamage(player, context, {
+    await enemy.takeDamage(player, {
       rawDamage: totalRawDamage,
       isIgnoreDef: false,
     })
-
+  
     // [출혈] 디버프 추가 (지속 피해)
     enemy.deBuff.push({
       name: '출혈',
@@ -55,7 +55,7 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
       duration: 3 + 1, // 3턴 지속
       atk: sacrificeCount * 5, // 시전자 공격력 비례 지속 피해 예시
     })
-  })
+  }
 
   return {
     isSuccess: true,

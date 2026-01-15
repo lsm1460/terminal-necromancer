@@ -112,7 +112,7 @@ export class Player {
   }
 
   get minions(): BattleTarget[] {
-    const _skeletons = this.skeleton.sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
+    const _skeletons = this.skeleton.sort((a, b) => (b?.orderWeight || 0) - (a?.orderWeight || 0))
 
     return [this.golem, ..._skeletons, this.knight].filter((_minion) => !!_minion).filter((_minion) => _minion.isAlive)
   }
@@ -215,6 +215,8 @@ export class Player {
       console.log('⚠️ 장착할 수 없는 아이템 타입입니다.')
       return false
     }
+
+    // TODO: 장비를 바꾸기 전 어픽스 벨릳이션 추가해야함
 
     const oldItem = this.equipped[slot]
     if (slot === 'weapon') {

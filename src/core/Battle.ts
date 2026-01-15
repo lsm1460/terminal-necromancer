@@ -57,9 +57,8 @@ export interface CombatUnit<T = BattleTarget> {
   onDeath?: (deathUnit: CombatUnit) => void
   takeDamage: <T extends BattleTarget | Player>(
     attacker: CombatUnit<T>,
-    context: GameContext,
     options?: CalcDamageOptions
-  ) => DamageResult
+  ) => Promise<DamageResult>
 }
 
 export class Battle {
@@ -147,12 +146,12 @@ export class Battle {
             return
           }
         } else if (unit.type === 'minion') {
-          this.executeAutoAttack(unit, enemiesSide, playerSide, context)
+          await this.executeAutoAttack(unit, enemiesSide, playerSide, context)
         } else {
           // npc라면 같은 faction만 ally로..
           enemiesSide = enemiesSide.filter((e) => (e.ref as NPC).faction === (unit.ref as NPC).faction)
 
-          this.executeAutoAttack(unit, playerSide, enemiesSide, context)
+          await this.executeAutoAttack(unit, playerSide, enemiesSide, context)
         }
 
         // 가독성을 위한 짧은 지연
@@ -182,7 +181,7 @@ export class Battle {
           let mUnit = this.unitCache.get(m)
           if (!mUnit) {
             mUnit = this.toCombatUnit(m, 'minion')
-            mUnit.onDeath = (u) => this.handleMinionsDeath(u.ref, enemies)
+            mUnit.onDeath = (u) => this.handleMinionsDeath(u, enemies)
             this.unitCache.set(m, mUnit)
           }
           units.push(mUnit)
@@ -241,7 +240,7 @@ export class Battle {
 
       if (target) {
         // 공격 실행
-        target.takeDamage(playerUnit, context)
+        await target.takeDamage(playerUnit)
       }
     } else if (action === '스킬') {
       const ally = playerSide.filter((unit) => unit.type !== 'player')
@@ -276,25 +275,52 @@ export class Battle {
     return false
   }
 
-  private executeAutoAttack(attacker: CombatUnit, targets: CombatUnit[], ally: CombatUnit[], context: GameContext) {
+  private async executeAutoAttack(
+    attacker: CombatUnit,
+    targets: CombatUnit[],
+    ally: CombatUnit[],
+    context: GameContext
+  ) {
     if (targets.length === 0) return
     const target = targets[0]
 
     const autoSkillId = context.npcSkills.getRandomSkillId(attacker.ref.skills || [])
     if (autoSkillId) {
-      context.npcSkills.execute(autoSkillId, attacker, ally, targets, context)
+      await context.npcSkills.execute(autoSkillId, attacker, ally, targets, context)
     } else {
-      target.takeDamage(attacker, context)
+      await target.takeDamage(attacker)
     }
   }
 
-  private handleMinionsDeath(target: BattleTarget, enemies: CombatUnit[]) {
-    target.hp = 0
-    target.isAlive = false
+  private async handleMinionsDeath(deathUnit: CombatUnit, enemies: CombatUnit[]) {
+    deathUnit.ref.hp = 0
+    deathUnit.ref.isAlive = false
 
-    this.player.removeMinion(target.id)
+    this.player.removeMinion(deathUnit.ref.id)
 
-    this.player.hasAffix('DOOMSDAY')
+    console.log(`\n💀 ${deathUnit.ref.name}이(가) 쓰러졌습니다!`)
+
+    if (this.player.hasAffix('DOOMSDAY')) {
+      const rawExplosionDamage = Math.floor(deathUnit.ref.maxHp * 0.6)
+
+      console.log(`\n[🔥 종말]: ${deathUnit.name}의 시체가 폭발합니다!`)
+
+      await delay(500)
+
+      for (const enemy of enemies) {
+        if (enemy.ref.hp === 0) {
+          continue
+        }
+        
+        await enemy.takeDamage(deathUnit, {
+          rawDamage: rawExplosionDamage,
+          isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
+          isSureHit: false, // 회피 불가능하게 하려면 true로 변경
+        })
+
+        await delay(300)
+      }
+    }
   }
 
   private handleUnitDeath(target: BattleTarget, context: GameContext) {
@@ -357,7 +383,7 @@ export class Battle {
       deBuff: [],
       orderWeight: unit?.orderWeight || 0,
       ref: unit as T,
-      takeDamage: (attacker, context, options = {}) => {
+      takeDamage: async (attacker, options = {}) => {
         if (!combatUnit.ref.isAlive) {
           return {
             isEscape: false,
@@ -399,7 +425,7 @@ export class Battle {
         const isDead = combatUnit.ref.hp <= 0
 
         if (isDead && combatUnit.onDeath) {
-          combatUnit.onDeath(combatUnit as CombatUnit)
+          await combatUnit.onDeath(combatUnit as CombatUnit)
         }
 
         return {

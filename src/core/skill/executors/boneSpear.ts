@@ -74,14 +74,15 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
       }
 
   // 3. 실행 및 로그 출력
-  targets.forEach((target, index) => {
-    const logMsg = index === 0 ? logTemplate.primary(target.name) : logTemplate.secondary(target.name)
+  for (let index in targets) {
+    const target = targets[index]
+    const logMsg = index == '0' ? logTemplate.primary(target.name) : logTemplate.secondary(target.name)
     console.log(logMsg)
 
     /**
      * skillAtkMult: 0.6 배율 적용
      */
-    target.takeDamage(player, context, {
+    await target.takeDamage(player, {
       skillAtkMult: 0.6,
       isIgnoreDef: false,
       isSureHit: false,
@@ -93,7 +94,7 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
       duration: 3 + 1, // 3턴 지속
       atk: 5,
     })
-  })
+  }
 
   return {
     isSuccess: true,

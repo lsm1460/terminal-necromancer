@@ -10,7 +10,8 @@ export const AFFIX_LIST: Record<string, Affix> = {
     id: 'OVERLORD',
     name: '군주',
     description: '스켈레톤 보유 수가 증가합니다.',
-    valueRange: [1, 4], // 생성 시 1~4 랜덤 부여
+    valueRange: [1, 4], // 생성 시 1~4 랜덤 부여,
+    metadata: { needsConfirmOnUnequip: true },
   },
   ELITE_SQUAD: {
     id: 'ELITE_SQUAD',

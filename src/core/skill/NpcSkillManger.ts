@@ -44,7 +44,7 @@ export class NpcSkillManager {
     }
   }
 
-  execute: SkillExecutor = (...params) => {
+  execute: SkillExecutor = async (...params) => {
     const [skillId, attacker, ally, enemies, context] = params
 
     const skill = this.getSkill(skillId)
@@ -61,18 +61,19 @@ export class NpcSkillManager {
     // 3. 모든 타겟에게 효과 적용 (forEach 활용)
     const isHeal = skill.targetType.endsWith('_HP')
 
-    targets.forEach((target) => {
+    for (const target of targets) {
       if (isHeal) {
         const healAmount = skill.power
         target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
         console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
       } else {
-        target.takeDamage(attacker, context, {
+        await target.takeDamage(attacker, {
           skillAtkMult: skill.power, // 스킬의 위력(배율) 전달
           // 추가 옵션이 필요하다면 여기에 작성 (예: isIgnoreDef: skill.isIgnoreDef)
         })
       }
-    })
+
+    }
   }
 
   getRandomSkillId(skills: string[]): string | null {

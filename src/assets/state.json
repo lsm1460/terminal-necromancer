@@ -3,16 +3,16 @@
     "x": 0,
     "y": 1,
     "_maxHp": 100,
-    "hp": 81,
+    "hp": 80,
     "_maxMp": 100,
-    "mp": 28,
+    "mp": 78,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 65,
-    "exp": 420,
+    "gold": 78,
+    "exp": 500,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [
@@ -87,17 +87,8 @@
         },
         "x": 0,
         "y": 1
-      }
-    ],
-    "_maxMemorize": 4,
-    "memorize": [
-      "RAISE_SKELETON",
-      "CURSE",
-      "SOUL_TRANSFER",
-      "BONE_SPEAR"
-    ],
-    "equipped": {
-      "weapon": {
+      },
+      {
         "id": "iron_sword_30d19166857f1a4a",
         "label": "\u001b[35m🟣 [정예] 몰락한 철검\u001b[0m",
         "type": "weapon",
@@ -129,6 +120,43 @@
         },
         "x": 0,
         "y": 1
+      }
+    ],
+    "_maxMemorize": 4,
+    "memorize": [
+      "RAISE_SKELETON",
+      "CURSE",
+      "SOUL_TRANSFER",
+      "BONE_SPEAR"
+    ],
+    "equipped": {
+      "weapon": {
+        "id": "iron_sword_fcdf5f6df33a3315",
+        "label": "\u001b[35m🟣 [종말] 필멸의 철검\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          5,
+          10
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "minRarity": "EPIC",
+        "atk": 11,
+        "crit": 0,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "DOOMSDAY",
+          "name": "종말",
+          "description": "스켈레톤이 죽을 때 폭발하여 주변에 피해를 입힙니다."
+        },
+        "x": 0,
+        "y": 1
       },
       "armor": {
         "id": "leather_armor_081972175966dfd9",
@@ -151,42 +179,7 @@
       "SOUL_HARVEST",
       "BONE_STORM"
     ],
-    "skeleton": [
-      {
-        "id": "skeleton_1768376127135",
-        "name": "[common] 스켈레톤 병사",
-        "maxHp": 6,
-        "hp": 3,
-        "atk": 0,
-        "def": 0,
-        "agi": 0,
-        "skills": [],
-        "exp": 0,
-        "description": "토끼의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true
-      },
-      {
-        "id": "skeleton_1768377084829",
-        "name": "[rare] 스켈레톤 검사",
-        "maxHp": 7,
-        "hp": 7,
-        "atk": 0,
-        "def": 1,
-        "agi": 1,
-        "skills": [
-          "power_smash"
-        ],
-        "exp": 0,
-        "description": "토끼의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true
-      }
-    ],
+    "skeleton": [],
     "_maxSkeleton": 3
   },
   "sceneId": "B1_Subway_Entrance",
