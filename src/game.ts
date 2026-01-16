@@ -14,11 +14,11 @@ import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
-import { ItemGenerator } from './core/item/ItemGenerator'
 
 // ---------- 데이터 로드 ----------
 const assets = path.join(__dirname, 'assets')
 const mapPath = path.join(assets, 'map.json')
+const monsterGroupPath = path.join(assets, 'monster-group.json')
 const monsterPath = path.join(assets, 'monster.json')
 const statePath = path.join(assets, 'state.json')
 const levelPath = path.join(assets, 'level.json')
@@ -31,7 +31,7 @@ const npcSkillPath = path.join(assets, 'npcSkills.json')
 // ---------- 초기화 ----------
 const save = new SaveSystem(statePath)
 const drop = new DropSystem(itemPath, dropPath)
-const monster = new MonsterFactory(monsterPath)
+const monster = new MonsterFactory(monsterGroupPath, monsterPath)
 const saved = save.load()
 const player = new Player(levelPath, saved?.player)
 const battle = new Battle(player)

@@ -54,7 +54,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
 
   if (targetItem) {
     console.log(`\n✨ [${targetItem.label}]을(를) 장비하였습니다.`)
-    player.equip(targetItem)
+    await player.equip(targetItem)
   }
 
   return false

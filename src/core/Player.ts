@@ -7,9 +7,11 @@ import {
   AffixId,
   ArmorItem,
   BattleTarget,
+  ConsumableItem,
   Item,
   ItemType,
   LevelData,
+  Skill,
   SKILL_IDS,
   SkillId,
   WeaponItem,
@@ -40,7 +42,7 @@ export class Player {
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
   _maxSkeleton: number = 3 // 최대 소환 가능 수
 
-  public golem: BattleTarget | undefined = undefined
+  public _golem: BattleTarget | undefined = undefined
   public _knight: BattleTarget | undefined = undefined
 
   onDeath?: () => void
@@ -117,6 +119,10 @@ export class Player {
 
   get maxMemorize() {
     return this._maxMemorize
+  }
+
+  get golem() {
+    return this._golem
   }
 
   get knight() {
@@ -230,7 +236,6 @@ export class Player {
     }
 
     const oldItem = this.equipped[slot]
-
     if (oldItem?.affix?.metadata?.needsConfirmOnUnequip) {
       const caution = oldItem.affix
       const warningMsg =
@@ -264,7 +269,6 @@ export class Player {
     this.inventory = updatedInventory
 
     this.updateSkeletonLimit()
-
     return true
   }
 
@@ -308,9 +312,10 @@ export class Player {
     return Math.max(nextLevelData.expRequired - this.exp, 0)
   }
 
-  unlockSkill(skillId: SkillId) {
-    if (!this.hasSkill(skillId)) {
-      this.unlockedSkills.push(skillId)
+  unlockSkill(skill: Skill) {
+    if (!this.hasSkill(skill.id)) {
+      this.unlockedSkills.push(skill.id)
+      this.exp = Math.max(this.exp - skill.requiredExp, 0)
     }
   }
 
@@ -330,9 +335,9 @@ export class Player {
   removeMinion(minionId: string) {
     this.skeleton = this.skeleton.filter((_minion) => _minion.id !== minionId)
 
-    if (this.golem && this.golem.id === minionId) {
-      this.golem = {
-        ...this.golem,
+    if (this._golem && this._golem.id === minionId) {
+      this._golem = {
+        ...this._golem,
         isAlive: false,
       }
     }
@@ -369,6 +374,71 @@ export class Player {
       // 요청 수량이 보유 수량보다 많거나 같으면 리스트에서 삭제
       this.inventory.splice(itemIndex, 1)
     }
+
+    return true
+  }
+
+  async useItem(targetItem?: ConsumableItem) {
+    // 1. 소비 아이템만 필터링
+    const consumables = this.inventory.filter((item): item is ConsumableItem => item.type === ItemType.CONSUMABLE)
+
+    if (consumables.length === 0) {
+      console.log('\n🎒 사용할 수 있는 소비 아이템이 없습니다.')
+      return false
+    }
+
+    if (!targetItem) {
+      const { itemId } = await enquirer.prompt<{ itemId: string }>({
+        type: 'select',
+        name: 'itemId',
+        message: '어떤 아이템을 사용하시겠습니까?',
+        choices: [
+          ...consumables.map((item) => ({
+            name: item.id,
+            message: `${item.label} (x${item.quantity || 1}) ${
+              item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
+            }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
+          })),
+          { name: 'cancel', message: '🔙 취소' },
+        ],
+        format(value) {
+          if (value === 'cancel') return '취소'
+          const item = consumables.find((i) => i.id === value)
+
+          return item ? item.label : value
+        },
+      })
+
+      if (itemId === 'cancel') return false
+      targetItem = consumables.find((i) => i.id === itemId)
+    }
+
+    if (!targetItem) {
+      console.log('해당 아이템이 존재하지 않습니다..')
+      return false
+    }
+
+    // 4. 아이템 사용 효과 적용
+    console.log(`\n [${targetItem.label}]을(를) 사용합니다...`)
+
+    // 체력 회복
+    if (targetItem.hpHeal) {
+      const beforeHp = this.hp
+      this.hp = Math.min(this.maxHp, this.hp + targetItem.hpHeal)
+      const recovered = this.hp - beforeHp
+      console.log(`❤️ 체력이 ${recovered} 회복되었습니다. (현재: ${this.hp}/${this.maxHp})`)
+    }
+
+    // 마나 회복
+    if (targetItem.mpHeal) {
+      const beforeMp = this.mp
+      this.mp = Math.min(this.maxMp, this.mp + targetItem.mpHeal)
+      const recovered = this.mp - beforeMp
+      console.log(`🧪 마나가 ${recovered} 회복되었습니다. (현재: ${this.mp}/${this.maxMp})`)
+    }
+
+    // 5. 인벤토리에서 수량 차감 (앞서 만든 removeItem 활용)
+    this.removeItem(targetItem.id, 1)
 
     return true
   }

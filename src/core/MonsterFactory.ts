@@ -1,20 +1,23 @@
 // core/MonsterFactory.ts
-import { Monster, Tile } from '../types'
+import _ from 'lodash'
+import { Monster, MonsterGroupMember, Tile } from '../types'
 import { generateId } from '../utils'
 import fs from 'fs'
 import path from 'path'
 
 export class MonsterFactory {
-  private data: Record<string, Monster[]> = {}
+  private monster: Record<string, Monster> = {}
+  private group: Record<string, MonsterGroupMember[]> = {}
 
-  constructor(monsterJsonPath: string) {
-    this.data = JSON.parse(fs.readFileSync(path.resolve(monsterJsonPath), 'utf-8'))
+  constructor(groupJsonPath: string, monsterJsonPath: string) {
+    this.group = JSON.parse(fs.readFileSync(path.resolve(groupJsonPath), 'utf-8'))
+    this.monster = JSON.parse(fs.readFileSync(path.resolve(monsterJsonPath), 'utf-8'))
   }
 
   spawn(tile: Tile): Monster | null {
     if (!tile.event.startsWith('monster')) return null
 
-    const group = this.data[tile.event]
+    const group = this.group[tile.event]
     if (!group?.length) return null
 
     // encounterRate를 가중치로 사용
@@ -41,11 +44,12 @@ export class MonsterFactory {
 
     if (!selected) return null
 
+    const origin = _.cloneDeep(this.monster[selected.id])
+
     const baseMonster = {
-      ...selected,
-      maxHp: selected.hp,
+      ...origin,
       isAlive: true,
-      id: generateId(selected.name),
+      id: generateId(origin.id),
     }
 
     return baseMonster

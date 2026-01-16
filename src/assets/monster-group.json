@@ -1,0 +1,8 @@
+{
+  "monster-group-level-1": [
+    {"id": "rabbit", "encounterRate": 70},
+    {"id": "squirrel", "encounterRate": 10},
+    {"id": "goblin", "encounterRate": 10},
+    {"id": "wolf", "encounterRate": 10}
+  ]
+}

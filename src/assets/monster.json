@@ -1,58 +1,56 @@
 {
-  "monster-group-level-1": [
-    {
-      "name": "토끼",
-      "hp": 15,
-      "maxHp": 15,
-      "atk": 1,
-      "def": 2,
-      "agi": 2,
-      "exp": 10,
-      "encounterRate": 100,
-      "dropTableId": "rabbit",
-      "description": "빠르고 귀여운 토끼. 공격력은 약하지만 회피율이 높아 쉽게 맞추기 어렵다.",
-      "orderWeight": 0
-    },
-    {
-      "name": "다람쥐",
-      "hp": 30,
-      "maxHp": 30,
-      "atk": 3,
-      "def": 1,
-      "agi": 5,
-      "exp": 15,
-      "skills": ["power_smash"],
-      "encounterRate": 0,
-      "dropTableId": "squirrel",
-      "description": "민첩한 다람쥐. 공격력은 토끼보다 높지만 방어력은 낮다. 회피 능력이 뛰어나다.",
-      "orderWeight": 10
-    },
-    {
-      "name": "고블린",
-      "hp": 5,
-      "maxHp": 5,
-      "atk": 1,
-      "def": 5,
-      "agi": 4,
-      "exp": 15,
-      "encounterRate": 0,
-      "dropTableId": "mob",
-      "description": "고블린 테스트",
-      "preemptive": true
-    },
-    {
-      "name": "늑대",
-      "hp": 5,
-      "maxHp": 10,
-      "atk": 1,
-      "def": 5,
-      "agi": 6,
-      "exp": 15,
-      "encounterRate": 0,
-      "dropTableId": "wolf",
-      "description": "늑대 테스트",
-      "preemptive": true,
-      "noEscape": true
-    }
-  ]
+  "rabbit": {
+    "id": "rabbit",
+    "name": "토끼",
+    "hp": 15,
+    "maxHp": 15,
+    "atk": 1,
+    "def": 2,
+    "agi": 2,
+    "exp": 10,
+    "dropTableId": "rabbit",
+    "description": "빠르고 귀여운 토끼. 공격력은 약하지만 회피율이 높아 쉽게 맞추기 어렵다.",
+    "orderWeight": 0
+  },
+  "squirrel": {
+    "id": "squirrel",
+    "name": "다람쥐",
+    "hp": 30,
+    "maxHp": 30,
+    "atk": 3,
+    "def": 1,
+    "agi": 5,
+    "exp": 15,
+    "skills": ["power_smash"],
+    "dropTableId": "squirrel",
+    "description": "민첩한 다람쥐. 공격력은 토끼보다 높지만 방어력은 낮다. 회피 능력이 뛰어나다.",
+    "orderWeight": 10
+  },
+  "goblin": {
+    "id": "goblin",
+    "name": "고블린",
+    "hp": 5,
+    "maxHp": 5,
+    "atk": 1,
+    "def": 5,
+    "agi": 4,
+    "exp": 15,
+    "dropTableId": "mob",
+    "description": "고블린 테스트",
+    "preemptive": true
+  },
+  "wolf": {
+    "id": "wolf",
+    "name": "늑대",
+    "hp": 5,
+    "maxHp": 10,
+    "atk": 1,
+    "def": 5,
+    "agi": 6,
+    "exp": 15,
+    "dropTableId": "wolf",
+    "description": "늑대 테스트",
+    "preemptive": true,
+    "noEscape": true
+  }
 }

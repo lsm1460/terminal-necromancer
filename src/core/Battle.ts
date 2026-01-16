@@ -244,67 +244,83 @@ export class Battle {
       type: 'select',
       name: 'action',
       message: '당신의 행동을 선택하세요:',
-      choices: ['공격', '스킬', '도망'],
+      choices: ['공격', '스킬', '아이템', '도망'],
     })
 
-    if (action === '공격') {
-      const { targetId } = await enquirer.prompt<{ targetId: string }>({
-        type: 'select',
-        name: 'targetId',
-        message: '누구를 공격하시겠습니까?',
-        choices: [
-          ...aliveEnemies.map((e) => ({
-            name: e.id,
-            message: `${e.name} (HP: ${e.ref.hp})`,
-          })),
-          { name: 'cancel', message: '🔙 뒤로가기' }, // 취소 옵션 추가
-        ],
-        format(value) {
-          if (value === 'cancel') return '취소'
-          const target = aliveEnemies.find((e) => e.id === value)
-          return target ? target.name : value
-        },
-      })
+    switch (action) {
+      case '공격':
+        {
+          const { targetId } = await enquirer.prompt<{ targetId: string }>({
+            type: 'select',
+            name: 'targetId',
+            message: '누구를 공격하시겠습니까?',
+            choices: [
+              ...aliveEnemies.map((e) => ({
+                name: e.id,
+                message: `${e.name} (HP: ${e.ref.hp})`,
+              })),
+              { name: 'cancel', message: '🔙 뒤로가기' }, // 취소 옵션 추가
+            ],
+            format(value) {
+              if (value === 'cancel') return '취소'
+              const target = aliveEnemies.find((e) => e.id === value)
+              return target ? target.name : value
+            },
+          })
 
-      // 취소 선택 시 다시 행동 선택창으로 재귀 호출
-      if (targetId === 'cancel') {
-        return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+          // 취소 선택 시 다시 행동 선택창으로 재귀 호출
+          if (targetId === 'cancel') {
+            return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+          }
+
+          const target = aliveEnemies.find((e) => e.id === targetId)
+
+          if (target) {
+            // 공격 실행
+            await target.takeDamage(playerUnit)
+          }
+        }
+        break
+      case '스킬':
+        {
+          const ally = playerSide.filter((unit) => unit.type !== 'player')
+          const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, {
+            ally,
+            enemies: aliveEnemies,
+          })
+          if (!isSuccess) {
+            // 스킬 사용을 취소했거나 실패했다면 다시 행동 선택으로
+            return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+          }
+        }
+        break
+
+      case '아이템':
+        await playerUnit.ref.useItem()
+        break
+
+      case '도망': {
+        const isEscapeBlocked = aliveEnemies.some((e) => e.ref.noEscape === true)
+
+        if (isEscapeBlocked) {
+          const blocker = aliveEnemies.find((e) => e.ref.noEscape === true)
+          console.log(`\n🚫 도망칠 수 없습니다! ${blocker?.name}(이)가 길을 가로막고 있습니다!`)
+
+          // 도망에 실패했으므로 턴을 낭비하게 하거나,
+          // 아니면 다시 선택하게 하려면 여기서 handlePlayerAction을 재귀 호출할 수도 있습니다.
+          // 일단은 턴을 날리는 것으로 처리(false 반환)하거나 다시 선택하게 유도합니다.
+          // return await this.handlePlayerAction(player, enemies);
+          return false
+        }
+
+        console.log('\n🏃 전투에서 도망쳤습니다!')
+        this.unitCache.clear()
+
+        return true
       }
 
-      const target = aliveEnemies.find((e) => e.id === targetId)
-
-      if (target) {
-        // 공격 실행
-        await target.takeDamage(playerUnit)
-      }
-    } else if (action === '스킬') {
-      const ally = playerSide.filter((unit) => unit.type !== 'player')
-      const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, {
-        ally,
-        enemies: aliveEnemies,
-      })
-      if (!isSuccess) {
-        // 스킬 사용을 취소했거나 실패했다면 다시 행동 선택으로
-        return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
-      }
-    } else if (action === '도망') {
-      const isEscapeBlocked = aliveEnemies.some((e) => e.ref.noEscape === true)
-
-      if (isEscapeBlocked) {
-        const blocker = aliveEnemies.find((e) => e.ref.noEscape === true)
-        console.log(`\n🚫 도망칠 수 없습니다! ${blocker?.name}(이)가 길을 가로막고 있습니다!`)
-
-        // 도망에 실패했으므로 턴을 낭비하게 하거나,
-        // 아니면 다시 선택하게 하려면 여기서 handlePlayerAction을 재귀 호출할 수도 있습니다.
-        // 일단은 턴을 날리는 것으로 처리(false 반환)하거나 다시 선택하게 유도합니다.
-        // return await this.handlePlayerAction(player, enemies);
-        return false
-      }
-
-      console.log('\n🏃 전투에서 도망쳤습니다!')
-      this.unitCache.clear()
-
-      return true
+      default:
+        break
     }
 
     return false
@@ -345,7 +361,7 @@ export class Battle {
     target.isAlive = false
 
     console.log(`\n💀 ${target.name}이(가) 쓰러졌습니다!`)
-    target.deathLine && console.log(`${target.name}: ${target.deathLine}`)
+    target.deathLine && console.log(target.deathLine)
 
     // 2. 전리품 및 경험치 처리 (플레이어 진영이 죽인 경우만 해당될 수 있음)
     // 편의를 위해 더 큰 타입인 NPC로 처리

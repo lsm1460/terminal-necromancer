@@ -1,7 +1,7 @@
 {
   "player": {
-    "x": 2,
-    "y": 0,
+    "x": 0,
+    "y": 1,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
@@ -11,31 +11,11 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 133,
-    "exp": 880,
+    "gold": 135,
+    "exp": 900,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [
-      {
-        "id": "mana_potion_small",
-        "label": "작은 마나 포션",
-        "type": "consumable",
-        "hpHeal": 20,
-        "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
-        "quantity": 1,
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "potion_small",
-        "label": "작은 포션",
-        "type": "consumable",
-        "hpHeal": 20,
-        "price": 50,
-        "sellPrice": 15,
-        "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
-        "quantity": 1
-      },
       {
         "id": "iron_sword_402a47d99388f239",
         "label": "\u001b[35m🟣 [서리] 심연의 철검\u001b[0m",
@@ -122,63 +102,7 @@
       "SOUL_HARVEST",
       "BONE_STORM"
     ],
-    "skeleton": [
-      {
-        "id": "skeleton_1768461983556",
-        "name": "[rare] 스켈레톤 검사",
-        "maxHp": 7,
-        "hp": 3,
-        "atk": 0,
-        "def": 1,
-        "agi": 1,
-        "skills": [
-          "power_smash"
-        ],
-        "exp": 0,
-        "description": "토끼의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true
-      },
-      {
-        "id": "skeleton_1768461983557",
-        "name": "[elite] 스켈레톤 궁수",
-        "maxHp": 7,
-        "hp": 7,
-        "atk": 1,
-        "def": 0,
-        "agi": 1,
-        "skills": [
-          "piercing_arrow"
-        ],
-        "exp": 0,
-        "description": "토끼의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true
-      },
-      {
-        "id": "skeleton_1768461983557",
-        "name": "[common] 스켈레톤 병사",
-        "maxHp": 6,
-        "hp": 6,
-        "atk": 0,
-        "def": 0,
-        "agi": 0,
-        "skills": [],
-        "exp": 0,
-        "description": "토끼의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true
-      }
-    ],
+    "skeleton": [],
     "_maxSkeleton": 3
   },
   "sceneId": "B2_Transit_Area",
@@ -219,6 +143,18 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "jax_seeker": {
+        "hp": 100,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "second_boss": {
+        "hp": 10,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
       }
     },
     "factionHostility": {
@@ -231,6 +167,7 @@
   },
   "drop": null,
   "completedEvents": [
-    "first_boss"
+    "first_boss",
+    "RESISTANCE_BASE"
   ]
 }

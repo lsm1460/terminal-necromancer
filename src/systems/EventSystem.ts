@@ -25,6 +25,19 @@ export class EventSystem {
       case 'heal':
         player.hp = player.maxHp
         player.mp = player.maxMp
+
+        player.minions.forEach((minion) => (minion.hp = minion.maxHp))
+        break
+
+      case 'heal_once':
+        {
+          if (!tile.isClear) {
+            player.hp = player.maxHp
+            player.mp = player.maxMp
+
+            player.minions.forEach((minion) => (minion.hp = minion.maxHp))
+          }
+        }
         break
 
       case 'monster':
@@ -42,7 +55,7 @@ export class EventSystem {
     }
 
     tile.isSeen = true
-    if (!(tile.event === 'boss' || tile.event.startsWith('monster'))) {
+    if (!(tile.event === 'boss' || tile.event.startsWith('monster') || tile.event.endsWith('_once'))) {
       tile.isClear = true
     }
   }

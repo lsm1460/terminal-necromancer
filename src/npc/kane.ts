@@ -1,7 +1,7 @@
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const KaneHandler: NPCHandler = {
-  getChoices(npc, context) {
+  getChoices(player, npc, context) {
     return [
       { name: 'talk', message: '💬 잡담' },
     ]

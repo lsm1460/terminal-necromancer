@@ -64,7 +64,7 @@ const printMinion = (minion: BattleTarget, index?: number) => {
   const prefix = index !== undefined ? `${index + 1}. ` : ''
 
   console.log(
-    `   ${prefix}[${minion.name}] ${statusIcon}\n` +
+    `   ${prefix}${minion.name} ${statusIcon}\n` +
       `      HP: ${hpBar} (${minion.hp}/${minion.maxHp})\n` +
       `      ATK: ${minion.atk} | AGI: ${minion.agi}`
   )

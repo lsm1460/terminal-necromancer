@@ -4,12 +4,12 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 import enquirer from 'enquirer'
 
 const MayaHandler: NPCHandler = {
-  getChoices(npc, context) {
+  getChoices(player, npc, context) {
     return [
       { name: 'talk', message: '💬 잡담' },
       { name: 'buy', message: '💰 아이템 구매' },
       { name: 'sell', message: '📦 아이템 판매' },
-      { name: 'upgrade_golem', message: '🤖 골렘 강화' },
+      ...(context.events.isCompleted('second_boss') ? [{ name: 'upgrade_golem', message: '🤖 골렘 강화' }] : []),
       { name: 'modify_darknight', message: '⚔️ 다크나이트 장비 변경' },
     ]
   },

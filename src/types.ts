@@ -30,13 +30,18 @@ export type BattleTarget = {
   noEscape?: boolean
   isMinion?: boolean
   isSkeleton?: boolean
+  isGolem?: boolean
   deathLine?: string
   minRarity?: SkeletonRarity
   orderWeight?: number
 }
 
+export type MonsterGroupMember = {
+  id: string
+  encounterRate: number
+}
+
 export interface Monster extends BattleTarget {
-  encounterRate: number // ← 개별 몬스터 출현 확률 (%)
   drops: Item[]
 }
 
@@ -231,6 +236,7 @@ export interface Skill {
   name: string
   description: string
   cost: number
+  requiredExp: number
   requiredLevel: number
   unlocks: string[]
   unlockHint: string

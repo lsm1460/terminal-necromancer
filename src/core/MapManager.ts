@@ -66,7 +66,8 @@ export class MapManager {
     this.currentSceneId = targetSceneId
     const newScene = this.currentScene
 
-    if (targetSceneId !== MAP_IDS.B1_SUBWAY) {
+    const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B2_5_RESISTANCE_BASE]
+    if (!fixedArea.includes(targetSceneId)) {
       this.shuffleTiles(targetSceneId)
     }
 
@@ -148,8 +149,8 @@ export class MapManager {
   }
 
   isUnlocked(mapId: string, completed: string[]) {
-    const unlocks = this.mapData[mapId].unlocks || []
-
-    return unlocks.every((requirement: string) => completed.includes(requirement));
+    const unlocks = this.mapData[mapId]?.unlocks || []
+  
+      return unlocks.every((requirement: string) => completed.includes(requirement))
   }
 }

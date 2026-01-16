@@ -60,7 +60,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     return false
   }
 
-  const menuChoices = [...handler.getChoices(npc, context), { name: 'exit', message: '🏃 떠나기' }]
+  const menuChoices = [...handler.getChoices(player, npc, context), { name: 'exit', message: '🏃 떠나기' }]
   const choiceMap = new Map(menuChoices.map((c) => [c.name, c.message]))
 
   const dialect = context.npcs.getDialectType(npc.factionHostility)

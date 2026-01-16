@@ -10,9 +10,9 @@
         null
       ],
       [
-        { "theme": "tiled_floor", "event": "monster-group-level-1", "spawn_limit": 4, "dialogue": "바닥에 핏자국이 선연합니다." },
+        { "theme": "tiled_floor", "event": "none", "dialogue": "바닥에 핏자국이 선연합니다." },
         { "theme": "tiled_floor", "event": "npc", "npcIds": ["death"], "dialogue": "이 터미널의 관리자실" },
-        { "theme": "tiled_floor", "event": "npc", "npcIds": ["maya_tech", "kane_leader"], "dialogue": "누군가 고철을 만지고 있습니다." }
+        { "theme": "tiled_floor", "event": "none", "dialogue": "누군가 있었던 자리" }
       ],
       [
         null,
@@ -31,9 +31,20 @@
         null
       ],
       [
-        { "theme": "platform", "event": "none", "dialogue": "레지스탕스 본부" },
-        { "theme": "platform", "event": "boss", "npcIds": ["first_boss"], "dialogue": "부서진 비석이 있습니다. 영혼을 해방하시겠습니까?" },
+        { "theme": "platform", "event": "npc", "npcIds": ["jax_seeker"], "dialogue": "덜그럭 거리는 환풍기 소음과 먼지 사이로 은밀한 발자국들이 얼핏 보입니다." },
+        { "theme": "platform", "event": "boss", "npcIds": ["first_boss"], "dialogue": "부서진 비석에서 영혼의 조각이 세어 나오고 있습니다." },
         { "theme": "platform", "event": "monster-group-level-1", "spawn_limit": 2, "dialogue": "망령들의 무리가 승강장을 점거하고 있습니다!" }
+      ]
+    ]
+  },
+  "B2_5_Resistance_Base": {
+    "displayName": "B2.5 숨겨진 구역 레지스탕스 본부",
+    "start_pos": { "x": 0, "y": 0 },
+    "unlocks": ["RESISTANCE_BASE"],
+    "tiles": [
+      [
+        { "theme": "iron_gate", "event": "npc", "npcIds": ["elevator"], "dialogue": "다시 위층으로 올라가는 문입니다." },
+        { "theme": "platform", "event": "npc", "npcIds": ["maya_tech", "kane_leader"], "dialogue": "터미널 안에 숨겨진 레지스탕스의 본부" }
       ]
     ]
   },
@@ -52,7 +63,7 @@
       { "theme": "platform", "event": "none", "dialogue": "작업용 컨베이어 벨트가 멈춰 있습니다." },
       { "theme": "platform", "event": "none", "dialogue": "좁은 틈새를 통해 반대편으로 건너갑니다." },
       { "theme": "machinery", "event": "none", "dialogue": "거대한 엔진이 불규칙한 소음을 내뿜습니다." },
-      { "theme": "workshop", "event": "boss", "dialogue": "거대한 기계 골렘이 하역장을 지키고 있습니다. 가동하시겠습니까?" }
+      { "theme": "workshop", "event": "boss", "npcIds": ["second_boss"], "dialogue": "하역장에서 노동을 하는 거대한 기계 골렘의 대기 장소" }
     ],
     [
       { "theme": "cargo_area", "event": "none", "dialogue": "화물 상자들이 어지럽게 널브러져 있습니다." },

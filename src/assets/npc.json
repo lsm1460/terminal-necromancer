@@ -35,8 +35,8 @@
     "id": "maya_tech",
     "name": "기술자 마야",
     "faction": "resistance",
-    "hp": 80,
-    "maxHp": 80,
+    "hp": 30,
+    "maxHp": 30,
     "atk": 15,
     "def": 5,
     "eva": 0.01,
@@ -62,6 +62,36 @@
     "description": "물건을 구입하여 무기로 탈바꿈 시키는 장인",
     "dropTableId": "resistance"
   },
+  "jax_seeker": {
+  "id": "jax_seeker",
+  "name": "수색꾼 카일",
+  "hp": 50,
+  "maxHp": 50,
+  "atk": 22,
+  "def": 8,
+  "eva": 0.15,
+  "exp": 120,
+  "isAlive": true,
+  "reborn": false,
+  "lines": ["바깥은 지옥이야. 준비는 됐어?"],
+  "scripts": {
+    "friendly": {
+      "greeting": "여어, 살아있었네? 이번엔 꽤 쓸만한 루트를 알아냈어.",
+      "farewell": "죽지 마. 너까지 죽으면 술 상대가 없으니까."
+    },
+    "normal": {
+      "greeting": "뭐야. 거치적 거리지 말고 비켜.",
+      "farewell": "운이 좋길 빌지. 그게 유일한 무기일 때가 많으니까."
+    },
+    "hostile": {
+      "greeting": "쥐새끼 같은 놈...",
+      "farewell": "내 눈앞에서 사라져. 다음엔 대화 대신 칼날이 나갈 테니."
+    }
+  },
+  "deathLine": "카일이 움켜쥐고 있던 지도를 놓치며 쓰러집니다.",
+  "description": "어딘가 어색해보이는 수색의 전문가",
+  "dropTableId": "resistance"
+},
   "elevator": {
     "id": "elevator",
     "name": "엘리베이터",
@@ -163,7 +193,7 @@
     "atk": 1,
     "def": 1,
     "eva": 0.03,
-    "exp": 5000,
+    "exp": 1000,
     "isAlive": true,
     "isBoss": true,
     "reborn": false,
@@ -185,6 +215,39 @@
     "deathLine": "보스 1 사망",
     "description": "보스1 입니다",
     "dropTableId": "boss1",
+    "noEscape": true,
+    "skills": ["power_smash"]
+  },
+  "second_boss": {
+    "id": "second_boss",
+    "name": "골렘",
+    "hp": 10,
+    "maxHp": 10,
+    "atk": 1,
+    "def": 1,
+    "eva": 0.03,
+    "exp": 1500,
+    "isAlive": true,
+    "isBoss": true,
+    "reborn": false,
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "...",
+        "farewell": "..."
+      },
+      "normal": {
+        "greeting": "...",
+        "farewell": "..."
+      },
+      "hostile": {
+        "greeting": "...",
+        "farewell": "..."
+      }
+    },
+    "deathLine": "보스 2 골렘 사망",
+    "description": "보스 2 골렘 입니다",
+    "dropTableId": "boss2",
     "noEscape": true,
     "skills": ["power_smash"]
   }
