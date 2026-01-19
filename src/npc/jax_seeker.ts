@@ -119,7 +119,7 @@ async function handleEnter(player: Player, context: GameContext) {
 
   console.log(`\n잭스: "좋아, 딴청 피우지 말고 바짝 붙으라고. 여기 길은 좀 복잡하니까."`)
 
-  map.changeScene(MAP_IDS.B2_5_RESISTANCE_BASE, player)
+  map.changeScene(MAP_IDS.B3_5_RESISTANCE_BASE, player)
 }
 
 export default JaxHandler

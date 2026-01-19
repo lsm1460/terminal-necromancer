@@ -56,8 +56,9 @@ export const HOSTILITY_LIMIT = 100
 export const MAP_IDS = {
   B1_SUBWAY: 'B1_Subway_Entrance',
   B2_TRANSIT: 'B2_Transit_Area',
-  B2_5_RESISTANCE_BASE: 'B2_5_Resistance_Base',
   B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',
+  B3_5_RESISTANCE_BASE: 'B3_5_Resistance_Base',
+  B4_Celestial_Transit_Lounge: 'B4_Celestial_Transit_Lounge'
 } as const
 
 export type SkeletonRarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'

@@ -13,7 +13,7 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
   const sceneId = map.currentSceneId
   if (!tiles) return false
 
-  const isFullyVisible = ([MAP_IDS.B1_SUBWAY, MAP_IDS.B2_5_RESISTANCE_BASE] as string[]).includes(sceneId)
+  const isFullyVisible = ([MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE] as string[]).includes(sceneId)
 
   console.log(`\n--- 🗺️ ${map.currentScene.displayName} ---`)
 

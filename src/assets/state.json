@@ -1,7 +1,7 @@
 {
   "player": {
-    "x": 1,
-    "y": 1,
+    "x": 0,
+    "y": 0,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
@@ -11,8 +11,8 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 184,
-    "exp": 550,
+    "gold": 694,
+    "exp": 2050,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [],
@@ -97,7 +97,7 @@
       "orderWeight": -15
     }
   },
-  "sceneId": "B2_Transit_Area",
+  "sceneId": "B4_Celestial_Transit_Lounge",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -144,7 +144,7 @@
       },
       "second_boss": {
         "hp": 10,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       }

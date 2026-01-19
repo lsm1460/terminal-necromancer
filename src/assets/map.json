@@ -5,72 +5,183 @@
     "move_pos": { "x": 1, "y": 2 },
     "tiles": [
       [
-        { "theme": "start", "event": "heal", "dialogue": "시작 공간입니다. 활력이 차오릅니다." },
+        { "theme": "start", "event": "heal", "dialogue": "언제나 이곳은 망자들로 가득합니다. 기운이 차오릅니다." },
         null,
-        null
+        { "theme": "tiled_floor", "event": "npc", "dialogue": "이 터미널의 방송실" },
+        { "theme": "tiled_floor", "event": "npc", "dialogue": "이 터미널의 의료실" }
       ],
       [
         { "theme": "tiled_floor", "event": "none", "dialogue": "바닥에 핏자국이 선연합니다." },
+        { "theme": "tiled_floor", "event": "none", "dialogue": "이 복도를 지나 망자들은 저승으로 갑니다." },
         { "theme": "tiled_floor", "event": "npc", "npcIds": ["death"], "dialogue": "이 터미널의 관리자실" },
         { "theme": "tiled_floor", "event": "none", "dialogue": "누군가 있었던 자리" }
       ],
       [
         null,
-        { "theme": "tiled_floor", "event": "npc", "npcIds": ["elevator"], "dialogue": "더 깊은 곳으로 내려가는 엘리베이터가 있습니다." },
+        null,
+        {
+          "theme": "tiled_floor",
+          "event": "npc",
+          "npcIds": ["elevator"],
+          "dialogue": "더 깊은 곳으로 내려가는 엘리베이터가 있습니다."
+        },
         null
       ]
     ]
   },
   "B2_Transit_Area": {
-    "displayName": "환승 구역 - B2",
+    "displayName": "B2 -환승 구역",
     "start_pos": { "x": 0, "y": 0 },
     "tiles": [
       [
-        { "theme": "iron_gate", "event": "npc", "npcIds": ["elevator"], "dialogue": "다시 위층으로 올라가는 문입니다." },
+        {
+          "theme": "iron_gate",
+          "event": "npc",
+          "npcIds": ["elevator"],
+          "dialogue": "다시 위층으로 올라가는 문입니다."
+        },
         { "theme": "platform", "event": "none", "dialogue": "넓은 승강장이 나타납니다." },
         null
       ],
       [
-        { "theme": "platform", "event": "npc", "npcIds": ["jax_seeker"], "dialogue": "덜그럭 거리는 환풍기 소음과 먼지 사이로 은밀한 발자국들이 얼핏 보입니다." },
-        { "theme": "platform", "event": "boss", "npcIds": ["first_boss"], "dialogue": "부서진 비석에서 영혼의 조각이 세어 나오고 있습니다." },
-        { "theme": "platform", "event": "monster-group-level-1", "spawn_limit": 2, "dialogue": "망령들의 무리가 승강장을 점거하고 있습니다!" }
+        { "theme": "scrap_pile", "event": "none", "dialogue": "고철 더미가 길을 반쯤 막고 있습니다." },
+        {
+          "theme": "platform",
+          "event": "boss",
+          "npcIds": ["first_boss"],
+          "dialogue": "부서진 비석에서 영혼의 조각이 세어 나오고 있습니다."
+        },
+        {
+          "theme": "platform",
+          "event": "monster-group-level-1",
+          "spawn_limit": 2,
+          "dialogue": "망령들의 무리가 승강장을 점거하고 있습니다!"
+        }
       ]
     ]
   },
-  "B2_5_Resistance_Base": {
-    "displayName": "B2.5 숨겨진 구역 레지스탕스 본부",
+  "B3_5_Resistance_Base": {
+    "displayName": "B3.5 - 숨겨진 구역 레지스탕스 본부",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["RESISTANCE_BASE"],
     "tiles": [
       [
-        { "theme": "iron_gate", "event": "npc", "npcIds": ["elevator"], "dialogue": "다시 위층으로 올라가는 문입니다." },
-        { "theme": "platform", "event": "npc", "npcIds": ["maya_tech", "kane_leader"], "dialogue": "터미널 안에 숨겨진 레지스탕스의 본부" }
+        {
+          "theme": "iron_gate",
+          "event": "npc",
+          "npcIds": ["elevator"],
+          "dialogue": "다시 위층으로 올라가는 문입니다."
+        },
+        {
+          "theme": "platform",
+          "event": "npc",
+          "npcIds": ["maya_tech", "kane_leader"],
+          "dialogue": "터미널 안에 숨겨진 레지스탕스의 본부"
+        }
       ]
     ]
   },
   "B3_Steel_Loading_Dock": {
-  "displayName": "강철 하역장 - B3",
-  "start_pos": { "x": 0, "y": 0 },
-  "unlocks": ["first_boss"],
-  "tiles": [
-    [
-      { "theme": "iron_gate", "event": "npc", "npcIds": ["elevator"], "dialogue": "위층으로 연결되는 엘리베이터입니다." },
-      { "theme": "platform", "event": "none", "dialogue": "기름 냄새가 진동하는 통로입니다." },
-      { "theme": "scrap_pile", "event": "none", "dialogue": "고철 더미가 길을 반쯤 막고 있습니다." },
-      null
-    ],
-    [
-      { "theme": "platform", "event": "none", "dialogue": "작업용 컨베이어 벨트가 멈춰 있습니다." },
-      { "theme": "platform", "event": "none", "dialogue": "좁은 틈새를 통해 반대편으로 건너갑니다." },
-      { "theme": "machinery", "event": "none", "dialogue": "거대한 엔진이 불규칙한 소음을 내뿜습니다." },
-      { "theme": "workshop", "event": "boss", "npcIds": ["second_boss"], "dialogue": "하역장에서 노동을 하는 거대한 기계 골렘의 대기 장소" }
-    ],
-    [
-      { "theme": "cargo_area", "event": "none", "dialogue": "화물 상자들이 어지럽게 널브러져 있습니다." },
-      { "theme": "platform", "event": "none", "dialogue": "하역장 구석의 어두운 공간입니다." },
-      null,
-      null
+    "displayName": "B3 - 강철 하역장",
+    "start_pos": { "x": 0, "y": 0 },
+    "unlocks": ["first_boss"],
+    "tiles": [
+      [
+        {
+          "theme": "iron_gate",
+          "event": "npc",
+          "npcIds": ["elevator"],
+          "dialogue": "위층으로 연결되는 엘리베이터입니다."
+        },
+        { "theme": "platform", "event": "none", "dialogue": "기름 냄새가 진동하는 통로입니다." },
+        {
+          "theme": "platform",
+          "event": "npc",
+          "npcIds": ["jax_seeker"],
+          "dialogue": "덜그럭 거리는 환풍기 소음과 먼지 사이로 은밀한 발자국들이 얼핏 보입니다."
+        },
+        null
+      ],
+      [
+        { "theme": "platform", "event": "none", "dialogue": "작업용 컨베이어 벨트가 멈춰 있습니다." },
+        { "theme": "platform", "event": "none", "dialogue": "좁은 틈새를 통해 반대편으로 건너갑니다." },
+        { "theme": "machinery", "event": "none", "dialogue": "거대한 엔진이 불규칙한 소음을 내뿜습니다." },
+        {
+          "theme": "workshop",
+          "event": "boss",
+          "npcIds": ["second_boss"],
+          "dialogue": "하역장에서 노동을 하는 거대한 기계 골렘의 대기 장소"
+        }
+      ],
+      [
+        { "theme": "cargo_area", "event": "none", "dialogue": "화물 상자들이 어지럽게 널브러져 있습니다." },
+        { "theme": "platform", "event": "none", "dialogue": "하역장 구석의 어두운 공간입니다." },
+        null,
+        null
+      ]
     ]
-  ]
-}
+  },
+  "B4_Celestial_Transit_Lounge": {
+    "displayName": "B4 - 성역의 회랑",
+    "start_pos": { "x": 0, "y": 0 },
+    "unlocks": ["second_boss"],
+    "tiles": [
+      [
+        {
+          "theme": "divine_gate",
+          "event": "npc",
+          "npcIds": ["elevator"],
+          "dialogue": "백색 대리석으로 조각된 승강기 문이 소리 없이 열립니다."
+        },
+        { 
+          "theme": "marble_path", 
+          "event": "none", 
+          "dialogue": "차갑고 매끄러운 바닥에 당신의 발소리가 유난히 크게 울려 퍼집니다." 
+        },
+        {
+          "theme": "purgatory_mirror",
+          "event": "none",
+          "dialogue": "날개가 꺾인 천사가 벽에 기댄 채 당신을 공포 어린 눈으로 바라봅니다."
+        },
+        null
+      ],
+      [
+        { 
+          "theme": "golden_rail", 
+          "event": "none", 
+          "dialogue": "은하수처럼 흐르는 선로 위로, 보지 말아야 할 것들을 태운 열차가 지나갑니다." 
+        },
+        { 
+          "theme": "judgment_hall", 
+          "event": "none", 
+          "dialogue": "천장 높이 매달린 거대한 저울이 영혼들의 무게를 재며 끼익거리는 소리를 냅니다." 
+        },
+        { 
+          "theme": "chaos_void", 
+          "event": "none", 
+          "dialogue": "신성한 찬송가 사이로, 익숙한 죽음의 기운이 희미하게 섞여 나옵니다." 
+        },
+        {
+          "theme": "chamberlain_office",
+          "event": "boss",
+          "npcIds": ["third_boss"],
+          "dialogue": "금색 휘장과 은식기들이 가득한 호화로운 집무실. 그러나 방 한가운데엔 주인을 잃고 녹슬어버린 검은 갑옷이 유령처럼 서 있습니다."
+        }
+      ],
+      [
+        { 
+          "theme": "vip_lounge", 
+          "event": "none", 
+          "dialogue": "하급 신들이 버리고 간 성배에는 마시다 남은 핏빛 포도주가 넘실거립니다." 
+        },
+        { 
+          "theme": "shrine_corridor", 
+          "event": "none", 
+          "dialogue": "벽면에 걸린 초상화들이 당신의 이동 경로를 따라 눈동자를 굴립니다." 
+        },
+        null,
+        null
+      ]
+    ]
+  }
 }

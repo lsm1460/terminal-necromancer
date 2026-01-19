@@ -30,7 +30,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
   }
   // 2. 인자가 없는 경우: Enquirer 선택창 띄우기
   else {
-    const { npcId } = (await enquirer.prompt({
+    const { npcId } = await enquirer.prompt<{ npcId: string }>({
       type: 'select',
       name: 'npcId',
       message: '누구와 대화하시겠습니까?',
@@ -46,7 +46,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
         const target = availableNpcs.find((n) => n.id === value)
         return target ? target.name : value
       },
-    })) as { npcId: string }
+    })
 
     if (npcId === 'cancel') return false
     selectedNpcId = npcId

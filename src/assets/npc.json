@@ -63,35 +63,35 @@
     "dropTableId": "resistance"
   },
   "jax_seeker": {
-  "id": "jax_seeker",
-  "name": "수색꾼 카일",
-  "hp": 50,
-  "maxHp": 50,
-  "atk": 22,
-  "def": 8,
-  "eva": 0.15,
-  "exp": 120,
-  "isAlive": true,
-  "reborn": false,
-  "lines": ["바깥은 지옥이야. 준비는 됐어?"],
-  "scripts": {
-    "friendly": {
-      "greeting": "여어, 살아있었네? 이번엔 꽤 쓸만한 루트를 알아냈어.",
-      "farewell": "죽지 마. 너까지 죽으면 술 상대가 없으니까."
+    "id": "jax_seeker",
+    "name": "수색꾼 카일",
+    "hp": 50,
+    "maxHp": 50,
+    "atk": 22,
+    "def": 8,
+    "eva": 0.15,
+    "exp": 120,
+    "isAlive": true,
+    "reborn": false,
+    "lines": ["바깥은 지옥이야. 준비는 됐어?"],
+    "scripts": {
+      "friendly": {
+        "greeting": "여어, 살아있었네? 이번엔 꽤 쓸만한 루트를 알아냈어.",
+        "farewell": "죽지 마. 너까지 죽으면 술 상대가 없으니까."
+      },
+      "normal": {
+        "greeting": "뭐야. 거치적 거리지 말고 비켜.",
+        "farewell": "운이 좋길 빌지. 그게 유일한 무기일 때가 많으니까."
+      },
+      "hostile": {
+        "greeting": "쥐새끼 같은 놈...",
+        "farewell": "내 눈앞에서 사라져. 다음엔 대화 대신 칼날이 나갈 테니."
+      }
     },
-    "normal": {
-      "greeting": "뭐야. 거치적 거리지 말고 비켜.",
-      "farewell": "운이 좋길 빌지. 그게 유일한 무기일 때가 많으니까."
-    },
-    "hostile": {
-      "greeting": "쥐새끼 같은 놈...",
-      "farewell": "내 눈앞에서 사라져. 다음엔 대화 대신 칼날이 나갈 테니."
-    }
+    "deathLine": "카일이 움켜쥐고 있던 지도를 놓치며 쓰러집니다.",
+    "description": "어딘가 어색해보이는 수색의 전문가",
+    "dropTableId": "resistance"
   },
-  "deathLine": "카일이 움켜쥐고 있던 지도를 놓치며 쓰러집니다.",
-  "description": "어딘가 어색해보이는 수색의 전문가",
-  "dropTableId": "resistance"
-},
   "elevator": {
     "id": "elevator",
     "name": "엘리베이터",
@@ -248,6 +248,39 @@
     "deathLine": "보스 2 골렘 사망",
     "description": "보스 2 골렘 입니다",
     "dropTableId": "boss2",
+    "noEscape": true,
+    "skills": ["power_smash"]
+  },
+  "third_boss": {
+    "id": "third_boss",
+    "name": "시종장 발타자르",
+    "hp": 10,
+    "maxHp": 10,
+    "atk": 12,
+    "def": 5,
+    "eva": 0.15,
+    "exp": 3000,
+    "isAlive": true,
+    "isBoss": true,
+    "reborn": false,
+    "lines": ["그림자가 드리우는군요...", "오랜 기다림이었습니다."],
+    "scripts": {
+      "friendly": {
+        "greeting": "주인님, 다시 당신의 그림자로 서게 되어 영광입니다. 이제 누구를 베면 되겠습니까?",
+        "farewell": "명령을 기다리며 어둠 속에 머물겠습니다."
+      },
+      "normal": {
+        "greeting": "다시 숨을 쉬는 기분이군요. 이 부패한 신성함보다 당신의 마력이 훨씬 달콤합니다.",
+        "farewell": "부디 무사하시길. 당신의 안위가 곧 저의 존재 이유입니다."
+      },
+      "hostile": {
+        "greeting": "...명령하신다면, 제 영혼조차 다시 찢어 바치겠습니다.",
+        "farewell": "당신의 의지가 곧 저의 길입니다."
+      }
+    },
+    "deathLine": "발타자르: \"죄송...합니다... 아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)\"",
+    "description": "성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.",
+    "dropTableId": "boss3_balthazar",
     "noEscape": true,
     "skills": ["power_smash"]
   }
