@@ -126,10 +126,9 @@ export class Player {
       return
     }
 
-    
     return {
       ...this._golem,
-      name: this.hasAffix('THORNS')? '가시가 돋아난 기계 골램' : this._golem.name,
+      name: this.hasAffix('THORNS') ? '가시가 돋아난 기계 골램' : this._golem.name,
     }
   }
 
@@ -449,5 +448,34 @@ export class Player {
     this.removeItem(targetItem.id, 1)
 
     return true
+  }
+
+  unlockDarkKnight() {
+    if (this._knight) {
+      return
+    }
+
+    this._knight = {
+      id: 'knight',
+      name: '기사 발타자르',
+      hp: 10,
+      maxHp: 10,
+      atk: 12,
+      def: 5,
+      eva: 0.15,
+      exp: 0,
+      agi: 5,
+      encounterRate: 0,
+      isAlive: true,
+      isKnight: true,
+      deathLine:
+        '발타자르: "아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)"',
+      description:
+        '성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.',
+      dropTableId: '',
+      skills: ['power_smash'],
+    }
+
+    console.log('[영혼이 귀속된 발타자르]를 획득했다.')
   }
 }

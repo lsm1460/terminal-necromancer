@@ -391,13 +391,15 @@ export class Battle {
       console.log(`📦 ${npc.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
     })
 
-    // 시체 생성 (네크로맨서의 핵심!)
-    world.addCorpse({
-      ...npc,
-      x,
-      y,
-    })
-    console.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
+    if (!['second_boss', 'third_boss'].includes(npc.id)) {
+      // 시체 생성 (네크로맨서의 핵심!)
+      world.addCorpse({
+        ...npc,
+        x,
+        y,
+      })
+      console.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
+    }
   }
 
   public toCombatUnit<T extends BattleTarget | Player>(unit: IUnit, type: CombatUnit['type']): CombatUnit<T> {
@@ -680,7 +682,9 @@ export class Battle {
 
       if (golem) {
         // 🔊 상황에 맞는 로그 출력
-        console.log(`\n[📢 포효]: 골렘이 증기를 내뿜고 굉음을 내지릅니다!! ${attacker.name}의 시선이 골렘에게 고정됩니다.`)
+        console.log(
+          `\n[📢 포효]: 골렘이 증기를 내뿜고 굉음을 내지릅니다!! ${attacker.name}의 시선이 골렘에게 고정됩니다.`
+        )
         return golem
       }
     }

@@ -1,7 +1,7 @@
 {
   "player": {
-    "x": 0,
-    "y": 0,
+    "x": 2,
+    "y": 1,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
@@ -12,7 +12,7 @@
     "eva": 0,
     "crit": 0,
     "gold": 694,
-    "exp": 2050,
+    "exp": 5050,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [],
@@ -95,6 +95,26 @@
       "isGolem": true,
       "deathLine": "(알 수 없는 기계음)",
       "orderWeight": -15
+    },
+    "_knight": {
+      "id": "knight",
+      "name": "기사 발타자르",
+      "hp": 10,
+      "maxHp": 10,
+      "atk": 12,
+      "def": 5,
+      "eva": 0.15,
+      "exp": 0,
+      "agi": 5,
+      "encounterRate": 0,
+      "isAlive": true,
+      "isKnight": true,
+      "deathLine": "발타자르: \"아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)\"",
+      "description": "성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.",
+      "dropTableId": "",
+      "skills": [
+        "power_smash"
+      ]
     }
   },
   "sceneId": "B4_Celestial_Transit_Lounge",
@@ -147,6 +167,12 @@
         "isAlive": false,
         "reborn": false,
         "relation": 0
+      },
+      "third_boss": {
+        "hp": 10,
+        "isAlive": false,
+        "reborn": false,
+        "relation": 0
       }
     },
     "factionHostility": {
@@ -161,6 +187,7 @@
   "completedEvents": [
     "first_boss",
     "RESISTANCE_BASE",
-    "second_boss"
+    "second_boss",
+    "third_boss"
   ]
 }

@@ -31,6 +31,7 @@ export type BattleTarget = {
   isMinion?: boolean
   isSkeleton?: boolean
   isGolem?: boolean
+  isKnight?: boolean
   deathLine?: string
   minRarity?: SkeletonRarity
   orderWeight?: number

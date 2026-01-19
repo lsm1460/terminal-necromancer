@@ -56,15 +56,19 @@ export class BossEvent {
       console.log(`✨ 이제 이곳에서 시작 지점으로 즉시 귀환할 수 있습니다.`)
 
       for (const message of eventData?.defeatTalk || []) {
-      await enquirer.prompt({
-        type: 'input',
-        name: 'confirm',
-        message,
-        // 입력값은 필요 없고 진행을 위한 대기 용도
-        result: () => '',
-        format: () => ' (계속하려면 Enter)',
-      })
-    }
+        await enquirer.prompt({
+          type: 'input',
+          name: 'confirm',
+          message,
+          // 입력값은 필요 없고 진행을 위한 대기 용도
+          result: () => '',
+          format: () => ' (계속하려면 Enter)',
+        })
+      }
+
+      if (bossId === 'third_boss') {
+        player.unlockDarkKnight()
+      }
     }
   }
 }
