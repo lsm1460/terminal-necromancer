@@ -51,7 +51,7 @@ export const AFFIX_LIST: Record<string, Affix> = {
   TABOO: {
     id: 'TABOO',
     name: '금기',
-    description: '다크나이트를 리치로 전직시키고 전용 스킬(시폭, 뼈감옥)을 해금합니다.',
+    description: '다크나이트를 리치로 전직시키고 전용 스킬(저주, 뼈감옥)을 해금합니다.',
   },
   WARHORSE: {
     id: 'WARHORSE',

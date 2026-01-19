@@ -126,13 +126,29 @@ export class Player {
       return
     }
 
-    return {
-      ...this._golem,
-      name: this.hasAffix('THORNS') ? '가시가 돋아난 기계 골램' : this._golem.name,
+    if (this.hasAffix('THORNS')) {
+      this._golem.name = '가시가 돋아난 기계 골램'
+    } else {
+      this._golem.name = '하역장의 기계 골렘'
     }
+
+    return this._golem
   }
 
   get knight() {
+    if (!this._knight) {
+      return
+    }
+    
+    if (this.hasAffix('TABOO')) {
+
+      this._knight.name = '타락한 리치 발타자르'
+      this._knight.skills = []
+    } else {
+      this._knight.name = '기사 발타자르'
+      this._knight.skills = ['power_smash']
+    }
+
     return this._knight
   }
 

@@ -2,7 +2,7 @@
   "B1_Subway_Entrance": {
     "displayName": "지하철 입구 - B1",
     "start_pos": { "x": 0, "y": 0 },
-    "move_pos": { "x": 1, "y": 2 },
+    "move_pos": { "x": 2, "y": 2 },
     "tiles": [
       [
         { "theme": "start", "event": "heal", "dialogue": "언제나 이곳은 망자들로 가득합니다. 기운이 차오릅니다." },
@@ -30,7 +30,7 @@
     ]
   },
   "B2_Transit_Area": {
-    "displayName": "B2 -환승 구역",
+    "displayName": "B2 - 환승 구역",
     "start_pos": { "x": 0, "y": 0 },
     "tiles": [
       [
@@ -122,7 +122,7 @@
     ]
   },
   "B4_Celestial_Transit_Lounge": {
-    "displayName": "B4 - 성역의 회랑",
+    "displayName": "B4 - VIP 대기실 [성역의 회랑]",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["second_boss"],
     "tiles": [
