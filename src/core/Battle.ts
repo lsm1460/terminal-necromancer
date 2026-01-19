@@ -336,12 +336,13 @@ export class Battle {
     context: GameContext
   ) {
     if (targets.length === 0) return
-    const target = targets[0]
 
     const autoSkillId = context.npcSkills.getRandomSkillId(attacker.ref.skills || [])
     if (autoSkillId) {
       await context.npcSkills.execute(autoSkillId, attacker, ally, targets)
     } else {
+      const target = Battle.handleBeforeAttackAffixes(this.player, attacker, targets)
+
       await target.takeDamage(attacker)
     }
   }
@@ -457,14 +458,14 @@ export class Battle {
         const currentHp = defender.ref.hp
 
         if (isEscape) {
-          console.log(`💥 ${attacker.name}의 공격! ${defender.name}은/는 회피했다! (남은 HP: ${currentHp})`)
+          console.log(`\n💥 ${attacker.name}의 공격! ${defender.name}은/는 회피했다! (남은 HP: ${currentHp})`)
         } else {
           if (isCritical) {
             console.log(
-              `⚡ CRITICAL HIT! ⚡ ${attacker.name}의 치명적인 일격! ${defender.name}에게 ${damage}의 강력한 피해! (남은 HP: ${currentHp})`
+              `\n⚡ CRITICAL HIT! ⚡ ${attacker.name}의 치명적인 일격! ${defender.name}에게 ${damage}의 강력한 피해! (남은 HP: ${currentHp})`
             )
           } else {
-            console.log(`💥 ${attacker.name}의 공격! ${defender.name}에게 ${damage}의 피해! (남은 HP: ${currentHp})`)
+            console.log(`\n💥 ${attacker.name}의 공격! ${defender.name}에게 ${damage}의 피해! (남은 HP: ${currentHp})`)
           }
         }
 
@@ -583,24 +584,49 @@ export class Battle {
           // 공격 후 발동하는 어픽스들
           await this.handleAfterAttackAffixes(attacker, defender)
           break
-  
+
         default:
           break
       }
     } else if (defender.ref.isMinion) {
       // 수비자가 미니언인 경우
       switch (event) {
-  
+        case 'afterHit':
+          // 사망 시 발동하는 어픽스 (예: DOOMSDAY)
+          await this.handleOnAfterHitAffixes(attacker, defender)
+          break
+
         case 'death':
           // 사망 시 발동하는 어픽스 (예: DOOMSDAY)
           await this.handleOnDeathAffixes(defender)
           break
-  
+
         default:
           break
       }
     }
+  }
 
+  private async handleOnAfterHitAffixes(attacker: CombatUnit, defender: CombatUnit) {
+    if (this.player.hasAffix('THORNS') && defender.ref.isGolem) {
+      const thornDamage = Math.max(1, Math.floor(defender.ref.atk * 0.05))
+
+      console.log(`\n[🦷 가시]: ${defender.name}의 가시가 ${attacker.name}의 살점을 찢습니다!`)
+
+      await delay(500)
+
+      if (attacker.ref.hp === 0) {
+        return
+      }
+
+      await attacker.takeDamage(defender, {
+        rawDamage: thornDamage,
+        isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
+        isSureHit: false, // 회피 불가능하게 하려면 true로 변경
+      })
+
+      await delay(300)
+    }
   }
 
   private async handleOnDeathAffixes(deathUnit: CombatUnit) {
@@ -642,5 +668,23 @@ export class Battle {
         agi: 5,
       })
     }
+  }
+
+  static handleBeforeAttackAffixes(player: Player, attacker: CombatUnit, targets: CombatUnit[]): CombatUnit {
+    let target = targets[0]
+
+    const isEnemyAttack = ['npc', 'monster'].includes(attacker.type)
+
+    if (isEnemyAttack && player.hasAffix('ROAR')) {
+      const golem = targets.find((target) => target.ref.isGolem && target.ref.isAlive)
+
+      if (golem) {
+        // 🔊 상황에 맞는 로그 출력
+        console.log(`\n[📢 포효]: 골렘이 증기를 내뿜고 굉음을 내지릅니다!! ${attacker.name}의 시선이 골렘에게 고정됩니다.`)
+        return golem
+      }
+    }
+
+    return target
   }
 }

@@ -39,7 +39,7 @@ const map = new MapManager(mapPath, saved?.sceneId)
 const npcs = new NPCManager(npcPath, saved?.npcs)
 const world = new World(map)
 const events = new EventSystem(eventPath, monster, saved?.completedEvents)
-const npcSkills = new NpcSkillManager(npcSkillPath)
+const npcSkills = new NpcSkillManager(npcSkillPath, player)
 
 if (saved?.drop) {
   world.addLootBag(saved.drop)

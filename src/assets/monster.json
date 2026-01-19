@@ -21,7 +21,7 @@
     "def": 1,
     "agi": 5,
     "exp": 15,
-    "skills": ["power_smash"],
+    "skills": ["piercing_arrow"],
     "dropTableId": "squirrel",
     "description": "민첩한 다람쥐. 공격력은 토끼보다 높지만 방어력은 낮다. 회피 능력이 뛰어나다.",
     "orderWeight": 10

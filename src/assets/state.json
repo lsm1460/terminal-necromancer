@@ -11,96 +11,11 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 157,
-    "exp": 1215,
+    "gold": 184,
+    "exp": 550,
     "level": 3,
     "inventoryMax": 15,
-    "inventory": [
-      {
-        "id": "iron_sword_402a47d99388f239",
-        "label": "\u001b[35m🟣 [서리] 심연의 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          5,
-          10
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "minRarity": "EPIC",
-        "atk": 12,
-        "crit": 0,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "FROSTBORNE",
-          "name": "서리",
-          "description": "서리 서린 스켈레톤의 손길이 적의 발걸음을 무겁게 합니다."
-        },
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "iron_sword_2a7a46fc195c6769",
-        "label": "\u001b[35m🟣 [군단] 필멸의 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          5,
-          10
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "minRarity": "EPIC",
-        "atk": 12,
-        "crit": 0,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "LEGION",
-          "name": "군단",
-          "description": "스켈레톤 부활 시 사역 가능한 수만큼의 시체를 동시에 부활시킵니다."
-        },
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "iron_sword_318c4d924540df46",
-        "label": "\u001b[35m🟣 [종말] 몰락한 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          5,
-          10
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "minRarity": "EPIC",
-        "atk": 9,
-        "crit": 0,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "DOOMSDAY",
-          "name": "종말",
-          "description": "스켈레톤이 죽을 때 폭발하여 주변에 피해를 입힙니다."
-        },
-        "x": 2,
-        "y": 1
-      }
-    ],
+    "inventory": [],
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
@@ -110,8 +25,8 @@
     ],
     "equipped": {
       "weapon": {
-        "id": "iron_sword_83f29d7cea9e267e",
-        "label": "\u001b[35m🟣 [가시] 금지된 철검\u001b[0m",
+        "id": "iron_sword_c1fc325a8df31787",
+        "label": "\u001b[35m🟣 [포효] 심연의 철검\u001b[0m",
         "type": "weapon",
         "atkRange": [
           5,
@@ -130,12 +45,12 @@
         "crit": 0,
         "rarity": "EPIC",
         "affix": {
-          "id": "THORNS",
-          "name": "가시",
-          "description": "골렘이 받은 피해의 일부를 적에게 반사합니다."
+          "id": "ROAR",
+          "name": "포효",
+          "description": "골렘이 적의 후열 공격을 자신에게 집중시킵니다."
         },
-        "x": 2,
-        "y": 1
+        "x": 1,
+        "y": 0
       },
       "armor": {
         "id": "leather_armor_081972175966dfd9",
@@ -158,28 +73,31 @@
       "SOUL_HARVEST",
       "BONE_STORM"
     ],
-    "skeleton": [
-      {
-        "id": "skeleton_1768787815966",
-        "name": "[common] 스켈레톤 병사",
-        "maxHp": 6,
-        "hp": 6,
-        "atk": 0,
-        "def": 0,
-        "agi": 0,
-        "skills": [],
-        "exp": 0,
-        "description": "토끼의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true
-      }
-    ],
-    "_maxSkeleton": 3
+    "skeleton": [],
+    "_maxSkeleton": 3,
+    "_golem": {
+      "id": "golem",
+      "name": "하역장의 기계 골렘",
+      "maxHp": 80,
+      "hp": 80,
+      "atk": 5,
+      "def": 40,
+      "agi": 3,
+      "exp": 0,
+      "description": "하역장에서 수거한 핵으로 부활시킨 거대 병기입니다. 사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.",
+      "dropTableId": "",
+      "encounterRate": 0,
+      "isAlive": true,
+      "skills": [
+        "power_smash"
+      ],
+      "isMinion": true,
+      "isGolem": true,
+      "deathLine": "(알 수 없는 기계음)",
+      "orderWeight": -15
+    }
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
