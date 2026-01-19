@@ -41,7 +41,7 @@ export const AFFIX_LIST: Record<string, Affix> = {
   THORNS: {
     id: 'THORNS',
     name: '가시',
-    description: '골렘이 받은 피해의 일부를 적에게 반사합니다.',
+    description: '골렘에게 가시가 돋아나 골렘을 공격하는 적에게도 상처를 줍니다.',
   },
   ROAR: {
     id: 'ROAR',

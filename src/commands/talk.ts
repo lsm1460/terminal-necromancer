@@ -60,9 +60,6 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     return false
   }
 
-  const menuChoices = [...handler.getChoices(player, npc, context), { name: 'exit', message: '🏃 떠나기' }]
-  const choiceMap = new Map(menuChoices.map((c) => [c.name, c.message]))
-
   const dialect = context.npcs.getDialectType(npc.factionHostility)
 
   // 2. 대화 인터페이스 출력
@@ -73,9 +70,12 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
 
   try {
     const printFarewell = () => console.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
-    
+
     // 유저가 'exit'를 선택할 때까지 무한 반복
     while (true) {
+      const menuChoices = [...handler.getChoices(player, npc, context), { name: 'exit', message: '🏃 떠나기' }]
+      const choiceMap = new Map(menuChoices.map((c) => [c.name, c.message]))
+
       const { action } = await enquirer.prompt<{ action: string }>({
         type: 'select',
         name: 'action',

@@ -122,7 +122,15 @@ export class Player {
   }
 
   get golem() {
-    return this._golem
+    if (!this._golem) {
+      return
+    }
+
+    
+    return {
+      ...this._golem,
+      name: this.hasAffix('THORNS')? '가시가 돋아난 기계 골램' : this._golem.name,
+    }
   }
 
   get knight() {

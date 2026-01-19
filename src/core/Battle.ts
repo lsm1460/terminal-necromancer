@@ -200,7 +200,10 @@ export class Battle {
 
     // 4. 적군 추가
     enemies.forEach((e) => {
-      if (e.ref.isAlive) units.push(e)
+      if (e.ref.isAlive) {
+        this.unitCache.set(e.ref, e)
+        units.push(e)
+      }
     })
 
     const getEffectiveAgi = (unit: CombatUnit): number => {
@@ -573,27 +576,35 @@ export class Battle {
   }
 
   async onAffix(event: string, attacker: CombatUnit, defender: CombatUnit) {
-    // 미니언이 아닌 주체의 공격은 어픽스 로직을 타지 않음 (얼리 리턴)
-    if (!attacker.ref.isMinion) return
-
-    switch (event) {
-      case 'afterHit':
-        // 공격 후 발동하는 어픽스들
-        await this.handleAfterAttackAffixes(attacker, defender)
-        break
-
-      case 'death':
-        // 사망 시 발동하는 어픽스 (예: DOOMSDAY)
-        await this.handleOnDeathAffixes(attacker)
-        break
-
-      default:
-        break
+    if (attacker.ref.isMinion) {
+      // 공격자가 미니언인 경우
+      switch (event) {
+        case 'afterHit':
+          // 공격 후 발동하는 어픽스들
+          await this.handleAfterAttackAffixes(attacker, defender)
+          break
+  
+        default:
+          break
+      }
+    } else if (defender.ref.isMinion) {
+      // 수비자가 미니언인 경우
+      switch (event) {
+  
+        case 'death':
+          // 사망 시 발동하는 어픽스 (예: DOOMSDAY)
+          await this.handleOnDeathAffixes(defender)
+          break
+  
+        default:
+          break
+      }
     }
+
   }
 
   private async handleOnDeathAffixes(deathUnit: CombatUnit) {
-    if (this.player.hasAffix('DOOMSDAY')) {
+    if (this.player.hasAffix('DOOMSDAY') && deathUnit.ref.isSkeleton) {
       const enemies = Array.from(this.unitCache.values()).filter(
         (u) => ['monster', 'npc'].includes(u.type) && u.ref.isAlive
       )
@@ -603,7 +614,6 @@ export class Battle {
       console.log(`\n[🔥 종말]: ${deathUnit.name}의 시체가 폭발합니다!`)
 
       await delay(500)
-
       for (const enemy of enemies) {
         if (enemy.ref.hp === 0) {
           continue

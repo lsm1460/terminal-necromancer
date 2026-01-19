@@ -13,7 +13,7 @@ const DeathHandler: NPCHandler = {
       { name: 'talk', message: '💬 잡담' },
       { name: 'levelUp', message: '✨ 레벨업' },
       ...(isB3Completed ? [{ name: 'increaseLimit', message: '🦴 해골 군단 확장' }] : []),
-      ...(isB3Completed && !player.golem ? [{ name: 'golem', message: '🪨 골렘 정수 부활' }] : []),
+      ...(isB3Completed && !player.golem ? [{ name: 'golem', message: '🪨  골렘 정수 부활' }] : []),
       { name: 'unlock', message: '🔮 기술 전수' },
       { name: 'memorize', message: '📜 기술 각인' },
     ]
@@ -35,7 +35,7 @@ const DeathHandler: NPCHandler = {
       case 'increaseLimit':
         await handleIncreaseLimit(player)
       case 'golem':
-        handleAwakeGolem(player)
+        await handleAwakeGolem(player)
         break
       default:
         break
@@ -225,7 +225,7 @@ async function handleAwakeGolem(player: Player) {
   console.log(`사신: "필멸자의 집착이란 가증스럽군. 그 죽은 심장에 내 권능을 조금 나눠주길 원하느냐?"`)
 
   const cost = 800
-  console.log(`현재 보유 경험치: ${player.exp} / 필요 경험치: ${cost}`)
+  console.log(`현재 보유 영혼의 파편: ${player.exp} / 필요 영혼의 파편: ${cost}`)
 
   // 2. 비용 체크
   if (player.exp < cost) {
