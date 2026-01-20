@@ -29,7 +29,8 @@
     "chance": 0.5,
     "power": 40,
     "targetType": "ALLY_LOWEST_HP",
-    "description": "가장 부상이 심한 아군을 회복시킵니다."
+    "description": "가장 부상이 심한 아군을 회복시킵니다.",
+    "type": "heal"
   },
   "volley_fire": {
     "id": "volley_fire",
@@ -44,7 +45,51 @@
     "name": "성스러운 합창",
     "chance": 0.15,
     "power": 25,
-    "targetType": "ALLY_ALL_HP",
-    "description": "모든 아군의 상처를 어루만집니다."
+    "targetType": "ALLY_ALL",
+    "description": "모든 아군의 상처를 어루만집니다.",
+    "type": "heal"
+  },
+  "bone_prison": {
+    "id": "bone_prison",
+    "name": "뼈 감옥",
+    "chance": 0.4,
+    "targetType": "RANDOM",
+    "description": "뼈로 이루어진 감옥은 대상의 행동을 제약합니다.",
+    "type": "deBuff",
+    "buff": {
+      "name": "뼈 감옥",
+      "type": "bind",
+      "duration": 2
+    }
+  },
+  "aging_curse": {
+    "id": "aging_curse",
+    "name": "노화",
+    "chance": 0.4,
+    "targetType": "ENEMY_LOWEST_HP",
+    "description": "가장 부상이 심한 적군을 노화시킵니다. 민첩이 떨어집니다.",
+    "type": "deBuff",
+    "buff": {
+      "name": "노화",
+      "type": "deBuff",
+      "duration": 2,
+      "agi": 2
+    }
+  },
+  "abyssal_gallop": {
+    "id": "abyssal_gallop",
+    "name": "심연의 질주",
+    "chance": 0.6,
+    "power": 25,
+    "targetType": "ENEMY_ALL",
+    "description": "군마가 지나간 자리에 심연의 불꽃이 솟구쳐 모든 적에게 고정 피해를 입힙니다."
+  },
+  "dread_charge": {
+    "id": "dread_charge",
+    "name": "죽음의 돌격",
+    "chance": 0.6,
+    "power": 1.6,
+    "targetType": "ENEMY_ALL",
+    "description": "군마와 혼연일체가 되어 적진을 관통합니다. 모든 적에게 강력한 물리 피해를 입힙니다."
   }
 }

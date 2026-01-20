@@ -37,7 +37,7 @@ export class NpcSkillManager {
       case 'ALLY_LOWEST_HP':
         const weakest = ally.reduce((p, c) => (p.ref.hp / p.ref.maxHp < c.ref.hp / c.ref.maxHp ? p : c))
         return [weakest]
-      case 'ALLY_ALL_HP':
+      case 'ALLY_ALL':
         return ally
       case 'ENEMY_ALL':
         return enemies // 플레이어 파티가 있다면 확장
@@ -46,6 +46,10 @@ export class NpcSkillManager {
         break
       case 'ENEMY_BACK':
         targets = enemies.length > 0 ? [enemies[enemies.length - 1]] : []
+        break
+      case 'RANDOM':
+        const randomIndex = Math.floor(Math.random() * enemies.length)
+        targets = [enemies[randomIndex]]
         break
       default:
         break
@@ -84,15 +88,20 @@ export class NpcSkillManager {
       return
     }
 
-
     // 3. 모든 타겟에게 효과 적용 (forEach 활용)
-    const isHeal = skill.targetType.endsWith('_HP')
+    const isHeal = skill.type === 'heal'
+    const isBuff = skill.type === 'buff'
+    const isDeBuff = skill.type === 'deBuff'
 
     for (const target of targets) {
       if (isHeal) {
         const healAmount = skill.power
         target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
         console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
+      } else if (isBuff && skill.buff) {
+        target.applyBuff(skill.buff)
+      } else if (isDeBuff && skill.buff) {
+        target.applyDeBuff(skill.buff)
       } else {
         await target.takeDamage(attacker, {
           skillAtkMult: skill.power, // 스킬의 위력(배율) 전달

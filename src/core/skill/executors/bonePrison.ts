@@ -54,10 +54,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
 
   // 2. 디버프 부여
   const duration = 3
-  console.log(
-    `\n💀 ${player.name}이(가) 차가운 마력을 뿜자, 거친 뼈 창살이 ${target.name}의 사지를 옥죄며 솟아오릅니다!`
-  )
-
+  
   target.applyDeBuff({
     name: '뼈 감옥',
     type: 'bind',

@@ -72,7 +72,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
   [SKILL_IDS.BONE_PRISON]: {
     id: SKILL_IDS.BONE_PRISON,
     name: '뼈 감옥',
-    description: '대상을 선택하여 움직임을 봉쇄합니다.',
+    description: '대상을 선택한 뒤 뼈를 사용해 대상의 움직임을 봉쇄합니다.',
     cost: 20,
     requiredExp: 1200,
     requiredLevel: 3,

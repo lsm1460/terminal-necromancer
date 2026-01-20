@@ -56,18 +56,21 @@ export const statusCommand: CommandFunction = (player, args, context) => {
 }
 
 const printMinion = (minion: BattleTarget, index?: number) => {
-  const hpPercent = Math.max(0, (minion.hp / minion.maxHp) * 10)
-  const hpBar = '■'.repeat(Math.floor(hpPercent)) + '□'.repeat(10 - Math.floor(hpPercent))
-  const statusIcon = minion.isAlive ? '🟢' : '🔴'
+  try{
+    const hpPercent = Math.max(0, (minion.hp / minion.maxHp) * 10)
+    const hpBar = '■'.repeat(Math.floor(hpPercent)) + '□'.repeat(10 - Math.floor(hpPercent))
+    const statusIcon = minion.isAlive ? '🟢' : '🔴'
+  
+    // index가 있으면 번호를 붙이고, 없으면 생략
+    const prefix = index !== undefined ? `${index + 1}. ` : ''
+  
+    console.log(
+      `   ${prefix}${minion.name} ${statusIcon}\n` +
+        `      HP: ${hpBar} (${minion.hp}/${minion.maxHp})\n` +
+        `      ATK: ${minion.atk} | AGI: ${minion.agi}`
+    )
 
-  // index가 있으면 번호를 붙이고, 없으면 생략
-  const prefix = index !== undefined ? `${index + 1}. ` : ''
-
-  console.log(
-    `   ${prefix}${minion.name} ${statusIcon}\n` +
-      `      HP: ${hpBar} (${minion.hp}/${minion.maxHp})\n` +
-      `      ATK: ${minion.atk} | AGI: ${minion.agi}`
-  )
+  } catch(_e) {console.log(_e)}
 }
 
 const lookAll = (player: Player, items: Drop[], monsters?: Monster[]) => {

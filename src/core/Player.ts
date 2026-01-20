@@ -139,11 +139,33 @@ export class Player {
     if (!this._knight) {
       return
     }
-    
-    if (this.hasAffix('TABOO')) {
 
+    const isLich = this.hasAffix('TABOO')
+    const hasHorse = this.hasAffix('WARHORSE')
+
+    if (isLich) {
+      
+      
+
+      this._knight.atk = Math.floor((this._knight.baseAtk || this._knight.atk) * 0.6)
+      this._knight.def = Math.floor((this._knight.baseDef || this._knight.def) * 0.6)
+    } else {
+      
+      
+
+      this._knight.atk = this._knight.baseAtk || this._knight.atk
+      this._knight.def = this._knight.baseDef || this._knight.def
+    }
+
+    if (isLich && hasHorse) {
+      this._knight.name = '망령의 군주 발타자르';
+      this._knight.skills = ['abyssal_gallop', 'bone_prison', 'aging_curse'];
+    } else if (isLich && !hasHorse) {
       this._knight.name = '타락한 리치 발타자르'
-      this._knight.skills = []
+      this._knight.skills = ['bone_prison', 'aging_curse']
+    } else if (!isLich && hasHorse) {
+      this._knight.name = '심연의 기사 발타자르';
+      this._knight.skills = ['dread_charge', 'power_smash'];
     } else {
       this._knight.name = '기사 발타자르'
       this._knight.skills = ['power_smash']
@@ -476,13 +498,16 @@ export class Player {
       name: '기사 발타자르',
       hp: 10,
       maxHp: 10,
+      baseAtk: 12,
       atk: 12,
+      baseDef: 12,
       def: 5,
       eva: 0.15,
       exp: 0,
       agi: 5,
       encounterRate: 0,
       isAlive: true,
+      isMinion: true,
       isKnight: true,
       deathLine:
         '발타자르: "아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)"',

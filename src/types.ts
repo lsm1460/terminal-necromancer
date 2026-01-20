@@ -1,5 +1,5 @@
 import { SkeletonRarity } from './consts'
-import { Battle, CombatUnit } from './core/Battle'
+import { Battle, Buff, CombatUnit } from './core/Battle'
 import { ItemRarity } from './core/item/consts'
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
@@ -15,7 +15,9 @@ export type BattleTarget = {
   name: string
   maxHp: number
   hp: number
+  baseAtk?: number
   atk: number
+  baseDef?: number
   def: number
   agi: number
   exp: number
@@ -265,8 +267,9 @@ export type SkillTargetType =
   | 'ENEMY_ALL'
   | 'ALLY_SINGLE'
   | 'ALLY_LOWEST_HP'
-  | 'ALLY_ALL_HP'
+  | 'ALLY_ALL'
   | 'SINGLE_BUFF'
+  | 'RANDOM'
 
 export type NpcSkill = {
   id: string
@@ -276,6 +279,7 @@ export type NpcSkill = {
   power: number
   targetType: SkillTargetType
   type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
+  buff?: Buff
 }
 
 export type AffixId =

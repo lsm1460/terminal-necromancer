@@ -1,18 +1,18 @@
 {
   "player": {
     "x": 0,
-    "y": 0,
+    "y": 1,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
-    "mp": 100,
+    "mp": 95,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 704,
-    "exp": 5135,
+    "gold": 730,
+    "exp": 5285,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [
@@ -43,17 +43,8 @@
         },
         "x": 2,
         "y": 1
-      }
-    ],
-    "_maxMemorize": 4,
-    "memorize": [
-      "RAISE_SKELETON",
-      "SOUL_TRANSFER",
-      "BONE_SPEAR",
-      "BONE_STORM"
-    ],
-    "equipped": {
-      "weapon": {
+      },
+      {
         "id": "iron_sword_c1fc325a8df31787",
         "label": "\u001b[35m🟣 [포효] 심연의 철검\u001b[0m",
         "type": "weapon",
@@ -80,6 +71,71 @@
         },
         "x": 1,
         "y": 0
+      },
+      {
+        "id": "iron_sword_817e9dc6ba587023",
+        "label": "\u001b[35m🟣 [군마] 몰락한 철검\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          5,
+          10
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "minRarity": "EPIC",
+        "atk": 9,
+        "crit": 0,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "WARHORSE",
+          "name": "군마",
+          "description": "다크나이트의 공격이 전체 공격으로 전환됩니다."
+        },
+        "x": 2,
+        "y": 1
+      }
+    ],
+    "_maxMemorize": 4,
+    "memorize": [
+      "RAISE_SKELETON",
+      "SOUL_TRANSFER",
+      "BONE_SPEAR",
+      "BONE_STORM"
+    ],
+    "equipped": {
+      "weapon": {
+        "id": "iron_sword_15ca823a4fed2351",
+        "label": "\u001b[35m🟣 [금기] 심연의 철검\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          5,
+          10
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "minRarity": "EPIC",
+        "atk": 12,
+        "crit": 0,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "TABOO",
+          "name": "금기",
+          "description": "다크나이트를 리치로 전직시키고 전용 스킬(저주, 뼈감옥)을 해금합니다."
+        },
+        "x": 0,
+        "y": 1
       },
       "armor": {
         "id": "leather_armor_081972175966dfd9",
@@ -108,7 +164,7 @@
       "id": "golem",
       "name": "하역장의 기계 골렘",
       "maxHp": 80,
-      "hp": 78,
+      "hp": 80,
       "atk": 5,
       "def": 40,
       "agi": 3,
@@ -127,22 +183,26 @@
     },
     "_knight": {
       "id": "knight",
-      "name": "기사 발타자르",
-      "hp": 10,
+      "name": "타락한 리치 발타자르",
       "maxHp": 10,
-      "atk": 12,
-      "def": 5,
+      "hp": 10,
+      "baseAtk": 12,
+      "atk": 7,
+      "baseDef": 5,
+      "def": 3,
       "eva": 0.15,
       "exp": 0,
       "agi": 5,
       "encounterRate": 0,
       "isAlive": true,
+      "isMinion": true,
       "isKnight": true,
       "deathLine": "발타자르: \"아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)\"",
       "description": "성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.",
       "dropTableId": "",
       "skills": [
-        "power_smash"
+        "bone_prison",
+        "aging_curse"
       ]
     }
   },

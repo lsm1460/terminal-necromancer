@@ -299,7 +299,12 @@ export class Battle {
         break
 
       case '아이템':
-        await playerUnit.ref.useItem()
+        const isUse = await playerUnit.ref.useItem()
+
+        if (!isUse) {
+          // 아이템 사용 취소 시 다시 행동 선택으로
+          return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+        }
         break
 
       case '도망': {
@@ -430,8 +435,40 @@ export class Battle {
           targetArray.push(newEffect)
         }
       },
-      applyBuff: (b: Buff) => combatUnit.applyEffect(b),
-      applyDeBuff: (d: Buff) => combatUnit.applyEffect(d),
+      applyBuff: (b: Buff) => {
+        switch (b.name) {
+          case '광폭화':
+            console.log(
+              `\n[🔥 강화] ${combatUnit.name}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! (${combatUnit.name} HP ${combatUnit.ref.hp} / ${combatUnit.ref.maxHp})`
+            )
+            break
+
+          default:
+            break
+        }
+
+        combatUnit.applyEffect(b)
+      },
+      applyDeBuff: (d: Buff) => {
+        switch (d.name) {
+          case '뼈 감옥':
+            console.log(`\n 거친 뼈 창살이 ${combatUnit.name}의 사지를 옥죄며 솟아오릅니다!`)
+            break
+          case '심연의 한기':
+            console.log(`\n[❄️] 심연의 한기가 대상(${combatUnit.name})을 얼려버립니다.`)
+            break
+          case '노화':
+            console.log(
+              `\n[⏳] ${combatUnit.name}의 피부가 급격히 메마르며 숨이 가빠집니다! 모든 반응이 눈에 띄게 둔해집니다.`
+            )
+            break
+
+          default:
+            break
+        }
+
+        combatUnit.applyEffect(d)
+      },
       takeDamage: async (attacker, options = {}) => {
         if (!combatUnit.ref.isAlive) {
           return {
@@ -661,8 +698,6 @@ export class Battle {
   private async handleAfterAttackAffixes(attacker: CombatUnit, defender: CombatUnit) {
     // 1. FROSTBORNE (서리 서린 유해)
     if (this.player.hasAffix('FROSTBORNE') && attacker.ref.isSkeleton) {
-      console.log(`[❄️] 스켈레톤이 머금은 심연의 한기가 대상(${defender.name})을 얼려버립니다.`)
-
       defender.applyDeBuff({
         name: '심연의 한기',
         type: 'deBuff',

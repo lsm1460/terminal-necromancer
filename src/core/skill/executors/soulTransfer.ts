@@ -67,10 +67,6 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
       duration: 3 + 1, // 행동 시작 시 차감 고려
     })
 
-    const prefix = isSpecialEffectTriggered ? ' └ ' : '\n'
-    console.log(
-      `${prefix}🔥 [강화] ${targetMinion.name}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! (${targetMinion.name} HP ${targetMinion.ref.hp} / ${targetMinion.ref.maxHp})`
-    )
     totalGross += 65
     isSpecialEffectTriggered = true
   }
