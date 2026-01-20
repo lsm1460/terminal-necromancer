@@ -52,6 +52,7 @@ export interface Tile {
   theme: string
   event: string
   dialogue: string
+  observe: string
   npcIds?: string[] // npc용
   spawn_limit?: number // monster용
   monsters?: Monster[]

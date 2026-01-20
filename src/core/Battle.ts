@@ -247,10 +247,37 @@ export class Battle {
       type: 'select',
       name: 'action',
       message: '당신의 행동을 선택하세요:',
-      choices: ['공격', '스킬', '아이템', '도망'],
+      choices: ['상태', '공격', '스킬', '아이템', '도망'],
     })
 
+    const renderLine = (unit: CombatUnit, isLead: boolean) => {
+      const leadLabel = isLead ? '🚩 [선두]' : '         '
+      // 이름은 14칸 확보하여 정렬, 체력은 (현재/최대) 형식
+      return `${leadLabel} ${unit.name} (${unit.ref.hp}/${unit.ref.maxHp})`
+    }
+
     switch (action) {
+      case '상태':
+        {
+          console.log('\n━━━━━━━━━━━━━━━━━━━━ 전장 상황 ━━━━━━━━━━━━━━━━━━━━')
+
+          // 1. 아군 출력 (입력 순서대로: 0번이 선두)
+          console.log(' [🛡️ 아군 진영]')
+          playerSide.forEach((unit, i) => {
+            console.log(renderLine(unit, i === 0))
+          })
+
+          console.log('──────────────────────────────────────────────────')
+
+          // 2. 적군 출력 (입력 순서대로: 0번이 선두)
+          console.log(' [⚔️ 적군 진영]')
+          aliveEnemies.forEach((unit, i) => {
+            console.log(renderLine(unit, i === 0))
+          })
+
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
+        }
+        return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
       case '공격':
         {
           const { targetId } = await enquirer.prompt<{ targetId: string }>({

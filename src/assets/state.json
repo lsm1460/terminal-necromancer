@@ -1,24 +1,24 @@
 {
   "player": {
-    "x": 0,
-    "y": 1,
+    "x": 1,
+    "y": 0,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 100,
-    "mp": 95,
+    "mp": 90,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 730,
-    "exp": 5285,
+    "gold": 746,
+    "exp": 5460,
     "level": 3,
     "inventoryMax": 15,
     "inventory": [
       {
-        "id": "iron_sword_4539b08e52a6d3dd",
-        "label": "\u001b[35m🟣 [가시] 몰락한 철검\u001b[0m",
+        "id": "iron_sword_a26e2a08d604dab3",
+        "label": "\u001b[35m🟣 [광역] 몰락한 낡은 철검\u001b[0m",
         "type": "weapon",
         "atkRange": [
           5,
@@ -33,85 +33,29 @@
         "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
         "quantity": 1,
         "minRarity": "EPIC",
-        "atk": 9,
-        "crit": 1,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "THORNS",
-          "name": "가시",
-          "description": "골렘에게 가시가 돋아나 골렘을 공격하는 적에게도 상처를 줍니다."
-        },
-        "x": 2,
-        "y": 1
-      },
-      {
-        "id": "iron_sword_c1fc325a8df31787",
-        "label": "\u001b[35m🟣 [포효] 심연의 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          5,
-          10
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "minRarity": "EPIC",
-        "atk": 11,
+        "atk": 8,
         "crit": 0,
         "rarity": "EPIC",
         "affix": {
-          "id": "ROAR",
-          "name": "포효",
-          "description": "골렘이 적의 후열 공격을 자신에게 집중시킵니다."
+          "id": "WIDE_CURSE",
+          "name": "광역",
+          "description": "저주의 효과가 낮아지지만 모든 적에게 부여됩니다."
         },
-        "x": 1,
+        "x": 0,
         "y": 0
-      },
-      {
-        "id": "iron_sword_817e9dc6ba587023",
-        "label": "\u001b[35m🟣 [군마] 몰락한 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          5,
-          10
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "minRarity": "EPIC",
-        "atk": 9,
-        "crit": 0,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "WARHORSE",
-          "name": "군마",
-          "description": "다크나이트의 공격이 전체 공격으로 전환됩니다."
-        },
-        "x": 2,
-        "y": 1
       }
     ],
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
-      "SOUL_TRANSFER",
-      "BONE_SPEAR",
-      "BONE_STORM"
+      "CORPSE_EXPLOSION",
+      "CURSE",
+      "SOUL_HARVEST"
     ],
     "equipped": {
       "weapon": {
-        "id": "iron_sword_15ca823a4fed2351",
-        "label": "\u001b[35m🟣 [금기] 심연의 철검\u001b[0m",
+        "id": "iron_sword_4456ac2a98471747",
+        "label": "\u001b[35m🟣 [부식] 몰락한 낡은 철검\u001b[0m",
         "type": "weapon",
         "atkRange": [
           5,
@@ -126,15 +70,15 @@
         "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
         "quantity": 1,
         "minRarity": "EPIC",
-        "atk": 12,
+        "atk": 8,
         "crit": 0,
         "rarity": "EPIC",
         "affix": {
-          "id": "TABOO",
-          "name": "금기",
-          "description": "다크나이트를 리치로 전직시키고 전용 스킬(저주, 뼈감옥)을 해금합니다."
+          "id": "CORROSION",
+          "name": "부식",
+          "description": "저주의 효과가 공격력 감소에서 방어력 감소로 변경됩니다."
         },
-        "x": 0,
+        "x": 1,
         "y": 1
       },
       "armor": {
@@ -158,13 +102,50 @@
       "SOUL_HARVEST",
       "BONE_STORM"
     ],
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1768885677194",
+        "name": "[rare] 스켈레톤 검사",
+        "maxHp": 5,
+        "hp": 5,
+        "atk": 5,
+        "def": 2,
+        "agi": 3,
+        "skills": [
+          "power_smash"
+        ],
+        "exp": 0,
+        "description": "늑대의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      },
+      {
+        "id": "skeleton_1768895474980",
+        "name": "[common] 스켈레톤 병사",
+        "maxHp": 6,
+        "hp": 6,
+        "atk": 3,
+        "def": 0,
+        "agi": 0,
+        "skills": [],
+        "exp": 0,
+        "description": "토끼의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      }
+    ],
     "_maxSkeleton": 3,
     "_golem": {
       "id": "golem",
       "name": "하역장의 기계 골렘",
       "maxHp": 80,
-      "hp": 80,
+      "hp": 79,
       "atk": 5,
       "def": 40,
       "agi": 3,
@@ -183,13 +164,13 @@
     },
     "_knight": {
       "id": "knight",
-      "name": "타락한 리치 발타자르",
+      "name": "기사 발타자르",
       "maxHp": 10,
       "hp": 10,
       "baseAtk": 12,
-      "atk": 7,
+      "atk": 12,
       "baseDef": 5,
-      "def": 3,
+      "def": 5,
       "eva": 0.15,
       "exp": 0,
       "agi": 5,
@@ -201,8 +182,7 @@
       "description": "성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.",
       "dropTableId": "",
       "skills": [
-        "bone_prison",
-        "aging_curse"
+        "power_smash"
       ]
     }
   },

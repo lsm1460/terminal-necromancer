@@ -1,5 +1,5 @@
 import { Player } from './core/Player'
-import { GameContext, NPC } from './types'
+import { GameContext, NPC, Tile } from './types'
 
 export function printTileStatus(player: Player, { map, npcs, world }: GameContext) {
   const { x, y } = player.pos
@@ -16,7 +16,7 @@ export function printTileStatus(player: Player, { map, npcs, world }: GameContex
     const isSingular = alive.length === 1
     const aliveNames = alive.map((_npc) => _npc.name).join(', ')
 
-    console.log(`주변에 있는 사람${isSingular ? '' : '들'}: ${aliveNames}`)
+    console.log(`주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`)
   }
 
   if (corpses.length > 0) {

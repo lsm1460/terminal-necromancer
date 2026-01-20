@@ -31,7 +31,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
     { name: 'cancel', message: '취소' },
   ]
 
-  const { itemId } = (await enquirer.prompt({
+  const { itemId } = await enquirer.prompt<{ itemId: string }>({
     type: 'select',
     name: 'itemId',
     message: '장비할 아이템을 선택하세요:',
@@ -42,7 +42,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
       const item = findItem(value)
       return item ? item.label : value
     },
-  })) as { itemId: string }
+  })
 
   // 3. 선택 결과 처리
   if (itemId === 'cancel') {

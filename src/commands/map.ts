@@ -39,9 +39,13 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
             return '👤 '
           }
 
+          if (tile.event.startsWith('monster') && !tile.isClear) {
+            return '⚔️ '
+          }
+
           // 5. 일반 타일 (밝은 상자)
           // 클리어 여부에 따라 아이콘 분리 (· 는 가독성을 위해 상자 안에 점이 있는 느낌)
-          return tile.isClear ? '⬜' : '⚔️ '
+          return '⬜'
         })
         .join('')
     })
