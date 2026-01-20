@@ -3,64 +3,77 @@ import { ExecuteSkill } from '../../../types'
 
 /**
  * 저주 (Curse)
- * : 1명을 선택하여 공격력 감소 [5% 나머지는 버림]를 3턴동안 부여
+ * - 일반: 공격력 5% 감소 (나머지 버림)
+ * - 부식(CORROSION): 방어력 5% 감소 (나머지 버림) ※ 공격력 감소는 적용 안 함
+ * - 광역(WIDE_CURSE): 모든 생존한 적에게 적용
  */
 export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
   const duration = 3
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
+  const isCorrosion = player.ref.hasAffix('CORROSION')
+  const isWide = player.ref.hasAffix('WIDE_CURSE')
+
+  const curseName = isCorrosion ? '부식' : '저주'
+  const displayName = isWide ? `광역 ${curseName}` : curseName
+
   if (aliveEnemies.length === 0) {
-    console.log('\n[실패] 저주를 걸 대상이 없습니다.')
+    console.log(`\n[실패] ${displayName}의 대상이 없습니다.`)
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
-  // 1. 선택지 구성 (취소 옵션 및 이미 저주 상태인지 표시)
-  const choices = [
-    ...aliveEnemies.map((e) => {
-      const isAlreadyCursed = e.deBuff.some((d) => d.name === '저주')
-      return {
-        name: e.id,
-        message: e.name + (isAlreadyCursed ? ' (이미 저주 상태)' : ''),
-        value: e.id,
-        disabled: isAlreadyCursed, // 이미 저주 상태면 선택 불가하게 설정 (기호에 따라 생략 가능)
-      }
-    }),
-    { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' },
-  ]
+  // 실제 디버프 적용 함수
+  const applyCurse = (target: any) => {
+    // 부식일 때는 방어력만, 아닐 때는 공격력만 계산
+    const atkReduction = !isCorrosion ? Math.max(Math.floor(target.stats.atk * 0.05), 1) : 0
+    const defReduction = isCorrosion ? Math.max(Math.floor(target.stats.def * 0.05), 1) : 0
+
+    target.applyDeBuff({
+      name: curseName,
+      type: 'deBuff',
+      ...(isCorrosion ? { def: defReduction } : { atk: atkReduction }),
+      duration: duration + 1,
+    })
+
+    // 로그 출력 분기
+    const effectDetail = isCorrosion ? `방어력 -${defReduction}` : `공격력 -${atkReduction}`
+
+    console.log(` └ [약화] ${target.name}: ${effectDetail} (${duration}턴)`)
+  }
 
   try {
+    // --- 1. 광역 효과 처리 ---
+    if (isWide) {
+      console.log(`\n💀 ${player.name}의 ${displayName}가 전장에 퍼져나갑니다!`)
+      aliveEnemies.forEach((enemy) => applyCurse(enemy))
+      
+      return { isSuccess: true, isAggressive: true, gross: 120 }
+    }
+
+    // --- 2. 단일 타겟 선택 ---
+    const choices = [
+      ...aliveEnemies.map((e) => ({
+        name: e.id,
+        message: e.name + (e.deBuff.some((d) => d.name === curseName) ? ` (이미 ${curseName} 상태)` : ''),
+        value: e.id,
+      })),
+      { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' },
+    ]
+
     const response = await enquirer.prompt<{ targetId: string }>({
       type: 'select',
       name: 'targetId',
-      message: '저주를 걸 대상을 선택하세요',
+      message: `${displayName}의 대상을 선택하세요`,
       choices: choices,
-      format(value) {
-        if (value === 'cancel') return '시전을 취소합니다.'
-        const target = aliveEnemies.find((e) => e.id === value)
-        return target ? target.name : ''
-      },
     })
 
-    if (response.targetId === 'cancel') {
-      return { isSuccess: false, isAggressive: false, gross: 0 }
-    }
+    if (response.targetId === 'cancel') return { isSuccess: false, isAggressive: false, gross: 0 }
 
     const target = aliveEnemies.find((e) => e.id === response.targetId)
     if (!target) return { isSuccess: false, isAggressive: false, gross: 0 }
 
-    // 2. 디버프 로직 실행
-    const atkReduction = Math.floor(target.stats.atk * 0.05)
-
-    console.log(`\n💀 ${player.name}이(가) ${target.name}에게 어두운 저주를 내립니다!`)
-
-    target.applyDeBuff({
-      name: '저주',
-      type: 'deBuff',
-      atk: atkReduction,
-      duration: duration + 1,
-    })
-
-    console.log(` └ [약화] ${target.name}의 공격력이 ${duration}턴 동안 ${atkReduction}만큼 감소합니다.`)
+    console.log(`\n💀 ${player.name}이(가) ${target.name}에게 ${curseName}를 내립니다!`)
+    applyCurse(target)
 
     return {
       isSuccess: true,
