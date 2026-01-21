@@ -16,6 +16,7 @@ import {
   SkillId,
   WeaponItem,
 } from '../types'
+import { ItemRarity } from './item/consts'
 
 export class Player {
   x = 0
@@ -38,11 +39,17 @@ export class Player {
   memorize: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
   equipped = { weapon: null as WeaponItem | null, armor: null as ArmorItem | null }
 
-  public unlockedSkills: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
+  public unlockedSkills: (SkillId | 'SPACE')[] = [SKILL_IDS.RAISE_SKELETON]
+
+  skeletonSubspace = []
+  subspaceLimit = 1
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
   _maxSkeleton: number = 3 // 최대 소환 가능 수
 
+  upgradeLimit = 5
+  golemUpgrade: ('machine' | 'soul')[] = []
   public _golem: BattleTarget | undefined = undefined
+  knightUpgrade: (ItemRarity | 'soul')[] = []
   public _knight: BattleTarget | undefined = undefined
 
   onDeath?: () => void
@@ -144,15 +151,12 @@ export class Player {
     const hasHorse = this.hasAffix('WARHORSE')
 
     if (isLich) {
-      
-      
-
       this._knight.atk = Math.floor((this._knight.baseAtk || this._knight.atk) * 0.6)
       this._knight.def = Math.floor((this._knight.baseDef || this._knight.def) * 0.6)
+      this._knight.maxHp = this._knight.maxHp
+      this._knight.hp = Math.min(this._knight.maxHp, this._knight.hp)
     } else {
-      
-      
-
+      this._knight.maxHp = Math.floor((this._knight.baseMaxHp || this._knight.maxHp) * 1.2)
       this._knight.atk = this._knight.baseAtk || this._knight.atk
       this._knight.def = this._knight.baseDef || this._knight.def
     }
@@ -364,7 +368,7 @@ export class Player {
     }
   }
 
-  hasSkill(skillId: SkillId): boolean {
+  hasSkill(skillId: SkillId | 'SPACE'): boolean {
     return this.unlockedSkills.includes(skillId)
   }
 
@@ -497,6 +501,7 @@ export class Player {
       id: 'knight',
       name: '기사 발타자르',
       hp: 10,
+      baseMaxHp: 10,
       maxHp: 10,
       baseAtk: 12,
       atk: 12,

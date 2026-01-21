@@ -3,7 +3,7 @@ import { CommandFunction } from '../types'
 
 // --- 공통 이동 함수 ---
 export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
-  return (player, args, context) => {
+  return async (player, args, context) => {
     const { map, npcs } = context
     const { monsters, npcIds } = map.getTile(player.pos.x, player.pos.y)
 
@@ -27,9 +27,11 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
     const { x, y } = player.pos
 
     if (map.canMove(x + dx, y + dy)) {
+      await context.broadcast.play()
       player.move(dx, dy)
       return true
     }
+    
     console.log('지나갈 수 없다.')
     return false
   }

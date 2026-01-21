@@ -135,6 +135,10 @@ export class NPCManager {
     }
   }
 
+  public getFactionContribution(faction: string) {
+    return this.factionContribution[faction]
+  }
+
   public setFactionHostility(faction: string, amount: number) {
     if (this.factionHostility[faction] >= HOSTILITY_LIMIT) {
       return

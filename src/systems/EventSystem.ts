@@ -8,10 +8,13 @@ import { MonsterEvent } from './events/MonsterEvent'
 import { NpcEvent } from './events/NpcEvent'
 import { BossEvent } from './events/BossEvent'
 
+type EventCallback = (eventId: string) => void
+
 export class EventSystem {
   private completedEvents: Set<string> = new Set()
   private monsterEvent: MonsterEvent
   private eventData: Record<string, GameEvent> = {}
+  private subscribers: EventCallback[] = [] // 구독자 명단
 
   constructor(eventPath: string, monsterFactory: MonsterFactory, savedData?: string[]) {
     if (savedData) this.completedEvents = new Set(savedData)
@@ -22,6 +25,9 @@ export class EventSystem {
 
   async handle(tile: Tile, player: Player, context: GameContext) {
     switch (tile.event) {
+      case 'event-00':
+        this.completeEvent('START_GAME')
+        break
       case 'heal':
         player.hp = player.maxHp
         player.mp = player.maxMp
@@ -60,6 +66,10 @@ export class EventSystem {
     }
   }
 
+  public subscribe(callback: EventCallback) {
+    this.subscribers.push(callback)
+  }
+
   public getEventInfo(eventId: string) {
     return this.eventData[eventId]
   }
@@ -68,6 +78,8 @@ export class EventSystem {
   public completeEvent(eventId: string) {
     if (!this.completedEvents.has(eventId)) {
       this.completedEvents.add(eventId)
+
+      this.subscribers.forEach((callback) => callback(eventId))
     }
   }
 

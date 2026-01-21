@@ -60,7 +60,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     return false
   }
 
-  const dialect = context.npcs.getDialectType(npc.factionHostility)
+  const dialect = context.npcs.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
 
   // 2. 대화 인터페이스 출력
   console.log(`\n──────────────────────────────────────────────────`)

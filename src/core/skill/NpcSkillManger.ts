@@ -105,7 +105,7 @@ export class NpcSkillManager {
       } else {
         await target.takeDamage(attacker, {
           skillAtkMult: skill.power, // 스킬의 위력(배율) 전달
-          // 추가 옵션이 필요하다면 여기에 작성 (예: isIgnoreDef: skill.isIgnoreDef)
+          ...(skill.options || {}),
         })
       }
     }

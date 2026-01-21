@@ -105,7 +105,11 @@ export class Battle {
 
           if (unit.ref.hp <= 0) {
             unit.ref.isAlive = false
-            console.log(` └ 💀 ${unit.name}이(가) 출혈 과다로 사망했습니다.`)
+            if (effect.name === '출혈') {
+              console.log(` └ 💀 ${unit.name}이(가) 출혈 과다로 사망했습니다.`)
+            } else if (effect.name === '중독') {
+              console.log(` └ 💀 ${unit.name}이(가) 중독으로 사망했습니다.`)
+            }
             unit.onDeath && unit.onDeath()
 
             await delay()
@@ -423,7 +427,7 @@ export class Battle {
       console.log(`📦 ${npc.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
     })
 
-    if (!['second_boss', 'third_boss'].includes(npc.id)) {
+    if (!npc.noCorpse) {
       // 시체 생성 (네크로맨서의 핵심!)
       world.addCorpse({
         ...npc,

@@ -1,5 +1,6 @@
 import { SkeletonRarity } from './consts'
 import { Battle, Buff, CombatUnit } from './core/Battle'
+import { Broadcast } from './core/Broadcast'
 import { ItemRarity } from './core/item/consts'
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
@@ -13,6 +14,7 @@ import { SaveSystem } from './systems/SaveSystem'
 export type BattleTarget = {
   id: string
   name: string
+  baseMaxHp?: number
   maxHp: number
   hp: number
   baseAtk?: number
@@ -30,6 +32,7 @@ export type BattleTarget = {
   skills?: string[]
   preemptive?: boolean
   noEscape?: boolean
+  noCorpse?: boolean
   isMinion?: boolean
   isSkeleton?: boolean
   isGolem?: boolean
@@ -171,6 +174,7 @@ export interface GameContext {
   drop: DropSystem
   save: SaveSystem
   battle: Battle
+  broadcast: Broadcast
   rl: any
 
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
@@ -192,6 +196,7 @@ export interface NPC extends BattleTarget {
   faction: string
   reborn: boolean
   lines: string[]
+  relation: number
   isHostile: boolean
   isBoss: boolean
   factionHostility: number
@@ -281,6 +286,11 @@ export type NpcSkill = {
   targetType: SkillTargetType
   type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
   buff?: Buff
+  options?: {
+    isIgnoreDef?: boolean // 방어력 무시
+    isFixed?: boolean // 고정 데미지
+    isSureHit?: boolean // 회피불가
+  }
 }
 
 export type AffixId =
@@ -315,4 +325,9 @@ export interface Affix {
     unEquipCaution?: string // 장비 해제 시 경고문
     [key: string]: any
   }
+}
+
+export type BroadcastScript = {
+  hostile: string[];
+  normal: string[];
 }

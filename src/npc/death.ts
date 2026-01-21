@@ -1,18 +1,20 @@
 import enquirer from 'enquirer'
 import { Player } from '../core/Player'
 import { SKILL_LIST, SkillUtils } from '../core/skill'
-import { GameContext, SkillId } from '../types'
+import { GameContext, Skill, SkillId } from '../types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 import { INIT_MAX_MEMORIZE_COUNT } from '../consts'
 
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
     const isB3Completed = context.events.isCompleted('second_boss')
+    const hasSubSpace = player.hasSkill('SPACE')
 
     return [
       { name: 'talk', message: '💬 잡담' },
       { name: 'levelUp', message: '✨ 레벨업' },
       ...(isB3Completed ? [{ name: 'increaseLimit', message: '🦴 해골 군단 확장' }] : []),
+      ...(isB3Completed && !hasSubSpace ? [{ name: 'getSubSpace', message: '🦴 아공간 획득' }] : []),
       ...(isB3Completed && !player.golem ? [{ name: 'golem', message: '🪨  골렘 정수 부활' }] : []),
       { name: 'unlock', message: '🔮 기술 전수' },
       { name: 'memorize', message: '📜 기술 각인' },
@@ -36,6 +38,9 @@ const DeathHandler: NPCHandler = {
         await handleIncreaseLimit(player)
       case 'golem':
         await handleAwakeGolem(player)
+        break
+      case 'getSubSpace':
+        handleGetSubSpace(player)
         break
       default:
         break
@@ -116,13 +121,15 @@ async function handleMemorize(player: Player) {
   console.log('──────────────────────────────────────────────────\n')
 
   // 1. 선택지 구성 (ID를 명확히 찾기 위해 choices 변수 유지)
-  const skillChoices = player.unlockedSkills.map((skillId) => {
-    const skill = SKILL_LIST[skillId]
-    return {
-      name: skill.name, // multiselect의 기준 키
-      message: `${skill.name.padEnd(12)} | 코스트: ${String(skill.cost).padStart(2)} | ${skill.description}`,
-    }
-  })
+  const skillChoices = player.unlockedSkills
+    .map((skillId) => (SKILL_LIST as Partial<Record<SkillId | 'SPACE', Skill>>)[skillId])
+    .filter((skill) => !!skill)
+    .map((skill) => {
+      return {
+        name: skill.name, // multiselect의 기준 키
+        message: `${skill.name.padEnd(12)} | 코스트: ${String(skill.cost).padStart(2)} | ${skill.description}`,
+      }
+    })
 
   try {
     // 2. prompt 설정 (hint 제거 및 result 로직 수정)
@@ -254,9 +261,12 @@ async function handleAwakeGolem(player: Player) {
   player._golem = {
     id: 'golem',
     name: '하역장의 기계 골렘',
+    baseMaxHp: 80,
     maxHp: 80,
     hp: 80,
+    baseAtk: 50,
     atk: 50,
+    baseDef: 40,
     def: 40,
     agi: 3,
     exp: 0,
@@ -274,6 +284,53 @@ async function handleAwakeGolem(player: Player) {
 
   console.log(`\n[⚙️ 골렘 기동 성공]`)
   console.log(`사신: "자, 눈을 뜨거라! 이름 없는 고철이여. 이제 네놈의 새로운 주인은 이 나약한 필멸자다!"`)
+}
+
+async function handleGetSubSpace(player: Player): Promise<boolean> {
+  const SOUL_COST = 500; // 요구 영혼 수치
+  const warningMsg = `💀 사신이 속삭입니다: "영혼 ${SOUL_COST}개를 바쳐 그림자의 틈새를 열겠느냐?"`;
+
+  console.log('\n--------------------------------------------------');
+  console.log('🌑 [공간의 지배자] 계약 제안');
+  console.log('--------------------------------------------------');
+
+  // 1. 자원 체크
+  if (player.exp < SOUL_COST) {
+    console.log(`\n❌ 사신이 코웃음 칩니다: "가진 영혼의 조각이 겨우 ${player.exp}개뿐인가?"`);
+    return false;
+  }
+
+  try {
+    // 2. enquirer를 이용한 사용자 컨펌
+    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
+      type: 'confirm',
+      name: 'proceed',
+      message: warningMsg,
+      initial: false,
+    });
+
+    // 3. 거절 시
+    if (!proceed) {
+      console.log('\n"멍청한 놈, 평생 그 무거운 뼈다귀들을 직접 끌고 다니거라..."');
+      return false;
+    }
+
+    // 4. 계약 이행
+    player.exp -= SOUL_COST;
+    player.unlockedSkills.push('SPACE');
+
+    console.log('\n--------------------------------------------------');
+    console.log('✨ [계약 완료]');
+    console.log(`🌌 플레이어의 그림자에서 이질적인 공간이 느껴집니다. 아공간 명령어를 사용할 수 있습니다.`);
+    console.log(`💡 (남은 영혼: ${player.exp} EXP)`);
+    console.log('--------------------------------------------------\n');
+
+    return true;
+
+  } catch (error) {
+    // 입력 중단(Ctrl+C 등) 예외 처리
+    return false;
+  }
 }
 
 export default DeathHandler

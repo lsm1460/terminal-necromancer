@@ -7,22 +7,24 @@
       [
         {
           "theme": "start",
-          "event": "heal",
+          "event": "event-00",
           "dialogue": "언제나 이곳은 망자들로 가득합니다. 기운이 차오릅니다.",
           "observe": "저 멀리서 창백한 푸른 안개가 소용돌이치며 죽은 자들의 속삭임이 들려옵니다."
         },
         null,
         {
           "theme": "tiled_floor",
-          "event": "npc",
+          "event": "none",
+          "npcIds": ["echo"],
           "dialogue": "이 터미널의 방송실",
           "observe": "치직거리는 노이즈와 함께 끊임없이 누군가의 이름을 부르는 목소리가 흘러나오고 있습니다."
         },
         {
           "theme": "tiled_floor",
-          "event": "npc",
+          "event": "none",
+          "npcIds": ["dr_zed"],
           "dialogue": "이 터미널의 의료실",
-          "observe": "코끝을 찌르는 독한 소독약 냄새 사이로, 닥터 핀치의 기괴한 콧노래가 새어 나옵니다."
+          "observe": "코끝을 찌르는 독한 소독약 냄새 사이로, 기괴한 노래가 새어 나옵니다."
         }
       ],
       [

@@ -1,4 +1,9 @@
 {
+  "START_GAME": {
+    "id": "START_GAME",
+    "name": "게임의 시작",
+    "description": ""
+  },
   "first_boss": {
     "id": "first_boss",
     "name": "첫 번째 시련 극복",
@@ -37,6 +42,11 @@
       "검은 안개가 발타자르의 시신을 감싸며, 그의 눈에 서늘한 보랏빛 안광이 되살아납니다.",
       "발타자르: '...영원한 안식보다... 당신 곁의 영원한 투쟁을 택하겠습니다.'"
     ]
+  },
+  "HEARD_RESISTANCE": {
+    "id": "HEARD_RESISTANCE",
+    "name": "레지스탕스의 소문에 대해 들었다.",
+    "description": ""
   },
   "RESISTANCE_BASE": {
     "id": "RESISTANCE_BASE",

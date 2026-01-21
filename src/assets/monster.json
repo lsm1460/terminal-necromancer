@@ -1,7 +1,7 @@
 {
   "rabbit": {
     "id": "rabbit",
-    "name": "토끼",
+    "name": "유령 토끼",
     "hp": 15,
     "maxHp": 15,
     "atk": 6,
@@ -10,7 +10,8 @@
     "exp": 10,
     "dropTableId": "rabbit",
     "description": "빠르고 귀여운 토끼. 공격력은 약하지만 회피율이 높아 쉽게 맞추기 어렵다.",
-    "orderWeight": 0
+    "orderWeight": 0,
+    "noCorpse": true
   },
   "squirrel": {
     "id": "squirrel",

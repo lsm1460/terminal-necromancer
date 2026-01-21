@@ -5,12 +5,15 @@ import enquirer from 'enquirer'
 
 const MayaHandler: NPCHandler = {
   getChoices(player, npc, context) {
+    const canUpgrade = npc.factionContribution > 500 && context.events.isCompleted('second_boss')
+    const canModify = npc.factionContribution > 800 && context.events.isCompleted('third_boss')
+
     return [
       { name: 'talk', message: '💬 잡담' },
       { name: 'buy', message: '💰 아이템 구매' },
       { name: 'sell', message: '📦 아이템 판매' },
-      ...(context.events.isCompleted('second_boss') ? [{ name: 'upgrade_golem', message: '🤖 골렘 강화' }] : []),
-      { name: 'modify_darknight', message: '⚔️ 다크나이트 장비 변경' },
+      ...(canUpgrade ? [{ name: 'upgrade_golem', message: '🤖 골렘 강화' }] : []),
+      ...(canModify ? [{ name: 'modify_darknight', message: '⚔️ 다크나이트 장비 변경' }] : []),
     ]
   },
   async handle(action, player, npc, context) {
@@ -114,19 +117,17 @@ async function handleSell(player: Player, npc: NPC, context: GameContext) {
     const contribution = npc.factionContribution || 0
     const bonusRate = Math.min(0.2, contribution * 0.0005)
 
-    const choices = player.inventory
-      .map((item, index) => {
-        const itemOrigin = context.drop.getItem(item.id)
-        const finalSellPrice = Math.floor(itemOrigin.sellPrice * (1 + bonusRate))
-        
-        return {
-          name: `${index}`,
-          message: `${item.label.padEnd(10)} | 💰 개당 +${finalSellPrice}G | 보유: ${item.quantity}개`,
-          label: item.label,
-          price: finalSellPrice,
-          originalIndex: index,
-        }
-      })
+    const choices = player.inventory.map((item, index) => {
+      const finalSellPrice = Math.floor(item.sellPrice * (1 + bonusRate))
+
+      return {
+        name: `${index}`,
+        message: `${item.label.padEnd(10)} | 💰 개당 +${finalSellPrice}G | 보유: ${item.quantity}개`,
+        label: item.label,
+        price: finalSellPrice,
+        originalIndex: index,
+      }
+    })
 
     choices.push({ name: 'cancel', message: '🔙 돌아가기', label: '취소', price: 0, originalIndex: -1 })
 
@@ -190,6 +191,10 @@ async function handleSell(player: Player, npc: NPC, context: GameContext) {
     console.log(` 💰 현재 소지금: ${player.gold}G`)
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   }
+}
+
+async function handleUpgrade(player: Player, npc: NPC, context: GameContext) {
+
 }
 
 export default MayaHandler
