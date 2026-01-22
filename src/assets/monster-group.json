@@ -1,8 +1,16 @@
 {
-  "monster-group-level-1": [
-    {"id": "rabbit", "encounterRate": 70},
-    {"id": "squirrel", "encounterRate": 10},
-    {"id": "goblin", "encounterRate": 10},
-    {"id": "wolf", "encounterRate": 10}
+  "monster-group-b2-suburb": [
+    { "id": "track_ratman", "encounterRate": 50 },
+    { "id": "ichor_flies", "encounterRate": 40 },
+    { "id": "suspicious_turtle", "encounterRate": 10 }
+  ],
+  "monster-group-b2-rail": [
+    { "id": "derailed_ghost", "encounterRate": 40 },
+    { "id": "filth_slime", "encounterRate": 50 },
+    { "id": "track_ratman", "encounterRate": 10 }
+  ],
+  "monster-group-b2-deep": [
+    { "id": "snare_spider", "encounterRate": 75 },
+    { "id": "cocoon_human", "encounterRate": 25 }
   ]
 }

@@ -435,6 +435,8 @@ export class Battle {
         y,
       })
       console.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
+    } else {
+      console.log(`${target.name}이/가 연기처럼 사라졌다.`)
     }
   }
 

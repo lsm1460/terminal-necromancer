@@ -8,6 +8,23 @@
     "sellPrice": 3,
     "description": "신선한 당근입니다. 소량의 체력을 회복할 수 있습니다."
   },
+  "pizza": {
+    "id": "pizza",
+    "label": "당근",
+    "type": "food",
+    "hpHeal": 5,
+    "price": 15,
+    "sellPrice": 3,
+    "description": "지하에 살던 거북이들이 좋아했던 피자"
+  },
+  "tainted_core": {
+    "id": "tainted_core",
+    "label": "오염된 핵",
+    "type": "item",
+    "price": 1,
+    "sellPrice": 1,
+    "description": "지하에 살고있는 이형의 핵"
+  },
   "potion_small": {
     "id": "potion_small",
     "label": "작은 포션",

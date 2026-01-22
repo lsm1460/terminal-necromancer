@@ -3,15 +3,52 @@
     "id": "fire_breath",
     "name": "화염 숨결",
     "description": "전방에 강력한 불을 내뿜습니다.",
-    "chance": 0.3, 
+    "chance": 0.3,
     "power": 2.0,
+    "targetType": "ENEMY_SINGLE"
+  },
+  "quick_slash": {
+    "id": "quick_slash",
+    "name": "기습적인 일격",
+    "description": "상대의 빈틈을 노려 예리한 무기나 날카로운 신체 부위로 빠르게 베어 가릅니다.",
+    "chance": 0.4,
+    "power": 1.2,
+    "targetType": "ENEMY_SINGLE"
+  },
+  "sticky_web": {
+    "id": "sticky_web",
+    "name": "강제 구속",
+    "description": "끈적한 점액이나 보이지 않는 마력의 끈을 투척하여 대상의 행동을 제약합니다.",
+    "chance": 0.3,
+    "targetType": "RANDOM",
+    "type": "deBuff",
+    "buff": {
+      "name": "구속",
+      "type": "bind",
+      "duration": 2
+    }
+  },
+  "self_destruct": {
+    "id": "self_destruct",
+    "name": "불안정한 자폭",
+    "description": "내부의 에너지를 한꺼번에 폭주시킨 뒤 신체를 비산시켜 주위에 치명적인 타격을 입힙니다.",
+    "chance": 0.2,
+    "power": 1,
+    "targetType": "ENEMY_ALL"
+  },
+  "health_drain": {
+    "id": "health_drain",
+    "name": "생명력 강탈",
+    "description": "대상에게 달라붙어 그들의 생명 에너지를 직접 빨아들여 자신의 양분으로 삼습니다.",
+    "chance": 0.2,
+    "power": 0.5,
     "targetType": "ENEMY_SINGLE"
   },
   "power_smash": {
     "id": "power_smash",
     "name": "강력한 내리치기",
     "description": "무거운 무기로 적을 내리칩니다.",
-    "chance": 0.4,
+    "chance": 0.3,
     "power": 1.4,
     "targetType": "ENEMY_SINGLE"
   },

@@ -75,7 +75,7 @@ export class NpcSkillManager {
     const [skillId, attacker] = params
 
     const skill = this.getSkill(skillId)
-    if (!skill) return []
+    if (!skill) return
 
     console.log(`\n✨ ${attacker.name}의 [${skill.name}]!`)
     console.log(`💬 ${skill.description}`)
