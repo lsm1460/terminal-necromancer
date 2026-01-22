@@ -7,8 +7,14 @@ import { INIT_MAX_MEMORIZE_COUNT } from '../consts'
 
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
+    const isFirst = context.events.isCompleted('first_talk_death')
+    const isB2Completed = context.events.isCompleted('first_boss')
     const isB3Completed = context.events.isCompleted('second_boss')
     const hasSubSpace = player.hasSkill('SPACE')
+
+    if (!isFirst && !isB2Completed) {
+      return [{ name: 'intro', message: '💬 대화' }]
+    }
 
     return [
       { name: 'talk', message: '💬 잡담' },
@@ -22,6 +28,9 @@ const DeathHandler: NPCHandler = {
   },
   async handle(action, player, npc, context) {
     switch (action) {
+      case 'intro':
+        handleIntro(context)
+        break
       case 'talk':
         handleTalk(npc)
         break
@@ -46,6 +55,45 @@ const DeathHandler: NPCHandler = {
         break
     }
   },
+}
+
+async function handleIntro(context: GameContext) {
+  const { events } = context
+
+  const isB2Completed = context.events.isCompleted('first_boss')
+
+  if (!isB2Completed) {
+    console.log(`\n사신: "아직도 청소를 끝내지 못했나? 끝내고 나면 내게 돌아오도록.."`)
+    return
+  }
+
+  const dialogues = [
+    '사신: "아직도 그 오만한 눈빛이라니. 네놈이 다스리던 제국의 흙먼지라도 묻어있는 줄 아는 모양이군."',
+    '사신: "착각하지 마라. 이곳 터미널에선 너 또한 심판을 기다리며 줄을 서야 하는 흔해 빠진 망자 중 하나일 뿐이다."',
+    '사신: "살아남고 싶다면 네놈이 그토록 경멸하던 노역부터 시작해라. 마침 지하 2층 환승로에 아주 역겨운 게 자라나서 말이지."',
+    '사신: "[기어다니는 죄악, 벨페고르]. 제 분수를 모르고 심판을 피해 도망친 영혼들이 서로 엉겨 붙어 탄생한 기괴한 고기 덩어리다."',
+    '사신: "그 비천한 것들이 환승로 선로를 점거하고 비명을 지르는 통에 영혼들의 운송이 지체되고 있어."',
+    '사신: "가서 그 오물들을 도려내라. 네놈의 그 녹슨 낫이 아직 영혼의 껍질이라도 썰 수 있다면 말이야."',
+    '사신: "청소를 끝내면 나에게 와서 보고하도록.."',
+  ]
+
+  console.clear()
+  console.log(`[ 심판의 방 - 죽음의 조롱 ]\n`)
+
+  for (const message of dialogues) {
+    await enquirer.prompt({
+      type: 'input',
+      name: 'confirm',
+      message,
+      format: () => ' (Enter ⏎)',
+    })
+  }
+
+  console.log(
+    `\n사신: \"실패하면? 걱정 마라. 네놈의 혼령 또한 저 고기 덩어리의 일부가 되어 영원히 선로나 닦게 될 테니까. 하하하!\"`
+  )
+
+  events.completeEvent('first_talk_death')
 }
 
 // --- 서브 메뉴: 스킬 전수 ---
@@ -287,17 +335,17 @@ async function handleAwakeGolem(player: Player) {
 }
 
 async function handleGetSubSpace(player: Player): Promise<boolean> {
-  const SOUL_COST = 500; // 요구 영혼 수치
-  const warningMsg = `💀 사신이 속삭입니다: "영혼 ${SOUL_COST}개를 바쳐 그림자의 틈새를 열겠느냐?"`;
+  const SOUL_COST = 500 // 요구 영혼 수치
+  const warningMsg = `💀 사신이 속삭입니다: "영혼 ${SOUL_COST}개를 바쳐 그림자의 틈새를 열겠느냐?"`
 
-  console.log('\n--------------------------------------------------');
-  console.log('🌑 [공간의 지배자] 계약 제안');
-  console.log('--------------------------------------------------');
+  console.log('\n--------------------------------------------------')
+  console.log('🌑 [공간의 지배자] 계약 제안')
+  console.log('--------------------------------------------------')
 
   // 1. 자원 체크
   if (player.exp < SOUL_COST) {
-    console.log(`\n❌ 사신이 코웃음 칩니다: "가진 영혼의 조각이 겨우 ${player.exp}개뿐인가?"`);
-    return false;
+    console.log(`\n❌ 사신이 코웃음 칩니다: "가진 영혼의 조각이 겨우 ${player.exp}개뿐인가?"`)
+    return false
   }
 
   try {
@@ -307,29 +355,28 @@ async function handleGetSubSpace(player: Player): Promise<boolean> {
       name: 'proceed',
       message: warningMsg,
       initial: false,
-    });
+    })
 
     // 3. 거절 시
     if (!proceed) {
-      console.log('\n"멍청한 놈, 평생 그 무거운 뼈다귀들을 직접 끌고 다니거라..."');
-      return false;
+      console.log('\n"멍청한 놈, 평생 그 무거운 뼈다귀들을 직접 끌고 다니거라..."')
+      return false
     }
 
     // 4. 계약 이행
-    player.exp -= SOUL_COST;
-    player.unlockedSkills.push('SPACE');
+    player.exp -= SOUL_COST
+    player.unlockedSkills.push('SPACE')
 
-    console.log('\n--------------------------------------------------');
-    console.log('✨ [계약 완료]');
-    console.log(`🌌 플레이어의 그림자에서 이질적인 공간이 느껴집니다. 아공간 명령어를 사용할 수 있습니다.`);
-    console.log(`💡 (남은 영혼: ${player.exp} EXP)`);
-    console.log('--------------------------------------------------\n');
+    console.log('\n--------------------------------------------------')
+    console.log('✨ [계약 완료]')
+    console.log(`🌌 플레이어의 그림자에서 이질적인 공간이 느껴집니다. 아공간 명령어를 사용할 수 있습니다.`)
+    console.log(`💡 (남은 영혼: ${player.exp} EXP)`)
+    console.log('--------------------------------------------------\n')
 
-    return true;
-
+    return true
   } catch (error) {
     // 입력 중단(Ctrl+C 등) 예외 처리
-    return false;
+    return false
   }
 }
 

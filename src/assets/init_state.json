@@ -61,7 +61,7 @@
       },
       "first_boss": {
         "hp": 10,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },

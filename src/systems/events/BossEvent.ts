@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
+import { CombatUnit } from '../../core/Battle'
 import { Player } from '../../core/Player'
 import { GameContext, Tile } from '../../types'
 
@@ -42,9 +43,19 @@ export class BossEvent {
 
     console.log(`\n⚔️  전투가 시작됩니다!`)
 
+    const enemies: CombatUnit[] = [battle.toCombatUnit(bossNpc, 'npc')]
     // 4. 전투 실행
     // bossNpc가 Hostile NPC라면 그대로 전달합니다.
-    tile.isClear = await battle.runCombatLoop([battle.toCombatUnit(bossNpc, 'npc')], context)
+    if (eventData.withMonster) {
+      events
+        .makeMonsters(eventData.withMonster)
+        .map((monster) => battle.toCombatUnit(monster, 'monster'))
+        .forEach((unit) => {
+          enemies.push(unit as CombatUnit)
+        })
+    }
+
+    tile.isClear = await battle.runCombatLoop(enemies, context)
 
     // 5. 승리 시 이벤트 처리
     if (!bossNpc.isAlive) {

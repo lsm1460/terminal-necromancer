@@ -187,12 +187,12 @@
   },
   "first_boss": {
     "id": "first_boss",
-    "name": "보스1",
-    "hp": 10,
-    "maxHp": 10,
-    "atk": 1,
-    "def": 1,
-    "eva": 0.03,
+    "name": "[기어다니는 죄악, 벨페고르]",
+    "hp": 300,
+    "maxHp": 300,
+    "atk": 15,
+    "def": 0,
+    "eva": 0.00,
     "exp": 1000,
     "isAlive": true,
     "isBoss": true,
@@ -212,8 +212,8 @@
         "farewell": "..."
       }
     },
-    "deathLine": "보스 1 사망",
-    "description": "보스1 입니다",
+    "deathLine": "너.. 또한.. ..르지..않을..",
+    "description": "'이것'은 단지 '치워야 할 오물'입니다.",
     "dropTableId": "boss1",
     "noEscape": true,
     "skills": ["power_smash"]

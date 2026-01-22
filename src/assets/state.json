@@ -1,9 +1,9 @@
 {
   "player": {
-    "x": 3,
-    "y": 0,
+    "x": 1,
+    "y": 1,
     "_maxHp": 100,
-    "hp": 100,
+    "hp": 96,
     "_maxMp": 100,
     "mp": 100,
     "atk": 10,
@@ -24,7 +24,9 @@
       "weapon": null,
       "armor": null
     },
-    "unlockedSkills": [],
+    "unlockedSkills": [
+      "RAISE_SKELETON"
+    ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
     "skeleton": [],
@@ -33,7 +35,7 @@
     "golemUpgrade": [],
     "knightUpgrade": []
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -43,24 +45,12 @@
         "relation": 0
       },
       "maya_tech": {
-        "hp": 30,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "jax_seeker": {
-        "hp": 50,
+        "hp": 80,
         "isAlive": true,
         "reborn": false,
         "relation": 0
       },
       "elevator": {
-        "hp": 8000,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "portal": {
         "hp": 8000,
         "isAlive": true,
         "reborn": false,
@@ -78,15 +68,27 @@
         "reborn": false,
         "relation": 0
       },
+      "portal": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "jax_seeker": {
+        "hp": 100,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
       "second_boss": {
         "hp": 10,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
       "third_boss": {
         "hp": 10,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -103,15 +105,16 @@
         "relation": 0
       }
     },
-    "factionHostility": {},
-    "factionContribution": {}
+    "factionHostility": {
+      "resistance": -2,
+      "boss1": 5
+    },
+    "factionContribution": {
+      "resistance": 20
+    }
   },
   "drop": null,
   "completedEvents": [
-    "START_GAME",
-    "first_boss",
-    "RESISTANCE_BASE",
-    "second_boss",
-    "HEARD_RESISTANCE"
+    "START_GAME"
   ]
 }

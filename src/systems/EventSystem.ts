@@ -7,6 +7,7 @@ import { GameContext, GameEvent, Tile } from '../types'
 import { MonsterEvent } from './events/MonsterEvent'
 import { NpcEvent } from './events/NpcEvent'
 import { BossEvent } from './events/BossEvent'
+import { Title } from '../core/Title'
 
 type EventCallback = (eventId: string) => void
 
@@ -25,6 +26,9 @@ export class EventSystem {
 
   async handle(tile: Tile, player: Player, context: GameContext) {
     switch (tile.event) {
+      case 'title':
+        await Title.gameStart(player, context)
+        break
       case 'event-00':
         this.completeEvent('START_GAME')
         break
@@ -95,5 +99,9 @@ export class EventSystem {
   /** 세이브를 위한 데이터 추출 */
   public getSaveData(): string[] {
     return Array.from(this.completedEvents)
+  }
+
+  public makeMonsters(groupName: string) {
+    return this.monsterEvent.monsterFactory.makeMonsters(groupName)
   }
 }

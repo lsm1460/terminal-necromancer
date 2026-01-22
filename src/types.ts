@@ -263,6 +263,7 @@ export type GameEvent = {
   id: string
   name: string
   description: string
+  withMonster?: string
   postTalk?: string[]
   defeatTalk?: string[]
 }

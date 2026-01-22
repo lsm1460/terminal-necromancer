@@ -80,13 +80,9 @@ player.onDeath = () => {
 }
 
 // 시작 위치 초기화
-map.currentSceneId = MAP_IDS.B1_SUBWAY
+map.currentSceneId = MAP_IDS.title
 player.x = 0
 player.y = 0
-
-// ---------- 게임 시작 ----------
-console.log('=== 게임 시작 ===')
-printStatus(player, context as GameContext)
 
 // ---------- CLI 시작 ----------
 

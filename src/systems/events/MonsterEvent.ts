@@ -5,7 +5,7 @@ import { GameContext, Monster, Tile } from '../../types'
 import { delay } from '../../utils'
 
 export class MonsterEvent {
-  constructor(private monsterFactory: MonsterFactory) {}
+  constructor(public monsterFactory: MonsterFactory) {}
 
   async handle(tile: Tile, player: Player, context: GameContext) {
     if (tile.isClear) return
