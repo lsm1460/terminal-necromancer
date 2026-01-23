@@ -56,7 +56,7 @@ export class MonsterFactory {
   }
 
   makeMonsters(groupName: string): Monster[] {
-    const group = this.group[groupName]
+    const group = this.group[groupName] || []
 
     return group
       .map((member) => _.cloneDeep(this.monster[member.id]))
