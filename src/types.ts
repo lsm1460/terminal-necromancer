@@ -150,6 +150,7 @@ export type Drop = {
   critRange?: [number, number]
   evaRange?: [number, number]
   minRarity?: ItemRarity
+  maxRarity?: ItemRarity
 } & Item
 
 export type Corpse = {

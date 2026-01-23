@@ -4,14 +4,15 @@
     "name": "선로 랫맨",
     "hp": 18,
     "maxHp": 18,
-    "atk": 8,
+    "atk": 6,
     "def": 3,
     "agi": 8,
     "exp": 25,
     "skills": ["quick_slash"],
     "dropTableId": "b2_equipment_loot",
     "description": "선로의 폐기물을 먹고 자란 랫맨. 무리 지어 다니며 망자의 파편을 훔치려 합니다.",
-    "orderWeight": 20
+    "orderWeight": 20,
+    "preemptive": true
   },
   "snare_spider": {
     "id": "snare_spider",
@@ -25,7 +26,9 @@
     "skills": ["sticky_web"],
     "dropTableId": "core_loot",
     "description": "천장의 배관 사이에 숨어 영혼의 사슬을 내뿜습니다. 걸려든 먹잇감은 서서히 진액을 빨립니다.",
-    "orderWeight": 25
+    "orderWeight": 25,
+    "preemptive": true,
+    "noEscape": true
   },
   "cocoon_human": {
     "id": "cocoon_human",
@@ -44,15 +47,16 @@
   "filth_slime": {
     "id": "filth_slime",
     "name": "오물 슬라임",
-    "hp": 22,
-    "maxHp": 22,
+    "hp": 14,
+    "maxHp": 14,
     "atk": 2,
-    "def": 10,
+    "def": 5,
     "agi": 1,
     "exp": 40,
     "dropTableId": "core_loot",
     "description": "망자들의 오물이 응축된 덩어리. 물리 타격이 잘 통하지 않으며 닿는 모든 것을 부식시킵니다.",
-    "orderWeight": 15
+    "orderWeight": -5,
+    "noCorpse": true
   },
   "derailed_ghost": {
     "id": "derailed_ghost",
@@ -60,13 +64,15 @@
     "hp": 25,
     "maxHp": 25,
     "atk": 7,
-    "def": 4,
+    "def": 1,
     "agi": 3,
     "exp": 80,
     "dropTableId": "b2_equipment_loot",
     "description": "하반신이 지하철 바퀴와 엉겨 붙은 원혼. 무거운 쇳덩이를 끌며 직선상의 모든 것을 뭉개버립니다.",
     "orderWeight": 40,
-    "noCorpse": true
+    "noCorpse": true,
+    "preemptive": true,
+    "noEscape": true
   },
   "ichor_flies": {
     "id": "ichor_flies",
@@ -81,7 +87,8 @@
     "dropTableId": "core_loot",
     "description": "피 냄새를 쫓는 작은 파리들의 무리. 개별은 약하나 지속적으로 생명력을 빨아먹습니다.",
     "orderWeight": 10,
-    "noCorpse": true
+    "noCorpse": true,
+    "preemptive": true
   },
   "suspicious_turtle": {
     "id": "suspicious_turtle",

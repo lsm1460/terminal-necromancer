@@ -28,76 +28,12 @@
     "skeletonSubspace": [],
     "subspaceLimit": 1,
     "skeleton": [],
-    "_maxSkeleton": 1,
+    "_maxSkeleton": 2,
     "golemUpgrade": [],
     "knightUpgrade": []
   },
   "sceneId": "B1_Subway_Entrance",
-  "npcs": {
-    "states": {
-      "kane_leader": {
-        "hp": 150,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "maya_tech": {
-        "hp": 80,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "elevator": {
-        "hp": 8000,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "death": {
-        "hp": 3000,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "first_boss": {
-        "hp": 10,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "portal": {
-        "hp": 8000,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "jax_seeker": {
-        "hp": 100,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "second_boss": {
-        "hp": 10,
-        "isAlive": false,
-        "reborn": false,
-        "relation": 0
-      },
-      "third_boss": {
-        "hp": 10,
-        "isAlive": false,
-        "reborn": false,
-        "relation": 0
-      }
-    },
-    "factionHostility": {
-      "resistance": -2,
-      "boss1": 5
-    },
-    "factionContribution": {
-      "resistance": 20
-    }
-  },
+  "npcs": null,
   "drop": null,
   "completedEvents": []
 }

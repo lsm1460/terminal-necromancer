@@ -9,11 +9,12 @@ import { MonsterFactory } from './core/MonsterFactory'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
 import { NpcSkillManager } from './core/skill/NpcSkillManger'
+import { Title } from './core/Title'
 import { World } from './core/World'
 import { printStatus } from './statusPrinter'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
-import { SaveSystem } from './systems/SaveSystem'
+import { SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
 
 // ---------- 데이터 로드 ----------
@@ -32,62 +33,69 @@ const broadcastPath = path.join(assets, 'broadcast.json')
 
 // ---------- 초기화 ----------
 const save = new SaveSystem(statePath)
-const drop = new DropSystem(itemPath, dropPath)
-const monster = new MonsterFactory(monsterGroupPath, monsterPath)
-const saved = save.load()
-const player = new Player(levelPath, saved?.player)
-const battle = new Battle(player)
-const map = new MapManager(mapPath, saved?.sceneId)
-const npcs = new NPCManager(npcPath, saved?.npcs)
-const world = new World(map)
-const events = new EventSystem(eventPath, monster, saved?.completedEvents)
-const broadcast = new Broadcast(broadcastPath, npcs, events)
-const npcSkills = new NpcSkillManager(npcSkillPath, player)
 
-if (saved?.drop) {
-  world.addLootBag(saved.drop)
-}
+const init = (initData: SaveData): [Player, GameContext] => {
+  const drop = new DropSystem(itemPath, dropPath)
+  const monster = new MonsterFactory(monsterGroupPath, monsterPath)
+  const player = new Player(levelPath, initData?.player)
+  const events = new EventSystem(eventPath, monster, initData?.completedEvents)
+  const battle = new Battle(player)
+  const map = new MapManager(mapPath)
+  const npcs = new NPCManager(npcPath, initData?.npcs)
+  const world = new World(map)
+  const broadcast = new Broadcast(broadcastPath, npcs, events)
+  const npcSkills = new NpcSkillManager(npcSkillPath, player)
 
-const context = { map, world, events, npcs, drop, save, npcSkills, battle, broadcast }
-
-player.onDeath = () => {
-  const hostility = npcs.getFactionContribution('resistance');
-  const isHostile = hostility >= 70;
-
-  console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log(`📡 [터미널 브로드캐스팅: 에코]`);
-
-  if (isHostile) {
-    // 적대적일 때: 레지스탕스와 손잡은 네크로맨서의 최후를 비웃음
-    console.log(`  📢 "알립니다. 레지스탕스와 결탁하여 소란을 피우던 사령술사가 방금 제압되었습니다."`);
-    console.log(`  📢 "살아있는 반역자들과 어울리더니 끝내 시체가 되었군요. 물론 조만간 다시 기어 나오겠지만 말입니다."`);
-  } else {
-    // 일반 상태일 때: 지긋지긋한 부활 루프에 대한 행정 공고
-    console.log(`  📢 "알립니다. 사령술사가 활동을 중단했습니다."`);
-    console.log(`  📢 "어차피 금방 다시 재생될 테니, 서류 처리는 좀 천천히 해도 될 것으로 보입니다."`);
+  if (initData?.drop) {
+    world.addLootBag(initData.drop)
   }
 
-  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-  console.log('\n💀 나는 사망했다... (다시 육체를 재구성하는 감각이 느껴집니다.)\n');
+  const context = { map, world, events, npcs, drop, save, npcSkills, battle, broadcast } as GameContext
 
-  world.addLootBag(LootFactory.fromPlayer(player, map))
+  player.onDeath = () => {
+    const hostility = npcs.getFactionContribution('resistance')
+    const isHostile = hostility >= 70
 
-  map.currentSceneId = MAP_IDS.B1_SUBWAY
-  player.x = 0
-  player.y = 0
-  player.hp = 1
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+    console.log(`📡 [터미널 브로드캐스팅: 에코]`)
 
-  printStatus(player, context as GameContext)
+    if (isHostile) {
+      // 적대적일 때: 레지스탕스와 손잡은 네크로맨서의 최후를 비웃음
+      console.log(`  📢 "알립니다. 레지스탕스와 결탁하여 소란을 피우던 사령술사가 방금 제압되었습니다."`)
+      console.log(
+        `  📢 "살아있는 반역자들과 어울리더니 끝내 시체가 되었군요. 물론 조만간 다시 기어 나오겠지만 말입니다."`
+      )
+    } else {
+      // 일반 상태일 때: 지긋지긋한 부활 루프에 대한 행정 공고
+      console.log(`  📢 "알립니다. 사령술사가 활동을 중단했습니다."`)
+      console.log(`  📢 "어차피 금방 다시 재생될 테니, 서류 처리는 좀 천천히 해도 될 것으로 보입니다."`)
+    }
+
+    console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+    console.log('\n💀 나는 사망했다... (다시 육체를 재구성하는 감각이 느껴집니다.)\n')
+
+    world.addLootBag(LootFactory.fromPlayer(player, map))
+
+    map.currentSceneId = MAP_IDS.B1_SUBWAY
+    player.x = 0
+    player.y = 0
+    player.hp = 1
+
+    printStatus(player, context)
+  }
+
+  return [player, context]
 }
 
-// 시작 위치 초기화
-map.currentSceneId = MAP_IDS.title
-player.x = 0
-player.y = 0
+Title.gameStart(save).then(async (playData) => {
+  const [player, context] = init(playData!)
+  // ---------- CLI 시작 ----------
+  const { map, events } = context
 
-// ---------- CLI 시작 ----------
+  printStatus(player, context)
 
-const currentTile = map.getTile(player.pos.x, player.pos.y)
-events.handle(currentTile, player, context as GameContext).then(() => {
+  const currentTile = map.getTile(player.pos.x, player.pos.y)
+  await events.handle(currentTile, player, context as GameContext)
+
   createCLI(player, context)
 })

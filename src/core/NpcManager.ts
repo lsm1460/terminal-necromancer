@@ -36,8 +36,6 @@ export class NPCManager {
         reborn: data.reborn ?? false,
         relation: 0,
       }
-
-      console.log(`[NPCManager] New NPC detected and initialized: ${id}`)
     })
   }
 
@@ -47,7 +45,7 @@ export class NPCManager {
   getNPC(id: string): NPC | null {
     const base = this.baseData[id]
     const state = this.states[id]
-    
+
     if (!base || !state) return null
     if (state.reborn) return null
 
@@ -60,9 +58,8 @@ export class NPCManager {
       factionHostility: this.factionHostility[base.faction] || 0,
       factionContribution: this.factionContribution[base.faction] || 0,
       updateHostility: (_amount: number) => {
-
         this.updateFactionHostility(base.faction, _amount)
-      }
+      },
     }
 
     return npc
@@ -154,8 +151,17 @@ export class NPCManager {
    * 특정 NPC가 적대적인지 확인 (소속 기반)
    */
   isHostile(id: string): boolean {
-    const npc = this.baseData[id]
-    return this.factionHostility[npc?.faction] ? this.factionHostility[npc?.faction] >= HOSTILITY_LIMIT : false
+    const npc: NPC = this.baseData[id]
+
+    if (npc.isBoss) {
+      return true
+    }
+
+    if (this.factionHostility[npc.faction]) {
+      return this.factionHostility[npc?.faction] >= HOSTILITY_LIMIT
+    }
+
+    return false
   }
 
   getDialectType(hostility: number) {

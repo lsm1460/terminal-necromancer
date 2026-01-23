@@ -4,10 +4,10 @@ import path from 'path'
 import { MonsterFactory } from '../core/MonsterFactory'
 import { Player } from '../core/Player'
 import { GameContext, GameEvent, Tile } from '../types'
+import { BossEvent } from './events/BossEvent'
 import { MonsterEvent } from './events/MonsterEvent'
 import { NpcEvent } from './events/NpcEvent'
-import { BossEvent } from './events/BossEvent'
-import { Title } from '../core/Title'
+import { printLootStatus } from '../statusPrinter'
 
 type EventCallback = (eventId: string) => void
 
@@ -26,11 +26,24 @@ export class EventSystem {
 
   async handle(tile: Tile, player: Player, context: GameContext) {
     switch (tile.event) {
-      case 'title':
-        await Title.gameStart(player, context)
-        break
       case 'event-00':
         this.completeEvent('START_GAME')
+        break
+      case 'event-01':
+        {
+          if (!this.isCompleted('item-tutorial')) {
+            const { x, y } = player.pos
+            const { drop, world } = context
+            const { drops } = drop.generateDrops('tutorial-drop')
+
+            drops.forEach((d) => {
+              world.addDrop({ ...d, x, y })
+            })
+            this.completeEvent('item-tutorial')
+
+            printLootStatus(player, context)
+          }
+        }
         break
       case 'heal':
         player.hp = player.maxHp
@@ -46,6 +59,10 @@ export class EventSystem {
             player.mp = player.maxMp
 
             player.minions.forEach((minion) => (minion.hp = minion.maxHp))
+
+            console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+            console.log(`✨ HP/MP와 모든 소환수의 상태가 완벽하게 복구되었습니다.`)
+            console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
           }
         }
         break
@@ -79,10 +96,13 @@ export class EventSystem {
 
   /** 이벤트 완료 처리 */
   public completeEvent(eventId: string) {
-    if (!this.completedEvents.has(eventId)) {
-      this.completedEvents.add(eventId)
-
-      this.subscribers.forEach((callback) => callback(eventId))
+    try {
+      if (!this.completedEvents.has(eventId)) {
+        this.completedEvents.add(eventId)
+        this.subscribers.forEach((callback) => callback(eventId))
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -102,5 +122,9 @@ export class EventSystem {
 
   public makeMonsters(groupName: string) {
     return this.monsterEvent.monsterFactory.makeMonsters(groupName)
+  }
+
+  public resetCompletedEvents() {
+    this.completedEvents.clear()
   }
 }

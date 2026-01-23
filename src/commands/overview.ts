@@ -257,7 +257,18 @@ export const lookAll = async (
     if (target) printItem(target.raw)
   } else if (category === 'PATH') {
     const target = accessiblePaths.find((p) => p.label === targetId)
-    if (target) console.log(target.tile?.observe)
+    if (target) {
+      console.log(target.tile?.observe)
+      if (!target.tile?.isClear && target.tile?.event) {
+        const eventId = target.tile.event
+
+        if (eventId.includes('boss')) {
+          console.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`);
+        } else if (eventId.startsWith('monster')) {
+          console.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`);
+        }
+      }
+    }
   }
 }
 

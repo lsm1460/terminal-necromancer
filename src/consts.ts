@@ -154,3 +154,13 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
 }
 
 export const INIT_MAX_MEMORIZE_COUNT = 4
+
+export const SKELETON_UPGRADE = {
+  MIN_LIMIT: 2,
+  MAX_LIMIT: 5,
+  COSTS: {
+    2: 500, // 2->3구 확장 비용
+    3: 2000, // 3->4구 확장 비용
+    4: 4000  // 4->5구 확장 비용
+  } as Record<number, number>
+};

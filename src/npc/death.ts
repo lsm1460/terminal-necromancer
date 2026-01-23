@@ -1,9 +1,9 @@
 import enquirer from 'enquirer'
+import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '../consts'
 import { Player } from '../core/Player'
 import { SKILL_LIST, SkillUtils } from '../core/skill'
 import { GameContext, Skill, SkillId } from '../types'
 import { handleTalk, NPCHandler } from './NPCHandler'
-import { INIT_MAX_MEMORIZE_COUNT } from '../consts'
 
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -12,7 +12,7 @@ const DeathHandler: NPCHandler = {
     const isB3Completed = context.events.isCompleted('second_boss')
     const hasSubSpace = player.hasSkill('SPACE')
 
-    if (!isFirst && !isB2Completed) {
+    if (!isFirst || !isB2Completed) {
       return [{ name: 'intro', message: '💬 대화' }]
     }
 
@@ -29,13 +29,13 @@ const DeathHandler: NPCHandler = {
   async handle(action, player, npc, context) {
     switch (action) {
       case 'intro':
-        handleIntro(context)
+        await handleIntro(context)
         break
       case 'talk':
-        handleTalk(npc)
+        await handleTalk(npc)
         break
       case 'levelUp':
-        handleLevelUp(player)
+        await handleLevelUp(player)
         break
       case 'unlock':
         await handleSkillMenu(player, context)
@@ -49,7 +49,7 @@ const DeathHandler: NPCHandler = {
         await handleAwakeGolem(player)
         break
       case 'getSubSpace':
-        handleGetSubSpace(player)
+        await handleGetSubSpace(player)
         break
       default:
         break
@@ -60,9 +60,10 @@ const DeathHandler: NPCHandler = {
 async function handleIntro(context: GameContext) {
   const { events } = context
 
+  const isFirst = context.events.isCompleted('first_talk_death')
   const isB2Completed = context.events.isCompleted('first_boss')
 
-  if (!isB2Completed) {
+  if (isFirst && !isB2Completed) {
     console.log(`\n사신: "아직도 청소를 끝내지 못했나? 끝내고 나면 내게 돌아오도록.."`)
     return
   }
@@ -74,7 +75,7 @@ async function handleIntro(context: GameContext) {
     '사신: "[기어다니는 죄악, 벨페고르]. 제 분수를 모르고 심판을 피해 도망친 영혼들이 서로 엉겨 붙어 탄생한 기괴한 고기 덩어리다."',
     '사신: "그 비천한 것들이 환승로 선로를 점거하고 비명을 지르는 통에 영혼들의 운송이 지체되고 있어."',
     '사신: "가서 그 오물들을 도려내라. 네놈의 그 녹슨 낫이 아직 영혼의 껍질이라도 썰 수 있다면 말이야."',
-    '사신: "청소를 끝내면 나에게 와서 보고하도록.."',
+    '사신: "[아래]로 내려가면 지하로 내려갈 수 있는 엘리베이터가 있다. 청소를 끝내면 나에게 와서 보고하도록.."',
   ]
 
   console.clear()
@@ -218,10 +219,10 @@ async function handleMemorize(player: Player) {
 }
 
 async function handleIncreaseLimit(player: Player) {
-  const currentLimit = player._maxSkeleton || 3
+  const currentLimit = player._maxSkeleton || SKELETON_UPGRADE.MIN_LIMIT
 
   // 1. 최대치 도달 체크 (5구 제한)
-  if (currentLimit >= 5) {
+  if (currentLimit >= SKELETON_UPGRADE.MAX_LIMIT) {
     console.log(
       `\n사신: "분수를 모르는군. 네놈 같은 필멸자가 다룰 수 있는 망자의 수는 여기까지다. 더 탐했다간 네놈의 영혼부터 먹히게 될 게야."`
     )
@@ -229,10 +230,10 @@ async function handleIncreaseLimit(player: Player) {
   }
 
   // 2. 필요 경험치 계산
-  const cost = currentLimit === 3 ? 2000 : 3000
+  const cost = SKELETON_UPGRADE.COSTS[currentLimit];
 
   console.log(
-    `\n사신: "겨우 그 정도 군세로 만족하지 못하는 건가? 좋다. 망자의 자리를 더 내어주지. 다만, 그에 걸맞은 영혼의 정수(${cost} EXP)는 준비했겠지?"`
+    `\n사신: "그 정도로는 역시 만족하지 못하는 건가? 좋다. 망자의 자리를 더 내어주지. 다만, 그에 걸맞은 영혼의 정수(${cost} EXP)는 준비했겠지?"`
   )
   console.log(`현재 보유 경험치: ${player.exp} / 필요 경험치: ${cost}`)
 

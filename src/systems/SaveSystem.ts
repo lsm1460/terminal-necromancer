@@ -3,16 +3,16 @@ import fs from 'fs'
 import { Player } from '../core/Player'
 import { LootBag, NPCState } from '../types'
 
-type SaveData = {
-    player: Player;
-    sceneId: string;
-    npcs: {
-        states: Record<string, NPCState>;
-        factionHostility: Record<string, number>;
-        factionContribution: Record<string, number>;
-    };
-    drop: LootBag | null;
-    completedEvents: string[];
+export type SaveData = {
+  player: Player
+  sceneId: string
+  npcs: {
+    states: Record<string, NPCState>
+    factionHostility: Record<string, number>
+    factionContribution: Record<string, number>
+  }
+  drop: LootBag | null
+  completedEvents: string[]
 }
 
 export class SaveSystem {
@@ -24,9 +24,16 @@ export class SaveSystem {
   }
 
   save(saveData: SaveData) {
-    fs.writeFileSync(this.path, JSON.stringify({
-      ...saveData,
-      player: saveData.player.raw
-    }, null, 2))
+    fs.writeFileSync(
+      this.path,
+      JSON.stringify(
+        {
+          ...saveData,
+          player: saveData.player.raw,
+        },
+        null,
+        2
+      )
+    )
   }
 }

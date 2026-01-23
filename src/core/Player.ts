@@ -44,7 +44,7 @@ export class Player {
   skeletonSubspace = []
   subspaceLimit = 1
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
-  _maxSkeleton: number = 3 // 최대 소환 가능 수
+  _maxSkeleton: number = 2 // 최대 소환 가능 수
 
   upgradeLimit = 5
   golemUpgrade: ('machine' | 'soul')[] = []
@@ -61,6 +61,9 @@ export class Player {
     if (saved) {
       Object.assign(this, saved)
     }
+
+    this.x = 0
+    this.y = 0
 
     // 레벨 테이블 로드
     this.levelTable = JSON.parse(fs.readFileSync(levelPath, 'utf-8'))
@@ -429,7 +432,7 @@ export class Player {
 
   async useItem(targetItem?: ConsumableItem) {
     // 1. 소비 아이템만 필터링
-    const consumables = this.inventory.filter((item): item is ConsumableItem => item.type === ItemType.CONSUMABLE)
+    const consumables = this.inventory.filter((item): item is ConsumableItem =>  [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type))
 
     if (consumables.length === 0) {
       console.log('\n🎒 사용할 수 있는 소비 아이템이 없습니다.')

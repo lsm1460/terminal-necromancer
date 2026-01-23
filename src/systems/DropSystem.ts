@@ -9,6 +9,7 @@ export interface DropEntry {
   chance: number
   quantity?: [number, number]
   minRarity?: ItemRarity
+  maxRarity?: ItemRarity
 }
 
 export interface DropTable {
@@ -59,13 +60,10 @@ export class DropSystem {
         ...this.items[entry.itemId],
         quantity: entry.quantity ? this.randomRange(entry.quantity[0], entry.quantity[1]) : 1,
         minRarity: entry.minRarity,
+        maxRarity: entry.maxRarity,
       }))
       .map((_item) => this.itemGenerator.createItem(_item))
 
     return { gold, drops }
-  }
-
-  getItem(_itemId: string) {
-    return this.items[_itemId] as Item
   }
 }

@@ -5,20 +5,34 @@ import { ItemRarity, RARITY_SETTINGS } from './consts'
 
 export class ItemGenerator {
   /** 1. 가중치 기반 등급 결정 (minRarity 고려) */
-  private rollRarity(minRarity: ItemRarity = 'COMMON') {
+  private rollRarity(
+    minRarity: ItemRarity = 'COMMON',
+    maxRarity: ItemRarity = 'EPIC' // 기본 최대치는 EPIC
+  ): ItemRarity {
     const roll = Math.random() * 100
     let rolled: ItemRarity
 
+    // 1. 기본 확률 주사위
     if (roll < 10) rolled = 'EPIC'
     else if (roll < 35) rolled = 'RARE'
     else rolled = 'COMMON'
 
-    // 등급 우선순위 (숫자가 클수록 높은 등급)
-    const rarityOrder: Record<ItemRarity, number> = { COMMON: 0, RARE: 1, EPIC: 2 }
+    // 2. 등급 우선순위 정의
+    const rarityOrder: Record<ItemRarity, number> = {
+      COMMON: 0,
+      RARE: 1,
+      EPIC: 2,
+    }
 
-    // 만약 뽑힌 등급이 최소 등급보다 낮으면 최소 등급으로 보정
+    // 3. 범위 보정 (Clamping)
+    // 결과가 최소 등급보다 낮으면 최소 등급으로 승격
     if (rarityOrder[rolled] < rarityOrder[minRarity]) {
-      return minRarity
+      rolled = minRarity
+    }
+
+    // 결과가 최대 등급보다 높으면 최대 등급으로 강등
+    if (rarityOrder[rolled] > rarityOrder[maxRarity]) {
+      rolled = maxRarity
     }
 
     return rolled
@@ -63,7 +77,7 @@ export class ItemGenerator {
     }
 
     // [보정] baseItem에 지정된 최소 등급을 적용하여 굴림
-    const rarityKey = this.rollRarity(baseItem.minRarity)
+    const rarityKey = this.rollRarity(baseItem.minRarity, baseItem?.maxRarity)
     const setting = RARITY_SETTINGS[rarityKey]
 
     let finalStats: Partial<{ atk: number; def: number; eva: number; crit: number }> = {}

@@ -1,8 +1,17 @@
 {
+  "tutorial-drop": {
+    "gold": [0, 0],
+    "items": [
+      { "itemId": "wood_stick", "chance": 1, "quantity": [1, 1], "maxRarity": "COMMON" },
+      { "itemId": "rags", "chance": 1, "quantity": [1, 1], "maxRarity": "COMMON" },
+      { "itemId": "nut", "chance": 1, "quantity": [1, 1] }
+    ]
+  },
   "b2_equipment_loot": {
     "gold": [0, 3],
     "items": [
-      { "itemId": "iron_sword", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "iron_sword", "chance": 0.6, "quantity": [1, 1] },
+      { "itemId": "leather_armor", "chance": 0.6, "quantity": [1, 1] },
       { "itemId": "pizza", "chance": 0.05, "quantity": [1, 2] },
       { "itemId": "potion_small", "chance": 0.2, "quantity": [1, 1] },
       { "itemId": "mana_potion_small", "chance": 0.2, "quantity": [1, 1] }
@@ -31,7 +40,7 @@
   "boss1": {
     "gold": [500, 700],
     "items": [
-      { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1] }
+      { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" }
     ]
   },
   "boss2": {

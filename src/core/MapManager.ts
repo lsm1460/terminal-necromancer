@@ -17,26 +17,14 @@ export class MapManager {
   private mapData: Record<string, SceneData>
   public currentSceneId: string
 
-  constructor(path: string, initialSceneId?: string) {
+  constructor(path: string) {
     // 1. map.json 데이터 로드
     const data = fs.readFileSync(path, 'utf-8')
     this.mapData = JSON.parse(data)
     this.originMapData = JSON.parse(data)
 
     // 2. 초기 씬 ID 설정
-    if (initialSceneId && this.mapData[initialSceneId]) {
-      // 인자로 전달받은 ID가 있고, 실제 데이터에도 존재할 때
-      this.currentSceneId = initialSceneId
-    } else {
-      // 인자가 없거나 잘못된 경우, JSON의 첫 번째 키를 기본값으로 설정
-      const sceneKeys = Object.keys(this.mapData)
-
-      if (sceneKeys.length === 0) {
-        throw new Error('map.json 파일에 설정된 씬 데이터가 없습니다.')
-      }
-
-      this.currentSceneId = sceneKeys[0]
-    }
+    this.currentSceneId = MAP_IDS.B1_SUBWAY
   }
 
   get currentScene(): SceneData {
