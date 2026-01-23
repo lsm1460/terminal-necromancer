@@ -1,9 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import { BattleTarget, NpcSkill } from '../../types'
+import { CombatUnit } from '../Battle'
 import { Player } from '../Player'
-import { CombatUnit } from '../CombatUnit'
-import { Battle } from '../Battle'
 
 const SkillEffectHandlers: Record<string, (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit) => void> = {
   heal: (target, skill) => {
@@ -74,9 +73,7 @@ type SkillExecutor<T = void> = (
   skillId: string,
   attacker: CombatUnit<BattleTarget>,
   ally: CombatUnit<BattleTarget>[],
-  enemies: CombatUnit<BattleTarget>[],
-  battleInstance: Battle
-) => T
+  enemies: CombatUnit<BattleTarget>[]) => T
 
 export class NpcSkillManager {
   private skillData: Record<string, NpcSkill>
@@ -138,7 +135,7 @@ export class NpcSkillManager {
   }
 
   execute: SkillExecutor = async (...params) => {
-    const [skillId, attacker, ally, enemies, battleInstance] = params
+    const [skillId, attacker] = params
     const skill = this.getSkill(skillId)
     if (!skill) return
 

@@ -1,5 +1,5 @@
 import { SkeletonRarity } from './consts'
-import { Battle, Buff, CombatUnit } from './core/Battle'
+import { Battle, Buff, CalcDamageOptions, CombatUnit } from './core/Battle'
 import { Broadcast } from './core/Broadcast'
 import { ItemRarity } from './core/item/consts'
 import { MapManager } from './core/MapManager'
@@ -287,11 +287,7 @@ export type NpcSkill = {
   targetType: SkillTargetType
   type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
   buff?: Buff
-  options?: {
-    isIgnoreDef?: boolean // 방어력 무시
-    isFixed?: boolean // 고정 데미지
-    isSureHit?: boolean // 회피불가
-  }
+  options?: CalcDamageOptions
 }
 
 export type AffixId =
