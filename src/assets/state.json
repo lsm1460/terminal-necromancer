@@ -1,28 +1,69 @@
 {
   "player": {
     "x": 2,
-    "y": 1,
+    "y": 2,
     "_maxHp": 100,
-    "hp": 100,
+    "hp": 52,
     "_maxMp": 100,
-    "mp": 100,
+    "mp": 70,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 0,
-    "exp": 0,
+    "gold": 511,
+    "exp": 1435,
     "level": 1,
     "inventoryMax": 15,
-    "inventory": [],
-    "_maxMemorize": 4,
-    "memorize": [
-      "RAISE_SKELETON"
-    ],
-    "equipped": {
-      "weapon": {
-        "id": "wood_stick_8a047078fef765f8",
+    "inventory": [
+      {
+        "id": "nut",
+        "label": "도토리",
+        "type": "food",
+        "hpHeal": 2,
+        "price": 5,
+        "sellPrice": 1,
+        "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다.",
+        "quantity": 1,
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "tainted_core",
+        "label": "오염된 핵",
+        "type": "item",
+        "price": 1,
+        "sellPrice": 1,
+        "description": "지하에 살고있는 이형의 핵",
+        "quantity": 2,
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "rags_5514243669f22865",
+        "label": "\u001b[37m⚪ 낡은 누더기\u001b[0m",
+        "type": "armor",
+        "defRange": [
+          1,
+          2
+        ],
+        "evaRange": [
+          0,
+          0
+        ],
+        "price": 0,
+        "sellPrice": 0,
+        "description": "길바닥을 굴러다니는 망자의 천",
+        "quantity": 1,
+        "maxRarity": "COMMON",
+        "def": 1,
+        "eva": 0,
+        "rarity": "COMMON",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "wood_stick_e9e6ea0f3b09c057",
         "label": "\u001b[37m⚪ 나무 막대\u001b[0m",
         "type": "weapon",
         "atkRange": [
@@ -43,29 +84,57 @@
         "rarity": "COMMON",
         "x": 0,
         "y": 1
+      }
+    ],
+    "_maxMemorize": 4,
+    "memorize": [
+      "RAISE_SKELETON"
+    ],
+    "equipped": {
+      "weapon": {
+        "id": "iron_sword_e09254f46588d5bb",
+        "label": "\u001b[34m🔵 우수한 낡은 철검\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          5,
+          10
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "minRarity": "RARE",
+        "atk": 6,
+        "crit": 0,
+        "rarity": "RARE",
+        "x": 1,
+        "y": 2
       },
       "armor": {
-        "id": "rags_342e33221e04d929",
-        "label": "\u001b[37m⚪ 장인의 누더기\u001b[0m",
+        "id": "leather_armor_1d1ae69d0a9532ed",
+        "label": "\u001b[37m⚪ 장인의 가죽 갑옷\u001b[0m",
         "type": "armor",
         "defRange": [
-          1,
-          2
+          2,
+          5
         ],
         "evaRange": [
           0,
-          0
+          0.02
         ],
-        "price": 0,
-        "sellPrice": 0,
-        "description": "길바닥을 굴러다니는 망자의 천",
+        "price": 400,
+        "sellPrice": 100,
+        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
         "quantity": 1,
-        "maxRarity": "COMMON",
-        "def": 2,
+        "def": 5,
         "eva": 0,
         "rarity": "COMMON",
-        "x": 0,
-        "y": 1
+        "x": 2,
+        "y": 0
       }
     },
     "unlockedSkills": [],
@@ -118,7 +187,7 @@
       },
       "first_boss": {
         "hp": 100,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -153,6 +222,8 @@
   "drop": null,
   "completedEvents": [
     "START_GAME",
-    "item-tutorial"
+    "item-tutorial",
+    "first_talk_death",
+    "first_boss"
   ]
 }

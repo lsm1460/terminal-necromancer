@@ -13,7 +13,7 @@ export class ItemGenerator {
     let rolled: ItemRarity
 
     // 1. 기본 확률 주사위
-    if (roll < 10) rolled = 'EPIC'
+    if (roll < 3) rolled = 'EPIC'
     else if (roll < 35) rolled = 'RARE'
     else rolled = 'COMMON'
 
