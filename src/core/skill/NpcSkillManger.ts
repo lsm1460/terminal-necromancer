@@ -1,15 +1,81 @@
 import fs from 'fs'
 import path from 'path'
-import { NpcSkill } from '../../types'
-import { CombatUnit } from '../Battle'
+import { BattleTarget, NpcSkill } from '../../types'
 import { Player } from '../Player'
+import { CombatUnit } from '../CombatUnit'
+import { Battle } from '../Battle'
+
+const SkillEffectHandlers: Record<string, (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit) => void> = {
+  heal: (target, skill) => {
+    const healAmount = skill.power
+    target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
+    console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
+  },
+  buff: (target, skill) => {
+    if (skill.buff) target.applyBuff(skill.buff)
+  },
+  deBuff: (target, skill) => {
+    if (skill.buff) target.applyDeBuff(skill.buff)
+  },
+  damage: async (target, skill, attacker) => {
+    await target.takeDamage(attacker, {
+      skillAtkMult: skill.power,
+      ...(skill.options || {}),
+    })
+  },
+}
+
+// B. 스킬 ID별 특수 로직 (시전자나 전장에 특별한 변화가 생길 때)
+const SpecialSkillLogics: Record<
+  string,
+  (attacker: CombatUnit, targets: CombatUnit[], skill: NpcSkill) => Promise<void>
+> = {
+  call_minion: async (attacker, targets, skill) => {
+    // 1. 모든 대상에게 데미지 적용
+    for (const target of targets) {
+      await SkillEffectHandlers.damage(target, { ...skill, options: { rawDamage: Math.floor(attacker.ref.hp * skill.power) } }, attacker)
+    }
+    // 2. 시전자 즉사 처리
+    console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
+    attacker?.onDeath?.()
+  },
+  // 자폭
+  self_destruct: async (attacker, targets, skill) => {
+    // 1. 모든 대상에게 데미지 적용
+    for (const target of targets) {
+      await SkillEffectHandlers.damage(target, { ...skill, options: { rawDamage: Math.floor(attacker.ref.hp * skill.power) } }, attacker)
+    }
+    // 2. 시전자 즉사 처리
+    console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
+    attacker?.onDeath?.()
+  },
+
+  health_drain: async (attacker, targets, skill) => {
+    let totalDamageDealt = 0
+
+    for (const target of targets) {
+      const result = await target.takeDamage(attacker, {
+        skillAtkMult: skill.power,
+      })
+
+      totalDamageDealt += result.damage || 0
+    }
+
+    // 2. 입힌 데미지의 일정 비율만큼 시전자 회복 (예: 데미지의 50%)
+    const healAmount = Math.floor(totalDamageDealt * 0.5)
+    if (healAmount > 0) {
+      attacker.ref.hp = Math.min(attacker.ref.maxHp, attacker.ref.hp + healAmount)
+      console.log(`💉 ${attacker.name}(이)가 적의 생명력을 흡수하여 HP를 ${healAmount}만큼 회복했습니다!`)
+    }
+  },
+}
 
 type SkillExecutor<T = void> = (
   skillId: string,
-  attacker: CombatUnit,
-  ally: CombatUnit[],
-  enemies: CombatUnit[],
-  callback?: () => void
+  attacker: CombatUnit<BattleTarget>,
+  ally: CombatUnit<BattleTarget>[],
+  enemies: CombatUnit<BattleTarget>[],
+  battleInstance: Battle
 ) => T
 
 export class NpcSkillManager {
@@ -72,42 +138,29 @@ export class NpcSkillManager {
   }
 
   execute: SkillExecutor = async (...params) => {
-    const [skillId, attacker] = params
-
+    const [skillId, attacker, ally, enemies, battleInstance] = params
     const skill = this.getSkill(skillId)
     if (!skill) return
 
     console.log(`\n✨ ${attacker.name}의 [${skill.name}]!`)
     console.log(`💬 ${skill.description}`)
 
-    // 1. 타겟 배열 정의
     let targets = this.findTargets(...params)
-
     if (targets.length === 0) {
-      console.log(`하지만 ${attacker.name}은/는 대상을 찾을 수 없었다..`)
+      console.log(`하지만 대상을 찾을 수 없었다..`)
       return
     }
 
-    // 3. 모든 타겟에게 효과 적용 (forEach 활용)
-    const isHeal = skill.type === 'heal'
-    const isBuff = skill.type === 'buff'
-    const isDeBuff = skill.type === 'deBuff'
+    // 1. 특수 로직(ID 기반)이 있는지 먼저 확인
+    if (SpecialSkillLogics[skillId]) {
+      await SpecialSkillLogics[skillId](attacker, targets, skill)
+      return
+    }
 
+    // 2. 특수 로직이 없다면 공통 타입(Type 기반) 핸들러 실행
+    const handler = SkillEffectHandlers[skill.type] || SkillEffectHandlers.damage
     for (const target of targets) {
-      if (isHeal) {
-        const healAmount = skill.power
-        target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
-        console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
-      } else if (isBuff && skill.buff) {
-        target.applyBuff(skill.buff)
-      } else if (isDeBuff && skill.buff) {
-        target.applyDeBuff(skill.buff)
-      } else {
-        await target.takeDamage(attacker, {
-          skillAtkMult: skill.power, // 스킬의 위력(배율) 전달
-          ...(skill.options || {}),
-        })
-      }
+      await handler(target, skill, attacker)
     }
   }
 
