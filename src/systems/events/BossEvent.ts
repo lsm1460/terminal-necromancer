@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
-import { CombatUnit } from '../../core/Battle'
+import { CombatUnit } from '../../core/battle/CombatUnit'
 import { Player } from '../../core/Player'
 import { GameContext, Tile } from '../../types'
 

@@ -1,30 +1,12 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
-import { BattleTarget, Drop, GameContext, NPC } from '../types'
-import { delay } from '../utils'
-import { LootFactory } from './LootFactory'
-import { Player } from './Player'
-import { SkillManager } from './skill'
-
-interface CombatStatus {
-  atk: number
-  def: number
-  agi: number
-  crit?: number
-  eva?: number
-}
-
-interface IUnit extends CombatStatus {
-  id?: string
-  name?: string
-  hp: number
-  faction?: string
-  maxHp?: number
-  computed?: CombatStatus
-  isAlive: boolean
-  orderWeight?: number
-  minions?: any[] // 플레이어만 가질 수 있음
-}
+import { BattleTarget, Drop, GameContext, NPC } from '../../types'
+import { delay } from '../../utils'
+import { LootFactory } from '../LootFactory'
+import { Player } from '../Player'
+import { SkillManager } from '../skill'
+import { AffixManager } from './AffixManager'
+import { CombatUnit } from './CombatUnit'
 
 export type Buff = {
   name: string
@@ -46,43 +28,31 @@ export interface DamageResult extends CalcDamageResult {
   isDead: boolean
 }
 
-export interface CombatUnit<T = BattleTarget> {
-  id: string
-  name: string
-  type: 'player' | 'minion' | 'monster' | 'npc'
-  stats: CombatStatus
-  buff: Buff[]
-  deBuff: Buff[]
-  orderWeight: number
-  ref: T // 원본 객체 참조 (데이터 직접 수정용)
-  onDeath?: () => void
-  applyEffect: (_buff: Buff) => void
-  applyBuff: (_buff: Buff) => void
-  applyDeBuff: (_buff: Buff) => void
-  takeDamage: <T extends BattleTarget | Player>(
-    attacker: CombatUnit<T>,
-    options?: CalcDamageOptions
-  ) => Promise<DamageResult>
-}
-
 export class Battle {
   private unitCache = new Map<any, CombatUnit>()
+  private currentEnemies: CombatUnit[] = []
 
   constructor(public player: Player) {}
 
+  public getAliveEnemies() {
+    return this.currentEnemies.filter((e) => e.ref.isAlive)
+  }
+
   async runCombatLoop(enemies: CombatUnit[], context: GameContext) {
+    this.currentEnemies = [...enemies]
+
     console.log(`\n⚔️  전투가 시작되었습니다!`)
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
     enemies.forEach((e) => {
-      e.onDeath = () => this.handleUnitDeath(e.ref, context)
+      e.onDeath = () => this.handleUnitDeath(e.ref as BattleTarget, context)
     })
 
     let turn = 0
-    while (this.player.isAlive && enemies.some((e) => e.ref.isAlive)) {
+    while (this.player.isAlive && this.currentEnemies.some((e) => e.ref.isAlive)) {
       turn++
 
-      const turnOrder = this.getTurnOrder(enemies)
+      const turnOrder = this.getTurnOrder(this.currentEnemies)
 
       console.log(`\n============== turn: ${turn} ==============`)
 
@@ -134,7 +104,7 @@ export class Battle {
         let enemiesSide = _.chain(turnOrder)
           .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
           .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
-          .value()
+          .value() as CombatUnit<BattleTarget>[]
 
         const playerSide = _.chain(turnOrder)
           .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
@@ -145,7 +115,7 @@ export class Battle {
             // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
             return _.findIndex(this.player.minions, { id: unit.id })
           })
-          .value()
+          .value() as CombatUnit<BattleTarget>[]
 
         if (unit.type === 'player') {
           // 플레이어 직접 조작
@@ -194,7 +164,7 @@ export class Battle {
           let mUnit = this.unitCache.get(m)
           if (!mUnit) {
             mUnit = this.toCombatUnit(m, 'minion')
-            mUnit.onDeath = () => this.handleMinionsDeath(mUnit!, enemies)
+            mUnit.onDeath = () => this.handleMinionsDeath(mUnit! as CombatUnit<BattleTarget>, enemies)
             this.unitCache.set(m, mUnit)
           }
           units.push(mUnit)
@@ -339,10 +309,10 @@ export class Battle {
         break
 
       case '도망': {
-        const isEscapeBlocked = aliveEnemies.some((e) => e.ref.noEscape === true)
+        const isEscapeBlocked = aliveEnemies.some((e) => (e.ref as BattleTarget).noEscape === true)
 
         if (isEscapeBlocked) {
-          const blocker = aliveEnemies.find((e) => e.ref.noEscape === true)
+          const blocker = aliveEnemies.find((e) => (e.ref as BattleTarget).noEscape === true)
           console.log(`\n🚫 도망칠 수 없습니다! ${blocker?.name}(이)가 길을 가로막고 있습니다!`)
 
           // 도망에 실패했으므로 턴을 낭비하게 하거나,
@@ -367,23 +337,23 @@ export class Battle {
 
   private async executeAutoAttack(
     attacker: CombatUnit,
-    targets: CombatUnit[],
+    targets: CombatUnit<BattleTarget>[],
     ally: CombatUnit[],
     context: GameContext
   ) {
     if (targets.length === 0) return
 
-    const autoSkillId = context.npcSkills.getRandomSkillId(attacker.ref.skills || [])
+    const autoSkillId = context.npcSkills.getRandomSkillId((attacker.ref as BattleTarget).skills || [])
     if (autoSkillId) {
       await context.npcSkills.execute(autoSkillId, attacker, ally, targets)
     } else {
-      const target = Battle.handleBeforeAttackAffixes(this.player, attacker, targets)
+      const target = AffixManager.handleBeforeAttack(this.player, attacker, targets)
 
       await target.takeDamage(attacker)
     }
   }
 
-  private async handleMinionsDeath(deathUnit: CombatUnit, enemies: CombatUnit[]) {
+  private async handleMinionsDeath(deathUnit: CombatUnit<BattleTarget>, enemies: CombatUnit[]) {
     deathUnit.ref.hp = 0
     deathUnit.ref.isAlive = false
 
@@ -399,6 +369,7 @@ export class Battle {
     // 1. 기본 사망 상태 설정
     target.hp = 0
     target.isAlive = false
+    this.unitCache.delete(target)
 
     console.log(`\n💀 ${target.name}이(가) 쓰러졌습니다!`)
     target.deathLine && console.log(target.deathLine)
@@ -440,126 +411,10 @@ export class Battle {
     }
   }
 
-  public toCombatUnit<T extends BattleTarget | Player>(unit: IUnit, type: CombatUnit['type']): CombatUnit<T> {
-    const combatUnit: CombatUnit<T> = {
-      id: unit.id || 'player',
-      name: unit.name || 'player',
-      type,
-      stats: {
-        atk: unit.computed?.atk || unit.atk || 0,
-        def: unit.computed?.def || unit.def || 0,
-        agi: unit.computed?.agi || unit.agi || 0,
-        eva: unit.computed?.eva || unit.eva || 0,
-        crit: unit.computed?.crit || unit.crit || 0,
-      },
-      buff: [],
-      deBuff: [],
-      orderWeight: unit?.orderWeight || 0,
-      ref: unit as T,
-      applyEffect: (newEffect: Buff) => {
-        // 1. 타입에 따라 대상 배열 결정 ('buff'면 buff, 나머지는 deBuff)
-        const targetArray = newEffect.type === 'buff' ? combatUnit.buff : combatUnit.deBuff
+  public toCombatUnit<T extends Player | BattleTarget>(unit: T, type: CombatUnit['type']): CombatUnit<T> {
+    const combatUnit = new CombatUnit<T>(unit, type)
 
-        // 2. 중복 확인 및 처리
-        const existing = targetArray.find((e) => e.name === newEffect.name)
-        if (existing) {
-          existing.duration = Math.max(existing.duration, newEffect.duration)
-        } else {
-          targetArray.push(newEffect)
-        }
-      },
-      applyBuff: (b: Buff) => {
-        switch (b.name) {
-          case '광폭화':
-            console.log(
-              `\n[🔥 강화] ${combatUnit.name}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! (${combatUnit.name} HP ${combatUnit.ref.hp} / ${combatUnit.ref.maxHp})`
-            )
-            break
-
-          default:
-            break
-        }
-
-        combatUnit.applyEffect(b)
-      },
-      applyDeBuff: (d: Buff) => {
-        switch (d.name) {
-          case '뼈 감옥':
-            console.log(`\n 거친 뼈 창살이 ${combatUnit.name}의 사지를 옥죄며 솟아오릅니다!`)
-            break
-          case '심연의 한기':
-            console.log(`\n[❄️] 심연의 한기가 대상(${combatUnit.name})을 얼려버립니다.`)
-            break
-          case '노화':
-            console.log(
-              `\n[⏳] ${combatUnit.name}의 피부가 급격히 메마르며 숨이 가빠집니다! 모든 반응이 눈에 띄게 둔해집니다.`
-            )
-            break
-
-          default:
-            break
-        }
-
-        combatUnit.applyEffect(d)
-      },
-      takeDamage: async (attacker, options = {}) => {
-        if (!combatUnit.ref.isAlive) {
-          return {
-            isEscape: false,
-            damage: 0,
-            isCritical: false,
-            currentHp: 0,
-            isDead: true,
-          }
-        }
-
-        const result = Battle.calcDamage(attacker, combatUnit, options)
-        const { isEscape, damage, isCritical } = result
-
-        if (!isEscape) {
-          combatUnit.ref.hp = Math.max(0, combatUnit.ref.hp - damage)
-        }
-
-        const _npc = combatUnit.ref as NPC
-
-        if (_npc.faction) {
-          _npc.updateHostility(5)
-        }
-
-        const defender = combatUnit
-        const currentHp = defender.ref.hp
-
-        if (isEscape) {
-          console.log(`\n💥 ${attacker.name}의 공격! ${defender.name}은/는 회피했다! (남은 HP: ${currentHp})`)
-        } else {
-          if (isCritical) {
-            console.log(
-              `\n⚡ CRITICAL HIT! ⚡ ${attacker.name}의 치명적인 일격! ${defender.name}에게 ${damage}의 강력한 피해! (남은 HP: ${currentHp})`
-            )
-          } else {
-            console.log(`\n💥 ${attacker.name}의 공격! ${defender.name}에게 ${damage}의 피해! (남은 HP: ${currentHp})`)
-          }
-        }
-
-        const isDead = combatUnit.ref.hp <= 0
-
-        if (isDead) {
-          if (combatUnit.onDeath) {
-            await combatUnit.onDeath()
-          }
-
-          await this.onAffix('death', attacker as CombatUnit, combatUnit as CombatUnit)
-        }
-
-        if (!isDead && !isEscape) await this.onAffix('afterHit', attacker as CombatUnit, combatUnit as CombatUnit)
-
-        return {
-          ...result,
-          currentHp: combatUnit.ref.hp,
-          isDead: combatUnit.ref.hp <= 0,
-        }
-      },
-    }
+    AffixManager.setup(combatUnit, this.player, this)
 
     return combatUnit
   }
@@ -577,8 +432,8 @@ export class Battle {
   }
 
   static calcDamage(
-    attacker: CombatUnit<BattleTarget | Player>,
-    target: CombatUnit<BattleTarget | Player>,
+    attacker: CombatUnit,
+    target: CombatUnit,
     options: {
       skillAtkMult?: number // 데미지 배율
       rawDamage?: number // 직접 계산된 데미지 (시체 폭발 등)
@@ -646,117 +501,5 @@ export class Battle {
       // 지속 시간이 남은 효과들만 유지
       unit[type] = unit[type].filter((e) => e.duration > 0)
     })
-  }
-
-  async onAffix(event: string, attacker: CombatUnit, defender: CombatUnit) {
-    if (attacker.ref.isMinion) {
-      // 공격자가 미니언인 경우
-      switch (event) {
-        case 'afterHit':
-          // 공격 후 발동하는 어픽스들
-          await this.handleAfterAttackAffixes(attacker, defender)
-          break
-
-        default:
-          break
-      }
-    } else if (defender.ref.isMinion) {
-      // 수비자가 미니언인 경우
-      switch (event) {
-        case 'afterHit':
-          // 사망 시 발동하는 어픽스 (예: DOOMSDAY)
-          await this.handleOnAfterHitAffixes(attacker, defender)
-          break
-
-        case 'death':
-          // 사망 시 발동하는 어픽스 (예: DOOMSDAY)
-          await this.handleOnDeathAffixes(defender)
-          break
-
-        default:
-          break
-      }
-    }
-  }
-
-  private async handleOnAfterHitAffixes(attacker: CombatUnit, defender: CombatUnit) {
-    if (this.player.hasAffix('THORNS') && defender.ref.isGolem) {
-      const thornDamage = Math.max(1, Math.floor(defender.ref.atk * 0.05))
-
-      console.log(`\n[🦷 가시]: ${defender.name}의 가시가 ${attacker.name}의 살점을 찢습니다!`)
-
-      await delay(500)
-
-      if (attacker.ref.hp === 0) {
-        return
-      }
-
-      await attacker.takeDamage(defender, {
-        rawDamage: thornDamage,
-        isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
-        isSureHit: false, // 회피 불가능하게 하려면 true로 변경
-      })
-
-      await delay(300)
-    }
-  }
-
-  private async handleOnDeathAffixes(deathUnit: CombatUnit) {
-    if (this.player.hasAffix('DOOMSDAY') && deathUnit.ref.isSkeleton) {
-      const enemies = Array.from(this.unitCache.values()).filter(
-        (u) => ['monster', 'npc'].includes(u.type) && u.ref.isAlive
-      )
-
-      const rawExplosionDamage = Math.floor(deathUnit.ref.maxHp * 0.6)
-
-      console.log(`\n[🔥 종말]: ${deathUnit.name}의 시체가 폭발합니다!`)
-
-      await delay(500)
-      for (const enemy of enemies) {
-        if (enemy.ref.hp === 0) {
-          continue
-        }
-
-        await enemy.takeDamage(deathUnit, {
-          rawDamage: rawExplosionDamage,
-          isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
-          isSureHit: false, // 회피 불가능하게 하려면 true로 변경
-        })
-
-        await delay(300)
-      }
-    }
-  }
-
-  private async handleAfterAttackAffixes(attacker: CombatUnit, defender: CombatUnit) {
-    // 1. FROSTBORNE (서리 서린 유해)
-    if (this.player.hasAffix('FROSTBORNE') && attacker.ref.isSkeleton) {
-      defender.applyDeBuff({
-        name: '심연의 한기',
-        type: 'deBuff',
-        duration: 3,
-        agi: 5,
-      })
-    }
-  }
-
-  static handleBeforeAttackAffixes(player: Player, attacker: CombatUnit, targets: CombatUnit[]): CombatUnit {
-    let target = targets[0]
-
-    const isEnemyAttack = ['npc', 'monster'].includes(attacker.type)
-
-    if (isEnemyAttack && player.hasAffix('ROAR')) {
-      const golem = targets.find((target) => target.ref.isGolem && target.ref.isAlive)
-
-      if (golem) {
-        // 🔊 상황에 맞는 로그 출력
-        console.log(
-          `\n[📢 포효]: 골렘이 증기를 내뿜고 굉음을 내지릅니다!! ${attacker.name}의 시선이 골렘에게 고정됩니다.`
-        )
-        return golem
-      }
-    }
-
-    return target
   }
 }

@@ -1,4 +1,4 @@
-import { CombatUnit } from '../../core/Battle'
+import { CombatUnit } from '../../core/battle/CombatUnit'
 import { MonsterFactory } from '../../core/MonsterFactory'
 import { Player } from '../../core/Player'
 import { GameContext, Monster, Tile } from '../../types'
@@ -8,10 +8,11 @@ export class MonsterEvent {
   constructor(public monsterFactory: MonsterFactory) {}
 
   async handle(tile: Tile, player: Player, context: GameContext) {
+    console.log('DEBUG:',1)
     if (tile.isClear) return
      
     if (!tile.monsters) tile.monsters = []
-
+    console.log('DEBUG:',tile.monsters)
     // 1. 현재 살아있는 몬스터 수 확인
     const aliveMonsters = tile.monsters.filter((m) => m.isAlive)
     const currentCount = aliveMonsters.length

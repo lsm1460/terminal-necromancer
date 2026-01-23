@@ -1,4 +1,4 @@
-import { CombatUnit } from '../core/Battle'
+import { CombatUnit } from '../core/battle/CombatUnit'
 import { SkillManager } from '../core/skill'
 import { CommandFunction, NPC } from '../types'
 import { delay } from '../utils'
@@ -21,7 +21,7 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
   })
 
   const ally: CombatUnit[] = player.minions.map((m) => battle.toCombatUnit(m, 'minion'))
-  
+
   const { isAggressive, gross } = await SkillManager.requestAndExecuteSkill(
     battle.toCombatUnit(player, 'player'),
     context,

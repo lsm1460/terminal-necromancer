@@ -1,4 +1,4 @@
-import { CombatUnit } from '../core/Battle'
+import { CombatUnit } from '../core/battle/CombatUnit'
 import { CommandFunction, NPC } from '../types'
 
 export const attackCommand: CommandFunction = async (player, args, context) => {

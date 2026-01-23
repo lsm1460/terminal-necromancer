@@ -1,7 +1,7 @@
 import path from 'path'
 import { createCLI } from './cli'
 import { MAP_IDS } from './consts'
-import { Battle } from './core/Battle'
+import { Battle } from './core/battle/Battle'
 import { Broadcast } from './core/Broadcast'
 import { LootFactory } from './core/LootFactory'
 import { MapManager } from './core/MapManager'
@@ -72,6 +72,7 @@ player.onDeath = () => {
 
   world.addLootBag(LootFactory.fromPlayer(player, map))
 
+  map.currentSceneId = MAP_IDS.B1_SUBWAY
   player.x = 0
   player.y = 0
   player.hp = 1

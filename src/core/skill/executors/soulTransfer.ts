@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill } from '../../../types'
+import { BattleTarget, ExecuteSkill } from '../../../types'
 
 /**
  * 영혼 전달 (Soul Transfer)
@@ -8,7 +8,7 @@ import { ExecuteSkill } from '../../../types'
  * : [어픽스: EMPOWER_SOUL] 미니언 공격력 버프 부여 + 체력 감소
  */
 export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], enemies } = {}) => {
-  const minions = ally.filter((target) => target.ref.isMinion)
+  const minions = ally.filter((target) => (target.ref as BattleTarget).isMinion)
 
   // 1. 소환수 존재 여부 체크
   if (minions.length === 0) {

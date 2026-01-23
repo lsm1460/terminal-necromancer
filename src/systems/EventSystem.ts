@@ -49,11 +49,6 @@ export class EventSystem {
           }
         }
         break
-
-      case 'monster':
-      case 'monster-group-level-1':
-        await this.monsterEvent.handle(tile, player, context)
-        break
       case 'boss':
         await BossEvent.handle(tile, player, context)
         break
@@ -62,6 +57,10 @@ export class EventSystem {
         await NpcEvent.handle(tile, player, context)
         break
       }
+    }
+
+    if (tile.event.startsWith('monster-')) {
+      await this.monsterEvent.handle(tile, player, context)
     }
 
     tile.isSeen = true

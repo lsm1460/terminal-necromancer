@@ -1,5 +1,6 @@
 import { SkeletonRarity } from './consts'
-import { Battle, Buff, CalcDamageOptions, CombatUnit } from './core/Battle'
+import { Battle, Buff, CalcDamageOptions } from './core/battle/Battle'
+import { CombatUnit } from './core/battle/CombatUnit'
 import { Broadcast } from './core/Broadcast'
 import { ItemRarity } from './core/item/consts'
 import { MapManager } from './core/MapManager'
