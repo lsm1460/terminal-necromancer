@@ -4,7 +4,10 @@ import { BattleTarget, GameContext, NpcSkill } from '../../types'
 import { Player } from '../Player'
 import { CombatUnit } from '../battle/CombatUnit'
 
-const SkillEffectHandlers: Record<string, (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit, context: GameContext) => void> = {
+const SkillEffectHandlers: Record<
+  string,
+  (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit, context: GameContext) => void
+> = {
   heal: (target, skill) => {
     const healAmount = skill.power
     target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
@@ -45,7 +48,7 @@ const SkillEffectHandlers: Record<string, (target: CombatUnit, skill: NpcSkill, 
     } else {
       console.log(`👾 ${attacker.name}의 부름에 ${reinforcement.name}(이)가 나타났습니다!`)
     }
-  }
+  },
 }
 
 // B. 스킬 ID별 특수 로직 (시전자나 전장에 특별한 변화가 생길 때)
@@ -122,7 +125,8 @@ export class NpcSkillManager {
       case 'ENEMY_ALL':
         return enemies // 플레이어 파티가 있다면 확장
       case 'ENEMY_SINGLE':
-        targets = [enemies[0]]
+        const priorityTarget = enemies.find((e) => e.deBuff.some((b) => b.type === 'focus')) || enemies[0]
+        targets = [priorityTarget]
         break
       case 'ENEMY_BACK':
         targets = enemies.length > 0 ? [enemies[enemies.length - 1]] : []
@@ -189,7 +193,7 @@ export class NpcSkillManager {
     }
 
     const npcSkillId = available[Math.floor(Math.random() * available.length)]
-    
+
     return this.skillData[npcSkillId].id
   }
 }

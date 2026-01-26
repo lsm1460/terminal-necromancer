@@ -19,14 +19,16 @@
     "inventory": [],
     "_maxMemorize": 4,
     "memorize": [
-      "RAISE_SKELETON"
+      "RAISE_SKELETON",
+      "FOCUS_FIRE"
     ],
     "equipped": {
       "weapon": null,
       "armor": null
     },
     "unlockedSkills": [
-      "RAISE_SKELETON"
+      "RAISE_SKELETON",
+      "FOCUS_FIRE"
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,

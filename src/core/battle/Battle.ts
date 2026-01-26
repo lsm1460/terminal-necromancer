@@ -12,7 +12,7 @@ import { CombatUnit } from './CombatUnit'
 export type Buff = {
   name: string
   duration: number
-  type: 'deBuff' | 'bind' | 'buff' | 'dot'
+  type: 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus'
   atk?: number
   agi?: number
   def?: number
@@ -351,7 +351,18 @@ export class Battle {
     if (autoSkillId) {
       await context.npcSkills.execute(autoSkillId, attacker, ally, targets, context)
     } else {
-      const target = AffixManager.handleBeforeAttack(this.player, attacker, targets)
+      let target: CombatUnit
+      if (['monster', 'npc'].includes(attacker.type)) {
+        target = AffixManager.handleBeforeAttack(this.player, attacker, targets)
+      } else {
+        // is minion..
+        target = [...targets].sort((a, b) => {
+          const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0
+          const bHasFocus = b.deBuff.some((b) => b.type === 'focus') ? 1 : 0
+
+          return bHasFocus - aHasFocus // focus가 있는 유닛을 배열의 맨 앞으로
+        })[0] as CombatUnit
+      }
 
       await target.takeDamage(attacker)
     }

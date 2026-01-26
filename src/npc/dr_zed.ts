@@ -9,8 +9,6 @@ const ZedHandler: NPCHandler = {
     const isB3Completed = context.events.isCompleted('second_boss')
     const alreadyHeard = context.events.isCompleted('HEARD_RESISTANCE')
 
-    console.log('DEBUG:::', isB2Completed, alreadyHeard)
-
     return [
       { name: 'talk', message: '💬 잡담' },
       ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: '💬 대화' }] : []),

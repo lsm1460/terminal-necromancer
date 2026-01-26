@@ -9,7 +9,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   const lootBag = context.world.getLootBagAt(context.map.currentSceneId, tile.id)
   const drops = context.world.getDropsAt(player.x, player.y)
 
-  if (!drops.length) {
+  if (!drops.length && !lootBag) {
     console.log('\n🕳️ 이곳에는 주울 수 있는 아이템이 없습니다.')
     return false
   }

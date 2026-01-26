@@ -14,6 +14,18 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     unlockHint: '',
     execute: (player, context) => SkillExecutor.raiseSkeleton(player, context),
   },
+  [SKILL_IDS.FOCUS_FIRE]: {
+    id: SKILL_IDS.FOCUS_FIRE,
+    name: '죽음의 표식',
+    description:
+      '지정한 적에게 죽음의 표식을 남깁니다. 소환된 모든 해골 병사가 즉시 해당 대상을 우선적으로 공격합니다.',
+    cost: 5,
+    requiredExp: 0,
+    requiredLevel: 1,
+    unlocks: [],
+    unlockHint: '',
+    execute: (player, context, units) => SkillExecutor.focusFire(player, context, units),
+  },
   [SKILL_IDS.SOUL_HARVEST]: {
     id: SKILL_IDS.SOUL_HARVEST,
     name: '영혼 흡수',

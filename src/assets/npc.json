@@ -188,8 +188,8 @@
   "first_boss": {
     "id": "first_boss",
     "name": "기어다니는 죄악, 벨페고르",
-    "hp": 100,
-    "maxHp": 100,
+    "hp": 80,
+    "maxHp": 80,
     "atk": 16,
     "def": 8,
     "eva": 0.00,

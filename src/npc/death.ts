@@ -13,7 +13,7 @@ const DeathHandler: NPCHandler = {
     const isB3Completed = context.events.isCompleted('second_boss')
     const hasSubSpace = player.hasSkill('SPACE')
 
-    if (!isFirst) {
+    if (!isFirst || !isB2Completed) {
       return [{ name: 'intro', message: '💬 대화' }]
     }
 
@@ -85,9 +85,6 @@ async function handleIntro(context: GameContext) {
     '사신: "가서 그 오물들을 도려내라. 네놈의 그 녹슨 낫이 아직 영혼의 껍질이라도 썰 수 있다면 말이야."',
     '사신: "[아래]로 내려가면 지하로 내려갈 수 있는 엘리베이터가 있다. 청소를 끝내면 나에게 와서 보고하도록.."',
   ]
-
-  console.clear()
-  console.log(`[ 심판의 방 - 죽음의 조롱 ]\n`)
 
   for (const message of dialogues) {
     await enquirer.prompt({

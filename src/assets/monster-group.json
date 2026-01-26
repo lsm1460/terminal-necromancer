@@ -14,8 +14,8 @@
     { "id": "cocoon_human", "encounterRate": 25 }
   ],
   "monster-group-b2-boss": [
-    { "id": "filth_slime", "encounterRate": 100 },
-    { "id": "filth_slime", "encounterRate": 100 },
-    { "id": "filth_slime", "encounterRate": 100 }
+    { "id": "ghoul", "encounterRate": 100 },
+    { "id": "ghoul", "encounterRate": 100 },
+    { "id": "ghoul", "encounterRate": 100 }
   ]
 }

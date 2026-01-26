@@ -117,7 +117,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   private logDamage(attacker: CombatUnit, result: any) {
     const { isEscape, damage, isCritical } = result
-    const hpMsg = `(남은 HP: ${this.ref.hp})`
+    const hpMsg = `(${this.name}의 남은 HP: ${this.ref.hp})`
     if (isEscape) console.log(`\n💥 ${attacker.name}의 공격! ${this.name} 회피! ${hpMsg}`)
     else
       console.log(

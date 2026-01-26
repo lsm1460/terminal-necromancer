@@ -1,7 +1,7 @@
 {
   "player": {
     "x": 0,
-    "y": 1,
+    "y": 0,
     "_maxHp": 50,
     "hp": 50,
     "_maxMp": 50,
@@ -16,17 +16,78 @@
     "level": 1,
     "karma": 0,
     "inventoryMax": 15,
-    "inventory": [],
+    "inventory": [
+      {
+        "id": "wood_stick_85c46acc187a4d83",
+        "label": "\u001b[37m⚪ 나무 막대\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          1,
+          3
+        ],
+        "critRange": [
+          0,
+          0
+        ],
+        "price": 0,
+        "sellPrice": 0,
+        "description": "길바닥을 굴러다니는 나무 막대",
+        "quantity": 1,
+        "maxRarity": "COMMON",
+        "atk": 2,
+        "crit": 0,
+        "rarity": "COMMON",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "rags_c062b48f5f05642f",
+        "label": "\u001b[37m⚪ 장인의 누더기\u001b[0m",
+        "type": "armor",
+        "defRange": [
+          1,
+          2
+        ],
+        "evaRange": [
+          0,
+          0
+        ],
+        "price": 0,
+        "sellPrice": 0,
+        "description": "길바닥을 굴러다니는 망자의 천",
+        "quantity": 1,
+        "maxRarity": "COMMON",
+        "def": 2,
+        "eva": 0,
+        "rarity": "COMMON",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "nut",
+        "label": "도토리",
+        "type": "food",
+        "hpHeal": 2,
+        "price": 5,
+        "sellPrice": 1,
+        "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다.",
+        "quantity": 1,
+        "x": 0,
+        "y": 1
+      }
+    ],
     "_maxMemorize": 4,
     "memorize": [
-      "RAISE_SKELETON"
+      "RAISE_SKELETON",
+      "FOCUS_FIRE"
     ],
     "equipped": {
       "weapon": null,
       "armor": null
     },
     "unlockedSkills": [
-      "RAISE_SKELETON"
+      "RAISE_SKELETON",
+      "FOCUS_FIRE"
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
@@ -36,7 +97,7 @@
     "golemUpgrade": [],
     "knightUpgrade": []
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -76,7 +137,7 @@
         "relation": 0
       },
       "first_boss": {
-        "hp": 100,
+        "hp": 80,
         "isAlive": true,
         "reborn": false,
         "relation": 0
@@ -118,6 +179,7 @@
   "drop": null,
   "completedEvents": [
     "START_GAME",
-    "item-tutorial"
+    "item-tutorial",
+    "first_talk_death"
   ]
 }
