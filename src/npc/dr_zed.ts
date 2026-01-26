@@ -5,9 +5,11 @@ import enquirer from 'enquirer'
 
 const ZedHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const isB2Completed = context.events.isCompleted('first_boss')
+    const isB2Completed = context.events.isCompleted('second_talk_death')
     const isB3Completed = context.events.isCompleted('second_boss')
     const alreadyHeard = context.events.isCompleted('HEARD_RESISTANCE')
+
+    console.log('DEBUG:::', isB2Completed, alreadyHeard)
 
     return [
       { name: 'talk', message: '💬 잡담' },

@@ -1,8 +1,8 @@
 import fs from 'fs'
-import { Tile } from '../types'
-import { Player } from './Player'
 import _ from 'lodash'
 import { MAP_IDS } from '../consts'
+import { Tile } from '../types'
+import { Player } from './Player'
 
 interface SceneData {
   displayName: string
@@ -55,6 +55,7 @@ export class MapManager {
     const newScene = this.currentScene
 
     const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE]
+
     if (!fixedArea.includes(targetSceneId)) {
       this.shuffleTiles(targetSceneId)
     }

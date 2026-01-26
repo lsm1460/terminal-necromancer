@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
-import { BattleTarget, NpcSkill } from '../../types'
+import { BattleTarget, GameContext, NpcSkill } from '../../types'
 import { Player } from '../Player'
 import { CombatUnit } from '../battle/CombatUnit'
 
-const SkillEffectHandlers: Record<string, (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit) => void> = {
+const SkillEffectHandlers: Record<string, (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit, context: GameContext) => void> = {
   heal: (target, skill) => {
     const healAmount = skill.power
     target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
@@ -22,6 +22,30 @@ const SkillEffectHandlers: Record<string, (target: CombatUnit, skill: NpcSkill, 
       ...(skill.options || {}),
     })
   },
+  summon: (target, skill, attacker, context) => {
+    const { battle } = context
+
+    if (!skill.options?.spawnMonsterId) {
+      console.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
+      return
+    }
+
+    const reinforcement = battle.spawnMonster(skill.options.spawnMonsterId, context)
+
+    if (!reinforcement) {
+      console.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
+      return
+    }
+
+    console.log(`📢 ${attacker.name}의 [${skill.name}]!`)
+
+    // 3. 상황에 맞는 연출 문구 (스킬 ID나 이름으로 판별)
+    if (skill.id.includes('divide')) {
+      console.log(`🧬 ${attacker.name}에게서 ${reinforcement.name}(이)가 분리되었습니다!`)
+    } else {
+      console.log(`👾 ${attacker.name}의 부름에 ${reinforcement.name}(이)가 나타났습니다!`)
+    }
+  }
 }
 
 // B. 스킬 ID별 특수 로직 (시전자나 전장에 특별한 변화가 생길 때)
@@ -29,20 +53,11 @@ const SpecialSkillLogics: Record<
   string,
   (attacker: CombatUnit, targets: CombatUnit[], skill: NpcSkill) => Promise<void>
 > = {
-  call_minion: async (attacker, targets, skill) => {
-    // 1. 모든 대상에게 데미지 적용
-    for (const target of targets) {
-      await SkillEffectHandlers.damage(target, { ...skill, options: { rawDamage: Math.floor(attacker.ref.hp * skill.power) } }, attacker)
-    }
-    // 2. 시전자 즉사 처리
-    console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
-    attacker?.onDeath?.()
-  },
   // 자폭
   self_destruct: async (attacker, targets, skill) => {
     // 1. 모든 대상에게 데미지 적용
     for (const target of targets) {
-      await SkillEffectHandlers.damage(target, { ...skill, options: { rawDamage: Math.floor(attacker.ref.hp * skill.power) } }, attacker)
+      await target.takeDamage(attacker, { rawDamage: Math.floor(attacker.ref.hp * skill.power) })
     }
     // 2. 시전자 즉사 처리
     console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
@@ -73,7 +88,9 @@ type SkillExecutor<T = void> = (
   skillId: string,
   attacker: CombatUnit,
   ally: CombatUnit[],
-  enemies: CombatUnit<BattleTarget>[]) => T
+  enemies: CombatUnit<BattleTarget>[],
+  context: GameContext
+) => T
 
 export class NpcSkillManager {
   private skillData: Record<string, NpcSkill>
@@ -114,6 +131,9 @@ export class NpcSkillManager {
         const randomIndex = Math.floor(Math.random() * enemies.length)
         targets = [enemies[randomIndex]]
         break
+      case 'SELF':
+        targets = [attacker]
+        break
       default:
         break
     }
@@ -135,7 +155,7 @@ export class NpcSkillManager {
   }
 
   execute: SkillExecutor = async (...params) => {
-    const [skillId, attacker] = params
+    const [skillId, attacker, ally, enemies, context] = params
     const skill = this.getSkill(skillId)
     if (!skill) return
 
@@ -157,13 +177,19 @@ export class NpcSkillManager {
     // 2. 특수 로직이 없다면 공통 타입(Type 기반) 핸들러 실행
     const handler = SkillEffectHandlers[skill.type] || SkillEffectHandlers.damage
     for (const target of targets) {
-      await handler(target, skill, attacker)
+      await handler(target, skill, attacker, context)
     }
   }
 
   getRandomSkillId(skills: string[]): string | null {
     const available = skills.filter((id) => Math.random() <= (this.skillData[id]?.chance || 0))
 
-    return available.length > 0 ? available[Math.floor(Math.random() * available.length)] : null
+    if (available.length < 1) {
+      return null
+    }
+
+    const npcSkillId = available[Math.floor(Math.random() * available.length)]
+    
+    return this.skillData[npcSkillId].id
   }
 }

@@ -38,8 +38,10 @@ export function printTileStatus(player: Player, { map, npcs, world }: GameContex
 
 export function printLootStatus(player: Player, { world, map }: GameContext) {
   const { x, y } = player.pos
-  const bag = world.getLootBagAt(map.currentSceneId, x, y)
-  if (bag) console.log(`\n나의 시체를 발견했다.`)
+  const tile = map.getTile(x,y)
+  
+  const bag = world.getLootBagAt(map.currentSceneId, tile.id)
+  if (bag) console.log(`\n나의 영혼 파편들을 발견했다.`)
 
   const drops = world.getDropsAt(x, y)
   if (drops?.length) {

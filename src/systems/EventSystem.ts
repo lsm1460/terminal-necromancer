@@ -63,6 +63,8 @@ export class EventSystem {
             console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
             console.log(`✨ HP/MP와 모든 소환수의 상태가 완벽하게 복구되었습니다.`)
             console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+
+            tile.isClear = true
           }
         }
         break

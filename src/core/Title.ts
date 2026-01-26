@@ -22,8 +22,8 @@ export class Title {
           name: 'menu',
           message: '시작하시겠습니까?',
           choices: [
-            { name: 'new', message: '새 게임 시작' },
             ...(hasSave ? [{ name: 'load', message: '이어하기' }] : []),
+            { name: 'new', message: '새 게임 시작' },
             { name: 'exit', message: '종료' },
           ],
         })

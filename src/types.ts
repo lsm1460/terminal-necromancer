@@ -53,6 +53,7 @@ export interface Monster extends BattleTarget {
 }
 
 export interface Tile {
+  id: string
   theme: string
   event: string
   dialogue: string
@@ -161,8 +162,7 @@ export type Corpse = {
 export type LootBag = {
   id: string
   scendId: string
-  x: number
-  y: number
+  tileId: string
   exp: number
   gold: number
 }
@@ -279,6 +279,7 @@ export type SkillTargetType =
   | 'ALLY_ALL'
   | 'SINGLE_BUFF'
   | 'RANDOM'
+  | 'SELF'
 
 export type NpcSkill = {
   id: string
@@ -289,7 +290,9 @@ export type NpcSkill = {
   targetType: SkillTargetType
   type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
   buff?: Buff
-  options?: CalcDamageOptions
+  options?: CalcDamageOptions & {
+    spawnMonsterId?: string
+  }
 }
 
 export type AffixId =

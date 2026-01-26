@@ -1,9 +1,9 @@
 // core/MonsterFactory.ts
+import fs from 'fs'
 import _ from 'lodash'
+import path from 'path'
 import { Monster, MonsterGroupMember, Tile } from '../types'
 import { generateId } from '../utils'
-import fs from 'fs'
-import path from 'path'
 
 export class MonsterFactory {
   private monster: Record<string, Monster> = {}
@@ -44,12 +44,10 @@ export class MonsterFactory {
 
     if (!selected) return null
 
-    const origin = _.cloneDeep(this.monster[selected.id])
+    const baseMonster = this.makeMonster(selected.id)
 
-    const baseMonster = {
-      ...origin,
-      isAlive: true,
-      id: generateId(origin.id),
+    if (!baseMonster) {
+      return null
     }
 
     return baseMonster
@@ -58,12 +56,20 @@ export class MonsterFactory {
   makeMonsters(groupName: string): Monster[] {
     const group = this.group[groupName] || []
 
-    return group
-      .map((member) => _.cloneDeep(this.monster[member.id]))
-      .map((origin) => ({
-        ...origin,
-        isAlive: true,
-        id: generateId(origin.id),
-      }))
+    return group.map((member) => this.makeMonster(member.id)).filter(Boolean) as Monster[]
+  }
+
+  makeMonster(monsterId: string): Monster | void {
+    if (!this.monster[monsterId]) {
+      return
+    }
+
+    const base = _.cloneDeep(this.monster[monsterId])
+
+    return {
+      ...base,
+      isAlive: true,
+      id: generateId(base.id),
+    }
   }
 }

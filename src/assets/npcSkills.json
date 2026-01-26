@@ -25,7 +25,7 @@
     "buff": {
       "name": "구속",
       "type": "bind",
-      "duration": 2
+      "duration": 3
     }
   },
   "self_destruct": {
@@ -40,7 +40,7 @@
     "id": "health_drain",
     "name": "생명력 강탈",
     "description": "대상에게 달라붙어 그들의 생명 에너지를 직접 빨아들여 자신의 양분으로 삼습니다.",
-    "chance": 0.2,
+    "chance": 0.7,
     "power": 0.5,
     "targetType": "ENEMY_SINGLE"
   },
@@ -128,5 +128,16 @@
     "power": 1.6,
     "targetType": "ENEMY_ALL",
     "description": "군마와 혼연일체가 되어 적진을 관통합니다. 모든 적에게 강력한 물리 피해를 입힙니다."
+  },
+  "divide_soul": {
+    "id": "divide_soul",
+    "name": "자가 분열",
+    "description": "몸에 붙어있는 망령들이 떨어져나갑니다.",
+    "chance": 0.65,
+    "targetType": "SELF",
+    "type": "summon",
+    "options": {
+      "spawnMonsterId": "ghoul"
+    }
   }
 }

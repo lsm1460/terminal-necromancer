@@ -8,12 +8,17 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
     const isFirst = context.events.isCompleted('first_talk_death')
+    const isSecond = context.events.isCompleted('second_talk_death')
     const isB2Completed = context.events.isCompleted('first_boss')
     const isB3Completed = context.events.isCompleted('second_boss')
     const hasSubSpace = player.hasSkill('SPACE')
 
-    if (!isFirst || !isB2Completed) {
+    if (!isFirst) {
       return [{ name: 'intro', message: '💬 대화' }]
+    }
+
+    if (isB2Completed && !isSecond) {
+      return [{ name: 'tutorialOver', message: '💬 대화' }]
     }
 
     return [
@@ -33,6 +38,9 @@ const DeathHandler: NPCHandler = {
         break
       case 'talk':
         await handleTalk(npc)
+        break
+      case 'tutorialOver':
+        await handleTutorialOver(context)
         break
       case 'levelUp':
         await handleLevelUp(player)
@@ -152,7 +160,7 @@ function handleLevelUp(player: Player) {
   if (player.levelUp()) {
     console.log(`\n✨ 축하합니다! 레벨이 올랐습니다. (현재 LV.${player.level})`)
   } else {
-    const nextExp = player.expToNextLevel()
+    const { required: nextExp } = player.expToNextLevel()
     console.log(`\n[실패] 경험치가 부족합니다. (현재: ${player.exp}/${nextExp})`)
   }
 }
@@ -230,7 +238,7 @@ async function handleIncreaseLimit(player: Player) {
   }
 
   // 2. 필요 경험치 계산
-  const cost = SKELETON_UPGRADE.COSTS[currentLimit];
+  const cost = SKELETON_UPGRADE.COSTS[currentLimit]
 
   console.log(
     `\n사신: "그 정도로는 역시 만족하지 못하는 건가? 좋다. 망자의 자리를 더 내어주지. 다만, 그에 걸맞은 영혼의 정수(${cost} EXP)는 준비했겠지?"`
@@ -379,6 +387,30 @@ async function handleGetSubSpace(player: Player): Promise<boolean> {
     // 입력 중단(Ctrl+C 등) 예외 처리
     return false
   }
+}
+
+async function handleTutorialOver(context: GameContext) {
+  const { events } = context
+
+  const dialogues = [
+    '사신: "오호... 그 비릿한 오물 더미를 정말로 치우고 돌아온 건가? 용케도 사지가 붙어있군."',
+    '사신: "(비릿한 조소를 띠며) 기어다니는 죄악의 단말마가 여기까지 들리더군. 칭찬이라도 기대한 것은 아니겠지? "',
+    '사신: "하지만... 인정하지. 네놈의 그 처절한 발버둥이 제법 쓸만하다는 것을."',
+    '사신: "이제부터는 알아서 깊은 곳의 오물들을 치우도록 해라."', // 추가된 지시
+    '사신: "일을 잘한다면, 네 하찮은 능력은 조금 더 풀어줄지도 모르지."', // 계약 강조
+    '사신: "네놈이 바치는 영혼의 정수가 쌓일수록, 네놈이 잊고 있던 [기술]들을 더 많이 허락해주마."',
+  ]
+
+  for (const message of dialogues) {
+    await enquirer.prompt({
+      type: 'input',
+      name: 'confirm',
+      message,
+      format: () => ' (Enter ⏎)',
+    })
+  }
+
+  events.completeEvent('second_talk_death')
 }
 
 export default DeathHandler

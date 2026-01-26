@@ -6,6 +6,7 @@ import portal from './portal'
 import jax_seeker from './jax_seeker'
 import echo from './echo'
 import dr_zed from './dr_zed'
+import ratty from './ratty'
 import { NPCHandler } from './NPCHandler'
 
 const npcHandlers: Record<string, NPCHandler> = {
@@ -19,6 +20,9 @@ const npcHandlers: Record<string, NPCHandler> = {
   kane_leader,
   maya_tech,
   jax_seeker,
+
+  // b2
+  ratty,
 }
 
 export default npcHandlers

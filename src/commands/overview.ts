@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import { Player } from '../core/Player'
-import { printTileStatus } from '../statusPrinter'
+import { printStatus } from '../statusPrinter'
 import {
   ArmorItem,
   BattleTarget,
@@ -22,7 +22,7 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   console.log('🛡️ 상태창')
   console.log(`레벨: ${level} (경험치: ${exp})`)
 
-  const expNeeded = player.expToNextLevel()
+  const { required: expNeeded } = player.expToNextLevel()
   if (expNeeded !== null) {
     console.log(`다음 레벨까지 필요한 경험치: ${expNeeded}`)
   } else {
@@ -45,7 +45,8 @@ export const statusCommand: CommandFunction = (player, args, context) => {
     const { label, atk } = equipped.weapon
     weaponText = `${label} (공격 +${atk})`
 
-    if ('affix' in equipped.weapon && equipped.weapon.affix) weaponText += `\n   ㄴ축복 : [${equipped.weapon.affix.name}] 효과 부여 (${equipped.weapon.affix.description})`
+    if ('affix' in equipped.weapon && equipped.weapon.affix)
+      weaponText += `\n   ㄴ축복 : [${equipped.weapon.affix.name}] 효과 부여 (${equipped.weapon.affix.description})`
   }
 
   let armorText = '없음'
@@ -54,7 +55,8 @@ export const statusCommand: CommandFunction = (player, args, context) => {
 
     armorText = `${label} (방어 +${def})`
 
-    if ('affix' in equipped.armor && equipped.armor.affix) armorText += `\n   ㄴ축복 : [${equipped.armor.affix.name}] 효과 부여 (${equipped.armor.affix.description})`
+    if ('affix' in equipped.armor && equipped.armor.affix)
+      armorText += `\n   ㄴ축복 : [${equipped.armor.affix.name}] 효과 부여 (${equipped.armor.affix.description})`
   }
 
   console.log(`무기: ${weaponText}`)
@@ -98,7 +100,7 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   console.log(` HP  : ${hpBar} ${target.hp}/${target.maxHp}`)
   console.log(
-    ` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)} | AGI: ${target.agi}`
+    ` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)} | AGI: ${target.agi || 0}`
   )
 
   if (target.eva || target.crit) {
@@ -263,9 +265,9 @@ export const lookAll = async (
         const eventId = target.tile.event
 
         if (eventId.includes('boss')) {
-          console.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`);
+          console.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`)
         } else if (eventId.startsWith('monster')) {
-          console.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`);
+          console.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`)
         }
       }
     }
@@ -280,7 +282,7 @@ export const lookCommand: CommandFunction = async (player, args, context) => {
 
   const items = world.getDropsAt(x, y)
 
-  printTileStatus(player, context)
+  printStatus(player, context)
 
   await lookAll(player, context, items, tile.monsters)
 

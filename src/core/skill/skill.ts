@@ -44,7 +44,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredExp: 600,
     requiredLevel: 3,
     unlocks: ['second_boss'],
-    unlockHint: '지하 2층 정화 완료',
+    unlockHint: '지하 3층 정화 완료',
     execute: (player, context, units) => SkillExecutor.soulTransfer(player, context, units),
   },
   [SKILL_IDS.CURSE]: {
@@ -55,7 +55,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredExp: 1000,
     requiredLevel: 3,
     unlocks: ['second_boss'],
-    unlockHint: '지하 2층 정화 완료',
+    unlockHint: '지하 3층 정화 완료',
     execute: (player, context, units) => SkillExecutor.curse(player, context, units),
   },
   [SKILL_IDS.BONE_SPEAR]: {
@@ -77,7 +77,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredExp: 1200,
     requiredLevel: 3,
     unlocks: ['third_boss'],
-    unlockHint: '지하 2층 정화 완료',
+    unlockHint: '지하 4층 정화 완료',
     execute: (player, context, units) => SkillExecutor.bonePrison(player, context, units),
   },
   [SKILL_IDS.BONE_STORM]: {
@@ -88,7 +88,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     requiredExp: 2000,
     requiredLevel: 3,
     unlocks: ['third_boss'],
-    unlockHint: '지하 2층 정화 완료',
+    unlockHint: '지하 4층 정화 완료',
     execute: (player, context, units) => SkillExecutor.boneStorm(player, context, units),
   },
 }

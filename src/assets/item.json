@@ -76,7 +76,7 @@
     "id": "iron_sword",
     "label": "철검",
     "type": "weapon",
-    "atkRange": [5, 10],
+    "atkRange": [4, 7],
     "critRange": [0, 0.05],
     "price": 500,
     "sellPrice": 120,

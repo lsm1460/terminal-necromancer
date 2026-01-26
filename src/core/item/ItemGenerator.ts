@@ -14,7 +14,7 @@ export class ItemGenerator {
 
     // 1. 기본 확률 주사위
     if (roll < 3) rolled = 'EPIC'
-    else if (roll < 35) rolled = 'RARE'
+    else if (roll < 20) rolled = 'RARE'
     else rolled = 'COMMON'
 
     // 2. 등급 우선순위 정의

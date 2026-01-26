@@ -39,9 +39,9 @@ const init = (initData: SaveData): [Player, GameContext] => {
   const monster = new MonsterFactory(monsterGroupPath, monsterPath)
   const player = new Player(levelPath, initData?.player)
   const events = new EventSystem(eventPath, monster, initData?.completedEvents)
-  const battle = new Battle(player)
+  const battle = new Battle(player, monster)
   const map = new MapManager(mapPath)
-  const npcs = new NPCManager(npcPath, initData?.npcs)
+  const npcs = new NPCManager(npcPath, player, initData?.npcs)
   const world = new World(map)
   const broadcast = new Broadcast(broadcastPath, npcs, events)
   const npcSkills = new NpcSkillManager(npcSkillPath, player)
@@ -72,9 +72,14 @@ const init = (initData: SaveData): [Player, GameContext] => {
     }
 
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-    console.log('\n💀 나는 사망했다... (다시 육체를 재구성하는 감각이 느껴집니다.)\n')
+    console.log('\n💀 나의 영혼들은 조각났다... (다시 육체를 재구성하는 감각이 느껴집니다.)\n')
 
-    world.addLootBag(LootFactory.fromPlayer(player, map))
+    const lootBag = LootFactory.fromPlayer(player, map)
+
+    player.exp -= lootBag.exp
+    player.gold -= lootBag.gold
+
+    world.addLootBag(lootBag)
 
     map.currentSceneId = MAP_IDS.B1_SUBWAY
     player.x = 0

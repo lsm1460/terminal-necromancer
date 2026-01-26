@@ -26,7 +26,7 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
   }
   // 2. 인자가 없는 경우: Enquirer 선택창 띄우기
   else {
-    const { itemId } = (await enquirer.prompt({
+    const { itemId } = await enquirer.prompt<{ itemId: string }>({
       type: 'select',
       name: 'itemId',
       message: '어떤 아이템을 버리시겠습니까?',
@@ -43,7 +43,7 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
 
         return target ? target.label : value
       },
-    })) as { itemId: string }
+    })
 
     if (itemId === 'cancel') return false
     itemToDrop = inventory.find((i) => i.id === itemId)

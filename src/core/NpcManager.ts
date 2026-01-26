@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { HOSTILITY_LIMIT } from '../consts'
 import { NPC, NPCState } from '../types'
+import { Player } from './Player'
 
 export class NPCManager {
   private baseData: Record<string, any> // npc.json 원본
@@ -8,7 +9,7 @@ export class NPCManager {
   private factionHostility: Record<string, number> = {} // 소속별 적대도
   private factionContribution: Record<string, number> = {} // 소속별 기여도
 
-  constructor(path: string, savedData?: any) {
+  constructor(path: string, private player: Player, savedData?: any) {
     // 1. 원본 JSON 로드
     this.baseData = JSON.parse(fs.readFileSync(path, 'utf-8'))
 
@@ -89,6 +90,7 @@ export class NPCManager {
       return
     }
 
+    this.player.karma += 1
     this.states[id].isAlive = false
   }
 

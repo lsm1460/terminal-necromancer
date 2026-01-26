@@ -3,6 +3,10 @@ import { CommandFunction, Drop, Item, ItemType } from '../types'
 
 export const pickCommand: CommandFunction = async (player, args, context) => {
   // 1. 현재 위치의 드랍 아이템 탐색
+  const { x, y } = player.pos
+  const tile = context.map.getTile(x, y)
+
+  const lootBag = context.world.getLootBagAt(context.map.currentSceneId, tile.id)
   const drops = context.world.getDropsAt(player.x, player.y)
 
   if (!drops.length) {
@@ -12,7 +16,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
 
   // 2. 현재 인벤토리 총 점유 수량 계산 (각 아이템의 quantity 합산)
   const currentTotalQuantity = player.inventory.reduce((sum, item) => sum + (item.quantity || 1), 0)
-  
+
   // 3. 남은 공간 확인
   const availableSpace = player.inventoryMax - currentTotalQuantity
 
@@ -24,42 +28,52 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
 
   let drop: any | undefined
 
-  // 4. 대상 아이템 선택 로직
-  if (args.length > 0) {
-    // 명령어로 직접 입력한 경우 (예: pick 포션)
-    const itemName = args.join(' ')
-    const dropIndex = drops.findIndex((d) => d.label === itemName)
+  // 선택 메뉴 띄우기
+  const findDrop = (_dropId: string) => drops.find((_drop) => _drop.id === _dropId)
 
-    if (dropIndex === -1) {
-      console.log(`\n❓ 이곳에 "${itemName}"은(는) 없습니다.`)
-      return false
-    }
-    drop = drops[dropIndex]
-  } else {
-    // 선택 메뉴 띄우기
-    const findDrop = (_dropId: string) => drops.find((_drop) => _drop.id === _dropId)
+  const choices = [
+    ...(lootBag
+      ? [
+          {
+            name: 'lootBag',
+            message: `내가 흘린 영혼의 조각들..(영혼 조각: ${lootBag.exp}, 골드: ${lootBag.gold})`,
+          },
+        ]
+      : []),
+    ...drops.map((d) => ({
+      name: d.id,
+      message: `${d.label}${d.quantity ? ` (${d.quantity}개)` : ''}`,
+    })),
+    { name: 'cancel', message: '🔙 취소' },
+  ]
 
-    const { dropId } = (await enquirer.prompt({
-      type: 'select',
-      name: 'dropId',
-      message: `무엇을 획득하시겠습니까? (공간: ${availableSpace}칸 남음)`,
-      choices: [
-        ...drops.map((d) => ({
-          name: d.id,
-          message: `${d.label}${d.quantity ? ` (${d.quantity}개)` : ''}`,
-        })),
-        { name: 'cancel', message: '🔙 취소' },
-      ],
-      format(value) {
-        if (value === 'cancel') return '취소'
-        const target = findDrop(value)
-        return target ? target.label : value
-      },
-    })) as { dropId: string }
+  const { dropId } = await enquirer.prompt<{ dropId: string }>({
+    type: 'select',
+    name: 'dropId',
+    message: `무엇을 획득하시겠습니까? (공간: ${availableSpace}칸 남음)`,
+    choices,
+    format(value) {
+      if (value === 'cancel') return '취소'
+      if (value === 'lootBag') return '영혼 조각'
 
-    if (dropId === 'cancel') return false
-    drop = findDrop(dropId)
+      const target = findDrop(value)
+      return target ? target.label : value
+    },
+  })
+
+  if (dropId === 'cancel') return false
+  if (dropId === 'lootBag' && lootBag) {
+    console.log(`\n흩어져 있던 영혼의 조각(${lootBag.exp} EXP)과 낡은 금화(${lootBag.gold} G)를 수습합니다.`)
+    console.log(`"죽음은 끝이 아니었으나, 그 고통만큼은 고스란히 손끝에 전해집니다."`)
+
+    player.gainExp(lootBag.exp)
+    player.gainGold(lootBag.gold)
+    context.world.removeLootBag()
+
+    return false
   }
+
+  drop = findDrop(dropId)
 
   // 5. 획득 처리
   if (drop) {

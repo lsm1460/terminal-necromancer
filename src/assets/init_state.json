@@ -2,10 +2,10 @@
   "player": {
     "x": 0,
     "y": 0,
-    "_maxHp": 100,
-    "hp": 100,
-    "_maxMp": 100,
-    "mp": 100,
+    "_maxHp": 50,
+    "hp": 50,
+    "_maxMp": 50,
+    "mp": 50,
     "atk": 10,
     "def": 5,
     "agi": 5,
@@ -13,6 +13,7 @@
     "crit": 0,
     "gold": 0,
     "exp": 0,
+    "karma": 0,
     "level": 1,
     "inventoryMax": 15,
     "inventory": [],
@@ -24,7 +25,9 @@
       "weapon": null,
       "armor": null
     },
-    "unlockedSkills": [],
+    "unlockedSkills": [
+      "RAISE_SKELETON"
+    ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
     "skeleton": [],

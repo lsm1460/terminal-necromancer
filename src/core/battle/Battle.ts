@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { BattleTarget, Drop, GameContext, NPC } from '../../types'
 import { delay } from '../../utils'
 import { LootFactory } from '../LootFactory'
+import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../Player'
 import { SkillManager } from '../skill'
 import { AffixManager } from './AffixManager'
@@ -32,7 +33,10 @@ export class Battle {
   private unitCache = new Map<any, CombatUnit>()
   private currentEnemies: CombatUnit[] = []
 
-  constructor(public player: Player) {}
+  constructor(
+    private player: Player,
+    private monster: MonsterFactory
+  ) {}
 
   public getAliveEnemies() {
     return this.currentEnemies.filter((e) => e.ref.isAlive)
@@ -60,7 +64,7 @@ export class Battle {
       for (const unit of turnOrder) {
         // 전투 도중 누군가 죽었다면 체크
         if (!unit.ref.isAlive) continue
-        if (!this.player.isAlive || !enemies.some((e) => e.ref.isAlive)) break
+        if (!this.player.isAlive || !this.currentEnemies.some((e) => e.ref.isAlive)) break
 
         console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
         this.updateEffectsDuration(unit)
@@ -345,7 +349,7 @@ export class Battle {
 
     const autoSkillId = context.npcSkills.getRandomSkillId((attacker.ref as BattleTarget).skills || [])
     if (autoSkillId) {
-      await context.npcSkills.execute(autoSkillId, attacker, ally, targets)
+      await context.npcSkills.execute(autoSkillId, attacker, ally, targets, context)
     } else {
       const target = AffixManager.handleBeforeAttack(this.player, attacker, targets)
 
@@ -501,5 +505,20 @@ export class Battle {
       // 지속 시간이 남은 효과들만 유지
       unit[type] = unit[type].filter((e) => e.duration > 0)
     })
+  }
+
+  public spawnMonster(monsterId: string, context: GameContext) {
+    const monster = this.monster.makeMonster(monsterId)
+
+    if (!monster) {
+      return
+    }
+
+    const unit = this.toCombatUnit(monster, 'monster')
+    unit.onDeath = () => this.handleUnitDeath(monster as BattleTarget, context)
+
+    this.currentEnemies.push(unit)
+
+    return { ...unit }
   }
 }

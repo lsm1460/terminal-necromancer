@@ -21,10 +21,10 @@ import { ItemRarity } from './item/consts'
 export class Player {
   x = 0
   y = 0
-  _maxHp = 100
-  hp = 100
-  _maxMp = 100
-  mp = 100
+  _maxHp = 50
+  hp = 50
+  _maxMp = 50
+  mp = 50
   atk = 10
   def = 5
   agi = 5
@@ -33,6 +33,7 @@ export class Player {
   gold = 0
   exp = 0
   level = 1
+  karma = 0
   inventoryMax = 15
   inventory: Item[] = []
   _maxMemorize = INIT_MAX_MEMORIZE_COUNT
@@ -165,14 +166,14 @@ export class Player {
     }
 
     if (isLich && hasHorse) {
-      this._knight.name = '망령의 군주 발타자르';
-      this._knight.skills = ['abyssal_gallop', 'bone_prison', 'aging_curse'];
+      this._knight.name = '망령의 군주 발타자르'
+      this._knight.skills = ['abyssal_gallop', 'bone_prison', 'aging_curse']
     } else if (isLich && !hasHorse) {
       this._knight.name = '타락한 리치 발타자르'
       this._knight.skills = ['bone_prison', 'aging_curse']
     } else if (!isLich && hasHorse) {
-      this._knight.name = '심연의 기사 발타자르';
-      this._knight.skills = ['dread_charge', 'power_smash'];
+      this._knight.name = '심연의 기사 발타자르'
+      this._knight.skills = ['dread_charge', 'power_smash']
     } else {
       this._knight.name = '기사 발타자르'
       this._knight.skills = ['power_smash']
@@ -240,7 +241,7 @@ export class Player {
   }
 
   levelUp() {
-    const newLevelExp = this.expToNextLevel()
+    const { required: newLevelExp } = this.expToNextLevel()
     if (this.exp >= newLevelExp) {
       this.level += 1
       this.exp = this.exp - newLevelExp
@@ -357,11 +358,16 @@ export class Player {
     }
   }
 
-  expToNextLevel(): number {
+  expToNextLevel(): { required: number; toNext: number } {
     const nextLevel = this.level + 1
     const nextLevelData = this.levelTable.find((l) => l.level === nextLevel)
-    if (!nextLevelData) return 0 // 최고 레벨
-    return Math.max(nextLevelData.expRequired - this.exp, 0)
+
+    if (!nextLevelData) return { required: 0, toNext: 0 } // 최고 레벨
+
+    return {
+      required: Math.max(nextLevelData.expRequired - this.exp, 0),
+      toNext: Math.abs(nextLevelData.expRequired - this.exp),
+    }
   }
 
   unlockSkill(skill: Skill) {
@@ -432,7 +438,9 @@ export class Player {
 
   async useItem(targetItem?: ConsumableItem) {
     // 1. 소비 아이템만 필터링
-    const consumables = this.inventory.filter((item): item is ConsumableItem =>  [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type))
+    const consumables = this.inventory.filter((item): item is ConsumableItem =>
+      [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type)
+    )
 
     if (consumables.length === 0) {
       console.log('\n🎒 사용할 수 있는 소비 아이템이 없습니다.')
@@ -517,8 +525,7 @@ export class Player {
       isAlive: true,
       isMinion: true,
       isKnight: true,
-      deathLine:
-        '발타자르: "아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)"',
+      deathLine: '발타자르: "아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)"',
       description:
         '성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.',
       dropTableId: '',

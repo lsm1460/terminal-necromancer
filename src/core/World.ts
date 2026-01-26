@@ -35,15 +35,15 @@ export class World {
     this.lootBags = bag
   }
 
-  getLootBagAt(scendId: string, x: number, y: number): LootBag | undefined {
+  getLootBagAt(scendId: string, tileId: string): LootBag | undefined {
     return (
-      (this.lootBags &&
-        this.lootBags.scendId === scendId &&
-        this.lootBags.x === x &&
-        this.lootBags.y === y &&
-        this.lootBags) ||
+      (this.lootBags && this.lootBags.scendId === scendId && this.lootBags.tileId === tileId && this.lootBags) ||
       undefined
     )
+  }
+
+  findLootBagAtByScendId(scendId: string): LootBag | undefined {
+    return (this.lootBags && this.lootBags.scendId === scendId && this.lootBags) || undefined
   }
 
   removeLootBag() {

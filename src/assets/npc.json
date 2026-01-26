@@ -190,8 +190,8 @@
     "name": "기어다니는 죄악, 벨페고르",
     "hp": 100,
     "maxHp": 100,
-    "atk": 8,
-    "def": 0,
+    "atk": 16,
+    "def": 8,
     "eva": 0.00,
     "exp": 1000,
     "isAlive": true,
@@ -216,7 +216,7 @@
     "description": "'이것'은 단지 '치워야 할 오물'입니다.",
     "dropTableId": "boss1",
     "noEscape": true,
-    "skills": ["power_smash"]
+    "skills": ["power_smash", "divide_soul"]
   },
   "second_boss": {
     "id": "second_boss",
@@ -355,5 +355,40 @@
     "deathLine": "이 지긋지긋한 방송도... 이제 끝이네... 하아...",
     "description": "터미널 방송실에 틀어박혀 온갖 독설을 내뱉는 여성 아나운서입니다. 사실은 이 난장판을 누구보다 즐기고 있을지도 모릅니다.",
     "dropTableId": ""
+  },
+  "ratty": {
+    "id": "ratty",
+    "name": "래티",
+    "faction": "scavenger",
+    "hp": 30,
+    "maxHp": 30,
+    "atk": 5,
+    "def": 2,
+    "eva": 0,
+    "exp": 0,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "히히... 뭘 봐? 구경났냐? 통행료 안 낼 거면 저리 꺼져!",
+      "야, 내가 왕년에 황실 근위대 셋을 동시에... 아, 진짜라니까!",
+      "거 고철더미 좀 뒤지는 게 뭐 어때서? 여기 주인이 따로 있어?"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "오오, 형님! 오셨습니까? 오늘은 또 어떤 영혼을 털어오셨길래 그렇게 안색이 좋으셔!",
+        "farewell": "조심히 가쇼! 혹시 가다가 죽으면 그 장비는 내가 잘 수습해둘게. 히히!"
+      },
+      "normal": {
+        "greeting": "어이, 신입. 어디서 그런 넝마 같은 걸 주워 입고 다니냐? 꼴이 참 볼만해.",
+        "farewell": "가라 가. 내 무용담 들을 기회를 놓치다니, 평생 후회할 거다."
+      },
+      "hostile": {
+        "greeting": "뭐야, 그 눈빛은? 한 대 치게? 쳐봐! 쳐보라고! 네 그 힘 빠진 손으로 뭘 하겠냐?",
+        "farewell": "쳇, 재수 없긴. 사신 놈 앞바닥이나 핥으러 가는 주제에 기세는 좋네."
+      }
+    },
+    "deathLine": "아니... 내가... 왕년에는 진짜... 으윽...",
+    "description": "지하 2층 고철더미에 숨어 지내는 비열한 망령입니다. 끊임없이 과거의 영광을 날조하며 타인을 조롱하지만, 정작 실력은 형편없습니다.",
+    "dropTableId": "core_loot"
   }
 }
