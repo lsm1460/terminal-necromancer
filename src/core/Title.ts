@@ -75,7 +75,9 @@ export class Title {
               type: 'input',
               name: 'confirm',
               message,
-              format: () => ' ⏎',
+              // 입력값은 필요 없고 진행을 위한 대기 용도
+              result: () => '',
+              format: () => ' (계속하려면 Enter)',
             })
           }
     

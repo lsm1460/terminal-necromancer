@@ -8,12 +8,12 @@ export class LootFactory {
   static fromPlayer(player: Player, map: MapManager): LootBag {
     const { x, y } = player.pos
     const tile = map.getTile(x, y)
-    const { toNext } = player.expToNextLevel()
+    
     return {
       scendId: map.currentSceneId,
       id: generateId(),
       tileId: tile.id,
-      exp: toNext,
+      exp: player.exp,
       gold: player.gold,
     }
   }

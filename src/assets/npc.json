@@ -216,6 +216,7 @@
     "description": "'이것'은 단지 '치워야 할 오물'입니다.",
     "dropTableId": "boss1",
     "noEscape": true,
+    "minRarity": "elite",
     "skills": ["power_smash", "divide_soul"]
   },
   "second_boss": {
@@ -389,6 +390,37 @@
     },
     "deathLine": "아니... 내가... 왕년에는 진짜... 으윽...",
     "description": "지하 2층 고철더미에 숨어 지내는 비열한 망령입니다. 끊임없이 과거의 영광을 날조하며 타인을 조롱하지만, 정작 실력은 형편없습니다.",
-    "dropTableId": "core_loot"
+    "dropTableId": "b2_ratty"
+  },
+  "vending_machine": {
+    "id": "vending_machine",
+    "name": "포션 자판기",
+    "faction": "untouchable",
+    "hp": 8000,
+    "maxHp": 8000,
+    "atk": 15000,
+    "def": 5,
+    "eva": 1,
+    "exp": 5,
+    "isAlive": true,
+    "reborn": false,
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "원하시는 음료를 선택해주세요.",
+        "farewell": "이용해 주셔서 감사합니다."
+      },
+      "normal": {
+        "greeting": "원하시는 음료를 선택해주세요.",
+        "farewell": "이용해 주셔서 감사합니다."
+      },
+      "hostile": {
+        "greeting": "원하시는 음료를 선택해주세요.",
+        "farewell": "이용해 주셔서 감사합니다."
+      }
+    },
+    "deathLine": "...",
+    "description": "이런 곳에도 자판기는 있습니다.",
+    "dropTableId": ""
   }
 }

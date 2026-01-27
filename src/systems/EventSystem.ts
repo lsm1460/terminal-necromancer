@@ -34,7 +34,7 @@ export class EventSystem {
           if (!this.isCompleted('item-tutorial')) {
             const { x, y } = player.pos
             const { drop, world } = context
-            const { drops } = drop.generateDrops('tutorial-drop')
+            const { drops } = drop.generateDrops('tutorial_drop')
 
             drops.forEach((d) => {
               world.addDrop({ ...d, x, y })

@@ -131,7 +131,7 @@ async function handleSkillMenu(player: Player, context: GameContext) {
   const { skillId } = await enquirer.prompt<{ skillId: SkillId | 'back' }>({
     type: 'select',
     name: 'skillId',
-    message: '전수받을 기술을 선택하세요:',
+    message: '전수받을 기술을 선택하세요: 현재 사용 가능한 영혼 조각: ' + player.exp,
     choices: [...choices, { name: 'back', message: '🔙 뒤로 가기' }],
     format: (value) => {
       const selected = choices.find((c) => c.name === value)
@@ -153,11 +153,25 @@ async function handleSkillMenu(player: Player, context: GameContext) {
   }
 }
 
-function handleLevelUp(player: Player) {
+async function handleLevelUp(player: Player) {
+  const { required: nextExp, toNext: cost } = player.expToNextLevel()
+
+  const warningMsg = `${cost}개의 영혼 조각을 바친다면, 네 전성기의 힘을 조금이나마 되돌아올지도 모르지..`
+  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
+    type: 'confirm',
+    name: 'proceed',
+    message: warningMsg,
+    initial: false,
+  })
+
+  if (!proceed) {
+    console.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)
+    return
+  }
+
   if (player.levelUp()) {
     console.log(`\n✨ 축하합니다! 레벨이 올랐습니다. (현재 LV.${player.level})`)
   } else {
-    const { required: nextExp } = player.expToNextLevel()
     console.log(`\n[실패] 경험치가 부족합니다. (현재: ${player.exp}/${nextExp})`)
   }
 }
@@ -251,7 +265,7 @@ async function handleIncreaseLimit(player: Player) {
   }
 
   // 4. 확인 절차 (Enquirer)
-  const warningMsg = `정말로 ${cost} EXP를 바쳐 군단을 확장하겠느냐? 되돌릴 수 없는 계약이다.`
+  const warningMsg = `정말로 ${cost}개의 영혼 조각을 바쳐 군단을 확장하겠느냐? 되돌릴 수 없는 계약이다.`
   const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
     type: 'confirm',
     name: 'proceed',

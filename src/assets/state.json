@@ -1,25 +1,37 @@
 {
   "player": {
-    "x": 0,
-    "y": 0,
+    "x": 3,
+    "y": 2,
     "_maxHp": 50,
-    "hp": 50,
+    "hp": 40,
     "_maxMp": 50,
-    "mp": 50,
+    "mp": 30,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 0,
-    "exp": 0,
+    "gold": 22,
+    "exp": 21,
     "level": 1,
     "karma": 0,
     "inventoryMax": 15,
     "inventory": [
       {
-        "id": "wood_stick_85c46acc187a4d83",
-        "label": "\u001b[37m⚪ 나무 막대\u001b[0m",
+        "id": "nut",
+        "label": "도토리",
+        "type": "food",
+        "hpHeal": 2,
+        "price": 5,
+        "sellPrice": 1,
+        "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다.",
+        "quantity": 1,
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "wood_stick_26d1f45ef977fbd4",
+        "label": "\u001b[37m⚪ 장인의 나무 막대\u001b[0m",
         "type": "weapon",
         "atkRange": [
           1,
@@ -34,15 +46,15 @@
         "description": "길바닥을 굴러다니는 나무 막대",
         "quantity": 1,
         "maxRarity": "COMMON",
-        "atk": 2,
+        "atk": 3,
         "crit": 0,
         "rarity": "COMMON",
         "x": 0,
         "y": 1
       },
       {
-        "id": "rags_c062b48f5f05642f",
-        "label": "\u001b[37m⚪ 장인의 누더기\u001b[0m",
+        "id": "rags_c677979decc2fb8b",
+        "label": "\u001b[37m⚪ 낡은 누더기\u001b[0m",
         "type": "armor",
         "defRange": [
           1,
@@ -57,23 +69,71 @@
         "description": "길바닥을 굴러다니는 망자의 천",
         "quantity": 1,
         "maxRarity": "COMMON",
-        "def": 2,
+        "def": 1,
         "eva": 0,
         "rarity": "COMMON",
         "x": 0,
         "y": 1
       },
       {
-        "id": "nut",
-        "label": "도토리",
-        "type": "food",
-        "hpHeal": 2,
-        "price": 5,
-        "sellPrice": 1,
-        "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다.",
+        "id": "iron_sword_1b3896d26ac35a1a",
+        "label": "\u001b[37m⚪ 낡은 철검\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          4,
+          7
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
         "quantity": 1,
+        "atk": 4,
+        "crit": 0,
+        "rarity": "COMMON",
+        "x": 1,
+        "y": 0
+      },
+      {
+        "id": "tainted_core",
+        "label": "오염된 핵",
+        "type": "item",
+        "price": 1,
+        "sellPrice": 1,
+        "description": "지하에 살고있는 이형의 핵",
+        "quantity": 3,
         "x": 0,
         "y": 1
+      },
+      {
+        "id": "leather_armor_5ba9b7124ba559a0",
+        "label": "\u001b[35m🟣 [군마] 심연의 낡은 가죽 갑옷\u001b[0m",
+        "type": "armor",
+        "defRange": [
+          2,
+          5
+        ],
+        "evaRange": [
+          0,
+          0.02
+        ],
+        "price": 400,
+        "sellPrice": 100,
+        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
+        "quantity": 1,
+        "def": 3,
+        "eva": 0,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "WARHORSE",
+          "name": "군마",
+          "description": "다크나이트의 공격이 전체 공격으로 전환됩니다."
+        },
+        "x": 1,
+        "y": 0
       }
     ],
     "_maxMemorize": 4,
@@ -82,8 +142,50 @@
       "FOCUS_FIRE"
     ],
     "equipped": {
-      "weapon": null,
-      "armor": null
+      "weapon": {
+        "id": "iron_sword_d1f9e6db9cd4a75b",
+        "label": "\u001b[37m⚪ 장인의 철검\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          4,
+          7
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "atk": 7,
+        "crit": 0,
+        "rarity": "COMMON",
+        "x": 2,
+        "y": 1
+      },
+      "armor": {
+        "id": "leather_armor_cd7d4bb7ba6df559",
+        "label": "\u001b[37m⚪ 장인의 가죽 갑옷\u001b[0m",
+        "type": "armor",
+        "defRange": [
+          2,
+          5
+        ],
+        "evaRange": [
+          0,
+          0.02
+        ],
+        "price": 400,
+        "sellPrice": 100,
+        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
+        "quantity": 1,
+        "def": 5,
+        "eva": 0,
+        "rarity": "COMMON",
+        "x": 2,
+        "y": 0
+      }
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
@@ -91,7 +193,42 @@
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1769493044493",
+        "name": "[common] 스켈레톤 병사",
+        "maxHp": 11,
+        "hp": 6,
+        "atk": 8,
+        "def": 1,
+        "agi": 3,
+        "skills": [],
+        "exp": 0,
+        "description": "올가미 거미의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      },
+      {
+        "id": "skeleton_1769493046800",
+        "name": "[common] 스켈레톤 병사",
+        "maxHp": 11,
+        "hp": 11,
+        "atk": 8,
+        "def": 1,
+        "agi": 3,
+        "skills": [],
+        "exp": 0,
+        "description": "올가미 거미의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      }
+    ],
     "_maxSkeleton": 2,
     "upgradeLimit": 5,
     "golemUpgrade": [],
@@ -171,15 +308,28 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "vending_machine": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
       }
     },
     "factionHostility": {},
     "factionContribution": {}
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B2_Transit_Area",
+    "id": "88c039feefe11c40",
+    "tileId": "11",
+    "exp": 11,
+    "gold": 15
+  },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "first_talk_death"
+    "first_talk_death",
+    "b2_ratty"
   ]
 }

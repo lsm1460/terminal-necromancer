@@ -1,5 +1,5 @@
 {
-  "tutorial-drop": {
+  "tutorial_drop": {
     "gold": [0, 0],
     "items": [
       { "itemId": "wood_stick", "chance": 1, "quantity": [1, 1], "maxRarity": "COMMON" },
@@ -7,8 +7,12 @@
       { "itemId": "nut", "chance": 1, "quantity": [1, 1] }
     ]
   },
+  "b2_ratty": {
+    "gold": [12, 24],
+    "items": []
+  },
   "b2_equipment_loot": {
-    "gold": [0, 3],
+    "gold": [4, 12],
     "items": [
       { "itemId": "iron_sword", "chance": 0.6, "quantity": [1, 1] },
       { "itemId": "leather_armor", "chance": 0.6, "quantity": [1, 1] },
@@ -18,7 +22,7 @@
     ]
   },
   "core_loot": {
-    "gold": [0, 0],
+    "gold": [0, 5],
     "items": [
       { "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
@@ -30,7 +34,7 @@
       { "itemId": "leather_armor", "chance": 0.6, "quantity": [1, 1] }
     ]
   },
-  "maya_shop": {
+  "potion_goods": {
     "gold": [0, 0],
     "items": [
       { "itemId": "potion_small", "chance": 1, "quantity": [1, 1] },

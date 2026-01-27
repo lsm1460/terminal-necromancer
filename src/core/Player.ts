@@ -241,20 +241,20 @@ export class Player {
   }
 
   levelUp() {
-    const { required: newLevelExp } = this.expToNextLevel()
-    if (this.exp >= newLevelExp) {
+    const { toNext: newLevelExp } = this.expToNextLevel()
+    const next = this.level + 1
+    const levelData = this.levelTable.find((_data) => _data.level === next)
+
+    if (levelData && this.exp >= newLevelExp) {
       this.level += 1
       this.exp = this.exp - newLevelExp
 
-      const levelData = this.levelTable.find((_data) => _data.level === this.level)
-      if (levelData) {
-        const { hp, mp, atk, def } = levelData
+      const { hp, mp, atk, def } = levelData
 
-        this._maxHp += hp
-        this._maxMp += mp
-        this.atk += atk
-        this.def += def
-      }
+      this._maxHp += hp
+      this._maxMp += mp
+      this.atk += atk
+      this.def += def
 
       this.hp = this.maxHp
       this.mp = this.maxMp
@@ -362,12 +362,9 @@ export class Player {
     const nextLevel = this.level + 1
     const nextLevelData = this.levelTable.find((l) => l.level === nextLevel)
 
-    if (!nextLevelData) return { required: 0, toNext: 0 } // 최고 레벨
+    if (!nextLevelData) return { required: 0, toNext: 0 }
 
-    return {
-      required: Math.max(nextLevelData.expRequired - this.exp, 0),
-      toNext: Math.abs(nextLevelData.expRequired - this.exp),
-    }
+    return { required: Math.max(nextLevelData.expRequired - this.exp, 0), toNext: nextLevelData.expRequired }
   }
 
   unlockSkill(skill: Skill) {

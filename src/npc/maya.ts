@@ -45,7 +45,7 @@ const MayaHandler: NPCHandler = {
 // --- 서브 메뉴: 물건 구매 ---
 async function handleBuy(player: Player, npc: NPC, context: GameContext) {
   const { drop, npcs } = context
-  const { drops: goods } = drop.generateDrops('maya_shop')
+  const { drops: goods } = drop.generateDrops('potion_goods')
 
   if (goods.length === 0) {
     console.log(`\n[${npc.name}]: "미안하지만 지금은 재고가 하나도 없어."`)

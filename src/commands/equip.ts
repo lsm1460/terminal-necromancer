@@ -18,7 +18,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
       let message = ''
 
       if (item.type === ItemType.WEAPON) {
-        message = `${item.label} (atk: ${item.atk}, crit: ${Number(item.crit.toFixed(2)) * 100}%)`
+        message = `${item.label} (atk: ${item.atk}, crit: ${item.crit.toFixed(2)}%)`
       } else if (item.type === ItemType.ARMOR) {
         message = `${item.label} (def: ${item.def})`
       }

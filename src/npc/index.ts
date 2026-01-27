@@ -1,13 +1,14 @@
 import death from './death'
+import dr_zed from './dr_zed'
+import echo from './echo'
 import elevator from './elevator'
+import jax_seeker from './jax_seeker'
 import kane_leader from './kane'
 import maya_tech from './maya'
-import portal from './portal'
-import jax_seeker from './jax_seeker'
-import echo from './echo'
-import dr_zed from './dr_zed'
-import ratty from './ratty'
 import { NPCHandler } from './NPCHandler'
+import portal from './portal'
+import ratty from './ratty'
+import vending_machine from './vending_machine'
 
 const npcHandlers: Record<string, NPCHandler> = {
   portal,
@@ -15,6 +16,8 @@ const npcHandlers: Record<string, NPCHandler> = {
   death,
   echo,
   dr_zed,
+
+  vending_machine,
 
   // 레지스탕스
   kane_leader,
