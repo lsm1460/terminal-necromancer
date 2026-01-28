@@ -17,5 +17,27 @@
     { "id": "ghoul", "encounterRate": 100 },
     { "id": "ghoul", "encounterRate": 100 },
     { "id": "ghoul", "encounterRate": 100 }
+  ],
+  "monster-group-b3-sludge": [
+    { "id": "oil_sludge_slime", "encounterRate": 30 },
+    { "id": "ratman_scavenger", "encounterRate": 30 },
+    { "id": "ratman_shaman", "encounterRate": 20 },
+    { "id": "mutated_worker", "encounterRate": 20 }
+  ],
+  "monster-group-b3-periphery": [
+    { "id": "ratman_scout", "encounterRate": 30 },
+    { "id": "shipyard_worker", "encounterRate": 40 },
+    { "id": "cargo_thief", "encounterRate": 20 },
+    { "id": "shipyard_hound", "encounterRate": 10 }
+  ],
+  "monster-group-b3-automated-security": [
+    { "id": "security_sensor_drone", "encounterRate": 35 },
+    { "id": "shipyard_guard", "encounterRate": 45 },
+    { "id": "shipyard_hound", "encounterRate": 20 }
+  ],
+  "monster-group-b3-human-managed": [
+    { "id": "shipyard_supervisor", "encounterRate": 30 },
+    { "id": "shipyard_guard", "encounterRate": 50 },
+    { "id": "shipyard_worker", "encounterRate": 20 }
   ]
 }

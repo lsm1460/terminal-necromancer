@@ -6,12 +6,14 @@ import {
   BattleTarget,
   CommandFunction,
   ConsumableItem,
+  Corpse,
   Drop,
   FoodItem,
   GameContext,
   GenericItem,
   ItemType,
   Monster,
+  NPC,
   Tile,
   WeaponItem,
 } from '../types'
@@ -151,6 +153,118 @@ export const printItem = (item: WeaponItem | ArmorItem | FoodItem | ConsumableIt
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 }
 
+const selectTarget = async (subChoices: { name: string; message: string }[]) => {
+  subChoices.push({ name: 'back', message: '↩ 뒤로 가기' })
+
+  const { targetId } = await enquirer.prompt<{ targetId: string }>({
+    type: 'select',
+    name: 'targetId',
+    message: '세부 대상을 선택하세요.',
+    choices: subChoices,
+    format(value) {
+      if (value === 'back') return '↩ 뒤로 가기'
+      const target = subChoices.find((n) => n.name === value)
+
+      return target ? target.message : value
+    },
+  })
+
+  return targetId
+}
+
+const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) => {
+  const subChoices = targets.map((t) => ({ name: t.id, message: t.name }))
+
+  const selected = await selectTarget(subChoices)
+
+  if (selected !== 'back') {
+    const target = targets.find((t) => t.id === selected)
+    if (target) printEntity(target, context)
+  }
+
+  return selected
+}
+
+const lookItem = async (items: { label: string; qty: number; raw: any }[]) => {
+  const subChoices = items.map((i) => ({
+    name: i.label, // 아이템은 label을 식별자로 사용
+    message: i.qty > 1 ? `${i.label} (x${i.qty})` : i.label,
+  }))
+
+  const selected = await selectTarget(subChoices)
+
+  if (selected !== 'back') {
+    const target = items.find((i) => i.label === selected)
+    if (target) printItem(target.raw)
+  }
+
+  return selected
+}
+
+const lookPath = async (
+  paths: {
+    label: string
+    tile: Tile | null
+    canMove: boolean
+  }[]
+) => {
+  const subChoices = paths.map((p) => ({
+    name: p.label,
+    message: p.label + '쪽',
+  }))
+
+  const selected = await selectTarget(subChoices)
+
+  if (selected !== 'back') {
+    const target = paths.find((p) => p.label === selected)
+    if (target) {
+      console.log(target.tile?.observe)
+      if (!target.tile?.isClear && target.tile?.event) {
+        const eventId = target.tile.event
+
+        if (eventId.includes('boss')) {
+          console.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`)
+        } else if (eventId.startsWith('monster')) {
+          console.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`)
+        }
+      }
+    }
+  }
+
+  return selected
+}
+
+const lookCorpse = async (corpse: Corpse[]) => {
+  const subChoices = corpse.map((c) => ({
+    name: c.id, // 아이템은 label을 식별자로 사용
+    message: `${c.name}의 시체`,
+  }))
+
+  const selected = await selectTarget(subChoices)
+
+  if (selected !== 'back') {
+    const target = corpse.find((c) => c.id === selected)
+
+    if (target) {
+      const { name, maxHp, atk, def, agi } = target
+
+      console.log(
+        `\n차갑게 식어버린 ${name}의 사체가 있습니다.\n강령술을 통해 다시 움직이게 하기에 결함이 없는 보편적인 소체 상태입니다.`
+      )
+      console.log(`========================================
+[ 대상 식별: ${name} ]
+========================================
+- 체력: ${maxHp}
+- 공격: ${atk}
+- 방어: ${def}
+- 민첩: ${agi || 0}
+----------------------------------------`)
+    }
+  }
+
+  return selected
+}
+
 /**
  * [2] 주변 탐색 및 선택 로직 (Controller)
  */
@@ -161,9 +275,13 @@ export const lookAll = async (
   monsters?: Monster[]
 ): Promise<void> => {
   const { x, y } = player.pos
-  const { map } = context
+  const { map, npcs, world } = context
   const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
   const minions = player.minions || []
+  const tile = map.getTile(x, y)
+
+  const aliveNPCs = (tile.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as NPC[]
+  const corpse = world.getCorpsesAt(x, y)
 
   // 아이템 수량 합산 처리
   const itemCounts: Record<string, { label: string; qty: number; raw: any }> = {}
@@ -190,6 +308,8 @@ export const lookAll = async (
 
   const categoryChoices = [
     ...(accessiblePaths.length ? [{ name: 'PATH', message: '🔍 주변 지형 살피기' }] : []),
+    ...(aliveNPCs.length ? [{ name: 'NPC', message: '👤 주변 인물' }] : []),
+    ...(corpse.length ? [{ name: 'CORPSE', message: '💀 시체' }] : []),
     ...(aliveMonsters.length ? [{ name: 'MONSTER', message: '💀 적대적 생명체' }] : []),
     ...(minions.length ? [{ name: 'MINION', message: '🧟 소환된 미니언' }] : []),
     ...(groupedItems.length ? [{ name: 'ITEM', message: '💎 드롭된 아이템' }] : []),
@@ -212,66 +332,34 @@ export const lookAll = async (
 
   if (category === 'cancel') return
 
-  // 2. 세부 대상 선택 (name은 ID, message는 표시용 이름)
-  let subChoices: { name: string; message: string }[] = []
-
-  if (category === 'MONSTER') {
-    subChoices = aliveMonsters.map((m) => ({ name: m.id, message: m.name }))
-  } else if (category === 'MINION') {
-    subChoices = minions.map((m) => ({ name: m.id, message: m.name }))
-  } else if (category === 'ITEM') {
-    subChoices = groupedItems.map((i) => ({
-      name: i.label, // 아이템은 label을 식별자로 사용
-      message: i.qty > 1 ? `${i.label} (x${i.qty})` : i.label,
-    }))
-  } else if (category === 'PATH') {
-    subChoices = accessiblePaths.map((p) => ({
-      name: p.label,
-      message: p.label + '쪽',
-    }))
+  let targetId: string
+  switch (category) {
+    case 'MONSTER':
+      targetId = await lookBattleTarget(aliveMonsters, context)
+      break
+    case 'MINION':
+      targetId = await lookBattleTarget(minions, context)
+      break
+    case 'NPC':
+      targetId = await lookBattleTarget(aliveNPCs, context)
+      break
+    case 'ITEM':
+      targetId = await lookItem(groupedItems)
+      break
+    case 'PATH':
+      targetId = await lookPath(accessiblePaths)
+      break
+    case 'CORPSE':
+      targetId = await lookCorpse(corpse)
+      break
+    default:
+      targetId = 'back'
+      break
   }
-
-  subChoices.push({ name: 'back', message: '↩ 뒤로 가기' })
-
-  const { targetId } = await enquirer.prompt<{ targetId: string }>({
-    type: 'select',
-    name: 'targetId',
-    message: '세부 대상을 선택하세요.',
-    choices: subChoices,
-    format(value) {
-      if (value === 'back') return '↩ 뒤로 가기'
-      const target = subChoices.find((n) => n.name === value)
-
-      return target ? target.message : value
-    },
-  })
 
   if (targetId === 'back') return await lookAll(player, context, items, monsters)
 
-  if (category === 'MONSTER') {
-    const target = aliveMonsters.find((m) => m.id === targetId)
-    if (target) printEntity(target, context)
-  } else if (category === 'MINION') {
-    const target = minions.find((m) => m.id === targetId)
-    if (target) printEntity(target, context)
-  } else if (category === 'ITEM') {
-    const target = groupedItems.find((i) => i.label === targetId)
-    if (target) printItem(target.raw)
-  } else if (category === 'PATH') {
-    const target = accessiblePaths.find((p) => p.label === targetId)
-    if (target) {
-      console.log(target.tile?.observe)
-      if (!target.tile?.isClear && target.tile?.event) {
-        const eventId = target.tile.event
-
-        if (eventId.includes('boss')) {
-          console.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`)
-        } else if (eventId.startsWith('monster')) {
-          console.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`)
-        }
-      }
-    }
-  }
+  //
 }
 
 // lookCommand에서는 args에 따라 호출

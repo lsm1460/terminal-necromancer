@@ -133,7 +133,7 @@
     "id": "divide_soul",
     "name": "자가 분열",
     "description": "몸에 붙어있는 망령들이 떨어져나갑니다.",
-    "chance": 0.25,
+    "chance": 0.4,
     "targetType": "SELF",
     "type": "summon",
     "options": {

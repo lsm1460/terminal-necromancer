@@ -61,10 +61,10 @@
   "ghoul": {
     "id": "ghoul",
     "name": "오염된 망자",
-    "hp": 14,
-    "maxHp": 14,
-    "atk": 5,
-    "def": 5,
+    "hp": 12,
+    "maxHp": 12,
+    "atk": 2,
+    "def": 18,
     "agi": 1,
     "exp": 0,
     "dropTableId": "core_loot",
@@ -115,5 +115,94 @@
     "dropTableId": "b2_equipment_loot",
     "description": "하수구에서 방사능 대신 사악한 기운을 쐰 듯한 붉은 두건의 거북이. 이상하게 닌자 기술과 피자에 집착합니다.",
     "orderWeight": 50
+  },
+  "shipyard_worker": {
+    "id": "shipyard_worker",
+    "name": "하역 인부",
+    "hp": 45, "maxHp": 45, "atk": 12, "def": 8, "agi": 12, "exp": 25,
+    "dropTableId": "b3_common_loot",
+    "description": "고된 노동과 열악한 환경 탓에 눈이 움푹 들어간 인부입니다. 녹슨 갈고리로 대상을 끌어당기려 합니다.",
+    "orderWeight": 50
+  },
+  "shipyard_guard": {
+    "id": "shipyard_guard",
+    "name": "하역장 경비병",
+    "hp": 60, "maxHp": 60, "atk": 18, "def": 15, "agi": 15, "exp": 45,
+    "dropTableId": "b3_guard_loot",
+    "skills": ["shield_bash"],
+    "description": "관리국 소속의 하급 경비병입니다. 규격화된 방패로 적을 밀쳐내 기절시킵니다.",
+    "orderWeight": 45
+  },
+  "security_sensor_drone": {
+    "id": "security_sensor_drone",
+    "name": "보안 센서 드론",
+    "hp": 35, "maxHp": 35, "atk": 10, "def": 12, "agi": 25, "exp": 40,
+    "dropTableId": "b3_machine_loot",
+    "skills": ["call_reinforcements", "target_lock_on"],
+    "description": "공중에 부유하며 붉은 레이저로 침입자를 스캔합니다. 타겟을 고정하고 경비병을 호출합니다.",
+    "orderWeight": 60
+  },
+  "shipyard_hound": {
+    "id": "shipyard_hound",
+    "name": "하역장 사냥개",
+    "hp": 40, "maxHp": 40, "atk": 22, "def": 6, "agi": 30, "exp": 35,
+    "dropTableId": "b3_beast_loot",
+    "skills": ["achilles_bite"],
+    "description": "날카로운 금속 이빨을 이식받은 사냥개입니다. 아킬레스건을 물어 이동 속도를 크게 떨어뜨립니다.",
+    "orderWeight": 70
+  },
+  "ratman_scout": {
+    "id": "ratman_scout",
+    "name": "랫맨 정찰병",
+    "hp": 38, "maxHp": 38, "atk": 15, "def": 5, "agi": 28, "exp": 30,
+    "dropTableId": "b3_ratman_loot",
+    "skills": ["smoke_bomb", "poison_dagger"],
+    "description": "어둠 속에 몸을 숨긴 쥐 수인입니다. 연막탄으로 시야를 가리고 독 단검을 투척합니다.",
+    "orderWeight": 65
+  },
+  "ratman_shaman": {
+    "id": "ratman_shaman",
+    "name": "랫맨 주술사",
+    "hp": 50, "maxHp": 50, "atk": 20, "def": 10, "agi": 18, "exp": 55,
+    "dropTableId": "b3_magic_loot",
+    "skills": ["scrap_curse", "mana_interference"],
+    "description": "버려진 마력석 파편을 숭배하는 주술사입니다. 고철의 저주로 적의 마법 행위를 방해합니다.",
+    "orderWeight": 40
+  },
+  "mutated_worker": {
+    "id": "mutated_worker",
+    "name": "변이된 하역 인부",
+    "hp": 70, "maxHp": 70, "atk": 26, "def": 12, "agi": 8, "exp": 60,
+    "dropTableId": "b3_mutant_loot",
+    "skills": ["heavy_slam", "health_drain"],
+    "description": "오염물질로 비대해진 괴물입니다. 육중한 내려치기와 함께 대상의 생명력을 흡수합니다.",
+    "orderWeight": 30
+  },
+  "shipyard_supervisor": {
+    "id": "shipyard_supervisor",
+    "name": "하역장 감독관",
+    "hp": 65, "maxHp": 65, "atk": 24, "def": 18, "agi": 14, "exp": 75,
+    "dropTableId": "b3_boss_sub_loot",
+    "skills": ["emergency_call", "forced_overtime"],
+    "description": "냉혹한 관리자입니다. 비상 소집으로 병력을 증원하고 아군의 공격성을 강제로 끌어올립니다.",
+    "orderWeight": 35
+  },
+  "cargo_thief": {
+    "id": "cargo_thief",
+    "name": "화물 도둑",
+    "hp": 42, "maxHp": 42, "atk": 16, "def": 7, "agi": 26, "exp": 50,
+    "dropTableId": "b3_thief_loot",
+    "skills": ["stealth", "item_steal"],
+    "description": "보안망을 뚫고 잠입한 약탈자입니다. 은신 상태로 접근해 소지품을 훔치려 합니다.",
+    "orderWeight": 55
+  },
+  "oil_sludge_slime": {
+    "id": "oil_sludge_slime",
+    "name": "오일 슬러지 슬라임",
+    "hp": 55, "maxHp": 55, "atk": 14, "def": 20, "agi": 5, "exp": 30,
+    "dropTableId": "b3_slime_loot",
+    "skills": ["oil_coating", "sticky_fluid"],
+    "description": "기름 찌꺼기 생명체입니다. 바닥을 오일로 코팅하여 모든 이동을 방해합니다.",
+    "orderWeight": 20
   }
 }

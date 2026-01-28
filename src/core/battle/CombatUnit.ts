@@ -9,7 +9,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public buff: Buff[] = []
   public deBuff: Buff[] = []
   public orderWeight: number
-  public onDeath?: () => void | Promise<void>
 
   // 어픽스 매니저가 주입할 훅 리스트
   public onAfterHitHooks: ((attacker: CombatUnit, defender: CombatUnit) => Promise<void>)[] = []
@@ -104,15 +103,19 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     const isDead = this.ref.hp <= 0
 
     if (isDead) {
-      if (this.onDeath) await this.onDeath()
       // 주입된 사망 어픽스 실행
-      for (const hook of this.onDeathHooks) await hook(this)
+      this.dead()
     } else if (!isEscape) {
       // 주입된 피격 후 어픽스 실행
       for (const hook of this.onAfterHitHooks) await hook(attacker, this)
     }
 
     return { ...result, currentHp: this.ref.hp, isDead }
+  }
+
+  async dead() {
+    this.ref.isAlive = false
+    for (const hook of this.onDeathHooks) await hook(this)
   }
 
   private logDamage(attacker: CombatUnit, result: any) {

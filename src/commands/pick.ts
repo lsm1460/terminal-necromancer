@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { CommandFunction, Drop, Item, ItemType } from '../types'
+import { CommandFunction } from '../types'
 
 export const pickCommand: CommandFunction = async (player, args, context) => {
   // 1. 현재 위치의 드랍 아이템 탐색
@@ -40,10 +40,28 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
           },
         ]
       : []),
-    ...drops.map((d) => ({
-      name: d.id,
-      message: `${d.label}${d.quantity ? ` (${d.quantity}개)` : ''}`,
-    })),
+    ...drops.map((d) => {
+      let message = `${d.label}${d.quantity ? ` (${d.quantity}개)` : ''}`
+
+      if (d.type === 'weapon') {
+        const currentAtk = player.equipped.weapon?.atk || 0
+        const diff = d.atk - currentAtk
+        const sign = diff > 0 ? '▲' : diff < 0 ? '▼' : '-'
+
+        message += ` [공격력: ${currentAtk} → ${d.atk} (${sign}${Math.abs(diff)})]`
+      } else if (d.type === 'armor') {
+        const currentDef = player.equipped.armor?.def || 0
+        const diff = d.def - currentDef
+        const sign = diff > 0 ? '▲' : diff < 0 ? '▼' : '-'
+
+        message += ` [방어력: ${currentDef} → ${d.def} (${sign}${Math.abs(diff)})]`
+      }
+
+      return {
+        name: d.id,
+        message,
+      }
+    }),
     { name: 'cancel', message: '🔙 취소' },
   ]
 

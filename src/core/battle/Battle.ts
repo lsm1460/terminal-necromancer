@@ -49,7 +49,7 @@ export class Battle {
     console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
 
     enemies.forEach((e) => {
-      e.onDeath = () => this.handleUnitDeath(e.ref as BattleTarget, context)
+      e.onDeathHooks.push(async () => this.handleUnitDeath(e.ref as BattleTarget, context))
     })
 
     let turn = 0
@@ -78,13 +78,12 @@ export class Battle {
           console.log(` └ 🩸 [${effect.name}] 피해: -${damage} (남은 지속: ${effect.duration}턴)`)
 
           if (unit.ref.hp <= 0) {
-            unit.ref.isAlive = false
             if (effect.name === '출혈') {
               console.log(` └ 💀 ${unit.name}이(가) 출혈 과다로 사망했습니다.`)
             } else if (effect.name === '중독') {
               console.log(` └ 💀 ${unit.name}이(가) 중독으로 사망했습니다.`)
             }
-            unit.onDeath && unit.onDeath()
+            unit.dead()
 
             await delay()
             break
@@ -168,7 +167,7 @@ export class Battle {
           let mUnit = this.unitCache.get(m)
           if (!mUnit) {
             mUnit = this.toCombatUnit(m, 'minion')
-            mUnit.onDeath = () => this.handleMinionsDeath(mUnit! as CombatUnit<BattleTarget>, enemies)
+            mUnit.onDeathHooks.push(() => this.handleMinionsDeath(mUnit! as CombatUnit<BattleTarget>, enemies))
             this.unitCache.set(m, mUnit)
           }
           units.push(mUnit)
@@ -355,7 +354,7 @@ export class Battle {
       if (['monster', 'npc'].includes(attacker.type)) {
         target = AffixManager.handleBeforeAttack(this.player, attacker, targets)
       } else {
-        // is minion..
+        // attacker is minion..
         target = [...targets].sort((a, b) => {
           const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0
           const bHasFocus = b.deBuff.some((b) => b.type === 'focus') ? 1 : 0
@@ -364,7 +363,11 @@ export class Battle {
         })[0] as CombatUnit
       }
 
-      await target.takeDamage(attacker)
+      if (attacker.stats.atk > 0) {
+        await target.takeDamage(attacker)
+      } else {
+        console.log(`${attacker.name}은 가만히 서있을 뿐이다.`)
+      }
     }
   }
 
@@ -526,7 +529,7 @@ export class Battle {
     }
 
     const unit = this.toCombatUnit(monster, 'monster')
-    unit.onDeath = () => this.handleUnitDeath(monster as BattleTarget, context)
+    unit.onDeathHooks.push(async () => this.handleUnitDeath(monster as BattleTarget, context))
 
     this.currentEnemies.push(unit)
 

@@ -1,9 +1,9 @@
 {
   "player": {
-    "x": 3,
-    "y": 2,
+    "x": 4,
+    "y": 1,
     "_maxHp": 50,
-    "hp": 40,
+    "hp": 37,
     "_maxMp": 50,
     "mp": 30,
     "atk": 10,
@@ -11,8 +11,8 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 22,
-    "exp": 21,
+    "gold": 37,
+    "exp": 31,
     "level": 1,
     "karma": 0,
     "inventoryMax": 15,
@@ -134,6 +134,28 @@
         },
         "x": 1,
         "y": 0
+      },
+      {
+        "id": "iron_sword_c51659702da6272a",
+        "label": "\u001b[34m🔵 강화된 철검\u001b[0m",
+        "type": "weapon",
+        "atkRange": [
+          4,
+          7
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "atk": 6,
+        "crit": 0,
+        "rarity": "RARE",
+        "x": 1,
+        "y": 0
       }
     ],
     "_maxMemorize": 4,
@@ -193,48 +215,13 @@
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
-    "skeleton": [
-      {
-        "id": "skeleton_1769493044493",
-        "name": "[common] 스켈레톤 병사",
-        "maxHp": 11,
-        "hp": 6,
-        "atk": 8,
-        "def": 1,
-        "agi": 3,
-        "skills": [],
-        "exp": 0,
-        "description": "올가미 거미의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true
-      },
-      {
-        "id": "skeleton_1769493046800",
-        "name": "[common] 스켈레톤 병사",
-        "maxHp": 11,
-        "hp": 11,
-        "atk": 8,
-        "def": 1,
-        "agi": 3,
-        "skills": [],
-        "exp": 0,
-        "description": "올가미 거미의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true
-      }
-    ],
+    "skeleton": [],
     "_maxSkeleton": 2,
     "upgradeLimit": 5,
     "golemUpgrade": [],
     "knightUpgrade": []
   },
-  "sceneId": "B2_Transit_Area",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
