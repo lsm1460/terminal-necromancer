@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { ExecuteSkill } from '../../../types'
+import { TargetSelector } from '../../battle/TargetSelector'
 
 /**
  * 저주 (Curse)
@@ -46,25 +47,21 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     if (isWide) {
       console.log(`\n💀 ${player.name}의 ${displayName}가 전장에 퍼져나갑니다!`)
       aliveEnemies.forEach((enemy) => applyCurse(enemy))
-      
+
       return { isSuccess: true, isAggressive: true, gross: 120 }
     }
 
     // --- 2. 단일 타겟 선택 ---
-    const choices = [
-      ...aliveEnemies.map((e) => ({
-        name: e.id,
-        message: e.name + (e.deBuff.some((d) => d.name === curseName) ? ` (이미 ${curseName} 상태)` : ''),
-        value: e.id,
-      })),
-      { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' },
-    ]
+    const choices = new TargetSelector(aliveEnemies)
+      .excludeStealth()
+      .labelIf((e) => e.deBuff.some((d) => d.name === curseName), ` (이미 ${curseName} 상태)`)
+      .build()
 
     const response = await enquirer.prompt<{ targetId: string }>({
       type: 'select',
       name: 'targetId',
       message: `${displayName}의 대상을 선택하세요`,
-      choices: choices,
+      choices: [...choices, { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' }],
     })
 
     if (response.targetId === 'cancel') return { isSuccess: false, isAggressive: false, gross: 0 }

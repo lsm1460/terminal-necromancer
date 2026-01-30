@@ -531,4 +531,11 @@ export class Player {
 
     console.log('[영혼이 귀속된 발타자르]를 획득했다.')
   }
+
+  restoreAll() {
+    this.hp = this.maxHp
+    this.mp = this.maxMp
+
+    this.minions.forEach((minion) => (minion.hp = minion.maxHp))
+  }
 }

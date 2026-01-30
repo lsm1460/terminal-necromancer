@@ -25,10 +25,10 @@
     { "id": "mutated_worker", "encounterRate": 20 }
   ],
   "monster-group-b3-periphery": [
-    { "id": "ratman_scout", "encounterRate": 30 },
-    { "id": "shipyard_worker", "encounterRate": 40 },
-    { "id": "cargo_thief", "encounterRate": 20 },
-    { "id": "shipyard_hound", "encounterRate": 10 }
+    { "id": "ratman_scout", "encounterRate": 10 },
+    { "id": "shipyard_worker", "encounterRate": 50 },
+    { "id": "cargo_thief", "encounterRate": 10 },
+    { "id": "shipyard_hound", "encounterRate": 30 }
   ],
   "monster-group-b3-automated-security": [
     { "id": "security_sensor_drone", "encounterRate": 35 },

@@ -87,6 +87,7 @@ export enum ItemType {
   ARMOR = 'armor',
   FOOD = 'food',
   CONSUMABLE = 'consumable',
+  QUEST = 'quest'
 }
 
 type BaseItem = {
@@ -100,9 +101,14 @@ type BaseItem = {
   rarity?: ItemRarity
 }
 
-// 일반 아이템 (퀘스트용, 재료 등)
+// 일반 아이템 (재료 등)
 export type GenericItem = BaseItem & {
   type: ItemType.ITEM
+}
+
+// 일반 아이템 (퀘스트용)
+export type QuestItem = BaseItem & {
+  type: ItemType.QUEST
 }
 
 type ItemOptions = {
@@ -141,7 +147,7 @@ export type ConsumableItem = BaseItem & {
   mpHeal?: number
 }
 
-export type Item = GenericItem | WeaponItem | ArmorItem | FoodItem | ConsumableItem
+export type Item = GenericItem | WeaponItem | ArmorItem | FoodItem | ConsumableItem | QuestItem
 
 export type Drop = {
   x: number
@@ -281,6 +287,7 @@ export type SkillTargetType =
   | 'SINGLE_BUFF'
   | 'RANDOM'
   | 'SELF'
+  | 'PLAYER'
 
 export type NpcSkill = {
   id: string

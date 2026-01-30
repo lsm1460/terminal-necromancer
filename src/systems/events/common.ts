@@ -1,0 +1,52 @@
+import enquirer from 'enquirer'
+import { EventHandler } from '.'
+import { BossEvent } from './BossEvent'
+import { NpcEvent } from './NpcEvent'
+import { delay } from '../../utils'
+
+export const commonHandlers: Record<string, EventHandler> = {
+  heal: (tile, player) => {
+    player.restoreAll() // Player 내부에서 minion까지 회복하도록 구현 권장
+  },
+
+  heal_once: async (tile, player, context) => {
+    if (tile.isClear) return
+
+    console.log(
+      `\n\x1b[93m[ 철과 먼지뿐인 이곳에서, 기적처럼 푸른 이끼와 작은 꽃이 피어난 구석을 발견했습니다 ]\x1b[0m`
+    )
+    console.log(`\x1b[90m(사신의 서늘한 기운이 닿지 않는, 누군가 의도적으로 숨겨둔 듯한 따스한 공간입니다)\x1b[0m`)
+
+    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
+      type: 'confirm',
+      name: 'proceed',
+      message: '🌿 생명의 온기가 서린 이 자리에 앉아 쉬시겠습니까? (단 한 번만 허락되는 안식입니다)',
+      initial: false,
+    })
+
+    if (!proceed) {
+      console.log(' > 당신은 이 소중한 온기를 나중을 위해 아껴두기로 합니다.')
+      return
+    }
+
+    // 회복 연출: 생명의 기운이 스며드는 느낌
+    console.log(`\n\x1b[32m[ 발밑의 작은 꽃들이 빛을 내며 당신의 상처와 피로를 어루만집니다... ]\x1b[0m`)
+    await delay(2000)
+
+    player.restoreAll()
+
+    console.log(`\n✨ 생명의 가호가 온몸에 퍼지며 모든 상태가 완벽하게 복구되었습니다!`)
+    console.log(`\x1b[90m(기운을 다한 꽃들이 투명하게 흩어지며, 다시 차가운 터미널의 공기가 돌아옵니다.)\x1b[0m\n`)
+
+    // 생명의 기운을 소진했으므로 클리어 처리
+    tile.isClear = true
+  },
+
+  boss: async (tile, player, context) => {
+    await BossEvent.handle(tile, player, context)
+  },
+
+  npc: async (tile, player, context) => {
+    await NpcEvent.handle(tile, player, context)
+  },
+}

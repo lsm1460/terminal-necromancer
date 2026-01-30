@@ -22,7 +22,7 @@
     ]
   },
   "core_loot": {
-    "gold": [0, 5],
+    "gold": [0, 2],
     "items": [
       { "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
@@ -30,8 +30,10 @@
   "resistance": {
     "gold": [50, 100],
     "items": [
-      { "itemId": "iron_sword", "chance": 0.6, "quantity": [1, 1] },
-      { "itemId": "leather_armor", "chance": 0.6, "quantity": [1, 1] }
+      { "itemId": "resistance_mace", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "improvised_bayonet", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "rebel_iron_plate", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "scavenged_mantle", "chance": 0.2, "quantity": [1, 1] }
     ]
   },
   "potion_goods": {
@@ -48,9 +50,39 @@
     ]
   },
   "boss2": {
-    "gold": [500, 700],
+    "gold": [700, 900],
     "items": [
       { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1] }
+    ]
+  },
+  "b3_common_loot": {
+    "gold": [0, 2],
+    "items": [
+      { "itemId": "sharp_pipe", "chance": 0.1, "quantity": [1, 1] },
+      { "itemId": "heavy_wrench", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "reinforced_vest", "chance": 0.1, "quantity": [1, 1] }
+    ]
+  },
+  "b3_equipment_loot": {
+    "gold": [0, 2],
+    "items": [
+      { "itemId": "terminal_halberd", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "reaper_chain_mail", "chance": 0.2, "quantity": [1, 1] }
+    ]
+  },
+  "b3_ratman_loot": {
+    "gold": [0, 2],
+    "items": [
+      { "itemId": "stolen_helmet", "chance": 0.1, "quantity": [1, 1] },
+      { "itemId": "ratman_dagger", "chance": 0.3, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "sewer_leather_vest", "chance": 0.2, "quantity": [1, 1] }
+    ]
+  },
+  "b3_thief_loot": {
+    "gold": [0, 2],
+    "items": [
+
     ]
   },
   "none": { "gold": [0, 0], "items": [] }

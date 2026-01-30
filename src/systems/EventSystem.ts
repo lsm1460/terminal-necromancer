@@ -8,6 +8,7 @@ import { BossEvent } from './events/BossEvent'
 import { MonsterEvent } from './events/MonsterEvent'
 import { NpcEvent } from './events/NpcEvent'
 import { printLootStatus } from '../statusPrinter'
+import { allEventHandlers } from './events'
 
 type EventCallback = (eventId: string) => void
 
@@ -25,57 +26,10 @@ export class EventSystem {
   }
 
   async handle(tile: Tile, player: Player, context: GameContext) {
-    switch (tile.event) {
-      case 'event-00':
-        this.completeEvent('START_GAME')
-        break
-      case 'event-01':
-        {
-          if (!this.isCompleted('item-tutorial')) {
-            const { x, y } = player.pos
-            const { drop, world } = context
-            const { drops } = drop.generateDrops('tutorial_drop')
+    const handler = allEventHandlers[tile.event]
 
-            drops.forEach((d) => {
-              world.addDrop({ ...d, x, y })
-            })
-            this.completeEvent('item-tutorial')
-
-            printLootStatus(player, context)
-          }
-        }
-        break
-      case 'heal':
-        player.hp = player.maxHp
-        player.mp = player.maxMp
-
-        player.minions.forEach((minion) => (minion.hp = minion.maxHp))
-        break
-
-      case 'heal_once':
-        {
-          if (!tile.isClear) {
-            player.hp = player.maxHp
-            player.mp = player.maxMp
-
-            player.minions.forEach((minion) => (minion.hp = minion.maxHp))
-
-            console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-            console.log(`✨ HP/MP와 모든 소환수의 상태가 완벽하게 복구되었습니다.`)
-            console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
-
-            tile.isClear = true
-          }
-        }
-        break
-      case 'boss':
-        await BossEvent.handle(tile, player, context)
-        break
-
-      case 'npc': {
-        await NpcEvent.handle(tile, player, context)
-        break
-      }
+    if (handler) {
+      await handler(tile, player, context)
     }
 
     if (tile.event.startsWith('monster-')) {

@@ -32,7 +32,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     }
 
     const rarityInfo = RARITY_DATA[finalRarity]
-
+    
     // 2. 해당 등급 내 서브 클래스 결정
     const totalSubWeight = rarityInfo.subClasses.reduce((sum, s) => sum + s.weight, 0)
     let subRandom = Math.random() * totalSubWeight
@@ -50,9 +50,21 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     const m = rarityInfo.bonus
     const s = selectedClass.statMod
 
+    const rarityColors: Record<SkeletonRarity, string> = {
+      common: '\x1b[37m', // 하얀색
+      rare: '\x1b[32m', // 초록색
+      elite: '\x1b[34m', // 파란색
+      epic: '\x1b[35m', // 보라색
+      legendary: '\x1b[33m', // 노란색(금색)
+    }
+
+    const resetColor = '\x1b[0m'
+    const color = rarityColors[finalRarity] || rarityColors.common
+    const rarityTag = `${color}[${finalRarity.toUpperCase()}]${resetColor}`
+    
     const skeleton: BattleTarget = {
       id: `skeleton_${Date.now()}`,
-      name: `[${finalRarity}] 스켈레톤 ${selectedClass.name}`,
+      name: `${rarityTag} 스켈레톤 ${selectedClass.name}`,
       maxHp: Math.floor(corpse.maxHp * 0.9 * m * s.hp),
       hp: Math.floor(corpse.maxHp * 0.9 * m * s.hp),
       atk: Math.floor(corpse.atk * 0.9 * m * s.atk),
@@ -66,6 +78,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       isAlive: true,
       isMinion: true,
       isSkeleton: true,
+      orderWeight: selectedClass.orderWeight
     }
 
     // 4. 플레이어에게 추가 및 세계에서 시체 제거
@@ -117,7 +130,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
 
     if (!selectedCorpse) {
       console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
-      return {...failure}
+      return { ...failure }
     }
 
     isSuccess = makeSkeleton(selectedCorpse)

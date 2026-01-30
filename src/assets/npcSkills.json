@@ -60,9 +60,9 @@
     "targetType": "ENEMY_BACK",
     "description": "가장 뒤에 있는 적을 저격합니다."
   },
-  "dark_heal": {
-    "id": "dark_heal",
-    "name": "어둠의 치유",
+  "heal": {
+    "id": "heal",
+    "name": "치유",
     "chance": 0.5,
     "power": 40,
     "targetType": "ALLY_LOWEST_HP",
@@ -89,7 +89,7 @@
   "bone_prison": {
     "id": "bone_prison",
     "name": "뼈 감옥",
-    "chance": 0.4,
+    "chance": 0.3,
     "targetType": "RANDOM",
     "description": "뼈로 이루어진 감옥은 대상의 행동을 제약합니다.",
     "type": "deBuff",
@@ -102,7 +102,7 @@
   "aging_curse": {
     "id": "aging_curse",
     "name": "노화",
-    "chance": 0.4,
+    "chance": 0.3,
     "targetType": "ENEMY_LOWEST_HP",
     "description": "가장 부상이 심한 적군을 노화시킵니다. 민첩이 떨어집니다.",
     "type": "deBuff",
@@ -138,6 +138,96 @@
     "type": "summon",
     "options": {
       "spawnMonsterId": "ghoul"
+    }
+  },
+  "achilles_bite": {
+    "id": "achilles_bite",
+    "name": "발목 물기",
+    "chance": 0.4,
+    "power": 1.2,
+    "targetType": "RANDOM",
+    "description": "발목을 정확히 조준하여 물어뜯습니다. 날카로운 이빨이 인대를 파고들어 이동 속도와 회피율을 급격히 떨어뜨립니다.",
+    "buff": {
+      "name": "부상",
+      "type": "deBuff",
+      "duration": 2,
+      "agi": 2,
+      "eva": 0.1
+    }
+  },
+  "call_reinforcements": {
+    "id": "call_reinforcements",
+    "name": "가드 호출",
+    "description": "높은 주파수의 경보음을 울립니다. 하역장 곳곳에 대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다.",
+    "chance": 0.2,
+    "targetType": "SELF",
+    "type": "summon",
+    "options": {
+      "spawnMonsterId": "shipyard_guard"
+    }
+  },
+  "stealth": {
+    "id": "stealth",
+    "name": "은신",
+    "description": "주변의 화물 더미와 그림자 속으로 몸을 숨깁니다. 시야에서 완전히 사라진 적은 다시 나타나 공격하기 전까지 타겟팅할 수 없습니다.",
+    "chance": 0.15,
+    "targetType": "SELF",
+    "type": "buff",
+    "buff": {
+      "name": "은신",
+      "type": "stealth",
+      "crit": 1,
+      "duration": 3
+    }
+  },
+  "item_steal": {
+    "id": "item_steal",
+    "name": "절도",
+    "description": "약탈자의 빠른 손놀림이 당신의 배낭을 스칩니다. 소지하고 있던 소모품이나 골드 중 일부가 순식간에 사라집니다.",
+    "chance": 0.15,
+    "power": 0.8,
+    "targetType": "PLAYER"
+  },
+  "enemy_curse": {
+    "id": "enemy_curse",
+    "name": "조롱",
+    "description": "적군 모두에게 조롱을 퍼부어, 방어력을 떨어뜨립니다.",
+    "chance": 0.15,
+    "targetType": "ENEMY_ALL",
+    "type": "deBuff",
+    "buff": {
+      "name": "저주",
+      "type": "deBuff",
+      "def": 5,
+      "duration": 3
+    }
+  },
+  "smoke_bomb": {
+    "id": "smoke_bomb",
+    "name": "연막",
+    "description": "발밑에서 자욱한 회색 연기가 터져 나옵니다. 전장의 시야가 차단되어 공격의 명중률이 바닥으로 떨어지고 혼란이 가중됩니다.",
+    "chance": 0.15,
+    "targetType": "ENEMY_ALL",
+    "type": "deBuff",
+    "buff": {
+      "name": "연막",
+      "type": "deBuff",
+      "eva": 0.3,
+      "duration": 3
+    }
+  },
+  "poison_dagger": {
+    "id": "poison_dagger",
+    "name": "독 찌르기",
+    "chance": 0.4,
+    "power": 1.1,
+    "targetType": "RANDOM",
+    "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다.",
+    "buff": {
+      "name": "중독",
+      "type": "deBuff",
+      "duration": 15,
+      "atk": 2
     }
   }
 }

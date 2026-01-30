@@ -172,7 +172,7 @@ async function handleLevelUp(player: Player) {
   if (player.levelUp()) {
     console.log(`\n✨ 축하합니다! 레벨이 올랐습니다. (현재 LV.${player.level})`)
   } else {
-    console.log(`\n[실패] 경험치가 부족합니다. (현재: ${player.exp}/${nextExp})`)
+    console.log(`\n[실패] 가볍구나. 겨우 이 정도인가? (${player.exp}/${nextExp})`)
   }
 }
 
@@ -254,7 +254,7 @@ async function handleIncreaseLimit(player: Player) {
   console.log(
     `\n사신: "그 정도로는 역시 만족하지 못하는 건가? 좋다. 망자의 자리를 더 내어주지. 다만, 그에 걸맞은 영혼의 정수(${cost} EXP)는 준비했겠지?"`
   )
-  console.log(`현재 보유 경험치: ${player.exp} / 필요 경험치: ${cost}`)
+  console.log(`현재 보유 영혼 조각: ${player.exp} / 필요 영혼 조각: ${cost}`)
 
   // 3. 경험치 부족 체크
   if (player.exp < cost) {

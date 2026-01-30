@@ -1,20 +1,20 @@
 {
   "player": {
-    "x": 4,
-    "y": 1,
-    "_maxHp": 50,
-    "hp": 37,
-    "_maxMp": 50,
-    "mp": 30,
-    "atk": 10,
-    "def": 5,
+    "x": 0,
+    "y": 0,
+    "_maxHp": 55,
+    "hp": 55,
+    "_maxMp": 55,
+    "mp": 55,
+    "atk": 12,
+    "def": 6,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 37,
-    "exp": 31,
-    "level": 1,
-    "karma": 0,
+    "gold": 583,
+    "exp": 158,
+    "level": 2,
+    "karma": 1,
     "inventoryMax": 15,
     "inventory": [
       {
@@ -26,29 +26,6 @@
         "sellPrice": 1,
         "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다.",
         "quantity": 1,
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "wood_stick_26d1f45ef977fbd4",
-        "label": "\u001b[37m⚪ 장인의 나무 막대\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          1,
-          3
-        ],
-        "critRange": [
-          0,
-          0
-        ],
-        "price": 0,
-        "sellPrice": 0,
-        "description": "길바닥을 굴러다니는 나무 막대",
-        "quantity": 1,
-        "maxRarity": "COMMON",
-        "atk": 3,
-        "crit": 0,
-        "rarity": "COMMON",
         "x": 0,
         "y": 1
       },
@@ -156,12 +133,33 @@
         "rarity": "RARE",
         "x": 1,
         "y": 0
+      },
+      {
+        "id": "potion_small",
+        "label": "작은 포션",
+        "type": "consumable",
+        "hpHeal": 20,
+        "price": 20,
+        "sellPrice": 5,
+        "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
+        "quantity": 1
+      },
+      {
+        "id": "mana_potion_small",
+        "label": "작은 마나 포션",
+        "type": "consumable",
+        "mpHeal": 20,
+        "price": 25,
+        "sellPrice": 6,
+        "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
+        "quantity": 1
       }
     ],
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
-      "FOCUS_FIRE"
+      "FOCUS_FIRE",
+      "SOUL_HARVEST"
     ],
     "equipped": {
       "weapon": {
@@ -211,17 +209,55 @@
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
-      "FOCUS_FIRE"
+      "FOCUS_FIRE",
+      "SOUL_HARVEST"
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1769754667088",
+        "name": "\u001b[35m[EPIC]\u001b[0m 스켈레톤 워리어",
+        "maxHp": 129,
+        "hp": 129,
+        "atk": 32,
+        "def": 12,
+        "agi": null,
+        "skills": [
+          "whirlwind"
+        ],
+        "exp": 0,
+        "description": "기어다니는 죄악, 벨페고르의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      },
+      {
+        "id": "skeleton_1769754835865",
+        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
+        "maxHp": 12,
+        "hp": 12,
+        "atk": 0,
+        "def": 1,
+        "agi": 1,
+        "skills": [],
+        "exp": 0,
+        "description": "고치 인간의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true
+      }
+    ],
     "_maxSkeleton": 2,
     "upgradeLimit": 5,
     "golemUpgrade": [],
     "knightUpgrade": []
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B3_Steel_Loading_Dock",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -262,8 +298,8 @@
       },
       "first_boss": {
         "hp": 80,
-        "isAlive": true,
-        "reborn": false,
+        "isAlive": false,
+        "reborn": true,
         "relation": 0
       },
       "second_boss": {
@@ -303,20 +339,27 @@
         "relation": 0
       }
     },
-    "factionHostility": {},
-    "factionContribution": {}
+    "factionHostility": {
+      "untouchable": -3
+    },
+    "factionContribution": {
+      "untouchable": 15
+    }
   },
   "drop": {
     "scendId": "B2_Transit_Area",
-    "id": "88c039feefe11c40",
-    "tileId": "11",
-    "exp": 11,
-    "gold": 15
+    "id": "39d82f62d19cbd99",
+    "tileId": "19",
+    "exp": 52,
+    "gold": 31
   },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
     "first_talk_death",
-    "b2_ratty"
+    "b2_ratty",
+    "first_boss",
+    "second_talk_death",
+    "HEARD_RESISTANCE"
   ]
 }

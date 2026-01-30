@@ -8,16 +8,18 @@ import { Player } from '../Player'
 import { SkillManager } from '../skill'
 import { AffixManager } from './AffixManager'
 import { CombatUnit } from './CombatUnit'
+import { TargetSelector } from './TargetSelector'
 
 export type Buff = {
   name: string
   duration: number
-  type: 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus'
+  type: 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus' | 'stealth' | 'expose'
   atk?: number
   agi?: number
   def?: number
   eva?: number
   hp?: number
+  crit?: number
 }
 
 export type CalcDamageOptions = NonNullable<Parameters<typeof Battle.calcDamage>[2]>
@@ -35,7 +37,7 @@ export class Battle {
 
   constructor(
     private player: Player,
-    private monster: MonsterFactory
+    public monster: MonsterFactory
   ) {}
 
   public getAliveEnemies() {
@@ -230,7 +232,23 @@ export class Battle {
     const renderLine = (unit: CombatUnit, isLead: boolean) => {
       const leadLabel = isLead ? '🚩 [선두]' : '         '
       // 이름은 14칸 확보하여 정렬, 체력은 (현재/최대) 형식
-      return `${leadLabel} ${unit.name} (${unit.ref.hp}/${unit.ref.maxHp})`
+      let line = `${leadLabel} ${unit.name} (${unit.ref.hp}/${unit.ref.maxHp})`
+
+      // 2. 버프/디버프 텍스트 생성
+      const buffText = unit.buff
+        .map((b) => `\x1b[32m[${b.name}:${b.duration}턴]\x1b[0m`) // 초록색 버프
+        .join(' ')
+
+      const deBuffText = unit.deBuff
+        .map((d) => `\x1b[31m[${d.name}:${d.duration}턴]\x1b[0m`) // 빨간색 디버프
+        .join(' ')
+
+      // 3. 상태 이상이 있을 때만 줄바꿈(\n)과 함께 상세 내용 추가
+      if (buffText || deBuffText) {
+        line += `\n         └─ 상태: ${buffText} ${deBuffText}`.trimEnd()
+      }
+
+      return line
     }
 
     switch (action) {
@@ -257,15 +275,14 @@ export class Battle {
         return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
       case '공격':
         {
+          const choices = new TargetSelector(aliveEnemies).excludeStealth().build()
+
           const { targetId } = await enquirer.prompt<{ targetId: string }>({
             type: 'select',
             name: 'targetId',
             message: '누구를 공격하시겠습니까?',
             choices: [
-              ...aliveEnemies.map((e) => ({
-                name: e.id,
-                message: `${e.name} (HP: ${e.ref.hp})`,
-              })),
+              ...choices,
               { name: 'cancel', message: '🔙 뒤로가기' }, // 취소 옵션 추가
             ],
             format(value) {
@@ -344,18 +361,24 @@ export class Battle {
     ally: CombatUnit[],
     context: GameContext
   ) {
-    if (targets.length === 0) return
+    // 은신 상태인 타겟은 거름
+    const visibleTargets = targets.filter((t) => !t.buff.some((b) => b.type === 'stealth'))
 
-    const autoSkillId = context.npcSkills.getRandomSkillId((attacker.ref as BattleTarget).skills || [])
+    if (visibleTargets.length === 0) {
+      console.log(` > ${attacker.name}(이)가 공격할 대상을 찾지 못해 두리번거립니다...`)
+      return
+    }
+
+    const autoSkillId = context.npcSkills.getRandomSkillId(attacker)
     if (autoSkillId) {
-      await context.npcSkills.execute(autoSkillId, attacker, ally, targets, context)
+      await context.npcSkills.execute(autoSkillId, attacker, ally, visibleTargets, context)
     } else {
       let target: CombatUnit
       if (['monster', 'npc'].includes(attacker.type)) {
-        target = AffixManager.handleBeforeAttack(this.player, attacker, targets)
+        target = AffixManager.handleBeforeAttack(this.player, attacker, visibleTargets)
       } else {
         // attacker is minion..
-        target = [...targets].sort((a, b) => {
+        target = [...visibleTargets].sort((a, b) => {
           const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0
           const bHasFocus = b.deBuff.some((b) => b.type === 'focus') ? 1 : 0
 
@@ -369,6 +392,8 @@ export class Battle {
         console.log(`${attacker.name}은 가만히 서있을 뿐이다.`)
       }
     }
+
+    attacker.removeStealth()
   }
 
   private async handleMinionsDeath(deathUnit: CombatUnit<BattleTarget>, enemies: CombatUnit[]) {
@@ -458,40 +483,28 @@ export class Battle {
       isIgnoreDef?: boolean // 방어력 무시
       isFixed?: boolean // 고정 데미지
       isSureHit?: boolean // 회피불가
+      isSureCrit?: boolean // 무조건 치명타
     } = {}
   ) {
-    // 1. 기초 데미지 설정
-    let baseAtk = 0
+    const { atk, crit } = attacker.finalStats
+    const { def, eva } = target.finalStats
 
-    if (options.rawDamage !== undefined) {
-      // 시체 폭발 등 이미 계산된 수치가 들어온 경우
-      baseAtk = options.rawDamage
-    } else {
-      // 일반적인 공격자 ATK 기반 계산
-      const attackerBuffAtk = attacker.buff.reduce((acc, b) => acc + (b.atk || 0), 0)
-      const attackerDeBuffAtk = attacker.deBuff?.reduce((acc, d) => acc + (d.atk || 0), 0) || 0
-      baseAtk = Math.max(0, attacker.stats.atk + attackerBuffAtk - attackerDeBuffAtk)
-      baseAtk *= options.skillAtkMult || 1
-    }
-
-    // 2. 방어/회피 판정 (기존 로직 유지)
-    const targetBuffEva = target.buff.reduce((acc, b) => acc + (b.eva || 0), 0)
-    const targetDeBuffEva = target.deBuff?.reduce((acc, d) => acc + (d.eva || 0), 0) || 0
-    const finalEva = Math.max(0, (target.stats?.eva || 0) + targetBuffEva - targetDeBuffEva)
-
-    if (!options.isSureHit && Math.random() < finalEva) {
+    // 1. 회피 판정
+    if (!options.isSureHit && Math.random() < eva) {
       return { isEscape: true, damage: 0, isCritical: false }
     }
 
-    // 3. 크리티컬 및 방어력 적용
-    const isCrit = Math.random() < (attacker.stats?.crit || 0)
+    // 2. 기초 데미지 결정 (rawDamage가 없으면 계산된 atk 사용)
+    const baseAtk = (options.rawDamage ?? atk) * (options.skillAtkMult ?? 1)
+
+    // 3. 크리티컬 판정
+    const isCrit = options.isSureCrit || Math.random() < crit
     let finalDamage = isCrit ? baseAtk * 1.2 : baseAtk
 
+    // 4. 방어력 적용
     if (!options.isFixed) {
-      const targetBuffDef = target.buff.reduce((acc, b) => acc + (b.def || 0), 0)
-      const targetDeBuffDef = target.deBuff?.reduce((acc, d) => acc + (d.def || 0), 0) || 0
-      const finalDef = options.isIgnoreDef ? 0 : Math.max(0, target.stats.def + targetBuffDef - targetDeBuffDef)
-      finalDamage = Math.max(1, finalDamage - Math.floor(finalDef / 2))
+      const appliedDef = options.isIgnoreDef ? 0 : def
+      finalDamage = Math.max(1, finalDamage - Math.floor(appliedDef / 2))
     }
 
     return { isEscape: false, damage: Math.floor(finalDamage), isCritical: isCrit }
@@ -521,7 +534,7 @@ export class Battle {
     })
   }
 
-  public spawnMonster(monsterId: string, context: GameContext) {
+  public _spawnMonster(monsterId: string, context: GameContext) {
     const monster = this.monster.makeMonster(monsterId)
 
     if (!monster) {

@@ -91,7 +91,7 @@
         {
           "id": "9",
           "theme": "tiled_floor",
-          "event": "npc",
+          "event": "none",
           "npcIds": ["elevator"],
           "dialogue": "더 깊은 곳으로 내려가는 엘리베이터가 있습니다.\n\"조사\"를 입력하시면 다양한 정보를 확인할 수 있습니다..",
           "observe": "강철 와이어가 팽팽하게 당겨지는 소음이 바닥 아래에서부터 진동처럼 전해집니다."
@@ -201,7 +201,7 @@
         {
           "id": "20",
           "theme": "iron_gate",
-          "event": "npc",
+          "event": "none",
           "npcIds": ["elevator"],
           "dialogue": "녹슨 철문 뒤로 정체를 알 수 없는 주파수의 신호음이 들려옵니다.",
           "observe": "하역장의 폐쇄된 구석, 겉보기엔 평범한 벽처럼 보이는 곳에 정교하게 숨겨진 해치가 있습니다."
@@ -226,7 +226,7 @@
         {
           "id": "22",
           "theme": "iron_gate",
-          "event": "npc",
+          "event": "none",
           "npcIds": ["elevator"],
           "dialogue": "위층으로 연결되는 엘리베이터입니다.",
           "observe": "어둠 속에서 금속 케이블이 마찰되는 날카로운 소음이 들려옵니다. 차가운 기계 장치의 실루엣이 보입니다."
@@ -242,7 +242,7 @@
         {
           "id": "24",
           "theme": "platform",
-          "event": "npc",
+          "event": "none",
           "npcIds": ["jax_seeker"],
           "dialogue": "덜그럭 거리는 환풍기 소음과 먼지 사이로 은밀한 발자국들이 얼핏 보입니다.",
           "observe": "먼지 섞인 증기가 자욱한 통로 너머로, 누군가 숨을 죽이고 움직이는 듯한 인기척이 감지됩니다."
@@ -317,7 +317,7 @@
         {
           "id": "29",
           "theme": "cargo_area",
-          "event": "event-terminal-lore",
+          "event": "monster-group-b3-periphery",
           "dialogue": "화물 상자들이 어지럽게 널브러져 있습니다.",
           "observe": "무질서하게 쌓인 거대한 상자들이 미로처럼 앞을 가로막고 있는 광경이 보입니다."
         },
@@ -371,10 +371,10 @@
         },
         {
           "id": "tile_308",
-          "theme": "cargo",
-          "event": "none",
-          "observe": "벽면의 대형 배전반 주변으로 유독 먼지가 쌓이지 않은 부자연스러운 틈새가 얼핏 보입니다.",
-          "dialogue": "먼지가 자욱한 벽면 중 오직 배전반 주변만이 매끄럽게 닦여 있으며, 바닥에는 무거운 것이 쓸린 자국이 남아있습니다."
+          "theme": "ritual_altar",
+          "event": "heal_once",
+          "dialogue": "망령들이 스스로를 위로하고 만들어 놓은 제단이 있습니다. 기도가 모여있다면 체력을 회복해줄지도 모릅니다.",
+          "observe": "구석진 하수구 근처, 상자더미 위에 놓인 푸른 촛불들이 주위의 탁한 공기를 집어삼키며 정적을 만들어내고 있습니다."
         },
         {
           "id": "tile_309",
@@ -411,7 +411,7 @@
         {
           "id": "31",
           "theme": "divine_gate",
-          "event": "npc",
+          "event": "none",
           "npcIds": ["elevator"],
           "dialogue": "백색 대리석으로 조각된 승강기 문이 소리 없이 열립니다.",
           "observe": "눈이 시릴 정도로 하얀 대리석 기둥들이 끝없이 늘어서 있습니다. 소음조차 삼켜버린 듯한 기묘한 정적이 감돕니다."

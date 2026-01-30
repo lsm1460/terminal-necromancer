@@ -100,5 +100,125 @@
     "price": 5,
     "sellPrice": 1,
     "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다."
+  },
+  "heavy_wrench": {
+    "id": "heavy_wrench",
+    "label": "대형 렌치",
+    "type": "weapon",
+    "atkRange": [8, 12],
+    "critRange": [0.05, 0.12],
+    "price": 1200,
+    "sellPrice": 350,
+    "description": "기중기를 수리할 때 쓰던 묵직한 공구입니다. 철검보다 무겁지만 타격감과 치명타 확률이 확실합니다."
+  },
+  "terminal_halberd": {
+    "id": "terminal_halberd",
+    "label": "터미널 경비병의 창",
+    "type": "weapon",
+    "atkRange": [10, 15],
+    "critRange": [0.02, 0.08],
+    "price": 1500,
+    "sellPrice": 450,
+    "description": "하역장 감시자들이 사용하던 창입니다. 날카로운 날이 세워져 있어 안정적인 공격력을 보장합니다."
+  },
+  "reinforced_vest": {
+    "id": "reinforced_vest",
+    "label": "강화 작업복",
+    "type": "armor",
+    "defRange": [5, 9],
+    "evaRange": [0.01, 0.03],
+    "price": 1100,
+    "sellPrice": 300,
+    "description": "두꺼운 캔버스 천과 얇은 철판을 덧댄 옷입니다. 가죽 갑옷보다 단단하며 활동성도 나쁘지 않습니다."
+  },
+  "reaper_chain_mail": {
+    "id": "reaper_chain_mail",
+    "label": "사슬 갑옷",
+    "type": "armor",
+    "defRange": [8, 12],
+    "evaRange": [0, 0.01],
+    "price": 1800,
+    "sellPrice": 500,
+    "description": "검은 금속 고리를 엮어 만든 갑옷입니다. 매우 무겁지만 웬만한 공격은 가볍게 튕겨냅니다."
+  },
+  "resistance_mace": {
+    "id": "resistance_mace",
+    "label": "다용도 망치",
+    "type": "weapon",
+    "atkRange": [12, 16],
+    "critRange": [0.08, 0.15],
+    "price": 1800,
+    "sellPrice": 400,
+    "description": "선로 파쇄용 망치를 전투용으로 개조했습니다. 사신의 사슬조차 깨부술 듯한 파괴력을 지녔습니다."
+  },
+  "improvised_bayonet": {
+    "id": "improvised_bayonet",
+    "label": "급조된 총검",
+    "type": "weapon",
+    "atkRange": [9, 18],
+    "critRange": [0.10, 0.20],
+    "price": 2100,
+    "sellPrice": 500,
+    "description": "망가진 소총 끝에 단단한 날을 용접했습니다. 사정거리는 짧지만 치명적인 급소를 찌르기에 최적입니다."
+  },
+  "scavenged_mantle": {
+    "id": "scavenged_mantle",
+    "label": "저항군의 누더기 망토",
+    "type": "armor",
+    "defRange": [4, 7],
+    "evaRange": [0.05, 0.12],
+    "price": 1600,
+    "sellPrice": 380,
+    "description": "그림자 속에 숨기 좋도록 어두운 천을 덧댄 망토입니다. 방어력은 낮지만 사신의 눈을 피하기엔 안성맞춤입니다."
+  },
+  "rebel_iron_plate": {
+    "id": "rebel_iron_plate",
+    "label": "반란군의 흉갑",
+    "type": "armor",
+    "defRange": [10, 14],
+    "evaRange": [0, 0.02],
+    "price": 2300,
+    "sellPrice": 600,
+    "description": "하역장 컨테이너의 철판을 떼어내 가슴에 덧댔습니다. 투박하지만 보스 골렘의 일격도 버텨낼 만큼 튼튼합니다."
+  },
+  "ratman_dagger": {
+    "id": "ratman_dagger",
+    "label": "랫맨의 녹슨 단검",
+    "type": "weapon",
+    "atkRange": [6, 9],
+    "critRange": [0.05, 0.10],
+    "price": 800,
+    "sellPrice": 180,
+    "description": "관리가 전혀 안 된 녹슨 칼입니다. 가끔 상처 부위에 덧나기라도 하는지 생각보다 아프게 박힙니다."
+  },
+  "sharp_pipe": {
+    "id": "sharp_pipe",
+    "label": "날카로운 파이프",
+    "type": "weapon",
+    "atkRange": [5, 11],
+    "critRange": [0.03, 0.07],
+    "price": 750,
+    "sellPrice": 150,
+    "description": "하역장 배수관을 뜯어 끝을 뾰족하게 갈았습니다. 가볍게 휘둘러 기습하기에 좋습니다."
+  },
+  "sewer_leather_vest": {
+    "id": "sewer_leather_vest",
+    "label": "하수도 가죽 조끼",
+    "type": "armor",
+    "defRange": [3, 6],
+    "evaRange": [0.02, 0.05],
+    "price": 700,
+    "sellPrice": 160,
+    "description": "축축한 하수도 냄새가 밴 가죽 조끼입니다. 찝찝하지만 가벼워서 몸을 놀리기엔 편합니다."
+  },
+  "stolen_helmet": {
+    "id": "stolen_helmet",
+    "label": "훔친 안전모",
+    "type": "armor",
+    "defRange": [4, 7],
+    "evaRange": [0, 0.01],
+    "price": 850,
+    "sellPrice": 200,
+    "description": "경비병의 창고에서 랫맨들이 슬쩍한 투구입니다. 찌그러져 있지만 머리를 보호하기엔 충분합니다."
   }
 }

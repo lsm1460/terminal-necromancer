@@ -2,31 +2,27 @@ import enquirer from 'enquirer'
 import { Player } from '../core/Player'
 import { printStatus } from '../statusPrinter'
 import {
-  ArmorItem,
   BattleTarget,
   CommandFunction,
-  ConsumableItem,
   Corpse,
   Drop,
-  FoodItem,
   GameContext,
-  GenericItem,
+  Item,
   ItemType,
   Monster,
   NPC,
-  Tile,
-  WeaponItem,
+  Tile
 } from '../types'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
   const { atk, def, crit, eva, agi, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
   console.log('🛡️ 상태창')
-  console.log(`레벨: ${level} (경험치: ${exp})`)
+  console.log(`레벨: ${level} (영혼 조각: ${exp})`)
 
   const { required: expNeeded } = player.expToNextLevel()
   if (expNeeded !== null) {
-    console.log(`다음 레벨까지 필요한 경험치: ${expNeeded}`)
+    console.log(`다음 레벨까지 필요한 영혼 조각: ${expNeeded}`)
   } else {
     console.log('최고 레벨입니다.')
   }
@@ -125,7 +121,7 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
 }
 
 // 아이템 정보 출력
-export const printItem = (item: WeaponItem | ArmorItem | FoodItem | ConsumableItem | GenericItem) => {
+export const printItem = (item: Item) => {
   const rarityMap: Record<string, string> = {
     EPIC: '⟪🔮 에픽⟫',
     RARE: '⟪💎 희귀⟫',

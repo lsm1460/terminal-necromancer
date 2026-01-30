@@ -70,14 +70,32 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   public applyDeBuff(d: Buff) {
     switch (d.name) {
+      case '구속':
+        console.log(`\n [!] ${this.name}은/는 구속되어 움직일 수 없습니다!`)
+        break
+      case '출혈':
+        console.log(`\n [!] ${this.name}은/는 깊은 상처를 입고 피를 흘리기 시작합니다!`)
+        break
+      case '중독':
+        console.log(`\n [!] ${this.name}은/는 치명적인 독소에 노출되어 안색이 창백해집니다.`)
+        break
+      case '조롱':
+        console.log(`\n [!] ${this.name}(은)는 분노를 참지 못해 방어 태세가 흐트러집니다!`)
+        break
+      case '연막':
+        console.log(`\n [!] 자욱한 연기가 ${this.name}의 시야를 완전히 가려버립니다!`)
+        break
       case '뼈 감옥':
-        console.log(`\n 거친 뼈 창살이 ${this.name}의 사지를 옥죄며 솟아오릅니다!`)
+        console.log(`\n [!] 거친 뼈 창살이 ${this.name}의 사지를 옥죄며 솟아오릅니다!`)
         break
       case '심연의 한기':
         console.log(`\n[❄️] 심연의 한기가 대상(${this.name})을 얼려버립니다.`)
         break
       case '노화':
         console.log(`\n[⏳] ${this.name}의 피부가 급격히 메마르며 숨이 가빠집니다! 모든 반응이 눈에 띄게 둔해집니다.`)
+        break
+      case '부상':
+        console.log(`\n[⏳] ${this.name}의 발목에 부상을 입습니다! 움직임이 눈에 띄게 둔해집니다.`)
         break
 
       default:
@@ -126,5 +144,45 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       console.log(
         `\n${isCritical ? '⚡ CRITICAL! ' : ''}${attacker.name}의 공격! ${this.name}에게 ${damage} 피해! ${hpMsg}`
       )
+  }
+
+  get finalStats() {
+    // key: keyof Buff를 통해 Buff의 속성 이름만 들어올 수 있게 제한합니다.
+    const getSum = (arr: Buff[], key: keyof Buff) => arr.reduce((acc, b) => acc + (Number(b[key]) || 0), 0)
+
+    return {
+      atk: Math.max(0, this.stats.atk + getSum(this.buff, 'atk') - getSum(this.deBuff, 'atk')),
+      def: Math.max(0, this.stats.def + getSum(this.buff, 'def') - getSum(this.deBuff, 'def')),
+      eva: Math.max(0, this.stats.eva + getSum(this.buff, 'eva') - getSum(this.deBuff, 'eva')),
+      crit: (this.stats.crit || 0) + getSum(this.buff, 'crit') - getSum(this.deBuff, 'crit'),
+    }
+  }
+
+  public removeStealth(): void {
+    const hasStealth = this.buff.some((b) => b.type === 'stealth')
+    if (hasStealth) {
+      this.buff = this.buff.filter((b) => b.type !== 'stealth')
+      console.log(` \x1b[90m[!] ${this.name}의 은신이 해제되어 정체가 드러났습니다!\x1b[0m`)
+
+      this.applyDeBuff({ name: '드러난 자', duration: 2, type: 'expose' })
+    }
+  }
+
+  public removeRandomDebuff(): void {
+    if (this.deBuff.length === 0) return
+
+    const randomIndex = Math.floor(Math.random() * this.deBuff.length)
+    const removed = this.deBuff.splice(randomIndex, 1)[0]
+
+    console.log(` \x1b[32m[!] ${this.name}(은)는 기운을 차려 '${removed.name}' 효과에서 벗어났습니다!\x1b[0m`)
+  }
+
+  public removeRandomBuff(): void {
+    if (this.buff.length === 0) return
+
+    const randomIndex = Math.floor(Math.random() * this.buff.length)
+    const removed = this.buff.splice(randomIndex, 1)[0]
+
+    console.log(` \x1b[31m[!] ${this.name}에게 걸려있던 '${removed.name}' 효과가 강제로 해제되었습니다!\x1b[0m`)
   }
 }

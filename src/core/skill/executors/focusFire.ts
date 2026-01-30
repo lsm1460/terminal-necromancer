@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { ExecuteSkill } from '../../../types'
+import { TargetSelector } from '../../battle/TargetSelector'
 
 /**
  * 표식 (Curse)
@@ -18,22 +19,16 @@ export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } 
 
   try {
     // --- 2. 단일 타겟 선택 ---
-    const choices = [
-      ...aliveEnemies.map((e) => ({
-        name: e.id,
-        message:
-          `${e.name} hp: ${e.ref.hp}/${e.ref.maxHp} ` +
-          (e.deBuff.some((d) => d.name === curseName) ? ` (이미 ${curseName} 상태)` : ''),
-        value: e.id,
-      })),
-      { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' },
-    ]
+    const choices = new TargetSelector(aliveEnemies)
+      .excludeStealth()
+      .labelIf((e) => e.deBuff.some((d) => d.name === curseName), ` (이미 ${curseName} 상태)`)
+      .build()
 
     const response = await enquirer.prompt<{ targetId: string }>({
       type: 'select',
       name: 'targetId',
       message: `대상을 선택하세요`,
-      choices: choices,
+      choices: [...choices, { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' }],
     })
 
     if (response.targetId === 'cancel') return { isSuccess: false, isAggressive: false, gross: 0 }

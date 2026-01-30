@@ -113,7 +113,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         name: '수도자',
         orderWeight: 35,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
-        skills: ['dark_heal'],
+        skills: ['heal'],
         weight: 1,
       },
     ],

@@ -1,8 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import { BattleTarget, GameContext, NpcSkill } from '../../types'
+import { BattleTarget, GameContext, ItemType, NpcSkill } from '../../types'
 import { Player } from '../Player'
 import { CombatUnit } from '../battle/CombatUnit'
+import _ from 'lodash'
 
 const SkillEffectHandlers: Record<
   string,
@@ -19,11 +20,15 @@ const SkillEffectHandlers: Record<
   deBuff: (target, skill) => {
     if (skill.buff) target.applyDeBuff(skill.buff)
   },
-  damage: async (target, skill, attacker) => {
+  damage: async (...params) => {
+    const [target, skill, attacker] = params
+
     await target.takeDamage(attacker, {
       skillAtkMult: skill.power,
       ...(skill.options || {}),
     })
+
+    if (skill.buff) await SkillEffectHandlers.deBuff(...params)
   },
   summon: (target, skill, attacker, context) => {
     const { battle } = context
@@ -33,7 +38,7 @@ const SkillEffectHandlers: Record<
       return
     }
 
-    const reinforcement = battle.spawnMonster(skill.options.spawnMonsterId, context)
+    const reinforcement = battle._spawnMonster(skill.options.spawnMonsterId, context)
 
     if (!reinforcement) {
       console.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
@@ -64,7 +69,8 @@ const SpecialSkillLogics: Record<
     }
     // 2. 시전자 즉사 처리
     console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
-    attacker?.onDeath?.()
+
+    for (const hook of attacker?.onDeathHooks || []) await hook(attacker)
   },
 
   health_drain: async (attacker, targets, skill) => {
@@ -83,6 +89,48 @@ const SpecialSkillLogics: Record<
     if (healAmount > 0) {
       attacker.ref.hp = Math.min(attacker.ref.maxHp, attacker.ref.hp + healAmount)
       console.log(`💉 ${attacker.name}(이)가 적의 생명력을 흡수하여 HP를 ${healAmount}만큼 회복했습니다!`)
+    }
+  },
+  item_steal: async (attacker, targets, skill) => {
+    for (const target of targets) {
+      const result = await target.takeDamage(attacker, {
+        skillAtkMult: skill.power,
+      })
+
+      if (target.type !== 'player') {
+        console.log(` > ${target.name}(은)는 훔칠 물건이 없습니다.`)
+        continue
+      }
+
+      const player = target.ref as Player
+
+      const isGoldSteal = Math.random() < 0.5
+
+      const stealableCandidates = player.inventory?.filter((item) => item.type !== ItemType.QUEST) || []
+
+      if (isGoldSteal && player.gold > 0) {
+        // 골드 탈취: 고정 수치와 비율 중 작은 값을 선택해 파산 방지
+        const stealAmount = Math.min(player.gold, Math.floor(10 + player.gold * 0.05))
+        player.gold -= stealAmount
+        console.log(
+          ` \x1b[33m[!] 소매치기!\x1b[0m ${attacker.name}(이)가 \x1b[33m${stealAmount}G\x1b[0m를 훔쳐 달아납니다!`
+        )
+      } else if (stealableCandidates.length > 0) {
+        // 3. 필터링된 후보 중에서만 랜덤 선택
+        const targetItem = stealableCandidates[Math.floor(Math.random() * stealableCandidates.length)]
+
+        // 실제 인벤토리에서 해당 아이템의 인덱스를 찾아 제거
+        const actualIndex = player.inventory.findIndex((item) => item === targetItem)
+        if (actualIndex !== -1) {
+          player.inventory.splice(actualIndex, 1)
+          console.log(
+            ` \x1b[31m[!] 분실!\x1b[0m ${attacker.name}(이)가 배낭에서 \x1b[90m'${targetItem.label}'\x1b[0m을(를) 훔쳐 달아납니다!`
+          )
+        }
+      } else {
+        // 훔칠 골드도 없고, 훔칠 수 있는 일반 아이템도 없을 때
+        console.log(` > ${attacker.name}(이)가 당신의 주머니를 뒤졌지만, 땡전 한 푼 나오지 않습니다.`)
+      }
     }
   },
 }
@@ -106,7 +154,7 @@ export class NpcSkillManager {
   }
 
   getSkill(skillId: string) {
-    return this.skillData[skillId]
+    return _.cloneDeep(this.skillData[skillId])
   }
 
   findTargets: SkillExecutor<CombatUnit[]> = (skillId, attacker, ally, enemies) => {
@@ -134,6 +182,9 @@ export class NpcSkillManager {
       case 'RANDOM':
         const randomIndex = Math.floor(Math.random() * enemies.length)
         targets = [enemies[randomIndex]]
+        break
+      case 'PLAYER':
+        targets = [...ally, ...enemies].filter((unit) => unit.type === 'player')
         break
       case 'SELF':
         targets = [attacker]
@@ -181,12 +232,26 @@ export class NpcSkillManager {
     // 2. 특수 로직이 없다면 공통 타입(Type 기반) 핸들러 실행
     const handler = SkillEffectHandlers[skill.type] || SkillEffectHandlers.damage
     for (const target of targets) {
+      console.log('DEBUG:: skill',skill)
       await handler(target, skill, attacker, context)
     }
   }
 
-  getRandomSkillId(skills: string[]): string | null {
-    const available = skills.filter((id) => Math.random() <= (this.skillData[id]?.chance || 0))
+  getRandomSkillId(attacker: CombatUnit): string | null {
+    const skills = (attacker.ref as BattleTarget).skills || []
+
+    const isExposed = attacker.deBuff.some((d) => d.type === 'expose')
+
+    const available = skills.filter((id) => {
+      const skill = this.skillData[id]
+      if (!skill) return false
+
+      if (isExposed && skill.buff?.type === 'stealth') {
+        return false
+      }
+
+      return Math.random() <= (skill.chance || 0)
+    })
 
     if (available.length < 1) {
       return null
