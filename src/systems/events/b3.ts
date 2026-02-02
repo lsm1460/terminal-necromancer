@@ -211,8 +211,8 @@ const transportPlayerByConveyor = async (
     console.log(`\n\x1b[90m[ ${message} ]\x1b[0m`)
     await delay(1200)
 
-    player.pos.x = targetX
-    player.pos.y = targetY
+    player.x = targetX
+    player.y = targetY
     destinationTile.isSeen = true
 
     console.log(`\x1b[32m✨ 슈우우욱—! 목적지에 안전하게 도착했습니다. [${targetX}, ${targetY}]\x1b[0m\n`)

@@ -10,8 +10,8 @@
     { "id": "track_ratman", "encounterRate": 50 }
   ],
   "monster-group-b2-deep": [
-    { "id": "snare_spider", "encounterRate": 75 },
-    { "id": "cocoon_human", "encounterRate": 25 }
+    { "id": "snare_spider", "encounterRate": 65 },
+    { "id": "cocoon_human", "encounterRate": 35 }
   ],
   "monster-group-b2-boss": [
     { "id": "ghoul", "encounterRate": 100 },

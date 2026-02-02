@@ -53,12 +53,14 @@ export class Battle {
   ) {}
 
   private get aliveEnemies(): CombatUnit[] {
-    return Array.from(this.unitCache.values()).filter((unit) => unit.type === 'monster' && unit.ref.isAlive)
+    return Array.from(this.unitCache.values()).filter(
+      (unit) => ['monster', 'npc'].includes(unit.type) && unit.ref.isAlive
+    )
   }
 
   async runCombatLoop(initialEnemies: CombatUnit[], context: GameContext) {
     initialEnemies.forEach((e) => {
-      this.unitCache.set(e.ref, e)
+      this.unitCache.set(e.ref.id, e)
       // 공통 사망 로직 주입
       e.onDeathHooks.push(async () => this.handleUnitDeath(e.ref as BattleTarget, context))
     })
@@ -173,10 +175,10 @@ export class Battle {
     if (this.player.minions) {
       this.player.minions.forEach((m) => {
         // 살아있고 아직 캐시에 등록되지 않은 미니언만 주입
-        if (m.isAlive && !this.unitCache.has(m)) {
+        if (m.isAlive && !this.unitCache.has(m.id)) {
           const mUnit = this.toCombatUnit(m, 'minion')
           // 미니언 전용 사망 훅 주입
-          mUnit.onDeathHooks.push(async () => this.handleMinionsDeath(mUnit, this.aliveEnemies))
+          mUnit.onDeathHooks.push(async () => await this.handleMinionsDeath(mUnit, this.aliveEnemies))
         }
       })
     }
@@ -383,6 +385,8 @@ export class Battle {
   }
 
   private async handleMinionsDeath(deathUnit: CombatUnit<BattleTarget>, enemies: CombatUnit[]) {
+    this.unitCache.delete(deathUnit.ref)
+
     deathUnit.ref.hp = 0
     deathUnit.ref.isAlive = false
 
@@ -442,17 +446,18 @@ export class Battle {
 
   public toCombatUnit<T extends Player | BattleTarget>(unit: T, type: CombatUnit['type']): CombatUnit<T> {
     // 이미 캐싱되어 있다면 반환
-    if (this.unitCache.has(unit)) {
-      return this.unitCache.get(unit) as CombatUnit<T>
+    if (this.unitCache.has(unit.id)) {
+      return this.unitCache.get(unit.id) as CombatUnit<T>
     }
 
-    const combatUnit = new CombatUnit<T>(unit, type, this.npcSkills)
+    const combatUnit = new CombatUnit<T>(unit, type)
 
     // NpcSkillManager를 통해 패시브 주입 (기존에 정의한 로직)
     this.npcSkills.setupPassiveHook(combatUnit, this)
 
     // 캐시에 등록
-    this.unitCache.set(unit, combatUnit)
+    this.unitCache.set(unit.id, combatUnit)
+
     return combatUnit
   }
 

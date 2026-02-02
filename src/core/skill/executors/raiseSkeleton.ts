@@ -89,7 +89,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       npcs.reborn(corpse.id)
 
       console.log(`\n[강령술] ${corpse.name}의 뼈가 맞춰지며 일어섭니다!`)
-      console.log(`${finalRarity} 등급의 스켈레톤 ${selectedClass.name}으로 부활했습니다! 💀`)
+      console.log(`💀 ${rarityTag} 등급의 스켈레톤 ${selectedClass.name}으로 부활했습니다!`)
 
       return true
     }

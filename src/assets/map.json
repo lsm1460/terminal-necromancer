@@ -169,7 +169,7 @@
           "id": "17",
           "theme": "spider_nest",
           "event": "monster-group-b2-deep",
-          "spawn_limit": 3,
+          "spawn_limit": 2,
           "dialogue": "천장이 온통 하얀 거미줄로 덮여 있습니다.",
           "observe": "천장 배관 사이사이에 허옇게 엉겨 붙은 실타래들이 마치 거대한 수의처럼 늘어져 흔들리고 있습니다."
         },
@@ -235,7 +235,7 @@
           "id": "23",
           "theme": "platform",
           "event": "monster-group-b3-periphery",
-          "spawn_limit": 4,
+          "spawn_limit": 3,
           "dialogue": "기름 냄새가 진동하는 통로입니다.",
           "observe": "매캐하고 끈적한 공기가 흘러나오는 구역입니다. 바닥 표면이 검은 기름으로 희미하게 번들거리고 있습니다."
         },
@@ -284,7 +284,7 @@
           "id": "27",
           "theme": "machinery",
           "event": "monster-group-b3-automated-security",
-          "spawn_limit": 3,
+          "spawn_limit": 2,
           "dialogue": "거대한 엔진이 불규칙한 소음을 내뿜습니다.",
           "observe": "바닥을 타고 기분 나쁜 진동이 전해져 옵니다. 저 멀리서 거대한 기계가 박동하는 듯한 소리가 들립니다."
         },
@@ -300,7 +300,7 @@
           "id": "42",
           "theme": "cargo",
           "event": "monster-group-b3-sludge",
-          "spawn_limit": 4,
+          "spawn_limit": 3,
           "observe": "바닥의 균열 사이로 뜨거운 증기가 주기적으로 뿜어져 나오며 통로 전체의 시야를 흐리고 있습니다.",
           "dialogue": "배관의 파손 부위에서 뿜어져 나오는 고압 증기가 벽면을 타고 흘러내려 사방이 온통 축축합니다."
         },
@@ -318,6 +318,7 @@
           "id": "29",
           "theme": "cargo_area",
           "event": "monster-group-b3-periphery",
+          "spawn_limit": 2,
           "dialogue": "화물 상자들이 어지럽게 널브러져 있습니다.",
           "observe": "무질서하게 쌓인 거대한 상자들이 미로처럼 앞을 가로막고 있는 광경이 보입니다."
         },
@@ -325,7 +326,7 @@
           "id": "30",
           "theme": "platform",
           "event": "monster-group-b3-sludge",
-          "spawn_limit": 4,
+          "spawn_limit": 3,
           "dialogue": "하역장 구석의 어두운 공간입니다.",
           "observe": "조명조차 닿지 않는 깊은 구석에서 랫맨들의 비열한 웃음소리와 무기 긁히는 소음이 들려옵니다."
         },
@@ -348,7 +349,7 @@
           "id": "42",
           "theme": "cargo",
           "event": "monster-group-b3-periphery",
-          "spawn_limit": 4,
+          "spawn_limit": 3,
           "dialogue": "철제 선반이 높게 솟아 있어 위를 올려다보아야 하는 구역입니다. 틈새마다 낡은 종이 상자들이 빽빽하게 박혀 있습니다.",
           "observe": "높은 선반 위, 먼지 쌓인 화물들 사이에서 이질적인 금속성 광채가 희미하게 명멸합니다."
         }
@@ -365,7 +366,7 @@
           "id": "tile_307",
           "theme": "cargo",
           "event": "monster-group-b3-sludge",
-          "spawn_limit": 5,
+          "spawn_limit": 2,
           "observe": "천장 환풍구에서 검은 액체가 뚝뚝 떨어지며 바닥에 끈적한 웅덩이를 형성하고 있습니다.",
           "dialogue": "환풍구 주변으로 정체 모를 점액질이 번져 있고, 격리 구역을 뚫고 나온 변이체들이 굶주린 소리를 냅니다."
         },
@@ -387,7 +388,7 @@
           "id": "40",
           "theme": "cargo",
           "event": "monster-group-b3-periphery",
-          "spawn_limit": 3,
+          "spawn_limit": 2,
           "observe": "강철 컨테이너들이 종잇장처럼 찌그러진 구역입니다. 공간 전체를 압박하는 중압감이 느껴집니다.",
           "dialogue": "육중한 하중을 견디지 못하고 휘어진 철제 기둥들과 파괴된 화물들이 참혹한 현장을 그대로 보여줍니다."
         },
@@ -395,7 +396,7 @@
           "id": "41",
           "theme": "cargo",
           "event": "monster-group-b3-automated-security",
-          "spawn_limit": 3,
+          "spawn_limit": 2,
           "observe": "형광등이 지직거리며 깜빡이는 복도 끝에 버려진 지게차들이 흉물스럽게 방치되어 있습니다.",
           "dialogue": "작동을 멈춘 지 오래된 지게차들이 녹슨 채 길을 막고 있고, 공기 중에는 묵은 먼지만이 부유하고 있습니다."
         }

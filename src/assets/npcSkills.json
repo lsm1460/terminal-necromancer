@@ -255,7 +255,7 @@
     "chance": 0.25,
     "power": 0.4,
     "targetType": "ENEMY_ALL",
-    "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다.",
+    "description": "무기를 크게 휘둘러 주변 모든 적을 공격하고 3턴간 출혈 상태로 만듭니다.",
     "buff": {
       "name": "출혈",
       "type": "dot",

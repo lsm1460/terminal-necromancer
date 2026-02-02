@@ -19,6 +19,8 @@ import {
 import { ItemRarity } from './item/consts'
 
 export class Player {
+  id = 'player'
+  name = 'player'
   x = 0
   y = 0
   _maxHp = 50
@@ -194,7 +196,7 @@ export class Player {
 
   get minions(): BattleTarget[] {
     const _skeletons = this.skeleton
-      .sort((a, b) => (b?.orderWeight || 0) - (a?.orderWeight || 0))
+      .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
       .map((skeleton) => {
         // 1. 기존에 들어있을 수 있는 어픽스 관련 스킬들을 한 번에 제거
         const affixSkillIds = ['death_destruct', 'frostborne']

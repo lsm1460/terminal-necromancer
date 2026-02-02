@@ -1,7 +1,7 @@
 [
   { "level": 1, "expRequired": 0, "atk": 0, "def": 0, "hp": 0, "mp": 0 },
-  { "level": 2, "expRequired": 500, "atk": 2, "def": 1, "hp": 5, "mp": 5 },
-  { "level": 3, "expRequired": 2000, "atk": 3, "def": 2, "hp": 5, "mp": 5 },
-  { "level": 4, "expRequired": 6000, "atk": 5, "def": 3, "hp": 5, "mp": 5 },
-  { "level": 5, "expRequired": 10000, "atk": 7, "def": 5, "hp": 5, "mp": 5 }
+  { "level": 2, "expRequired": 500, "atk": 5, "def": 3, "hp": 10, "mp": 10 },
+  { "level": 3, "expRequired": 2000, "atk": 7, "def": 5, "hp": 15, "mp": 15 },
+  { "level": 4, "expRequired": 6000, "atk": 10, "def": 7, "hp": 20, "mp": 20 },
+  { "level": 5, "expRequired": 10000, "atk": 12, "def": 9, "hp": 25, "mp": 25 }
 ]

@@ -22,16 +22,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   constructor(
     public ref: T,
-    public type: 'player' | 'minion' | 'monster' | 'npc',
-    private npcSkills: NpcSkillManager
+    public type: 'player' | 'minion' | 'monster' | 'npc'
   ) {
-    if ('id' in ref) {
-      this.id = ref.id || (type === 'player' ? 'player' : 'npc')
-      this.name = ref.name
-    } else {
-      this.id = 'player'
-      this.name = 'player'
-    }
+    this.id = ref.id
+    this.name = ref.name
 
     this.orderWeight = (ref as any).orderWeight || 0
     this.updateStats()
@@ -121,7 +115,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
     // 2. [Action]
     const result = await this.takeDamage(attacker, options)
-
     // 3. [After]
     if (!result.isEscape && !options.isPassive) {
       await this.runHooks(attacker.onAfterAttackHooks, attacker, options)
@@ -132,7 +125,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     }
 
     // 4. [Death] - 사망 시에는 공격 정보(options)가 필요할 수 있으므로 함께 전달
-    if (result.isDead && this.ref.isAlive) {
+    if (result.isDead) {
       await this.dead(attacker, options)
     }
 

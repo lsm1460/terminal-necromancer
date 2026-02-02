@@ -1,36 +1,108 @@
 {
   "player": {
+    "id": "player",
+    "name": "player",
     "x": 0,
-    "y": 0,
-    "_maxHp": 55,
-    "hp": 55,
-    "_maxMp": 55,
-    "mp": 55,
-    "atk": 12,
-    "def": 6,
+    "y": 1,
+    "_maxHp": 50,
+    "hp": 40,
+    "_maxMp": 50,
+    "mp": 30,
+    "atk": 10,
+    "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 583,
-    "exp": 158,
-    "level": 2,
-    "karma": 1,
+    "gold": 36,
+    "exp": 33,
+    "level": 1,
+    "karma": 0,
     "inventoryMax": 15,
     "inventory": [
       {
-        "id": "nut",
-        "label": "도토리",
-        "type": "food",
-        "hpHeal": 2,
-        "price": 5,
+        "id": "potion_small",
+        "label": "작은 포션",
+        "type": "consumable",
+        "hpHeal": 20,
+        "price": 20,
+        "sellPrice": 5,
+        "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
+        "quantity": 2,
+        "x": 1,
+        "y": 1
+      },
+      {
+        "id": "tainted_core",
+        "label": "오염된 핵",
+        "type": "item",
+        "price": 1,
         "sellPrice": 1,
-        "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다.",
+        "description": "지하에 살고있는 이형의 핵",
         "quantity": 1,
+        "x": 1,
+        "y": 1
+      },
+      {
+        "id": "mana_potion_small",
+        "label": "작은 마나 포션",
+        "type": "consumable",
+        "mpHeal": 20,
+        "price": 25,
+        "sellPrice": 6,
+        "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
+        "quantity": 2,
+        "x": 2,
+        "y": 1
+      },
+      {
+        "id": "wood_stick_397d6baa49bc1413",
+        "label": "\u001b[37m⚪ 장인의 나무 막대\u001b[0m",
+        "type": "weapon",
+        "rangeType": "melee",
+        "atkRange": [
+          1,
+          3
+        ],
+        "critRange": [
+          0,
+          0
+        ],
+        "price": 0,
+        "sellPrice": 0,
+        "description": "길바닥을 굴러다니는 나무 막대",
+        "quantity": 1,
+        "maxRarity": "COMMON",
+        "atk": 3,
+        "crit": 0,
+        "rarity": "COMMON",
         "x": 0,
         "y": 1
       },
       {
-        "id": "rags_c677979decc2fb8b",
+        "id": "iron_sword_41d97c2895dec5b5",
+        "label": "\u001b[34m🔵 숙련된 낡은 철검\u001b[0m",
+        "type": "weapon",
+        "rangeType": "melee",
+        "atkRange": [
+          4,
+          7
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "atk": 5,
+        "crit": 0,
+        "rarity": "RARE",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "id": "rags_7361ca16f7eb1f9f",
         "label": "\u001b[37m⚪ 낡은 누더기\u001b[0m",
         "type": "armor",
         "defRange": [
@@ -51,121 +123,19 @@
         "rarity": "COMMON",
         "x": 0,
         "y": 1
-      },
-      {
-        "id": "iron_sword_1b3896d26ac35a1a",
-        "label": "\u001b[37m⚪ 낡은 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          4,
-          7
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "atk": 4,
-        "crit": 0,
-        "rarity": "COMMON",
-        "x": 1,
-        "y": 0
-      },
-      {
-        "id": "tainted_core",
-        "label": "오염된 핵",
-        "type": "item",
-        "price": 1,
-        "sellPrice": 1,
-        "description": "지하에 살고있는 이형의 핵",
-        "quantity": 3,
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "leather_armor_5ba9b7124ba559a0",
-        "label": "\u001b[35m🟣 [군마] 심연의 낡은 가죽 갑옷\u001b[0m",
-        "type": "armor",
-        "defRange": [
-          2,
-          5
-        ],
-        "evaRange": [
-          0,
-          0.02
-        ],
-        "price": 400,
-        "sellPrice": 100,
-        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
-        "quantity": 1,
-        "def": 3,
-        "eva": 0,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "WARHORSE",
-          "name": "군마",
-          "description": "다크나이트의 공격이 전체 공격으로 전환됩니다."
-        },
-        "x": 1,
-        "y": 0
-      },
-      {
-        "id": "iron_sword_c51659702da6272a",
-        "label": "\u001b[34m🔵 강화된 철검\u001b[0m",
-        "type": "weapon",
-        "atkRange": [
-          4,
-          7
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "atk": 6,
-        "crit": 0,
-        "rarity": "RARE",
-        "x": 1,
-        "y": 0
-      },
-      {
-        "id": "potion_small",
-        "label": "작은 포션",
-        "type": "consumable",
-        "hpHeal": 20,
-        "price": 20,
-        "sellPrice": 5,
-        "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
-        "quantity": 1
-      },
-      {
-        "id": "mana_potion_small",
-        "label": "작은 마나 포션",
-        "type": "consumable",
-        "mpHeal": 20,
-        "price": 25,
-        "sellPrice": 6,
-        "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
-        "quantity": 1
       }
     ],
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
-      "FOCUS_FIRE",
-      "SOUL_HARVEST"
+      "FOCUS_FIRE"
     ],
     "equipped": {
       "weapon": {
-        "id": "iron_sword_d1f9e6db9cd4a75b",
+        "id": "iron_sword_89964c2adf49937b",
         "label": "\u001b[37m⚪ 장인의 철검\u001b[0m",
         "type": "weapon",
+        "rangeType": "melee",
         "atkRange": [
           4,
           7
@@ -181,12 +151,12 @@
         "atk": 7,
         "crit": 0,
         "rarity": "COMMON",
-        "x": 2,
+        "x": 1,
         "y": 1
       },
       "armor": {
-        "id": "leather_armor_cd7d4bb7ba6df559",
-        "label": "\u001b[37m⚪ 장인의 가죽 갑옷\u001b[0m",
+        "id": "leather_armor_7be82dcf6844aecd",
+        "label": "\u001b[34m🔵 강화된 낡은 가죽 갑옷\u001b[0m",
         "type": "armor",
         "defRange": [
           2,
@@ -200,45 +170,26 @@
         "sellPrice": 100,
         "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
         "quantity": 1,
-        "def": 5,
+        "def": 2,
         "eva": 0,
-        "rarity": "COMMON",
-        "x": 2,
-        "y": 0
+        "rarity": "RARE",
+        "x": 3,
+        "y": 1
       }
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
-      "FOCUS_FIRE",
-      "SOUL_HARVEST"
+      "FOCUS_FIRE"
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
     "skeleton": [
       {
-        "id": "skeleton_1769754667088",
-        "name": "\u001b[35m[EPIC]\u001b[0m 스켈레톤 워리어",
-        "maxHp": 129,
-        "hp": 129,
-        "atk": 32,
-        "def": 12,
-        "agi": null,
-        "skills": [
-          "whirlwind"
-        ],
-        "exp": 0,
-        "description": "기어다니는 죄악, 벨페고르의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true
-      },
-      {
-        "id": "skeleton_1769754835865",
+        "id": "skeleton_1770021403840",
         "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
+        "rangeType": "melee",
         "maxHp": 12,
-        "hp": 12,
+        "hp": 4,
         "atk": 0,
         "def": 1,
         "agi": 1,
@@ -249,7 +200,8 @@
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
-        "isSkeleton": true
+        "isSkeleton": true,
+        "orderWeight": 10
       }
     ],
     "_maxSkeleton": 2,
@@ -257,7 +209,7 @@
     "golemUpgrade": [],
     "knightUpgrade": []
   },
-  "sceneId": "B3_Steel_Loading_Dock",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -298,8 +250,8 @@
       },
       "first_boss": {
         "hp": 80,
-        "isAlive": false,
-        "reborn": true,
+        "isAlive": true,
+        "reborn": false,
         "relation": 0
       },
       "second_boss": {
@@ -339,27 +291,19 @@
         "relation": 0
       }
     },
-    "factionHostility": {
-      "untouchable": -3
-    },
-    "factionContribution": {
-      "untouchable": 15
-    }
+    "factionHostility": {},
+    "factionContribution": {}
   },
   "drop": {
     "scendId": "B2_Transit_Area",
-    "id": "39d82f62d19cbd99",
+    "id": "9cc8602d234b7d13",
     "tileId": "19",
-    "exp": 52,
-    "gold": 31
+    "exp": 10,
+    "gold": 18
   },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "first_talk_death",
-    "b2_ratty",
-    "first_boss",
-    "second_talk_death",
-    "HEARD_RESISTANCE"
+    "first_talk_death"
   ]
 }

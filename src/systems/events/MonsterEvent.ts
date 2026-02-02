@@ -50,7 +50,7 @@ export class MonsterEvent {
         await delay()
 
         const units: CombatUnit[] = finalAlive.map((m) => context.battle.toCombatUnit(m, 'monster'))
-
+        
         tile.isClear = await context.battle.runCombatLoop(units, context)
       }
     }

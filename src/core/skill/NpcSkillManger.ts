@@ -25,13 +25,13 @@ const SkillEffectHandlers: Record<
   damage: async (...params) => {
     const [target, skill, attacker] = params
 
-    await target.executeHit(attacker, {
+    const result = await target.executeHit(attacker, {
       skillAtkMult: skill.power,
       ...(skill.options || {}),
       rangeType: skill.rangeType,
     })
 
-    if (skill.buff) await SkillEffectHandlers.deBuff(...params)
+    if (!result.isDead && skill.buff) await SkillEffectHandlers.deBuff(...params)
   },
   summon: (target, skill, attacker, context) => {
     const { battle } = context
@@ -67,7 +67,6 @@ const SpecialSkillLogics: Record<
   // 자폭
   self_destruct: async (attacker, targets, skill) => {
     // 1. 모든 대상에게 데미지 적용
-    console.log('DEBUG::', attacker)
     for (const target of targets) {
       await target.executeHit(attacker, { rawDamage: Math.floor(attacker.ref.hp * skill.power) })
     }
