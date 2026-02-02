@@ -1,22 +1,29 @@
-import { BattleTarget } from '../../types'
+import { AttackRangeType, BattleTarget } from '../../types'
 import { Player } from '../Player'
-import { Battle, Buff } from './Battle'
+import { NpcSkillManager } from '../skill/NpcSkillManger'
+import { Battle, Buff, DamageOptions } from './Battle'
+
+type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
 
 export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player> {
   public id: string
   public name: string
   public stats: any
+  public rangeType: AttackRangeType = 'melee'
   public buff: Buff[] = []
   public deBuff: Buff[] = []
   public orderWeight: number
 
   // 어픽스 매니저가 주입할 훅 리스트
-  public onAfterHitHooks: ((attacker: CombatUnit, defender: CombatUnit) => Promise<void>)[] = []
-  public onDeathHooks: ((unit: CombatUnit) => Promise<void>)[] = []
+  public onBeforeAttackHooks: UnitDamageProcessHook[] = []
+  public onAfterAttackHooks: UnitDamageProcessHook[] = []
+  public onAfterHitHooks: UnitDamageProcessHook[] = []
+  public onDeathHooks: ((attacker: CombatUnit, options?: DamageOptions) => Promise<void>)[] = []
 
   constructor(
     public ref: T,
-    public type: 'player' | 'minion' | 'monster' | 'npc'
+    public type: 'player' | 'minion' | 'monster' | 'npc',
+    private npcSkills: NpcSkillManager
   ) {
     if ('id' in ref) {
       this.id = ref.id || (type === 'player' ? 'player' : 'npc')
@@ -25,6 +32,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       this.id = 'player'
       this.name = 'player'
     }
+
     this.orderWeight = (ref as any).orderWeight || 0
     this.updateStats()
   }
@@ -38,6 +46,8 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       eva: unit.computed?.eva || unit.eva || 0,
       crit: unit.computed?.crit || unit.crit || 0,
     }
+
+    this.rangeType = unit.computed?.rangeType || unit.rangeType || 'melee'
   }
 
   applyEffect(newEffect: Buff) {
@@ -105,35 +115,60 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.applyEffect(d)
   }
 
-  public async takeDamage(attacker: CombatUnit, options: any = {}) {
-    if (!this.ref.isAlive) return { isDead: true, damage: 0 }
+  public async executeHit(attacker: CombatUnit, options: DamageOptions = {}) {
+    // 1. [Before]
+    await this.runHooks(attacker.onBeforeAttackHooks, attacker, options)
 
-    const result = Battle.calcDamage(attacker, this, options)
-    const { isEscape, damage, isCritical } = result
+    // 2. [Action]
+    const result = await this.takeDamage(attacker, options)
 
-    if (!isEscape) {
-      this.ref.hp = Math.max(0, this.ref.hp - damage)
+    // 3. [After]
+    if (!result.isEscape && !options.isPassive) {
+      await this.runHooks(attacker.onAfterAttackHooks, attacker, options)
+
+      if (!result.isDead) {
+        await this.runHooks(this.onAfterHitHooks, attacker, options)
+      }
     }
 
-    // 결과 출력
-    this.logDamage(attacker, result)
-
-    const isDead = this.ref.hp <= 0
-
-    if (isDead) {
-      // 주입된 사망 어픽스 실행
-      this.dead()
-    } else if (!isEscape) {
-      // 주입된 피격 후 어픽스 실행
-      for (const hook of this.onAfterHitHooks) await hook(attacker, this)
+    // 4. [Death] - 사망 시에는 공격 정보(options)가 필요할 수 있으므로 함께 전달
+    if (result.isDead && this.ref.isAlive) {
+      await this.dead(attacker, options)
     }
 
-    return { ...result, currentHp: this.ref.hp, isDead }
+    return result
   }
 
-  async dead() {
+  /**
+   * 비동기 훅 리스트를 순차적으로 실행하는 내부 헬퍼
+   */
+  private async runHooks(hooks: Function[] = [], attacker?: CombatUnit, options: DamageOptions = {}) {
+    for (const hook of hooks) {
+      // 훅의 규격에 맞춰 attacker, defender(this), options를 전달
+      await hook(attacker, this, options)
+    }
+  }
+
+  /**
+   * [순수 데미지 정산]
+   */
+  public async takeDamage(attacker: CombatUnit, options: DamageOptions = {}) {
+    if (!this.ref.isAlive) return { isEscape: false, isDead: true, damage: 0 }
+
+    const result = Battle.calcDamage(attacker, this, options)
+    if (!result.isEscape) {
+      this.ref.hp = Math.max(0, this.ref.hp - result.damage)
+    }
+
+    this.logDamage(attacker, result)
+    return { ...result, currentHp: this.ref.hp, isDead: this.ref.hp <= 0 }
+  }
+
+  async dead(attacker?: CombatUnit, options: DamageOptions = {}) {
     this.ref.isAlive = false
-    for (const hook of this.onDeathHooks) await hook(this)
+    for (const hook of this.onDeathHooks) {
+      await hook(this, options) // 사망한 유닛 자신과 당시 공격 정보를 전달
+    }
   }
 
   private logDamage(attacker: CombatUnit, result: any) {

@@ -2,6 +2,7 @@
   "track_ratman": {
     "id": "track_ratman",
     "name": "선로 랫맨",
+    "rangeType": "melee",
     "hp": 18,
     "maxHp": 18,
     "atk": 8,
@@ -17,6 +18,7 @@
   "snare_spider": {
     "id": "snare_spider",
     "name": "올가미 거미",
+    "rangeType": "melee",
     "hp": 16,
     "maxHp": 16,
     "atk": 12,
@@ -33,6 +35,7 @@
   "cocoon_human": {
     "id": "cocoon_human",
     "name": "고치 인간",
+    "rangeType": "melee",
     "hp": 18,
     "maxHp": 18,
     "atk": 1,
@@ -47,6 +50,7 @@
   "filth_slime": {
     "id": "filth_slime",
     "name": "오물 슬라임",
+    "rangeType": "melee",
     "hp": 14,
     "maxHp": 14,
     "atk": 5,
@@ -61,6 +65,7 @@
   "ghoul": {
     "id": "ghoul",
     "name": "오염된 망자",
+    "rangeType": "melee",
     "hp": 12,
     "maxHp": 12,
     "atk": 2,
@@ -74,6 +79,7 @@
   "derailed_ghost": {
     "id": "derailed_ghost",
     "name": "탈선된 유령",
+    "rangeType": "melee",
     "hp": 25,
     "maxHp": 25,
     "atk": 9,
@@ -90,6 +96,7 @@
   "ichor_flies": {
     "id": "ichor_flies",
     "name": "흡혈 파리떼",
+    "rangeType": "melee",
     "hp": 13,
     "maxHp": 13,
     "atk": 5,
@@ -106,6 +113,7 @@
   "suspicious_turtle": {
     "id": "suspicious_turtle",
     "name": "수상한 거북이",
+    "rangeType": "melee",
     "hp": 30,
     "maxHp": 30,
     "atk": 8,
@@ -120,6 +128,7 @@
   "shipyard_worker": {
     "id": "shipyard_worker",
     "name": "하역 인부",
+    "rangeType": "melee",
     "hp": 45,
     "maxHp": 45,
     "atk": 12,
@@ -133,6 +142,7 @@
   "shipyard_guard": {
     "id": "shipyard_guard",
     "name": "하역장 경비병",
+    "rangeType": "melee",
     "hp": 60,
     "maxHp": 60,
     "atk": 18,
@@ -147,6 +157,7 @@
   "security_sensor_drone": {
     "id": "security_sensor_drone",
     "name": "보안 센서 드론",
+    "rangeType": "ranged",
     "hp": 35,
     "maxHp": 35,
     "atk": 10,
@@ -162,6 +173,7 @@
   "shipyard_hound": {
     "id": "shipyard_hound",
     "name": "하역장 사냥개",
+    "rangeType": "melee",
     "hp": 40,
     "maxHp": 40,
     "atk": 22,
@@ -177,6 +189,7 @@
   "ratman_scout": {
     "id": "ratman_scout",
     "name": "랫맨 정찰병",
+    "rangeType": "melee",
     "hp": 38,
     "maxHp": 38,
     "atk": 15,
@@ -192,6 +205,7 @@
   "ratman_shaman": {
     "id": "ratman_shaman",
     "name": "랫맨 주술사",
+    "rangeType": "ranged",
     "hp": 50,
     "maxHp": 50,
     "atk": 20,
@@ -206,6 +220,7 @@
   "mutated_worker": {
     "id": "mutated_worker",
     "name": "변이된 하역 인부",
+    "rangeType": "melee",
     "hp": 70,
     "maxHp": 70,
     "atk": 26,
@@ -220,6 +235,7 @@
   "shipyard_supervisor": {
     "id": "shipyard_supervisor",
     "name": "하역장 감독관",
+    "rangeType": "melee",
     "hp": 65,
     "maxHp": 65,
     "atk": 24,
@@ -234,6 +250,7 @@
   "cargo_thief": {
     "id": "cargo_thief",
     "name": "화물 도둑",
+    "rangeType": "melee",
     "hp": 42,
     "maxHp": 42,
     "atk": 16,
@@ -249,6 +266,7 @@
   "oil_sludge_slime": {
     "id": "oil_sludge_slime",
     "name": "오일 슬러지 슬라임",
+    "rangeType": "melee",
     "hp": 55,
     "maxHp": 55,
     "atk": 14,

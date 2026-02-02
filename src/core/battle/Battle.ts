@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
-import { BattleTarget, Drop, GameContext, NPC } from '../../types'
+import { AttackRangeType, BattleTarget, Drop, GameContext, NPC } from '../../types'
 import { delay } from '../../utils'
 import { LootFactory } from '../LootFactory'
 import { MonsterFactory } from '../MonsterFactory'
@@ -9,6 +9,18 @@ import { SkillManager } from '../skill'
 import { AffixManager } from './AffixManager'
 import { CombatUnit } from './CombatUnit'
 import { TargetSelector } from './TargetSelector'
+import { NpcSkillManager } from '../skill/NpcSkillManger'
+
+export type DamageOptions = {
+  skillAtkMult?: number // 데미지 배율
+  rawDamage?: number // 직접 계산된 데미지 (시체 폭발 등)
+  isIgnoreDef?: boolean // 방어력 무시
+  isFixed?: boolean // 고정 데미지
+  isSureHit?: boolean // 회피불가
+  isSureCrit?: boolean // 무조건 치명타
+  rangeType?: AttackRangeType
+  isPassive?: boolean
+}
 
 export type Buff = {
   name: string
@@ -33,32 +45,32 @@ export interface DamageResult extends CalcDamageResult {
 
 export class Battle {
   private unitCache = new Map<any, CombatUnit>()
-  private currentEnemies: CombatUnit[] = []
 
   constructor(
     private player: Player,
-    public monster: MonsterFactory
+    public monster: MonsterFactory,
+    public npcSkills: NpcSkillManager
   ) {}
 
-  public getAliveEnemies() {
-    return this.currentEnemies.filter((e) => e.ref.isAlive)
+  private get aliveEnemies(): CombatUnit[] {
+    return Array.from(this.unitCache.values()).filter((unit) => unit.type === 'monster' && unit.ref.isAlive)
   }
 
-  async runCombatLoop(enemies: CombatUnit[], context: GameContext) {
-    this.currentEnemies = [...enemies]
-
-    console.log(`\n⚔️  전투가 시작되었습니다!`)
-    console.log(`적: ${enemies.map((e) => e.name).join(', ')}`)
-
-    enemies.forEach((e) => {
+  async runCombatLoop(initialEnemies: CombatUnit[], context: GameContext) {
+    initialEnemies.forEach((e) => {
+      this.unitCache.set(e.ref, e)
+      // 공통 사망 로직 주입
       e.onDeathHooks.push(async () => this.handleUnitDeath(e.ref as BattleTarget, context))
     })
 
+    console.log(`\n⚔️ 전투가 시작되었습니다!`)
+    console.log(`적: ${this.aliveEnemies.map((e) => e.name).join(', ')}`)
+
     let turn = 0
-    while (this.player.isAlive && this.currentEnemies.some((e) => e.ref.isAlive)) {
+    while (this.player.isAlive && this.aliveEnemies.some((e) => e.ref.isAlive)) {
       turn++
 
-      const turnOrder = this.getTurnOrder(this.currentEnemies)
+      const turnOrder = this.getTurnOrder()
 
       console.log(`\n============== turn: ${turn} ==============`)
 
@@ -66,7 +78,7 @@ export class Battle {
       for (const unit of turnOrder) {
         // 전투 도중 누군가 죽었다면 체크
         if (!unit.ref.isAlive) continue
-        if (!this.player.isAlive || !this.currentEnemies.some((e) => e.ref.isAlive)) break
+        if (!this.player.isAlive || !this.aliveEnemies.some((e) => e.ref.isAlive)) break
 
         console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
         this.updateEffectsDuration(unit)
@@ -85,7 +97,7 @@ export class Battle {
             } else if (effect.name === '중독') {
               console.log(` └ 💀 ${unit.name}이(가) 중독으로 사망했습니다.`)
             }
-            unit.dead()
+            await unit.dead()
 
             await delay()
             break
@@ -150,68 +162,42 @@ export class Battle {
     return true
   }
 
-  // --- 내부 로직 함수들 ---
-  private getTurnOrder(enemies: CombatUnit[]): CombatUnit[] {
-    const units: CombatUnit[] = []
+  /**
+   * 현재 전투에 참여 중인 모든 유닛의 턴 순서를 결정합니다.
+   */
+  getTurnOrder(): CombatUnit[] {
+    // 1. 플레이어 유닛 보장 (캐시에 없으면 생성 및 주입)
+    this.toCombatUnit(this.player, 'player')
 
-    // 2. 플레이어 캐싱 및 콜백 주입
-    let pUnit = this.unitCache.get(this.player)
-    if (!pUnit) {
-      pUnit = this.toCombatUnit(this.player, 'player')
-      this.unitCache.set(this.player, pUnit)
-    }
-    units.push(pUnit)
-
-    // 3. 미니언 캐싱 및 콜백 주입 (새로 소환된 미니언 포함)
+    // 2. 미니언 유닛 최신화 (새로 소환된 미니언이 있을 수 있으므로 체크)
     if (this.player.minions) {
       this.player.minions.forEach((m) => {
-        if (m.isAlive) {
-          let mUnit = this.unitCache.get(m)
-          if (!mUnit) {
-            mUnit = this.toCombatUnit(m, 'minion')
-            mUnit.onDeathHooks.push(() => this.handleMinionsDeath(mUnit! as CombatUnit<BattleTarget>, enemies))
-            this.unitCache.set(m, mUnit)
-          }
-          units.push(mUnit)
+        // 살아있고 아직 캐시에 등록되지 않은 미니언만 주입
+        if (m.isAlive && !this.unitCache.has(m)) {
+          const mUnit = this.toCombatUnit(m, 'minion')
+          // 미니언 전용 사망 훅 주입
+          mUnit.onDeathHooks.push(async () => this.handleMinionsDeath(mUnit, this.aliveEnemies))
         }
       })
     }
 
-    // 4. 적군 추가
-    enemies.forEach((e) => {
-      if (e.ref.isAlive) {
-        this.unitCache.set(e.ref, e)
-        units.push(e)
-      }
-    })
+    // 3. unitCache에 있는 모든 유닛 중 '살아있는' 유닛들만 추출하여 정렬
+    // 플레이어, 미니언, 몬스터가 모두 포함됩니다.
+    return Array.from(this.unitCache.values())
+      .filter((unit) => unit.ref.isAlive)
+      .sort((a, b) => {
+        // 민첩성(AGI) 기준 내림차순 정렬
+        const agiA = a.stats?.agi ?? 0
+        const agiB = b.stats?.agi ?? 0
 
-    const getEffectiveAgi = (unit: CombatUnit): number => {
-      let finalAgi = unit.stats.agi
+        if (agiB !== agiA) {
+          return agiB - agiA
+        }
 
-      // 버프 배열: agi가 있으면 더함
-      unit.buff.forEach((b) => {
-        if (b.agi) finalAgi += b.agi
+        // 민첩성이 같다면 플레이어 진영(player, minion)에게 우선권 부여 (선택 사항)
+        const priority: Record<string, number> = { player: 3, minion: 2, monster: 1, npc: 1 }
+        return (priority[b.type] ?? 0) - (priority[a.type] ?? 0)
       })
-
-      // 디버프 배열: agi가 있으면 뺌
-      unit.deBuff.forEach((d) => {
-        if (d.agi) finalAgi -= d.agi
-      })
-
-      return finalAgi
-    }
-
-    return units.sort((a, b) => {
-      const diff = getEffectiveAgi(b) - getEffectiveAgi(a)
-
-      // 민첩 수치가 같다면 플레이어 진영 우선 (안정적인 게임 경험을 위해)
-      if (diff === 0) {
-        const priority = (u: CombatUnit) => (['npc', 'monster'].includes(u.type) ? 1 : 0)
-        return priority(a) - priority(b)
-      }
-
-      return diff
-    })
   }
 
   private async handlePlayerAction(
@@ -301,7 +287,7 @@ export class Battle {
 
           if (target) {
             // 공격 실행
-            await target.takeDamage(playerUnit)
+            await target.executeHit(playerUnit, { rangeType: playerUnit.rangeType })
           }
         }
         break
@@ -369,9 +355,9 @@ export class Battle {
       return
     }
 
-    const autoSkillId = context.npcSkills.getRandomSkillId(attacker)
+    const autoSkillId = this.npcSkills.getRandomSkillId(attacker)
     if (autoSkillId) {
-      await context.npcSkills.execute(autoSkillId, attacker, ally, visibleTargets, context)
+      await this.npcSkills.execute(autoSkillId, attacker, ally, visibleTargets, context)
     } else {
       let target: CombatUnit
       if (['monster', 'npc'].includes(attacker.type)) {
@@ -387,7 +373,7 @@ export class Battle {
       }
 
       if (attacker.stats.atk > 0) {
-        await target.takeDamage(attacker)
+        await target.executeHit(attacker, { rangeType: attacker.rangeType })
       } else {
         console.log(`${attacker.name}은 가만히 서있을 뿐이다.`)
       }
@@ -455,10 +441,18 @@ export class Battle {
   }
 
   public toCombatUnit<T extends Player | BattleTarget>(unit: T, type: CombatUnit['type']): CombatUnit<T> {
-    const combatUnit = new CombatUnit<T>(unit, type)
+    // 이미 캐싱되어 있다면 반환
+    if (this.unitCache.has(unit)) {
+      return this.unitCache.get(unit) as CombatUnit<T>
+    }
 
-    AffixManager.setup(combatUnit, this.player, this)
+    const combatUnit = new CombatUnit<T>(unit, type, this.npcSkills)
 
+    // NpcSkillManager를 통해 패시브 주입 (기존에 정의한 로직)
+    this.npcSkills.setupPassiveHook(combatUnit, this)
+
+    // 캐시에 등록
+    this.unitCache.set(unit, combatUnit)
     return combatUnit
   }
 
@@ -474,18 +468,7 @@ export class Battle {
     }
   }
 
-  static calcDamage(
-    attacker: CombatUnit,
-    target: CombatUnit,
-    options: {
-      skillAtkMult?: number // 데미지 배율
-      rawDamage?: number // 직접 계산된 데미지 (시체 폭발 등)
-      isIgnoreDef?: boolean // 방어력 무시
-      isFixed?: boolean // 고정 데미지
-      isSureHit?: boolean // 회피불가
-      isSureCrit?: boolean // 무조건 치명타
-    } = {}
-  ) {
+  static calcDamage(attacker: CombatUnit, target: CombatUnit, options: DamageOptions = {}) {
     const { atk, crit } = attacker.finalStats
     const { def, eva } = target.finalStats
 
@@ -536,16 +519,35 @@ export class Battle {
 
   public _spawnMonster(monsterId: string, context: GameContext) {
     const monster = this.monster.makeMonster(monsterId)
-
-    if (!monster) {
-      return
-    }
+    if (!monster) return
 
     const unit = this.toCombatUnit(monster, 'monster')
     unit.onDeathHooks.push(async () => this.handleUnitDeath(monster as BattleTarget, context))
 
-    this.currentEnemies.push(unit)
+    // 이제 currentEnemies.push 대신 unitCache에 이미 들어있음 (toCombatUnit 내부 로직)
+    return unit
+  }
 
-    return { ...unit }
+  public getEnemiesOf(attacker: CombatUnit): CombatUnit[] {
+    // 1. 진영 그룹 정의
+    const playerSideTypes = ['player', 'minion']
+    const enemySideTypes = ['monster', 'npc']
+
+    // 2. 공격자가 어느 진영인지 확인
+    const isPlayerSide = playerSideTypes.includes(attacker.type)
+
+    // 3. 캐시에서 반대 진영 필터링
+    return Array.from(this.unitCache.values()).filter((unit) => {
+      // 이미 죽은 유닛은 제외
+      if (!unit.ref.isAlive) return false
+
+      if (isPlayerSide) {
+        // 플레이어 측이 공격자라면: 적은 enemySideTypes에 포함된 유닛
+        return enemySideTypes.includes(unit.type)
+      } else {
+        // 몬스터/NPC가 공격자라면: 적은 playerSideTypes에 포함된 유닛
+        return playerSideTypes.includes(unit.type)
+      }
+    })
   }
 }

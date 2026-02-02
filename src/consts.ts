@@ -1,4 +1,4 @@
-import { Direction, Vector } from './types'
+import { AttackRangeType, Direction, Vector } from './types'
 
 export const COMMAND_KEYS = {
   UP: 'up',
@@ -59,7 +59,7 @@ export const MAP_IDS = {
   B2_TRANSIT: 'B2_Transit_Area',
   B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',
   B3_5_RESISTANCE_BASE: 'B3_5_Resistance_Base',
-  B4_Celestial_Transit_Lounge: 'B4_Celestial_Transit_Lounge'
+  B4_Celestial_Transit_Lounge: 'B4_Celestial_Transit_Lounge',
 } as const
 
 export type SkeletonRarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'
@@ -70,13 +70,23 @@ type SubClass = {
   skills: string[]
   weight: number
   orderWeight: number
+  rangeType: AttackRangeType
 }
 
 export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
   common: {
     bonus: 0.8,
     weight: 625,
-    subClasses: [{ name: '병사', orderWeight: 10, statMod: { atk: 1, def: 1, hp: 1, agi: 1 }, skills: [], weight: 1 }],
+    subClasses: [
+      {
+        name: '병사',
+        orderWeight: 10,
+        statMod: { atk: 1, def: 1, hp: 1, agi: 1 },
+        skills: [],
+        weight: 1,
+        rangeType: 'melee',
+      },
+    ],
   },
   rare: {
     bonus: 1.0,
@@ -88,6 +98,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         statMod: { atk: 1.2, def: 1, hp: 1, agi: 1.1 },
         skills: ['power_smash'],
         weight: 1,
+        rangeType: 'melee',
       },
     ],
   },
@@ -101,6 +112,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         statMod: { atk: 0.8, def: 1.5, hp: 1.3, agi: 0.7 },
         skills: ['shield_Bash'],
         weight: 5,
+        rangeType: 'melee',
       },
       {
         name: '궁수',
@@ -108,6 +120,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         statMod: { atk: 1.3, def: 0.7, hp: 0.8, agi: 1.5 },
         skills: ['piercing_arrow'],
         weight: 4,
+        rangeType: 'ranged',
       },
       {
         name: '수도자',
@@ -115,6 +128,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
         skills: ['heal'],
         weight: 1,
+        rangeType: 'ranged',
       },
     ],
   },
@@ -128,6 +142,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         statMod: { atk: 1.5, def: 1.2, hp: 1.2, agi: 1.0 },
         skills: ['whirlwind'],
         weight: 9,
+        rangeType: 'melee',
       },
       {
         name: '사제',
@@ -135,6 +150,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
         skills: ['holy_radiance'],
         weight: 1,
+        rangeType: 'ranged',
       },
     ],
   },
@@ -148,6 +164,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         statMod: { atk: 2.0, def: 1.5, hp: 1.5, agi: 1.5 },
         skills: ['death_aura'],
         weight: 1,
+        rangeType: 'melee',
       },
     ],
   },
@@ -161,6 +178,6 @@ export const SKELETON_UPGRADE = {
   COSTS: {
     2: 500, // 2->3구 확장 비용
     3: 2000, // 3->4구 확장 비용
-    4: 4000  // 4->5구 확장 비용
-  } as Record<number, number>
-};
+    4: 4000, // 4->5구 확장 비용
+  } as Record<number, number>,
+}

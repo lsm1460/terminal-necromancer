@@ -329,6 +329,7 @@ async function handleAwakeGolem(player: Player) {
   player._golem = {
     id: 'golem',
     name: '하역장의 기계 골렘',
+    rangeType: 'melee',
     baseMaxHp: 80,
     maxHp: 80,
     hp: 80,

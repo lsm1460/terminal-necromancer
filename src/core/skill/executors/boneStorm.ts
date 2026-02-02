@@ -41,9 +41,10 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
     console.log(` └ 🩸 날카로운 뼈 파편이 ${enemy.name}을 찢어발깁니다!`)
 
     // 데미지 적용 (고정 데미지가 아니므로 적 방어력에 감쇄됨)
-    await enemy.takeDamage(player, {
+    await enemy.executeHit(player, {
       rawDamage: totalRawDamage,
       isIgnoreDef: false,
+      rangeType: 'ranged'
     })
 
     // [출혈] 디버프 추가 (지속 피해)

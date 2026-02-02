@@ -103,8 +103,13 @@ export class Player {
     let crit = this.crit
     let def = this.def
     let eva = this.eva
+    let rangeType = 'melee'
 
-    if (this.equipped.weapon) atk += this.equipped.weapon.atk
+    if (this.equipped.weapon) {
+      atk += this.equipped.weapon.atk
+
+      rangeType = this.equipped.weapon.rangeType || 'melee'
+    }
     if (this.equipped.weapon) crit += this.equipped.weapon.crit
     if (this.equipped.armor) def += this.equipped.armor.def
     if (this.equipped.armor) eva += this.equipped.armor?.eva || 0
@@ -117,6 +122,7 @@ export class Player {
       crit,
       def,
       eva,
+      rangeType,
     }
   }
 
@@ -139,8 +145,10 @@ export class Player {
 
     if (this.hasAffix('THORNS')) {
       this._golem.name = '가시가 돋아난 기계 골램'
+      this._golem.skills = ['thorns']
     } else {
       this._golem.name = '하역장의 기계 골렘'
+      this._golem.skills = ['power_smash']
     }
 
     return this._golem
@@ -159,10 +167,12 @@ export class Player {
       this._knight.def = Math.floor((this._knight.baseDef || this._knight.def) * 0.6)
       this._knight.maxHp = this._knight.maxHp
       this._knight.hp = Math.min(this._knight.maxHp, this._knight.hp)
+      this._knight.rangeType = 'ranged'
     } else {
       this._knight.maxHp = Math.floor((this._knight.baseMaxHp || this._knight.maxHp) * 1.2)
       this._knight.atk = this._knight.baseAtk || this._knight.atk
       this._knight.def = this._knight.baseDef || this._knight.def
+      this._knight.rangeType = 'melee'
     }
 
     if (isLich && hasHorse) {
@@ -183,7 +193,27 @@ export class Player {
   }
 
   get minions(): BattleTarget[] {
-    const _skeletons = this.skeleton.sort((a, b) => (b?.orderWeight || 0) - (a?.orderWeight || 0))
+    const _skeletons = this.skeleton
+      .sort((a, b) => (b?.orderWeight || 0) - (a?.orderWeight || 0))
+      .map((skeleton) => {
+        // 1. 기존에 들어있을 수 있는 어픽스 관련 스킬들을 한 번에 제거
+        const affixSkillIds = ['death_destruct', 'frostborne']
+        let currentSkills = (skeleton.skills || []).filter((id) => !affixSkillIds.includes(id))
+
+        // 2. 현재 활성화된 어픽스만 추가
+        if (this.hasAffix('DOOMSDAY')) {
+          currentSkills.push('death_destruct')
+        }
+
+        if (this.hasAffix('FROSTBORNE')) {
+          currentSkills.push('frostborne')
+        }
+
+        // 3. 필터링 및 추가가 완료된 새로운 스킬 배열 할당
+        skeleton.skills = currentSkills
+
+        return skeleton
+      })
 
     return [this.golem, ..._skeletons, this.knight].filter((_minion) => !!_minion).filter((_minion) => _minion.isAlive)
   }
@@ -508,6 +538,7 @@ export class Player {
     this._knight = {
       id: 'knight',
       name: '기사 발타자르',
+      rangeType: 'melee',
       hp: 10,
       baseMaxHp: 10,
       maxHp: 10,

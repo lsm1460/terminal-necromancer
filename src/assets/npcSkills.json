@@ -2,6 +2,7 @@
   "fire_breath": {
     "id": "fire_breath",
     "name": "화염 숨결",
+    "rangeType": "ranged",
     "description": "전방에 강력한 불을 내뿜습니다.",
     "chance": 0.3,
     "power": 2.0,
@@ -10,6 +11,7 @@
   "quick_slash": {
     "id": "quick_slash",
     "name": "기습적인 일격",
+    "rangeType": "melee",
     "description": "상대의 빈틈을 노려 예리한 무기나 날카로운 신체 부위로 빠르게 베어 가릅니다.",
     "chance": 0.4,
     "power": 1.2,
@@ -18,6 +20,7 @@
   "sticky_web": {
     "id": "sticky_web",
     "name": "강제 구속",
+    "rangeType": "ranged",
     "description": "끈적한 점액이나 보이지 않는 마력의 끈을 투척하여 대상의 행동을 제약합니다.",
     "chance": 0.3,
     "targetType": "RANDOM",
@@ -31,6 +34,7 @@
   "self_destruct": {
     "id": "self_destruct",
     "name": "불안정한 자폭",
+    "rangeType": "ranged",
     "description": "내부의 에너지를 한꺼번에 폭주시킨 뒤 신체를 비산시켜 주위에 치명적인 타격을 입힙니다.",
     "chance": 0.2,
     "power": 1,
@@ -39,6 +43,7 @@
   "health_drain": {
     "id": "health_drain",
     "name": "생명력 강탈",
+    "rangeType": "ranged",
     "description": "대상에게 달라붙어 그들의 생명 에너지를 직접 빨아들여 자신의 양분으로 삼습니다.",
     "chance": 0.7,
     "power": 0.5,
@@ -47,6 +52,7 @@
   "power_smash": {
     "id": "power_smash",
     "name": "강력한 내리치기",
+    "rangeType": "melee",
     "description": "무거운 무기로 적을 내리칩니다.",
     "chance": 0.3,
     "power": 1.4,
@@ -55,40 +61,45 @@
   "piercing_arrow": {
     "id": "piercing_arrow",
     "name": "관통 화살",
+    "rangeType": "ranged",
+    "description": "가장 뒤에 있는 적을 저격합니다.",
     "chance": 1,
     "power": 1.2,
-    "targetType": "ENEMY_BACK",
-    "description": "가장 뒤에 있는 적을 저격합니다."
+    "targetType": "ENEMY_BACK"
   },
   "heal": {
     "id": "heal",
     "name": "치유",
+    "rangeType": "ranged",
+    "description": "가장 부상이 심한 아군을 회복시킵니다.",
     "chance": 0.5,
     "power": 40,
     "targetType": "ALLY_LOWEST_HP",
-    "description": "가장 부상이 심한 아군을 회복시킵니다.",
     "type": "heal"
   },
   "volley_fire": {
     "id": "volley_fire",
     "name": "일제 사격",
+    "rangeType": "ranged",
+    "description": "모든 적에게 화살 비를 퍼붓습니다.",
     "chance": 0.2,
     "power": 0.8,
-    "targetType": "ENEMY_ALL",
-    "description": "모든 적에게 화살 비를 퍼붓습니다."
+    "targetType": "ENEMY_ALL"
   },
   "holy_radiance": {
     "id": "holy_radiance",
     "name": "성스러운 합창",
+    "rangeType": "ranged",
+    "description": "모든 아군의 상처를 어루만집니다.",
     "chance": 0.15,
     "power": 25,
     "targetType": "ALLY_ALL",
-    "description": "모든 아군의 상처를 어루만집니다.",
     "type": "heal"
   },
   "bone_prison": {
     "id": "bone_prison",
     "name": "뼈 감옥",
+    "rangeType": "ranged",
     "chance": 0.3,
     "targetType": "RANDOM",
     "description": "뼈로 이루어진 감옥은 대상의 행동을 제약합니다.",
@@ -102,6 +113,7 @@
   "aging_curse": {
     "id": "aging_curse",
     "name": "노화",
+    "rangeType": "ranged",
     "chance": 0.3,
     "targetType": "ENEMY_LOWEST_HP",
     "description": "가장 부상이 심한 적군을 노화시킵니다. 민첩이 떨어집니다.",
@@ -116,6 +128,7 @@
   "abyssal_gallop": {
     "id": "abyssal_gallop",
     "name": "심연의 질주",
+    "rangeType": "melee",
     "chance": 0.6,
     "power": 25,
     "targetType": "ENEMY_ALL",
@@ -124,6 +137,7 @@
   "dread_charge": {
     "id": "dread_charge",
     "name": "죽음의 돌격",
+    "rangeType": "melee",
     "chance": 0.6,
     "power": 1.6,
     "targetType": "ENEMY_ALL",
@@ -143,6 +157,7 @@
   "achilles_bite": {
     "id": "achilles_bite",
     "name": "발목 물기",
+    "rangeType": "melee",
     "chance": 0.4,
     "power": 1.2,
     "targetType": "RANDOM",
@@ -183,6 +198,7 @@
   "item_steal": {
     "id": "item_steal",
     "name": "절도",
+    "rangeType": "melee",
     "description": "약탈자의 빠른 손놀림이 당신의 배낭을 스칩니다. 소지하고 있던 소모품이나 골드 중 일부가 순식간에 사라집니다.",
     "chance": 0.15,
     "power": 0.8,
@@ -205,6 +221,7 @@
   "smoke_bomb": {
     "id": "smoke_bomb",
     "name": "연막",
+    "rangeType": "ranged",
     "description": "발밑에서 자욱한 회색 연기가 터져 나옵니다. 전장의 시야가 차단되어 공격의 명중률이 바닥으로 떨어지고 혼란이 가중됩니다.",
     "chance": 0.15,
     "targetType": "ENEMY_ALL",
@@ -219,6 +236,7 @@
   "poison_dagger": {
     "id": "poison_dagger",
     "name": "독 찌르기",
+    "rangeType": "melee",
     "chance": 0.4,
     "power": 1.1,
     "targetType": "RANDOM",
@@ -228,6 +246,65 @@
       "type": "deBuff",
       "duration": 15,
       "atk": 2
+    }
+  },
+  "whirlwind": {
+    "id": "whirlwind",
+    "name": "소용돌이",
+    "rangeType": "melee",
+    "chance": 0.25,
+    "power": 0.4,
+    "targetType": "ENEMY_ALL",
+    "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다.",
+    "buff": {
+      "name": "출혈",
+      "type": "dot",
+      "duration": 3,
+      "atk": 5
+    }
+  },
+  "thorns": {
+    "id": "thorns",
+    "name": "가시",
+    "description": "적에게 공격을 받는다면 되갚아줍니다.",
+    "chance": 1,
+    "targetType": "COUNTER",
+    "type": "passive"
+  },
+  "death_aura": {
+    "id": "death_aura",
+    "name": "죽음의 오라",
+    "description": "반경 내의 모든 생명체를 시들게 합니다.  매 턴마다 적의 방어력을 깎는 디버프를 부여하고 체력을 감소시킵니다.",
+    "chance": 1,
+    "targetType": "ENEMY_ALL",
+    "type": "passive",
+    "buff": {
+      "name": "저주",
+      "type": "deBuff",
+      "def": 3,
+      "duration": 3
+    }
+  },
+  "death_destruct": {
+    "id": "death_destruct",
+    "name": "종말",
+    "description": "이 유닛이 사망 시, 폭발하여 이 유닛 체력의 60%의 데미지를 상대방 유닛에게 줌",
+    "chance": 1,
+    "targetType": "ENEMY_ALL",
+    "type": "passive"
+  },
+  "frostborne": {
+    "id": "frostborne",
+    "name": "서리",
+    "description": "이 유닛이 사망 시, 폭발하여 상대방 유닛에게 데미지를 줌",
+    "chance": 1,
+    "targetType": "ENEMY_ALL",
+    "type": "passive",
+    "buff": {
+      "name": "심연의 한기",
+      "type": "deBuff",
+      "duration": 3,
+      "agi": 5
     }
   }
 }

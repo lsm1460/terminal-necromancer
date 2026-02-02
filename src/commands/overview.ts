@@ -1,18 +1,7 @@
 import enquirer from 'enquirer'
 import { Player } from '../core/Player'
 import { printStatus } from '../statusPrinter'
-import {
-  BattleTarget,
-  CommandFunction,
-  Corpse,
-  Drop,
-  GameContext,
-  Item,
-  ItemType,
-  Monster,
-  NPC,
-  Tile
-} from '../types'
+import { BattleTarget, CommandFunction, Corpse, Drop, GameContext, Item, ItemType, Monster, NPC, Tile } from '../types'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
@@ -85,7 +74,10 @@ const renderHpBar = (hp: number, max: number) => {
 
 // 미니언 및 몬스터 정보 출력
 export const printEntity = (target: BattleTarget, context: GameContext) => {
-  const { npcSkills } = context
+  const {
+    battle: { npcSkills },
+  } = context
+
   const isMinion = target.isMinion
   const hpBar = renderHpBar(target.hp, target.maxHp)
   const typeTag = isMinion ? ' [🧟 MINION] ' : ' [💀 MONSTER] '

@@ -39,18 +39,18 @@ const init = (initData: SaveData): [Player, GameContext] => {
   const monster = new MonsterFactory(monsterGroupPath, monsterPath)
   const player = new Player(levelPath, initData?.player)
   const events = new EventSystem(eventPath, monster, initData?.completedEvents)
-  const battle = new Battle(player, monster)
+  const npcSkills = new NpcSkillManager(npcSkillPath, player)
+  const battle = new Battle(player, monster, npcSkills)
   const map = new MapManager(mapPath)
   const npcs = new NPCManager(npcPath, player, initData?.npcs)
   const world = new World(map)
   const broadcast = new Broadcast(broadcastPath, npcs, events)
-  const npcSkills = new NpcSkillManager(npcSkillPath, player)
 
   if (initData?.drop) {
     world.addLootBag(initData.drop)
   }
 
-  const context = { map, world, events, npcs, drop, save, npcSkills, battle, broadcast } as GameContext
+  const context = { map, world, events, npcs, drop, save, battle, broadcast } as GameContext
 
   player.onDeath = () => {
     const hostility = npcs.getFactionContribution('resistance')

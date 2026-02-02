@@ -6,15 +6,17 @@ import { ItemRarity } from './core/item/consts'
 import { MapManager } from './core/MapManager'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
-import { NpcSkillManager } from './core/skill/NpcSkillManger'
 import { World } from './core/World'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 import { SaveSystem } from './systems/SaveSystem'
 
+export type AttackRangeType = 'melee' | 'ranged'
+
 export type BattleTarget = {
   id: string
   name: string
+  rangeType: AttackRangeType
   baseMaxHp?: number
   maxHp: number
   hp: number
@@ -87,7 +89,7 @@ export enum ItemType {
   ARMOR = 'armor',
   FOOD = 'food',
   CONSUMABLE = 'consumable',
-  QUEST = 'quest'
+  QUEST = 'quest',
 }
 
 type BaseItem = {
@@ -124,6 +126,7 @@ export type WeaponItem = BaseItem &
     type: ItemType.WEAPON
     atk: number
     crit: number
+    rangeType: AttackRangeType
   }
 
 // 방어구
@@ -176,7 +179,6 @@ export type LootBag = {
 export interface GameContext {
   map: MapManager
   npcs: NPCManager
-  npcSkills: NpcSkillManager
   world: World
   events: EventSystem
   drop: DropSystem
@@ -252,6 +254,7 @@ export type ExecuteSkill = (
 export interface Skill {
   id: SkillId
   name: string
+  rangeType?: AttackRangeType
   description: string
   cost: number
   requiredExp: number
@@ -292,6 +295,7 @@ export type SkillTargetType =
 export type NpcSkill = {
   id: string
   name: string
+  rangeType?: AttackRangeType
   description: string
   chance: number
   power: number
@@ -338,6 +342,6 @@ export interface Affix {
 }
 
 export type BroadcastScript = {
-  hostile: string[];
-  normal: string[];
+  hostile: string[]
+  normal: string[]
 }

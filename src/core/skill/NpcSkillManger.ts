@@ -4,6 +4,8 @@ import { BattleTarget, GameContext, ItemType, NpcSkill } from '../../types'
 import { Player } from '../Player'
 import { CombatUnit } from '../battle/CombatUnit'
 import _ from 'lodash'
+import { PASSIVE_EFFECTS } from './passiveHandlers'
+import { Battle } from '../battle/Battle'
 
 const SkillEffectHandlers: Record<
   string,
@@ -23,9 +25,10 @@ const SkillEffectHandlers: Record<
   damage: async (...params) => {
     const [target, skill, attacker] = params
 
-    await target.takeDamage(attacker, {
+    await target.executeHit(attacker, {
       skillAtkMult: skill.power,
       ...(skill.options || {}),
+      rangeType: skill.rangeType,
     })
 
     if (skill.buff) await SkillEffectHandlers.deBuff(...params)
@@ -64,8 +67,9 @@ const SpecialSkillLogics: Record<
   // 자폭
   self_destruct: async (attacker, targets, skill) => {
     // 1. 모든 대상에게 데미지 적용
+    console.log('DEBUG::', attacker)
     for (const target of targets) {
-      await target.takeDamage(attacker, { rawDamage: Math.floor(attacker.ref.hp * skill.power) })
+      await target.executeHit(attacker, { rawDamage: Math.floor(attacker.ref.hp * skill.power) })
     }
     // 2. 시전자 즉사 처리
     console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
@@ -77,8 +81,9 @@ const SpecialSkillLogics: Record<
     let totalDamageDealt = 0
 
     for (const target of targets) {
-      const result = await target.takeDamage(attacker, {
+      const result = await target.executeHit(attacker, {
         skillAtkMult: skill.power,
+        rangeType: skill.rangeType,
       })
 
       totalDamageDealt += result.damage || 0
@@ -93,8 +98,9 @@ const SpecialSkillLogics: Record<
   },
   item_steal: async (attacker, targets, skill) => {
     for (const target of targets) {
-      const result = await target.takeDamage(attacker, {
+      await target.executeHit(attacker, {
         skillAtkMult: skill.power,
+        rangeType: skill.rangeType,
       })
 
       if (target.type !== 'player') {
@@ -232,7 +238,6 @@ export class NpcSkillManager {
     // 2. 특수 로직이 없다면 공통 타입(Type 기반) 핸들러 실행
     const handler = SkillEffectHandlers[skill.type] || SkillEffectHandlers.damage
     for (const target of targets) {
-      console.log('DEBUG:: skill',skill)
       await handler(target, skill, attacker, context)
     }
   }
@@ -245,6 +250,7 @@ export class NpcSkillManager {
     const available = skills.filter((id) => {
       const skill = this.skillData[id]
       if (!skill) return false
+      if (skill.type === 'passive') return false
 
       if (isExposed && skill.buff?.type === 'stealth') {
         return false
@@ -261,4 +267,35 @@ export class NpcSkillManager {
 
     return this.skillData[npcSkillId].id
   }
+
+  public setupPassiveHook(unit: CombatUnit, battle: Battle) {
+  const skillIds = (unit.ref as any).skills || [];
+
+  for (const id of skillIds) {
+    const skillData = this.getSkill(id);
+    if (!skillData || skillData.type !== 'passive') continue;
+
+    const hooks = PASSIVE_EFFECTS[id];
+    if (!hooks) continue;
+
+    // 공통 래퍼 함수: 파라미터를 핸들러 규격에 맞게 매핑
+    if (hooks.onAfterHit) {
+      unit.onAfterHitHooks.push(async (attacker, defender, options) => {
+        await hooks.onAfterHit!(attacker, defender, skillData, battle, options);
+      });
+    }
+
+    if (hooks.onAfterAttack) {
+      unit.onAfterAttackHooks.push(async (attacker, defender, options) => {
+        await hooks.onAfterAttack!(attacker, defender, skillData, battle, options);
+      });
+    }
+
+    if (hooks.onDeath) {
+      unit.onDeathHooks.push(async (u, options) => {
+        await hooks.onDeath!(u, skillData, battle, options);
+      });
+    }
+  }
+}
 }
