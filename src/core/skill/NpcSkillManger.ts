@@ -28,7 +28,7 @@ const SkillEffectHandlers: Record<
     const result = await target.executeHit(attacker, {
       skillAtkMult: skill.power,
       ...(skill.options || {}),
-      rangeType: skill.rangeType,
+      attackType: skill.attackType,
     })
 
     if (!result.isDead && skill.buff) await SkillEffectHandlers.deBuff(...params)
@@ -48,8 +48,6 @@ const SkillEffectHandlers: Record<
       return
     }
 
-    console.log(`📢 ${attacker.name}의 [${skill.name}]!`)
-
     // 3. 상황에 맞는 연출 문구 (스킬 ID나 이름으로 판별)
     if (skill.id.includes('divide')) {
       console.log(`🧬 ${attacker.name}에게서 ${reinforcement.name}(이)가 분리되었습니다!`)
@@ -68,12 +66,15 @@ const SpecialSkillLogics: Record<
   self_destruct: async (attacker, targets, skill) => {
     // 1. 모든 대상에게 데미지 적용
     for (const target of targets) {
-      await target.executeHit(attacker, { rawDamage: Math.floor(attacker.ref.hp * skill.power) })
+      await target.executeHit(attacker, {
+        attackType: 'explode',
+        rawDamage: Math.floor(attacker.ref.hp * skill.power),
+      })
     }
     // 2. 시전자 즉사 처리
     console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
 
-    for (const hook of attacker?.onDeathHooks || []) await hook(attacker)
+    attacker.dead()
   },
 
   health_drain: async (attacker, targets, skill) => {
@@ -82,7 +83,7 @@ const SpecialSkillLogics: Record<
     for (const target of targets) {
       const result = await target.executeHit(attacker, {
         skillAtkMult: skill.power,
-        rangeType: skill.rangeType,
+        attackType: skill.attackType,
       })
 
       totalDamageDealt += result.damage || 0
@@ -99,7 +100,7 @@ const SpecialSkillLogics: Record<
     for (const target of targets) {
       await target.executeHit(attacker, {
         skillAtkMult: skill.power,
-        rangeType: skill.rangeType,
+        attackType: skill.attackType,
       })
 
       if (target.type !== 'player') {
@@ -268,33 +269,33 @@ export class NpcSkillManager {
   }
 
   public setupPassiveHook(unit: CombatUnit, battle: Battle) {
-  const skillIds = (unit.ref as any).skills || [];
+    const skillIds = (unit.ref as any).skills || []
 
-  for (const id of skillIds) {
-    const skillData = this.getSkill(id);
-    if (!skillData || skillData.type !== 'passive') continue;
+    for (const id of skillIds) {
+      const skillData = this.getSkill(id)
+      if (!skillData || skillData.type !== 'passive') continue
 
-    const hooks = PASSIVE_EFFECTS[id];
-    if (!hooks) continue;
+      const hooks = PASSIVE_EFFECTS[id]
+      if (!hooks) continue
 
-    // 공통 래퍼 함수: 파라미터를 핸들러 규격에 맞게 매핑
-    if (hooks.onAfterHit) {
-      unit.onAfterHitHooks.push(async (attacker, defender, options) => {
-        await hooks.onAfterHit!(attacker, defender, skillData, battle, options);
-      });
-    }
+      // 공통 래퍼 함수: 파라미터를 핸들러 규격에 맞게 매핑
+      if (hooks.onAfterHit) {
+        unit.onAfterHitHooks.push(async (attacker, defender, options) => {
+          await hooks.onAfterHit!(attacker, defender, skillData, battle, options)
+        })
+      }
 
-    if (hooks.onAfterAttack) {
-      unit.onAfterAttackHooks.push(async (attacker, defender, options) => {
-        await hooks.onAfterAttack!(attacker, defender, skillData, battle, options);
-      });
-    }
+      if (hooks.onAfterAttack) {
+        unit.onAfterAttackHooks.push(async (attacker, defender, options) => {
+          await hooks.onAfterAttack!(attacker, defender, skillData, battle, options)
+        })
+      }
 
-    if (hooks.onDeath) {
-      unit.onDeathHooks.push(async (u, options) => {
-        await hooks.onDeath!(u, skillData, battle, options);
-      });
+      if (hooks.onDeath) {
+        unit.onDeathHooks.push(async (u, options) => {
+          await hooks.onDeath!(u, skillData, battle, options)
+        })
+      }
     }
   }
-}
 }

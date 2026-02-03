@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Player } from '../core/Player'
 import { GameContext, NPC } from '../types'
 import { handleBuy, handleSell, handleTalk, NPCHandler } from './NPCHandler'
@@ -37,7 +36,7 @@ const MayaHandler: NPCHandler = {
         handleTalk(npc)
         break
       case 'buy':
-        await handleBuy(player, npc, context, 'potion_goods', mayaScripts.buy)
+        await handleBuy(player, npc, context, 'resistance_shop', mayaScripts.buy)
         break
       case 'sell':
         await handleSell(player, npc, context, mayaScripts.sell)

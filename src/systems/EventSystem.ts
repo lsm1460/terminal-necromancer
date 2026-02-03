@@ -4,11 +4,8 @@ import path from 'path'
 import { MonsterFactory } from '../core/MonsterFactory'
 import { Player } from '../core/Player'
 import { GameContext, GameEvent, Tile } from '../types'
-import { BossEvent } from './events/BossEvent'
-import { MonsterEvent } from './events/MonsterEvent'
-import { NpcEvent } from './events/NpcEvent'
-import { printLootStatus } from '../statusPrinter'
 import { allEventHandlers } from './events'
+import { MonsterEvent } from './events/MonsterEvent'
 
 type EventCallback = (eventId: string) => void
 
@@ -74,10 +71,6 @@ export class EventSystem {
   /** 세이브를 위한 데이터 추출 */
   public getSaveData(): string[] {
     return Array.from(this.completedEvents)
-  }
-
-  public makeMonsters(groupName: string) {
-    return this.monsterEvent.monsterFactory.makeMonsters(groupName)
   }
 
   public resetCompletedEvents() {

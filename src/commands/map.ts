@@ -31,6 +31,8 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
           if (player.x === x && player.y === y) return '📍'
 
           // 4. 이벤트/NPC 우선순위
+          if (tile.theme === 'vending_machine_area') return '🧪'
+          if (tile.event.startsWith('heal')) return '💊'
           if (tile.event === 'boss') return '👹'
 
           if (tile.npcIds && tile.npcIds.length > 0) {

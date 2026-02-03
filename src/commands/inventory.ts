@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
-import { ArmorItem, CommandFunction, ConsumableItem, Drop, Item, ItemType, WeaponItem } from '../types'
+import { CommandFunction, ConsumableItem, Drop, ItemType } from '../types'
+import { makeItemMessage } from '../utils'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (player, args, context) => {
@@ -10,23 +11,11 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
     return false
   }
 
-  const typeMap: Partial<Record<ItemType, string>> = {
-    weapon: '무기',
-    armor: '방어구',
-    food: '음식',
-  }
-
   // 1. 아이템 리스트 생성
-  const itemChoices = inventory.map((_item) => {
-    const item = _item as unknown as Item & { isEquip?: boolean }
-
-    const typeLabel = typeMap[item!.type] || '아이템'
-
-    return {
-      name: item.id,
-      message: `${item.isEquip ? '✅ ' : ''}[${typeLabel}] ${item.label}${item.quantity ? ` x${item.quantity}` : ''}`,
-    }
-  })
+  const itemChoices = inventory.map((_item) => ({
+    name: _item.id,
+    message: makeItemMessage(_item, player),
+  }))
 
   itemChoices.push({ name: 'cancel', message: '↩ 닫기' })
 

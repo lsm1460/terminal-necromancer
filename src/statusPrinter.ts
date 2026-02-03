@@ -1,7 +1,8 @@
 import { Player } from './core/Player'
 import { GameContext, NPC, Tile } from './types'
 
-export function printTileStatus(player: Player, { map, npcs, world }: GameContext) {
+export function printTileStatus(player: Player, context: GameContext) {
+  const { map, npcs, world } = context
   const { x, y } = player.pos
   const tile = map.getTile(x, y)
 
@@ -25,6 +26,8 @@ export function printTileStatus(player: Player, { map, npcs, world }: GameContex
     console.log(`주변의 시체: ${deadNames}`)
   }
 
+  printLootStatus(player, context)
+
   // 이동 가능한 방향 계산
   const directions: string[] = []
 
@@ -38,8 +41,8 @@ export function printTileStatus(player: Player, { map, npcs, world }: GameContex
 
 export function printLootStatus(player: Player, { world, map }: GameContext) {
   const { x, y } = player.pos
-  const tile = map.getTile(x,y)
-  
+  const tile = map.getTile(x, y)
+
   const bag = world.getLootBagAt(map.currentSceneId, tile.id)
   if (bag) console.log(`\n나의 영혼 파편들을 발견했다.`)
 
@@ -55,5 +58,4 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
 
 export function printStatus(player: Player, context: GameContext) {
   printTileStatus(player, context)
-  printLootStatus(player, context)
 }

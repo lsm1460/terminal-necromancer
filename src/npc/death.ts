@@ -156,6 +156,8 @@ async function handleSkillMenu(player: Player, context: GameContext) {
 async function handleLevelUp(player: Player) {
   const { required: nextExp, toNext: cost } = player.expToNextLevel()
 
+  console.log(`현재 가지고 있는 영혼 조각: `, player.exp)
+  
   const warningMsg = `${cost}개의 영혼 조각을 바친다면, 네 전성기의 힘을 조금이나마 되돌아올지도 모르지..`
   const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
     type: 'confirm',
@@ -329,7 +331,7 @@ async function handleAwakeGolem(player: Player) {
   player._golem = {
     id: 'golem',
     name: '하역장의 기계 골렘',
-    rangeType: 'melee',
+    attackType: 'melee',
     baseMaxHp: 80,
     maxHp: 80,
     hp: 80,
@@ -406,7 +408,7 @@ async function handleTutorialOver(context: GameContext) {
 
   const dialogues = [
     '사신: "오호... 그 비릿한 오물 더미를 정말로 치우고 돌아온 건가? 용케도 사지가 붙어있군."',
-    '사신: "(비릿한 조소를 띠며) 기어다니는 죄악의 단말마가 여기까지 들리더군. 칭찬이라도 기대한 것은 아니겠지? "',
+    '사신: "(비릿한 조소를 띠며) 기어다니는 죄악의 단말마가 여기까지 들리더군.\n칭찬이라도 기대한 것은 아니겠지? "',
     '사신: "하지만... 인정하지. 네놈의 그 처절한 발버둥이 제법 쓸만하다는 것을."',
     '사신: "이제부터는 알아서 깊은 곳의 오물들을 치우도록 해라."', // 추가된 지시
     '사신: "일을 잘한다면, 네 하찮은 능력은 조금 더 풀어줄지도 모르지."', // 계약 강조

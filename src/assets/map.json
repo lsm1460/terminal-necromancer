@@ -44,7 +44,8 @@
           "npcIds": ["dr_zed"],
           "dialogue": "이 터미널의 의료실",
           "observe": "코끝을 찌르는 독한 소독약 냄새 사이로, 기괴한 노래가 새어 나옵니다."
-        }
+        },
+        null
       ],
       [
         {
@@ -80,8 +81,16 @@
           "id": "8",
           "theme": "tiled_floor",
           "event": "none",
-          "dialogue": "터미널 관리실의 중앙입니다. 누군가 있었던 흔적만이 보입니다.",
-          "observe": "터미널 관리실의 중앙이 보입니다."
+          "dialogue": "터미널 대합실의 중앙입니다. 누군가 있었던 흔적만이 보입니다.",
+          "observe": "터미널 대합실의 중앙이 보입니다."
+        },
+        {
+          "id": "tile_110",
+          "theme": "tiled_floor",
+          "event": "none",
+          "npcIds": ["marco"],
+          "dialogue": "터미널 대합실의 외진 곳. 마르코의 편의점이 있습니다.",
+          "observe": "터미널 한 켠, 작은 가게가 보입니다."
         }
       ],
       [
@@ -96,6 +105,7 @@
           "dialogue": "더 깊은 곳으로 내려가는 엘리베이터가 있습니다.\n\"조사\"를 입력하시면 다양한 정보를 확인할 수 있습니다..",
           "observe": "강철 와이어가 팽팽하게 당겨지는 소음이 바닥 아래에서부터 진동처럼 전해집니다."
         },
+        null,
         null
       ]
     ]
@@ -269,7 +279,8 @@
         {
           "id": "25",
           "theme": "platform",
-          "event": "event-conveyor-control-1",
+          "event": "boss",
+          "npcIds": ["second_boss"],
           "dialogue": "작업용 컨베이어 벨트가 멈춰 있습니다. 수동 조작반이 보입니다.",
           "observe": "거대한 뱀처럼 길게 늘어진 녹슨 강철 궤도가 어둠 속에 웅크리고 있는 것이 보입니다."
         },
@@ -291,8 +302,7 @@
         {
           "id": "28",
           "theme": "workshop",
-          "event": "boss",
-          "npcIds": ["second_boss"],
+          "event": "none",
           "dialogue": "하역장에서 노동을 하는 거대한 기계 골렘의 대기 장소",
           "observe": "압도적인 크기의 강철 그림자가 시야를 가로막습니다. 금속이 부딪히는 묵직한 소음이 고막을 울립니다."
         },
@@ -308,7 +318,7 @@
           "id": "43",
           "theme": "cargo",
           "event": "none",
-          "npcIds": ["broken_bot"],
+          "npcIds": ["apostle"],
           "dialogue": "반쯤 파손된 로봇의 메모리에서 과거 하역장에서 벌어졌던 참혹한 기록들이 흘러나옵니다.",
           "observe": "작업대 주변으로 흐릿한 잔상들이 겹쳐 보이며, 허공을 맴도는 낮은 중얼거림이 들려옵니다."
         }

@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { CommandFunction, ItemType } from '../types'
+import { makeItemMessage } from '../utils'
 
 export const equipCommand: CommandFunction = async (player, args, context) => {
   const inventory = player.inventory
@@ -14,20 +15,10 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const findItem = (_itemId: string) => equipAbles.find((i) => i.id === _itemId)
 
   const choices = [
-    ...equipAbles.map((item) => {
-      let message = ''
-
-      if (item.type === ItemType.WEAPON) {
-        message = `${item.label} (atk: ${item.atk}, crit: ${item.crit.toFixed(2)}%)`
-      } else if (item.type === ItemType.ARMOR) {
-        message = `${item.label} (def: ${item.def})`
-      }
-
-      return {
-        name: item.id,
-        message,
-      }
-    }),
+    ...equipAbles.map((item) => ({
+      name: item.id,
+      message: makeItemMessage(item, player),
+    })),
     { name: 'cancel', message: '취소' },
   ]
 

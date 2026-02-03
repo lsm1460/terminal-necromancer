@@ -3,20 +3,20 @@
     "id": "player",
     "name": "player",
     "x": 0,
-    "y": 1,
-    "_maxHp": 50,
-    "hp": 40,
-    "_maxMp": 50,
-    "mp": 30,
-    "atk": 10,
-    "def": 5,
+    "y": 0,
+    "_maxHp": 75,
+    "hp": 75,
+    "_maxMp": 75,
+    "mp": 75,
+    "atk": 22,
+    "def": 13,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 36,
-    "exp": 33,
-    "level": 1,
-    "karma": 0,
+    "gold": 2207,
+    "exp": 3192,
+    "level": 3,
+    "karma": 2,
     "inventoryMax": 15,
     "inventory": [
       {
@@ -27,7 +27,7 @@
         "price": 20,
         "sellPrice": 5,
         "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다.",
-        "quantity": 2,
+        "quantity": 1,
         "x": 1,
         "y": 1
       },
@@ -50,92 +50,42 @@
         "price": 25,
         "sellPrice": 6,
         "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다.",
-        "quantity": 2,
+        "quantity": 3,
         "x": 2,
         "y": 1
       },
       {
-        "id": "wood_stick_397d6baa49bc1413",
-        "label": "\u001b[37m⚪ 장인의 나무 막대\u001b[0m",
-        "type": "weapon",
-        "rangeType": "melee",
-        "atkRange": [
-          1,
-          3
-        ],
-        "critRange": [
-          0,
-          0
-        ],
-        "price": 0,
-        "sellPrice": 0,
-        "description": "길바닥을 굴러다니는 나무 막대",
-        "quantity": 1,
-        "maxRarity": "COMMON",
-        "atk": 3,
-        "crit": 0,
-        "rarity": "COMMON",
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "iron_sword_41d97c2895dec5b5",
-        "label": "\u001b[34m🔵 숙련된 낡은 철검\u001b[0m",
-        "type": "weapon",
-        "rangeType": "melee",
-        "atkRange": [
-          4,
-          7
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "atk": 5,
-        "crit": 0,
-        "rarity": "RARE",
-        "x": 1,
-        "y": 1
-      },
-      {
-        "id": "rags_7361ca16f7eb1f9f",
-        "label": "\u001b[37m⚪ 낡은 누더기\u001b[0m",
+        "id": "leather_armor_75d28553a53ca83c",
+        "label": "\u001b[35m🟣 [가시] 필멸의 가죽 갑옷\u001b[0m",
         "type": "armor",
         "defRange": [
-          1,
-          2
+          2,
+          5
         ],
         "evaRange": [
           0,
-          0
+          0.02
         ],
-        "price": 0,
-        "sellPrice": 0,
-        "description": "길바닥을 굴러다니는 망자의 천",
+        "price": 400,
+        "sellPrice": 100,
+        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
         "quantity": 1,
-        "maxRarity": "COMMON",
-        "def": 1,
+        "def": 4,
         "eva": 0,
-        "rarity": "COMMON",
+        "rarity": "EPIC",
+        "affix": {
+          "id": "THORNS",
+          "name": "가시",
+          "description": "골렘에게 가시가 돋아나 골렘을 공격하는 적에게도 상처를 줍니다."
+        },
         "x": 0,
-        "y": 1
-      }
-    ],
-    "_maxMemorize": 4,
-    "memorize": [
-      "RAISE_SKELETON",
-      "FOCUS_FIRE"
-    ],
-    "equipped": {
-      "weapon": {
+        "y": 2
+      },
+      {
         "id": "iron_sword_89964c2adf49937b",
         "label": "\u001b[37m⚪ 장인의 철검\u001b[0m",
         "type": "weapon",
-        "rangeType": "melee",
+        "attackType": "melee",
         "atkRange": [
           4,
           7
@@ -154,54 +104,253 @@
         "x": 1,
         "y": 1
       },
-      "armor": {
-        "id": "leather_armor_7be82dcf6844aecd",
-        "label": "\u001b[34m🔵 강화된 낡은 가죽 갑옷\u001b[0m",
+      {
+        "id": "sharp_pipe_29409c0e7894aae6",
+        "label": "\u001b[34m🔵 날카로운 날카로운 파이프\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          5,
+          11
+        ],
+        "critRange": [
+          0.03,
+          0.07
+        ],
+        "price": 750,
+        "sellPrice": 150,
+        "description": "하역장 배수관을 뜯어 끝을 뾰족하게 갈았습니다. 가볍게 휘둘러 기습하기에 좋습니다.",
+        "quantity": 1,
+        "atk": 8,
+        "crit": 0.03,
+        "rarity": "RARE",
+        "x": 0,
+        "y": 2
+      },
+      {
+        "id": "reaper_chain_mail_6a63c611a56e3e05",
+        "label": "\u001b[37m⚪ 사슬 갑옷\u001b[0m",
         "type": "armor",
         "defRange": [
-          2,
-          5
+          8,
+          12
         ],
         "evaRange": [
           0,
-          0.02
+          0.01
         ],
-        "price": 400,
-        "sellPrice": 100,
-        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
+        "price": 1800,
+        "sellPrice": 500,
+        "description": "검은 금속 고리를 엮어 만든 갑옷입니다. 매우 무겁지만 웬만한 공격은 가볍게 튕겨냅니다.",
         "quantity": 1,
-        "def": 2,
+        "def": 10,
         "eva": 0,
-        "rarity": "RARE",
-        "x": 3,
+        "rarity": "COMMON",
+        "x": 0,
         "y": 1
+      },
+      {
+        "id": "heavy_wrench_1699a39c13cb75a6",
+        "label": "\u001b[37m⚪ 대형 렌치\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          8,
+          12
+        ],
+        "critRange": [
+          0.05,
+          0.12
+        ],
+        "price": 1200,
+        "sellPrice": 350,
+        "description": "기중기를 수리할 때 쓰던 묵직한 공구입니다. 철검보다 무겁지만 타격감과 치명타 확률이 확실합니다.",
+        "quantity": 1,
+        "atk": 11,
+        "crit": 0.05,
+        "rarity": "COMMON",
+        "x": 1,
+        "y": 0
+      },
+      {
+        "id": "terminal_halberd_c9c6ea4a8846870f",
+        "label": "\u001b[37m⚪ 낡은 터미널 경비병의 창\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          10,
+          15
+        ],
+        "critRange": [
+          0.02,
+          0.08
+        ],
+        "price": 1500,
+        "sellPrice": 450,
+        "description": "하역장 감시자들이 사용하던 창입니다. 날카로운 날이 세워져 있어 안정적인 공격력을 보장합니다.",
+        "quantity": 1,
+        "atk": 10,
+        "crit": 0.02,
+        "rarity": "COMMON",
+        "x": 1,
+        "y": 0
+      },
+      {
+        "id": "iron_sword_26afefdb2a059d43",
+        "label": "\u001b[35m🟣 [종말] 몰락한 낡은 철검\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          4,
+          7
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "atk": 7,
+        "crit": 0.05,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "DOOMSDAY",
+          "name": "종말",
+          "description": "스켈레톤이 죽을 때 폭발하여 주변에 피해를 입힙니다."
+        },
+        "x": 2,
+        "y": 0
+      },
+      {
+        "id": "sewer_leather_vest_655a313117c661db",
+        "label": "\u001b[34m🔵 우수한 장인의 하수도 가죽 조끼\u001b[0m",
+        "type": "armor",
+        "defRange": [
+          3,
+          6
+        ],
+        "evaRange": [
+          0.02,
+          0.05
+        ],
+        "price": 700,
+        "sellPrice": 160,
+        "description": "축축한 하수도 냄새가 밴 가죽 조끼입니다. 찝찝하지만 가벼워서 몸을 놀리기엔 편합니다.",
+        "quantity": 1,
+        "def": 7,
+        "eva": 0.04,
+        "rarity": "RARE",
+        "x": 2,
+        "y": 2
+      }
+    ],
+    "_maxMemorize": 4,
+    "memorize": [
+      "RAISE_SKELETON",
+      "FOCUS_FIRE",
+      "CORPSE_EXPLOSION"
+    ],
+    "equipped": {
+      "weapon": {
+        "id": "terminal_halberd_14a3c2e5f72124ea",
+        "label": "\u001b[35m🟣 [부식] 몰락한 터미널 경비병의 창\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          10,
+          15
+        ],
+        "critRange": [
+          0.02,
+          0.08
+        ],
+        "price": 1500,
+        "sellPrice": 450,
+        "description": "하역장 감시자들이 사용하던 창입니다. 날카로운 날이 세워져 있어 안정적인 공격력을 보장합니다.",
+        "quantity": 1,
+        "atk": 20,
+        "crit": 1.02,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "CORROSION",
+          "name": "부식",
+          "description": "저주의 효과가 공격력 감소에서 방어력 감소로 변경됩니다."
+        },
+        "x": 0,
+        "y": 1
+      },
+      "armor": {
+        "id": "reaper_chain_mail_043367fb7bc3b4bc",
+        "label": "\u001b[37m⚪ 장인의 사슬 갑옷\u001b[0m",
+        "type": "armor",
+        "defRange": [
+          8,
+          12
+        ],
+        "evaRange": [
+          0,
+          0.01
+        ],
+        "price": 1800,
+        "sellPrice": 500,
+        "description": "검은 금속 고리를 엮어 만든 갑옷입니다. 매우 무겁지만 웬만한 공격은 가볍게 튕겨냅니다.",
+        "quantity": 1,
+        "def": 12,
+        "eva": 0,
+        "rarity": "COMMON",
+        "x": 1,
+        "y": 0
       }
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
-      "FOCUS_FIRE"
+      "FOCUS_FIRE",
+      "CORPSE_EXPLOSION"
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
     "skeleton": [
       {
-        "id": "skeleton_1770021403840",
+        "id": "skeleton_1770105362461",
         "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
-        "rangeType": "melee",
-        "maxHp": 12,
-        "hp": 4,
-        "atk": 0,
-        "def": 1,
-        "agi": 1,
+        "attackType": "melee",
+        "maxHp": 37,
+        "hp": 37,
+        "atk": 10,
+        "def": 8,
+        "agi": 12,
         "skills": [],
         "exp": 0,
-        "description": "고치 인간의 유골로 만들어진 소환수입니다.",
+        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 10
+      },
+      {
+        "id": "skeleton_1770105359853",
+        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 검사",
+        "attackType": "melee",
+        "maxHp": 49,
+        "hp": 49,
+        "atk": 21,
+        "def": 13,
+        "agi": 15,
+        "skills": [
+          "power_smash"
+        ],
+        "exp": 0,
+        "description": "하역장 감독관의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 15
       }
     ],
     "_maxSkeleton": 2,
@@ -209,7 +358,7 @@
     "golemUpgrade": [],
     "knightUpgrade": []
   },
-  "sceneId": "B2_Transit_Area",
+  "sceneId": "B3_Steel_Loading_Dock",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -250,8 +399,8 @@
       },
       "first_boss": {
         "hp": 80,
-        "isAlive": true,
-        "reborn": false,
+        "isAlive": false,
+        "reborn": true,
         "relation": 0
       },
       "second_boss": {
@@ -289,21 +438,40 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "marco": {
+        "hp": 450,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "apostle": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
       }
     },
-    "factionHostility": {},
-    "factionContribution": {}
+    "factionHostility": {
+      "untouchable": -5
+    },
+    "factionContribution": {
+      "untouchable": 50
+    }
   },
   "drop": {
     "scendId": "B2_Transit_Area",
-    "id": "9cc8602d234b7d13",
+    "id": "7920417a15232f09",
     "tileId": "19",
-    "exp": 10,
-    "gold": 18
+    "exp": 103,
+    "gold": 109
   },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "first_talk_death"
+    "first_talk_death",
+    "first_boss",
+    "second_talk_death",
+    "RESISTANCE_BASE"
   ]
 }

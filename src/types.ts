@@ -4,6 +4,7 @@ import { CombatUnit } from './core/battle/CombatUnit'
 import { Broadcast } from './core/Broadcast'
 import { ItemRarity } from './core/item/consts'
 import { MapManager } from './core/MapManager'
+import { MonsterFactory } from './core/MonsterFactory'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/Player'
 import { World } from './core/World'
@@ -11,12 +12,12 @@ import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 import { SaveSystem } from './systems/SaveSystem'
 
-export type AttackRangeType = 'melee' | 'ranged'
+export type AttackType = 'melee' | 'ranged' | 'explode'
 
 export type BattleTarget = {
   id: string
   name: string
-  rangeType: AttackRangeType
+  attackType: AttackType
   baseMaxHp?: number
   maxHp: number
   hp: number
@@ -126,7 +127,7 @@ export type WeaponItem = BaseItem &
     type: ItemType.WEAPON
     atk: number
     crit: number
-    rangeType: AttackRangeType
+    attackType: AttackType
   }
 
 // 방어구
@@ -185,6 +186,7 @@ export interface GameContext {
   save: SaveSystem
   battle: Battle
   broadcast: Broadcast
+  monster: MonsterFactory
   rl: any
 
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
@@ -254,7 +256,7 @@ export type ExecuteSkill = (
 export interface Skill {
   id: SkillId
   name: string
-  rangeType?: AttackRangeType
+  attackType?: AttackType
   description: string
   cost: number
   requiredExp: number
@@ -295,7 +297,7 @@ export type SkillTargetType =
 export type NpcSkill = {
   id: string
   name: string
-  rangeType?: AttackRangeType
+  attackType?: AttackType
   description: string
   chance: number
   power: number

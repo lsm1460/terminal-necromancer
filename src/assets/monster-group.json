@@ -39,5 +39,10 @@
     { "id": "shipyard_supervisor", "encounterRate": 30 },
     { "id": "shipyard_guard", "encounterRate": 50 },
     { "id": "shipyard_worker", "encounterRate": 20 }
+  ],
+  "monster-group-b3-boss": [
+    { "id": "shipyard_worker", "encounterRate": 100 },
+    { "id": "golem_left_arm", "encounterRate": 100 },
+    { "id": "golem_right_arm", "encounterRate": 100 }
   ]
 }

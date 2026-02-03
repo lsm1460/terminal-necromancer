@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
-import { AttackRangeType, BattleTarget, Drop, GameContext, NPC } from '../../types'
+import { AttackType, BattleTarget, Drop, GameContext, NPC } from '../../types'
 import { delay } from '../../utils'
 import { LootFactory } from '../LootFactory'
 import { MonsterFactory } from '../MonsterFactory'
@@ -18,7 +18,7 @@ export type DamageOptions = {
   isFixed?: boolean // 고정 데미지
   isSureHit?: boolean // 회피불가
   isSureCrit?: boolean // 무조건 치명타
-  rangeType?: AttackRangeType
+  attackType?: AttackType
   isPassive?: boolean
 }
 
@@ -60,9 +60,10 @@ export class Battle {
 
   async runCombatLoop(initialEnemies: CombatUnit[], context: GameContext) {
     initialEnemies.forEach((e) => {
-      this.unitCache.set(e.ref.id, e)
       // 공통 사망 로직 주입
-      e.onDeathHooks.push(async () => this.handleUnitDeath(e.ref as BattleTarget, context))
+      e.onDeath = async () => this.handleUnitDeath(e.ref as BattleTarget, context)
+
+      this.unitCache.set(e.ref.id, e)
     })
 
     console.log(`\n⚔️ 전투가 시작되었습니다!`)
@@ -175,10 +176,10 @@ export class Battle {
     if (this.player.minions) {
       this.player.minions.forEach((m) => {
         // 살아있고 아직 캐시에 등록되지 않은 미니언만 주입
-        if (m.isAlive && !this.unitCache.has(m.id)) {
+        if (m.isAlive) {
           const mUnit = this.toCombatUnit(m, 'minion')
           // 미니언 전용 사망 훅 주입
-          mUnit.onDeathHooks.push(async () => await this.handleMinionsDeath(mUnit, this.aliveEnemies))
+          mUnit.onDeath = async () => await this.handleMinionsDeath(mUnit, this.aliveEnemies)
         }
       })
     }
@@ -263,7 +264,7 @@ export class Battle {
         return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
       case '공격':
         {
-          const choices = new TargetSelector(aliveEnemies).excludeStealth().build()
+          const { choices } = new TargetSelector(aliveEnemies).excludeStealth().build()
 
           const { targetId } = await enquirer.prompt<{ targetId: string }>({
             type: 'select',
@@ -289,7 +290,7 @@ export class Battle {
 
           if (target) {
             // 공격 실행
-            await target.executeHit(playerUnit, { rangeType: playerUnit.rangeType })
+            await target.executeHit(playerUnit, { attackType: playerUnit.attackType })
           }
         }
         break
@@ -350,7 +351,7 @@ export class Battle {
     context: GameContext
   ) {
     // 은신 상태인 타겟은 거름
-    const visibleTargets = targets.filter((t) => !t.buff.some((b) => b.type === 'stealth'))
+    const visibleTargets = targets.filter((t) => !t.deBuff.some((b) => b.type === 'stealth'))
 
     if (visibleTargets.length === 0) {
       console.log(` > ${attacker.name}(이)가 공격할 대상을 찾지 못해 두리번거립니다...`)
@@ -375,9 +376,11 @@ export class Battle {
       }
 
       if (attacker.stats.atk > 0) {
-        await target.executeHit(attacker, { rangeType: attacker.rangeType })
+        await target.executeHit(attacker, { attackType: attacker.attackType })
       } else {
         console.log(`${attacker.name}은 가만히 서있을 뿐이다.`)
+
+        return
       }
     }
 

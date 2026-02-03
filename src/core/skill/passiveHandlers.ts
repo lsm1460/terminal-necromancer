@@ -46,7 +46,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
 
   thorns: {
     onAfterHit: async (attacker, defender, skill, battle, options) => {
-      if (options?.rangeType !== 'melee') {
+      if (options?.attackType !== 'melee') {
         return
       }
 

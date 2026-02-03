@@ -105,12 +105,12 @@ export class Player {
     let crit = this.crit
     let def = this.def
     let eva = this.eva
-    let rangeType = 'melee'
+    let attackType = 'melee'
 
     if (this.equipped.weapon) {
       atk += this.equipped.weapon.atk
 
-      rangeType = this.equipped.weapon.rangeType || 'melee'
+      attackType = this.equipped.weapon.attackType || 'melee'
     }
     if (this.equipped.weapon) crit += this.equipped.weapon.crit
     if (this.equipped.armor) def += this.equipped.armor.def
@@ -124,7 +124,7 @@ export class Player {
       crit,
       def,
       eva,
-      rangeType,
+      attackType,
     }
   }
 
@@ -169,12 +169,12 @@ export class Player {
       this._knight.def = Math.floor((this._knight.baseDef || this._knight.def) * 0.6)
       this._knight.maxHp = this._knight.maxHp
       this._knight.hp = Math.min(this._knight.maxHp, this._knight.hp)
-      this._knight.rangeType = 'ranged'
+      this._knight.attackType = 'ranged'
     } else {
       this._knight.maxHp = Math.floor((this._knight.baseMaxHp || this._knight.maxHp) * 1.2)
       this._knight.atk = this._knight.baseAtk || this._knight.atk
       this._knight.def = this._knight.baseDef || this._knight.def
-      this._knight.rangeType = 'melee'
+      this._knight.attackType = 'melee'
     }
 
     if (isLich && hasHorse) {
@@ -540,7 +540,7 @@ export class Player {
     this._knight = {
       id: 'knight',
       name: '기사 발타자르',
-      rangeType: 'melee',
+      attackType: 'melee',
       hp: 10,
       baseMaxHp: 10,
       maxHp: 10,

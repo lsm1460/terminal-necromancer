@@ -41,7 +41,14 @@ export class ItemGenerator {
   /** 2. 수치 확정 함수 (범위형 스탯 처리) */
   private finalizeStat(range: [number, number]): number {
     const [min, max] = range
-    return Math.floor(Math.random() * (max - min + 1)) + min
+    // 0.02 ~ 0.08 범위를 2 ~ 8 정수 범위로 변환
+    const precision = 100
+    const minInt = Math.round(min * precision)
+    const maxInt = Math.round(max * precision)
+
+    // 정수 범위에서 랜덤 추출 후 다시 소수점으로 변환
+    const randomInt = Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
+    return randomInt / precision
   }
 
   /** 3. 성능 접두사 판단 (상/하위 15%) */

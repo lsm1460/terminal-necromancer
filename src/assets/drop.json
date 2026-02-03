@@ -23,9 +23,7 @@
   },
   "core_loot": {
     "gold": [0, 2],
-    "items": [
-      { "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }
-    ]
+    "items": [{ "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }]
   },
   "resistance": {
     "gold": [50, 100],
@@ -34,6 +32,26 @@
       { "itemId": "improvised_bayonet", "chance": 0.2, "quantity": [1, 1] },
       { "itemId": "rebel_iron_plate", "chance": 0.2, "quantity": [1, 1] },
       { "itemId": "scavenged_mantle", "chance": 0.2, "quantity": [1, 1] }
+    ]
+  },
+  "resistance_shop": {
+    "gold": [50, 100],
+    "items": [
+      { "itemId": "resistance_mace", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "improvised_bayonet", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "rebel_iron_plate", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "scavenged_mantle", "chance": 0.2, "quantity": [1, 1] }
+    ]
+  },
+  "marco_goods": {
+    "gold": [0, 0],
+    "items": [
+      { "itemId": "potion_small", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "mana_potion_small", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "pizza", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "terminal_bentobox", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "roasted_nut_mix", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "filtered_honey_tea", "chance": 1, "quantity": [1, 1] }
     ]
   },
   "potion_goods": {
@@ -45,18 +63,14 @@
   },
   "boss1": {
     "gold": [500, 700],
-    "items": [
-      { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" }
-    ]
+    "items": [{ "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" }]
   },
   "boss2": {
     "gold": [700, 900],
-    "items": [
-      { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1] }
-    ]
+    "items": [{ "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" }]
   },
   "b3_common_loot": {
-    "gold": [0, 2],
+    "gold": [10, 20],
     "items": [
       { "itemId": "sharp_pipe", "chance": 0.1, "quantity": [1, 1] },
       { "itemId": "heavy_wrench", "chance": 0.2, "quantity": [1, 1] },
@@ -64,14 +78,14 @@
     ]
   },
   "b3_equipment_loot": {
-    "gold": [0, 2],
+    "gold": [15, 30],
     "items": [
       { "itemId": "terminal_halberd", "chance": 0.2, "quantity": [1, 1] },
       { "itemId": "reaper_chain_mail", "chance": 0.2, "quantity": [1, 1] }
     ]
   },
   "b3_ratman_loot": {
-    "gold": [0, 2],
+    "gold": [5, 10],
     "items": [
       { "itemId": "stolen_helmet", "chance": 0.1, "quantity": [1, 1] },
       { "itemId": "ratman_dagger", "chance": 0.3, "quantity": [1, 1] },
@@ -80,10 +94,8 @@
     ]
   },
   "b3_thief_loot": {
-    "gold": [0, 2],
-    "items": [
-
-    ]
+    "gold": [100, 150],
+    "items": []
   },
   "none": { "gold": [0, 0], "items": [] }
 }

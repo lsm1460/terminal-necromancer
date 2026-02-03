@@ -46,6 +46,9 @@ export class TargetSelector {
   }
 
   build() {
-    return this.choices.map(({ unit, ...rest }) => rest)
+    return {
+      units: this.choices.map(({unit}) => unit),
+      choices: this.choices.map(({ unit, ...rest }) => rest)
+    }
   }
 }

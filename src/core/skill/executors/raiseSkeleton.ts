@@ -65,7 +65,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     const skeleton: BattleTarget = {
       id: `skeleton_${Date.now()}`,
       name: `${rarityTag} 스켈레톤 ${selectedClass.name}`,
-      rangeType: selectedClass.rangeType,
+      attackType: selectedClass.attackType,
       maxHp: Math.floor(corpse.maxHp * 0.9 * m * s.hp),
       hp: Math.floor(corpse.maxHp * 0.9 * m * s.hp),
       atk: Math.floor(corpse.atk * 0.9 * m * s.atk),

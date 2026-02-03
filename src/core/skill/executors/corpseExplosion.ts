@@ -76,6 +76,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
         rawDamage: rawExplosionDamage,
         isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
         isSureHit: false, // 회피 불가능하게 하려면 true로 변경
+        attackType: 'explode'
       })
     }
   }

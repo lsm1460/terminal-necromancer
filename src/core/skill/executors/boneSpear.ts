@@ -86,7 +86,7 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
       skillAtkMult: 0.6,
       isIgnoreDef: false,
       isSureHit: false,
-      rangeType: 'ranged'
+      attackType: 'ranged'
     })
 
     target.applyDeBuff({

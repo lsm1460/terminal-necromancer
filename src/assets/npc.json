@@ -3,7 +3,7 @@
     "id": "kane_leader",
     "name": "대장 케인",
     "faction": "resistance",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 150,
     "maxHp": 150,
     "atk": 25,
@@ -36,7 +36,7 @@
     "id": "maya_tech",
     "name": "기술자 마야",
     "faction": "resistance",
-    "rangeType": "ranged",
+    "attackType": "ranged",
     "hp": 30,
     "maxHp": 30,
     "atk": 15,
@@ -67,7 +67,7 @@
   "jax_seeker": {
     "id": "jax_seeker",
     "name": "수색꾼 카일",
-    "rangeType": "ranged",
+    "attackType": "ranged",
     "hp": 50,
     "maxHp": 50,
     "atk": 22,
@@ -99,7 +99,7 @@
     "id": "elevator",
     "name": "엘리베이터",
     "faction": "untouchable",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 8000,
     "maxHp": 8000,
     "atk": 15000,
@@ -131,7 +131,7 @@
     "id": "portal",
     "name": "포탈",
     "faction": "untouchable",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 8000,
     "maxHp": 8000,
     "atk": 15000,
@@ -162,7 +162,7 @@
   "death": {
     "id": "death",
     "name": "사신",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 3000,
     "maxHp": 3000,
     "atk": 1,
@@ -194,12 +194,12 @@
   "first_boss": {
     "id": "first_boss",
     "name": "기어다니는 죄악, 벨페고르",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 80,
     "maxHp": 80,
-    "atk": 16,
+    "atk": 12,
     "def": 8,
-    "eva": 0.00,
+    "eva": 0.0,
     "exp": 1000,
     "isAlive": true,
     "isBoss": true,
@@ -228,11 +228,11 @@
   },
   "second_boss": {
     "id": "second_boss",
-    "name": "골렘",
-    "rangeType": "melee",
-    "hp": 10,
-    "maxHp": 10,
-    "atk": 1,
+    "name": "하역장의 골렘",
+    "attackType": "ranged",
+    "hp": 500,
+    "maxHp": 500,
+    "atk": 0,
     "def": 1,
     "eva": 0.03,
     "exp": 1500,
@@ -259,12 +259,12 @@
     "dropTableId": "boss2",
     "noEscape": true,
     "noCorpse": true,
-    "skills": ["power_smash"]
+    "skills": ["power_smash", "call_reinforcements"]
   },
   "third_boss": {
     "id": "third_boss",
     "name": "시종장 발타자르",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 10,
     "maxHp": 10,
     "atk": 12,
@@ -300,7 +300,7 @@
     "id": "dr_zed",
     "name": "닥터 제드",
     "faction": "untouchable",
-    "rangeType": "ranged",
+    "attackType": "ranged",
     "hp": 1500,
     "maxHp": 1500,
     "atk": 120,
@@ -336,7 +336,7 @@
     "id": "echo",
     "name": "에코",
     "faction": "untouchable",
-    "rangeType": "ranged",
+    "attackType": "ranged",
     "hp": 999,
     "maxHp": 999,
     "atk": 0,
@@ -372,7 +372,7 @@
     "id": "ratty",
     "name": "래티",
     "faction": "scavenger",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 30,
     "maxHp": 30,
     "atk": 5,
@@ -408,7 +408,7 @@
     "id": "vending_machine",
     "name": "포션 자판기",
     "faction": "untouchable",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 8000,
     "maxHp": 8000,
     "atk": 15000,
@@ -434,6 +434,74 @@
     },
     "deathLine": "...",
     "description": "이런 곳에도 자판기는 있습니다.",
+    "dropTableId": ""
+  },
+  "marco": {
+    "id": "marco",
+    "name": "마르코",
+    "faction": "untouchable",
+    "attackType": "melee",
+    "hp": 450,
+    "maxHp": 450,
+    "atk": 45,
+    "def": 25,
+    "eva": 15,
+    "exp": 120,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "인생은 기계랑 똑같아. 적당히 기름칠 안 해주면 바로 삐걱거리다 멈추는 법이지.",
+      "이 부품? 어허, 훔친 게 아니라 주인이 '잠시 포기'한 걸 내가 수습한 거야.",
+      "돈만 충분하다면 터미널 통제실 열쇠도 구해줄 수 있어. 물론 그 '충분함'의 기준은 내 마음이지만."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "오우! 우리 단골 손님 오셨나! 자네 얼굴만 봐도 대합실 먼지가 싹 가시는 기분이라니까. 오늘은 또 어떤 귀한 보물을 찾으시나?",
+        "farewell": "몸조심해서 가게나! 자네가 잘못되기라도 하면 이 터미널에서 나랑 수다 떨 사람이 누가 있겠어? 매출 때문이 아니라, 진심이라고!"
+      },
+      "normal": {
+        "greeting": "어서 오게. 이 구석진 노점까지 찾아온 걸 보니, 자네도 꽤나 안목이 있는 모양이구먼? 훑어보는 건 공짜니 편하게 보라고.",
+        "farewell": "뭐, 오늘은 인연이 여기까지인가 보지. 다음엔 자네 눈이 번쩍 뜨일 만한 '물건'을 좀 더 구해 놓을 테니 또 들러줘."
+      },
+      "hostile": {
+        "greeting": "아니, 이 양반아! 남의 장사 방해하러 왔나? 내 갈고리가 기계 부품만 뜯는 줄 알면 큰 오산이야. 당장 꺼지지 못해!",
+        "farewell": "퉤! 재수 옴 붙었네... 야! 다음에 내 눈앞에 띄면 그땐 자릿세가 아니라 목숨값으로 청구할 줄 알아!"
+      }
+    },
+    "deathLine": "젠장... 마진 계산을... 잘못했군... 내 장부... 누가 좀 챙겨줘...",
+    "description": "대합실 구석 벤치 뒤에서 낡은 노점을 운영합니다. 항상 손에 폐유가 묻어있어 '기름손'이라 불리며, 터미널 내부의 온갖 장물과 정보를 은밀하게 유통합니다.",
+    "dropTableId": ""
+  },
+  "apostle": {
+    "id": "apostle",
+    "name": "아포스톨-03",
+    "faction": "untouchable",
+    "attackType": "melee",
+    "hp": 8000,
+    "maxHp": 8000,
+    "atk": 15000,
+    "def": 5,
+    "eva": 1,
+    "exp": 5,
+    "isAlive": true,
+    "reborn": false,
+    "lines": ["...침묵이 이어집니다.."],
+    "scripts": {
+      "friendly": {
+        "greeting": "",
+        "farewell": ""
+      },
+      "normal": {
+        "greeting": "",
+        "farewell": ""
+      },
+      "hostile": {
+        "greeting": "",
+        "farewell": ""
+      }
+    },
+    "deathLine": "...",
+    "description": "",
     "dropTableId": ""
   }
 }

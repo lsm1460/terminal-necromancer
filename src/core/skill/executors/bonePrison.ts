@@ -16,7 +16,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
   }
 
   // 1. 대상 선택
-  const choices = new TargetSelector(aliveEnemies)
+  const { choices } = new TargetSelector(aliveEnemies)
     .excludeStealth()
     .excludeIf((u) => u.deBuff.some((d) => d.name === '뼈 감옥'), '(이미 갇힘)')
     .build()

@@ -8,6 +8,8 @@ import maya_tech from './maya'
 import { NPCHandler } from './NPCHandler'
 import portal from './portal'
 import ratty from './ratty'
+import marco from './marco'
+import apostle from './apostle'
 import vending_machine from './vending_machine'
 
 const npcHandlers: Record<string, NPCHandler> = {
@@ -16,6 +18,7 @@ const npcHandlers: Record<string, NPCHandler> = {
   death,
   echo,
   dr_zed,
+  marco,
 
   vending_machine,
 
@@ -26,6 +29,9 @@ const npcHandlers: Record<string, NPCHandler> = {
 
   // b2
   ratty,
+
+  // b3
+  apostle
 }
 
 export default npcHandlers

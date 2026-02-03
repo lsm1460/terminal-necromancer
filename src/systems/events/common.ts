@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import { EventHandler } from '.'
-import { BossEvent } from './BossEvent'
+import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
 import { delay } from '../../utils'
 

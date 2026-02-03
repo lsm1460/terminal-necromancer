@@ -1,4 +1,4 @@
-import { AttackRangeType, BattleTarget } from '../../types'
+import { AttackType, BattleTarget } from '../../types'
 import { Player } from '../Player'
 import { NpcSkillManager } from '../skill/NpcSkillManger'
 import { Battle, Buff, DamageOptions } from './Battle'
@@ -9,15 +9,17 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public id: string
   public name: string
   public stats: any
-  public rangeType: AttackRangeType = 'melee'
+  public attackType: AttackType = 'melee'
   public buff: Buff[] = []
   public deBuff: Buff[] = []
   public orderWeight: number
 
   // 어픽스 매니저가 주입할 훅 리스트
   public onBeforeAttackHooks: UnitDamageProcessHook[] = []
+  public onBeforeHitHooks: UnitDamageProcessHook[] = []
   public onAfterAttackHooks: UnitDamageProcessHook[] = []
   public onAfterHitHooks: UnitDamageProcessHook[] = []
+  public onDeath?: () => void | Promise<void>
   public onDeathHooks: ((attacker: CombatUnit, options?: DamageOptions) => Promise<void>)[] = []
 
   constructor(
@@ -41,7 +43,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       crit: unit.computed?.crit || unit.crit || 0,
     }
 
-    this.rangeType = unit.computed?.rangeType || unit.rangeType || 'melee'
+    this.attackType = unit.computed?.attackType || unit.attackType || 'melee'
   }
 
   applyEffect(newEffect: Buff) {
@@ -112,9 +114,11 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public async executeHit(attacker: CombatUnit, options: DamageOptions = {}) {
     // 1. [Before]
     await this.runHooks(attacker.onBeforeAttackHooks, attacker, options)
+    await this.runHooks(this.onBeforeHitHooks, attacker, options)
 
     // 2. [Action]
     const result = await this.takeDamage(attacker, options)
+
     // 3. [After]
     if (!result.isEscape && !options.isPassive) {
       await this.runHooks(attacker.onAfterAttackHooks, attacker, options)
@@ -159,6 +163,9 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   async dead(attacker?: CombatUnit, options: DamageOptions = {}) {
     this.ref.isAlive = false
+
+    if (this.onDeath) await this.onDeath()
+
     for (const hook of this.onDeathHooks) {
       await hook(this, options) // 사망한 유닛 자신과 당시 공격 정보를 전달
     }
@@ -167,11 +174,22 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   private logDamage(attacker: CombatUnit, result: any) {
     const { isEscape, damage, isCritical } = result
     const hpMsg = `(${this.name}의 남은 HP: ${this.ref.hp})`
-    if (isEscape) console.log(`\n💥 ${attacker.name}의 공격! ${this.name} 회피! ${hpMsg}`)
-    else
-      console.log(
-        `\n${isCritical ? '⚡ CRITICAL! ' : ''}${attacker.name}의 공격! ${this.name}에게 ${damage} 피해! ${hpMsg}`
-      )
+
+    // 1. 회피했을 경우
+    if (isEscape) {
+      console.log(`\n💨 ${attacker.name}의 공격! ${this.name}이(가) 가볍게 회피했습니다! ${hpMsg}`)
+      return
+    }
+
+    // 2. 데미지가 0일 경우 (회피는 아니지만 피해를 입지 않음)
+    if (damage <= 0) {
+      console.log(`\n🛡️ ${attacker.name}의 공격! 하지만 ${this.name}에게는 아무런 효과가 없었습니다! ${hpMsg}`)
+      return
+    }
+
+    // 3. 일반적인 피해 로그
+    const critMsg = isCritical ? '⚡ CRITICAL! ' : ''
+    console.log(`\n${critMsg}${attacker.name}의 공격! ${this.name}에게 ${damage} 피해! ${hpMsg}`)
   }
 
   get finalStats() {
@@ -196,13 +214,25 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     }
   }
 
-  public removeRandomDebuff(): void {
+  public removeRandomDeBuff(): void {
     if (this.deBuff.length === 0) return
 
     const randomIndex = Math.floor(Math.random() * this.deBuff.length)
     const removed = this.deBuff.splice(randomIndex, 1)[0]
 
     console.log(` \x1b[32m[!] ${this.name}(은)는 기운을 차려 '${removed.name}' 효과에서 벗어났습니다!\x1b[0m`)
+  }
+
+  public removeDeBuff(name: string): void {
+    if (this.deBuff.length === 0) return
+
+    const initialLength = this.deBuff.length
+
+    this.deBuff = this.deBuff.filter((b) => b.name !== name)
+
+    if (this.deBuff.length < initialLength) {
+      console.log(`\n✨ [상태 변화] ${this.name}에게서 [${name}] 효과가 사라졌습니다.`)
+    }
   }
 
   public removeRandomBuff(): void {

@@ -44,7 +44,7 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
     await enemy.executeHit(player, {
       rawDamage: totalRawDamage,
       isIgnoreDef: false,
-      rangeType: 'ranged'
+      attackType: 'ranged'
     })
 
     // [출혈] 디버프 추가 (지속 피해)

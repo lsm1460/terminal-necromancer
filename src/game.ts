@@ -50,7 +50,7 @@ const init = (initData: SaveData): [Player, GameContext] => {
     world.addLootBag(initData.drop)
   }
 
-  const context = { map, world, events, npcs, drop, save, battle, broadcast } as GameContext
+  const context = { map, world, events, npcs, drop, save, battle, broadcast, monster } as GameContext
 
   player.onDeath = () => {
     const hostility = npcs.getFactionContribution('resistance')

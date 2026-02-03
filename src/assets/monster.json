@@ -2,7 +2,7 @@
   "track_ratman": {
     "id": "track_ratman",
     "name": "선로 랫맨",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 18,
     "maxHp": 18,
     "atk": 8,
@@ -18,7 +18,7 @@
   "snare_spider": {
     "id": "snare_spider",
     "name": "올가미 거미",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 16,
     "maxHp": 16,
     "atk": 12,
@@ -35,7 +35,7 @@
   "cocoon_human": {
     "id": "cocoon_human",
     "name": "고치 인간",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 18,
     "maxHp": 18,
     "atk": 1,
@@ -50,7 +50,7 @@
   "filth_slime": {
     "id": "filth_slime",
     "name": "오물 슬라임",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 14,
     "maxHp": 14,
     "atk": 5,
@@ -65,7 +65,7 @@
   "ghoul": {
     "id": "ghoul",
     "name": "오염된 망자",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 12,
     "maxHp": 12,
     "atk": 2,
@@ -79,7 +79,7 @@
   "derailed_ghost": {
     "id": "derailed_ghost",
     "name": "탈선된 유령",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 25,
     "maxHp": 25,
     "atk": 9,
@@ -96,7 +96,7 @@
   "ichor_flies": {
     "id": "ichor_flies",
     "name": "흡혈 파리떼",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 13,
     "maxHp": 13,
     "atk": 5,
@@ -113,7 +113,7 @@
   "suspicious_turtle": {
     "id": "suspicious_turtle",
     "name": "수상한 거북이",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 30,
     "maxHp": 30,
     "atk": 8,
@@ -128,7 +128,7 @@
   "shipyard_worker": {
     "id": "shipyard_worker",
     "name": "하역 인부",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 38,
     "maxHp": 38,
     "atk": 10,
@@ -142,7 +142,7 @@
   "shipyard_guard": {
     "id": "shipyard_guard",
     "name": "하역장 경비병",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 52,
     "maxHp": 52,
     "atk": 15,
@@ -159,7 +159,7 @@
   "security_sensor_drone": {
     "id": "security_sensor_drone",
     "name": "보안 센서 드론",
-    "rangeType": "ranged",
+    "attackType": "ranged",
     "hp": 28,
     "maxHp": 28,
     "atk": 8,
@@ -178,7 +178,7 @@
   "shipyard_hound": {
     "id": "shipyard_hound",
     "name": "하역장 사냥개",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 32,
     "maxHp": 32,
     "atk": 18,
@@ -196,7 +196,7 @@
   "ratman_scout": {
     "id": "ratman_scout",
     "name": "랫맨 정찰병",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 32,
     "maxHp": 32,
     "atk": 13,
@@ -212,7 +212,7 @@
   "ratman_shaman": {
     "id": "ratman_shaman",
     "name": "랫맨 주술사",
-    "rangeType": "ranged",
+    "attackType": "ranged",
     "hp": 42,
     "maxHp": 42,
     "atk": 17,
@@ -228,7 +228,7 @@
   "mutated_worker": {
     "id": "mutated_worker",
     "name": "변이된 하역 인부",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 60,
     "maxHp": 60,
     "atk": 22,
@@ -244,7 +244,7 @@
   "shipyard_supervisor": {
     "id": "shipyard_supervisor",
     "name": "하역장 감독관",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 55,
     "maxHp": 55,
     "atk": 20,
@@ -254,12 +254,12 @@
     "dropTableId": "b3_common_loot",
     "skills": ["call_reinforcements"],
     "description": "냉혹한 관리자입니다. 비상 소집으로 병력을 증원하고 아군의 공격성을 강제로 끌어올립니다.",
-    "orderWeight": 35
+    "orderWeight": 55
   },
   "cargo_thief": {
     "id": "cargo_thief",
     "name": "화물 도둑",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 35,
     "maxHp": 35,
     "atk": 14,
@@ -275,7 +275,7 @@
   "oil_sludge_slime": {
     "id": "oil_sludge_slime",
     "name": "오일 슬러지 슬라임",
-    "rangeType": "melee",
+    "attackType": "melee",
     "hp": 48,
     "maxHp": 48,
     "atk": 12,
@@ -285,6 +285,69 @@
     "dropTableId": "core_loot",
     "description": "기름 찌꺼기 생명체입니다. 바닥을 오일로 코팅하여 모든 이동을 방해합니다.",
     "orderWeight": 20,
+    "noCorpse": true
+  },
+  "golem_left_arm": {
+    "id": "golem_left_arm",
+    "name": "골렘의 파쇄용 왼팔",
+    "attackType": "melee",
+    "hp": 120,
+    "maxHp": 120,
+    "atk": 25,
+    "def": 25,
+    "agi": 3,
+    "exp": 50,
+    "dropTableId": "",
+    "skills": ["power_smash"],
+    "description": "거대한 금속 집게가 달린 왼팔입니다. 둔탁하지만 한 번 잡히면 뼈도 못 추릴 압력을 가합니다.",
+    "orderWeight": 30,
+    "noCorpse": true
+  },
+  "golem_right_arm": {
+    "id": "golem_right_arm",
+    "name": "골렘의 유압식 오른팔",
+    "attackType": "ranged",
+    "hp": 100,
+    "maxHp": 100,
+    "atk": 18,
+    "def": 20,
+    "agi": 8,
+    "exp": 50,
+    "dropTableId": "",
+    "skills": ["fire_breath"],
+    "description": "화염 분사 장치가 내장된 유압식 팔입니다. 접근하는 침입자를 고열의 불꽃으로 구워버립니다.",
+    "orderWeight": 30,
+    "noCorpse": true
+  },
+  "golem_chest_armor": {
+    "id": "golem_chest_armor",
+    "name": "골렘의 가슴 장갑판",
+    "attackType": "melee",
+    "hp": 50,
+    "maxHp": 50,
+    "atk": 0,
+    "def": 45,
+    "agi": 1,
+    "exp": 80,
+    "dropTableId": "",
+    "description": "핵심 동력을 보호하는 두꺼운 장갑입니다. 오직 강력한 폭발 충격만이 내부 구조를 뒤흔들 수 있습니다.",
+    "orderWeight": 50,
+    "noCorpse": true
+  },
+  "golem_core": {
+    "id": "golem_core",
+    "name": "골렘의 핵",
+    "attackType": "melee",
+    "hp": 500,
+    "maxHp": 500,
+    "atk": 0,
+    "def": 1,
+    "agi": 1,
+    "exp": 1500,
+    "dropTableId": "",
+    "skills": ["call_reinforcements"],
+    "description": "골렘의 핵심 동력원.",
+    "orderWeight": 50,
     "noCorpse": true
   }
 }

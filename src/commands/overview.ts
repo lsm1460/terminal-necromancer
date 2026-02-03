@@ -161,7 +161,7 @@ const selectTarget = async (subChoices: { name: string; message: string }[]) => 
 }
 
 const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) => {
-  const subChoices = targets.map((t) => ({ name: t.id, message: t.name }))
+  const subChoices = targets.map((t) => ({ name: t.id, message: `${t.name} (hp: ${t.hp}/${t.maxHp})` }))
 
   const selected = await selectTarget(subChoices)
 

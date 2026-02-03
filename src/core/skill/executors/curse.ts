@@ -52,7 +52,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     }
 
     // --- 2. 단일 타겟 선택 ---
-    const choices = new TargetSelector(aliveEnemies)
+    const { choices } = new TargetSelector(aliveEnemies)
       .excludeStealth()
       .labelIf((e) => e.deBuff.some((d) => d.name === curseName), ` (이미 ${curseName} 상태)`)
       .build()
