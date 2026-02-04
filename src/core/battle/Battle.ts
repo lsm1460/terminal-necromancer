@@ -215,7 +215,7 @@ export class Battle {
       type: 'select',
       name: 'action',
       message: '당신의 행동을 선택하세요:',
-      choices: ['상태', '공격', '스킬', '아이템', '도망'],
+      choices: ['상태', '공격', '방어', '스킬', '아이템', '도망'],
     })
 
     const renderLine = (unit: CombatUnit, isLead: boolean) => {
@@ -293,6 +293,15 @@ export class Battle {
             await target.executeHit(playerUnit, { attackType: playerUnit.attackType })
           }
         }
+        break
+      case '방어':
+        console.log(`🛡️ ${playerUnit.name}(이)가 방어 자세를 취합니다! 다음 턴까지 피해를 덜 입습니다.`)
+        playerUnit.applyBuff({
+          name: '방어',
+          type: 'buff',
+          def: 10,
+          duration: 2,
+        })
         break
       case '스킬':
         {

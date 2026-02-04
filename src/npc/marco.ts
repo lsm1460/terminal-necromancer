@@ -26,7 +26,7 @@ const MarcoHandler: NPCHandler = {
 
     switch (action) {
       case 'buy':
-        await handleBuy(player, npc, context, 'potion_goods', marcoScripts.buy)
+        await handleBuy(player, npc, context, 'marco_goods', marcoScripts.buy)
         break
       case 'sell':
         await handleSell(player, npc, context, marcoScripts.sell)

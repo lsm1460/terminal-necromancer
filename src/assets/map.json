@@ -279,8 +279,7 @@
         {
           "id": "25",
           "theme": "platform",
-          "event": "boss",
-          "npcIds": ["second_boss"],
+          "event": "event-conveyor-control-1",
           "dialogue": "작업용 컨베이어 벨트가 멈춰 있습니다. 수동 조작반이 보입니다.",
           "observe": "거대한 뱀처럼 길게 늘어진 녹슨 강철 궤도가 어둠 속에 웅크리고 있는 것이 보입니다."
         },
@@ -302,7 +301,8 @@
         {
           "id": "28",
           "theme": "workshop",
-          "event": "none",
+          "event": "boss",
+          "npcIds": ["second_boss"],
           "dialogue": "하역장에서 노동을 하는 거대한 기계 골렘의 대기 장소",
           "observe": "압도적인 크기의 강철 그림자가 시야를 가로막습니다. 금속이 부딪히는 묵직한 소음이 고막을 울립니다."
         },

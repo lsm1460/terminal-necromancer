@@ -2,6 +2,7 @@ import enquirer from 'enquirer'
 import { Player } from '../core/Player'
 import { printStatus } from '../statusPrinter'
 import { BattleTarget, CommandFunction, Corpse, Drop, GameContext, Item, ItemType, Monster, NPC, Tile } from '../types'
+import { makeItemMessage } from '../utils'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
@@ -173,10 +174,10 @@ const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) =
   return selected
 }
 
-const lookItem = async (items: { label: string; qty: number; raw: any }[]) => {
+const lookItem = async (items: { label: string; qty: number; raw: any }[], player: Player) => {
   const subChoices = items.map((i) => ({
     name: i.label, // 아이템은 label을 식별자로 사용
-    message: i.qty > 1 ? `${i.label} (x${i.qty})` : i.label,
+    message: makeItemMessage(i.raw, player),
   }))
 
   const selected = await selectTarget(subChoices)
@@ -332,7 +333,7 @@ export const lookAll = async (
       targetId = await lookBattleTarget(aliveNPCs, context)
       break
     case 'ITEM':
-      targetId = await lookItem(groupedItems)
+      targetId = await lookItem(groupedItems, player)
       break
     case 'PATH':
       targetId = await lookPath(accessiblePaths)

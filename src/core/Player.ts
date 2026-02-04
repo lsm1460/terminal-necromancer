@@ -16,7 +16,9 @@ import {
   SkillId,
   WeaponItem,
 } from '../types'
+import GolemWrapper from './GolemWrapper'
 import { ItemRarity } from './item/consts'
+import KnightWrapper from './KnightWrapper'
 
 export class Player {
   id = 'player'
@@ -145,15 +147,7 @@ export class Player {
       return
     }
 
-    if (this.hasAffix('THORNS')) {
-      this._golem.name = '가시가 돋아난 기계 골램'
-      this._golem.skills = ['thorns']
-    } else {
-      this._golem.name = '하역장의 기계 골렘'
-      this._golem.skills = ['power_smash']
-    }
-
-    return this._golem
+    return new GolemWrapper(this._golem, this)
   }
 
   get knight() {
@@ -161,37 +155,7 @@ export class Player {
       return
     }
 
-    const isLich = this.hasAffix('TABOO')
-    const hasHorse = this.hasAffix('WARHORSE')
-
-    if (isLich) {
-      this._knight.atk = Math.floor((this._knight.baseAtk || this._knight.atk) * 0.6)
-      this._knight.def = Math.floor((this._knight.baseDef || this._knight.def) * 0.6)
-      this._knight.maxHp = this._knight.maxHp
-      this._knight.hp = Math.min(this._knight.maxHp, this._knight.hp)
-      this._knight.attackType = 'ranged'
-    } else {
-      this._knight.maxHp = Math.floor((this._knight.baseMaxHp || this._knight.maxHp) * 1.2)
-      this._knight.atk = this._knight.baseAtk || this._knight.atk
-      this._knight.def = this._knight.baseDef || this._knight.def
-      this._knight.attackType = 'melee'
-    }
-
-    if (isLich && hasHorse) {
-      this._knight.name = '망령의 군주 발타자르'
-      this._knight.skills = ['abyssal_gallop', 'bone_prison', 'aging_curse']
-    } else if (isLich && !hasHorse) {
-      this._knight.name = '타락한 리치 발타자르'
-      this._knight.skills = ['bone_prison', 'aging_curse']
-    } else if (!isLich && hasHorse) {
-      this._knight.name = '심연의 기사 발타자르'
-      this._knight.skills = ['dread_charge', 'power_smash']
-    } else {
-      this._knight.name = '기사 발타자르'
-      this._knight.skills = ['power_smash']
-    }
-
-    return this._knight
+    return new KnightWrapper(this._knight, this)
   }
 
   get minions(): BattleTarget[] {
