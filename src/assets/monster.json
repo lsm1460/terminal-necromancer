@@ -348,6 +348,7 @@
     "skills": ["call_reinforcements"],
     "description": "골렘의 핵심 동력원.",
     "orderWeight": 50,
-    "noCorpse": true
+    "noCorpse": true,
+    "noEscape": true
   }
 }

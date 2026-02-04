@@ -66,8 +66,12 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
 
   // 3. 주변 적들에게 데미지 적용
   // player를 공격자(attacker)로 넘기되, 계산 방식은 rawDamage 기반으로 수행하도록 전달합니다.
+
+  let isAggressive = true
+
   if (enemies.length === 0) {
     console.log(' 주변에 휘말린 적이 없습니다.')
+    isAggressive = false
   } else {
     for (const enemy of enemies) {
       if (enemy.ref.hp === 0) continue
@@ -76,7 +80,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
         rawDamage: rawExplosionDamage,
         isIgnoreDef: false, // 시체 폭발이 방어력을 무시하게 하려면 true로 변경
         isSureHit: false, // 회피 불가능하게 하려면 true로 변경
-        attackType: 'explode'
+        attackType: 'explode',
       })
     }
   }
@@ -96,7 +100,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
 
   return {
     isSuccess: true,
-    isAggressive: true,
+    isAggressive,
     gross: 70,
   }
 }

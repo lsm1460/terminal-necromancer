@@ -121,12 +121,9 @@ export class Battle {
           continue
         }
 
-        let enemiesSide = _.chain(turnOrder)
-          .filter((unit) => unit.type !== 'player' && unit.type !== 'minion' && unit.ref.isAlive)
-          .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
-          .value() as CombatUnit<BattleTarget>[]
+        let enemiesSide = this.aliveEnemies.sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0)) as CombatUnit<BattleTarget>[]
 
-        const playerSide = _.chain(turnOrder)
+        const playerSide = _.chain(Array.from(this.unitCache.values()))
           .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
           .sortBy((unit) => {
             if (unit.type === 'player') {

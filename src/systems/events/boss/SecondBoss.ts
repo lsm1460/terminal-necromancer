@@ -7,7 +7,7 @@ export class SecondBoss implements BossLogic {
     const { battle, monster } = context
 
     // 1. 메인 보스 추가
-    const core = monster.makeMonster('golem_chest_armor')
+    const core = monster.makeMonster('golem_core')
     const coreUnit = battle.toCombatUnit(core!, 'monster')
     coreUnit.applyDeBuff({
       name: '은신',

@@ -48,6 +48,9 @@
     "items": [
       { "itemId": "potion_small", "chance": 1, "quantity": [1, 1] },
       { "itemId": "mana_potion_small", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "potion", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "mana_potion", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "potion_large", "chance": 1, "quantity": [1, 1] },
       { "itemId": "pizza", "chance": 1, "quantity": [1, 1] },
       { "itemId": "terminal_bentobox", "chance": 1, "quantity": [1, 1] },
       { "itemId": "roasted_nut_mix", "chance": 1, "quantity": [1, 1] },

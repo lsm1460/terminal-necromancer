@@ -7,5 +7,4 @@ export interface BossLogic {
   createEnemies(bossNpc: NPC, eventData: any, context: GameContext): CombatUnit[]
 
   onVictory?: (player: Player, context: GameContext) => Promise<void>
-  executePattern?: (enemies: CombatUnit[], context: GameContext) => Promise<void>
 }

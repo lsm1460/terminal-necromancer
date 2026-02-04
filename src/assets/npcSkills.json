@@ -174,7 +174,7 @@
     "id": "call_reinforcements",
     "name": "가드 호출",
     "description": "높은 주파수의 경보음을 울립니다. 하역장 곳곳에 대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다.",
-    "chance": 0.2,
+    "chance": 0.3,
     "targetType": "SELF",
     "type": "summon",
     "options": {
@@ -243,7 +243,7 @@
     "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다.",
     "buff": {
       "name": "중독",
-      "type": "deBuff",
+      "type": "dot",
       "duration": 15,
       "atk": 2
     }

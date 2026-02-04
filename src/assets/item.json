@@ -24,7 +24,7 @@
     "hpHeal": 30,
     "price": 45,
     "sellPrice": 10,
-    "description": "마르코가 보온 컨테이너에 정성껏 담아 파는 도시락입니다. 따끈한 밥과 절임 채소가 들어있어 기운이 납니다."
+    "description": "따끈한 밥과 절임 채소가 들어있어 기운이 납니다."
   },
   "roasted_nut_mix": {
     "id": "roasted_nut_mix",
@@ -34,7 +34,7 @@
     "mpHeal": 5,
     "price": 20,
     "sellPrice": 4,
-    "description": "구석에서 작은 화로로 직접 볶아낸 고소한 견과류입니다. 이동하면서 가볍게 먹기 좋고 정신이 맑아집니다."
+    "description": "작은 화로로 직접 볶아낸 고소한 견과류입니다."
   },
   "filtered_honey_tea": {
     "id": "filtered_honey_tea",
@@ -44,7 +44,7 @@
     "mpHeal": 15,
     "price": 25,
     "sellPrice": 5,
-    "description": "고급 필터로 세 번 정수한 물에 진한 꿀을 탔습니다. 피로를 풀고 마력을 회복하는 데 도움을 줍니다."
+    "description": "피로를 풀고 마력을 회복하는 데 도움을 줍니다."
   },
   "tainted_core": {
     "id": "tainted_core",
@@ -56,7 +56,7 @@
   },
   "potion_small": {
     "id": "potion_small",
-    "label": "작은 포션",
+    "label": "작은 체력 포션",
     "type": "consumable",
     "hpHeal": 20,
     "price": 20,
@@ -72,12 +72,30 @@
     "sellPrice": 6,
     "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다."
   },
+  "potion": {
+    "id": "potion",
+    "label": "체력 포션",
+    "type": "consumable",
+    "hpHeal": 50,
+    "price": 100,
+    "sellPrice": 15,
+    "description": "전투 중 빠르게 체력을 보충할 수 있습니다."
+  },
+  "mana_potion": {
+    "id": "mana_potion",
+    "label": "작은 마나 포션",
+    "type": "consumable",
+    "mpHeal": 40,
+    "price": 130,
+    "sellPrice": 18,
+    "description": "전투 중 빠르게 마나을 보충할 수 있습니다."
+  },
   "potion_large": {
     "id": "potion_large",
     "label": "큰 포션",
     "type": "consumable",
-    "hpHeal": 50,
-    "price": 150,
+    "hpHeal": 250,
+    "price": 180,
     "sellPrice": 45,
     "description": "강력한 체력 회복 포션으로, 위급할 때 사용하면 큰 효과를 볼 수 있습니다."
   },
@@ -191,7 +209,7 @@
     "type": "weapon",
     "attackType": "ranged",
     "atkRange": [22, 24],
-    "critRange": [0.10, 0.20],
+    "critRange": [0.1, 0.2],
     "price": 2100,
     "sellPrice": 500,
     "description": "망가진 소총 끝에 단단한 날을 용접했습니다. 사정거리는 짧지만 치명적인 급소를 찌르기에 최적입니다."
@@ -222,7 +240,7 @@
     "type": "weapon",
     "attackType": "melee",
     "atkRange": [6, 9],
-    "critRange": [0.05, 0.10],
+    "critRange": [0.05, 0.1],
     "price": 800,
     "sellPrice": 180,
     "description": "관리가 전혀 안 된 녹슨 칼입니다. 가끔 상처 부위에 덧나기라도 하는지 생각보다 아프게 박힙니다."

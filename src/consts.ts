@@ -76,7 +76,7 @@ type SubClass = {
 export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
   common: {
     bonus: 0.8,
-    weight: 625,
+    weight: 575,
     subClasses: [
       {
         name: '병사',
@@ -90,8 +90,16 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
   },
   rare: {
     bonus: 1.0,
-    weight: 250,
+    weight: 300,
     subClasses: [
+      {
+        name: '방패병',
+        orderWeight: 4,
+        statMod: { atk: 0.6, def: 1.5, hp: 1.3, agi: 0.7 },
+        skills: [],
+        weight: 1,
+        attackType: 'melee',
+      },
       {
         name: '검사',
         orderWeight: 15,
@@ -107,11 +115,11 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     weight: 100,
     subClasses: [
       {
-        name: '방패병',
+        name: '대형 방패병',
         orderWeight: 5,
-        statMod: { atk: 0.8, def: 1.5, hp: 1.3, agi: 0.7 },
+        statMod: { atk: 0.8, def: 1.5, hp: 1.5, agi: 0.7 },
         skills: ['shield_Bash'],
-        weight: 5,
+        weight: 4,
         attackType: 'melee',
       },
       {
@@ -119,7 +127,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         orderWeight: 25,
         statMod: { atk: 1.3, def: 0.7, hp: 0.8, agi: 1.5 },
         skills: ['piercing_arrow'],
-        weight: 4,
+        weight: 3,
         attackType: 'ranged',
       },
       {
@@ -127,7 +135,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         orderWeight: 35,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
         skills: ['heal'],
-        weight: 1,
+        weight: 3,
         attackType: 'ranged',
       },
     ],

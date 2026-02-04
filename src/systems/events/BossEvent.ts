@@ -46,10 +46,15 @@ class BossEvent {
     }
 
     // 5. 전투 실행 (전투 루프에 bossLogic을 전달하여 패턴 실행 지원)
-    tile.isClear = await battle.runCombatLoop(enemies, context)
+    const isWin = await battle.runCombatLoop(enemies, context)
+
+    tile.isClear = isWin
 
     // 6. 승리 시 이벤트 처리
-    if (!bossNpc.isAlive) {
+    if (isWin) {
+      bossNpc.hp = 0
+      bossNpc.isAlive = false
+      
       events.completeEvent(bossId)
       console.log(`\n🏆 위협적인 적, ${bossNpc.name}를 처치했습니다!`)
 
