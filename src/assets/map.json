@@ -230,7 +230,7 @@
   "B3_Steel_Loading_Dock": {
     "displayName": "B3 - 강철 하역장",
     "start_pos": { "x": 0, "y": 0 },
-    "unlocks": ["first_boss", "second_talk_death"],
+    "unlocks": ["first_boss", "talk_death_2"],
     "tiles": [
       [
         {
@@ -413,84 +413,27 @@
       ]
     ]
   },
-  "B4_Celestial_Transit_Lounge": {
-    "displayName": "B4 - VIP 대기실 [성역의 회랑]",
+  "B4_Terminal_Lost_Storage": {
+    "displayName": "B4 - 터미널 분실물 보관소",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["second_boss"],
     "tiles": [
       [
         {
           "id": "31",
-          "theme": "divine_gate",
+          "theme": "iron_gate",
           "event": "none",
           "npcIds": ["elevator"],
-          "dialogue": "백색 대리석으로 조각된 승강기 문이 소리 없이 열립니다.",
-          "observe": "눈이 시릴 정도로 하얀 대리석 기둥들이 끝없이 늘어서 있습니다. 소음조차 삼켜버린 듯한 기묘한 정적이 감돕니다."
+          "dialogue": "녹슨 철문 너머로 서늘한 바람이 새어 나옵니다. 바닥에는 버려진 서류와 먼지만이 굴러다닙니다.",
+          "observe": "터미널 외곽에 굳게 닫힌 거대한 철문이 보입니다."
         },
         {
           "id": "32",
-          "theme": "marble_path",
+          "theme": "platform",
           "event": "none",
-          "dialogue": "차갑고 매끄러운 바닥에 당신의 발소리가 유난히 크게 울려 퍼집니다.",
-          "observe": "거울처럼 매끄러운 바닥 위로 천장의 화려한 금색 장식들이 일그러지며 비쳐 보입니다."
-        },
-        {
-          "id": "33",
-          "theme": "purgatory_mirror",
-          "event": "none",
-          "dialogue": "날개가 꺾인 천사가 벽에 기댄 채 당신을 공포 어린 눈으로 바라봅니다.",
-          "observe": "통로 저편에 부자연스러운 각도로 꺾인 하얀 형체가 보입니다. 그 주변으로 형용할 수 없는 슬픔의 파동이 느껴집니다."
-        },
-        null
-      ],
-      [
-        {
-          "id": "34",
-          "theme": "golden_rail",
-          "event": "none",
-          "dialogue": "은하수처럼 흐르는 선로 위로, 보지 말아야 할 것들을 태운 열차가 지나갑니다.",
-          "observe": "공중에 떠 있는 황금빛 궤도가 신비로운 안개 속으로 길게 이어져 있습니다. 간간이 영혼들의 흐느낌 같은 환청이 들려옵니다."
-        },
-        {
-          "id": "35",
-          "theme": "judgment_hall",
-          "event": "none",
-          "dialogue": "천장 높이 매달린 거대한 저울이 영혼들의 무게를 재며 끼익거리는 소리를 냅니다.",
-          "observe": "어둠 속에서 거대한 천칭의 추가 느릿하게 움직이는 실루엣이 보입니다. 대기가 죄의 무게를 견디는 듯 무겁게 가라앉아 있습니다."
-        },
-        {
-          "id": "36",
-          "theme": "chaos_void",
-          "event": "none",
-          "dialogue": "신성한 찬송가 사이로, 익숙한 죽음의 기운이 희미하게 섞여 나옵니다.",
-          "observe": "멀리서 들려오는 찬송가 소리에 소름 끼치는 비명이 섞여 듭니다. 신성한 빛 사이로 검은 그림자가 간헐적으로 일렁입니다."
-        },
-        {
-          "id": "37",
-          "theme": "chamberlain_office",
-          "event": "boss",
-          "npcIds": ["third_boss"],
-          "dialogue": "금색 휘장과 은식기들이 가득한 호화로운 집무실. 그러나 방 한가운데엔 주인을 잃고 녹슬어버린 검은 갑옷이 유령처럼 서 있습니다.",
-          "observe": "가장 화려하게 빛나는 문 너머로, 압도적인 위엄을 가진 존재가 내뿜는 차가운 투기가 흘러나오고 있습니다."
+          "dialogue": "천장까지 쌓인 짐더미가 미로처럼 얽혀 있습니다. 어둠 속에서 주인 잃은 영혼들의 흐느낌이 들려옵니다.",
+          "observe": "어두운 조명 아래, 산더미 같은 적재물들이 거대한 무덤처럼 늘어서 있습니다."
         }
-      ],
-      [
-        {
-          "id": "38",
-          "theme": "vip_lounge",
-          "event": "none",
-          "dialogue": "하급 신들이 버리고 간 성배에는 마시다 남은 핏빛 포도주가 넘실거립니다.",
-          "observe": "호화로운 가구들이 배치된 공간 너머로 진한 포도주 향과 비릿한 피 냄새가 섞인 기묘한 악취가 풍겨옵니다."
-        },
-        {
-          "id": "39",
-          "theme": "shrine_corridor",
-          "event": "none",
-          "dialogue": "벽면에 걸린 초상화들이 당신의 이동 경로를 따라 눈동자를 굴립니다.",
-          "observe": "복도 양옆에 걸린 수많은 액자들이 기괴한 시선을 내던지는 듯한 감각이 피부에 와닿습니다."
-        },
-        null,
-        null
       ]
     ]
   }

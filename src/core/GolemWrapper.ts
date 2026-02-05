@@ -6,6 +6,7 @@ interface GolemWrapper extends BattleTarget {}
 class GolemWrapper {
   constructor(
     public raw: BattleTarget,
+    private upgrade: ('machine' | 'soul')[],
     private player: Player
   ) {
     Object.keys(raw).forEach((key) => {
@@ -21,13 +22,53 @@ class GolemWrapper {
     })
   }
 
+  private get machineCount() {
+    return this.upgrade.filter((u) => u === 'machine').length
+  }
+  private get soulCount() {
+    return this.upgrade.filter((u) => u === 'soul').length
+  }
   private get hasThorns() {
     return this.player.hasAffix('THORNS')
   }
 
+  get atk(): number {
+    const bonus = this.soulCount * 30 + this.machineCount * 10
+    return this.raw.atk + bonus
+  }
+
+  get def(): number {
+    const bonus = this.machineCount * 30 + this.soulCount * 5
+    return this.raw.def + bonus
+  }
+
+  get maxHp(): number {
+    const bonusHp = this.machineCount * 40 + this.soulCount * 20
+    return this.raw.maxHp + bonusHp
+  }
+
   get name(): string {
-    // 임의 수치 조정 없이 이름만 변경
-    return this.hasThorns ? '가시가 돋아난 기계 골렘' : this.raw.name
+    const m = this.machineCount
+    const s = this.soulCount
+    let baseName = this.raw.name
+
+    // 1. 강화 상태에 따른 기본 명칭 결정
+    if (s >= 3 && m >= 3) {
+      baseName = '심연의 강철 마신'
+    } else if (s >= 3) {
+      baseName = '원념의 학살자'
+    } else if (m >= 3) {
+      baseName = '강철 요새'
+    } else if (s > 0 && m > 0) {
+      baseName = '개조된 마력 골렘'
+    } else if (s > 0) {
+      baseName = '생체 주입형 골렘'
+    } else if (m > 0) {
+      baseName = '강화형 기계 골렘'
+    }
+
+    // 2. THORNS 어픽스가 있다면 '가시 돋친' 프리픽스 부여
+    return this.hasThorns ? `가시 돋친 ${baseName}` : baseName
   }
 
   get skills(): string[] {

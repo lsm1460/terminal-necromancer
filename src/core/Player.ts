@@ -46,8 +46,8 @@ export class Player {
 
   public unlockedSkills: (SkillId | 'SPACE')[] = [SKILL_IDS.RAISE_SKELETON]
 
-  skeletonSubspace = []
-  subspaceLimit = 1
+  skeletonSubspace: BattleTarget[] = []
+  subspaceLimit = 3
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
   _maxSkeleton: number = 2 // 최대 소환 가능 수
 
@@ -147,7 +147,7 @@ export class Player {
       return
     }
 
-    return new GolemWrapper(this._golem, this)
+    return new GolemWrapper(this._golem, this.golemUpgrade, this)
   }
 
   get knight() {

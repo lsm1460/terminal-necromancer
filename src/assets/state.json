@@ -3,7 +3,7 @@
     "id": "player",
     "name": "player",
     "x": 3,
-    "y": 1,
+    "y": 2,
     "_maxHp": 75,
     "hp": 75,
     "_maxMp": 75,
@@ -14,7 +14,7 @@
     "eva": 0,
     "crit": 0,
     "gold": 107,
-    "exp": 2570,
+    "exp": 1670,
     "level": 3,
     "karma": 2,
     "inventoryMax": 15,
@@ -166,7 +166,35 @@
     ],
     "_maxSkeleton": 2,
     "upgradeLimit": 5,
-    "golemUpgrade": [],
+    "golemUpgrade": [
+      "soul",
+      "soul"
+    ],
+    "_golem": {
+      "id": "golem",
+      "name": "하역장의 기계 골렘",
+      "attackType": "melee",
+      "baseMaxHp": 80,
+      "maxHp": 80,
+      "hp": 120,
+      "baseAtk": 60,
+      "atk": 60,
+      "baseDef": 40,
+      "def": 40,
+      "agi": 3,
+      "exp": 0,
+      "description": "하역장에서 수거한 핵으로 제드가 부활시킨 거대 병기입니다. 사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.",
+      "dropTableId": "",
+      "encounterRate": 0,
+      "isAlive": true,
+      "skills": [
+        "power_smash"
+      ],
+      "isMinion": true,
+      "isGolem": true,
+      "deathLine": "(알 수 없는 기계음)",
+      "orderWeight": -15
+    },
     "knightUpgrade": []
   },
   "sceneId": "B1_Subway_Entrance",
@@ -280,11 +308,12 @@
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "first_talk_death",
+    "talk_death_1",
     "first_boss",
-    "second_talk_death",
+    "talk_death_2",
     "RESISTANCE_BASE",
     "b3_apostle",
-    "second_boss"
+    "second_boss",
+    "talk_death_3"
   ]
 }

@@ -5,14 +5,20 @@ import enquirer from 'enquirer'
 
 const ZedHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const isB2Completed = context.events.isCompleted('second_talk_death')
+    const isB2Completed = context.events.isCompleted('talk_death_2')
     const isB3Completed = context.events.isCompleted('second_boss')
     const alreadyHeard = context.events.isCompleted('HEARD_RESISTANCE')
+
+    if (isB3Completed && !player._golem) {
+      return [
+        { name: 'golem', message: '💬 [!] 대화' },
+      ]
+    }
 
     return [
       { name: 'talk', message: '💬 잡담' },
       ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: '💬 대화' }] : []),
-      ...(isB3Completed ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }] : []),
+      ...(isB3Completed && player._golem ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }] : []),
       { name: 'heal', message: '💊 치료' },
     ]
   },
@@ -26,6 +32,9 @@ const ZedHandler: NPCHandler = {
         break
       case 'heal':
         handleHeal(player)
+        break
+      case 'golem':
+        await handleAwakeGolem(player)
         break
       case 'upgrade_golem':
         await handleUpgradeGolem(player)
@@ -113,14 +122,14 @@ async function handleUpgradeGolem(player: Player) {
 
   // 1. 비용 계산 로직 단일화
   const penaltyMultiplier = 1 + machineStacks * 0.5
-  const upgradeCost = Math.floor(100 * (totalStacks + 1) * penaltyMultiplier)
-  const removeCost = 200
+  const upgradeCost = Math.floor(500 * (totalStacks + 1) * penaltyMultiplier)
+  const removeCost = 1500
 
   // 2. 입장 시 기계 혐오 대사
   if (machineStacks > 0) {
-    console.log(`\n닥터 제드: "우아악! 이 비린내 나는 쇳덩어리들은 뭐야?! 당장 내 눈앞에서 치우지 못해?!"`)
+    console.log(`\n닥터 제드: "우아악! 이 비린내 나는 쇳덩어리들은 뭐죠?! 당장 내 눈앞에서 치워주시겠어요?!"`)
     console.log(
-      `닥터 제드: "이런 고철 쓰레기들 때문에 내 정수가 들어갈 자리가 없다고요! 억지로 밀어 넣으려면 EXP나 더 내놓으시지!"`
+      `닥터 제드: "이런 고철 쓰레기들 때문에 내 정수가 들어갈 자리가 없다고요!"`
     )
   }
 
@@ -128,11 +137,11 @@ async function handleUpgradeGolem(player: Player) {
   const choices = [
     {
       name: 'soul_upgrade',
-      message: `🧬 [생체 변이] Soul 슬롯 주입 (비용: ${upgradeCost} EXP)`,
+      message: `🧬 [생체 변이] Soul 슬롯 주입 (비용: 영혼 조각 ${upgradeCost}개)`,
     },
     {
       name: 'remove_soul',
-      message: `🔪 [생체 적출] Soul 스택 하나 제거 (비용: ${removeCost} EXP)`,
+      message: `🔪 [생체 적출] Soul 스택 하나 제거 (비용: 영혼 조각 ${removeCost}개)`,
     },
     {
       name: 'exit',
@@ -143,7 +152,7 @@ async function handleUpgradeGolem(player: Player) {
   const { action } = await enquirer.prompt<{ action: string }>({
     type: 'select',
     name: 'action',
-    message: `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ]`,
+    message: `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ] / 보유 영혼 조각: ${player.exp}`,
     choices,
   })
 
@@ -170,11 +179,11 @@ async function handleUpgradeGolem(player: Player) {
       console.log(`닥터 제드: "하하하! 억지로 쑤셔 넣으니 결국 들어가잖아! 이제야 좀 '살아있는' 것 같군!"`)
       console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
     } else {
-      console.log(`\n💉 [집도 완료] 'Soul' 정수를 주입했습니다.`)
+      console.log('\n💉 [집도 완료] 닥터 제드: "히히히! 보라고, 이 영혼이 강철 속에서 비명을 지르며 요동치고 있어!"')
     }
   } else if (action === 'remove_soul') {
     if (soulStacks === 0) {
-      console.log(`\n닥터 제드: "내 정수가 하나도 없는데 뭘 도려내라는 거야?"`)
+      console.log(`\n닥터 제드: "내 정수가 하나도 없는데요?"`)
       return
     }
 
@@ -191,6 +200,74 @@ async function handleUpgradeGolem(player: Player) {
   } else if (action === 'exit') {
     console.log(`\n닥터 제드: "나갈 때 문 닫으세요. 먼지 들어와"`)
   }
+}
+
+async function handleAwakeGolem(player: Player) {
+  if (player._golem) {
+    console.log(`\n제드: "이미 기동 중인 개체입니다. 중복 출력은 자원 낭비일 뿐이죠."`)
+    return
+  }
+
+  const dialogues = [
+    "제드: ...이건 지하 3층을 지키던 골렘의 핵이군.",
+    "제드: 코어가 완전히 박살 났어. 보통 사람이라면 쓰레기통에나 던졌겠지만...",
+    "제드: 운이 좋군. 나 정도의 실력자라면 다시 맥동하게 만들 수 있지.",
+    "제드: 자, 그 핵을 이쪽으로 넘겨봐. 원래보다 더 강력하게 고쳐주마."
+  ]
+
+  // 1. 순차적 대화 노출
+  for (const message of dialogues) {
+    await enquirer.prompt({
+      type: 'input',
+      name: 'confirm',
+      message,
+      format: () => ' (Enter ⏎)',
+    })
+  }
+
+  // 3. 최종 확인
+  const warningMsg = `핵에 사신의 마력을 주입합니다. 골렘이 불완전하게 깨어나며 폭주할 위험이 있습니다. 강행하시겠습니까?`
+  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
+    type: 'confirm',
+    name: 'proceed',
+    message: warningMsg,
+    initial: false,
+  })
+
+  if (!proceed) {
+    console.log('\n제드: "현명한 선택입니다. 아직 금속의 비명이 멈추지 않았으니까요."')
+    return
+  }
+
+  player._golem = {
+    id: 'golem',
+    name: '하역장의 기계 골렘',
+    attackType: 'melee',
+    baseMaxHp: 80,
+    maxHp: 80,
+    hp: 80,
+    baseAtk: 60,
+    atk: 60,
+    baseDef: 40,
+    def: 40,
+    agi: 3,
+    exp: 0,
+    description:
+      '하역장에서 수거한 핵으로 제드가 부활시킨 거대 병기입니다.\n사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.',
+    dropTableId: '',
+    encounterRate: 0,
+    isAlive: true,
+    skills: ['power_smash'],
+    isMinion: true,
+    isGolem: true,
+    deathLine: '(알 수 없는 기계음)',
+    orderWeight: -15,
+  }
+
+  console.log(`\n[⚙️ 골렘 기동 성공]`)
+  console.log(`제드: "시스템 로드 완료. 보시다시피... 꽤 훌륭한 살육 병기가 되었군요."`)
+  console.log(`제드: "이제 이 고철 덩어리는 당신의 그림자를 따라다니며 앞길을 가로막는 것들을 짓이겨 놓을 겁니다."`)
+  console.log(`제드: "원한다면 골렘을 강화시킬 방법이 있을지도 모릅니다.."`)
 }
 
 export default ZedHandler

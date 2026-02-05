@@ -7,11 +7,12 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const isFirst = context.events.isCompleted('first_talk_death')
-    const isSecond = context.events.isCompleted('second_talk_death')
+    const isFirst = context.events.isCompleted('talk_death_1')
+    const isSecond = context.events.isCompleted('talk_death_2')
+    const isThird = context.events.isCompleted('talk_death_3')
+
     const isB2Completed = context.events.isCompleted('first_boss')
     const isB3Completed = context.events.isCompleted('second_boss')
-    const hasSubSpace = player.hasSkill('SPACE')
 
     if (!isFirst || !isB2Completed) {
       return [{ name: 'intro', message: '💬 대화' }]
@@ -21,12 +22,14 @@ const DeathHandler: NPCHandler = {
       return [{ name: 'tutorialOver', message: '💬 대화' }]
     }
 
+    if (isB3Completed && !isThird) {
+      return [{ name: 'defeatGolem', message: '💬 대화' }]
+    }
+
     return [
       { name: 'talk', message: '💬 잡담' },
       { name: 'levelUp', message: '✨ 레벨업' },
       ...(isB3Completed ? [{ name: 'increaseLimit', message: '🦴 해골 군단 확장' }] : []),
-      ...(isB3Completed && !hasSubSpace ? [{ name: 'getSubSpace', message: '🦴 아공간 획득' }] : []),
-      ...(isB3Completed && !player.golem ? [{ name: 'golem', message: '🪨  골렘 정수 부활' }] : []),
       { name: 'unlock', message: '🔮 기술 전수' },
       { name: 'memorize', message: '📜 기술 각인' },
     ]
@@ -42,6 +45,9 @@ const DeathHandler: NPCHandler = {
       case 'tutorialOver':
         await handleTutorialOver(context)
         break
+      case 'defeatGolem':
+        await handleDefeatGolem(context)
+        break
       case 'levelUp':
         await handleLevelUp(player)
         break
@@ -53,12 +59,6 @@ const DeathHandler: NPCHandler = {
         break
       case 'increaseLimit':
         await handleIncreaseLimit(player)
-      case 'golem':
-        await handleAwakeGolem(player)
-        break
-      case 'getSubSpace':
-        await handleGetSubSpace(player)
-        break
       default:
         break
     }
@@ -68,7 +68,7 @@ const DeathHandler: NPCHandler = {
 async function handleIntro(context: GameContext) {
   const { events } = context
 
-  const isFirst = context.events.isCompleted('first_talk_death')
+  const isFirst = context.events.isCompleted('talk_death_1')
   const isB2Completed = context.events.isCompleted('first_boss')
 
   if (isFirst && !isB2Completed) {
@@ -99,7 +99,7 @@ async function handleIntro(context: GameContext) {
     `\n사신: \"실패하면? 걱정 마라. 네놈의 혼령 또한 저 고기 덩어리의 일부가 되어 영원히 선로나 닦게 될 테니까. 하하하!\"`
   )
 
-  events.completeEvent('first_talk_death')
+  events.completeEvent('talk_death_1')
 }
 
 // --- 서브 메뉴: 스킬 전수 ---
@@ -157,7 +157,7 @@ async function handleLevelUp(player: Player) {
   const { required: nextExp, toNext: cost } = player.expToNextLevel()
 
   console.log(`현재 가지고 있는 영혼 조각: `, player.exp)
-  
+
   const warningMsg = `${cost}개의 영혼 조각을 바친다면, 네 전성기의 힘을 조금이나마 되돌아올지도 모르지..`
   const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
     type: 'confirm',
@@ -291,118 +291,6 @@ async function handleIncreaseLimit(player: Player) {
   console.log(`스켈레톤 최대 보유 수: ${currentLimit} ➔ ${player._maxSkeleton}`)
 }
 
-async function handleAwakeGolem(player: Player) {
-  if (player._golem) {
-    console.log(`\n사신: "이미 네 곁에 그 흉물스러운 철덩이가 있지 않나. 탐욕도 병이군."`)
-    return
-  }
-
-  // 1. 사신의 조소
-  console.log(`\n사신: "오호... 그 고철더미 속에서 기어코 그 '핵'을 파내어 가져왔단 말이냐?"`)
-  console.log(`사신: "필멸자의 집착이란 가증스럽군. 그 죽은 심장에 내 권능을 조금 나눠주길 원하느냐?"`)
-
-  const cost = 800
-  console.log(`현재 보유 영혼의 파편: ${player.exp} / 필요 영혼의 파편: ${cost}`)
-
-  // 2. 비용 체크
-  if (player.exp < cost) {
-    console.log(
-      `사신: "크크크... 그 핵을 깨울 동력조차 없으면서 내 시간을 뺏는 것이냐? 가서 더 많은 죽음을 목격하고 오거라."`
-    )
-    return
-  }
-
-  // 3. 최종 확인 (실수 방지용)
-  const warningMsg = `사신: "겨우 영혼의 파편 ${cost}개면 충분하다. 이 고철에 생기를 불어넣겠느냐?"`
-  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-    type: 'confirm',
-    name: 'proceed',
-    message: warningMsg,
-    initial: false,
-  })
-
-  if (!proceed) {
-    console.log(`사신: "흥, 그 귀한 핵을 그냥 장식품으로 쓰겠다니. 네놈 마음대로 하거라."`)
-    return
-  }
-
-  // 4. 골렘 부활 및 데이터 할당
-  player.exp -= cost
-  player._golem = {
-    id: 'golem',
-    name: '하역장의 기계 골렘',
-    attackType: 'melee',
-    baseMaxHp: 80,
-    maxHp: 80,
-    hp: 80,
-    baseAtk: 50,
-    atk: 50,
-    baseDef: 40,
-    def: 40,
-    agi: 3,
-    exp: 0,
-    description:
-      '하역장에서 수거한 핵으로 부활시킨 거대 병기입니다. 사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.',
-    dropTableId: '',
-    encounterRate: 0,
-    isAlive: true,
-    skills: ['power_smash'],
-    isMinion: true,
-    isGolem: true,
-    deathLine: '(알 수 없는 기계음)',
-    orderWeight: -15,
-  }
-
-  console.log(`\n[⚙️ 골렘 기동 성공]`)
-  console.log(`사신: "자, 눈을 뜨거라! 이름 없는 고철이여. 이제 네놈의 새로운 주인은 이 나약한 필멸자다!"`)
-}
-
-async function handleGetSubSpace(player: Player): Promise<boolean> {
-  const SOUL_COST = 500 // 요구 영혼 수치
-  const warningMsg = `💀 사신이 속삭입니다: "영혼 ${SOUL_COST}개를 바쳐 그림자의 틈새를 열겠느냐?"`
-
-  console.log('\n--------------------------------------------------')
-  console.log('🌑 [공간의 지배자] 계약 제안')
-  console.log('--------------------------------------------------')
-
-  // 1. 자원 체크
-  if (player.exp < SOUL_COST) {
-    console.log(`\n❌ 사신이 코웃음 칩니다: "가진 영혼의 조각이 겨우 ${player.exp}개뿐인가?"`)
-    return false
-  }
-
-  try {
-    // 2. enquirer를 이용한 사용자 컨펌
-    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-      type: 'confirm',
-      name: 'proceed',
-      message: warningMsg,
-      initial: false,
-    })
-
-    // 3. 거절 시
-    if (!proceed) {
-      console.log('\n"멍청한 놈, 평생 그 무거운 뼈다귀들을 직접 끌고 다니거라..."')
-      return false
-    }
-
-    // 4. 계약 이행
-    player.exp -= SOUL_COST
-    player.unlockedSkills.push('SPACE')
-
-    console.log('\n--------------------------------------------------')
-    console.log('✨ [계약 완료]')
-    console.log(`🌌 플레이어의 그림자에서 이질적인 공간이 느껴집니다. 아공간 명령어를 사용할 수 있습니다.`)
-    console.log(`💡 (남은 영혼: ${player.exp} EXP)`)
-    console.log('--------------------------------------------------\n')
-
-    return true
-  } catch (error) {
-    // 입력 중단(Ctrl+C 등) 예외 처리
-    return false
-  }
-}
-
 async function handleTutorialOver(context: GameContext) {
   const { events } = context
 
@@ -424,7 +312,31 @@ async function handleTutorialOver(context: GameContext) {
     })
   }
 
-  events.completeEvent('second_talk_death')
+  events.completeEvent('talk_death_2')
+}
+
+async function handleDefeatGolem(context: GameContext) {
+  const { events } = context
+
+  const dialogues = [
+    '사신: "오호... 청소하라고 보냈더니, 아예 하역장의 골렘을 고철 덩어리로 만들어놨군."',
+    '사신: "(차가운 눈빛으로 당신을 훑으며) 네놈의 그 무식한 손버릇은 여전하구나.\n그 골렘을 수복하는 데 얼마나 많은 정수가 드는지 알고는 있는 거냐?"',
+    '사신: "쯧... 좋다. 이미 부서진 오물을 탓해서 무엇하겠나. \n제드라면 그 핵을 유용하게 쓸지도 모르지.."',
+    '사신: "지금 당장 지하 4층의 분실물 보관소으로 내려가라. 그곳에 있는 [센터장]에게 전해."',
+    '사신: "오늘부로 네놈은 \'해고\'라고 말이다. 그 역겨운 낯짝을 더는 내 궁전에서 보고 싶지 않으니 말이야."',
+    '사신: "가서 전하기만 해라. 또다시 손가락을 함부로 놀려 일을 복잡하게 만들었다간...\n네놈의 그림자조차 이곳에서 지워버릴 테니까."',
+  ]
+
+  for (const message of dialogues) {
+    await enquirer.prompt({
+      type: 'input',
+      name: 'confirm',
+      message,
+      format: () => ' (Enter ⏎)',
+    })
+  }
+
+  events.completeEvent('talk_death_3')
 }
 
 export default DeathHandler

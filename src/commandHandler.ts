@@ -59,6 +59,7 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   talk: Commands.talkCommand,
   use: Commands.useCommand,
   map: Commands.mapCommand,
+  space: Commands.spaceCommand,
 }
 
 // --- handleCommand ---

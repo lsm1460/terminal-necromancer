@@ -19,6 +19,7 @@ export const COMMAND_KEYS = {
   TALK: 'talk', // 대화 추가
   EXIT: 'exit',
   MAP: 'map',
+  SPACE: 'space',
 } as const
 
 export type CommandKey = (typeof COMMAND_KEYS)[keyof typeof COMMAND_KEYS]
@@ -41,6 +42,7 @@ export const COMMAND_GROUPS: Record<CommandKey, string[]> = {
   [COMMAND_KEYS.SKILL]: ['skill', '스킬', '마법', 'sk'],
   [COMMAND_KEYS.TALK]: ['talk', '대화', 'tk'],
   [COMMAND_KEYS.MAP]: ['map', '지도', 'm'],
+  [COMMAND_KEYS.SPACE]: ['space', '아공간', 'sp'],
   [COMMAND_KEYS.EXIT]: ['exit'],
 }
 
@@ -59,7 +61,7 @@ export const MAP_IDS = {
   B2_TRANSIT: 'B2_Transit_Area',
   B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',
   B3_5_RESISTANCE_BASE: 'B3_5_Resistance_Base',
-  B4_Celestial_Transit_Lounge: 'B4_Celestial_Transit_Lounge',
+  B4_Terminal_Lost_Storage: 'B4_Terminal_Lost_Storage',
 } as const
 
 export type SkeletonRarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'

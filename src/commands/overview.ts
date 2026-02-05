@@ -51,6 +51,13 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   console.log(`방어구: ${armorText}`)
 
   console.log('\n💀 [ 소환수 군단 상태 ]')
+  if (player.golem) {
+    const golemStatus = player.golem.isAlive ? `[${player.golem.hp}/${player.golem.maxHp}]` : `[파괴됨]`
+
+    const golemIcon = player.golem.isAlive ? '🤖' : '🛠️'
+
+    console.log(` └ ${golemIcon} ${player.golem.name}: ${golemStatus}`)
+  }
   console.log(` └ 💀 해골 병사: ${skeleton.length} / ${maxSkeleton}`)
 
   if (player.minions.length === 0) {
