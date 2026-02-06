@@ -37,6 +37,7 @@ export type BattleTarget = {
   preemptive?: boolean
   noEscape?: boolean
   noCorpse?: boolean
+  isNpc?: boolean
   isMinion?: boolean
   isSkeleton?: boolean
   isGolem?: boolean
@@ -209,11 +210,13 @@ export interface NPC extends BattleTarget {
   reborn: boolean
   lines: string[]
   relation: number
+  isNpc: true
   isHostile: boolean
   isBoss: boolean
   factionHostility: number
   factionContribution: number
   updateHostility: (amount: number) => void
+  dead: () => void
   noEscape?: boolean
   scripts?: {
     friendly: NPCScripts

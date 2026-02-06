@@ -52,10 +52,70 @@ export class Battle {
     public npcSkills: NpcSkillManager
   ) {}
 
-  private get aliveEnemies(): CombatUnit[] {
-    return Array.from(this.unitCache.values()).filter(
-      (unit) => ['monster', 'npc'].includes(unit.type) && unit.ref.isAlive
-    )
+  private get aliveEnemies() {
+    return Array.from(this.unitCache.values())
+      .filter((unit) => ['monster', 'npc'].includes(unit.type) && unit.ref.isAlive)
+      .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0)) as CombatUnit<BattleTarget>[]
+  }
+
+  private initPlayerUnit() {
+    this.toCombatUnit(this.player, 'player')
+
+    // 2. 미니언 유닛 최신화 (새로 소환된 미니언이 있을 수 있으므로 체크)
+    if (this.player.minions) {
+      this.player.minions.forEach((m) => {
+        // 살아있고 아직 캐시에 등록되지 않은 미니언만 주입
+        if (m.isAlive) {
+          const mUnit = this.toCombatUnit(m, 'minion')
+          // 미니언 전용 사망 훅 주입
+          mUnit.onDeath = async () => await this.handleMinionsDeath(mUnit)
+        }
+      })
+    }
+  }
+
+  private async handleUnitDeBuff(unit: CombatUnit) {
+    // 1. 지속 피해(DOT) 처리
+    const dotEffects = unit.deBuff.filter((d) => d.type === 'dot')
+
+    for (const effect of dotEffects) {
+      const damage = Math.max(1, effect.atk || 0)
+      unit.ref.hp -= damage
+      console.log(` └ 🩸 [${effect.name}] 피해: -${damage} (남은 지속: ${effect.duration}턴)`)
+
+      if (unit.ref.hp <= 0) {
+        const reason = effect.name === '출혈' ? '출혈 과다' : effect.name === '중독' ? '중독' : '상태 이상'
+        console.log(` └ 💀 ${unit.name}이(가) ${reason}으로 사망했습니다.`)
+
+        await unit.dead()
+        await delay()
+        return true // 사망했으므로 이후 로직 스킵
+      }
+    }
+
+    // 2. 행동 제약(Bind) 처리
+    const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
+    if (bindEffect) {
+      console.log(
+        `\n⛓️  ${unit.name}은(는) ${bindEffect.name}에 갇혀 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`
+      )
+      return true // 속박되었으므로 이번 턴 행동 스킵
+    }
+
+    return false // 행동 가능
+  }
+
+  private getPlayerSide() {
+    return _.chain(Array.from(this.unitCache.values()))
+      .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
+      .sortBy((unit) => {
+        if (unit.type === 'player') {
+          return Infinity // 플레이어는 가장 큰 값을 주어 무조건 마지막으로 보냄
+        }
+        // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
+        return _.findIndex(this.player.minions, { id: unit.id })
+      })
+      .value() as CombatUnit<BattleTarget>[]
   }
 
   async runCombatLoop(initialEnemies: CombatUnit[], context: GameContext) {
@@ -70,9 +130,10 @@ export class Battle {
     console.log(`적: ${this.aliveEnemies.map((e) => e.name).join(', ')}`)
 
     let turn = 0
-    while (this.player.isAlive && this.aliveEnemies.some((e) => e.ref.isAlive)) {
+    while (this.player.isAlive && this.aliveEnemies.length > 0) {
       turn++
 
+      this.initPlayerUnit()
       const turnOrder = this.getTurnOrder()
 
       console.log(`\n============== turn: ${turn} ==============`)
@@ -81,63 +142,20 @@ export class Battle {
       for (const unit of turnOrder) {
         // 전투 도중 누군가 죽었다면 체크
         if (!unit.ref.isAlive) continue
-        if (!this.player.isAlive || !this.aliveEnemies.some((e) => e.ref.isAlive)) break
+        if (!this.player.isAlive || this.aliveEnemies.length === 0) break
 
         console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
         this.updateEffectsDuration(unit)
+        const isSkip = await this.handleUnitDeBuff(unit)
+        if (isSkip) continue
 
-        // 2. [출혈/독 등] 지속 피해 적용
-        // 업데이트 후에도 남아있는 효과들에 대해서만 데미지 발생
-        const dotEffects = unit.deBuff.filter((d) => d.type === 'dot')
-        for (const effect of dotEffects) {
-          const damage = Math.max(1, effect.atk || 0)
-          unit.ref.hp -= damage
-          console.log(` └ 🩸 [${effect.name}] 피해: -${damage} (남은 지속: ${effect.duration}턴)`)
-
-          if (unit.ref.hp <= 0) {
-            if (effect.name === '출혈') {
-              console.log(` └ 💀 ${unit.name}이(가) 출혈 과다로 사망했습니다.`)
-            } else if (effect.name === '중독') {
-              console.log(` └ 💀 ${unit.name}이(가) 중독으로 사망했습니다.`)
-            }
-            await unit.dead()
-
-            await delay()
-            break
-          }
-        }
-
-        if (!unit.ref.isAlive) continue
-
-        // 3. [추가] 속박(bind) 상태 체크
-        // updateEffectsDuration 후에도 bind가 남아있다면 이번 턴은 행동 불능입니다.
-        const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
-
-        if (bindEffect) {
-          console.log(
-            `\n⛓️  ${unit.name}은(는) ${bindEffect.name}에 갇혀 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`
-          )
-          // 행동을 수행하지 않고 다음 유닛으로 넘어갑니다.
-          continue
-        }
-
-        let enemiesSide = this.aliveEnemies.sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0)) as CombatUnit<BattleTarget>[]
-
-        const playerSide = _.chain(Array.from(this.unitCache.values()))
-          .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
-          .sortBy((unit) => {
-            if (unit.type === 'player') {
-              return Infinity // 플레이어는 가장 큰 값을 주어 무조건 마지막으로 보냄
-            }
-            // 미니언은 player.minions 배열의 인덱스 순서대로 (0, 1, 2...)
-            return _.findIndex(this.player.minions, { id: unit.id })
-          })
-          .value() as CombatUnit<BattleTarget>[]
+        let enemiesSide = [...this.aliveEnemies]
+        const playerSide = this.getPlayerSide()
 
         if (unit.type === 'player') {
           // 플레이어 직접 조작
-          const playerUnit = unit as unknown as CombatUnit<Player>
-          const isEscaped = await this.handlePlayerAction(playerUnit, playerSide, enemiesSide, context)
+          const playerUnit = unit as CombatUnit<Player>
+          const isEscaped = await this.handlePlayerAction(playerUnit, playerSide, context)
 
           if (isEscaped) {
             // 전투 종료
@@ -162,27 +180,7 @@ export class Battle {
     return true
   }
 
-  /**
-   * 현재 전투에 참여 중인 모든 유닛의 턴 순서를 결정합니다.
-   */
   getTurnOrder(): CombatUnit[] {
-    // 1. 플레이어 유닛 보장 (캐시에 없으면 생성 및 주입)
-    this.toCombatUnit(this.player, 'player')
-
-    // 2. 미니언 유닛 최신화 (새로 소환된 미니언이 있을 수 있으므로 체크)
-    if (this.player.minions) {
-      this.player.minions.forEach((m) => {
-        // 살아있고 아직 캐시에 등록되지 않은 미니언만 주입
-        if (m.isAlive) {
-          const mUnit = this.toCombatUnit(m, 'minion')
-          // 미니언 전용 사망 훅 주입
-          mUnit.onDeath = async () => await this.handleMinionsDeath(mUnit, this.aliveEnemies)
-        }
-      })
-    }
-
-    // 3. unitCache에 있는 모든 유닛 중 '살아있는' 유닛들만 추출하여 정렬
-    // 플레이어, 미니언, 몬스터가 모두 포함됩니다.
     return Array.from(this.unitCache.values())
       .filter((unit) => unit.ref.isAlive)
       .sort((a, b) => {
@@ -203,11 +201,9 @@ export class Battle {
   private async handlePlayerAction(
     playerUnit: CombatUnit<Player>,
     playerSide: CombatUnit[],
-    enemies: CombatUnit[],
+    // enemies: CombatUnit[],
     context: GameContext
   ): Promise<boolean> {
-    const aliveEnemies = enemies.filter((e) => e.ref.isAlive)
-
     const { action } = await enquirer.prompt<{ action: string }>({
       type: 'select',
       name: 'action',
@@ -252,16 +248,16 @@ export class Battle {
 
           // 2. 적군 출력 (입력 순서대로: 0번이 선두)
           console.log(' [⚔️ 적군 진영]')
-          aliveEnemies.forEach((unit, i) => {
+          this.aliveEnemies.forEach((unit, i) => {
             console.log(renderLine(unit, i === 0))
           })
 
           console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
         }
-        return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+        return await this.handlePlayerAction(playerUnit, playerSide, context)
       case '공격':
         {
-          const { choices } = new TargetSelector(aliveEnemies).excludeStealth().build()
+          const { choices } = new TargetSelector(this.aliveEnemies).excludeStealth().build()
 
           const { targetId } = await enquirer.prompt<{ targetId: string }>({
             type: 'select',
@@ -271,19 +267,20 @@ export class Battle {
               ...choices,
               { name: 'cancel', message: '🔙 뒤로가기' }, // 취소 옵션 추가
             ],
-            format(value) {
+            format: (value) => {
               if (value === 'cancel') return '취소'
-              const target = aliveEnemies.find((e) => e.id === value)
+              const target = this.aliveEnemies.find((e) => e.id === value)
+
               return target ? target.name : value
             },
           })
 
           // 취소 선택 시 다시 행동 선택창으로 재귀 호출
           if (targetId === 'cancel') {
-            return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+            return await this.handlePlayerAction(playerUnit, playerSide, context)
           }
 
-          const target = aliveEnemies.find((e) => e.id === targetId)
+          const target = this.aliveEnemies.find((e) => e.id === targetId)
 
           if (target) {
             // 공격 실행
@@ -305,11 +302,11 @@ export class Battle {
           const ally = playerSide.filter((unit) => unit.type !== 'player')
           const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, {
             ally,
-            enemies: aliveEnemies,
+            enemies: this.aliveEnemies,
           })
           if (!isSuccess) {
             // 스킬 사용을 취소했거나 실패했다면 다시 행동 선택으로
-            return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+            return await this.handlePlayerAction(playerUnit, playerSide, context)
           }
         }
         break
@@ -319,15 +316,15 @@ export class Battle {
 
         if (!isUse) {
           // 아이템 사용 취소 시 다시 행동 선택으로
-          return await this.handlePlayerAction(playerUnit, playerSide, enemies, context)
+          return await this.handlePlayerAction(playerUnit, playerSide, context)
         }
         break
 
       case '도망': {
-        const isEscapeBlocked = aliveEnemies.some((e) => (e.ref as BattleTarget).noEscape === true)
+        const isEscapeBlocked = this.aliveEnemies.some((e) => (e.ref as BattleTarget).noEscape === true)
 
         if (isEscapeBlocked) {
-          const blocker = aliveEnemies.find((e) => (e.ref as BattleTarget).noEscape === true)
+          const blocker = this.aliveEnemies.find((e) => (e.ref as BattleTarget).noEscape === true)
           console.log(`\n🚫 도망칠 수 없습니다! ${blocker?.name}(이)가 길을 가로막고 있습니다!`)
 
           // 도망에 실패했으므로 턴을 낭비하게 하거나,
@@ -393,7 +390,7 @@ export class Battle {
     attacker.removeStealth()
   }
 
-  private async handleMinionsDeath(deathUnit: CombatUnit<BattleTarget>, enemies: CombatUnit[]) {
+  private async handleMinionsDeath(deathUnit: CombatUnit<BattleTarget>) {
     this.unitCache.delete(deathUnit.ref)
 
     deathUnit.ref.hp = 0
@@ -417,19 +414,14 @@ export class Battle {
     target.deathLine && console.log(target.deathLine)
 
     // 2. 전리품 및 경험치 처리 (플레이어 진영이 죽인 경우만 해당될 수 있음)
-    // 편의를 위해 더 큰 타입인 NPC로 처리
-    const npc = target as NPC
+    target.isNpc && (target as NPC).dead()
 
-    npcs.dead(npc.id)
+    const { gold, drops } = LootFactory.fromTarget(target, dropTable)
 
-    npc.faction && context.npcs.setFactionHostility(npc.faction, 100)
-
-    const { gold, drops } = LootFactory.fromTarget(npc, dropTable)
-
-    this.player.gainExp(npc.exp || 0)
+    this.player.gainExp(target.exp || 0)
     this.player.gainGold(gold)
 
-    let logMessage = `✨ ${npc.name} 처치! EXP +${npc.exp || 0}`
+    let logMessage = `✨ ${target.name} 처치! EXP +${target.exp || 0}`
     if (gold > 0) logMessage += `, 골드 +${gold}`
     console.log(logMessage)
 
@@ -437,13 +429,13 @@ export class Battle {
     drops.forEach((d) => {
       world.addDrop({ ...d, x, y } as Drop)
       const qtyText = d.quantity !== undefined ? ` ${d.quantity}개` : ''
-      console.log(`📦 ${npc.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
+      console.log(`📦 ${target.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
     })
 
-    if (!npc.noCorpse) {
+    if (!target.noCorpse) {
       // 시체 생성 (네크로맨서의 핵심!)
       world.addCorpse({
-        ...npc,
+        ...target,
         x,
         y,
       })
@@ -538,28 +530,21 @@ export class Battle {
     const unit = this.toCombatUnit(monster, 'monster')
     unit.onDeathHooks.push(async () => this.handleUnitDeath(monster as BattleTarget, context))
 
-    // 이제 currentEnemies.push 대신 unitCache에 이미 들어있음 (toCombatUnit 내부 로직)
     return unit
   }
 
   public getEnemiesOf(attacker: CombatUnit): CombatUnit[] {
-    // 1. 진영 그룹 정의
     const playerSideTypes = ['player', 'minion']
     const enemySideTypes = ['monster', 'npc']
 
-    // 2. 공격자가 어느 진영인지 확인
     const isPlayerSide = playerSideTypes.includes(attacker.type)
 
-    // 3. 캐시에서 반대 진영 필터링
     return Array.from(this.unitCache.values()).filter((unit) => {
-      // 이미 죽은 유닛은 제외
       if (!unit.ref.isAlive) return false
 
       if (isPlayerSide) {
-        // 플레이어 측이 공격자라면: 적은 enemySideTypes에 포함된 유닛
         return enemySideTypes.includes(unit.type)
       } else {
-        // 몬스터/NPC가 공격자라면: 적은 playerSideTypes에 포함된 유닛
         return playerSideTypes.includes(unit.type)
       }
     })

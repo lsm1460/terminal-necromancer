@@ -55,12 +55,19 @@ export class NPCManager {
       ...base,
       ...state,
       // 현재 소속이 적대적이라면 강제로 role을 변경하거나 상태 반영 가능
+      isNpc: true,
       isHostile: this.isHostile(id),
       factionHostility: this.factionHostility[base.faction] || 0,
       factionContribution: this.factionContribution[base.faction] || 0,
       updateHostility: (_amount: number) => {
         this.updateFactionHostility(base.faction, _amount)
       },
+      dead: () => {
+        this.player.karma += 1
+        this.states[id].isAlive = false
+
+        npc.faction && this.setFactionHostility(npc.faction, 100)
+      }
     }
 
     return npc
@@ -83,15 +90,6 @@ export class NPCManager {
 
     // 3. 찾지 못한 경우 null 반환
     return null
-  }
-
-  dead(id: string) {
-    if (!this.states[id]) {
-      return
-    }
-
-    this.player.karma += 1
-    this.states[id].isAlive = false
   }
 
   reborn(id: string) {
