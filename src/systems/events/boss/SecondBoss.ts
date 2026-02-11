@@ -1,4 +1,5 @@
 import { CombatUnit } from '../../../core/battle/CombatUnit'
+import { Player } from '../../../core/Player'
 import { GameContext, GameEvent, NPC } from '../../../types'
 import { BossLogic } from './BossLogic'
 
@@ -52,5 +53,13 @@ export class SecondBoss implements BossLogic {
     enemies.push(amorUnit)
 
     return enemies
+  }
+
+  async onVictory(player: Player, context: GameContext) {
+    const {npcs} = context
+
+    const boss = npcs.getNPC('second_boss')
+
+    boss && boss.dead(0)
   }
 }

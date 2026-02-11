@@ -1,6 +1,7 @@
 import enquirer from 'enquirer'
 import { Player } from '../core/Player'
 import { GameContext, NPC } from '../types'
+import { makeItemMessage } from '../utils'
 
 export interface NPCHandler {
   getChoices(player: Player, npc: NPC, context: GameContext): { name: string; message: string }[]
@@ -51,10 +52,27 @@ export async function handleBuy(
   const discountRate = Math.min(0.3, contribution * 0.001)
 
   const choices = goods.map((item) => {
-    const finalPrice = Math.floor(item.price * (1 - discountRate))
+    let rarityMultiplier = 1
+
+    switch (item.rarity) {
+      case 'COMMON':
+        rarityMultiplier = 1.0
+        break
+      case 'RARE':
+        rarityMultiplier = 1.5
+        break
+      case 'EPIC':
+        rarityMultiplier = 2.5
+        break
+      default:
+        rarityMultiplier = 1.0
+    }
+
+    const finalPrice = Math.floor(item.price * rarityMultiplier * (1 - discountRate))
+
     return {
       name: item.id,
-      message: `${item.label.padEnd(12)} | 💰 ${String(finalPrice).padStart(4)}G | ${item.description}`,
+      message: makeItemMessage(item, player),
       label: item.label,
       price: finalPrice,
     }

@@ -8,8 +8,9 @@ const ZedHandler: NPCHandler = {
     const isB2Completed = context.events.isCompleted('talk_death_2')
     const isB3Completed = context.events.isCompleted('second_boss')
     const alreadyHeard = context.events.isCompleted('HEARD_RESISTANCE')
+    const alreadyDenied = context.events.isCompleted('golem_generation_denied_zed')
 
-    if (isB3Completed && !player._golem) {
+    if (isB3Completed && !player._golem && !alreadyDenied) {
       return [
         { name: 'golem', message: '💬 [!] 대화' },
       ]
@@ -18,7 +19,7 @@ const ZedHandler: NPCHandler = {
     return [
       { name: 'talk', message: '💬 잡담' },
       ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: '💬 대화' }] : []),
-      ...(isB3Completed && player._golem ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }] : []),
+      ...(isB3Completed && player._golem ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }] : [{ name: 'golem', message: '🧬 골렘 부활' }]),
       { name: 'heal', message: '💊 치료' },
     ]
   },
@@ -34,7 +35,7 @@ const ZedHandler: NPCHandler = {
         handleHeal(player)
         break
       case 'golem':
-        await handleAwakeGolem(player)
+        await handleAwakeGolem(player, context)
         break
       case 'upgrade_golem':
         await handleUpgradeGolem(player)
@@ -202,17 +203,18 @@ async function handleUpgradeGolem(player: Player) {
   }
 }
 
-async function handleAwakeGolem(player: Player) {
+async function handleAwakeGolem(player: Player, context: GameContext) {
+  const { events } = context
   if (player._golem) {
     console.log(`\n제드: "이미 기동 중인 개체입니다. 중복 출력은 자원 낭비일 뿐이죠."`)
     return
   }
 
   const dialogues = [
-    "제드: ...이건 지하 3층을 지키던 골렘의 핵이군.",
+    "제드: ...이건 지하 3층을 지키던 골렘의 핵이군요.",
     "제드: 코어가 완전히 박살 났어. 보통 사람이라면 쓰레기통에나 던졌겠지만...",
-    "제드: 운이 좋군. 나 정도의 실력자라면 다시 맥동하게 만들 수 있지.",
-    "제드: 자, 그 핵을 이쪽으로 넘겨봐. 원래보다 더 강력하게 고쳐주마."
+    "제드: 운이 좋군. 나 정도의 실력자라면 다시 맥동하게 만들 수 있습니다.",
+    "제드: 자, 그 핵을 이쪽으로 넘겨주세요. 원래보다 더 강력하게 고쳐주도록 하지요."
   ]
 
   // 1. 순차적 대화 노출
@@ -235,6 +237,8 @@ async function handleAwakeGolem(player: Player) {
   })
 
   if (!proceed) {
+    events.completeEvent('golem_generation_denied_zed')
+
     console.log('\n제드: "현명한 선택입니다. 아직 금속의 비명이 멈추지 않았으니까요."')
     return
   }

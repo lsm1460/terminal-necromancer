@@ -216,7 +216,7 @@ export interface NPC extends BattleTarget {
   factionHostility: number
   factionContribution: number
   updateHostility: (amount: number) => void
-  dead: () => void
+  dead: (_karma?: number) => void
   noEscape?: boolean
   scripts?: {
     friendly: NPCScripts

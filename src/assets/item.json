@@ -201,7 +201,7 @@
     "critRange": [0.08, 0.15],
     "price": 1800,
     "sellPrice": 400,
-    "description": "선로 파쇄용 망치를 전투용으로 개조했습니다. 사신의 사슬조차 깨부술 듯한 파괴력을 지녔습니다."
+    "description": "선로 파쇄용 망치를 전투용으로 개조했습니다."
   },
   "improvised_bayonet": {
     "id": "improvised_bayonet",
@@ -212,7 +212,7 @@
     "critRange": [0.1, 0.2],
     "price": 2100,
     "sellPrice": 500,
-    "description": "망가진 소총 끝에 단단한 날을 용접했습니다. 사정거리는 짧지만 치명적인 급소를 찌르기에 최적입니다."
+    "description": "사정거리는 짧지만 아직까지는 정상 격발됩니다."
   },
   "scavenged_mantle": {
     "id": "scavenged_mantle",

@@ -344,7 +344,7 @@
     "def": 1,
     "agi": 1,
     "exp": 1500,
-    "dropTableId": "",
+    "dropTableId": "boss2",
     "skills": ["call_reinforcements"],
     "description": "골렘의 핵심 동력원.",
     "orderWeight": 50,

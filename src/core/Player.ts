@@ -166,7 +166,6 @@ export class Player {
         const affixSkillIds = ['death_destruct', 'frostborne']
         let currentSkills = (skeleton.skills || []).filter((id) => !affixSkillIds.includes(id))
 
-        // 2. 현재 활성화된 어픽스만 추가
         if (this.hasAffix('DOOMSDAY')) {
           currentSkills.push('death_destruct')
         }
@@ -175,7 +174,6 @@ export class Player {
           currentSkills.push('frostborne')
         }
 
-        // 3. 필터링 및 추가가 완료된 새로운 스킬 배열 할당
         skeleton.skills = currentSkills
 
         return skeleton

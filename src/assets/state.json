@@ -2,80 +2,59 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
+    "x": 5,
     "y": 1,
-    "_maxHp": 75,
-    "hp": 56,
-    "_maxMp": 75,
-    "mp": 50,
-    "atk": 22,
-    "def": 13,
+    "_maxHp": 120,
+    "hp": 120,
+    "_maxMp": 120,
+    "mp": 120,
+    "atk": 44,
+    "def": 29,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 386,
-    "exp": 635,
-    "level": 3,
+    "gold": 5096,
+    "exp": 2575,
+    "level": 5,
     "karma": 1,
     "inventoryMax": 15,
-    "inventory": [
-      {
-        "id": "ratman_dagger_ec3bdfb83713cbde",
-        "label": "\u001b[37m⚪ 랫맨의 녹슨 단검\u001b[0m",
-        "type": "weapon",
-        "attackType": "melee",
-        "atkRange": [
-          6,
-          9
-        ],
-        "critRange": [
-          0.05,
-          0.1
-        ],
-        "price": 800,
-        "sellPrice": 180,
-        "description": "관리가 전혀 안 된 녹슨 칼입니다. 가끔 상처 부위에 덧나기라도 하는지 생각보다 아프게 박힙니다.",
-        "quantity": 1,
-        "atk": 7,
-        "crit": 0.05,
-        "rarity": "COMMON",
-        "x": 0,
-        "y": 3
-      }
-    ],
+    "inventory": [],
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
       "FOCUS_FIRE",
-      "CORPSE_EXPLOSION"
+      "CORPSE_EXPLOSION",
+      "SOUL_TRANSFER"
     ],
     "equipped": {
       "weapon": {
-        "id": "terminal_halberd_554948294a2afb26",
-        "label": "\u001b[34m🔵 숙련된 터미널 경비병의 창\u001b[0m",
+        "id": "golem_core_staff_05f175908d05925d",
+        "label": "\u001b[34m🔵 우수한 장인의 강철 수호자의 과부하 지팡이\u001b[0m",
         "type": "weapon",
-        "attackType": "melee",
+        "attackType": "ranged",
         "atkRange": [
-          10,
-          15
+          24,
+          38
         ],
         "critRange": [
-          0.02,
-          0.08
+          0.12,
+          0.18
         ],
-        "price": 1500,
-        "sellPrice": 450,
-        "description": "하역장 감시자들이 사용하던 창입니다. 날카로운 날이 세워져 있어 안정적인 공격력을 보장합니다.",
+        "price": 4200,
+        "sellPrice": 1150,
+        "description": "쓰러진 강철 골렘의 가동부에서 적출한 육중한 지팡이입니다. 중심부의 코어에서는 여전히 불안정한 전류가 흐르며, 휘두를 때마다 웅웅거리는 진동이 손목을 타고 전해집니다.",
+        "mp": 50,
         "quantity": 1,
-        "atk": 16,
-        "crit": 0.02,
+        "minRarity": "RARE",
+        "atk": 46,
+        "crit": 0.14,
         "rarity": "RARE",
-        "x": 3,
-        "y": 0
+        "x": 0,
+        "y": 1
       },
       "armor": {
-        "id": "reaper_chain_mail_d580112d7191f416",
-        "label": "\u001b[37m⚪ 장인의 사슬 갑옷\u001b[0m",
+        "id": "reaper_chain_mail_5788d1f47de46739",
+        "label": "\u001b[35m🟣 [해주] 태고의 장인의 사슬 갑옷\u001b[0m",
         "type": "armor",
         "defRange": [
           8,
@@ -89,24 +68,98 @@
         "sellPrice": 500,
         "description": "검은 금속 고리를 엮어 만든 갑옷입니다. 매우 무겁지만 웬만한 공격은 가볍게 튕겨냅니다.",
         "quantity": 1,
-        "def": 11,
-        "eva": 0,
-        "rarity": "COMMON",
-        "x": 1,
-        "y": 0
+        "def": 18,
+        "eva": 0.01,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "CLEANSE",
+          "name": "해주",
+          "description": "스켈레톤 사제나 수도자가 아군의 디버프를 해제 하는 스킬을 보유합니다."
+        },
+        "x": 2,
+        "y": 3
       }
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
       "FOCUS_FIRE",
-      "CORPSE_EXPLOSION"
+      "CORPSE_EXPLOSION",
+      "SOUL_TRANSFER"
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1770795867011",
+        "name": "\u001b[35m[EPIC]\u001b[0m 스켈레톤 워리어",
+        "attackType": "melee",
+        "maxHp": 93,
+        "hp": 93,
+        "atk": 33,
+        "def": 21,
+        "agi": 22,
+        "skills": [
+          "whirlwind"
+        ],
+        "exp": 0,
+        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 7
+      },
+      {
+        "id": "skeleton_1770795912122",
+        "name": "\u001b[34m[ELITE]\u001b[0m 스켈레톤 수도자",
+        "attackType": "ranged",
+        "maxHp": 62,
+        "hp": 62,
+        "atk": 10,
+        "def": 12,
+        "agi": 19,
+        "skills": [
+          "heal"
+        ],
+        "exp": 0,
+        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 35
+      }
+    ],
     "_maxSkeleton": 2,
     "upgradeLimit": 5,
     "golemUpgrade": [],
+    "_golem": {
+      "id": "golem",
+      "name": "하역장의 기계 골렘",
+      "attackType": "melee",
+      "baseMaxHp": 80,
+      "maxHp": 80,
+      "hp": 80,
+      "baseAtk": 60,
+      "atk": 60,
+      "baseDef": 40,
+      "def": 40,
+      "agi": 3,
+      "exp": 0,
+      "description": "하역장에서 수거한 핵으로 제드가 부활시킨 거대 병기입니다.\n사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.",
+      "dropTableId": "",
+      "encounterRate": 0,
+      "isAlive": true,
+      "skills": [
+        "power_smash"
+      ],
+      "isMinion": true,
+      "isGolem": true,
+      "deathLine": "(알 수 없는 기계음)",
+      "orderWeight": -15
+    },
     "knightUpgrade": []
   },
   "sceneId": "B1_Subway_Entrance",
@@ -204,19 +257,13 @@
       }
     },
     "factionHostility": {
-      "untouchable": -3
+      "untouchable": -11
     },
     "factionContribution": {
-      "untouchable": 20
+      "untouchable": 100
     }
   },
-  "drop": {
-    "scendId": "B3_Steel_Loading_Dock",
-    "id": "8ed1a157c8fe1d3d",
-    "tileId": "28",
-    "exp": 385,
-    "gold": 100
-  },
+  "drop": null,
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
@@ -228,6 +275,9 @@
     "RESISTANCE_BASE",
     "maya_1",
     "kane_1",
-    "b3_apostle"
+    "b3_apostle",
+    "second_boss",
+    "talk_death_3",
+    "golem_generation_denied_zed"
   ]
 }

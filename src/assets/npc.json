@@ -258,7 +258,7 @@
     },
     "deathLine": "보스 2 골렘 사망",
     "description": "보스 2 골렘 입니다",
-    "dropTableId": "boss2",
+    "dropTableId": "",
     "noEscape": true,
     "noCorpse": true,
     "skills": ["power_smash", "call_reinforcements"]

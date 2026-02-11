@@ -62,8 +62,8 @@ export class NPCManager {
       updateHostility: (_amount: number) => {
         this.updateFactionHostility(base.faction, _amount)
       },
-      dead: () => {
-        this.player.karma += 1
+      dead: (_karma = 1) => {
+        this.player.karma += _karma
         this.states[id].isAlive = false
 
         npc.faction && this.setFactionHostility(npc.faction, 100)

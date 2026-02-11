@@ -68,11 +68,20 @@
   },
   "boss1": {
     "gold": [500, 700],
-    "items": [{ "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" }]
+    "items": [
+      { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" },
+      { "itemId": "sewer_leather_vest", "chance": 0.5, "quantity": [1, 1] },
+      { "itemId": "stolen_helmet", "chance": 0.3, "quantity": [1, 1] }
+    ]
   },
   "boss2": {
     "gold": [700, 900],
-    "items": [{ "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" }]
+    "items": [
+      { "itemId": "golem_core_staff", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" },
+      { "itemId": "rebel_iron_plate", "chance": 0.5, "quantity": [1, 1], "minRarity": "RARE" },
+      { "itemId": "resistance_mace", "chance": 0.5, "quantity": [1, 1] },
+      { "itemId": "sharp_pipe", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" }
+    ]
   },
   "b3_common_loot": {
     "gold": [10, 20],
