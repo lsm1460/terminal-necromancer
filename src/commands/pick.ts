@@ -100,7 +100,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
       console.log(`⚠️ 인벤토리 공간이 부족하여 ${remainQty}개는 바닥에 남았습니다.`)
     } else {
       // 전부 다 주운 경우: 월드에서 제거
-      context.world.removeDropById(drop.id)
+      context.world.removeDropById(drop.id, player.pos)
     }
   }
 

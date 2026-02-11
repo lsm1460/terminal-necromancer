@@ -23,7 +23,7 @@ const JaxHandler: NPCHandler = {
         handleTalk(npc)
         break
       case 'enter':
-        await handleEnter(player, context)
+        handleEnter(player, context)
         break
       case 'join':
         await handleJoin(player, npc, context)
@@ -114,7 +114,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
   }
 }
 
-async function handleEnter(player: Player, context: GameContext) {
+function handleEnter(player: Player, context: GameContext) {
   const { map } = context
 
   console.log(`\n잭스: "좋아, 딴청 피우지 말고 바짝 붙으라고. 여기 길은 좀 복잡하니까."`)

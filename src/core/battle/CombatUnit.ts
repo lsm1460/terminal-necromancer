@@ -48,7 +48,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   applyEffect(newEffect: Buff) {
     // 1. 타입에 따라 대상 배열 결정 ('buff'면 buff, 나머지는 deBuff)
-    const targetArray = newEffect.type === 'buff' ? this.buff : this.deBuff
+    const targetArray = ['buff', 'stealth'].includes(newEffect.type) ? this.buff : this.deBuff
 
     // 2. 중복 확인 및 처리
     const existing = targetArray.find((e) => e.name === newEffect.name)
@@ -76,14 +76,23 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   public applyDeBuff(d: Buff) {
     switch (d.name) {
+      case '마비':
+        console.log(`\n [!] ${this.name}은/는 마비되어 움직일 수 없습니다!`)
+        break
       case '구속':
         console.log(`\n [!] ${this.name}은/는 구속되어 움직일 수 없습니다!`)
         break
       case '출혈':
         console.log(`\n [!] ${this.name}은/는 깊은 상처를 입고 피를 흘리기 시작합니다!`)
         break
+      case '화상':
+        console.log(`\n [!] ${this.name}의 피부가 화염에 그을립니다.`)
+        break
       case '중독':
         console.log(`\n [!] ${this.name}은/는 치명적인 독소에 노출되어 안색이 창백해집니다.`)
+        break
+      case '동결':
+        console.log(`\n [!] ${this.name}은/는 추위에 노출되어 피부가 얼어붙어갑니다.`)
         break
       case '조롱':
         console.log(`\n [!] ${this.name}(은)는 분노를 참지 못해 방어 태세가 흐트러집니다!`)
@@ -205,11 +214,12 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   public removeStealth(): void {
-    const hasStealth = this.buff.some((b) => b.type === 'stealth')
-    if (hasStealth) {
-      this.buff = this.buff.filter((b) => b.type !== 'stealth')
-      console.log(` \x1b[90m[!] ${this.name}의 은신이 해제되어 정체가 드러났습니다!\x1b[0m`)
+    const canReveal = this.buff.some((b) => b.type === 'stealth' && !b.isLocked)
 
+    if (canReveal) {
+      this.buff = this.buff.filter((b) => b.type !== 'stealth' || b.isLocked)
+
+      console.log(` \x1b[90m[!] ${this.name}의 은신이 해제되어 정체가 드러났습니다!\x1b[0m`)
       this.applyDeBuff({ name: '드러난 자', duration: 2, type: 'expose' })
     }
   }
@@ -223,12 +233,34 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     console.log(` \x1b[32m[!] ${this.name}(은)는 기운을 차려 '${removed.name}' 효과에서 벗어났습니다!\x1b[0m`)
   }
 
-  public removeDeBuff(name: string): void {
+  public removeBuff(name: string, force = false): void {
+    if (this.buff.length === 0) return
+
+    const initialLength = this.buff.length
+
+    this.buff = this.buff.filter((b) => {
+      if (b.name !== name) return true
+      if (b.isLocked && !force) return true
+
+      return false
+    })
+
+    if (this.buff.length < initialLength) {
+      console.log(`\n✨ [상태 변화] ${this.name}에게서 [${name}] 효과가 사라졌습니다.`)
+    }
+  }
+
+  public removeDeBuff(name: string, force = false): void {
     if (this.deBuff.length === 0) return
 
     const initialLength = this.deBuff.length
 
-    this.deBuff = this.deBuff.filter((b) => b.name !== name)
+    this.deBuff = this.deBuff.filter((b) => {
+      if (b.name !== name) return true
+      if (b.isLocked && !force) return true
+
+      return false
+    })
 
     if (this.deBuff.length < initialLength) {
       console.log(`\n✨ [상태 변화] ${this.name}에게서 [${name}] 효과가 사라졌습니다.`)

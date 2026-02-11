@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { Corpse, Drop, LootBag } from '../types'
 import { MapManager } from './MapManager'
 
@@ -9,8 +10,8 @@ export class World {
   constructor(public map: MapManager) {}
 
   addDrop(drop: Drop) {
-    const existing = this.drops.find((d) => d.id === drop.id)
-
+    const existing = this.drops.find(_.matches({ id: drop.id, x: drop.x, y: drop.y }))
+    
     if (existing && existing.quantity && drop.quantity) {
       existing.quantity += drop.quantity
     } else {
@@ -19,11 +20,11 @@ export class World {
   }
 
   getDropsAt(x: number, y: number): Drop[] {
-    return this.drops.filter((d) => d.x === x && d.y === y)
+    return this.drops.filter(_.matches({ x, y }))
   }
 
-  removeDropById(dropId: string): Drop | undefined {
-    const idx = this.drops.findIndex((d) => d.id === dropId)
+  removeDropById(dropId: string, pos: {x: number, y: number}): Drop | undefined {
+    const idx = this.drops.findIndex(_.matches({ id: dropId, ...pos }))
     if (idx === -1) return undefined
 
     // 배열에서 제거하고 반환
@@ -67,7 +68,7 @@ export class World {
     return picked
   }
 
-  leaveFloor() {
+  clearFloor() {
     this.drops = []
     this.corpses = []
   }

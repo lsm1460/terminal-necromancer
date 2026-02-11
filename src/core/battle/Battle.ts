@@ -32,6 +32,7 @@ export type Buff = {
   eva?: number
   hp?: number
   crit?: number
+  isLocked?: boolean
 }
 
 export type CalcDamageOptions = NonNullable<Parameters<typeof Battle.calcDamage>[2]>
@@ -59,7 +60,9 @@ export class Battle {
   }
 
   private initPlayerUnit() {
-    this.toCombatUnit(this.player, 'player')
+    const pUnit = this.toCombatUnit(this.player, 'player')
+
+    this.registerUnitCache(pUnit)
 
     // 2. 미니언 유닛 최신화 (새로 소환된 미니언이 있을 수 있으므로 체크)
     if (this.player.minions) {
@@ -67,11 +70,21 @@ export class Battle {
         // 살아있고 아직 캐시에 등록되지 않은 미니언만 주입
         if (m.isAlive) {
           const mUnit = this.toCombatUnit(m, 'minion')
+          this.registerUnitCache(mUnit)
+
           // 미니언 전용 사망 훅 주입
           mUnit.onDeath = async () => await this.handleMinionsDeath(mUnit)
         }
       })
     }
+  }
+
+  private registerUnitCache(unit: CombatUnit) {
+    if (this.unitCache.has(unit.id)) {
+      return
+    }
+
+    this.unitCache.set(unit.id, unit)
   }
 
   private async handleUnitDeBuff(unit: CombatUnit) {
@@ -84,8 +97,7 @@ export class Battle {
       console.log(` └ 🩸 [${effect.name}] 피해: -${damage} (남은 지속: ${effect.duration}턴)`)
 
       if (unit.ref.hp <= 0) {
-        const reason = effect.name === '출혈' ? '출혈 과다' : effect.name === '중독' ? '중독' : '상태 이상'
-        console.log(` └ 💀 ${unit.name}이(가) ${reason}으로 사망했습니다.`)
+        console.log(` └ 💀 ${unit.name}이(가) ${effect.name}으로 사망했습니다.`)
 
         await unit.dead()
         await delay()
@@ -97,7 +109,7 @@ export class Battle {
     const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
     if (bindEffect) {
       console.log(
-        `\n⛓️  ${unit.name}은(는) ${bindEffect.name}에 갇혀 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`
+        `\n⛓️  ${unit.name}은(는) ${bindEffect.name}(으)로 인해 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`
       )
       return true // 속박되었으므로 이번 턴 행동 스킵
     }
@@ -123,7 +135,7 @@ export class Battle {
       // 공통 사망 로직 주입
       e.onDeath = async () => this.handleUnitDeath(e.ref as BattleTarget, context)
 
-      this.unitCache.set(e.ref.id, e)
+      this.registerUnitCache(e)
     })
 
     console.log(`\n⚔️ 전투가 시작되었습니다!`)
@@ -175,9 +187,12 @@ export class Battle {
       }
     }
 
+    // 사망 시 player.onDeath에서 player의 체력을 1, alive를 true로 바꾸개 때문에
+    // 미리 결과값을 할당
+    const result = this.player.isAlive
     this.handleBattleEnd()
 
-    return true
+    return result
   }
 
   getTurnOrder(): CombatUnit[] {
@@ -354,7 +369,7 @@ export class Battle {
     context: GameContext
   ) {
     // 은신 상태인 타겟은 거름
-    const visibleTargets = targets.filter((t) => !t.deBuff.some((b) => b.type === 'stealth'))
+    const visibleTargets = targets.filter((t) => !t.buff.some((b) => b.type === 'stealth'))
 
     if (visibleTargets.length === 0) {
       console.log(` > ${attacker.name}(이)가 공격할 대상을 찾지 못해 두리번거립니다...`)
@@ -387,7 +402,7 @@ export class Battle {
       }
     }
 
-    attacker.removeStealth()
+    autoSkillId !== 'stealth' && attacker.removeStealth()
   }
 
   private async handleMinionsDeath(deathUnit: CombatUnit<BattleTarget>) {
@@ -404,7 +419,7 @@ export class Battle {
   private handleUnitDeath(target: BattleTarget, context: GameContext) {
     const { world, drop: dropTable, npcs } = context
     const { x, y } = this.player.pos // 현재 위치
-
+    
     // 1. 기본 사망 상태 설정
     target.hp = 0
     target.isAlive = false
@@ -455,10 +470,6 @@ export class Battle {
 
     // NpcSkillManager를 통해 패시브 주입 (기존에 정의한 로직)
     this.npcSkills.setupPassiveHook(combatUnit, this)
-
-    // 캐시에 등록
-    this.unitCache.set(unit.id, combatUnit)
-
     return combatUnit
   }
 
@@ -528,6 +539,8 @@ export class Battle {
     if (!monster) return
 
     const unit = this.toCombatUnit(monster, 'monster')
+    this.registerUnitCache(unit)
+
     unit.onDeathHooks.push(async () => this.handleUnitDeath(monster as BattleTarget, context))
 
     return unit

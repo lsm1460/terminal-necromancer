@@ -37,10 +37,10 @@
   "resistance_shop": {
     "gold": [50, 100],
     "items": [
-      { "itemId": "resistance_mace", "chance": 0.2, "quantity": [1, 1] },
-      { "itemId": "improvised_bayonet", "chance": 0.2, "quantity": [1, 1] },
-      { "itemId": "rebel_iron_plate", "chance": 0.2, "quantity": [1, 1] },
-      { "itemId": "scavenged_mantle", "chance": 0.2, "quantity": [1, 1] }
+      { "itemId": "resistance_mace", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "improvised_bayonet", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "rebel_iron_plate", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "scavenged_mantle", "chance": 0.5, "quantity": [1, 1] }
     ]
   },
   "marco_goods": {
@@ -51,17 +51,19 @@
       { "itemId": "potion", "chance": 1, "quantity": [1, 1] },
       { "itemId": "mana_potion", "chance": 1, "quantity": [1, 1] },
       { "itemId": "potion_large", "chance": 1, "quantity": [1, 1] },
-      { "itemId": "pizza", "chance": 1, "quantity": [1, 1] },
-      { "itemId": "terminal_bentobox", "chance": 1, "quantity": [1, 1] },
-      { "itemId": "roasted_nut_mix", "chance": 1, "quantity": [1, 1] },
-      { "itemId": "filtered_honey_tea", "chance": 1, "quantity": [1, 1] }
+      { "itemId": "pizza", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "terminal_bentobox", "chance": 0.3, "quantity": [1, 1] },
+      { "itemId": "roasted_nut_mix", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "filtered_honey_tea", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "potion_goods": {
     "gold": [0, 0],
     "items": [
       { "itemId": "potion_small", "chance": 1, "quantity": [1, 1] },
-      { "itemId": "mana_potion_small", "chance": 1, "quantity": [1, 1] }
+      { "itemId": "mana_potion_small", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "potion", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "mana_potion", "chance": 1, "quantity": [1, 1] }
     ]
   },
   "boss1": {

@@ -61,7 +61,7 @@
     "hpHeal": 20,
     "price": 20,
     "sellPrice": 5,
-    "description": "작은 체력 회복 포션으로, 전투 중 빠르게 체력을 보충할 수 있습니다."
+    "description": "작은 체력 회복 포션으로, hp 20을 보충할 수 있습니다."
   },
   "mana_potion_small": {
     "id": "mana_potion_small",
@@ -70,7 +70,7 @@
     "mpHeal": 20,
     "price": 45,
     "sellPrice": 6,
-    "description": "작은 마나 회복 포션으로, 전투 중 빠르게 마나을 보충할 수 있습니다."
+    "description": "작은 마나 회복 포션으로, mp 20을 보충할 수 있습니다."
   },
   "potion": {
     "id": "potion",
@@ -79,25 +79,25 @@
     "hpHeal": 50,
     "price": 100,
     "sellPrice": 15,
-    "description": "전투 중 빠르게 체력을 보충할 수 있습니다."
+    "description": "hp 50을 보충할 수 있습니다."
   },
   "mana_potion": {
     "id": "mana_potion",
-    "label": "작은 마나 포션",
+    "label": "마나 포션",
     "type": "consumable",
     "mpHeal": 40,
     "price": 130,
     "sellPrice": 18,
-    "description": "전투 중 빠르게 마나을 보충할 수 있습니다."
+    "description": "mp 40을 보충할 수 있습니다."
   },
   "potion_large": {
     "id": "potion_large",
     "label": "큰 포션",
     "type": "consumable",
     "hpHeal": 250,
-    "price": 180,
+    "price": 700,
     "sellPrice": 45,
-    "description": "강력한 체력 회복 포션으로, 위급할 때 사용하면 큰 효과를 볼 수 있습니다."
+    "description": "강력한 체력 회복 포션으로, hp 250을 보충할 수 있습니다."
   },
   "wood_stick": {
     "id": "wood_stick",
@@ -222,7 +222,7 @@
     "evaRange": [0.2, 0.3],
     "price": 1600,
     "sellPrice": 380,
-    "description": "그림자 속에 숨기 좋도록 어두운 천을 덧댄 망토입니다. 방어력은 낮지만 사신의 눈을 피하기엔 안성맞춤입니다."
+    "description": "그림자 속에 숨기 좋도록 어두운 천을 덧댄 망토입니다."
   },
   "rebel_iron_plate": {
     "id": "rebel_iron_plate",
@@ -232,7 +232,7 @@
     "evaRange": [0, 0.02],
     "price": 2300,
     "sellPrice": 600,
-    "description": "하역장 컨테이너의 철판을 떼어내 가슴에 덧댔습니다. 투박하지만 보스 골렘의 일격도 버텨낼 만큼 튼튼합니다."
+    "description": "하역장 컨테이너의 철판을 떼어내 가슴에 덧댔습니다."
   },
   "ratman_dagger": {
     "id": "ratman_dagger",
@@ -275,5 +275,17 @@
     "price": 850,
     "sellPrice": 200,
     "description": "경비병의 창고에서 랫맨들이 슬쩍한 투구입니다. 찌그러져 있지만 머리를 보호하기엔 충분합니다."
+  },
+  "golem_core_staff": {
+    "id": "golem_core_staff",
+    "label": "강철 수호자의 과부하 지팡이",
+    "type": "weapon",
+    "attackType": "ranged",
+    "atkRange": [24, 38],
+    "critRange": [0.12, 0.18],
+    "price": 4200,
+    "sellPrice": 1150,
+    "description": "쓰러진 강철 골렘의 가동부에서 적출한 육중한 지팡이입니다. 중심부의 코어에서는 여전히 불안정한 전류가 흐르며, 휘두를 때마다 웅웅거리는 진동이 손목을 타고 전해집니다.",
+    "mp": 50
   }
 }

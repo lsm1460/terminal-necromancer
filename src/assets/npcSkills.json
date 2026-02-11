@@ -1,4 +1,49 @@
 {
+  "fire_bolt": {
+    "id": "fire_bolt",
+    "name": "불꽃 화살",
+    "attackType": "ranged",
+    "description": "대상에게 불꽃을 날려 화상을 입힙니다.",
+    "chance": 0.3,
+    "power": 0.8,
+    "targetType": "ENEMY_SINGLE",
+    "buff": {
+      "name": "화상",
+      "type": "dot",
+      "duration": 2,
+      "atk": 2
+    }
+  },
+  "ice_bolt": {
+    "id": "ice_bolt",
+    "name": "얼음 화살",
+    "attackType": "ranged",
+    "description": "대상에게 얼음을 날려 행동을 둔화시킵니다.",
+    "chance": 0.3,
+    "power": 0.8,
+    "targetType": "ENEMY_SINGLE",
+    "buff": {
+      "name": "동결",
+      "type": "deBuff",
+      "duration": 2,
+      "agi": 2,
+      "eva": 0.1
+    }
+  },
+  "lightning_bolt": {
+    "id": "lightning_bolt",
+    "name": "전격 화살",
+    "attackType": "ranged",
+    "description": "대상에게 전격을 날려 마비시킵니다.",
+    "chance": 0.3,
+    "power": 0.8,
+    "targetType": "ENEMY_SINGLE",
+    "buff": {
+      "name": "마비",
+      "type": "bind",
+      "duration": 2
+    }
+  },
   "fire_breath": {
     "id": "fire_breath",
     "name": "화염 숨결",
@@ -28,7 +73,7 @@
     "buff": {
       "name": "구속",
       "type": "bind",
-      "duration": 3
+      "duration": 2
     }
   },
   "self_destruct": {
@@ -66,6 +111,16 @@
     "chance": 1,
     "power": 1.2,
     "targetType": "ENEMY_BACK"
+  },
+  "minor_heal": {
+    "id": "minor_heal",
+    "name": "하급 치유",
+    "attackType": "ranged",
+    "description": "가장 부상이 심한 아군이 체력을 약간 회복시킵니다.",
+    "chance": 0.3,
+    "power": 15,
+    "targetType": "ALLY_LOWEST_HP",
+    "type": "heal"
   },
   "heal": {
     "id": "heal",
@@ -185,7 +240,7 @@
     "id": "stealth",
     "name": "은신",
     "description": "주변의 화물 더미와 그림자 속으로 몸을 숨깁니다. 시야에서 완전히 사라진 적은 다시 나타나 공격하기 전까지 타겟팅할 수 없습니다.",
-    "chance": 0.15,
+    "chance": 0.2,
     "targetType": "SELF",
     "type": "buff",
     "buff": {
@@ -288,7 +343,7 @@
   "death_destruct": {
     "id": "death_destruct",
     "name": "종말",
-    "description": "이 유닛이 사망 시, 폭발하여 이 유닛 체력의 60%의 데미지를 상대방 유닛에게 줌",
+    "description": "이 유닛이 사망 시, 폭발하여 이 유닛 체력의 60%의 데미지를 상대방 유닛에게 줍니다.",
     "chance": 1,
     "targetType": "ENEMY_ALL",
     "type": "passive"
@@ -296,7 +351,7 @@
   "frostborne": {
     "id": "frostborne",
     "name": "서리",
-    "description": "이 유닛이 사망 시, 폭발하여 상대방 유닛에게 데미지를 줌",
+    "description": "공격 시 상대방 유닛의 행동을 둔화시킵니다.",
     "chance": 1,
     "targetType": "ENEMY_ALL",
     "type": "passive",

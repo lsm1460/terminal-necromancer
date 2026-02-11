@@ -81,6 +81,10 @@ const init = (initData: SaveData): [Player, GameContext] => {
 
     world.addLootBag(lootBag)
 
+    if (map.currentSceneId !== MAP_IDS.B1_SUBWAY) {
+      world.clearFloor()
+    }
+
     map.currentSceneId = MAP_IDS.B1_SUBWAY
     player.x = 0
     player.y = 0

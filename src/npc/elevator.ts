@@ -83,7 +83,7 @@ async function handleElevate(player: Player, context: GameContext) {
     console.log(`\n⚙️ 엘리베이터가 작동합니다. 웅성거리는 기계음과 함께 층이 바뀝니다...`)
 
     // 맵 시스템의 changeScene을 호출하여 플레이어 이동 및 맵 데이터 갱신
-    world.leaveFloor()
+    world.clearFloor()
     await context.map.changeScene(sceneId, player)
 
     console.log(`✨ [도착] ${targetMapData.displayName}에 도착했습니다.\n`)

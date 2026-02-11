@@ -9,10 +9,11 @@ export class SecondBoss implements BossLogic {
     // 1. 메인 보스 추가
     const core = monster.makeMonster('golem_core')
     const coreUnit = battle.toCombatUnit(core!, 'monster')
-    coreUnit.applyDeBuff({
+    coreUnit.applyBuff({
       name: '은신',
       type: 'stealth',
       duration: Infinity,
+      isLocked: true
     })
 
     const enemies: CombatUnit[] = [coreUnit]
@@ -38,7 +39,7 @@ export class SecondBoss implements BossLogic {
 
     amorUnit.onDeathHooks.push(async () => {
       // 1. 은신 버프 제거
-      coreUnit.removeDeBuff('은신')
+      coreUnit.removeBuff('은신', true)
 
       // 2. 연출 로그 출력
       console.log(`\n━━━━━━━━━━━━━━━ ⚠️  CORE EXPOSED ━━━━━━━━━━━━━━━`)

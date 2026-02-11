@@ -159,7 +159,7 @@ export const b3Handlers: Record<string, EventHandler> = {
     const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
       type: 'confirm',
       name: 'proceed',
-      message: '⚙️ 1번 플랫폼으로 되돌아가는 컨베이어를 작동시키겠습니까?',
+      message: '⚙️ 1번 플랫폼으로 향하는 컨베이어를 작동시키겠습니까?',
       initial: false,
     })
 
@@ -168,7 +168,7 @@ export const b3Handlers: Record<string, EventHandler> = {
         context,
         player,
         'event-conveyor-control-1',
-        '역방향 기어가 맞물리며 다시 1번 플랫폼으로 질주합니다!'
+        '역방향 기어가 맞물리며 1번 플랫폼으로 질주합니다!'
       )
     }
   },

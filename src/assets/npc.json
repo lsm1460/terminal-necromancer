@@ -93,7 +93,9 @@
     },
     "deathLine": "카일이 움켜쥐고 있던 지도를 놓치며 쓰러집니다.",
     "description": "어딘가 어색해보이는 수색의 전문가",
-    "dropTableId": "resistance"
+    "dropTableId": "resistance",
+    "minRarity": "elite",
+    "skills": ["stealth", "item_steal", "enemy_curse", "smoke_bomb"]
   },
   "elevator": {
     "id": "elevator",

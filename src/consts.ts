@@ -78,7 +78,7 @@ type SubClass = {
 export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
   common: {
     bonus: 0.8,
-    weight: 575,
+    weight: 500,
     subClasses: [
       {
         name: '병사',
@@ -92,7 +92,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
   },
   rare: {
     bonus: 1.0,
-    weight: 300,
+    weight: 375,
     subClasses: [
       {
         name: '방패병',
@@ -109,6 +109,22 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         skills: ['power_smash'],
         weight: 1,
         attackType: 'melee',
+      },
+      {
+        name: '화염술사',
+        orderWeight: 30,
+        statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
+        skills: ['fire_bolt'],
+        weight: 1,
+        attackType: 'ranged',
+      },
+      {
+        name: '힐러',
+        orderWeight: 30,
+        statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
+        skills: ['minor_heal'],
+        weight: 2,
+        attackType: 'ranged',
       },
     ],
   },
@@ -133,6 +149,14 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'ranged',
       },
       {
+        name: '빙결술사',
+        orderWeight: 30,
+        statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
+        skills: ['ice_bolt'],
+        weight: 2,
+        attackType: 'ranged',
+      },
+      {
         name: '수도자',
         orderWeight: 35,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
@@ -151,8 +175,16 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         orderWeight: 7,
         statMod: { atk: 1.5, def: 1.2, hp: 1.2, agi: 1.0 },
         skills: ['whirlwind'],
-        weight: 9,
+        weight: 6,
         attackType: 'melee',
+      },
+      {
+        name: '전격술사',
+        orderWeight: 30,
+        statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
+        skills: ['lightning_bolt'],
+        weight: 3,
+        attackType: 'ranged',
       },
       {
         name: '사제',

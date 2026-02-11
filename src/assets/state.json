@@ -2,59 +2,45 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
-    "y": 2,
+    "x": 0,
+    "y": 1,
     "_maxHp": 75,
-    "hp": 75,
+    "hp": 56,
     "_maxMp": 75,
-    "mp": 75,
+    "mp": 50,
     "atk": 22,
     "def": 13,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 107,
-    "exp": 1670,
+    "gold": 386,
+    "exp": 635,
     "level": 3,
-    "karma": 2,
+    "karma": 1,
     "inventoryMax": 15,
     "inventory": [
       {
-        "id": "sewer_leather_vest_7602ca4508fe9536",
-        "label": "\u001b[35m🟣 [서리] 몰락한 낡은 하수도 가죽 조끼\u001b[0m",
-        "type": "armor",
-        "defRange": [
-          3,
-          6
+        "id": "ratman_dagger_ec3bdfb83713cbde",
+        "label": "\u001b[37m⚪ 랫맨의 녹슨 단검\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          6,
+          9
         ],
-        "evaRange": [
-          0.02,
-          0.05
+        "critRange": [
+          0.05,
+          0.1
         ],
-        "price": 700,
-        "sellPrice": 160,
-        "description": "축축한 하수도 냄새가 밴 가죽 조끼입니다. 찝찝하지만 가벼워서 몸을 놀리기엔 편합니다.",
+        "price": 800,
+        "sellPrice": 180,
+        "description": "관리가 전혀 안 된 녹슨 칼입니다. 가끔 상처 부위에 덧나기라도 하는지 생각보다 아프게 박힙니다.",
         "quantity": 1,
-        "def": 4,
-        "eva": 0.04,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "FROSTBORNE",
-          "name": "서리",
-          "description": "서리 서린 스켈레톤의 손길이 적의 발걸음을 무겁게 합니다."
-        },
-        "x": 5,
-        "y": 1
-      },
-      {
-        "id": "potion",
-        "label": "체력 포션",
-        "type": "consumable",
-        "hpHeal": 50,
-        "price": 100,
-        "sellPrice": 15,
-        "description": "전투 중 빠르게 체력을 보충할 수 있습니다.",
-        "quantity": 1
+        "atk": 7,
+        "crit": 0.05,
+        "rarity": "COMMON",
+        "x": 0,
+        "y": 3
       }
     ],
     "_maxMemorize": 4,
@@ -65,8 +51,8 @@
     ],
     "equipped": {
       "weapon": {
-        "id": "terminal_halberd_14a3c2e5f72124ea",
-        "label": "\u001b[35m🟣 [부식] 몰락한 터미널 경비병의 창\u001b[0m",
+        "id": "terminal_halberd_554948294a2afb26",
+        "label": "\u001b[34m🔵 숙련된 터미널 경비병의 창\u001b[0m",
         "type": "weapon",
         "attackType": "melee",
         "atkRange": [
@@ -81,20 +67,15 @@
         "sellPrice": 450,
         "description": "하역장 감시자들이 사용하던 창입니다. 날카로운 날이 세워져 있어 안정적인 공격력을 보장합니다.",
         "quantity": 1,
-        "atk": 20,
-        "crit": 1.02,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "CORROSION",
-          "name": "부식",
-          "description": "저주의 효과가 공격력 감소에서 방어력 감소로 변경됩니다."
-        },
-        "x": 0,
-        "y": 1
+        "atk": 16,
+        "crit": 0.02,
+        "rarity": "RARE",
+        "x": 3,
+        "y": 0
       },
       "armor": {
-        "id": "reaper_chain_mail_27c1a4ec28a69f97",
-        "label": "\u001b[37m⚪ 낡은 사슬 갑옷\u001b[0m",
+        "id": "reaper_chain_mail_d580112d7191f416",
+        "label": "\u001b[37m⚪ 장인의 사슬 갑옷\u001b[0m",
         "type": "armor",
         "defRange": [
           8,
@@ -108,10 +89,10 @@
         "sellPrice": 500,
         "description": "검은 금속 고리를 엮어 만든 갑옷입니다. 매우 무겁지만 웬만한 공격은 가볍게 튕겨냅니다.",
         "quantity": 1,
-        "def": 8,
+        "def": 11,
         "eva": 0,
         "rarity": "COMMON",
-        "x": 2,
+        "x": 1,
         "y": 0
       }
     },
@@ -122,79 +103,10 @@
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 1,
-    "skeleton": [
-      {
-        "id": "skeleton_1770193512734",
-        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 방패병",
-        "attackType": "melee",
-        "maxHp": 78,
-        "hp": 78,
-        "atk": 13,
-        "def": 15,
-        "agi": 5,
-        "skills": [],
-        "exp": 0,
-        "description": "변이된 하역 인부의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
-      },
-      {
-        "id": "skeleton_1770193252396",
-        "name": "\u001b[34m[ELITE]\u001b[0m 스켈레톤 수도자",
-        "attackType": "ranged",
-        "maxHp": 62,
-        "hp": 62,
-        "atk": 10,
-        "def": 12,
-        "agi": 19,
-        "skills": [
-          "heal"
-        ],
-        "exp": 0,
-        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 35
-      }
-    ],
+    "skeleton": [],
     "_maxSkeleton": 2,
     "upgradeLimit": 5,
-    "golemUpgrade": [
-      "soul",
-      "soul"
-    ],
-    "_golem": {
-      "id": "golem",
-      "name": "하역장의 기계 골렘",
-      "attackType": "melee",
-      "baseMaxHp": 80,
-      "maxHp": 80,
-      "hp": 120,
-      "baseAtk": 60,
-      "atk": 60,
-      "baseDef": 40,
-      "def": 40,
-      "agi": 3,
-      "exp": 0,
-      "description": "하역장에서 수거한 핵으로 제드가 부활시킨 거대 병기입니다. 사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.",
-      "dropTableId": "",
-      "encounterRate": 0,
-      "isAlive": true,
-      "skills": [
-        "power_smash"
-      ],
-      "isMinion": true,
-      "isGolem": true,
-      "deathLine": "(알 수 없는 기계음)",
-      "orderWeight": -15
-    },
+    "golemUpgrade": [],
     "knightUpgrade": []
   },
   "sceneId": "B1_Subway_Entrance",
@@ -243,7 +155,7 @@
         "relation": 0
       },
       "second_boss": {
-        "hp": 10,
+        "hp": 500,
         "isAlive": true,
         "reborn": false,
         "relation": 0
@@ -292,28 +204,30 @@
       }
     },
     "factionHostility": {
-      "untouchable": -21
+      "untouchable": -3
     },
     "factionContribution": {
-      "untouchable": 170
+      "untouchable": 20
     }
   },
   "drop": {
     "scendId": "B3_Steel_Loading_Dock",
-    "id": "387e63ad199d958e",
+    "id": "8ed1a157c8fe1d3d",
     "tileId": "28",
-    "exp": 935,
-    "gold": 265
+    "exp": 385,
+    "gold": 100
   },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "talk_death_1",
+    "b2_ratty",
     "first_boss",
+    "talk_death_1",
     "talk_death_2",
+    "HEARD_RESISTANCE",
     "RESISTANCE_BASE",
-    "b3_apostle",
-    "second_boss",
-    "talk_death_3"
+    "maya_1",
+    "kane_1",
+    "b3_apostle"
   ]
 }
