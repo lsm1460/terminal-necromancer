@@ -510,7 +510,7 @@
     "id": "caron",
     "name": "카론",
     "faction": "untouchable",
-    "attackType": "melee",
+    "attackType": "ranged",
     "hp": 1200,
     "maxHp": 1200,
     "atk": 30,
@@ -538,13 +538,13 @@
     "deathLine": "아... 아아... 나의 아이여... 결국 복수에 닿지 못한 채...",
     "description": "",
     "dropTableId": "",
-    "skills": []
+    "skills": ["distortion_shroud", "soul_anchor", "dimensional_collapse"]
   },
   "caron_alive": {
     "id": "caron_alive",
     "name": "카론",
     "faction": "untouchable",
-    "attackType": "melee",
+    "attackType": "ranged",
     "hp": 1200,
     "maxHp": 1200,
     "atk": 30,
@@ -582,7 +582,7 @@
     "id": "caron_dead",
     "name": "아공간의 인도자",
     "faction": "untouchable",
-    "attackType": "melee",
+    "attackType": "ranged",
     "hp": 1200,
     "maxHp": 1200,
     "atk": 30,

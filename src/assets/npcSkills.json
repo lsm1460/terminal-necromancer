@@ -361,5 +361,42 @@
       "duration": 3,
       "agi": 5
     }
+  },
+  "distortion_shroud": {
+    "id": "distortion_shroud",
+    "name": "공간 왜곡: 흩어지는 잔상",
+    "description": "아공간의 틈새로 몸을 숨깁니다.",
+    "chance": 0.2,
+    "targetType": "SELF",
+    "type": "buff",
+    "buff": {
+      "name": "은신",
+      "type": "stealth",
+      "crit": 1,
+      "duration": 3
+    }
+  },
+  "soul_anchor": {
+    "id": "soul_anchor",
+    "name": "저승의 닻: 영혼 고립",
+    "attackType": "ranged",
+    "description": "적 중 하나의 발밑에 아공간의 구멍을 뚫어 영혼을 붙잡습니다.",
+    "chance": 0.3,
+    "targetType": "RANDOM",
+    "type": "deBuff",
+    "buff": {
+      "name": "구속",
+      "type": "bind",
+      "duration": 2
+    }
+  },
+  "dimensional_collapse": {
+    "id": "dimensional_collapse",
+    "name": "차원 붕괴: 닫히는 경계",
+    "attackType": "ranged",
+    "description": "전장 전체의 공간을 압축하여 파괴합니다.",
+    "chance": 0.2,
+    "power": 0.5,
+    "targetType": "ENEMY_ALL"
   }
 }
