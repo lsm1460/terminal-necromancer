@@ -45,7 +45,7 @@ const MayaHandler: NPCHandler = {
 
     switch (action) {
       case 'join':
-        await handleJoin(player, npc, context)
+        await handleJoin(player, context)
         break
       case 'talk':
         handleTalk(npc)
@@ -58,7 +58,7 @@ const MayaHandler: NPCHandler = {
         // TODO: 판매 창 로직 호출
         break
       case 'golem':
-        await handleAwakeGolem(player)
+        await handleAwakeGolem(player, npc, context)
         break
       case 'upgrade_golem':
         await handleUpgradeGolem(player)
@@ -73,7 +73,7 @@ const MayaHandler: NPCHandler = {
   },
 }
 
-async function handleJoin(player: Player, npc: NPC, context: GameContext) {
+async function handleJoin(player: Player, context: GameContext) {
   const { events, npcs } = context
 
   const isB3Completed = context.events.isCompleted('second_boss')
@@ -134,7 +134,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
   events.completeEvent('maya_1')
 }
 
-async function handleAwakeGolem(player: Player) {
+async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) {
   if (player._golem) {
     // 이미 골렘을 가지고 있는 경우
     console.log(`\n마야: "뭐야, 이미 골렘 한 마리 데리고 있잖아? 욕심도 많네. 걔나 잘 관리해."`)
@@ -142,10 +142,10 @@ async function handleAwakeGolem(player: Player) {
   }
 
   const dialogues = [
-    "마야: 뭐야, 그 넝마가 된 덩어리는? ...설마 지하 3층 골렘의 핵이야?",
-    "마야: 하, 아주 박살을 내놨네. 남들은 고물상에나 팔겠지만, 운 좋은 줄 알아.",
-    "마야: 나니까 이 정도 파편이라도 다시 이어붙여 볼 수 있는 거야.",
-    "마야: 자, 그거 이쪽으로 넘겨. 원래보다 훨씬 쓸만하게 만들어줄 테니까."
+    '마야: 뭐야, 그 넝마가 된 덩어리는? ...설마 지하 3층 골렘의 핵이야?',
+    '마야: 하, 아주 박살을 내놨네. 남들은 고물상에나 팔겠지만, 운 좋은 줄 알아.',
+    '마야: 나니까 이 정도 파편이라도 다시 이어붙여 볼 수 있는 거야.',
+    '마야: 자, 그거 이쪽으로 넘겨. 원래보다 훨씬 쓸만하게 만들어줄 테니까.',
   ]
 
   // 1. 순차적 대화 노출
@@ -196,6 +196,8 @@ async function handleAwakeGolem(player: Player) {
     deathLine: '(알 수 없는 기계음)',
     orderWeight: -15,
   }
+
+  context.npcs.updateFactionContribution(npc.faction, 40)
 
   // 성공 시 대사
   console.log(`\n[⚙️ 골렘 기동 성공]`)

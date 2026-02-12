@@ -1,7 +1,6 @@
-import enquirer from 'enquirer'
 import { GameContext } from '../types'
-import { handleTalk, NPCHandler } from './NPCHandler'
 import { delay } from '../utils'
+import { handleTalk, NPCHandler } from './NPCHandler'
 
 const ApostleHandler: NPCHandler = {
   getChoices(player, npc, context) {

@@ -505,5 +505,111 @@
     "deathLine": "...",
     "description": "",
     "dropTableId": ""
+  },
+  "caron": {
+    "id": "caron",
+    "name": "카론",
+    "faction": "untouchable",
+    "attackType": "melee",
+    "hp": 1200,
+    "maxHp": 1200,
+    "atk": 30,
+    "def": 35,
+    "eva": 1,
+    "exp": 1500,
+    "isAlive": true,
+    "reborn": false,
+    "noEscape": true,
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "",
+        "farewell": ""
+      },
+      "normal": {
+        "greeting": "",
+        "farewell": ""
+      },
+      "hostile": {
+        "greeting": "",
+        "farewell": ""
+      }
+    },
+    "deathLine": "아... 아아... 나의 아이여... 결국 복수에 닿지 못한 채...",
+    "description": "",
+    "dropTableId": "",
+    "skills": []
+  },
+  "caron_alive": {
+    "id": "caron_alive",
+    "name": "카론",
+    "faction": "untouchable",
+    "attackType": "melee",
+    "hp": 1200,
+    "maxHp": 1200,
+    "atk": 30,
+    "def": 35,
+    "eva": 1,
+    "exp": 1500,
+    "isAlive": true,
+    "reborn": false,
+    "noEscape": true,
+    "lines": [
+      "사신의 눈이 미치지 않는 곳입니다.",
+      "당신의 그림자 속에 숨어 때를 기다리겠습니다.",
+      "군세를 정비하시겠습니까?"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "어서 오십시오, 군주여. 차원의 문은 언제나 열려 있습니다.",
+        "farewell": "그림자 속에서 당신의 진군을 지켜보겠습니다."
+      },
+      "normal": {
+        "greeting": "사신의 기운이 가깝습니다. 용건은 간단히 하시지요.",
+        "farewell": "부디 몸조심하십시오."
+      },
+      "hostile": {
+        "greeting": "저를 다시 도살자로 만드실 셈입니까?",
+        "farewell": "...어리석은 선택이군요."
+      }
+    },
+    "deathLine": "나의 복수는... 아직 시작조차 하지 못했는데...",
+    "description": "사신을 배신하고 주인공의 그림자에 숨어든 전직 지하 관리자입니다. 온화하지만 서늘한 복수심을 품고 있습니다.",
+    "dropTableId": "item-caron-core",
+    "skills": []
+  },
+  "caron_dead": {
+    "id": "caron_dead",
+    "name": "아공간의 인도자",
+    "faction": "untouchable",
+    "attackType": "melee",
+    "hp": 1200,
+    "maxHp": 1200,
+    "atk": 30,
+    "def": 35,
+    "eva": 1,
+    "exp": 1500,
+    "isAlive": true,
+    "reborn": false,
+    "noEscape": true,
+    "lines": ["...스...스으윽...", "......(공허한 눈이 당신을 향합니다)......", "...명...령...을..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "......받...들...겠...습...니...다......",
+        "farewell": "......(그림자 속으로 녹아듭니다)......"
+      },
+      "normal": {
+        "greeting": "......관...리...합...니...다......",
+        "farewell": "......(기괴한 숨소리만 들립니다)......"
+      },
+      "hostile": {
+        "greeting": "......적...인...가......?",
+        "farewell": "......스...으...윽......"
+      }
+    },
+    "deathLine": "......아......이......여......",
+    "description": "찬탈당한 카론의 정수로 빚어낸 기괴한 사역마입니다. 자아는 소멸되었으며, 오직 주인인 당신의 마력에 반응하여 아공간을 조작합니다.",
+    "dropTableId": "item-void-dust",
+    "skills": []
   }
 }

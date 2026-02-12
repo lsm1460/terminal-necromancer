@@ -2,20 +2,20 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 5,
+    "x": 3,
     "y": 1,
-    "_maxHp": 120,
-    "hp": 120,
-    "_maxMp": 120,
-    "mp": 120,
-    "atk": 44,
-    "def": 29,
+    "_maxHp": 152,
+    "hp": 152,
+    "_maxMp": 152,
+    "mp": 202,
+    "atk": 59,
+    "def": 40,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 5096,
-    "exp": 2575,
-    "level": 5,
+    "gold": 2147,
+    "exp": 975,
+    "level": 6,
     "karma": 1,
     "inventoryMax": 15,
     "inventory": [],
@@ -53,31 +53,24 @@
         "y": 1
       },
       "armor": {
-        "id": "reaper_chain_mail_5788d1f47de46739",
-        "label": "\u001b[35m🟣 [해주] 태고의 장인의 사슬 갑옷\u001b[0m",
+        "id": "rebel_iron_plate_64943ed6c8819775",
+        "label": "\u001b[34m🔵 정교한 반란군의 흉갑\u001b[0m",
         "type": "armor",
         "defRange": [
-          8,
-          12
+          20,
+          24
         ],
         "evaRange": [
           0,
-          0.01
+          0.02
         ],
-        "price": 1800,
-        "sellPrice": 500,
-        "description": "검은 금속 고리를 엮어 만든 갑옷입니다. 매우 무겁지만 웬만한 공격은 가볍게 튕겨냅니다.",
+        "price": 2300,
+        "sellPrice": 600,
+        "description": "하역장 컨테이너의 철판을 떼어내 가슴에 덧댔습니다.",
         "quantity": 1,
-        "def": 18,
-        "eva": 0.01,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "CLEANSE",
-          "name": "해주",
-          "description": "스켈레톤 사제나 수도자가 아군의 디버프를 해제 하는 스킬을 보유합니다."
-        },
-        "x": 2,
-        "y": 3
+        "def": 27,
+        "eva": 0,
+        "rarity": "RARE"
       }
     },
     "unlockedSkills": [
@@ -254,13 +247,33 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "caron": {
+        "hp": 1200,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "caron_alive": {
+        "hp": 1200,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "caron_dead": {
+        "hp": 1200,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
       }
     },
     "factionHostility": {
-      "untouchable": -11
+      "untouchable": -11,
+      "resistance": -2
     },
     "factionContribution": {
-      "untouchable": 100
+      "untouchable": 100,
+      "resistance": 15
     }
   },
   "drop": null,

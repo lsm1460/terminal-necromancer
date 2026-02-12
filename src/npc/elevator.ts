@@ -1,9 +1,9 @@
-import { MAP_IDS } from '../consts'
+import enquirer from 'enquirer'
+import { MAP_IDS, MapId } from '../consts'
 import { Player } from '../core/Player'
 import { printTileStatus } from '../statusPrinter'
 import { GameContext } from '../types'
 import { NPCHandler } from './NPCHandler'
-import enquirer from 'enquirer'
 
 const ElevatorHandler: NPCHandler = {
   getChoices() {
@@ -84,7 +84,7 @@ async function handleElevate(player: Player, context: GameContext) {
 
     // 맵 시스템의 changeScene을 호출하여 플레이어 이동 및 맵 데이터 갱신
     world.clearFloor()
-    await context.map.changeScene(sceneId, player)
+    await context.map.changeScene(sceneId as MapId, player)
 
     console.log(`✨ [도착] ${targetMapData.displayName}에 도착했습니다.\n`)
 

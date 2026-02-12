@@ -1,6 +1,6 @@
 import fs from 'fs'
 import _ from 'lodash'
-import { MAP_IDS } from '../consts'
+import { MAP_IDS, MapId } from '../consts'
 import { Tile } from '../types'
 import { Player } from './Player'
 
@@ -15,7 +15,7 @@ interface SceneData {
 export class MapManager {
   private originMapData: Record<string, SceneData>
   private mapData: Record<string, SceneData>
-  public currentSceneId: string
+  public currentSceneId: MapId
 
   constructor(path: string) {
     // 1. map.json 데이터 로드
@@ -45,7 +45,7 @@ export class MapManager {
     return this.mapData[sceneId]
   }
 
-  changeScene(targetSceneId: string, player: Player) {
+  changeScene(targetSceneId: MapId, player: Player) {
     if (!this.mapData[targetSceneId]) {
       console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
       return
@@ -54,7 +54,7 @@ export class MapManager {
     this.currentSceneId = targetSceneId
     const newScene = this.currentScene
 
-    const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE]
+    const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE, MAP_IDS.B4_Waste_Disposal_Area]
 
     if (!fixedArea.includes(targetSceneId)) {
       this.shuffleTiles(targetSceneId)
@@ -78,7 +78,6 @@ export class MapManager {
     // 1. 타일 데이터 추출 및 분류
     let allTiles = _.compact(_.flatten(scene.tiles)) // undefined 제거 및 1차원화
 
-    // 시작 타일과 보스 타일 식별 및 리스트에서 제거
     const startTile = scene.tiles[start.y][start.x]
     const bossTile = _.remove(allTiles, (t) => t.event === 'boss')[0]
     _.remove(allTiles, (t) => t === startTile)
@@ -90,7 +89,6 @@ export class MapManager {
     const newGrid: (Tile | undefined)[][] = Array.from({ length: height }, () => Array(width).fill(undefined))
     newGrid[start.y][start.x] = startTile
 
-    // 인접 후보지 관리용 셋
     const candidates: string[] = []
     const getNeighbors = (x: number, y: number) =>
       [
@@ -111,26 +109,23 @@ export class MapManager {
 
     updateCandidates(start.x, start.y)
 
-    // 3. 확산 배치 로직
+    // 3. 배치 로직
     const minBossDist = Math.floor((width + height) / 2)
-    let bossPlaced = false
+    let bossPlaced = !bossTile
 
-    while ((allTiles.length > 0 || !bossPlaced) && candidates.length > 0) {
-      // lodash를 사용하여 랜덤하게 후보지 하나 선택 및 제거
-      const targetKey = _.pullAt(candidates, _.random(0, candidates.length - 1))[0]
+    while (candidates.length > 0) {
+      // 랜덤하게 후보지 하나 선택
+      const randomIndex = _.random(0, candidates.length - 1)
+      const targetKey = _.pullAt(candidates, randomIndex)[0]
       const [cx, cy] = targetKey.split(',').map(Number)
       const dist = Math.abs(cx - start.x) + Math.abs(cy - start.y)
 
-      // 보스 배치 조건 (거리가 멀고 아직 안 놨을 때)
-      if (!bossPlaced && dist >= minBossDist) {
+      if (!bossPlaced && bossTile && (dist >= minBossDist || allTiles.length === 0)) {
         newGrid[cy][cx] = bossTile
         bossPlaced = true
       } else if (allTiles.length > 0) {
         newGrid[cy][cx] = allTiles.pop()
-      } else {
-        continue // 보스 거리가 안맞고 남은 타일도 없으면 다음 루프로
       }
-
       updateCandidates(cx, cy)
     }
 
@@ -139,7 +134,7 @@ export class MapManager {
 
   isUnlocked(mapId: string, completed: string[]) {
     const unlocks = this.mapData[mapId]?.unlocks || []
-  
-      return unlocks.every((requirement: string) => completed.includes(requirement))
+
+    return unlocks.every((requirement: string) => completed.includes(requirement))
   }
 }

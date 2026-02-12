@@ -100,7 +100,7 @@ class BossEvent {
   /**
    * 클리어 후 차원문 타일 추가
    */
-  private static spawnPortal(tile: Tile) {
+  static spawnPortal(tile: Tile) {
     tile.npcIds = _.uniq([...(tile.npcIds || []), 'portal'])
     console.log('\n✨ [알림] 정적이 흐르는 방 한가운데에 시작 지점으로 연결되는 [차원문]이 일렁입니다.')
   }

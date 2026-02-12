@@ -1,8 +1,8 @@
+import enquirer from 'enquirer'
 import { MAP_IDS } from '../consts'
 import { Player } from '../core/Player'
 import { GameContext, NPC } from '../types'
 import { handleTalk, NPCHandler } from './NPCHandler'
-import enquirer from 'enquirer'
 
 const JaxHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -96,16 +96,15 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
     case 'kill':
       console.log(`\n잭스: "뭐? 그 눈빛은 뭐야? 감히 이 잭스 님을...!"`)
       console.log(`사령술사: "걱정 마라. 죽어서는 지금보다 훨씬 쓸모 있는 존재가 될 테니까."`)
-      const isEscape = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
+      const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
 
-      if (isEscape) {
-        npcs.updateFactionHostility('resistance', 10)
-      } else {
+      if (isWin) {
         events.completeEvent('RESISTANCE_BASE')
-        npcs.updateFactionHostility('resistance', 40)
+      } else {
+        npcs.updateFactionHostility('resistance', 10)
       }
 
-      tile.isClear = isEscape
+      tile.isClear = true
       break
 
     case 'leave':

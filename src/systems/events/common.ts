@@ -3,6 +3,7 @@ import { EventHandler } from '.'
 import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
 import { delay } from '../../utils'
+import _ from 'lodash'
 
 export const commonHandlers: Record<string, EventHandler> = {
   heal: (tile, player) => {
@@ -48,5 +49,24 @@ export const commonHandlers: Record<string, EventHandler> = {
 
   npc: async (tile, player, context) => {
     await NpcEvent.handle(tile, player, context)
+  },
+
+  summon_caron: async (tile, player, context) => {
+    const { events } = context
+    const isMine = events.isCompleted('caron_is_mine')
+    const isDead = events.isCompleted('caron_is_dead')
+
+    if (!isMine && !isDead) return
+
+    // 상황에 맞는 NPC 배치
+    const caronNpcId = isMine ? 'caron-alive' : 'caron-dead'
+    tile.npcIds = _.uniq([...(tile.npcIds || []), caronNpcId])
+
+    // 타일에 머물 때마다 들리는 은밀한 속삭임
+    if (isMine) {
+      console.log('\n카론: "(그림자 너머에서) 군주여, 이곳입니다. 준비가 필요하십니까?"')
+    } else {
+      console.log('\n[아공간의 인도자]: "...주...인... 명령...을..." (기괴한 냉기가 발치를 감쌉니다.)')
+    }
   },
 }

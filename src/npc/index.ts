@@ -1,15 +1,17 @@
+import apostle from './apostle'
+import caron from './caron'
 import death from './death'
 import dr_zed from './dr_zed'
 import echo from './echo'
 import elevator from './elevator'
 import jax_seeker from './jax_seeker'
 import kane_leader from './kane'
+import marco from './marco'
 import maya_tech from './maya'
 import { NPCHandler } from './NPCHandler'
 import portal from './portal'
 import ratty from './ratty'
-import marco from './marco'
-import apostle from './apostle'
+import subspace from './subspace'
 import vending_machine from './vending_machine'
 
 const npcHandlers: Record<string, NPCHandler> = {
@@ -19,6 +21,8 @@ const npcHandlers: Record<string, NPCHandler> = {
   echo,
   dr_zed,
   marco,
+  caron_alive: subspace,
+  caron_dead: subspace,
 
   vending_machine,
 
@@ -31,7 +35,10 @@ const npcHandlers: Record<string, NPCHandler> = {
   ratty,
 
   // b3
-  apostle
+  apostle,
+
+  // b4
+  caron,
 }
 
 export default npcHandlers
