@@ -430,7 +430,7 @@
     {
       "id": "tile_401",
       "theme": "corridor",
-      "event": "warp",
+      "event": "event-b4-reset",
       "npcIds": [],
       "dialogue": "바닥에 고인 검은 액체가 소용돌이치며 당신을 끌어당깁니다.",
       "observe": "...폐허뿐이 보이지 않습니다."
@@ -457,7 +457,7 @@
     {
       "id": "tile_405",
       "theme": "resonance_point",
-      "event": "event-b4-reset",
+      "event": "none",
       "npcIds": [""],
       "dialogue": "공간이 일렁이며 한 사내의 형상이 나타났다 사라집니다.",
       "observe": "...폐허뿐이 보이지 않습니다."
