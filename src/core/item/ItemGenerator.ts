@@ -39,17 +39,24 @@ export class ItemGenerator {
   }
 
   /** 2. 수치 확정 함수 (범위형 스탯 처리) */
-  private finalizeStat(range: [number, number]): number {
-    const [min, max] = range
-    // 0.02 ~ 0.08 범위를 2 ~ 8 정수 범위로 변환
-    const precision = 100
-    const minInt = Math.round(min * precision)
-    const maxInt = Math.round(max * precision)
+  private finalizeStat(range: [number, number], isInteger: boolean = false): number {
+  const [min, max] = range
 
-    // 정수 범위에서 랜덤 추출 후 다시 소수점으로 변환
-    const randomInt = Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
-    return randomInt / precision
+  if (isInteger) {
+    // 정수 범위에서 랜덤 추출 (min, max가 소수여도 정수로 내림/반올림 처리)
+    const minInt = Math.ceil(min)
+    const maxInt = Math.floor(max)
+    return Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
   }
+
+  // 기존 소수점 로직 (0.02 ~ 0.08 등의 정밀도 유지)
+  const precision = 100
+  const minInt = Math.round(min * precision)
+  const maxInt = Math.round(max * precision)
+
+  const randomInt = Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
+  return randomInt / precision
+}
 
   /** 3. 성능 접두사 판단 (상/하위 15%) */
   private getPerformancePrefix(value: number, min: number, max: number): string {
@@ -71,7 +78,7 @@ export class ItemGenerator {
 
     let finalValue = undefined
     if (affixData.valueRange) {
-      finalValue = this.finalizeStat(affixData.valueRange)
+      finalValue = this.finalizeStat(affixData.valueRange, true)
     }
 
     return { ...affixData, value: finalValue }
@@ -94,7 +101,7 @@ export class ItemGenerator {
     // [스탯 결정] 무기 vs 방어구
     if (baseItem.type === 'weapon') {
       mainRange = baseItem.atkRange || [0, 0]
-      mainValue = this.finalizeStat(mainRange)
+      mainValue = this.finalizeStat(mainRange, true)
       finalStats = {
         atk: Math.floor(mainValue * setting.multiplier),
         crit: baseItem.critRange ? this.finalizeStat(baseItem.critRange) : 0,
@@ -111,7 +118,7 @@ export class ItemGenerator {
     finalStats = {
       ...finalStats,
       ...(baseItem.maxSkeletonRange && {
-        maxSkeleton: this.finalizeStat(baseItem.maxSkeletonRange),
+        maxSkeleton: this.finalizeStat(baseItem.maxSkeletonRange, true),
       }),
     }
 

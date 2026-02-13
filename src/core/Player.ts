@@ -182,7 +182,7 @@ export class Player {
         return skeleton
       })
 
-    return [this.golem, ..._skeletons, this.knight].filter((_minion) => !!_minion).filter((_minion) => _minion.isAlive)
+    return [this.golem, ..._skeletons, this.knight].filter((_minion) => !!_minion)
   }
 
   get isAlive() {

@@ -19,29 +19,34 @@ const PortalHandler: NPCHandler = {
 }
 
 async function handlePortal(player: Player, context: GameContext) {
-  // 1. 사용자에게 확인 받기
+  const { map, events, broadcast } = context
+
   const { confirm } = await enquirer.prompt<{ confirm: boolean }>({
     type: 'confirm',
     name: 'confirm',
     message: '이 구역의 시작 지점으로 이동하시겠습니까?',
-    initial: false // 실수 방지를 위해 기본값을 false로 설정
-  });
+    initial: false,
+  })
 
   if (confirm) {
-    const currentScene = context.map.currentScene
-    
-    // 2. 플레이어 위치 업데이트
-      player.x = currentScene.start_pos.x;
-      player.y = currentScene.start_pos.y;
+    const currentScene = map.currentScene
 
-      console.log(`\n✨ 공간이 일렁이며 ${currentScene.displayName}의 시작 지점으로 이동했습니다.`);
+    player.x = currentScene.start_pos.x
+    player.y = currentScene.start_pos.y
 
-      printStatus(player, context)
+    console.log(`\n✨ 공간이 일렁이며 ${currentScene.displayName}의 시작 지점으로 이동했습니다.`)
+
+    const tile = map.getTile(player.x, player.y)
+
+    events.handle(tile, player, context)
+    broadcast.play()
+
+    printStatus(player, context)
   } else {
-    console.log('\n이동을 취소했습니다.');
+    console.log('\n이동을 취소했습니다.')
   }
 
-  return true; // NPC 상호작용 종료
+  return true
 }
 
 export default PortalHandler

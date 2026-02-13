@@ -511,11 +511,11 @@
     "name": "카론",
     "faction": "untouchable",
     "attackType": "ranged",
-    "hp": 1200,
-    "maxHp": 1200,
-    "atk": 30,
+    "hp": 1000,
+    "maxHp": 1000,
+    "atk": 50,
     "def": 35,
-    "eva": 1,
+    "eva": 0.1,
     "exp": 1500,
     "isAlive": true,
     "reborn": false,
@@ -597,11 +597,11 @@
         "farewell": "......(그림자 속으로 녹아듭니다)......"
       },
       "normal": {
-        "greeting": "......관...리...합...니...다......",
+        "greeting": "......관...리...",
         "farewell": "......(기괴한 숨소리만 들립니다)......"
       },
       "hostile": {
-        "greeting": "......적...인...가......?",
+        "greeting": "......적.....?",
         "farewell": "......스...으...윽......"
       }
     },

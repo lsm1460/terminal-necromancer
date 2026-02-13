@@ -66,7 +66,7 @@ export class SkillManager {
     const corpseChoices = [
       ...corpses.map((c, index) => ({
         name: c.id || index.toString(),
-        message: `${c.name}의 시체`,
+        message: `${c.name}의 시체 (HP: ${c.maxHp}, atk: ${c.atk})`,
       })),
       { name: 'cancel', message: '🔙 취소하기' },
     ]

@@ -38,6 +38,8 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
           await enemy.executeHit(attacker, {
             rawDamage: auraDamage,
             isPassive: true,
+            isSureHit: true,
+            isFixed: true
           })
         }
       }

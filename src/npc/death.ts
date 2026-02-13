@@ -26,7 +26,7 @@ const DeathHandler: NPCHandler = {
       return [{ name: 'reportCaron', message: '💀 카론의 행방에 대하여 보고' }]
     }
 
-    if (!isB2Completed && !isFirst) {
+    if (!isB2Completed) {
       return [{ name: 'intro', message: '💬 대화' }]
     }
 

@@ -133,7 +133,7 @@ export class Battle {
   async runCombatLoop(initialEnemies: CombatUnit[], context: GameContext) {
     initialEnemies.forEach((e) => {
       // 공통 사망 로직 주입
-      e.onDeath = async () => this.handleUnitDeath(e.ref as BattleTarget, context)
+      e.onDeath = async () => await this.handleUnitDeath(e.ref as BattleTarget, context)
 
       this.registerUnitCache(e)
     })
@@ -376,9 +376,10 @@ export class Battle {
       return
     }
 
-    const autoSkillId = this.npcSkills.getRandomSkillId(attacker)
-    if (autoSkillId) {
-      await this.npcSkills.execute(autoSkillId, attacker, ally, visibleTargets, context)
+    const autoSkill = this.npcSkills.getRandomSkill(attacker)
+    
+    if (autoSkill) {
+      await this.npcSkills.execute(autoSkill.id, attacker, ally, visibleTargets, context)
     } else {
       let target: CombatUnit
       if (['monster', 'npc'].includes(attacker.type)) {
@@ -402,7 +403,7 @@ export class Battle {
       }
     }
 
-    autoSkillId !== 'stealth' && attacker.removeStealth()
+    autoSkill?.buff?.type !== 'stealth' && attacker.removeStealth()
   }
 
   private async handleMinionsDeath(deathUnit: CombatUnit<BattleTarget>) {
@@ -541,7 +542,7 @@ export class Battle {
     const unit = this.toCombatUnit(monster, 'monster')
     this.registerUnitCache(unit)
 
-    unit.onDeathHooks.push(async () => this.handleUnitDeath(monster as BattleTarget, context))
+    unit.onDeath = async () => await this.handleUnitDeath(monster as BattleTarget, context)
 
     return unit
   }

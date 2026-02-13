@@ -128,7 +128,7 @@
     "attackType": "ranged",
     "description": "가장 부상이 심한 아군을 회복시킵니다.",
     "chance": 0.5,
-    "power": 40,
+    "power": 30,
     "targetType": "ALLY_LOWEST_HP",
     "type": "heal"
   },
@@ -395,8 +395,8 @@
     "name": "차원 붕괴: 닫히는 경계",
     "attackType": "ranged",
     "description": "전장 전체의 공간을 압축하여 파괴합니다.",
-    "chance": 0.2,
-    "power": 0.5,
+    "chance": 0.3,
+    "power": 0.7,
     "targetType": "ENEMY_ALL"
   }
 }

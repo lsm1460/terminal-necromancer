@@ -44,8 +44,6 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
           if (tile.npcIds && tile.npcIds.length > 0) {
             if (tile.npcIds.includes('elevator')) return '🛗 '
             if (tile.npcIds.includes('death')) return '💀'
-
-            console.log('DEBUG::', tile.npcIds)
             return '👤 '
           }
 

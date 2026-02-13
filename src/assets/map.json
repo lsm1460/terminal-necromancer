@@ -113,6 +113,7 @@
   "B2_Transit_Area": {
     "displayName": "B2 - 환승 구역",
     "start_pos": { "x": 0, "y": 0 },
+    "unlocks": ["talk_death_1"],
     "tiles": [
       [
         {
@@ -457,7 +458,7 @@
         {
           "id": "tile_405",
           "theme": "resonance_point",
-          "event": "none",
+          "event": "event-caron",
           "dialogue": "공간이 일렁이며 한 사내의 형상이 나타났다 사라집니다.",
           "observe": "...폐허뿐이 보이지 않습니다."
         },
@@ -472,7 +473,7 @@
         {
           "id": "tile_407",
           "theme": "memory_fragment",
-          "event": "event-caron",
+          "event": "none",
           "npcIds": [],
           "dialogue": "찢어진 아이의 배냇저고리가 못박힌 듯 허공에 고정되어 있습니다.",
           "observe": "...폐허뿐이 보이지 않습니다."

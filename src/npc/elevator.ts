@@ -40,6 +40,11 @@ async function handleElevate(player: Player, context: GameContext) {
       }
     })
 
+  if (choices.length < 1) {
+    console.log('❌ 엘리베이터 사용이 허락되지 않는 망자입니다..')
+    return true
+  }
+
   choices.push({ name: 'cancel', message: '🔙 그대로 머물기' })
 
   const { sceneId } = await enquirer.prompt<{ sceneId: string }>({

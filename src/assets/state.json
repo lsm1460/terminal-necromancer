@@ -2,23 +2,70 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
-    "y": 1,
-    "_maxHp": 152,
-    "hp": 152,
-    "_maxMp": 152,
-    "mp": 202,
-    "atk": 59,
-    "def": 40,
+    "x": 0,
+    "y": 0,
+    "_maxHp": 85,
+    "hp": 85,
+    "_maxMp": 85,
+    "mp": 135,
+    "atk": 30,
+    "def": 14,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 2147,
-    "exp": 975,
+    "gold": 2299,
+    "exp": 4219,
     "level": 6,
-    "karma": 1,
+    "karma": 3,
     "inventoryMax": 15,
-    "inventory": [],
+    "inventory": [
+      {
+        "id": "sharp_pipe_1a56cab6b6c10e92",
+        "label": "\u001b[34m🔵 우수한 낡은 날카로운 파이프\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          5,
+          11
+        ],
+        "critRange": [
+          0.03,
+          0.07
+        ],
+        "price": 750,
+        "sellPrice": 150,
+        "description": "하역장 배수관을 뜯어 끝을 뾰족하게 갈았습니다. 가볍게 휘둘러 기습하기에 좋습니다.",
+        "quantity": 1,
+        "atk": 6,
+        "crit": 0.07,
+        "rarity": "RARE",
+        "x": 3,
+        "y": 2
+      },
+      {
+        "id": "heavy_wrench_4018132837531471",
+        "label": "\u001b[37m⚪ 낡은 대형 렌치\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          8,
+          12
+        ],
+        "critRange": [
+          0.05,
+          0.12
+        ],
+        "price": 1200,
+        "sellPrice": 350,
+        "description": "기중기를 수리할 때 쓰던 묵직한 공구입니다. 철검보다 무겁지만 타격감과 치명타 확률이 확실합니다.",
+        "quantity": 1,
+        "atk": 8,
+        "crit": 0.1,
+        "rarity": "COMMON",
+        "x": 3,
+        "y": 2
+      }
+    ],
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
@@ -47,7 +94,7 @@
         "mp": 50,
         "quantity": 1,
         "minRarity": "RARE",
-        "atk": 46,
+        "atk": 30,
         "crit": 0.14,
         "rarity": "RARE",
         "x": 0,
@@ -124,6 +171,27 @@
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 35
+      },
+      {
+        "id": "skeleton_1770957570267",
+        "name": "\u001b[33m[LEGENDARY]\u001b[0m 스켈레톤 해골 왕",
+        "attackType": "melee",
+        "maxHp": 156,
+        "hp": 156,
+        "atk": 60,
+        "def": 36,
+        "agi": 45,
+        "skills": [
+          "death_aura"
+        ],
+        "exp": 0,
+        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 55
       }
     ],
     "_maxSkeleton": 2,
@@ -156,7 +224,7 @@
     },
     "knightUpgrade": []
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B4_Waste_Disposal_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -250,8 +318,8 @@
         "relation": 0
       },
       "caron": {
-        "hp": 1200,
-        "isAlive": true,
+        "hp": 1000,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -269,7 +337,7 @@
       }
     },
     "factionHostility": {
-      "untouchable": -11,
+      "untouchable": 100,
       "resistance": -2
     },
     "factionContribution": {
@@ -292,6 +360,7 @@
     "b3_apostle",
     "second_boss",
     "talk_death_3",
-    "golem_generation_denied_zed"
+    "golem_generation_denied_zed",
+    "caron_is_dead"
   ]
 }

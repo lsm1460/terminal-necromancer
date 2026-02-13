@@ -86,7 +86,11 @@ class KnightWrapper {
   }
 
   get isAlive() {
-    return this.raw.hp > 0
+    return this.raw.isAlive
+  }
+
+  set isAlive(v: boolean) {
+    this.raw.isAlive = v
   }
 }
 

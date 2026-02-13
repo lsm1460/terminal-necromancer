@@ -242,7 +242,7 @@ export class NpcSkillManager {
     }
   }
 
-  getRandomSkillId(attacker: CombatUnit): string | null {
+  getRandomSkill(attacker: CombatUnit): NpcSkill | null {
     const skills = (attacker.ref as BattleTarget).skills || []
 
     const isExposed = attacker.deBuff.some((d) => d.type === 'expose')
@@ -265,7 +265,7 @@ export class NpcSkillManager {
 
     const npcSkillId = available[Math.floor(Math.random() * available.length)]
 
-    return this.skillData[npcSkillId].id
+    return this.skillData[npcSkillId]
   }
 
   public setupPassiveHook(unit: CombatUnit, battle: Battle) {
@@ -277,6 +277,12 @@ export class NpcSkillManager {
 
       const hooks = PASSIVE_EFFECTS[id]
       if (!hooks) continue
+
+      if (hooks.onBeforeAttack) {
+        unit.onBeforeAttackHooks.push(async (attacker, defender, options) => {
+          await hooks.onBeforeAttack!(attacker, defender, skillData, battle, options)
+        })
+      }
 
       // 공통 래퍼 함수: 파라미터를 핸들러 규격에 맞게 매핑
       if (hooks.onAfterHit) {

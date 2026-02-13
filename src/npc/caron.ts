@@ -21,11 +21,14 @@ const CaronHandler: NPCHandler = {
   async handle(action, player, npc, context) {
     switch (action) {
       case 'talk':
-        return await handleCaronEvent(player, npc, context)
+        await handleCaronEvent(player, npc, context)
+        break
       case 'battle':
         await handleBattle(player, npc, context, true)
         break
     }
+
+    return true
   },
 }
 
@@ -43,7 +46,7 @@ export function relocateCaron(player: Player, npc: NPC, context: GameContext) {
   tiles.forEach((row) => {
     row?.forEach((tile) => {
       if (tile) {
-        tile.npcIds = _.without(currentTile.npcIds, 'caron')
+        tile.npcIds = _.without(tile.npcIds, 'caron')
         tile.observe = '...폐허뿐이 보이지 않습니다.'
       }
     })
@@ -94,8 +97,6 @@ async function handleCaronEvent(player: Player, npc: NPC, context: GameContext) 
     relocateCaron(player, npc, context)
     count++
   } else await finalEncounter(player, npc, context)
-
-  return true
 }
 
 /** 1차 대면: 시스템에 대한 순응도 확인 */

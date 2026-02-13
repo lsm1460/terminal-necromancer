@@ -83,6 +83,14 @@ class GolemWrapper {
   set hp(v: number) {
     this.raw.hp = v
   }
+
+  get isAlive() {
+    return this.raw.isAlive
+  }
+
+  set isAlive(v: boolean) {
+    this.raw.isAlive = v
+  }
 }
 
 export default GolemWrapper

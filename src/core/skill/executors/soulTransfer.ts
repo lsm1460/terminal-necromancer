@@ -52,7 +52,6 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
   let totalGross = 0
   let isSpecialEffectTriggered = false
 
-  player.ref.hasAffix('EXALTATION')
   const hasEmpower = player.ref.hasAffix('EXALTATION')
 
   // [A] 강화 (EMPOWER_SOUL) - 착취와 중첩 가능
@@ -73,8 +72,8 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
 
   // [B] 기본 치유 - 특수 어픽스가 없을 때만 발동
   if (!isSpecialEffectTriggered) {
-    // 1. 목표 회복량 설정 (미니언 최대 체력의 10%)
-    const targetHealGoal = Math.ceil(targetMinion.ref.maxHp * 0.1)
+    // 1. 목표 회복량 설정 (미니언 최대 체력의 30%)
+    const targetHealGoal = Math.ceil(targetMinion.ref.maxHp * 0.3)
 
     // 2. 미니언에게 실제로 필요한 회복량 (최대 체력을 넘길 순 없으므로)
     const actualNeed = targetMinion.ref.maxHp - targetMinion.ref.hp

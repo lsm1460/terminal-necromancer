@@ -123,10 +123,11 @@ export class MapManager {
       if (!bossPlaced && bossTile && (dist >= minBossDist || allTiles.length === 0)) {
         newGrid[cy][cx] = bossTile
         bossPlaced = true
+        updateCandidates(cx, cy)
       } else if (allTiles.length > 0) {
         newGrid[cy][cx] = allTiles.pop()
+        updateCandidates(cx, cy)
       }
-      updateCandidates(cx, cy)
     }
 
     this.mapData[sceneId].tiles = newGrid as Tile[][]

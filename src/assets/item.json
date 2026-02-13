@@ -282,7 +282,7 @@
     "label": "강철 수호자의 과부하 지팡이",
     "type": "weapon",
     "attackType": "ranged",
-    "atkRange": [24, 38],
+    "atkRange": [16, 28],
     "critRange": [0.12, 0.18],
     "maxSkeletonRange": [1, 2],
     "price": 4200,

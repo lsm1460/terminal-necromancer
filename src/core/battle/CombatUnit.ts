@@ -122,8 +122,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   public async executeHit(attacker: CombatUnit, options: DamageOptions = {}) {
     // 1. [Before]
-    await this.runHooks(attacker.onBeforeAttackHooks, attacker, options)
-    await this.runHooks(this.onBeforeHitHooks, attacker, options)
+    if (!options.isPassive) {
+      await this.runHooks(attacker.onBeforeAttackHooks, attacker, options)
+      await this.runHooks(this.onBeforeHitHooks, attacker, options)
+    }
 
     // 2. [Action]
     const result = await this.takeDamage(attacker, options)
@@ -166,11 +168,15 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       this.ref.hp = Math.max(0, this.ref.hp - result.damage)
     }
 
-    this.logDamage(attacker, result)
+    this.logDamage(attacker, result, options)
     return { ...result, currentHp: this.ref.hp, isDead: this.ref.hp <= 0 }
   }
 
   async dead(attacker?: CombatUnit, options: DamageOptions = {}) {
+    if (!this.ref.isAlive) {
+      return
+    }
+
     this.ref.isAlive = false
 
     if (this.onDeath) await this.onDeath()
@@ -180,25 +186,47 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     }
   }
 
-  private logDamage(attacker: CombatUnit, result: any) {
+  private logDamage(attacker: CombatUnit, result: any, options: DamageOptions = {}) {
     const { isEscape, damage, isCritical } = result
-    const hpMsg = `(${this.name}의 남은 HP: ${this.ref.hp})`
+
+    // --- 라벨 빌더 ---
+    const labels: string[] = []
+
+    // 주요 상태 라벨 (색상별 구분)
+    if (options.isPassive) labels.push('\x1b[36m[패시브]\x1b[0m') // 청록
+    if (options.isSureHit) labels.push('\x1b[33m[필중]\x1b[0m') // 노랑
+    if (options.isSureCrit) labels.push('\x1b[31m[확정 치명]\x1b[0m') // 빨강
+    if (options.isIgnoreDef) labels.push('\x1b[35m[방어 관통]\x1b[0m') // 자색
+    if (options.isFixed) labels.push('\x1b[32m[고정 피해]\x1b[0m') // 녹색
+
+    const labelPrefix = labels.length > 0 ? `${labels.join(' ')} ` : ''
+    const hpStatus = `\x1b[90m(남은 HP: ${this.ref.hp})\x1b[0m`
 
     // 1. 회피했을 경우
     if (isEscape) {
-      console.log(`\n💨 ${attacker.name}의 공격! ${this.name}이(가) 가볍게 회피했습니다! ${hpMsg}`)
+      console.log(
+        `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! 💨 \x1b[37m${this.name}\x1b[0m이(가) 회피했습니다. ${hpStatus}`
+      )
       return
     }
 
-    // 2. 데미지가 0일 경우 (회피는 아니지만 피해를 입지 않음)
     if (damage <= 0) {
-      console.log(`\n🛡️ ${attacker.name}의 공격! 하지만 ${this.name}에게는 아무런 효과가 없었습니다! ${hpMsg}`)
+      console.log(
+        `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! 🛡️ 하지만 \x1b[37m${this.name}\x1b[0m에게 피해를 주지 못했습니다. ${hpStatus}`
+      )
       return
     }
 
-    // 3. 일반적인 피해 로그
-    const critMsg = isCritical ? '⚡ CRITICAL! ' : ''
-    console.log(`\n${critMsg}${attacker.name}의 공격! ${this.name}에게 ${damage} 피해! ${hpMsg}`)
+    let damageMsg = ''
+    if (isCritical) {
+      damageMsg = `\x1b[1m\x1b[31m⚡ CRITICAL! ${damage}\x1b[0m`
+    } else {
+      damageMsg = `\x1b[31m${damage}\x1b[0m`
+    }
+
+    console.log(
+      `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! \x1b[37m${this.name}\x1b[0m에게 ${damageMsg}의 피해! ${hpStatus}`
+    )
   }
 
   get finalStats() {
