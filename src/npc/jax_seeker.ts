@@ -100,6 +100,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
 
       if (isWin) {
         events.completeEvent('RESISTANCE_BASE')
+        npcs.updateFactionHostility('resistance', 40)
       } else {
         npcs.updateFactionHostility('resistance', 10)
       }

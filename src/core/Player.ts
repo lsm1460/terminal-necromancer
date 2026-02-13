@@ -47,7 +47,7 @@ export class Player {
   public unlockedSkills: (SkillId | 'SPACE')[] = [SKILL_IDS.RAISE_SKELETON]
 
   skeletonSubspace: BattleTarget[] = []
-  subspaceLimit = 3
+  subspaceLimit = 15
   public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
   _maxSkeleton: number = 2 // 최대 소환 가능 수
 
@@ -132,6 +132,9 @@ export class Player {
 
   get maxSkeleton() {
     let maxSkeleton = this._maxSkeleton
+
+    if (this.equipped.weapon) maxSkeleton += this.equipped.weapon?.maxSkeleton || 0
+    if (this.equipped.armor) maxSkeleton += this.equipped.armor?.maxSkeleton || 0
 
     const _val = this.getAffixValue('OVERLORD')
 

@@ -159,6 +159,7 @@ export type Drop = {
   y: number
   atkRange?: [number, number]
   defRange?: [number, number]
+  maxSkeletonRange?: [number, number]
   critRange?: [number, number]
   evaRange?: [number, number]
   minRarity?: ItemRarity

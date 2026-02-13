@@ -11,15 +11,15 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
 
   const sceneId = map.currentSceneId
 
-  if (sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
-    console.log('📜 지도가 없습니다.')
-    return false
-  }
+  // if (sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
+  //   console.log('📜 지도가 없습니다.')
+  //   return false
+  // }
 
   const tiles = map.currentScene.tiles
   if (!tiles) return false
 
-  const isFullyVisible = ([MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE] as string[]).includes(sceneId)
+  const isFullyVisible = ([MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE, MAP_IDS.B4_Waste_Disposal_Area] as string[]).includes(sceneId)
 
   console.log(`\n--- 🗺️ ${map.currentScene.displayName} ---`)
 
@@ -44,6 +44,8 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
           if (tile.npcIds && tile.npcIds.length > 0) {
             if (tile.npcIds.includes('elevator')) return '🛗 '
             if (tile.npcIds.includes('death')) return '💀'
+
+            console.log('DEBUG::', tile.npcIds)
             return '👤 '
           }
 

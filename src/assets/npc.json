@@ -553,7 +553,6 @@
     "exp": 1500,
     "isAlive": true,
     "reborn": false,
-    "noEscape": true,
     "lines": [
       "사신의 눈이 미치지 않는 곳입니다.",
       "당신의 그림자 속에 숨어 때를 기다리겠습니다.",
@@ -591,7 +590,6 @@
     "exp": 1500,
     "isAlive": true,
     "reborn": false,
-    "noEscape": true,
     "lines": ["...스...스으윽...", "......(공허한 눈이 당신을 향합니다)......", "...명...령...을..."],
     "scripts": {
       "friendly": {

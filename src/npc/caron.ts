@@ -21,8 +21,7 @@ const CaronHandler: NPCHandler = {
   async handle(action, player, npc, context) {
     switch (action) {
       case 'talk':
-        await handleCaronEvent(player, npc, context)
-        break
+        return await handleCaronEvent(player, npc, context)
       case 'battle':
         await handleBattle(player, npc, context, true)
         break
@@ -30,7 +29,7 @@ const CaronHandler: NPCHandler = {
   },
 }
 
-function relocateCaron(player: Player, npc: NPC, context: GameContext) {
+export function relocateCaron(player: Player, npc: NPC, context: GameContext) {
   const { map } = context
   const tiles: (Tile | null)[][] = map.currentScene.tiles
 
@@ -38,22 +37,20 @@ function relocateCaron(player: Player, npc: NPC, context: GameContext) {
   const currentTile = map.getTile(player.pos.x, player.pos.y)
   if (currentTile) {
     currentTile.event = 'none'
-    if (currentTile.npcIds) {
-      currentTile.npcIds = _.without(currentTile.npcIds, npc.id)
-    }
   }
 
   // 2. 전체 타일 관찰 메시지 초기화 (Null 체크 추가)
-  tiles.forEach(row => {
-    row?.forEach(tile => {
+  tiles.forEach((row) => {
+    row?.forEach((tile) => {
       if (tile) {
+        tile.npcIds = _.without(currentTile.npcIds, 'caron')
         tile.observe = '...폐허뿐이 보이지 않습니다.'
       }
     })
   })
 
   // 3. 새 후보지 추출
-  const candidateTiles: { x: number, y: number, tile: Tile }[] = []
+  const candidateTiles: { x: number; y: number; tile: Tile }[] = []
   tiles.forEach((row, y) => {
     row?.forEach((tile, x) => {
       if (tile && tile.event === 'event-caron') {
@@ -70,11 +67,13 @@ function relocateCaron(player: Player, npc: NPC, context: GameContext) {
     tile.npcIds.push(npc.id)
 
     const directions = [
-      { dx: 0, dy: -1 }, { dx: 0, dy: 1 },
-      { dx: -1, dy: 0 }, { dx: 1, dy: 0 }
+      { dx: 0, dy: -1 },
+      { dx: 0, dy: 1 },
+      { dx: -1, dy: 0 },
+      { dx: 1, dy: 0 },
     ]
 
-    directions.forEach(dir => {
+    directions.forEach((dir) => {
       const ny = y + dir.dy
       const nx = x + dir.dx
       const neighbor = tiles[ny]?.[nx] // Optional chaining으로 안전하게 접근
@@ -95,13 +94,15 @@ async function handleCaronEvent(player: Player, npc: NPC, context: GameContext) 
     relocateCaron(player, npc, context)
     count++
   } else await finalEncounter(player, npc, context)
+
+  return true
 }
 
 /** 1차 대면: 시스템에 대한 순응도 확인 */
 async function firstEncounter() {
   await speak([
-    '카론: "(빈 요람을 물끄러미 바라보며) 예의 없는 발걸음이군요."',
-    '카론: "알고 있습니다. 제가 먼저 사신의 법도를 어겼고, 그분은 그저 정해진 섭리대로 아이의 영혼을 회수하셨을 뿐이지요."',
+    '카론: "결국, 이 정적마저 찢어 놓으러 오셨군요."',
+    '카론: "알고 있습니다. 제가 먼저 사신의 법도를 어겼고,\n그분은 그저 정해진 섭리대로 아이의 영혼을 회수하셨을 뿐이지요."',
     '카론: "관리자이기 전에 부모였던 저로서는, 그 공정함이 무엇보다 시리고 잔혹하게 느껴지더군요."',
   ])
 
@@ -125,16 +126,16 @@ async function firstEncounter() {
 /** 2차 대면: 시스템에 대한 분노와 복수심 확인 */
 async function secondEncounter() {
   await speak([
-    '카론: "(이전과 달리 떨리는 목소리로) ...하지만 말입니다. 규칙이 영혼보다 중하단 말입니까?"',
-    '카론: "사신은 제 아이를 \'오류 데이터\' 취급하며 지워버렸습니다. 제가 쌓아온 수백 년의 헌신은 안중에도 없었죠."',
-    '카론: "저는 증오합니다. 슬픔조차 허용하지 않는 그 차가운 질서를, 그리고 내 아이를 한 줌의 연기로 만든 그 무미건조한 손길을!"',
+    '카론: "...하지만 말입니다. 규칙이 영혼보다 중하단 말입니까?"',
+    '카론: "사신은 제 아이를 \'오류 데이터\' 취급하며 지워버렸습니다.\n제가 쌓아온 수백 년의 헌신은 안중에도 없었죠."',
+    '카론: "저는 증오합니다. 슬픔조차 허용하지 않는 그 차가운 질서를,\n그리고 내 아이를 한 줌의 연기로 만든 그 무미건조한 손길을!"',
   ])
 
   const { answer } = await enquirer.prompt<{ answer: boolean }>({
     type: 'confirm',
     name: 'answer',
     message:
-      '카론: "집행관이여, 당신도 만약 사신의 원칙이 당신의 소중한 것을 파괴한다면, 그분에게 칼끝을 겨누겠습니까?"',
+      '카론: "집행관이여, 당신도 만약 사신의 원칙이 당신의 소중한 것을 파괴한다면,\n그분에게 칼끝을 겨누겠습니까?"',
     initial: false,
   })
 
@@ -189,19 +190,19 @@ async function finalEncounter(player: Player, npc: NPC, context: GameContext) {
   if (choice) {
     await speak([
       '카론: "현명한 선택입니다. 규율을 어기는 것은 한 번이 어렵지, 두 번은 쉽더군요."',
-      '카론: "하지만 사신은 영민한 분입니다. 제 영혼의 흔적을 가져가지 않는다면 당신을 즉시 의심하고 도려내려 하겠지요."',
+      '카론: "하지만 사신은 영민한 분입니다.\n제 영혼의 흔적을 가져가지 않는다면 당신을 즉시 의심하고 도려내려 하겠지요."',
       '카론: "(자신의 가슴 깊은 곳에서 희미하게 빛나는 조각 하나를 떼어내며) ...윽, 이것을 가져가십시오."',
       '카론: "이 파편만큼은 진실된 것입니다. 사신에게는 이것을 바쳐 제가 완전히 소멸했다 믿게 만드십시오."',
-      '카론: "저는 평소 사신의 시선이 닿지 않는 [지하 엘리베이터 앞 안전구역]의 차원 틈새에 몸을 숨기고 있겠습니다."',
-      '카론: "군세의 관리가 필요하다면 그곳으로 오십시오. 오늘부터 당신의 그림자이자, 사신을 무너뜨릴 가장 은밀한 균열이 되겠습니다."',
-      '[카론의 영혼 파편(기만용)]을 획득했습니다.'
+      '카론: "저는 [지하 엘리베이터 앞 안전구역]의 차원 틈새에 몸을 숨기고 있겠습니다."',
+      '카론: "군세의 관리가 필요하다면 그곳으로 오십시오.\n오늘부터 당신의 그림자이자, 사신을 무너뜨릴 가장 은밀한 균열이 되겠습니다."',
+      '[카론의 영혼 파편(기만용)]을 획득했습니다.',
     ])
 
     events.completeEvent('caron_is_mine')
 
     npc.dead(0)
     const tile = map.getTile(player.x, player.y)
-    
+
     BossEvent.spawnPortal(tile)
   } else {
     await speak([
@@ -213,7 +214,7 @@ async function finalEncounter(player: Player, npc: NPC, context: GameContext) {
 
 /** 전투 핸들러 */
 async function handleBattle(player: Player, npc: NPC, context: GameContext, isManual: boolean = false) {
-  const { battle, events,map } = context
+  const { battle, events, map } = context
 
   if (isManual) {
     await speak(['카론: "무례하군요. 제 이야기가 끝나기도 전에 칼을 뽑다니... 사신이 보낸 도살자답습니다."'])
@@ -233,7 +234,6 @@ async function handleBattle(player: Player, npc: NPC, context: GameContext, isMa
       '이제 안전 구역에서 사역마를 통해 소환수들을 아공간에 유폐하거나 해방할 수 있습니다.',
       '주인을 잃고 정화된 [정제된 영혼 조각]이 바닥에 떨어집니다.',
     ])
-
 
     events.completeEvent('caron_is_dead')
 

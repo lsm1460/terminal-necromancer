@@ -140,6 +140,7 @@ export const printItem = (item: Item) => {
 
   if (stats.length > 0) console.log(` 효과 : ${stats.join(' | ')}`)
 
+  if ('mana' in item && item.mana) console.log(` 마나 증가 : +${item.mana}MP`)
   if ('maxSkeleton' in item && item.maxSkeleton) console.log(` 영령 : 최대 해골 소환수 +${item.maxSkeleton}`)
   if ('affix' in item && item.affix) console.log(` 축복 : [${item.affix.name}] 효과 부여 (${item.affix.description})`)
 

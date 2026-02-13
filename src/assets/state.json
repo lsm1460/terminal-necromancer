@@ -40,6 +40,7 @@
           0.12,
           0.18
         ],
+        "maxSkeleton": 1,
         "price": 4200,
         "sellPrice": 1150,
         "description": "쓰러진 강철 골렘의 가동부에서 적출한 육중한 지팡이입니다. 중심부의 코어에서는 여전히 불안정한 전류가 흐르며, 휘두를 때마다 웅웅거리는 진동이 손목을 타고 전해집니다.",
@@ -80,7 +81,7 @@
       "SOUL_TRANSFER"
     ],
     "skeletonSubspace": [],
-    "subspaceLimit": 1,
+    "subspaceLimit": 15,
     "skeleton": [
       {
         "id": "skeleton_1770795867011",

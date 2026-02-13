@@ -20,7 +20,7 @@ const ElevatorHandler: NPCHandler = {
 }
 
 async function handleElevate(player: Player, context: GameContext) {
-  const { map, events, world } = context
+  const { map, events, world, broadcast } = context
   const completed = events.getCompleted()
   const currentSceneId = map.currentSceneId
 
@@ -84,12 +84,15 @@ async function handleElevate(player: Player, context: GameContext) {
 
     // 맵 시스템의 changeScene을 호출하여 플레이어 이동 및 맵 데이터 갱신
     world.clearFloor()
-    await context.map.changeScene(sceneId as MapId, player)
+    await map.changeScene(sceneId as MapId, player)
 
     console.log(`✨ [도착] ${targetMapData.displayName}에 도착했습니다.\n`)
 
     const tile = map.getTile(player.x, player.y)
     tile.isSeen = true
+
+    events.handle(tile, player, context)
+    broadcast.play()
 
     printTileStatus(player, context)
     return true

@@ -31,7 +31,7 @@
       "FOCUS_FIRE"
     ],
     "skeletonSubspace": [],
-    "subspaceLimit": 1,
+    "subspaceLimit": 15,
     "skeleton": [],
     "_maxSkeleton": 2,
     "golemUpgrade": [],

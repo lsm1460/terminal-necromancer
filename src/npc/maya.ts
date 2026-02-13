@@ -16,7 +16,7 @@ const MayaHandler: NPCHandler = {
 
     const canMakeGolem = isB3Completed && !hasGolem
     const canUpgrade = npc.factionContribution > 40 && context.events.isCompleted('second_boss') && !!player._golem
-    const canModify = npc.factionContribution > 800 && context.events.isCompleted('third_boss')
+    const canModify = npc.factionContribution > 80 && context.events.isCompleted('third_boss')
 
     return [
       { name: 'talk', message: '💬 잡담' },
@@ -28,6 +28,8 @@ const MayaHandler: NPCHandler = {
     ]
   },
   async handle(action, player, npc, context) {
+    // TODO: npc.factionContribution 기여도와 진행도에 따라 상품 목록 변경 가능
+
     const mayaScripts = {
       buy: {
         greeting: '필요한 게 있다면 골라봐. 공짜는 없는 거 알지?',

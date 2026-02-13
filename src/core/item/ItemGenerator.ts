@@ -108,6 +108,13 @@ export class ItemGenerator {
       }
     }
 
+    finalStats = {
+      ...finalStats,
+      ...(baseItem.maxSkeletonRange && {
+        maxSkeleton: this.finalizeStat(baseItem.maxSkeletonRange),
+      }),
+    }
+
     // [이름 구성 요소]
     const perfPrefix = this.getPerformancePrefix(mainValue, mainRange[0], mainRange[1])
     const adjective =

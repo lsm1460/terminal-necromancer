@@ -225,3 +225,13 @@ export const SKELETON_UPGRADE = {
     4: 4000, // 4->5구 확장 비용
   } as Record<number, number>,
 }
+
+export const SUBSPACE_UPGRADE = {
+  MIN_LIMIT: 2,
+  MAX_LIMIT: 5,
+  COSTS: {
+    2: 500, // 2->3구 확장 비용
+    3: 2000, // 3->4구 확장 비용
+    4: 4000, // 4->5구 확장 비용
+  } as Record<number, number>,
+}

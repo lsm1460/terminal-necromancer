@@ -24,19 +24,21 @@ interface NPCWithContribution extends NPC {
   contribution?: number
 }
 
-// --- 서브 메뉴: 물건 구매 ---
+interface ShopScripts {
+  greeting?: string // 판매 메뉴 진입 시
+  noItems?: string // 인벤토리가 비어있을 때
+  success: string // 판매 성공 시 (개별 건)
+  exit?: string // 판매 종료 후 나갈 때
+  noStock?: string
+  noGold?: string
+}
+
 export async function handleBuy(
   player: Player,
   npc: NPCWithContribution,
   context: GameContext,
   dropTableId: string,
-  scripts: {
-    greeting: string // 상점 진입 시
-    noStock: string // 재고가 없을 때
-    noGold: string // 돈이 부족할 때
-    success: string // 구매 성공 시 (선택 사항)
-    exit?: string // 상점 나갈 때 (선택 사항)
-  }
+  scripts: ShopScripts
 ) {
   const { drop, npcs } = context
   const { drops: goods } = drop.generateDrops(dropTableId)
@@ -72,7 +74,7 @@ export async function handleBuy(
 
     return {
       name: item.id,
-      message: makeItemMessage(item, player),
+      message: makeItemMessage(item, player, { withPrice: true }),
       label: item.label,
       price: finalPrice,
     }
@@ -127,28 +129,7 @@ export async function handleBuy(
   }
 }
 
-interface SellScripts {
-  greeting: string // 판매 메뉴 진입 시
-  noItems: string // 인벤토리가 비어있을 때
-  success: string // 판매 성공 시 (개별 건)
-  exit: string // 판매 종료 후 나갈 때
-}
-
-/**
- * 범용 아이템 판매 핸들러
- * @param scripts - 상황별 대사 객체
- */
-export async function handleSell(
-  player: Player,
-  npc: NPC,
-  context: GameContext,
-  scripts: {
-    greeting: string // 판매 메뉴 진입 시
-    noItems: string // 인벤토리가 비어있을 때
-    success: string // 판매 성공 시 (개별 건)
-    exit?: string // 판매 종료 후 나갈 때
-  }
-) {
+export async function handleSell(player: Player, npc: NPC, context: GameContext, scripts: ShopScripts) {
   let totalEarnedInSession = 0
 
   console.log(`\n[${npc.name}]: "${scripts.greeting}"`)
@@ -169,7 +150,7 @@ export async function handleSell(
 
       return {
         name: `${index}`,
-        message: `${item.label.padEnd(12)} | 💰 개당 +${String(finalSellPrice).padStart(4)}G | 보유: ${item.quantity || 1}개`,
+        message: makeItemMessage(item, player, { withPrice: true }),
         label: item.label,
         price: finalSellPrice,
         originalIndex: index,

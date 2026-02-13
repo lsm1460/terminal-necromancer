@@ -416,137 +416,153 @@
   "B4_Waste_Disposal_Area": {
     "displayName": "B4 - 폐기된 구역",
     "start_pos": { "x": 0, "y": 0 },
-    "unlocks": ["second_boss"],
+    "unlocks": ["talk_death_3"],
     "tiles": [
-  [
-    {
-      "id": "tile_400",
-      "theme": "entrance",
-      "event": "summon_caron",
-      "npcIds": ["elevator"],
-      "dialogue": "공간이 검게 타버린 종이처럼 말려 올라갑니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_401",
-      "theme": "corridor",
-      "event": "event-b4-reset",
-      "npcIds": [],
-      "dialogue": "바닥에 고인 검은 액체가 소용돌이치며 당신을 끌어당깁니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_402",
-      "theme": "memory_fragment",
-      "event": "event-caron",
-      "npcIds": [],
-      "dialogue": "공중에 낡은 아이 신발 한 짝이 떠 있습니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_403",
-      "theme": "dead_end",
-      "event": "none",
-      "npcIds": [],
-      "dialogue": "폐기된 망령들이 거미처럼 천장에 매달려 있습니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    }
-  ],
-  [
-    null,
-    {
-      "id": "tile_405",
-      "theme": "resonance_point",
-      "event": "none",
-      "npcIds": [""],
-      "dialogue": "공간이 일렁이며 한 사내의 형상이 나타났다 사라집니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_406",
-      "theme": "corridor",
-      "event": "event-b4-warp",
-      "npcIds": [],
-      "dialogue": "시야가 지지직거리며 반전됩니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_407",
-      "theme": "memory_fragment",
-      "event": "event-caron",
-      "npcIds": [],
-      "dialogue": "찢어진 아이의 배냇저고리가 못박힌 듯 허공에 고정되어 있습니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    }
-  ],
-  [
-    {
-      "id": "tile_408",
-      "theme": "corridor",
-      "event": "none",
-      "npcIds": [],
-      "dialogue": "천장에서 검은 눈물이 떨어집니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_409",
-      "theme": "trap_pit",
-      "event": "event-b4-warp",
-      "npcIds": [],
-      "dialogue": "발밑의 고철더미가 무너지며 끝없는 어둠 속으로 추락합니다!",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_410",
-      "theme": "corridor",
-      "event": "none",
-      "npcIds": [],
-      "dialogue": "어디선가 나직한 자장가 소리가 들려옵니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_411",
-      "theme": "dead_end",
-      "event": "none",
-      "npcIds": [],
-      "dialogue": "형체를 알 수 없는 살점 덩어리들이 통로를 가로막고 있습니다.",
-      "observe": "아공간의 농도가 급격히 짙어집니다. 아주 가까운 곳에 목표가 숨어 있습니다."
-    }
-  ],
-  [
-    {
-      "id": "tile_412",
-      "theme": "corridor",
-      "event": "none",
-      "npcIds": [],
-      "dialogue": "차원 파편들이 유리 조각처럼 공중에 떠 있습니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_413",
-      "theme": "warp_gate",
-      "event": "event-b4-warp",
-      "npcIds": [],
-      "dialogue": "공간이 거울처럼 조각나며 당신의 위치를 강제로 뒤섞습니다.",
-      "observe": "...폐허뿐이 보이지 않습니다."
-    },
-    {
-      "id": "tile_414",
-      "theme": "memory_fragment",
-      "event": "item",
-      "npcIds": [],
-      "dialogue": "녹슨 은방울 팔찌가 놓여 있습니다. 딸랑거리는 소리가 환청처럼 들립니다.",
-      "observe": "아공간의 농도가 급격히 짙어집니다. 아주 가까운 곳에 목표가 숨어 있습니다."
-    },
-    {
-      "id": "tile_415",
-      "theme": "core_sanctuary",
-      "event": "none",
-      "npcIds": ["caron"],
-      "dialogue": "뒤틀림의 중심입니다.",
-      "observe": "사방이 아공간의 장벽으로 가로막혀 있습니다. 사내의 살기 어린 시선이 느껴집니다."
-    }
-  ]
-]
+      [
+        {
+          "id": "tile_400",
+          "theme": "entrance",
+          "event": "summon_caron",
+          "npcIds": ["elevator"],
+          "dialogue": "공간이 검게 타버린 종이처럼 말려 올라갑니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_401",
+          "theme": "corridor",
+          "event": "event-b4-reset",
+          "npcIds": [],
+          "dialogue": "바닥에 고인 검은 액체가 소용돌이치며 당신을 끌어당깁니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_402",
+          "theme": "memory_fragment",
+          "event": "event-caron",
+          "npcIds": [],
+          "dialogue": "공중에 낡은 아이 신발 한 짝이 떠 있습니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_403",
+          "theme": "dead_end",
+          "event": "none",
+          "npcIds": [],
+          "dialogue": "폐기된 망령들이 거미처럼 천장에 매달려 있습니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        }
+      ],
+      [
+        null,
+        {
+          "id": "tile_405",
+          "theme": "resonance_point",
+          "event": "none",
+          "dialogue": "공간이 일렁이며 한 사내의 형상이 나타났다 사라집니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_406",
+          "theme": "corridor",
+          "event": "event-b4-warp",
+          "npcIds": [],
+          "dialogue": "시야가 지지직거리며 반전됩니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_407",
+          "theme": "memory_fragment",
+          "event": "event-caron",
+          "npcIds": [],
+          "dialogue": "찢어진 아이의 배냇저고리가 못박힌 듯 허공에 고정되어 있습니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        }
+      ],
+      [
+        {
+          "id": "tile_408",
+          "theme": "corridor",
+          "event": "none",
+          "npcIds": [],
+          "dialogue": "천장에서 검은 눈물이 떨어집니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_409",
+          "theme": "trap_pit",
+          "event": "event-b4-warp",
+          "npcIds": [],
+          "dialogue": "발밑의 고철더미가 무너지며 끝없는 어둠 속으로 추락합니다!",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_410",
+          "theme": "corridor",
+          "event": "none",
+          "npcIds": [],
+          "dialogue": "어디선가 나직한 자장가 소리가 들려옵니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_411",
+          "theme": "dead_end",
+          "event": "none",
+          "npcIds": [],
+          "dialogue": "형체를 알 수 없는 살점 덩어리들이 통로를 가로막고 있습니다.",
+          "observe": "아공간의 농도가 급격히 짙어집니다. 아주 가까운 곳에 목표가 숨어 있습니다."
+        }
+      ],
+      [
+        {
+          "id": "tile_412",
+          "theme": "corridor",
+          "event": "none",
+          "npcIds": [],
+          "dialogue": "차원 파편들이 유리 조각처럼 공중에 떠 있습니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_413",
+          "theme": "warp_gate",
+          "event": "event-b4-warp",
+          "npcIds": [],
+          "dialogue": "공간이 거울처럼 조각나며 당신의 위치를 강제로 뒤섞습니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_414",
+          "theme": "memory_fragment",
+          "event": "item",
+          "npcIds": [],
+          "dialogue": "녹슨 은방울 팔찌가 놓여 있습니다. 딸랑거리는 소리가 환청처럼 들립니다.",
+          "observe": "아공간의 농도가 급격히 짙어집니다. 아주 가까운 곳에 목표가 숨어 있습니다."
+        },
+        {
+          "id": "tile_415",
+          "theme": "core_sanctuary",
+          "event": "event-caron",
+          "npcIds": ["caron"],
+          "dialogue": "뒤틀림의 중심입니다.",
+          "observe": "사방이 아공간의 장벽으로 가로막혀 있습니다. 사내의 살기 어린 시선이 느껴집니다."
+        }
+      ]
+    ]
+  },
+  "B5_VIP_lounge": {
+    "displayName": "B5 - VIP 라운지",
+    "start_pos": { "x": 0, "y": 0 },
+    "unlocks": ["report_caron_to_death"],
+    "tiles": [
+      [
+        {
+          "id": "tile_400",
+          "theme": "entrance",
+          "event": "summon_caron",
+          "npcIds": ["elevator"],
+          "dialogue": "공간이 검게 타버린 종이처럼 말려 올라갑니다.",
+          "observe": "...폐허뿐이 보이지 않습니다."
+        }
+      ]
+    ]
   }
 }

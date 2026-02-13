@@ -26,8 +26,8 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
   // 실제 디버프 적용 함수
   const applyCurse = (target: any) => {
     // 부식일 때는 방어력만, 아닐 때는 공격력만 계산
-    const atkReduction = !isCorrosion ? Math.max(Math.floor(target.stats.atk * 0.05), 1) : 0
-    const defReduction = isCorrosion ? Math.max(Math.floor(target.stats.def * 0.05), 1) : 0
+    const atkReduction = !isCorrosion ? Math.max(Math.floor(target.stats.atk * 0.5), 1) : 0
+    const defReduction = isCorrosion ? Math.max(Math.floor(target.stats.def * 0.5), 1) : 0
 
     target.applyDeBuff({
       name: curseName,

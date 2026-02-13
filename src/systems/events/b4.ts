@@ -1,4 +1,5 @@
 import { EventHandler } from '.'
+import { relocateCaron } from '../../npc/caron'
 import { Tile } from '../../types'
 import _ from 'lodash'
 
@@ -10,24 +11,24 @@ export const b4Handlers: Record<string, EventHandler> = {
 
     const safeTargets = _.chain(tiles)
       .flatMap(
-        (row, y) => row.map((t, x) => ({ ...t, x, y })) // 각 타일에 좌표 정보 주입
+        (row, y) => row.map((t, x) => ({ ...(t || {}), x, y })) // 각 타일에 좌표 정보 주입
       )
-      .filter((t) => t.event !== targetEvent && !t.npcIds?.includes('caron'))
+      .filter((t) => t && t.event !== targetEvent && !t.npcIds?.includes('caron'))
       .value()
 
     if (safeTargets.length > 0) {
       const target = _.sample(safeTargets)
 
       if (target) {
-        player.pos.x = target.x
-        player.pos.y = target.y
+        player.x = target.x
+        player.y = target.y
 
         console.log('공간이 거울처럼 조각나며 당신을 낯선 곳으로 내던집니다.')
       }
     }
   },
   'event-b4-reset': (tile, player, context) => {
-    const { map, events } = context
+    const { map, events, npcs } = context
     const isCaronEventFinished = events.isCompleted('caron_is_mine') || events.isCompleted('caron_is_dead')
 
     if (isCaronEventFinished) {
@@ -37,10 +38,15 @@ export const b4Handlers: Record<string, EventHandler> = {
       tiles.forEach((row) => {
         row?.forEach((t) => {
           if (t) {
+            t.npcIds = _.without(t.npcIds, 'caron')
             t.observe = '...폐허뿐이 보이지 않습니다.'
           }
         })
       })
+    } else {
+      const caron = npcs.getNPC('caron')
+
+      relocateCaron(player, caron!, context)
     }
   },
 }

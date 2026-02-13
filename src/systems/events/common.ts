@@ -59,7 +59,7 @@ export const commonHandlers: Record<string, EventHandler> = {
     if (!isMine && !isDead) return
 
     // 상황에 맞는 NPC 배치
-    const caronNpcId = isMine ? 'caron-alive' : 'caron-dead'
+    const caronNpcId = isMine ? 'caron_alive' : 'caron_dead'
     tile.npcIds = _.uniq([...(tile.npcIds || []), caronNpcId])
 
     // 타일에 머물 때마다 들리는 은밀한 속삭임

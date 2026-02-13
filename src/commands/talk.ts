@@ -68,6 +68,8 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
   console.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`)
   console.log(`──────────────────────────────────────────────────`)
 
+  npc.relation = npc.relation + 1
+
   try {
     const printFarewell = () => console.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
 
