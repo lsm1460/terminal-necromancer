@@ -166,9 +166,9 @@ export const printItem = (item: Item) => {
   console.log(`──────────────────────────────────────────────`)
 
   const stats: string[] = []
-  if ('atk' in item) stats.push(`공격력 +${item.atk}`, `치명타 ${item.crit}%`)
+  if ('atk' in item) stats.push(`공격력 +${item.atk}`, `치명타 ${item.crit * 100}%`)
   if ('def' in item) stats.push(`방어력 +${item.def}`)
-  if ('eva' in item && item.eva) stats.push(`회피율 +${item.eva}%`)
+  if ('eva' in item && item.eva) stats.push(`회피율 +${item.eva * 100}%`)
   if ('hpHeal' in item) stats.push(`즉시 회복 HP ${item.hpHeal}`)
 
   if (stats.length > 0) console.log(` 효과 : ${stats.join(' | ')}`)

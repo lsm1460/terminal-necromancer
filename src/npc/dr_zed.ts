@@ -11,15 +11,17 @@ const ZedHandler: NPCHandler = {
     const alreadyDenied = context.events.isCompleted('golem_generation_denied_zed')
 
     if (isB3Completed && !player._golem && !alreadyDenied) {
-      return [
-        { name: 'golem', message: '💬 [!] 대화' },
-      ]
+      return [{ name: 'golem', message: '💬 [!] 대화' }]
     }
 
     return [
       { name: 'talk', message: '💬 잡담' },
       ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: '💬 대화' }] : []),
-      ...(isB3Completed && player._golem ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }] : [{ name: 'golem', message: '🧬 골렘 부활' }]),
+      ...(isB3Completed
+        ? player._golem
+          ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }]
+          : [{ name: 'golem', message: '🧬 골렘 부활' }]
+        : []), // false라면 빈 배열을 반환하여 아무것도 추가되지 않음
       { name: 'heal', message: '💊 치료' },
     ]
   },
@@ -129,9 +131,7 @@ async function handleUpgradeGolem(player: Player) {
   // 2. 입장 시 기계 혐오 대사
   if (machineStacks > 0) {
     console.log(`\n닥터 제드: "우아악! 이 비린내 나는 쇳덩어리들은 뭐죠?! 당장 내 눈앞에서 치워주시겠어요?!"`)
-    console.log(
-      `닥터 제드: "이런 고철 쓰레기들 때문에 내 정수가 들어갈 자리가 없다고요!"`
-    )
+    console.log(`닥터 제드: "이런 고철 쓰레기들 때문에 내 정수가 들어갈 자리가 없다고요!"`)
   }
 
   // 3. 메뉴 구성
@@ -211,10 +211,10 @@ async function handleAwakeGolem(player: Player, context: GameContext) {
   }
 
   const dialogues = [
-    "제드: ...이건 지하 3층을 지키던 골렘의 핵이군요.",
-    "제드: 코어가 완전히 박살 났어. 보통 사람이라면 쓰레기통에나 던졌겠지만...",
-    "제드: 운이 좋군. 나 정도의 실력자라면 다시 맥동하게 만들 수 있습니다.",
-    "제드: 자, 그 핵을 이쪽으로 넘겨주세요. 원래보다 더 강력하게 고쳐주도록 하지요."
+    '제드: ...이건 지하 3층을 지키던 골렘의 핵이군요.',
+    '제드: 코어가 완전히 박살 났어. 보통 사람이라면 쓰레기통에나 던졌겠지만...',
+    '제드: 운이 좋군. 나 정도의 실력자라면 다시 맥동하게 만들 수 있습니다.',
+    '제드: 자, 그 핵을 이쪽으로 넘겨주세요. 원래보다 더 강력하게 고쳐주도록 하지요.',
   ]
 
   // 1. 순차적 대화 노출

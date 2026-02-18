@@ -31,7 +31,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     name: '시체 폭발',
     description: '시체를 폭파시켜 광역 피해를 입힙니다.',
     attackType: 'ranged',
-    cost: 15,
+    cost: 8,
     requiredExp: 300,
     requiredLevel: 2,
     unlocks: ['first_boss'],
@@ -50,7 +50,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
     unlockHint: '지하 2층 정화 완료',
     execute: (player, context) => SkillExecutor.soulHarvest(player, context),
   },
-  
+
   [SKILL_IDS.SOUL_TRANSFER]: {
     id: SKILL_IDS.SOUL_TRANSFER,
     name: '영혼 전달',

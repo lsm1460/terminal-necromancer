@@ -92,7 +92,7 @@
   },
   "potion_large": {
     "id": "potion_large",
-    "label": "큰 포션",
+    "label": "큰 체력 포션",
     "type": "consumable",
     "hpHeal": 250,
     "price": 700,
