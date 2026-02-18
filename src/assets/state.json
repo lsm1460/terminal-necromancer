@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
-    "y": 0,
+    "x": 3,
+    "y": 2,
     "_maxHp": 85,
     "hp": 85,
     "_maxMp": 85,
@@ -224,7 +224,7 @@
     },
     "knightUpgrade": []
   },
-  "sceneId": "B4_Waste_Disposal_Area",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -361,6 +361,7 @@
     "second_boss",
     "talk_death_3",
     "golem_generation_denied_zed",
-    "caron_is_dead"
+    "caron_is_dead",
+    "report_caron_to_death"
   ]
 }

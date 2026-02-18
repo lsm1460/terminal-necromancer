@@ -1,4 +1,6 @@
 import enquirer from 'enquirer'
+import _ from 'lodash'
+import GolemWrapper from '../core/GolemWrapper'
 import { Player } from '../core/Player'
 import { printStatus } from '../statusPrinter'
 import { BattleTarget, CommandFunction, Corpse, Drop, GameContext, Item, ItemType, Monster, NPC, Tile } from '../types'
@@ -107,6 +109,10 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
     )
   }
 
+  if (target.isGolem) {
+    printGolem(target)
+  }
+
   if (skillDetails.length > 0) {
     console.log(`──────────────────────────────────────────────`)
     console.log(` 보유 기술:`)
@@ -118,6 +124,33 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   console.log(`──────────────────────────────────────────────`)
   console.log(` 💬 "${target.description}"`)
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+}
+
+const printGolem = (target: BattleTarget) => {
+  const golem = target as GolemWrapper
+  const upgrades = golem.upgrade || []
+  const limit = golem.upgradeLimit || 0 // 한계치 가져오기
+  const currentCount = upgrades.length
+
+  console.log(`──────────────────────────────────────────────`)
+  const barLength = 10
+  const filledLength = limit > 0 ? Math.round((currentCount / limit) * barLength) : 0
+  const bar = '■'.repeat(filledLength) + '□'.repeat(Math.max(0, barLength - filledLength))
+
+  console.log(` 🛠️ 골렘 성장도: [${bar}] ${currentCount} / ${limit}`)
+
+  if (currentCount > 0) {
+    const counts = _.countBy(upgrades)
+    const machineLv = counts['machine'] || 0
+    const soulLv = counts['soul'] || 0
+
+    if (machineLv > 0) {
+      console.log(` • \x1b[33m[⚙️ 기계 개조]\x1b[0m Lv.${machineLv}`)
+    }
+    if (soulLv > 0) {
+      console.log(` • \x1b[36m[👻 영혼 주입]\x1b[0m Lv.${soulLv}`)
+    }
+  }
 }
 
 // 아이템 정보 출력

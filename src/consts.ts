@@ -62,9 +62,10 @@ export const MAP_IDS = {
   B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',
   B3_5_RESISTANCE_BASE: 'B3_5_Resistance_Base',
   B4_Waste_Disposal_Area: 'B4_Waste_Disposal_Area',
+  B5_VIP_lounge: 'B5_VIP_lounge',
 } as const
 
-export type MapId = typeof MAP_IDS[keyof typeof MAP_IDS]
+export type MapId = (typeof MAP_IDS)[keyof typeof MAP_IDS]
 
 export type SkeletonRarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'
 

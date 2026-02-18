@@ -4,9 +4,11 @@ import { Player } from './Player'
 interface GolemWrapper extends BattleTarget {}
 
 class GolemWrapper {
+  upgradeLimit: number
+
   constructor(
     public raw: BattleTarget,
-    private upgrade: ('machine' | 'soul')[],
+    public upgrade: ('machine' | 'soul')[],
     private player: Player
   ) {
     Object.keys(raw).forEach((key) => {
@@ -20,6 +22,8 @@ class GolemWrapper {
         configurable: true,
       })
     })
+
+    this.upgradeLimit = player.upgradeLimit
   }
 
   private get machineCount() {
