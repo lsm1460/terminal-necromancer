@@ -14,7 +14,7 @@ export class LootFactory {
       id: generateId(),
       tileId: tile.id,
       exp: player.exp,
-      gold: player.gold,
+      gold: Math.ceil(player.gold / 2),
     }
   }
 

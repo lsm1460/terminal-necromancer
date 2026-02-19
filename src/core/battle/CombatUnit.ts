@@ -200,7 +200,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     if (options.isFixed) labels.push('\x1b[32m[고정 피해]\x1b[0m') // 녹색
 
     const labelPrefix = labels.length > 0 ? `${labels.join(' ')} ` : ''
-    const hpStatus = `\x1b[90m(남은 HP: ${this.ref.hp})\x1b[0m`
+    const hpStatus = `\x1b[90m(${this.name}의 남은 HP: ${this.ref.hp})\x1b[0m`
 
     // 1. 회피했을 경우
     if (isEscape) {

@@ -40,6 +40,8 @@ export const soulHarvest: ExecuteSkill = async (player, context) => {
     console.log('마나가 이미 가득 차 있습니다.')
   }
 
+  world.removeCorpse(selectedCorpse.id)
+
   // (선택) 회복 스킬이라도 적에게 아주 미미한 데미지나 경직을 줄 수 있습니다.
   // target.takeDamage(5);
 

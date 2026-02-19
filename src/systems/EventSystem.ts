@@ -34,7 +34,7 @@ export class EventSystem {
     }
 
     tile.isSeen = true
-    if (!(tile.event === 'boss' || tile.event.startsWith('monster') || tile.event.endsWith('_once'))) {
+    if (!(tile.event === 'boss' || tile.event.startsWith('monster') || tile.event.endsWith('-once'))) {
       tile.isClear = true
     }
   }

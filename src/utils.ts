@@ -16,7 +16,7 @@ export async function delay(amount: number = 1500) {
   await new Promise((resolve) => setTimeout(resolve, amount))
 }
 
-export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean }) {
+export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean, isSell?: boolean }) {
   const typeMap: Partial<Record<ItemType, string>> = {
     weapon: '무기',
     armor: '방어구',
@@ -28,7 +28,9 @@ export function makeItemMessage(item: Item, player: Player, options?: { withPric
   let message = `[${typeLabel}] ${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`
 
   if (options?.withPrice) {
-    message += ` (${item.price}gold)`
+    const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price;
+    
+    message += ` (${displayPrice}gold)`
   }
 
   if (item.type === 'weapon') {

@@ -229,11 +229,11 @@
     "id": "call_reinforcements",
     "name": "가드 호출",
     "description": "높은 주파수의 경보음을 울립니다. 하역장 곳곳에 대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다.",
-    "chance": 0.25,
+    "chance": 0.15,
     "targetType": "SELF",
     "type": "summon",
     "options": {
-      "spawnMonsterId": "shipyard_guard"
+      "spawnMonsterId": "shipyard_guard_no_gain"
     }
   },
   "stealth": {

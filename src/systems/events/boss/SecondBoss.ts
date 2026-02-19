@@ -35,6 +35,8 @@ export class SecondBoss implements BossLogic {
         console.log(
           `\n🛡️ [장갑] 견고한 장갑판이 공격을 튕겨냅니다!\n(장갑의 틈새를 공략할 강력한 '폭발'이 필요할 것 같습니다...)`
         )
+      } else {
+        options.skillAtkMult = 2
       }
     })
 

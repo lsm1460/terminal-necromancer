@@ -102,7 +102,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         orderWeight: 4,
         statMod: { atk: 0.6, def: 1.5, hp: 1.3, agi: 0.7 },
         skills: [],
-        weight: 1,
+        weight: 2,
         attackType: 'melee',
       },
       {
@@ -126,7 +126,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         orderWeight: 30,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
         skills: ['minor_heal'],
-        weight: 2,
+        weight: 1,
         attackType: 'ranged',
       },
     ],

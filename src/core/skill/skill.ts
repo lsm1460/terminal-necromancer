@@ -54,7 +54,7 @@ export const SKILL_LIST: Record<SkillId, Skill> = {
   [SKILL_IDS.SOUL_TRANSFER]: {
     id: SKILL_IDS.SOUL_TRANSFER,
     name: '영혼 전달',
-    description: '종속에게 이로운 효과를 부여합니다.',
+    description: '사령술사의 체력을 종속에게 전달하여 체력을 체웁니다.',
     attackType: 'ranged',
     cost: 5,
     requiredExp: 600,

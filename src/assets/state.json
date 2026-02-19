@@ -4,105 +4,108 @@
     "name": "player",
     "x": 3,
     "y": 2,
-    "_maxHp": 85,
-    "hp": 85,
-    "_maxMp": 85,
-    "mp": 135,
-    "atk": 30,
-    "def": 14,
+    "_maxHp": 74,
+    "hp": 74,
+    "_maxMp": 74,
+    "mp": 124,
+    "atk": 24,
+    "def": 11,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 2299,
-    "exp": 4219,
-    "level": 6,
-    "karma": 3,
+    "gold": 8641,
+    "exp": 387,
+    "level": 5,
+    "karma": 1,
     "inventoryMax": 15,
     "inventory": [
       {
-        "id": "sharp_pipe_1a56cab6b6c10e92",
-        "label": "\u001b[34m🔵 우수한 낡은 날카로운 파이프\u001b[0m",
-        "type": "weapon",
-        "attackType": "melee",
-        "atkRange": [
-          5,
-          11
-        ],
-        "critRange": [
-          0.03,
-          0.07
-        ],
-        "price": 750,
-        "sellPrice": 150,
-        "description": "하역장 배수관을 뜯어 끝을 뾰족하게 갈았습니다. 가볍게 휘둘러 기습하기에 좋습니다.",
+        "id": "potion_small",
+        "label": "작은 체력 포션",
+        "type": "consumable",
+        "hpHeal": 20,
+        "price": 20,
+        "sellPrice": 5,
+        "description": "작은 체력 회복 포션으로, hp 20을 보충할 수 있습니다.",
         "quantity": 1,
-        "atk": 6,
-        "crit": 0.07,
-        "rarity": "RARE",
-        "x": 3,
+        "x": 2,
+        "y": 1
+      },
+      {
+        "id": "mana_potion_small",
+        "label": "작은 마나 포션",
+        "type": "consumable",
+        "mpHeal": 20,
+        "price": 45,
+        "sellPrice": 6,
+        "description": "작은 마나 회복 포션으로, mp 20을 보충할 수 있습니다.",
+        "quantity": 1,
+        "x": 2,
         "y": 2
       },
       {
-        "id": "heavy_wrench_4018132837531471",
-        "label": "\u001b[37m⚪ 낡은 대형 렌치\u001b[0m",
+        "id": "improvised_bayonet_37350ba10388feae",
+        "label": "\u001b[34m🔵 강화된 장인의 급조된 총\u001b[0m",
         "type": "weapon",
-        "attackType": "melee",
+        "attackType": "ranged",
         "atkRange": [
-          8,
-          12
+          22,
+          24
         ],
         "critRange": [
-          0.05,
-          0.12
+          0.1,
+          0.2
         ],
-        "price": 1200,
-        "sellPrice": 350,
-        "description": "기중기를 수리할 때 쓰던 묵직한 공구입니다. 철검보다 무겁지만 타격감과 치명타 확률이 확실합니다.",
+        "price": 2100,
+        "sellPrice": 500,
+        "description": "사정거리는 짧지만 아직까지는 정상 격발됩니다.",
         "quantity": 1,
-        "atk": 8,
-        "crit": 0.1,
-        "rarity": "COMMON",
-        "x": 3,
-        "y": 2
+        "atk": 30,
+        "crit": 0.15,
+        "rarity": "RARE"
       }
     ],
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
-      "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
-      "SOUL_TRANSFER"
+      "SOUL_HARVEST",
+      "CURSE"
     ],
     "equipped": {
       "weapon": {
-        "id": "golem_core_staff_05f175908d05925d",
-        "label": "\u001b[34m🔵 우수한 장인의 강철 수호자의 과부하 지팡이\u001b[0m",
+        "id": "golem_core_staff_84ea5314a352d0b8",
+        "label": "\u001b[34m🔵 숙련된 강철 수호자의 과부하 지팡이\u001b[0m",
         "type": "weapon",
         "attackType": "ranged",
         "atkRange": [
-          24,
-          38
+          16,
+          28
         ],
         "critRange": [
           0.12,
           0.18
         ],
-        "maxSkeleton": 1,
+        "maxSkeletonRange": [
+          1,
+          2
+        ],
         "price": 4200,
         "sellPrice": 1150,
         "description": "쓰러진 강철 골렘의 가동부에서 적출한 육중한 지팡이입니다. 중심부의 코어에서는 여전히 불안정한 전류가 흐르며, 휘두를 때마다 웅웅거리는 진동이 손목을 타고 전해집니다.",
         "mp": 50,
         "quantity": 1,
         "minRarity": "RARE",
-        "atk": 30,
-        "crit": 0.14,
+        "atk": 25,
+        "crit": 0.12,
+        "maxSkeleton": 1,
         "rarity": "RARE",
-        "x": 0,
-        "y": 1
+        "x": 2,
+        "y": 3
       },
       "armor": {
-        "id": "rebel_iron_plate_64943ed6c8819775",
-        "label": "\u001b[34m🔵 정교한 반란군의 흉갑\u001b[0m",
+        "id": "rebel_iron_plate_bd148f407f7df41b",
+        "label": "\u001b[34m🔵 날카로운 낡은 반란군의 흉갑\u001b[0m",
         "type": "armor",
         "defRange": [
           20,
@@ -116,52 +119,55 @@
         "sellPrice": 600,
         "description": "하역장 컨테이너의 철판을 떼어내 가슴에 덧댔습니다.",
         "quantity": 1,
-        "def": 27,
-        "eva": 0,
-        "rarity": "RARE"
+        "minRarity": "RARE",
+        "def": 25,
+        "eva": 0.01,
+        "rarity": "RARE",
+        "x": 2,
+        "y": 3
       }
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
       "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
-      "SOUL_TRANSFER"
+      "SOUL_HARVEST",
+      "SOUL_TRANSFER",
+      "CURSE"
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 15,
     "skeleton": [
       {
-        "id": "skeleton_1770795867011",
-        "name": "\u001b[35m[EPIC]\u001b[0m 스켈레톤 워리어",
+        "id": "skeleton_1771482733520",
+        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
         "attackType": "melee",
-        "maxHp": 93,
-        "hp": 93,
-        "atk": 33,
-        "def": 21,
-        "agi": 22,
-        "skills": [
-          "whirlwind"
-        ],
+        "maxHp": 30,
+        "hp": 30,
+        "atk": 8,
+        "def": 4,
+        "agi": 9,
+        "skills": [],
         "exp": 0,
-        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "description": "하역 인부의 유골로 만들어진 소환수입니다.",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 7
+        "orderWeight": 10
       },
       {
-        "id": "skeleton_1770795912122",
-        "name": "\u001b[34m[ELITE]\u001b[0m 스켈레톤 수도자",
+        "id": "skeleton_1771477381447",
+        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 힐러",
         "attackType": "ranged",
-        "maxHp": 62,
-        "hp": 62,
-        "atk": 10,
-        "def": 12,
-        "agi": 19,
+        "maxHp": 52,
+        "hp": 52,
+        "atk": 9,
+        "def": 10,
+        "agi": 16,
         "skills": [
-          "heal"
+          "minor_heal"
         ],
         "exp": 0,
         "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
@@ -170,19 +176,19 @@
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 35
+        "orderWeight": 30
       },
       {
-        "id": "skeleton_1770957570267",
-        "name": "\u001b[33m[LEGENDARY]\u001b[0m 스켈레톤 해골 왕",
-        "attackType": "melee",
-        "maxHp": 156,
-        "hp": 156,
-        "atk": 60,
-        "def": 36,
-        "agi": 45,
+        "id": "skeleton_1771477776052",
+        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 화염술사",
+        "attackType": "ranged",
+        "maxHp": 52,
+        "hp": 52,
+        "atk": 9,
+        "def": 10,
+        "agi": 16,
         "skills": [
-          "death_aura"
+          "fire_bolt"
         ],
         "exp": 0,
         "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
@@ -191,26 +197,49 @@
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 55
+        "orderWeight": 30
+      },
+      {
+        "id": "skeleton_1771482629201",
+        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 힐러",
+        "attackType": "ranged",
+        "maxHp": 32,
+        "hp": 32,
+        "atk": 10,
+        "def": 3,
+        "agi": 33,
+        "skills": [
+          "minor_heal"
+        ],
+        "exp": 0,
+        "description": "하역장 사냥개의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 30
       }
     ],
-    "_maxSkeleton": 2,
+    "_maxSkeleton": 3,
     "upgradeLimit": 5,
-    "golemUpgrade": [],
+    "golemUpgrade": [
+      "soul"
+    ],
     "_golem": {
       "id": "golem",
       "name": "하역장의 기계 골렘",
       "attackType": "melee",
-      "baseMaxHp": 80,
-      "maxHp": 80,
-      "hp": 80,
-      "baseAtk": 60,
-      "atk": 60,
-      "baseDef": 40,
-      "def": 40,
+      "baseMaxHp": 90,
+      "maxHp": 90,
+      "hp": 110,
+      "baseAtk": 40,
+      "atk": 40,
+      "baseDef": 50,
+      "def": 50,
       "agi": 3,
       "exp": 0,
-      "description": "하역장에서 수거한 핵으로 제드가 부활시킨 거대 병기입니다.\n사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.",
+      "description": "하역장에서 수거한 핵으로 마야가 부활시킨 거대 병기입니다.",
       "dropTableId": "",
       "encounterRate": 0,
       "isAlive": true,
@@ -271,7 +300,7 @@
       },
       "second_boss": {
         "hp": 500,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -338,30 +367,28 @@
     },
     "factionHostility": {
       "untouchable": 100,
-      "resistance": -2
+      "resistance": -47
     },
     "factionContribution": {
-      "untouchable": 100,
-      "resistance": 15
+      "untouchable": 95,
+      "resistance": 505
     }
   },
   "drop": null,
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "b2_ratty",
-    "first_boss",
     "talk_death_1",
+    "first_boss",
     "talk_death_2",
-    "HEARD_RESISTANCE",
+    "b3_apostle",
     "RESISTANCE_BASE",
     "maya_1",
     "kane_1",
-    "b3_apostle",
+    "b2_ratty",
     "second_boss",
     "talk_death_3",
-    "golem_generation_denied_zed",
-    "caron_is_dead",
+    "caron_is_mine",
     "report_caron_to_death"
   ]
 }

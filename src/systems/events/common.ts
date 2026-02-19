@@ -10,7 +10,7 @@ export const commonHandlers: Record<string, EventHandler> = {
     player.restoreAll() // Player 내부에서 minion까지 회복하도록 구현 권장
   },
 
-  heal_once: async (tile, player, context) => {
+  'heal-once': async (tile, player, context) => {
     if (tile.isClear) return
 
     console.log(
@@ -51,7 +51,7 @@ export const commonHandlers: Record<string, EventHandler> = {
     await NpcEvent.handle(tile, player, context)
   },
 
-  summon_caron: async (tile, player, context) => {
+  'summon-caron': async (tile, player, context) => {
     const { events } = context
     const isMine = events.isCompleted('caron_is_mine')
     const isDead = events.isCompleted('caron_is_dead')

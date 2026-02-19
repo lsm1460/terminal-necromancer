@@ -150,7 +150,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
       return {
         name: `${index}`,
-        message: makeItemMessage(item, player, { withPrice: true }),
+        message: makeItemMessage(item, player, { withPrice: true, isSell: true }),
         label: item.label,
         price: finalSellPrice,
         originalIndex: index,

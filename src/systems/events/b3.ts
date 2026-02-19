@@ -83,7 +83,7 @@ export const b3Handlers: Record<string, EventHandler> = {
     console.log(`\n\x1b[90m[ 기록이 종료되었습니다. ]\x1b[0m`)
   },
 
-  'event-map-scan': async (tile, player, context) => {
+  'event-map-scan-once': async (tile, player, context) => {
     if (tile.isClear) return
 
     const { map } = context
@@ -135,6 +135,8 @@ export const b3Handlers: Record<string, EventHandler> = {
     console.log(`\x1b[90m...\x1b[0m`)
     console.log(`\x1b[32m✅ 훼손되지 않은 ${revealedTiles.length}곳의 구역 정보를 확인했습니다.\x1b[0m`)
     console.log(`\x1b[90m(나머지 선로 정보는 녹이 슬어 알아볼 수 없습니다.)\x1b[0m\n`)
+
+    tile.isClear = true
   },
 
   'event-conveyor-control-1': async (tile, player, context) => {
