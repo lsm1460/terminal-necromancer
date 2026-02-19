@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
-    "y": 2,
+    "x": 1,
+    "y": 0,
     "_maxHp": 74,
     "hp": 74,
     "_maxMp": 74,
@@ -253,7 +253,7 @@
     },
     "knightUpgrade": []
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B5_VIP_lounge",
   "npcs": {
     "states": {
       "kane_leader": {

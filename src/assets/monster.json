@@ -367,5 +367,22 @@
     "orderWeight": 50,
     "noCorpse": true,
     "noEscape": true
+  },
+  "security_automaton_sebastian": {
+    "id": "security_automaton_sebastian",
+    "name": "보안 오토마톤 '세바스찬'",
+    "attackType": "melee",
+    "hp": 85,
+    "maxHp": 85,
+    "atk": 42,
+    "def": 40,
+    "agi": 18,
+    "exp": 0,
+    "dropTableId": "",
+    "skills": ["power_smash"],
+    "description": "라운지의 질서를 위협하는 침입자를 신속하고 깔끔하게 '청소'합니다. 금색 장갑판은 웬만한 충격에는 흠집조차 나지 않습니다.",
+    "orderWeight": 65,
+    "noCorpse": true,
+    "noEscape": true
   }
 }

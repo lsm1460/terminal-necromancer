@@ -44,5 +44,11 @@
     { "id": "shipyard_worker", "encounterRate": 100 },
     { "id": "golem_left_arm", "encounterRate": 100 },
     { "id": "golem_right_arm", "encounterRate": 100 }
+  ],
+  "monster-group-b5-test": [
+    { "id": "security_automaton_sebastian", "encounterRate": 100 },
+    { "id": "security_automaton_sebastian", "encounterRate": 100 },
+    { "id": "security_automaton_sebastian", "encounterRate": 100 },
+    { "id": "security_automaton_sebastian", "encounterRate": 100 }
   ]
 }

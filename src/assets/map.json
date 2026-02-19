@@ -556,12 +556,20 @@
     "tiles": [
       [
         {
-          "id": "tile_400",
+          "id": "tile_500",
           "theme": "entrance",
           "event": "summon-caron",
           "npcIds": ["elevator"],
           "dialogue": "공간이 검게 타버린 종이처럼 말려 올라갑니다.",
           "observe": "...폐허뿐이 보이지 않습니다."
+        },
+        {
+          "id": "tile_501",
+          "theme": "dark_corridor",
+          "event": "monster-group-b5-test",
+          "spawn_limit": 4,
+          "dialogue": "테스트 구역입니다..",
+          "observe": "테스트 구역입니다.."
         }
       ]
     ]
