@@ -45,10 +45,29 @@
     { "id": "golem_left_arm", "encounterRate": 100 },
     { "id": "golem_right_arm", "encounterRate": 100 }
   ],
-  "monster-group-b5-test": [
-    { "id": "security_automaton_sebastian", "encounterRate": 100 },
-    { "id": "security_automaton_sebastian", "encounterRate": 100 },
-    { "id": "security_automaton_sebastian", "encounterRate": 100 },
-    { "id": "security_automaton_sebastian", "encounterRate": 100 }
+  "monster-b5-standard-security": [
+    { "id": "modified_fury_hound", "encounterRate": 20 },
+    { "id": "security_guard", "encounterRate": 100 },
+    { "id": "security_sharpshooter", "encounterRate": 80 },
+    { "id": "optical_surveillance_unit", "encounterRate": 60 },
+    { "id": "security_priest", "encounterRate": 40 }
+  ],
+  "monster-b5-noble-escort": [
+    { "id": "corrupted_noble_wraith", "encounterRate": 30 },
+    { "id": "guardbot_sebastian", "encounterRate": 80 },
+    { "id": "optical_surveillance_unit", "encounterRate": 100 },
+    { "id": "clinging_concierge", "encounterRate": 70 }
+  ],
+  "monster-b5-hidden-assault": [
+    { "id": "masked_intruder_wraith", "encounterRate": 45 },
+    { "id": "modified_fury_hound", "encounterRate": 100 },
+    { "id": "clinging_concierge", "encounterRate": 60 },
+    { "id": "security_guard", "encounterRate": 50 }
+  ],
+  "monster-b5-lounge-patrol": [
+    { "id": "security_sharpshooter", "encounterRate": 100 },
+    { "id": "modified_fury_hound", "encounterRate": 80 },
+    { "id": "optical_surveillance_unit", "encounterRate": 80 },
+    { "id": "security_guard", "encounterRate": 100 }
   ]
 }

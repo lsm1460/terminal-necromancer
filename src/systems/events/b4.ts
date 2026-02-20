@@ -20,6 +20,7 @@ export const b4Handlers: Record<string, EventHandler> = {
       const target = _.sample(safeTargets)
 
       if (target) {
+        console.log('DEBUG::', target)
         player.x = target.x
         player.y = target.y
 

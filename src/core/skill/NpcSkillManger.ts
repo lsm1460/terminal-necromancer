@@ -89,8 +89,7 @@ const SpecialSkillLogics: Record<
       totalDamageDealt += result.damage || 0
     }
 
-    // 2. 입힌 데미지의 일정 비율만큼 시전자 회복 (예: 데미지의 50%)
-    const healAmount = Math.floor(totalDamageDealt * 0.5)
+    const healAmount = Math.ceil(totalDamageDealt * 0.5)
     if (healAmount > 0) {
       attacker.ref.hp = Math.min(attacker.ref.maxHp, attacker.ref.hp + healAmount)
       console.log(`💉 ${attacker.name}(이)가 적의 생명력을 흡수하여 HP를 ${healAmount}만큼 회복했습니다!`)
@@ -181,6 +180,17 @@ export class NpcSkillManager {
       case 'ENEMY_SINGLE':
         const priorityTarget = enemies.find((e) => e.deBuff.some((b) => b.type === 'focus')) || enemies[0]
         targets = [priorityTarget]
+        break
+      case 'ENEMY_DOUBLE':
+        targets = [enemies[0], enemies[1]].filter((v) => v !== undefined)
+        break
+      case 'ENEMY_LOWEST_HP':
+        if (enemies.length === 0) {
+          targets = []
+        } else {
+          const weakestEnemy = enemies.reduce((p, c) => (p.ref.hp / p.ref.maxHp < c.ref.hp / c.ref.maxHp ? p : c))
+          targets = [weakestEnemy]
+        }
         break
       case 'ENEMY_BACK':
         targets = enemies.length > 0 ? [enemies[enemies.length - 1]] : []

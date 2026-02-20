@@ -199,6 +199,15 @@ export class Player {
       .flatMap((item) => item.affix!)
   }
 
+  get minRebornRarity() {
+    let minRebornRarity = this.getAffixValue('ELITE_SQUAD')
+
+    if (this.equipped.weapon) minRebornRarity += this.equipped.weapon?.minRebornRarity || 0
+    if (this.equipped.armor) minRebornRarity += this.equipped.armor?.minRebornRarity || 0
+
+    return minRebornRarity
+  }
+
   public getAffixValue(affixId: AffixId): number {
     const values = [this.equipped.weapon, this.equipped.armor]
       .filter((item) => item?.affix?.id === affixId)

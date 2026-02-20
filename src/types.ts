@@ -43,7 +43,7 @@ export type BattleTarget = {
   isGolem?: boolean
   isKnight?: boolean
   deathLine?: string
-  minRarity?: SkeletonRarity
+  minRebornRarity?: SkeletonRarity
   orderWeight?: number
 }
 
@@ -129,6 +129,7 @@ export type WeaponItem = BaseItem &
     atk: number
     crit: number
     attackType: AttackType
+    minRebornRarity?: number
   }
 
 // 방어구
@@ -137,6 +138,7 @@ export type ArmorItem = BaseItem &
     type: ItemType.ARMOR
     def: number
     eva?: number
+    minRebornRarity?: number
   }
 
 // 음식
@@ -228,6 +230,7 @@ export interface NPC extends BattleTarget {
 
 export const SKILL_IDS = {
   RAISE_SKELETON: 'RAISE_SKELETON',
+  RECALL_SKELETON: 'RECALL_SKELETON',
   FOCUS_FIRE: 'FOCUS_FIRE',
   SOUL_HARVEST: 'SOUL_HARVEST',
   CORPSE_EXPLOSION: 'CORPSE_EXPLOSION',
@@ -288,7 +291,9 @@ export type GameEvent = {
 
 export type SkillTargetType =
   | 'ENEMY_SINGLE'
+  | 'ENEMY_DOUBLE'
   | 'ENEMY_BACK'
+  | 'ENEMY_LOWEST_HP'
   | 'ENEMY_ALL'
   | 'ALLY_SINGLE'
   | 'ALLY_LOWEST_HP'

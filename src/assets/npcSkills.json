@@ -4,7 +4,7 @@
     "name": "불꽃 화살",
     "attackType": "ranged",
     "description": "대상에게 불꽃을 날려 화상을 입힙니다.",
-    "chance": 0.3,
+    "chance": 0.4,
     "power": 0.8,
     "targetType": "ENEMY_SINGLE",
     "buff": {
@@ -19,7 +19,7 @@
     "name": "얼음 화살",
     "attackType": "ranged",
     "description": "대상에게 얼음을 날려 행동을 둔화시킵니다.",
-    "chance": 0.3,
+    "chance": 0.4,
     "power": 0.8,
     "targetType": "ENEMY_SINGLE",
     "buff": {
@@ -51,7 +51,13 @@
     "description": "강력한 불을 사방에 내뿜습니다.",
     "chance": 0.3,
     "power": 0.3,
-    "targetType": "ENEMY_ALL"
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "name": "화상",
+      "type": "dot",
+      "duration": 2,
+      "atk": 2
+    }
   },
   "quick_slash": {
     "id": "quick_slash",
@@ -103,14 +109,41 @@
     "power": 1.4,
     "targetType": "ENEMY_SINGLE"
   },
-  "piercing_arrow": {
-    "id": "piercing_arrow",
-    "name": "관통 화살",
+  "power_shot": {
+    "id": "power_shot",
+    "name": "강력한 사격",
+    "attackType": "ranged",
+    "description": "적의 급소를 노려 강력한 투사체를 발사합니다.",
+    "chance": 0.3,
+    "power": 1.4,
+    "targetType": "ENEMY_SINGLE"
+  },
+  "aim_arrow": {
+    "id": "aim_arrow",
+    "name": "저격 사격",
     "attackType": "ranged",
     "description": "가장 뒤에 있는 적을 저격합니다.",
     "chance": 1,
     "power": 1.2,
     "targetType": "ENEMY_BACK"
+  },
+  "piercing_arrow": {
+    "id": "piercing_arrow",
+    "name": "관통 사격",
+    "attackType": "ranged",
+    "description": "전열을 관통해 그 뒤에 있는 적까지 노립니다.",
+    "chance": 1,
+    "power": 1,
+    "targetType": "ENEMY_DOUBLE"
+  },
+  "rapid_fire": {
+    "id": "rapid_fire",
+    "name": "난사",
+    "attackType": "ranged",
+    "description": "전장에 무차별적인 사격을 가해 모든 적에게 피해를 입힙니다.",
+    "chance": 0.2,
+    "power": 0.6,
+    "targetType": "ENEMY_ALL"
   },
   "minor_heal": {
     "id": "minor_heal",
@@ -236,6 +269,28 @@
       "spawnMonsterId": "shipyard_guard_no_gain"
     }
   },
+  "call_reinforcements2": {
+    "id": "call_reinforcements2",
+    "name": "가드 호출",
+    "description": "높은 주파수의 경보음을 울립니다.대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다.",
+    "chance": 0.15,
+    "targetType": "SELF",
+    "type": "summon",
+    "options": {
+      "spawnMonsterId": "security_guard_no_gain"
+    }
+  },
+  "call_reinforcements3": {
+    "id": "call_reinforcements3",
+    "name": "가드 호출",
+    "description": "높은 주파수의 경보음을 울립니다.대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다.",
+    "chance": 0.15,
+    "targetType": "SELF",
+    "type": "summon",
+    "options": {
+      "spawnMonsterId": "security_priest_no_gain"
+    }
+  },
   "stealth": {
     "id": "stealth",
     "name": "은신",
@@ -302,6 +357,15 @@
       "duration": 15,
       "atk": 2
     }
+  },
+  "vitals_strike": {
+    "id": "vitals_strike",
+    "name": "급소 타격",
+    "attackType": "melee",
+    "description": "가장 취약한 적의 빈틈을 파고들어 치명적인 근접 공격을 가합니다.",
+    "chance": 0.25,
+    "power": 1.6,
+    "targetType": "ENEMY_LOWEST_HP"
   },
   "whirlwind": {
     "id": "whirlwind",
@@ -398,5 +462,23 @@
     "chance": 0.3,
     "power": 0.7,
     "targetType": "ENEMY_ALL"
+  },
+  "spectral_wail": {
+    "id": "spectral_wail",
+    "name": "원혼의 통곡",
+    "attackType": "ranged",
+    "description": "귀족의 원한이 담긴 비명을 질러 모든 적의 정신을 붕괴시킵니다.",
+    "chance": 0.6,
+    "power": 0.4,
+    "targetType": "ENEMY_ALL"
+  },
+  "spout_out": {
+    "id": "spout_out",
+    "name": "분출",
+    "attackType": "ranged",
+    "description": "죄악의 구덩이에서 끓어오르는 오물이 목표를 휩쓸어버립니다.",
+    "chance": 0.3,
+    "power": 3,
+    "targetType": "PLAYER"
   }
 }

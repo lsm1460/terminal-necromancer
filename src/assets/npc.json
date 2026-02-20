@@ -66,7 +66,7 @@
   },
   "jax_seeker": {
     "id": "jax_seeker",
-    "name": "수색꾼 카일",
+    "name": "수색꾼 잭스",
     "attackType": "ranged",
     "hp": 50,
     "maxHp": 50,
@@ -91,10 +91,10 @@
         "farewell": "내 눈앞에서 사라져. 다음엔 대화 대신 칼날이 나갈 테니."
       }
     },
-    "deathLine": "카일이 움켜쥐고 있던 지도를 놓치며 쓰러집니다.",
+    "deathLine": "잭스가 움켜쥐고 있던 지도를 놓치며 쓰러집니다.",
     "description": "어딘가 어색해보이는 수색의 전문가",
     "dropTableId": "resistance",
-    "minRarity": "elite",
+    "minRebornRarity": "elite",
     "skills": ["stealth", "item_steal", "enemy_curse", "smoke_bomb"]
   },
   "elevator": {
@@ -199,7 +199,7 @@
     "attackType": "melee",
     "hp": 80,
     "maxHp": 80,
-    "atk": 12,
+    "atk": 5,
     "def": 8,
     "eva": 0.0,
     "exp": 1000,
@@ -225,8 +225,8 @@
     "description": "'이것'은 단지 '치워야 할 오물'입니다.",
     "dropTableId": "boss1",
     "noEscape": true,
-    "minRarity": "elite",
-    "skills": ["power_smash", "divide_soul"]
+    "minRebornRarity": "elite",
+    "skills": ["spout_out", "divide_soul"]
   },
   "second_boss": {
     "id": "second_boss",
@@ -511,16 +511,17 @@
     "name": "카론",
     "faction": "untouchable",
     "attackType": "ranged",
-    "hp": 1000,
-    "maxHp": 1000,
-    "atk": 50,
-    "def": 35,
+    "hp": 500,
+    "maxHp": 500,
+    "atk": 30,
+    "def": 25,
     "eva": 0.1,
     "exp": 1500,
     "isAlive": true,
     "reborn": false,
     "noEscape": true,
     "lines": ["..."],
+    "minRebornRarity": "elite",
     "scripts": {
       "friendly": {
         "greeting": "",

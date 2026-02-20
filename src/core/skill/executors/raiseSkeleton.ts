@@ -15,7 +15,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     // --- 1. 등급 결정 로직 ---
     const rarities: SkeletonRarity[] = ['common', 'rare', 'elite', 'epic', 'legendary']
     // 시체에 저장된 최솟값 인덱스 (기본값 Rare)
-    const minIdx = rarities.indexOf(corpse?.minRarity || 'common') + player.ref.getAffixValue('ELITE_SQUAD')
+    const minIdx = rarities.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity
 
     // 가중치 기반으로 랜덤 등급 선택
     const pool = rarities.slice(Math.min(minIdx, rarities.length - 1)) // 최소 등급 이상만 필터링
@@ -68,8 +68,8 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       attackType: selectedClass.attackType,
       maxHp: Math.floor(corpse.maxHp * m * s.hp),
       hp: Math.floor(corpse.maxHp * m * s.hp),
-      atk: Math.floor(corpse.atk * m * s.atk),
-      def: Math.floor(corpse.def * m * s.def),
+      atk: Math.max(Math.floor(corpse.atk * m * s.atk), 8),
+      def: Math.max(Math.floor(corpse.def * m * s.def), 5),
       agi: Math.floor(corpse.agi * m * s.agi),
       skills: [...selectedClass.skills],
       exp: 0,

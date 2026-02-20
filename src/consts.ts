@@ -80,7 +80,7 @@ type SubClass = {
 
 export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number; subClasses: SubClass[] }> = {
   common: {
-    bonus: 0.8,
+    bonus: 1.1,
     weight: 500,
     subClasses: [
       {
@@ -94,13 +94,13 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     ],
   },
   rare: {
-    bonus: 1.0,
+    bonus: 1.2,
     weight: 375,
     subClasses: [
       {
         name: '방패병',
         orderWeight: 4,
-        statMod: { atk: 0.6, def: 1.5, hp: 1.3, agi: 0.7 },
+        statMod: { atk: 0.6, def: 2.5, hp: 2, agi: 0.7 },
         skills: [],
         weight: 2,
         attackType: 'melee',
@@ -108,7 +108,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
       {
         name: '검사',
         orderWeight: 15,
-        statMod: { atk: 1.2, def: 1, hp: 1, agi: 1.1 },
+        statMod: { atk: 1.2, def: 1, hp: 1.5, agi: 1.1 },
         skills: ['power_smash'],
         weight: 1,
         attackType: 'melee',
@@ -132,13 +132,13 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     ],
   },
   elite: {
-    bonus: 1.2,
+    bonus: 1.4,
     weight: 100,
     subClasses: [
       {
         name: '대형 방패병',
         orderWeight: 5,
-        statMod: { atk: 0.8, def: 1.5, hp: 1.5, agi: 0.7 },
+        statMod: { atk: 0.8, def: 2.8, hp: 2.5, agi: 0.7 },
         skills: ['shield_Bash'],
         weight: 4,
         attackType: 'melee',
@@ -146,8 +146,8 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
       {
         name: '궁수',
         orderWeight: 25,
-        statMod: { atk: 1.3, def: 0.7, hp: 0.8, agi: 1.5 },
-        skills: ['piercing_arrow'],
+        statMod: { atk: 1.3, def: 1, hp: 1, agi: 1.5 },
+        skills: ['aim_arrow'],
         weight: 3,
         attackType: 'ranged',
       },
@@ -200,7 +200,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     ],
   },
   legendary: {
-    bonus: 2.0,
+    bonus: 2,
     weight: 5,
     subClasses: [
       {
@@ -215,7 +215,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
   },
 }
 
-export const INIT_MAX_MEMORIZE_COUNT = 4
+export const INIT_MAX_MEMORIZE_COUNT = 5
 
 export const SKELETON_UPGRADE = {
   MIN_LIMIT: 2,

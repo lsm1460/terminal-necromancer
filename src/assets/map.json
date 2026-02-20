@@ -566,7 +566,7 @@
         {
           "id": "tile_501",
           "theme": "dark_corridor",
-          "event": "monster-group-b5-test",
+          "event": "monster-b5-standard-security",
           "spawn_limit": 4,
           "dialogue": "테스트 구역입니다..",
           "observe": "테스트 구역입니다.."

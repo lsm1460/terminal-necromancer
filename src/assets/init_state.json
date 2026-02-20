@@ -17,9 +17,10 @@
     "level": 1,
     "inventoryMax": 15,
     "inventory": [],
-    "_maxMemorize": 4,
+    "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
+      "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
     "equipped": {
@@ -28,6 +29,7 @@
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
+      "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
     "skeletonSubspace": [],

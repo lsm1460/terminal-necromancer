@@ -10,7 +10,7 @@ export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } 
   const duration = 3
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
-  const curseName = '[죽음의 표식]'
+  const curseName = '죽음의 표식'
 
   if (aliveEnemies.length === 0) {
     console.log(`\n[실패] 대상이 없습니다.`)

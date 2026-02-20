@@ -26,8 +26,7 @@ const JaxHandler: NPCHandler = {
         handleEnter(player, context)
         break
       case 'join':
-        await handleJoin(player, npc, context)
-        break
+        return await handleJoin(player, npc, context)
       default:
         break
     }
@@ -106,7 +105,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
       }
 
       tile.isClear = true
-      break
+      return true
 
     case 'leave':
       console.log(`\n잭스: "흥, 겁에 질려서 도망가는 꼴이라니! 다신 내 눈앞에 띄지 마라!"`)
