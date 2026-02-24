@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Corpse, Drop, LootBag } from '../types'
+import { Corpse, Drop, LootBag } from '~/types'
 import { MapManager } from './MapManager'
 
 export class World {

@@ -1,4 +1,4 @@
-import { NpcSkill } from '../../types'
+import { NpcSkill } from '~/types'
 import { Battle, DamageOptions } from '../battle/Battle'
 import { CombatUnit } from '../battle/CombatUnit'
 

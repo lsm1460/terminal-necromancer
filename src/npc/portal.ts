@@ -1,8 +1,8 @@
 import enquirer from 'enquirer'
-import { Player } from '../core/Player'
-import { GameContext } from '../types'
+import { Player } from '~/core/Player'
+import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
-import { printStatus } from '../statusPrinter'
+import { printStatus } from '~/statusPrinter'
 
 const PortalHandler: NPCHandler = {
   getChoices() {

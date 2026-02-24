@@ -1,7 +1,7 @@
 // core/Player.ts
 import enquirer from 'enquirer'
 import fs from 'fs'
-import { INIT_MAX_MEMORIZE_COUNT } from '../consts'
+import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import {
   Affix,
   AffixId,
@@ -15,7 +15,7 @@ import {
   SKILL_IDS,
   SkillId,
   WeaponItem,
-} from '../types'
+} from '~/types'
 import GolemWrapper from './GolemWrapper'
 import { ItemRarity } from './item/consts'
 import KnightWrapper from './KnightWrapper'

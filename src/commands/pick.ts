@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
-import { CommandFunction } from '../types'
-import { makeItemMessage } from '../utils'
+import { CommandFunction } from '~/types'
+import { makeItemMessage } from '~/utils'
 
 export const pickCommand: CommandFunction = async (player, args, context) => {
   // 1. 현재 위치의 드랍 아이템 탐색

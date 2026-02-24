@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
-import npcHandlers from '../npc'
-import { CommandFunction } from '../types'
+import npcHandlers from '~/npc'
+import { CommandFunction } from '~/types'
 
 export const talkCommand: CommandFunction = async (player, args, context) => {
   const tile = context.map.getTile(player.pos.x, player.pos.y)

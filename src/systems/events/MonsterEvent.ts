@@ -1,8 +1,8 @@
-import { CombatUnit } from '../../core/battle/CombatUnit'
-import { MonsterFactory } from '../../core/MonsterFactory'
-import { Player } from '../../core/Player'
-import { GameContext, Monster, Tile } from '../../types'
-import { delay } from '../../utils'
+import { CombatUnit } from '~/core/battle/CombatUnit'
+import { MonsterFactory } from '~/core/MonsterFactory'
+import { Player } from '~/core/Player'
+import { GameContext, Monster, Tile } from '~/types'
+import { delay } from '~/utils'
 
 export class MonsterEvent {
   constructor(public monsterFactory: MonsterFactory) {}

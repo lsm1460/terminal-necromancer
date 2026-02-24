@@ -6,6 +6,10 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "./dist",
-    "types": ["node"]    // ← 여기 추가
+    "types": ["node"],
+    "baseUrl": ".", 
+    "paths": {
+      "~/*": ["src/*"]
+    }
   }
 }

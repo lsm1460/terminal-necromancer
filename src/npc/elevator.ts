@@ -1,8 +1,8 @@
 import enquirer from 'enquirer'
-import { MAP_IDS, MapId } from '../consts'
-import { Player } from '../core/Player'
-import { printTileStatus } from '../statusPrinter'
-import { GameContext } from '../types'
+import { MAP_IDS, MapId } from '~/consts'
+import { Player } from '~/core/Player'
+import { printTileStatus } from '~/statusPrinter'
+import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
 
 const ElevatorHandler: NPCHandler = {

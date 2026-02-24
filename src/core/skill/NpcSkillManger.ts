@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { BattleTarget, GameContext, ItemType, NpcSkill } from '../../types'
+import { BattleTarget, GameContext, ItemType, NpcSkill } from '~/types'
 import { Player } from '../Player'
 import { CombatUnit } from '../battle/CombatUnit'
 import _ from 'lodash'

@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill } from '../../../types'
-import { TargetSelector } from '../../battle/TargetSelector'
+import { ExecuteSkill } from '~/types'
+import { TargetSelector } from '~/core/battle/TargetSelector'
 
 /**
  * 뼈 감옥 (Bone Prison)

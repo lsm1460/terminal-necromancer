@@ -1,4 +1,4 @@
-import { ExecuteSkill } from '../../../types'
+import { ExecuteSkill } from '~/types'
 import { SkillManager } from '../SkillManager'
 
 /**

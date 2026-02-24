@@ -1,10 +1,10 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
-import { GameContext, NPC, Tile } from '../types'
+import { GameContext, NPC, Tile } from '~/types'
 import { NPCHandler } from './NPCHandler'
-import BossEvent from '../systems/events/BossEvent'
-import { Player } from '../core/Player'
-import { speak } from '../utils'
+import BossEvent from '~/systems/events/BossEvent'
+import { Player } from '~/core/Player'
+import { speak } from '~/utils'
 
 let count = 0
 let firstAnswer: boolean | null = null

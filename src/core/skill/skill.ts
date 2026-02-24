@@ -1,4 +1,4 @@
-import { SKILL_IDS, Skill, SkillId } from '../../types'
+import { SKILL_IDS, Skill, SkillId } from '~/types'
 import { Player } from '../Player'
 import { SkillExecutor } from './executors'
 

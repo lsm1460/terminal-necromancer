@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
-import { Player } from '../core/Player'
-import { GameContext, NPC } from '../types'
-import { makeItemMessage } from '../utils'
+import { Player } from '~/core/Player'
+import { GameContext, NPC } from '~/types'
+import { makeItemMessage } from '~/utils'
 
 export interface NPCHandler {
   getChoices(player: Player, npc: NPC, context: GameContext): { name: string; message: string }[]

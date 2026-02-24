@@ -1,4 +1,4 @@
-import { BattleTarget } from '../types'
+import { BattleTarget } from '~/types'
 import { Player } from './Player'
 
 interface GolemWrapper extends BattleTarget {}

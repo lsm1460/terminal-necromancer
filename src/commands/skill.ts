@@ -1,7 +1,7 @@
-import { CombatUnit } from '../core/battle/CombatUnit'
-import { SkillManager } from '../core/skill'
-import { CommandFunction, NPC } from '../types'
-import { delay } from '../utils'
+import { CombatUnit } from '~/core/battle/CombatUnit'
+import { SkillManager } from '~/core/skill'
+import { CommandFunction, NPC } from '~/types'
+import { delay } from '~/utils'
 
 export const skillCommand: CommandFunction = async (player, args, context) => {
   const { map, npcs, battle } = context

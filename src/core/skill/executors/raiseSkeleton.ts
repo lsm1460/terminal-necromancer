@@ -1,5 +1,5 @@
-import { RARITY_DATA, SkeletonRarity } from '../../../consts'
-import { BattleTarget, Corpse, ExecuteSkill } from '../../../types'
+import { RARITY_DATA, SkeletonRarity } from '~/consts'
+import { BattleTarget, Corpse, ExecuteSkill } from '~/types'
 import { SkillManager } from '../SkillManager'
 
 export const raiseSkeleton: ExecuteSkill = async (player, context) => {

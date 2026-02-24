@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
-import { SKELETON_UPGRADE } from '../consts'
-import { Player } from '../core/Player'
-import { BattleTarget, GameContext } from '../types'
+import { SKELETON_UPGRADE } from '~/consts'
+import { Player } from '~/core/Player'
+import { BattleTarget, GameContext } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const SubspaceHandler: NPCHandler = {

@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill, GameContext, SkillId } from '../../types'
+import { ExecuteSkill, GameContext, SkillId } from '~/types'
 import { Player } from '../Player'
 import { SKILL_LIST } from './skill'
 

@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
-import { CommandFunction, ConsumableItem, Drop, ItemType } from '../types'
-import { makeItemMessage } from '../utils'
+import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
+import { makeItemMessage } from '~/utils'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (player, args, context) => {

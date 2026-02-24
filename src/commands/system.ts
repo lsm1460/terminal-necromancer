@@ -1,5 +1,5 @@
-import { COMMAND_GROUPS } from '../consts'
-import { CommandFunction } from '../types'
+import { COMMAND_GROUPS } from '~/consts'
+import { CommandFunction } from '~/types'
 
 // --- Exit ---
 export const exitCommand: CommandFunction = (player, args, context) => {

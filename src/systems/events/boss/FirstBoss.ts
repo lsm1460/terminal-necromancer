@@ -1,5 +1,5 @@
-import { CombatUnit } from '../../../core/battle/CombatUnit'
-import { GameContext, GameEvent, NPC } from '../../../types'
+import { CombatUnit } from '~/core/battle/CombatUnit'
+import { GameContext, GameEvent, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
 
 export class FirstBoss implements BossLogic {

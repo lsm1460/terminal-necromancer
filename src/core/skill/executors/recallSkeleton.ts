@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill } from '../../../types'
+import { ExecuteSkill } from '~/types'
 
 export const recallSkeleton: ExecuteSkill = async (player, context) => {
   const skeletons = player.ref.skeleton

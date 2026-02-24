@@ -1,4 +1,4 @@
-import { AttackType, BattleTarget } from '../types'
+import { AttackType, BattleTarget } from '~/types'
 import { Player } from './Player'
 
 /**

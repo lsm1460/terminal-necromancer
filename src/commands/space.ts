@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
-import { Player } from '../core/Player'
-import { BattleTarget, CommandFunction } from '../types'
+import { Player } from '~/core/Player'
+import { BattleTarget, CommandFunction } from '~/types'
 
 export const spaceCommand: CommandFunction = async (player, args, context) => {
   const { events } = context

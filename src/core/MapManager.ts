@@ -1,7 +1,7 @@
 import fs from 'fs'
 import _ from 'lodash'
-import { MAP_IDS, MapId } from '../consts'
-import { Tile } from '../types'
+import { MAP_IDS, MapId } from '~/consts'
+import { Tile } from '~/types'
 import { Player } from './Player'
 
 interface SceneData {

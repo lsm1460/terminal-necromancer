@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { GameContext } from '../types'
+import { GameContext } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const RattyHandler: NPCHandler = {

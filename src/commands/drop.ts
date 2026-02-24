@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { CommandFunction, Drop, Item } from '../types'
+import { CommandFunction, Drop, Item } from '~/types'
 
 export const dropCommand: CommandFunction = async (player, args, context) => {
   const inventory = player.inventory

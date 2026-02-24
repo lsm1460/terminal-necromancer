@@ -1,7 +1,7 @@
-import { Player } from '../core/Player'
-import { DropSystem } from '../systems/DropSystem'
-import { BattleTarget, LootBag } from '../types'
-import { generateId } from '../utils'
+import { Player } from '~/core/Player'
+import { DropSystem } from '~/systems/DropSystem'
+import { BattleTarget, LootBag } from '~/types'
+import { generateId } from '~/utils'
 import { MapManager } from './MapManager'
 
 export class LootFactory {

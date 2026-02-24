@@ -1,4 +1,4 @@
-import { BattleTarget } from '../../types'
+import { BattleTarget } from '~/types'
 import { Player } from '../Player'
 import { CombatUnit } from './CombatUnit'
 

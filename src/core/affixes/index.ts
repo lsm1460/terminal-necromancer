@@ -1,4 +1,4 @@
-import { Affix } from '../../types'
+import { Affix } from '~/types'
 
 export const AFFIX_LIST: Record<string, Affix> = {
   SURPRISE_ATTACK: {

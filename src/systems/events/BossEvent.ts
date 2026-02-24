@@ -1,8 +1,8 @@
-import _ from 'lodash'
 import enquirer from 'enquirer'
-import { GameContext, Tile } from '../../types'
-import { CombatUnit } from '../../core/battle/CombatUnit'
-import { Player } from '../../core/Player'
+import _ from 'lodash'
+import { CombatUnit } from '~/core/battle/CombatUnit'
+import { Player } from '~/core/Player'
+import { GameContext, Tile } from '~/types'
 import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {

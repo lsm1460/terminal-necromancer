@@ -1,5 +1,5 @@
-import { Affix, ArmorItem, Drop, ItemType, WeaponItem } from '../../types'
-import { generateId } from '../../utils'
+import { Affix, ArmorItem, Drop, ItemType, WeaponItem } from '~/types'
+import { generateId } from '~/utils'
 import { AFFIX_LIST } from '../affixes'
 import { ItemRarity, RARITY_SETTINGS } from './consts'
 

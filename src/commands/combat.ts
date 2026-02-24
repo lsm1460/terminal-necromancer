@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
-import { CombatUnit } from '../core/battle/CombatUnit'
-import { CommandFunction, NPC } from '../types'
+import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CommandFunction, NPC } from '~/types'
 
 export const attackCommand: CommandFunction = async (player, args, context) => {
   const { map, npcs, battle } = context

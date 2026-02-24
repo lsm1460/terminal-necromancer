@@ -1,7 +1,7 @@
 // systems/SaveSystem.ts
 import fs from 'fs'
-import { Player } from '../core/Player'
-import { LootBag, NPCState } from '../types'
+import { Player } from '~/core/Player'
+import { LootBag, NPCState } from '~/types'
 
 export type SaveData = {
   player: Player

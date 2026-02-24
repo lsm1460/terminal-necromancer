@@ -1,4 +1,4 @@
-import { ExecuteSkill } from '../../../types'
+import { ExecuteSkill } from '~/types'
 
 /**
  * 뼈 폭풍 (Bone Storm)

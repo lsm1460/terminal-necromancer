@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { HOSTILITY_LIMIT } from '../consts'
-import { NPC, NPCState } from '../types'
+import { HOSTILITY_LIMIT } from '~/consts'
+import { NPC, NPCState } from '~/types'
 import { Player } from './Player'
 
 export class NPCManager {

@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill } from '../../../types'
+import { ExecuteSkill } from '~/types'
 
 /**
  * 시체 폭발 (Corpse Explosion)

@@ -1,5 +1,5 @@
 import { EventHandler } from '.'
-import { printLootStatus } from '../../statusPrinter'
+import { printLootStatus } from '~/statusPrinter'
 
 export const b1Handlers: Record<string, EventHandler> = {
   'event-00': async (tile, player, context) => {

@@ -1,8 +1,8 @@
 import enquirer from 'enquirer'
 import { EventHandler } from '.'
-import { delay } from '../../utils'
-import { GameContext, Tile } from '../../types'
-import { Player } from '../../core/Player'
+import { delay } from '~/utils'
+import { GameContext, Tile } from '~/types'
+import { Player } from '~/core/Player'
 
 export const b3Handlers: Record<string, EventHandler> = {
   'event-abandoned-corpse': async (tile, player, context) => {

@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
-import { Player } from '../core/Player'
-import { GameContext, NPC } from '../types'
+import { Player } from '~/core/Player'
+import { GameContext, NPC } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const KaneHandler: NPCHandler = {

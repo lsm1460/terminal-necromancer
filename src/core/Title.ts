@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
 import fs from 'fs'
 import path from 'path'
-import { SaveSystem } from '../systems/SaveSystem'
+import { SaveSystem } from '~/systems/SaveSystem'
 
 export class Title {
   static async gameStart(save: SaveSystem) {

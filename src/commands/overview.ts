@@ -1,10 +1,10 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
-import GolemWrapper from '../core/GolemWrapper'
-import { Player } from '../core/Player'
-import { printStatus } from '../statusPrinter'
-import { BattleTarget, CommandFunction, Corpse, Drop, GameContext, Item, ItemType, Monster, NPC, Tile } from '../types'
-import { makeItemMessage } from '../utils'
+import GolemWrapper from '~/core/GolemWrapper'
+import { Player } from '~/core/Player'
+import { printStatus } from '~/statusPrinter'
+import { BattleTarget, CommandFunction, Corpse, Drop, GameContext, Item, ItemType, Monster, NPC, Tile } from '~/types'
+import { makeItemMessage } from '~/utils'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player

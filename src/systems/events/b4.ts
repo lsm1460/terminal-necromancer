@@ -1,6 +1,6 @@
 import { EventHandler } from '.'
-import { relocateCaron } from '../../npc/caron'
-import { Tile } from '../../types'
+import { relocateCaron } from '~/npc/caron'
+import { Tile } from '~/types'
 import _ from 'lodash'
 
 export const b4Handlers: Record<string, EventHandler> = {

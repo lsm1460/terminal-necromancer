@@ -2,7 +2,7 @@ import enquirer from 'enquirer'
 import { EventHandler } from '.'
 import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
-import { delay } from '../../utils'
+import { delay } from '~/utils'
 import _ from 'lodash'
 
 export const commonHandlers: Record<string, EventHandler> = {

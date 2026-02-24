@@ -1,5 +1,5 @@
-import { GameContext } from '../types'
-import { delay } from '../utils'
+import { GameContext } from '~/types'
+import { delay } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const ApostleHandler: NPCHandler = {

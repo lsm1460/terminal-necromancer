@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { BattleTarget, ExecuteSkill } from '../../../types'
+import { BattleTarget, ExecuteSkill } from '~/types'
 
 /**
  * 영혼 전달 (Soul Transfer)

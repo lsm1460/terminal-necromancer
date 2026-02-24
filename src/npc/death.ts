@@ -1,9 +1,9 @@
 import enquirer from 'enquirer'
-import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '../consts'
-import { Player } from '../core/Player'
-import { SKILL_LIST, SkillUtils } from '../core/skill'
-import { GameContext, Skill, SkillId } from '../types'
-import { speak } from '../utils'
+import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '~/consts'
+import { Player } from '~/core/Player'
+import { SKILL_LIST, SkillUtils } from '~/core/skill'
+import { GameContext, Skill, SkillId } from '~/types'
+import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const DeathHandler: NPCHandler = {

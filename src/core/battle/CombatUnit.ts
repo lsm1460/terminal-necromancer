@@ -1,4 +1,4 @@
-import { AttackType, BattleTarget } from '../../types'
+import { AttackType, BattleTarget } from '~/types'
 import { Player } from '../Player'
 import { NpcSkillManager } from '../skill/NpcSkillManger'
 import { Battle, Buff, DamageOptions } from './Battle'

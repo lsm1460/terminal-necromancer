@@ -1,9 +1,9 @@
 // systems/EventSystem.ts
 import fs from 'fs'
 import path from 'path'
-import { MonsterFactory } from '../core/MonsterFactory'
-import { Player } from '../core/Player'
-import { GameContext, GameEvent, Tile } from '../types'
+import { MonsterFactory } from '~/core/MonsterFactory'
+import { Player } from '~/core/Player'
+import { GameContext, GameEvent, Tile } from '~/types'
 import { allEventHandlers } from './events'
 import { MonsterEvent } from './events/MonsterEvent'
 

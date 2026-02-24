@@ -1,5 +1,5 @@
-import { MAP_IDS } from '../consts'
-import { CommandFunction } from '../types'
+import { MAP_IDS } from '~/consts'
+import { CommandFunction } from '~/types'
 
 export const mapCommand: CommandFunction = async (player, args, context) => {
   const { events, map } = context

@@ -1,5 +1,5 @@
-import { DIRECTIONS } from '../consts'
-import { CommandFunction } from '../types'
+import { DIRECTIONS } from '~/consts'
+import { CommandFunction } from '~/types'
 
 // --- 공통 이동 함수 ---
 export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {

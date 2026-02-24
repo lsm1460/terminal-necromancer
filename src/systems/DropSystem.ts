@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import { ItemRarity } from '../core/item/consts'
-import { ItemGenerator } from '../core/item/ItemGenerator'
-import { Drop, Item } from '../types'
+import { ItemRarity } from '~/core/item/consts'
+import { ItemGenerator } from '~/core/item/ItemGenerator'
+import { Drop, Item } from '~/types'
 
 export interface DropEntry {
   itemId: string

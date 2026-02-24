@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import { EventSystem } from '../systems/EventSystem'
-import { BroadcastScript } from '../types'
+import { EventSystem } from '~/systems/EventSystem'
+import { BroadcastScript } from '~/types'
 import { NPCManager } from './NpcManager'
 
 export class Broadcast {

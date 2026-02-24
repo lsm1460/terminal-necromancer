@@ -2,8 +2,8 @@
 import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
-import { Monster, MonsterGroupMember, Tile } from '../types'
-import { generateId } from '../utils'
+import { Monster, MonsterGroupMember, Tile } from '~/types'
+import { generateId } from '~/utils'
 
 export class MonsterFactory {
   private monster: Record<string, Monster> = {}
