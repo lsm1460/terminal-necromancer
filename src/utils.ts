@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto'
 import enquirer from 'enquirer'
-import { Player } from './core/Player'
+import { Player } from './core/player/Player'
 import { Item, ItemType } from './types'
 
 export function generateId(baseId?: string, length = 8): string {

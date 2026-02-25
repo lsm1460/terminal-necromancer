@@ -1,6 +1,6 @@
 import { CombatUnit } from '~/core/battle/CombatUnit'
 import { MonsterFactory } from '~/core/MonsterFactory'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { GameContext, Monster, Tile } from '~/types'
 import { delay } from '~/utils'
 

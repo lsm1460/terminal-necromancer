@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { BattleTarget, GameContext, ItemType, NpcSkill } from '~/types'
-import { Player } from '../Player'
+import { Player } from '../player/Player'
 import { CombatUnit } from '../battle/CombatUnit'
 import _ from 'lodash'
 import { PASSIVE_EFFECTS } from './passiveHandlers'

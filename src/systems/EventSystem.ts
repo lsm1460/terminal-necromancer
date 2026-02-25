@@ -2,7 +2,7 @@
 import fs from 'fs'
 import path from 'path'
 import { MonsterFactory } from '~/core/MonsterFactory'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { GameContext, GameEvent, Tile } from '~/types'
 import { allEventHandlers } from './events'
 import { MonsterEvent } from './events/MonsterEvent'

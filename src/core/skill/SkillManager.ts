@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import { ExecuteSkill, GameContext, SkillId } from '~/types'
-import { Player } from '../Player'
+import { Player } from '../player/Player'
 import { SKILL_LIST } from './skill'
 
 export class SkillManager {

@@ -1,6 +1,6 @@
 import * as Commands from './commands'
 import { COMMAND_GROUPS, CommandKey } from './consts'
-import { Player } from './core/Player'
+import { Player } from './core/player/Player'
 import { printStatus } from './statusPrinter'
 import { GameContext } from './types'
 

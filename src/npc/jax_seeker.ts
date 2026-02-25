@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import { MAP_IDS } from '~/consts'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 

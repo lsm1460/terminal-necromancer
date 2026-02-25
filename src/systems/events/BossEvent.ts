@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
 import { CombatUnit } from '~/core/battle/CombatUnit'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { GameContext, Tile } from '~/types'
 import { BossFactory } from './boss/BossFactory'
 

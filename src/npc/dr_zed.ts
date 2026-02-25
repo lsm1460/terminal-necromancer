@@ -1,4 +1,4 @@
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { GameContext } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 import enquirer from 'enquirer'

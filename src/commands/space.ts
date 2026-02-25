@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { BattleTarget, CommandFunction } from '~/types'
 
 export const spaceCommand: CommandFunction = async (player, args, context) => {

@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { GameContext, NPC, Tile } from '~/types'
 import { NPCHandler } from './NPCHandler'
 import BossEvent from '~/systems/events/BossEvent'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { speak } from '~/utils'
 
 let count = 0

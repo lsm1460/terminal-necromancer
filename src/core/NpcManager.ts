@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { HOSTILITY_LIMIT } from '~/consts'
 import { NPC, NPCState } from '~/types'
-import { Player } from './Player'
+import { Player } from './player/Player'
 
 export class NPCManager {
   private baseData: Record<string, any> // npc.json 원본

@@ -1,5 +1,5 @@
 import { SKILL_IDS, Skill, SkillId } from '~/types'
-import { Player } from '../Player'
+import { Player } from '../player/Player'
 import { SkillExecutor } from './executors'
 
 export const SKILL_LIST: Record<SkillId, Skill> = {

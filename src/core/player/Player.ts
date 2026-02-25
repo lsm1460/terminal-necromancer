@@ -17,7 +17,7 @@ import {
   WeaponItem,
 } from '~/types'
 import GolemWrapper from './GolemWrapper'
-import { ItemRarity } from './item/consts'
+import { ItemRarity } from '../item/consts'
 import KnightWrapper from './KnightWrapper'
 
 export class Player {

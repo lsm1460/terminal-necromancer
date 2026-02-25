@@ -13,9 +13,7 @@ class KnightWrapper {
     public raw: BattleTarget,
     private player: Player
   ) {
-    // 2. 런타임 자동 연결: raw의 모든 속성을 이 클래스에 바인딩
     Object.keys(raw).forEach((key) => {
-      // 이미 클래스에 getter/setter가 정의된 속성은 건너뜁니다.
       if (Object.getOwnPropertyDescriptor(KnightWrapper.prototype, key)) return
 
       Object.defineProperty(this, key, {

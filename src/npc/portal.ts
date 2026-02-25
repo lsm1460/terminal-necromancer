@@ -1,5 +1,5 @@
 import enquirer from 'enquirer'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
 import { printStatus } from '~/statusPrinter'

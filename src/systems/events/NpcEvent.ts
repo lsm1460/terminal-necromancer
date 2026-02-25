@@ -1,5 +1,5 @@
 import { CombatUnit } from '~/core/battle/CombatUnit'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { GameContext, Tile } from '~/types'
 import { delay } from '~/utils'
 

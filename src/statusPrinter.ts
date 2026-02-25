@@ -1,4 +1,4 @@
-import { Player } from './core/Player'
+import { Player } from './core/player/Player'
 import { GameContext, NPC, Tile } from './types'
 
 export function printTileStatus(player: Player, context: GameContext) {

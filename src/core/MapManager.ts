@@ -2,7 +2,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import { Tile } from '~/types'
-import { Player } from './Player'
+import { Player } from './player/Player'
 
 interface SceneData {
   displayName: string

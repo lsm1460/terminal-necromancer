@@ -1,5 +1,5 @@
 import { AttackType, BattleTarget } from '~/types'
-import { Player } from '../Player'
+import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/NpcSkillManger'
 import { Battle, Buff, DamageOptions } from './Battle'
 

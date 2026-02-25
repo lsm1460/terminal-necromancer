@@ -1,6 +1,6 @@
 import enquirer from 'enquirer'
 import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '~/consts'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { SKILL_LIST, SkillUtils } from '~/core/skill'
 import { GameContext, Skill, SkillId } from '~/types'
 import { speak } from '~/utils'

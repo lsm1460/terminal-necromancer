@@ -1,6 +1,6 @@
 import { commonHandlers } from './common'
 import { GameContext, Tile } from '~/types'
-import { Player } from '~/core/Player'
+import { Player } from '~/core/player/Player'
 import { b1Handlers } from './b1'
 import { b3Handlers } from './b3'
 import { b4Handlers } from './b4'
