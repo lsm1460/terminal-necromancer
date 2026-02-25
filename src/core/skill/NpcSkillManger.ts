@@ -111,7 +111,7 @@ const SpecialSkillLogics: Record<
 
       const isGoldSteal = Math.random() < 0.5
 
-      const stealableCandidates = player.inventory?.filter((item) => item.type !== ItemType.QUEST) || []
+      const stealableCandidates = player.inventory.filter((item) => item.type !== ItemType.QUEST) || []
 
       if (isGoldSteal && player.gold > 0) {
         // 골드 탈취: 고정 수치와 비율 중 작은 값을 선택해 파산 방지
@@ -125,9 +125,9 @@ const SpecialSkillLogics: Record<
         const targetItem = stealableCandidates[Math.floor(Math.random() * stealableCandidates.length)]
 
         // 실제 인벤토리에서 해당 아이템의 인덱스를 찾아 제거
-        const actualIndex = player.inventory.findIndex((item) => item === targetItem)
-        if (actualIndex !== -1) {
-          player.inventory.splice(actualIndex, 1)
+        const actualItem = player.inventory.find((item) => item === targetItem)
+        if (actualItem) {
+          player.removeItem(actualItem.id, 1)
           console.log(
             ` \x1b[31m[!] 분실!\x1b[0m ${attacker.name}(이)가 배낭에서 \x1b[90m'${targetItem.label}'\x1b[0m을(를) 훔쳐 달아납니다!`
           )

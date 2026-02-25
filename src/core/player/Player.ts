@@ -1,5 +1,4 @@
 // core/Player.ts
-import enquirer from 'enquirer'
 import fs from 'fs'
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import {
@@ -9,16 +8,17 @@ import {
   BattleTarget,
   ConsumableItem,
   Item,
-  ItemType,
   LevelData,
   Skill,
   SKILL_IDS,
   SkillId,
   WeaponItem,
 } from '~/types'
-import GolemWrapper from './GolemWrapper'
 import { ItemRarity } from '../item/consts'
+import GolemWrapper from './GolemWrapper'
+import { InventoryManager } from './InventoryManager'
 import KnightWrapper from './KnightWrapper'
+import { StatsCalculator } from './StatsCalculator'
 
 export class Player {
   id = 'player'
@@ -38,8 +38,6 @@ export class Player {
   exp = 0
   level = 1
   karma = 0
-  inventoryMax = 15
-  inventory: Item[] = []
   _maxMemorize = INIT_MAX_MEMORIZE_COUNT
   memorize: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
   equipped = { weapon: null as WeaponItem | null, armor: null as ArmorItem | null }
@@ -60,11 +58,12 @@ export class Player {
   onDeath?: () => void
 
   private levelTable: LevelData[]
+  private inventoryManager: InventoryManager
 
   constructor(levelPath: string, saved?: Partial<Player>) {
-    // 저장된 값이 있으면 덮어쓰기
     if (saved) {
-      Object.assign(this, saved)
+      const { inventory, inventoryMax, ...rest } = saved
+      Object.assign(this, rest)
     }
 
     this.x = 0
@@ -72,6 +71,15 @@ export class Player {
 
     // 레벨 테이블 로드
     this.levelTable = JSON.parse(fs.readFileSync(levelPath, 'utf-8'))
+    this.inventoryManager = new InventoryManager(this, saved)
+  }
+
+  get inventory() {
+    return this.inventoryManager.inventory
+  }
+
+  get inventoryMax() {
+    return this.inventoryManager.inventoryMax
   }
 
   get pos() {
@@ -79,54 +87,23 @@ export class Player {
   }
 
   get raw() {
-    const { levelTable, onDeath, ...rest } = this as any
+    const { levelTable, onDeath, inventoryManager, ...rest } = this as any
 
     return rest
   }
 
   get maxHp() {
-    let maxHp = this._maxHp
-
-    if (this.equipped.weapon) maxHp += this.equipped.weapon?.hp || 0
-    if (this.equipped.armor) maxHp += this.equipped.armor?.hp || 0
-
-    return maxHp
+    return StatsCalculator.getMaxHp(this)
   }
 
   get maxMp() {
-    let maxMp = this._maxMp
-
-    if (this.equipped.weapon) maxMp += this.equipped.weapon?.mp || 0
-    if (this.equipped.armor) maxMp += this.equipped.armor?.mp || 0
-
-    return maxMp
+    return StatsCalculator.getMaxMp(this)
   }
 
   get computed() {
-    let atk = this.atk
-    let crit = this.crit
-    let def = this.def
-    let eva = this.eva
-    let attackType = 'melee'
-
-    if (this.equipped.weapon) {
-      atk += this.equipped.weapon.atk
-
-      attackType = this.equipped.weapon.attackType || 'melee'
-    }
-    if (this.equipped.weapon) crit += this.equipped.weapon.crit
-    if (this.equipped.armor) def += this.equipped.armor.def
-    if (this.equipped.armor) eva += this.equipped.armor?.eva || 0
-
     return {
       ...this,
-      maxHp: this.maxHp,
-      maxMp: this.maxMp,
-      atk,
-      crit,
-      def,
-      eva,
-      attackType,
+      ...StatsCalculator.getComputed(this),
     }
   }
 
@@ -276,59 +253,7 @@ export class Player {
   }
 
   async equip(newItem: Item) {
-    const itemIndex = this.inventory.findIndex((i) => i.id === newItem.id)
-    if (itemIndex === -1) {
-      console.log('❌ 인벤토리에 해당 아이템이 없습니다.')
-      return false
-    }
-
-    const slotMap: Record<string, keyof typeof this.equipped> = {
-      [ItemType.WEAPON]: 'weapon',
-      [ItemType.ARMOR]: 'armor',
-      // [ItemType.RING]: 'ring' 등 추가 가능
-    }
-
-    const slot = slotMap[newItem.type]
-    if (!slot) {
-      console.log('⚠️ 장착할 수 없는 아이템 타입입니다.')
-      return false
-    }
-
-    const oldItem = this.equipped[slot]
-    if (oldItem?.affix?.metadata?.needsConfirmOnUnequip) {
-      const caution = oldItem.affix
-      const warningMsg =
-        caution.metadata?.unEquipCaution || `⚠️ [${caution.name}] 어픽스가 해제됩니다. 진행하시겠습니까?`
-
-      // 사용자 확인 (confirm 시스템이 async라고 가정)
-      const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-        type: 'confirm',
-        name: 'proceed', // 반환 객체의 키값이 됩니다.
-        message: warningMsg,
-        initial: false, // 기본 선택값 (default 대신 initial 사용)
-      })
-
-      if (!proceed) {
-        return false // 교체 중단
-      }
-    }
-
-    if (slot === 'weapon') {
-      this.equipped.weapon = newItem as WeaponItem
-    } else if (slot === 'armor') {
-      this.equipped.armor = newItem as ArmorItem
-    }
-
-    const updatedInventory = this.inventory.filter((i) => i.id !== newItem.id)
-
-    if (oldItem) {
-      updatedInventory.push(oldItem)
-    }
-
-    this.inventory = updatedInventory
-
-    this.updateSkeletonLimit()
-    return true
+    return this.inventoryManager.equip(newItem)
   }
 
   public updateSkeletonLimit() {
@@ -346,22 +271,11 @@ export class Player {
   }
 
   unEquip(slot: keyof typeof this.equipped): boolean {
-    const item = this.equipped[slot]
-    if (!item) return false
-
-    this.equipped[slot] = null
-    this.inventory.push(item)
-
-    return true
+    return this.inventoryManager.unEquip(slot)
   }
 
   addItem(newItem: Item) {
-    const existing = this.inventory.find((i) => i.id === newItem.id)
-    if (existing && existing.quantity && newItem.quantity) {
-      existing.quantity += newItem.quantity
-    } else {
-      this.inventory.push({ ...newItem })
-    }
+    this.inventoryManager.addItem(newItem)
   }
 
   expToNextLevel(): { required: number; toNext: number } {
@@ -412,98 +326,11 @@ export class Player {
   }
 
   removeItem(itemId: string, amount: number = 1): boolean {
-    const itemIndex = this.inventory.findIndex((item) => item.id === itemId)
-
-    if (itemIndex === -1) {
-      console.log('❌ 인벤토리에 해당 아이템이 없습니다.')
-      return false
-    }
-
-    const targetItem = this.inventory[itemIndex]
-
-    // 1. 수량이 없는 아이템이거나, 전체 제거(-1) 요청인 경우
-    if (!targetItem.quantity || amount === -1) {
-      this.inventory.splice(itemIndex, 1)
-      return true
-    }
-
-    // 2. 수량이 있는 아이템인 경우
-    if (targetItem.quantity > amount) {
-      // 수량만 감소
-      targetItem.quantity -= amount
-    } else {
-      // 요청 수량이 보유 수량보다 많거나 같으면 리스트에서 삭제
-      this.inventory.splice(itemIndex, 1)
-    }
-
-    return true
+    return this.inventoryManager.removeItem(itemId, amount)
   }
 
   async useItem(targetItem?: ConsumableItem) {
-    // 1. 소비 아이템만 필터링
-    const consumables = this.inventory.filter((item): item is ConsumableItem =>
-      [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type)
-    )
-
-    if (consumables.length === 0) {
-      console.log('\n🎒 사용할 수 있는 소비 아이템이 없습니다.')
-      return false
-    }
-
-    if (!targetItem) {
-      const { itemId } = await enquirer.prompt<{ itemId: string }>({
-        type: 'select',
-        name: 'itemId',
-        message: '어떤 아이템을 사용하시겠습니까?',
-        choices: [
-          ...consumables.map((item) => ({
-            name: item.id,
-            message: `${item.label} (x${item.quantity || 1}) ${
-              item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
-            }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
-          })),
-          { name: 'cancel', message: '🔙 취소' },
-        ],
-        format(value) {
-          if (value === 'cancel') return '취소'
-          const item = consumables.find((i) => i.id === value)
-
-          return item ? item.label : value
-        },
-      })
-
-      if (itemId === 'cancel') return false
-      targetItem = consumables.find((i) => i.id === itemId)
-    }
-
-    if (!targetItem) {
-      console.log('해당 아이템이 존재하지 않습니다..')
-      return false
-    }
-
-    // 4. 아이템 사용 효과 적용
-    console.log(`\n [${targetItem.label}]을(를) 사용합니다...`)
-
-    // 체력 회복
-    if (targetItem.hpHeal) {
-      const beforeHp = this.hp
-      this.hp = Math.min(this.maxHp, this.hp + targetItem.hpHeal)
-      const recovered = this.hp - beforeHp
-      console.log(`❤️ 체력이 ${recovered} 회복되었습니다. (현재: ${this.hp}/${this.maxHp})`)
-    }
-
-    // 마나 회복
-    if (targetItem.mpHeal) {
-      const beforeMp = this.mp
-      this.mp = Math.min(this.maxMp, this.mp + targetItem.mpHeal)
-      const recovered = this.mp - beforeMp
-      console.log(`🧪 마나가 ${recovered} 회복되었습니다. (현재: ${this.mp}/${this.maxMp})`)
-    }
-
-    // 5. 인벤토리에서 수량 차감 (앞서 만든 removeItem 활용)
-    this.removeItem(targetItem.id, 1)
-
-    return true
+    return this.inventoryManager.useItem(targetItem)
   }
 
   unlockDarkKnight() {

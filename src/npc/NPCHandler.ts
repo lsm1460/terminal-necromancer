@@ -150,6 +150,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
       return {
         name: `${index}`,
+        id: item.id,
         message: makeItemMessage(item, player, { withPrice: true, isSell: true }),
         label: item.label,
         price: finalSellPrice,
@@ -157,7 +158,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
       }
     })
 
-    choices.push({ name: 'cancel', message: '🔙 돌아가기', label: '취소', price: 0, originalIndex: -1 })
+    choices.push({ name: 'cancel', id: '', message: '🔙 돌아가기', label: '취소', price: 0, originalIndex: -1 })
 
     const bonusInfo = hasContribution ? ` / 보너스: +${(bonusRate * 100).toFixed(1)}%` : ''
 
@@ -177,7 +178,6 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
     const selected = choices.find((c) => c.name === choiceName)!
     const targetItem = player.inventory[selected.originalIndex]
 
-    // 3. 수량 선택
     let sellCount = 1
     if (targetItem.quantity && targetItem.quantity > 1) {
       const { count } = await enquirer.prompt<{ count: number }>({
@@ -193,22 +193,12 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
       sellCount = count
     }
 
-    // 4. 판매 처리
     const totalEarned = selected.price * sellCount
     player.gold += totalEarned
     totalEarnedInSession += totalEarned
 
-    // 아이템 제거/수량 감소 로직
-    if (targetItem.quantity) {
-      targetItem.quantity -= sellCount
-      if (targetItem.quantity <= 0) {
-        player.inventory.splice(selected.originalIndex, 1)
-      }
-    } else {
-      player.inventory.splice(selected.originalIndex, 1)
-    }
+    player.removeItem(selected.id, sellCount)
 
-    // 5. 평판 업데이트
     if (npc.faction) {
       context.npcs.updateFactionHostility(npc.faction, -1)
       context.npcs.updateFactionContribution(npc.faction, 10)
