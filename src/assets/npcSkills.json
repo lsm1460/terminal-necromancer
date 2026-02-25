@@ -160,7 +160,7 @@
     "name": "치유",
     "attackType": "ranged",
     "description": "가장 부상이 심한 아군을 회복시킵니다.",
-    "chance": 0.5,
+    "chance": 0.3,
     "power": 30,
     "targetType": "ALLY_LOWEST_HP",
     "type": "heal"

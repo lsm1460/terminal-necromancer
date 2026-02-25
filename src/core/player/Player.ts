@@ -89,7 +89,11 @@ export class Player {
   get raw() {
     const { levelTable, onDeath, inventoryManager, ...rest } = this as any
 
-    return rest
+    return {
+      ...rest,
+      inventory: this.inventory,
+      inventoryMax: this.inventoryMax,
+    }
   }
 
   get maxHp() {

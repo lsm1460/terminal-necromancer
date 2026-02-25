@@ -8,7 +8,7 @@ import { makeItemMessage } from '~/utils'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
-  const { atk, def, crit, eva, agi, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
+  const { atk, def, crit, eva, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
   console.log('🛡️ 상태창')
   console.log(`레벨: ${level} (영혼 조각: ${exp})`)
 
@@ -26,7 +26,6 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   console.log(`골드: ${gold}`)
 
   console.log(`치명: ${Math.floor(crit * 100)}%`)
-  console.log(`민첩: ${agi}`)
   console.log(`회피: ${Math.floor(eva * 100)}%`)
 
   // 장착 장비 출력 (타입 가드 + 구조 분해 활용)
@@ -100,7 +99,7 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   console.log(` HP  : ${hpBar} ${target.hp}/${target.maxHp}`)
   console.log(
-    ` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)} | AGI: ${target.agi || 0}`
+    ` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)}`
   )
 
   if (target.eva || target.crit) {
@@ -276,7 +275,7 @@ const lookCorpse = async (corpse: Corpse[]) => {
     const target = corpse.find((c) => c.id === selected)
 
     if (target) {
-      const { name, maxHp, atk, def, agi } = target
+      const { name, maxHp, atk, def } = target
 
       console.log(
         `\n차갑게 식어버린 ${name}의 사체가 있습니다.\n강령술을 통해 다시 움직이게 하기에 결함이 없는 보편적인 소체 상태입니다.`
@@ -287,7 +286,6 @@ const lookCorpse = async (corpse: Corpse[]) => {
 - 체력: ${maxHp}
 - 공격: ${atk}
 - 방어: ${def}
-- 민첩: ${agi || 0}
 ----------------------------------------`)
     }
   }
