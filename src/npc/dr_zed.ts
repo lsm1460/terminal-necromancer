@@ -10,7 +10,7 @@ const ZedHandler: NPCHandler = {
     const alreadyHeard = context.events.isCompleted('HEARD_RESISTANCE')
     const alreadyDenied = context.events.isCompleted('golem_generation_denied_zed')
 
-    if (isB3Completed && !player._golem && !alreadyDenied) {
+    if (isB3Completed && !player.golem && !alreadyDenied) {
       return [{ name: 'golem', message: '💬 [!] 대화' }]
     }
 
@@ -18,7 +18,7 @@ const ZedHandler: NPCHandler = {
       { name: 'talk', message: '💬 잡담' },
       ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: '💬 대화' }] : []),
       ...(isB3Completed
-        ? player._golem
+        ? player.golem
           ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }]
           : [{ name: 'golem', message: '🧬 골렘 부활' }]
         : []), // false라면 빈 배열을 반환하여 아무것도 추가되지 않음
@@ -205,7 +205,7 @@ async function handleUpgradeGolem(player: Player) {
 
 async function handleAwakeGolem(player: Player, context: GameContext) {
   const { events } = context
-  if (player._golem) {
+  if (player.golem) {
     console.log(`\n제드: "이미 기동 중인 개체입니다. 중복 출력은 자원 낭비일 뿐이죠."`)
     return
   }
@@ -243,30 +243,7 @@ async function handleAwakeGolem(player: Player, context: GameContext) {
     return
   }
 
-  player._golem = {
-    id: 'golem',
-    name: '하역장의 기계 골렘',
-    attackType: 'melee',
-    baseMaxHp: 80,
-    maxHp: 80,
-    hp: 80,
-    baseAtk: 30,
-    atk: 30,
-    baseDef: 20,
-    def: 20,
-    agi: 3,
-    exp: 0,
-    description:
-      '하역장에서 수거한 핵으로 제드가 부활시킨 거대 병기입니다.\n사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.',
-    dropTableId: '',
-    encounterRate: 0,
-    isAlive: true,
-    skills: ['power_smash'],
-    isMinion: true,
-    isGolem: true,
-    deathLine: '(알 수 없는 기계음)',
-    orderWeight: -15,
-  }
+  player.unlockGolem('zed')
 
   console.log(`\n[⚙️ 골렘 기동 성공]`)
   console.log(`제드: "시스템 로드 완료. 보시다시피... 꽤 훌륭한 살육 병기가 되었군요."`)

@@ -1,4 +1,3 @@
-// core/Player.ts
 import fs from 'fs'
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import {
@@ -14,11 +13,11 @@ import {
   SkillId,
   WeaponItem,
 } from '~/types'
-import { ItemRarity } from '../item/consts'
-import GolemWrapper from './GolemWrapper'
 import { InventoryManager } from './InventoryManager'
-import KnightWrapper from './KnightWrapper'
+import { MinionManager } from './MinionManager'
 import { StatsCalculator } from './StatsCalculator'
+
+export type PlayerSaveData = Partial<Player> & { _golem?: BattleTarget; _knight?: BattleTarget }
 
 export class Player {
   id = 'player'
@@ -44,23 +43,13 @@ export class Player {
 
   public unlockedSkills: (SkillId | 'SPACE')[] = [SKILL_IDS.RAISE_SKELETON]
 
-  skeletonSubspace: BattleTarget[] = []
-  subspaceLimit = 15
-  public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
-  _maxSkeleton: number = 2 // 최대 소환 가능 수
-
-  upgradeLimit = 5
-  golemUpgrade: ('machine' | 'soul')[] = []
-  public _golem: BattleTarget | undefined = undefined
-  knightUpgrade: (ItemRarity | 'soul')[] = []
-  public _knight: BattleTarget | undefined = undefined
-
   onDeath?: () => void
 
   private levelTable: LevelData[]
   private inventoryManager: InventoryManager
+  private minionManager: MinionManager
 
-  constructor(levelPath: string, saved?: Partial<Player>) {
+  constructor(levelPath: string, saved?: PlayerSaveData) {
     if (saved) {
       const { inventory, inventoryMax, ...rest } = saved
       Object.assign(this, rest)
@@ -72,6 +61,7 @@ export class Player {
     // 레벨 테이블 로드
     this.levelTable = JSON.parse(fs.readFileSync(levelPath, 'utf-8'))
     this.inventoryManager = new InventoryManager(this, saved)
+    this.minionManager = new MinionManager(this, saved)
   }
 
   get inventory() {
@@ -87,12 +77,15 @@ export class Player {
   }
 
   get raw() {
-    const { levelTable, onDeath, inventoryManager, ...rest } = this as any
+    const { levelTable, onDeath, inventoryManager, minionManager, ...rest } = this as any
+
+    const inventoryData = this.inventoryManager.toJSON()
+    const minionData = this.minionManager.toJSON()
 
     return {
       ...rest,
-      inventory: this.inventory,
-      inventoryMax: this.inventoryMax,
+      ...inventoryData,
+      ...minionData,
     }
   }
 
@@ -112,14 +105,7 @@ export class Player {
   }
 
   get maxSkeleton() {
-    let maxSkeleton = this._maxSkeleton
-
-    if (this.equipped.weapon) maxSkeleton += this.equipped.weapon?.maxSkeleton || 0
-    if (this.equipped.armor) maxSkeleton += this.equipped.armor?.maxSkeleton || 0
-
-    const _val = this.getAffixValue('OVERLORD')
-
-    return maxSkeleton + _val
+    return this.minionManager.maxSkeleton
   }
 
   get maxMemorize() {
@@ -127,43 +113,71 @@ export class Player {
   }
 
   get golem() {
-    if (!this._golem) {
-      return
-    }
-
-    return new GolemWrapper(this._golem, this.golemUpgrade, this)
+    return this.minionManager.golem
   }
 
   get knight() {
-    if (!this._knight) {
-      return
-    }
-
-    return new KnightWrapper(this._knight, this)
+    return this.minionManager.knight
   }
 
   get minions(): BattleTarget[] {
-    const _skeletons = this.skeleton
-      .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
-      .map((skeleton) => {
-        // 1. 기존에 들어있을 수 있는 어픽스 관련 스킬들을 한 번에 제거
-        const affixSkillIds = ['death_destruct', 'frostborne']
-        let currentSkills = (skeleton.skills || []).filter((id) => !affixSkillIds.includes(id))
+    return this.minionManager.minions
+  }
 
-        if (this.hasAffix('DOOMSDAY')) {
-          currentSkills.push('death_destruct')
-        }
+  get skeletonSubspace() {
+    return this.minionManager.skeletonSubspace
+  }
 
-        if (this.hasAffix('FROSTBORNE')) {
-          currentSkills.push('frostborne')
-        }
+  set skeletonSubspace(v) {
+    this.minionManager.skeletonSubspace = v
+  }
 
-        skeleton.skills = currentSkills
+  get subspaceLimit() {
+    return this.minionManager.subspaceLimit
+  }
 
-        return skeleton
-      })
+  set subspaceLimit(v) {
+    this.minionManager.subspaceLimit = v
+  }
 
-    return [this.golem, ..._skeletons, this.knight].filter((_minion) => !!_minion)
+  get skeleton() {
+    return this.minionManager.skeleton
+  }
+
+  set skeleton(v) {
+    this.minionManager.skeleton = v
+  }
+
+  get _maxSkeleton() {
+    return this.minionManager._maxSkeleton
+  }
+
+  set _maxSkeleton(v) {
+    this.minionManager._maxSkeleton = v
+  }
+
+  get golemUpgrade() {
+    return this.minionManager.golemUpgrade
+  }
+
+  set golemUpgrade(v) {
+    this.minionManager.golemUpgrade = v
+  }
+
+  get knightUpgrade() {
+    return this.minionManager.knightUpgrade
+  }
+
+  set knightUpgrade(v) {
+    this.minionManager.knightUpgrade = v
+  }
+
+  get upgradeLimit() {
+    return this.minionManager.upgradeLimit
+  }
+
+  set upgradeLimit(v) {
+    this.minionManager.upgradeLimit = v
   }
 
   get isAlive() {
@@ -261,17 +275,7 @@ export class Player {
   }
 
   public updateSkeletonLimit() {
-    const currentMax = this.maxSkeleton // [군주] 어픽스가 계산된 최신 Max값
-
-    // 현재 해골 수가 줄어든 최대치보다 많다면?
-    while (this.skeleton.length > currentMax) {
-      // 1. 가장 마지막에 추가된(최근 소환된) 해골을 제거
-      const removedSkeleton = this.skeleton.pop()
-
-      if (removedSkeleton) {
-        console.log(` └ ⚠️ 장비가 해제되어 ${removedSkeleton.name}이(가) 소멸했습니다.`)
-      }
-    }
+    return this.minionManager.updateSkeletonLimit()
   }
 
   unEquip(slot: keyof typeof this.equipped): boolean {
@@ -303,30 +307,11 @@ export class Player {
   }
 
   addSkeleton(minion: BattleTarget) {
-    if (this.skeleton.length < this.maxSkeleton) {
-      this.skeleton.push(minion)
-      return true
-    }
-
-    return false
+    return this.minionManager.addSkeleton(minion)
   }
 
   removeMinion(minionId: string) {
-    this.skeleton = this.skeleton.filter((_minion) => _minion.id !== minionId)
-
-    if (this._golem && this._golem.id === minionId) {
-      this._golem = {
-        ...this._golem,
-        isAlive: false,
-      }
-    }
-
-    if (this._knight && this._knight.id === minionId) {
-      this._knight = {
-        ...this._knight,
-        isAlive: false,
-      }
-    }
+    return this.minionManager.removeMinion(minionId)
   }
 
   removeItem(itemId: string, amount: number = 1): boolean {
@@ -337,37 +322,12 @@ export class Player {
     return this.inventoryManager.useItem(targetItem)
   }
 
+  unlockGolem(type: 'zed' | 'maya') {
+    return this.minionManager.unlockGolem(type)
+  }
+
   unlockDarkKnight() {
-    if (this._knight) {
-      return
-    }
-
-    this._knight = {
-      id: 'knight',
-      name: '기사 발타자르',
-      attackType: 'melee',
-      hp: 10,
-      baseMaxHp: 10,
-      maxHp: 10,
-      baseAtk: 12,
-      atk: 12,
-      baseDef: 12,
-      def: 5,
-      eva: 0.15,
-      exp: 0,
-      agi: 5,
-      encounterRate: 0,
-      isAlive: true,
-      isMinion: true,
-      isKnight: true,
-      deathLine: '발타자르: "아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)"',
-      description:
-        '성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.',
-      dropTableId: '',
-      skills: ['power_smash'],
-    }
-
-    console.log('[영혼이 귀속된 발타자르]를 획득했다.')
+    return this.minionManager.unlockDarkKnight()
   }
 
   restoreAll() {

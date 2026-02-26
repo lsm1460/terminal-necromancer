@@ -8,14 +8,14 @@ const MayaHandler: NPCHandler = {
     const isJoined = context.events.isCompleted('RESISTANCE_BASE')
     const isAlreadyMet = context.events.isCompleted('maya_1')
     const isB3Completed = context.events.isCompleted('second_boss')
-    const hasGolem = !!player._golem
+    const hasGolem = !!player.golem
 
     if (isJoined && !isAlreadyMet) {
       return [{ name: 'join', message: '💬 대화' }]
     }
 
     const canMakeGolem = isB3Completed && !hasGolem
-    const canUpgrade = npc.factionContribution > 40 && context.events.isCompleted('second_boss') && !!player._golem
+    const canUpgrade = npc.factionContribution > 40 && context.events.isCompleted('second_boss') && !!player.golem
     const canModify = npc.factionContribution > 80 && context.events.isCompleted('third_boss')
 
     return [
@@ -79,7 +79,7 @@ async function handleJoin(player: Player, context: GameContext) {
   const { events, npcs } = context
 
   const isB3Completed = context.events.isCompleted('second_boss')
-  const hasGolem = !!player._golem
+  const hasGolem = !!player.golem
   const canMakeGolem = isB3Completed && !hasGolem
   const { isAlive: jaxIsAlive } = npcs.getNPC('jax_seeker') || {}
 
@@ -137,7 +137,7 @@ async function handleJoin(player: Player, context: GameContext) {
 }
 
 async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) {
-  if (player._golem) {
+  if (player.golem) {
     // 이미 골렘을 가지고 있는 경우
     console.log(`\n마야: "뭐야, 이미 골렘 한 마리 데리고 있잖아? 욕심도 많네. 걔나 잘 관리해."`)
     return
@@ -175,29 +175,7 @@ async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) 
     return
   }
 
-  player._golem = {
-    id: 'golem',
-    name: '하역장의 기계 골렘',
-    attackType: 'melee',
-    baseMaxHp: 90,
-    maxHp: 90,
-    hp: 90,
-    baseAtk: 20,
-    atk: 20,
-    baseDef: 40,
-    def: 40,
-    agi: 3,
-    exp: 0,
-    description: '하역장에서 수거한 핵으로 마야가 부활시킨 거대 병기입니다.',
-    dropTableId: '',
-    encounterRate: 0,
-    isAlive: true,
-    skills: ['power_smash'],
-    isMinion: true,
-    isGolem: true,
-    deathLine: '(알 수 없는 기계음)',
-    orderWeight: -15,
-  }
+  player.unlockGolem('maya')
 
   context.npcs.updateFactionContribution(npc.faction, 40)
 

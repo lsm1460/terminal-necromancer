@@ -172,4 +172,11 @@ export class InventoryManager {
 
     return true
   }
+
+  public toJSON() {
+    return {
+      inventory: this.inventory,
+      inventoryMax: this.inventoryMax,
+    };
+  }
 }
