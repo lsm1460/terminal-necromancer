@@ -172,7 +172,7 @@ export class MinionManager {
     }
   }
 
-  unlockDarkKnight() {
+  unlockKnight() {
     if (this._knight) {
       return
     }

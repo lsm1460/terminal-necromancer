@@ -24,7 +24,7 @@ const MayaHandler: NPCHandler = {
       { name: 'sell', message: '📦 아이템 판매' },
       ...(canMakeGolem ? [{ name: 'golem', message: '🤖 골렘 생성' }] : []),
       ...(canUpgrade ? [{ name: 'upgrade_golem', message: '🤖 골렘 강화' }] : []),
-      ...(canModify ? [{ name: 'modify_darknight', message: '⚔️ 다크나이트 장비 변경' }] : []),
+      ...(canModify ? [{ name: 'modify_knight', message: '⚔️ 다크나이트 장비 변경' }] : []),
     ]
   },
   async handle(action, player, npc, context) {
@@ -65,7 +65,7 @@ const MayaHandler: NPCHandler = {
       case 'upgrade_golem':
         await handleUpgradeGolem(player)
         break
-      case 'modify_darknight':
+      case 'modify_knight':
         console.log('\n[마야]: "다크나이트의 무장 상태를 변경할게."')
         // TODO: 다크나이트 장비 관리 호출
         break

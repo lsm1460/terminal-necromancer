@@ -326,8 +326,8 @@ export class Player {
     return this.minionManager.unlockGolem(type)
   }
 
-  unlockDarkKnight() {
-    return this.minionManager.unlockDarkKnight()
+  unlockKnight() {
+    return this.minionManager.unlockKnight()
   }
 
   restoreAll() {

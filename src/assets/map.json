@@ -639,7 +639,7 @@
           "x": 1,
           "y": 2,
           "event": "none",
-          "npcIds": [],
+          "npcIds": ["heal-once"],
           "dialogue": "중앙 광장의 인공 분수에서 푸른 형광 액체가 순환하며 낮은 진동음을 냅니다. 수면 위로 정체 모를 연기가 깔려 있습니다.",
           "observe": "푸른 빛이 뿜어져 나오는 거대한 분수대 광장입니다."
         },
@@ -657,7 +657,7 @@
           "id": "tile_510",
           "x": 4,
           "y": 2,
-          "event": "monster-b5-lounge-patrol",
+          "event": "none",
           "npcIds": [],
           "dialogue": "고급 멤버십 라운지의 바(Bar) 구역입니다. 선반에는 이름 모를 푸른 술병들이 질서 정연하게 놓여 있습니다.",
           "observe": "수많은 병이 진열된 어두운 바 카운터입니다."
@@ -755,8 +755,8 @@
           "id": "tile_520",
           "x": 1,
           "y": 5,
-          "event": "monster-b5-hidden-assault",
-          "npcIds": [],
+          "event": "none",
+          "npcIds": ["vending_machine"],
           "dialogue": "푹신한 소파들이 배치된 휴게 코너입니다. 벽면에는 실시간으로 바뀌는 주식 시장 그래프가 투영되고 있습니다.",
           "observe": "화면들이 명멸하는 조용한 휴게실입니다."
         },
