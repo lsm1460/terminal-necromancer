@@ -16,17 +16,17 @@ export class Logger {
   }
 
   public static async select(message: string, choices: { name: string; message: string }[]): Promise<string> {
-    if (!this.renderer) throw new Error("Renderer not initialized");
-    return await this.renderer.select(message, choices);
+    if (!this.renderer) throw new Error('Renderer not initialized')
+    return await this.renderer.select(message, choices)
   }
 
   public static async confirm(message: string): Promise<boolean> {
-    if (!this.renderer) throw new Error("Renderer not initialized");
-    return await this.renderer.confirm(message);
+    if (!this.renderer) throw new Error('Renderer not initialized')
+    return await this.renderer.confirm(message)
   }
 
   public static async prompt(message: string): Promise<void> {
-    if (!this.renderer) throw new Error("Renderer not initialized");
-    await this.renderer.prompt(message);
+    if (!this.renderer) throw new Error('Renderer not initialized')
+    await this.renderer.prompt(message)
   }
 }

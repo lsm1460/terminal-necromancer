@@ -7,7 +7,6 @@
     "build:cli": "tsc && tsc-alias && cpx \"src/assets/**/*\" dist/assets",
     "start": "node dist/game.js",
     "dev:cli": "ts-node -r tsconfig-paths/register src/game.ts",
-
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -16,15 +15,17 @@
   "license": "ISC",
   "devDependencies": {
     "@types/lodash": "^4.17.21",
-    "@types/node": "^25.0.2",
+    "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
     "cpx": "^1.5.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "dependencies": {
     "enquirer": "^2.4.1",
