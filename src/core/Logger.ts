@@ -8,19 +8,25 @@ export class Logger {
   }
 
   public static log(message: string): void {
-    if (this.renderer) {
-      this.renderer.print(message)
-    } else {
-      // 레더러가 설정되기 전에는 일단 console.log로 출력하거나 무시할 수 있습니다.
-      Logger.log(message)
-    }
+    this.renderer ? this.renderer.print(message) : console.log(message)
   }
 
   public static clear(): void {
-    if (this.renderer) {
-      this.renderer.clear()
-    } else {
-      console.clear()
-    }
+    this.renderer ? this.renderer.clear() : console.clear()
+  }
+
+  public static async select(message: string, choices: { name: string; message: string }[]): Promise<string> {
+    if (!this.renderer) throw new Error("Renderer not initialized");
+    return await this.renderer.select(message, choices);
+  }
+
+  public static async confirm(message: string): Promise<boolean> {
+    if (!this.renderer) throw new Error("Renderer not initialized");
+    return await this.renderer.confirm(message);
+  }
+
+  public static async prompt(message: string): Promise<void> {
+    if (!this.renderer) throw new Error("Renderer not initialized");
+    await this.renderer.prompt(message);
   }
 }

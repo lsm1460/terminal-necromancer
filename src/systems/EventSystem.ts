@@ -1,6 +1,3 @@
-// systems/EventSystem.ts
-import fs from 'fs'
-import path from 'path'
 import { Logger } from '~/core/Logger'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Player } from '~/core/player/Player'
@@ -16,11 +13,17 @@ export class EventSystem {
   private eventData: Record<string, GameEvent> = {}
   private subscribers: EventCallback[] = [] // 구독자 명단
 
-  constructor(eventPath: string, monsterFactory: MonsterFactory, savedData?: string[]) {
+  /**
+   * @param eventData - 경로 대신 JSON 객체 데이터를 직접 받습니다.
+   * @param monsterFactory - 몬스터 생성을 위한 팩토리
+   * @param savedData - 완료된 이벤트 목록
+   */
+  constructor(eventData: any, monsterFactory: MonsterFactory, savedData?: string[]) {
     if (savedData) this.completedEvents = new Set(savedData)
 
     this.monsterEvent = new MonsterEvent(monsterFactory)
-    this.eventData = JSON.parse(fs.readFileSync(path.resolve(eventPath), 'utf-8'))
+
+    this.eventData = eventData
   }
 
   async handle(tile: Tile, player: Player, context: GameContext) {

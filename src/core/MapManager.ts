@@ -1,4 +1,3 @@
-import fs from 'fs'
 import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import { Tile } from '~/types'
@@ -18,13 +17,13 @@ export class MapManager {
   private mapData: Record<string, SceneData>
   public currentSceneId: MapId
 
-  constructor(path: string) {
-    // 1. map.json 데이터 로드
-    const data = fs.readFileSync(path, 'utf-8')
-    this.mapData = JSON.parse(data)
-    this.originMapData = JSON.parse(data)
+  /**
+   * @param mapData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
+   */
+  constructor(mapData: any) {
+    this.mapData = JSON.parse(JSON.stringify(mapData))
+    this.originMapData = JSON.parse(JSON.stringify(mapData))
 
-    // 2. 초기 씬 ID 설정
     this.currentSceneId = MAP_IDS.B1_SUBWAY
   }
 

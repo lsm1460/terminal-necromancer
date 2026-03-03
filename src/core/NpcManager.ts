@@ -1,22 +1,24 @@
-import fs from 'fs'
 import { HOSTILITY_LIMIT } from '~/consts'
 import { NPC, NPCState } from '~/types'
 import { Logger } from './Logger'
 import { Player } from './player/Player'
 
 export class NPCManager {
-  private baseData: Record<string, any> // npc.json 원본
-  private states: Record<string, NPCState> = {} // 가변 상태 데이터
-  private factionHostility: Record<string, number> = {} // 소속별 적대도
-  private factionContribution: Record<string, number> = {} // 소속별 기여도
+  private baseData: Record<string, any>
+  private states: Record<string, NPCState> = {}
+  private factionHostility: Record<string, number> = {}
+  private factionContribution: Record<string, number> = {}
 
-  constructor(path: string, private player: Player, savedData?: any) {
-    // 1. 원본 JSON 로드
-    this.baseData = JSON.parse(fs.readFileSync(path, 'utf-8'))
+  /**
+   * @param npcData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
+   * @param player - 플레이어 참조
+   * @param savedData - 세이브 파일에서 불러온 NPC 관련 상태 데이터
+   */
+  constructor(npcData: any, private player: Player, savedData?: any) {
+    this.baseData = npcData
 
     const hasValidSaveData = savedData && typeof savedData === 'object' && Object.keys(savedData).length > 0
 
-    // 2. 세이브 데이터 복구 또는 초기화
     if (hasValidSaveData) {
       this.states = savedData.states || {}
       this.factionHostility = savedData.factionHostility || {}
@@ -28,7 +30,6 @@ export class NPCManager {
 
   private initializeStates() {
     Object.entries(this.baseData).forEach(([id, data]) => {
-      // 이미 상태 데이터가 존재한다면 건너뜁니다 (기존 데이터 보존)
       if (this.states[id]) return
 
       // 새로 추가된 NPC인 경우 초기값 주입
@@ -41,9 +42,6 @@ export class NPCManager {
     })
   }
 
-  /**
-   * NPC의 원본 데이터와 현재 동적 상태를 병합하여 반환합니다.
-   */
   getNPC(id: string): NPC | null {
     const base = this.baseData[id]
     const state = this.states[id]
@@ -82,9 +80,6 @@ export class NPCManager {
     this.states[id].reborn = true
   }
 
-  /**
-   * 특정 소속을 적대적으로 설정
-   */
   public updateFactionContribution(faction: string, amount: number) {
     this.factionContribution[faction] = (this.factionContribution[faction] || 0) + amount
   }

@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
-    "y": 2,
+    "x": 0,
+    "y": 0,
     "_maxHp": 74,
     "hp": 74,
     "_maxMp": 74,
@@ -13,8 +13,8 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 8826,
-    "exp": 1047,
+    "gold": 8850,
+    "exp": 1132,
     "level": 5,
     "karma": 1,
     "_maxMemorize": 4,
@@ -93,7 +93,7 @@
       "attackType": "melee",
       "baseMaxHp": 90,
       "maxHp": 90,
-      "hp": 100,
+      "hp": 99,
       "baseAtk": 20,
       "atk": 20,
       "baseDef": 40,
@@ -112,7 +112,31 @@
       "deathLine": "(알 수 없는 기계음)",
       "orderWeight": -15
     },
-    "inventory": [],
+    "inventory": [
+      {
+        "id": "security_baton_86e3e2afd7f17473",
+        "label": "\u001b[37m⚪ 보안 진압봉\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          18,
+          22
+        ],
+        "critRange": [
+          0.05,
+          0.1
+        ],
+        "price": 1400,
+        "sellPrice": 320,
+        "description": "생체 가드들이 사용하던 표준 진압봉입니다. 튼튼하지만 투박합니다.",
+        "quantity": 1,
+        "atk": 21,
+        "crit": 0.1,
+        "rarity": "COMMON",
+        "x": 1,
+        "y": 1
+      }
+    ],
     "inventoryMax": 15,
     "skeleton": [
       {

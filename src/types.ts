@@ -185,7 +185,10 @@ export interface Renderer {
   print(message: string): void
   clear(): void
   printStatus(player: Player, context: GameContext): void
-  // 필요한 경우 여기에 더 많은 추상 메서드 추가 (예: 다이얼로그 노출, 인벤토리 갱신 등)
+  // 입력 관련 메서드 추가
+  select(message: string, choices: { name: string; message: string }[]): Promise<string>
+  confirm(message: string): Promise<boolean>
+  prompt(message: string): Promise<void> // 기존의 alert 역할을 prompt로 명칭 변경
 }
 
 export interface GameContext {

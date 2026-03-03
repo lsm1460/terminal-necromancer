@@ -4,25 +4,33 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && tsc-alias && cpx \"src/assets/**/*\" dist/assets",
+    "build:cli": "tsc && tsc-alias && cpx \"src/assets/**/*\" dist/assets",
     "start": "node dist/game.js",
-    "dev": "ts-node -r tsconfig-paths/register src/game.ts"
+    "dev:cli": "ts-node -r tsconfig-paths/register src/game.ts",
+
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/lodash": "^4.17.21",
     "@types/node": "^25.0.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "cpx": "^1.5.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   },
   "dependencies": {
     "enquirer": "^2.4.1",
     "lodash": "^4.17.21",
     "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "zustand": "^5.0.11"
   }
 }

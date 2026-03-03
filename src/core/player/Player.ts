@@ -1,4 +1,3 @@
-import fs from 'fs'
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import {
   Affix,
@@ -49,17 +48,31 @@ export class Player {
   private inventoryManager: InventoryManager
   private minionManager: MinionManager
 
-  constructor(levelPath: string, saved?: PlayerSaveData) {
+  /**
+   * @param levelData - 이제 경로 문자열이 아닌 JSON 객체 데이터를 직접 받습니다.
+   * @param saved - 저장된 플레이어 데이터
+   */
+  constructor(levelData: any, saved?: PlayerSaveData) {
     if (saved) {
-      const { inventory, inventoryMax, skeletonSubspace, subspaceLimit, skeleton, _maxSkeleton, upgradeLimit, golemUpgrade, knightUpgrade, ...rest } = saved
+      const {
+        inventory,
+        inventoryMax,
+        skeletonSubspace,
+        subspaceLimit,
+        skeleton,
+        _maxSkeleton,
+        upgradeLimit,
+        golemUpgrade,
+        knightUpgrade,
+        ...rest
+      } = saved
       Object.assign(this, rest)
     }
 
     this.x = 0
     this.y = 0
 
-    // 레벨 테이블 로드
-    this.levelTable = JSON.parse(fs.readFileSync(levelPath, 'utf-8'))
+    this.levelTable = levelData
     this.inventoryManager = new InventoryManager(this, saved)
     this.minionManager = new MinionManager(this, saved)
   }

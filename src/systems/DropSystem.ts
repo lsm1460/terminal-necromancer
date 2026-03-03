@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import { ItemRarity } from '~/core/item/consts'
 import { ItemGenerator } from '~/core/item/ItemGenerator'
 import { Drop, Item } from '~/types'
@@ -27,19 +25,20 @@ export class DropSystem {
   private tables: Record<string, DropTable> = {}
   private itemGenerator: ItemGenerator
 
-  constructor(itemJsonPath: string, dropTableJsonPath: string) {
+  constructor(itemData: any, dropTableData: any) {
     this.itemGenerator = new ItemGenerator()
 
-    this.items = JSON.parse(fs.readFileSync(path.resolve(itemJsonPath), 'utf-8'))
-    this.tables = JSON.parse(fs.readFileSync(path.resolve(dropTableJsonPath), 'utf-8'))
+    this.items = itemData
+    this.tables = dropTableData
+    
     this.validateTables()
   }
 
   private validateTables() {
-    for (const table of Object.values(this.tables)) {
+    for (const [tableId, table] of Object.entries(this.tables)) {
       for (const entry of table.items) {
         if (!this.items[entry.itemId]) {
-          throw new Error(`Invalid itemId in DropTable: ${entry.itemId}`)
+          throw new Error(`Invalid itemId [${entry.itemId}] in DropTable [${tableId}]`)
         }
       }
     }
@@ -49,9 +48,11 @@ export class DropSystem {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
-  /** spawn 시점에 몬스터에게 드랍을 부여 */
   public generateDrops(dropTableId: string): DropResult {
     const table = this.tables[dropTableId] || this.tables['none']
+    
+    if (!table) return { gold: 0, drops: [] }
+
     const gold = this.randomRange(table.gold[0], table.gold[1])
 
     const drops: Item[] = table.items

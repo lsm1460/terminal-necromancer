@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import { EventSystem } from '~/systems/EventSystem'
 import { BroadcastScript } from '~/types'
 import { Logger } from './Logger'
@@ -68,13 +66,20 @@ export class Broadcast {
     "📢 \"치익... 분실된 개체 '에이미(7세)'의 인식표가 파손된 채 발견되었습니다. 그냥 그렇다고요.\"",
   ]
 
+  /**
+   * @param scriptData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
+   * @param npcManager - NPC 상태 확인을 위한 매니저
+   * @param eventSystem - 이벤트 구독을 위한 시스템
+   */
   constructor(
-    scriptPath: string,
+    scriptData: any,
     private npcManager: NPCManager,
     eventSystem: EventSystem
   ) {
-    this.scripts = JSON.parse(fs.readFileSync(path.resolve(scriptPath), 'utf-8'))
+    // 1. fs.readFileSync 로직 제거 후 주입받은 객체 바로 할당
+    this.scripts = scriptData
 
+    // 2. 이벤트 시스템 구독 설정
     eventSystem.subscribe((eventId) => this.onEventCleared(eventId))
   }
 

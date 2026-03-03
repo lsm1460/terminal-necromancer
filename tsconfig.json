@@ -5,6 +5,8 @@
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
     "outDir": "./dist",
     "types": ["node"],
     "baseUrl": ".", 

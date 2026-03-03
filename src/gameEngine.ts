@@ -1,3 +1,4 @@
+import { GameAssets } from './assets'
 import { MAP_IDS } from './consts'
 import { Battle } from './core/battle/Battle'
 import { Broadcast } from './core/Broadcast'
@@ -13,52 +14,30 @@ import { EventSystem } from './systems/EventSystem'
 import { SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext, Renderer } from './types'
 
-export interface GameAssets {
-  mapPath: string
-  monsterGroupPath: string
-  monsterPath: string
-  statePath: string
-  levelPath: string
-  itemPath: string
-  dropPath: string
-  npcPath: string
-  eventPath: string
-  npcSkillPath: string
-  broadcastPath: string
-}
-
 export class GameEngine {
   public player!: Player
   public context!: GameContext
 
-  constructor(private assets: GameAssets, private renderer: Renderer) {}
+  // 생성자에서 받는 assets는 이제 경로가 아닌 실제 JSON 데이터 덩어리입니다.
+  constructor(
+    private assets: GameAssets,
+    private renderer: Renderer,
+    private saveSystem: SaveSystem
+  ) {}
 
-  public async init(initData: SaveData): Promise<void> {
-    const {
-      itemPath,
-      dropPath,
-      monsterGroupPath,
-      monsterPath,
-      levelPath,
-      eventPath,
-      npcSkillPath,
-      mapPath,
-      npcPath,
-      broadcastPath,
-      statePath,
-    } = this.assets
+  public async init(initData?: SaveData): Promise<void> {
+    const { item, drop, monsterGroup, monster, level, events, npcSkills, map, npc, broadcast, state } = this.assets
 
-    const save = new SaveSystem(statePath)
-    const drop = new DropSystem(itemPath, dropPath)
-    const monster = new MonsterFactory(monsterGroupPath, monsterPath)
-    const player = new Player(levelPath, initData?.player)
-    const events = new EventSystem(eventPath, monster, initData?.completedEvents)
-    const npcSkills = new NpcSkillManager(npcSkillPath, player)
-    const battle = new Battle(player, monster, npcSkills)
-    const map = new MapManager(mapPath)
-    const npcs = new NPCManager(npcPath, player, initData?.npcs)
-    const world = new World(map)
-    const broadcast = new Broadcast(broadcastPath, npcs, events)
+    const dropSystem = new DropSystem(item, drop)
+    const monsterFactory = new MonsterFactory(monsterGroup, monster)
+    const player = new Player(level, initData?.player)
+    const eventSystem = new EventSystem(events, monsterFactory, initData?.completedEvents)
+    const npcSkillManager = new NpcSkillManager(npcSkills, player)
+    const battle = new Battle(player, monsterFactory, npcSkillManager)
+    const mapManager = new MapManager(map)
+    const npcs = new NPCManager(npc, player, initData?.npcs)
+    const world = new World(mapManager)
+    const broadcastSystem = new Broadcast(broadcast, npcs, eventSystem)
 
     if (initData?.drop) {
       world.addLootBag(initData.drop)
@@ -66,15 +45,15 @@ export class GameEngine {
 
     this.player = player
     this.context = {
-      map,
+      map: mapManager,
       world,
-      events,
+      events: eventSystem,
       npcs,
-      drop,
-      save,
+      drop: dropSystem,
+      save: this.saveSystem,
       battle,
-      broadcast,
-      monster,
+      broadcast: broadcastSystem,
+      monster: monsterFactory,
     } as GameContext
 
     player.onDeath = () => {
@@ -97,18 +76,16 @@ export class GameEngine {
       this.renderer.print(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
       this.renderer.print('\n💀 나의 영혼들은 조각났다... (다시 육체를 재구성하는 감각이 느껴집니다.)\n')
 
-      const lootBag = LootFactory.fromPlayer(player, map)
-
+      const lootBag = LootFactory.fromPlayer(player, mapManager)
       player.exp -= lootBag.exp
       player.gold -= lootBag.gold
-
       world.addLootBag(lootBag)
 
-      if (map.currentSceneId !== MAP_IDS.B1_SUBWAY) {
+      if (mapManager.currentSceneId !== MAP_IDS.B1_SUBWAY) {
         world.clearFloor()
       }
 
-      map.currentSceneId = MAP_IDS.B1_SUBWAY
+      mapManager.currentSceneId = MAP_IDS.B1_SUBWAY
       player.x = 0
       player.y = 0
       player.hp = 1
@@ -123,5 +100,9 @@ export class GameEngine {
 
     const currentTile = map.getTile(this.player.pos.x, this.player.pos.y)
     await events.handle(currentTile, this.player, this.context)
+  }
+
+  public async processCommand(command: string): Promise<void> {
+    this.renderer.print(`입력된 명령어: ${command}`)
   }
 }
