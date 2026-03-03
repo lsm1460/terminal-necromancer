@@ -181,6 +181,13 @@ export type LootBag = {
   gold: number
 }
 
+export interface Renderer {
+  print(message: string): void
+  clear(): void
+  printStatus(player: Player, context: GameContext): void
+  // 필요한 경우 여기에 더 많은 추상 메서드 추가 (예: 다이얼로그 노출, 인벤토리 갱신 등)
+}
+
 export interface GameContext {
   map: MapManager
   npcs: NPCManager
@@ -191,7 +198,7 @@ export interface GameContext {
   battle: Battle
   broadcast: Broadcast
   monster: MonsterFactory
-  rl: any
+  renderer: Renderer
 
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }

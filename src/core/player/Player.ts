@@ -51,7 +51,7 @@ export class Player {
 
   constructor(levelPath: string, saved?: PlayerSaveData) {
     if (saved) {
-      const { inventory, inventoryMax, ...rest } = saved
+      const { inventory, inventoryMax, skeletonSubspace, subspaceLimit, skeleton, _maxSkeleton, upgradeLimit, golemUpgrade, knightUpgrade, ...rest } = saved
       Object.assign(this, rest)
     }
 
