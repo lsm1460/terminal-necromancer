@@ -1,4 +1,5 @@
 import { BattleTarget } from '~/types'
+import { Logger } from '../Logger'
 import { Player } from '../player/Player'
 import { CombatUnit } from './CombatUnit'
 
@@ -18,7 +19,7 @@ export class AffixManager {
 
       if (golem) {
         // 🔊 상황에 맞는 로그 출력
-        console.log(
+        Logger.log(
           `\n[📢 포효]: 골렘이 증기를 내뿜고 굉음을 내지릅니다!! ${attacker.name}의 시선이 골렘에게 고정됩니다.`
         )
         return golem

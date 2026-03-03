@@ -2,13 +2,14 @@ import enquirer from 'enquirer'
 import fs from 'fs'
 import path from 'path'
 import { SaveSystem } from '~/systems/SaveSystem'
+import { Logger } from './Logger'
 
 export class Title {
   static async gameStart(save: SaveSystem) {
     console.clear()
 
     // 1. 심플한 타이틀 및 부제
-    console.log(`
+    Logger.log(`
            [ TERMINAL ]
     "죽음이 너희를 자유케 하리라"
     ------------------------`)
@@ -29,7 +30,7 @@ export class Title {
         })
 
         if (menu === 'exit') throw new Error('EXIT')
-        if (menu === 'load') console.log('\n게임을 시작합니다.\n')
+        if (menu === 'load') Logger.log('\n게임을 시작합니다.\n')
         if (menu === 'new') {
           // new game..
           if (hasSave) {
@@ -81,7 +82,7 @@ export class Title {
             })
           }
     
-          console.log('진입 중...\n')
+          Logger.log('진입 중...\n')
         }
         //
         break
@@ -89,7 +90,7 @@ export class Title {
 
       return hasSave
     } catch (e: any) {
-      console.log('터미널을 떠납니다..')
+      Logger.log('터미널을 떠납니다..')
       process.exit()
     }
   }

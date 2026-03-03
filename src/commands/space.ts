@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { BattleTarget, CommandFunction } from '~/types'
 
@@ -10,14 +11,14 @@ export const spaceCommand: CommandFunction = async (player, args, context) => {
   const caronIsDead = events.isCompleted('caron_is_dead')
 
   if (!caronIsMine && !caronIsDead) {
-    console.log('\n(아공간의 권능을 소유하고 있지 않습니다.)')
+    Logger.log('\n(아공간의 권능을 소유하고 있지 않습니다.)')
     return false
   }
 
   if (caronIsMine) {
-    console.log('\n카론: "(그림자 속에서 나직이 읊조리며) 차원의 문을 열겠습니다. 당신의 군세를 이곳에 맡기시지요."')
+    Logger.log('\n카론: "(그림자 속에서 나직이 읊조리며) 차원의 문을 열겠습니다. 당신의 군세를 이곳에 맡기시지요."')
   } else {
-    console.log('\n[ 찬탈한 아공간의 틈새가 비정상적인 냉기를 뿜으며 뒤틀립니다. ]')
+    Logger.log('\n[ 찬탈한 아공간의 틈새가 비정상적인 냉기를 뿜으며 뒤틀립니다. ]')
   }
 
   // 2. 가용 동작 판단
@@ -31,7 +32,7 @@ export const spaceCommand: CommandFunction = async (player, args, context) => {
 
   if (actionChoices.length === 1) {
     // 취소만 있는 경우
-    console.log('\n(현재 조작할 수 있는 스켈레톤이 아공간이나 필드에 없습니다.)')
+    Logger.log('\n(현재 조작할 수 있는 스켈레톤이 아공간이나 필드에 없습니다.)')
     return false
   }
 
@@ -74,7 +75,7 @@ async function handlePush(player: Player) {
 
   player.skeleton = player.skeleton.filter((s) => s.id !== targetId)
   player.skeletonSubspace.push(target)
-  console.log(`\n✨ [봉인] ${target.name}이(가) 차원의 틈새로 사라졌습니다.`)
+  Logger.log(`\n✨ [봉인] ${target.name}이(가) 차원의 틈새로 사라졌습니다.`)
 }
 
 /** 아공간 -> 필드 이동 (교체 로직 포함) */
@@ -109,7 +110,7 @@ async function handlePull(player: Player) {
 
 /** 🔄 필드와 아공간의 스켈레톤 교체 */
 async function handleSwap(player: Player, targetToPull: BattleTarget) {
-  console.log('\n⚠️ 필드 수용량이 가득 찼습니다. 대상을 교체해야 합니다.')
+  Logger.log('\n⚠️ 필드 수용량이 가득 찼습니다. 대상을 교체해야 합니다.')
 
   const fieldChoices = player.skeleton.map((sk) => ({
     name: sk.id,
@@ -143,5 +144,5 @@ function renderSuccessMessage(name: string, type: 'push' | 'pull' | 'swap') {
     pull: `\n💀 [해방] ${name}이(가) 지면에서 솟아오릅니다.`,
     swap: `\n🔄 [교체] ${name}의 위치가 아공간의 비틀림 속에서 뒤바뀌었습니다.`,
   }
-  console.log(messages[type])
+  Logger.log(messages[type])
 }

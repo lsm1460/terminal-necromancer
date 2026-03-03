@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { ExecuteSkill, GameContext, SkillId } from '~/types'
+import { Logger } from '../Logger'
 import { Player } from '../player/Player'
 import { SKILL_LIST } from './skill'
 
@@ -39,7 +40,7 @@ export class SkillManager {
 
     // 3. 자원 체크
     if (player.ref.mp < targetSkill.cost) {
-      console.log(`\n🚫 마력이 부족합니다! (필요: ${targetSkill.cost} / 현재: ${player.ref.mp})`)
+      Logger.log(`\n🚫 마력이 부족합니다! (필요: ${targetSkill.cost} / 현재: ${player.ref.mp})`)
       return failResult
     }
 
@@ -59,7 +60,7 @@ export class SkillManager {
 
     const corpses = world.getCorpsesAt(x, y)
     if (corpses.length === 0) {
-      console.log('\n💬 주변에 활용할 시체가 없습니다.')
+      Logger.log('\n💬 주변에 활용할 시체가 없습니다.')
       return false
     }
 
@@ -85,7 +86,7 @@ export class SkillManager {
     })
 
     if (corpseId === 'cancel') {
-      console.log('\n💬 스킬 사용을 취소했습니다.')
+      Logger.log('\n💬 스킬 사용을 취소했습니다.')
       return false
     }
 

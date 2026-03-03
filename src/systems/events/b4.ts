@@ -1,7 +1,8 @@
-import { EventHandler } from '.'
+import _ from 'lodash'
+import { Logger } from '~/core/Logger'
 import { relocateCaron } from '~/npc/caron'
 import { Tile } from '~/types'
-import _ from 'lodash'
+import { EventHandler } from '.'
 
 export const b4Handlers: Record<string, EventHandler> = {
   'event-b4-warp': (tile, player, context) => {
@@ -23,7 +24,7 @@ export const b4Handlers: Record<string, EventHandler> = {
         player.x = target.x
         player.y = target.y
 
-        console.log('공간이 거울처럼 조각나며 당신을 낯선 곳으로 내던집니다.')
+        Logger.log('공간이 거울처럼 조각나며 당신을 낯선 곳으로 내던집니다.')
       }
     }
   },

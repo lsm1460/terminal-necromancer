@@ -75,7 +75,6 @@ export class GameEngine {
       battle,
       broadcast,
       monster,
-      renderer: this.renderer,
     } as GameContext
 
     player.onDeath = () => {

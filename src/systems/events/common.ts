@@ -1,9 +1,10 @@
 import enquirer from 'enquirer'
+import _ from 'lodash'
+import { Logger } from '~/core/Logger'
+import { delay } from '~/utils'
 import { EventHandler } from '.'
 import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
-import { delay } from '~/utils'
-import _ from 'lodash'
 
 export const commonHandlers: Record<string, EventHandler> = {
   heal: (tile, player) => {
@@ -13,10 +14,10 @@ export const commonHandlers: Record<string, EventHandler> = {
   'heal-once': async (tile, player, context) => {
     if (tile.isClear) return
 
-    console.log(
+    Logger.log(
       `\n\x1b[93m[ 철과 먼지뿐인 이곳에서, 기적처럼 푸른 이끼와 작은 꽃이 피어난 구석을 발견했습니다 ]\x1b[0m`
     )
-    console.log(`\x1b[90m(사신의 서늘한 기운이 닿지 않는, 누군가 의도적으로 숨겨둔 듯한 따스한 공간입니다)\x1b[0m`)
+    Logger.log(`\x1b[90m(사신의 서늘한 기운이 닿지 않는, 누군가 의도적으로 숨겨둔 듯한 따스한 공간입니다)\x1b[0m`)
 
     const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
       type: 'confirm',
@@ -26,18 +27,18 @@ export const commonHandlers: Record<string, EventHandler> = {
     })
 
     if (!proceed) {
-      console.log(' > 당신은 이 소중한 온기를 나중을 위해 아껴두기로 합니다.')
+      Logger.log(' > 당신은 이 소중한 온기를 나중을 위해 아껴두기로 합니다.')
       return
     }
 
     // 회복 연출: 생명의 기운이 스며드는 느낌
-    console.log(`\n\x1b[32m[ 발밑의 작은 꽃들이 빛을 내며 당신의 상처와 피로를 어루만집니다... ]\x1b[0m`)
+    Logger.log(`\n\x1b[32m[ 발밑의 작은 꽃들이 빛을 내며 당신의 상처와 피로를 어루만집니다... ]\x1b[0m`)
     await delay(2000)
 
     player.restoreAll()
 
-    console.log(`\n✨ 생명의 가호가 온몸에 퍼지며 모든 상태가 완벽하게 복구되었습니다!`)
-    console.log(`\x1b[90m(기운을 다한 꽃들이 투명하게 흩어지며, 다시 차가운 터미널의 공기가 돌아옵니다.)\x1b[0m\n`)
+    Logger.log(`\n✨ 생명의 가호가 온몸에 퍼지며 모든 상태가 완벽하게 복구되었습니다!`)
+    Logger.log(`\x1b[90m(기운을 다한 꽃들이 투명하게 흩어지며, 다시 차가운 터미널의 공기가 돌아옵니다.)\x1b[0m\n`)
 
     // 생명의 기운을 소진했으므로 클리어 처리
     tile.isClear = true
@@ -64,9 +65,9 @@ export const commonHandlers: Record<string, EventHandler> = {
 
     // 타일에 머물 때마다 들리는 은밀한 속삭임
     if (isMine) {
-      console.log('\n카론: "(그림자 너머에서) 군주여, 이곳입니다. 준비가 필요하십니까?"')
+      Logger.log('\n카론: "(그림자 너머에서) 군주여, 이곳입니다. 준비가 필요하십니까?"')
     } else {
-      console.log('\n[아공간의 인도자]: "...주...인... 명령...을..." (기괴한 냉기가 발치를 감쌉니다.)')
+      Logger.log('\n[아공간의 인도자]: "...주...인... 명령...을..." (기괴한 냉기가 발치를 감쌉니다.)')
     }
   },
 }

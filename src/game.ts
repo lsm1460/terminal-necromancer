@@ -4,6 +4,7 @@ import { CLIRenderer } from './cliRenderer'
 import { GameEngine } from './gameEngine'
 import { Title } from './core/Title'
 import { SaveSystem } from './systems/SaveSystem'
+import { Logger } from './core/Logger'
 
 // ---------- 데이터 로드 ----------
 const assetsDir = path.join(__dirname, 'assets')
@@ -24,6 +25,7 @@ const assets = {
 // ---------- 초기화 ----------
 const save = new SaveSystem(assets.statePath)
 const renderer = new CLIRenderer()
+Logger.setRenderer(renderer)
 const engine = new GameEngine(assets, renderer)
 
 Title.gameStart(save).then(async (playData) => {

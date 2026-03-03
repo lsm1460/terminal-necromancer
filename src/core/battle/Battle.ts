@@ -2,14 +2,15 @@ import enquirer from 'enquirer'
 import _ from 'lodash'
 import { AttackType, BattleTarget, Drop, GameContext, NPC } from '~/types'
 import { delay } from '~/utils'
+import { Logger } from '../Logger'
 import { LootFactory } from '../LootFactory'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
 import { SkillManager } from '../skill'
+import { NpcSkillManager } from '../skill/NpcSkillManger'
 import { AffixManager } from './AffixManager'
 import { CombatUnit } from './CombatUnit'
 import { TargetSelector } from './TargetSelector'
-import { NpcSkillManager } from '../skill/NpcSkillManger'
 
 export type DamageOptions = {
   skillAtkMult?: number // 데미지 배율
@@ -94,10 +95,10 @@ export class Battle {
     for (const effect of dotEffects) {
       const damage = Math.max(1, effect.atk || 0)
       unit.ref.hp -= damage
-      console.log(` └ 🩸 [${effect.name}] 피해: -${damage} (남은 지속: ${effect.duration}턴)`)
+      Logger.log(` └ 🩸 [${effect.name}] 피해: -${damage} (남은 지속: ${effect.duration}턴)`)
 
       if (unit.ref.hp <= 0) {
-        console.log(` └ 💀 ${unit.name}이(가) ${effect.name}으로 사망했습니다.`)
+        Logger.log(` └ 💀 ${unit.name}이(가) ${effect.name}으로 사망했습니다.`)
 
         await unit.dead()
         await delay()
@@ -108,7 +109,7 @@ export class Battle {
     // 2. 행동 제약(Bind) 처리
     const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
     if (bindEffect) {
-      console.log(
+      Logger.log(
         `\n⛓️  ${unit.name}은(는) ${bindEffect.name}(으)로 인해 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`
       )
       return true // 속박되었으므로 이번 턴 행동 스킵
@@ -138,8 +139,8 @@ export class Battle {
       this.registerUnitCache(e)
     })
 
-    console.log(`\n⚔️ 전투가 시작되었습니다!`)
-    console.log(`적: ${this.aliveEnemies.map((e) => e.name).join(', ')}`)
+    Logger.log(`\n⚔️ 전투가 시작되었습니다!`)
+    Logger.log(`적: ${this.aliveEnemies.map((e) => e.name).join(', ')}`)
 
     let turn = 0
     while (this.player.isAlive && this.aliveEnemies.length > 0) {
@@ -148,7 +149,7 @@ export class Battle {
       this.initPlayerUnit()
       const turnOrder = this.getTurnOrder()
 
-      console.log(`\n============== turn: ${turn} ==============`)
+      Logger.log(`\n============== turn: ${turn} ==============`)
 
       // 1. 민첩(AGI) 기반 턴 순서 정렬 (매 라운드마다 갱신)
       for (const unit of turnOrder) {
@@ -156,7 +157,7 @@ export class Battle {
         if (!unit.ref.isAlive) continue
         if (!this.player.isAlive || this.aliveEnemies.length === 0) break
 
-        console.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
+        Logger.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
         this.updateEffectsDuration(unit)
         const isSkip = await this.handleUnitDeBuff(unit)
         if (isSkip) continue
@@ -251,23 +252,23 @@ export class Battle {
     switch (action) {
       case '상태':
         {
-          console.log('\n━━━━━━━━━━━━━━━━━━━━ 전장 상황 ━━━━━━━━━━━━━━━━━━━━')
+          Logger.log('\n━━━━━━━━━━━━━━━━━━━━ 전장 상황 ━━━━━━━━━━━━━━━━━━━━')
 
           // 1. 아군 출력 (입력 순서대로: 0번이 선두)
-          console.log(' [🛡️ 아군 진영]')
+          Logger.log(' [🛡️ 아군 진영]')
           playerSide.forEach((unit, i) => {
-            console.log(renderLine(unit, i === 0))
+            Logger.log(renderLine(unit, i === 0))
           })
 
-          console.log('──────────────────────────────────────────────────')
+          Logger.log('──────────────────────────────────────────────────')
 
           // 2. 적군 출력 (입력 순서대로: 0번이 선두)
-          console.log(' [⚔️ 적군 진영]')
+          Logger.log(' [⚔️ 적군 진영]')
           this.aliveEnemies.forEach((unit, i) => {
-            console.log(renderLine(unit, i === 0))
+            Logger.log(renderLine(unit, i === 0))
           })
 
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
+          Logger.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
         }
         return await this.handlePlayerAction(playerUnit, playerSide, context)
       case '공격':
@@ -304,7 +305,7 @@ export class Battle {
         }
         break
       case '방어':
-        console.log(`🛡️ ${playerUnit.name}(이)가 방어 자세를 취합니다! 다음 턴까지 피해를 덜 입습니다.`)
+        Logger.log(`🛡️ ${playerUnit.name}(이)가 방어 자세를 취합니다! 다음 턴까지 피해를 덜 입습니다.`)
         playerUnit.applyBuff({
           name: '방어',
           type: 'buff',
@@ -340,7 +341,7 @@ export class Battle {
 
         if (isEscapeBlocked) {
           const blocker = this.aliveEnemies.find((e) => (e.ref as BattleTarget).noEscape === true)
-          console.log(`\n🚫 도망칠 수 없습니다! ${blocker?.name}(이)가 길을 가로막고 있습니다!`)
+          Logger.log(`\n🚫 도망칠 수 없습니다! ${blocker?.name}(이)가 길을 가로막고 있습니다!`)
 
           // 도망에 실패했으므로 턴을 낭비하게 하거나,
           // 아니면 다시 선택하게 하려면 여기서 handlePlayerAction을 재귀 호출할 수도 있습니다.
@@ -349,7 +350,7 @@ export class Battle {
           return false
         }
 
-        console.log('\n🏃 전투에서 도망쳤습니다!')
+        Logger.log('\n🏃 전투에서 도망쳤습니다!')
         this.unitCache.clear()
 
         return true
@@ -372,7 +373,7 @@ export class Battle {
     const visibleTargets = targets.filter((t) => !t.buff.some((b) => b.type === 'stealth'))
 
     if (visibleTargets.length === 0) {
-      console.log(` > ${attacker.name}(이)가 공격할 대상을 찾지 못해 두리번거립니다...`)
+      Logger.log(` > ${attacker.name}(이)가 공격할 대상을 찾지 못해 두리번거립니다...`)
       return
     }
 
@@ -397,7 +398,7 @@ export class Battle {
       if (attacker.stats.atk > 0) {
         await target.executeHit(attacker, { attackType: attacker.attackType })
       } else {
-        console.log(`${attacker.name}은 가만히 서있을 뿐이다.`)
+        Logger.log(`${attacker.name}은 가만히 서있을 뿐이다.`)
 
         return
       }
@@ -414,7 +415,7 @@ export class Battle {
 
     this.player.removeMinion(deathUnit.ref.id)
 
-    console.log(`\n💀 ${deathUnit.ref.name}이(가) 쓰러졌습니다!`)
+    Logger.log(`\n💀 ${deathUnit.ref.name}이(가) 쓰러졌습니다!`)
   }
 
   private handleUnitDeath(target: BattleTarget, context: GameContext) {
@@ -426,8 +427,8 @@ export class Battle {
     target.isAlive = false
     this.unitCache.delete(target)
 
-    console.log(`\n💀 ${target.name}이(가) 쓰러졌습니다!`)
-    target.deathLine && console.log(target.deathLine)
+    Logger.log(`\n💀 ${target.name}이(가) 쓰러졌습니다!`)
+    target.deathLine && Logger.log(target.deathLine)
 
     // 2. 전리품 및 경험치 처리 (플레이어 진영이 죽인 경우만 해당될 수 있음)
     target.isNpc && (target as NPC).dead()
@@ -439,13 +440,13 @@ export class Battle {
 
     let logMessage = `✨ ${target.name} 처치! EXP +${target.exp || 0}`
     if (gold > 0) logMessage += `, 골드 +${gold}`
-    console.log(logMessage)
+    Logger.log(logMessage)
 
     // 아이템 드랍
     drops.forEach((d) => {
       world.addDrop({ ...d, x, y } as Drop)
       const qtyText = d.quantity !== undefined ? ` ${d.quantity}개` : ''
-      console.log(`📦 ${target.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
+      Logger.log(`📦 ${target.name}은(는) ${d.label}${qtyText}을(를) 떨어뜨렸습니다.`)
     })
 
     if (!target.noCorpse) {
@@ -455,9 +456,9 @@ export class Battle {
         x,
         y,
       })
-      console.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
+      Logger.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
     } else {
-      console.log(`${target.name}이/가 연기처럼 사라졌다.`)
+      Logger.log(`${target.name}이/가 연기처럼 사라졌다.`)
     }
   }
 
@@ -478,9 +479,9 @@ export class Battle {
     this.unitCache.clear()
 
     if (this.player.isAlive) {
-      console.log(`\n🏆 전투에서 승리했습니다!`)
+      Logger.log(`\n🏆 전투에서 승리했습니다!`)
     } else {
-      console.log(`\n💀 전투에서 패배했습니다...`)
+      Logger.log(`\n💀 전투에서 패배했습니다...`)
 
       this.player?.onDeath && this.player.onDeath()
     }
@@ -527,7 +528,7 @@ export class Battle {
 
       expiredEffects.forEach((e) => {
         const icon = type === 'buff' ? '✨' : '💢'
-        console.log(`[효과 만료] ${unit.name}의 ${icon} [${e.name}] 효과가 사라졌습니다.`)
+        Logger.log(`[효과 만료] ${unit.name}의 ${icon} [${e.name}] 효과가 사라졌습니다.`)
       })
 
       // 지속 시간이 남은 효과들만 유지

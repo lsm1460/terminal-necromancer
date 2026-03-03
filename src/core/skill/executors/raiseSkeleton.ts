@@ -1,6 +1,7 @@
 import { RARITY_DATA, SkeletonRarity } from '~/consts'
 import { BattleTarget, Corpse, ExecuteSkill } from '~/types'
 import { SkillManager } from '../SkillManager'
+import { Logger } from '~/core/Logger'
 
 export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   const failure = {
@@ -88,13 +89,13 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
 
       npcs.reborn(corpse.id)
 
-      console.log(`\n[강령술] ${corpse.name}의 뼈가 맞춰지며 일어섭니다!`)
-      console.log(`💀 ${rarityTag} 등급의 스켈레톤 ${selectedClass.name}으로 부활했습니다!`)
+      Logger.log(`\n[강령술] ${corpse.name}의 뼈가 맞춰지며 일어섭니다!`)
+      Logger.log(`💀 ${rarityTag} 등급의 스켈레톤 ${selectedClass.name}으로 부활했습니다!`)
 
       return true
     }
 
-    !isMultiple && console.log('\n[알림] 더 이상 해골병사를 부릴 수 없습니다.')
+    !isMultiple && Logger.log('\n[알림] 더 이상 해골병사를 부릴 수 없습니다.')
 
     return false
   }
@@ -102,14 +103,14 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   const corpses = world.getCorpsesAt(x, y)
 
   if (corpses.length === 0) {
-    console.log('🌑 주위에 부름에 응답할 시체가 존재하지 않습니다. 정적만이 감돕니다.')
+    Logger.log('🌑 주위에 부름에 응답할 시체가 존재하지 않습니다. 정적만이 감돕니다.')
 
     return { ...failure }
   }
 
   if (player.ref.skeleton.length >= player.ref.maxSkeleton) {
     // 2. 이미 최대 소환 수에 도달했을 때
-    console.log('⚠️ 지배할 수 있는 영혼의 그릇이 가득 찼습니다. 더 이상 군단을 부릴 수 없습니다.')
+    Logger.log('⚠️ 지배할 수 있는 영혼의 그릇이 가득 찼습니다. 더 이상 군단을 부릴 수 없습니다.')
 
     return { ...failure }
   }
@@ -117,11 +118,11 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   let isSuccess = false
 
   if (player.ref.hasAffix('LEGION')) {
-    console.log('💀 군단의 인장이 붉게 타오르며, 대지의 모든 유골이 동시에 진동합니다!')
+    Logger.log('💀 군단의 인장이 붉게 타오르며, 대지의 모든 유골이 동시에 진동합니다!')
 
     isSuccess = corpses.map((_corpse) => makeSkeleton(_corpse, true)).some(Boolean)
 
-    isSuccess && console.log('⚔️ 대강령 완료: 전율하는 뼈의 군세가 지옥의 부름에 응답해 일어섰습니다.')
+    isSuccess && Logger.log('⚔️ 대강령 완료: 전율하는 뼈의 군세가 지옥의 부름에 응답해 일어섰습니다.')
   } else {
     // 1. 현재 위치의 시체 목록 가져오기
     const targetId = await SkillManager.selectCorpse(player.ref, context)
@@ -130,7 +131,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     const selectedCorpse = corpses.find((c) => c.id === targetId)
 
     if (!selectedCorpse) {
-      console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+      Logger.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
       return { ...failure }
     }
 

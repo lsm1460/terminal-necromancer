@@ -1,6 +1,7 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill } from '~/types'
 import { TargetSelector } from '~/core/battle/TargetSelector'
+import { Logger } from '~/core/Logger'
+import { ExecuteSkill } from '~/types'
 
 /**
  * 뼈 감옥 (Bone Prison)
@@ -11,7 +12,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
   if (aliveEnemies.length === 0) {
-    console.log('\n[실패] 감옥을 생성할 대상이 없습니다.')
+    Logger.log('\n[실패] 감옥을 생성할 대상이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -35,13 +36,13 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
   })
 
   if (targetId === 'cancel') {
-    console.log('\n💬 스킬 사용을 취소했습니다.')
+    Logger.log('\n💬 스킬 사용을 취소했습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   const target = aliveEnemies.find((e) => e.id === targetId)
   if (!target) {
-    console.log('\n[실패] 대상이 없습니다.')
+    Logger.log('\n[실패] 대상이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -54,7 +55,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
     duration: duration + 1,
   })
 
-  console.log(` └ [속박] ${target.name}이(가) ${duration}턴 동안 속박되었습니다.`)
+  Logger.log(` └ [속박] ${target.name}이(가) ${duration}턴 동안 속박되었습니다.`)
 
   return {
     isSuccess: true,

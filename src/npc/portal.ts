@@ -1,8 +1,9 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
+import { printStatus } from '~/statusPrinter'
 import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
-import { printStatus } from '~/statusPrinter'
 
 const PortalHandler: NPCHandler = {
   getChoices() {
@@ -34,7 +35,7 @@ async function handlePortal(player: Player, context: GameContext) {
     player.x = currentScene.start_pos.x
     player.y = currentScene.start_pos.y
 
-    console.log(`\n✨ 공간이 일렁이며 ${currentScene.displayName}의 시작 지점으로 이동했습니다.`)
+    Logger.log(`\n✨ 공간이 일렁이며 ${currentScene.displayName}의 시작 지점으로 이동했습니다.`)
 
     const tile = map.getTile(player.x, player.y)
 
@@ -43,7 +44,7 @@ async function handlePortal(player: Player, context: GameContext) {
 
     printStatus(player, context)
   } else {
-    console.log('\n이동을 취소했습니다.')
+    Logger.log('\n이동을 취소했습니다.')
   }
 
   return true

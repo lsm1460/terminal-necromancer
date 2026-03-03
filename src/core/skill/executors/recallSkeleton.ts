@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { ExecuteSkill } from '~/types'
 
 export const recallSkeleton: ExecuteSkill = async (player, context) => {
@@ -24,7 +25,7 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
   })
 
   if (corpseId === 'cancel') {
-    console.log('\n💬 스킬 사용을 취소했습니다.')
+    Logger.log('\n💬 스킬 사용을 취소했습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -35,7 +36,7 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
   const selectedCorpse = skeletons.find((target) => target.id === corpseId)
 
   if (!selectedCorpse) {
-    console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+    Logger.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -53,10 +54,10 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
 
   player.ref.mp = Math.min(player.ref.mp + 5, player.ref.maxMp) 
 
-  console.log(
+  Logger.log(
     `[역소환 성공] ${selectedCorpse.name || '스켈레톤'} 이(가) 영혼으로 환원되었습니다.`
   );
-  console.log(
+  Logger.log(
     `[자원 회수] 마나 +5 회복 | 현재 마나: ${player.ref.mp}`
   );
 

@@ -1,6 +1,7 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill } from '~/types'
 import { TargetSelector } from '~/core/battle/TargetSelector'
+import { Logger } from '~/core/Logger'
+import { ExecuteSkill } from '~/types'
 
 /**
  * 표식 (Curse)
@@ -13,7 +14,7 @@ export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } 
   const curseName = '죽음의 표식'
 
   if (aliveEnemies.length === 0) {
-    console.log(`\n[실패] 대상이 없습니다.`)
+    Logger.log(`\n[실패] 대상이 없습니다.`)
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -36,8 +37,8 @@ export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } 
     const target = aliveEnemies.find((e) => e.id === response.targetId)
     if (!target) return { isSuccess: false, isAggressive: false, gross: 0 }
 
-    console.log(`\n[!] ${player.name}이(가) ${target.name}에게 서늘한 죽음의 손짓을 보냅니다!`)
-    console.log(`[!] 모든 수하의 안광이 붉게 타오릅니다.\n`)
+    Logger.log(`\n[!] ${player.name}이(가) ${target.name}에게 서늘한 죽음의 손짓을 보냅니다!`)
+    Logger.log(`[!] 모든 수하의 안광이 붉게 타오릅니다.\n`)
 
     target.applyDeBuff({
       name: curseName,

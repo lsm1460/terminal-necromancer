@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
 import { makeItemMessage } from '~/utils'
 import { printItem } from './overview'
@@ -7,7 +8,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
   const inventory = player.inventory
 
   if (inventory.length === 0) {
-    console.log('\n🎒 인벤토리가 텅 비어 있습니다.')
+    Logger.log('\n🎒 인벤토리가 텅 비어 있습니다.')
     return false
   }
 
@@ -76,7 +77,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
         printItem(selectedItem)
         break
       case 'equip':
-        console.log(`\n✨ [${selectedItem.label}]을(를) 장비하였습니다.`)
+        Logger.log(`\n✨ [${selectedItem.label}]을(를) 장비하였습니다.`)
         await player.equip(selectedItem)
         break
       case 'use':
@@ -96,7 +97,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
           } as Drop)
 
           const qtyText = selectedItem.quantity !== undefined ? ` 1개` : ''
-          console.log(`📦 [${selectedItem.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
+          Logger.log(`📦 [${selectedItem.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
         }
         break
       case 'back':

@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { MAP_IDS } from '~/consts'
+import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -72,7 +73,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
   // 3. 결과 처리
   switch (choice) {
     case 'join':
-      console.log(`\n잭스: "크크, 역시 살고 싶나 보군? 현명해. 본부 놈들에겐 내가 잘 말해주지. 따라와!"`)
+      Logger.log(`\n잭스: "크크, 역시 살고 싶나 보군? 현명해. 본부 놈들에겐 내가 잘 말해주지. 따라와!"`)
       events.completeEvent('RESISTANCE_BASE')
 
       // 바로 이동할지 묻는 confirm 분기
@@ -87,14 +88,14 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
         handleEnter(player, context)
         return
       } else {
-        console.log(`\n잭스: "뭐 아직 볼일이 남았어?"`)
+        Logger.log(`\n잭스: "뭐 아직 볼일이 남았어?"`)
         // TODO: 현재 구역에 머무는 로직을 작성하세요.
       }
       break
 
     case 'kill':
-      console.log(`\n잭스: "뭐? 그 눈빛은 뭐야? 감히 이 잭스 님을...!"`)
-      console.log(`사령술사: "걱정 마라. 죽어서는 지금보다 훨씬 쓸모 있는 존재가 될 테니까."`)
+      Logger.log(`\n잭스: "뭐? 그 눈빛은 뭐야? 감히 이 잭스 님을...!"`)
+      Logger.log(`사령술사: "걱정 마라. 죽어서는 지금보다 훨씬 쓸모 있는 존재가 될 테니까."`)
       const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
 
       if (isWin) {
@@ -108,7 +109,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
       return true
 
     case 'leave':
-      console.log(`\n잭스: "흥, 겁에 질려서 도망가는 꼴이라니! 다신 내 눈앞에 띄지 마라!"`)
+      Logger.log(`\n잭스: "흥, 겁에 질려서 도망가는 꼴이라니! 다신 내 눈앞에 띄지 마라!"`)
       break
   }
 }
@@ -116,7 +117,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
 function handleEnter(player: Player, context: GameContext) {
   const { map } = context
 
-  console.log(`\n잭스: "좋아, 딴청 피우지 말고 바짝 붙으라고. 여기 길은 좀 복잡하니까."`)
+  Logger.log(`\n잭스: "좋아, 딴청 피우지 말고 바짝 붙으라고. 여기 길은 좀 복잡하니까."`)
 
   map.changeScene(MAP_IDS.B3_5_RESISTANCE_BASE, player)
 }

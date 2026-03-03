@@ -1,3 +1,4 @@
+import { Logger } from '~/core/Logger'
 import { ExecuteSkill } from '~/types'
 import { SkillManager } from '../SkillManager'
 
@@ -17,7 +18,7 @@ export const soulHarvest: ExecuteSkill = async (player, context) => {
   const selectedCorpse = corpses.find((c) => c.id === targetId)
 
   if (!selectedCorpse) {
-    console.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+    Logger.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -35,9 +36,9 @@ export const soulHarvest: ExecuteSkill = async (player, context) => {
 
   // 4. 결과 연출 로그
   if (actualRestored > 0) {
-    console.log(`${selectedCorpse.name}에게서 영혼을 추출하여 마나를 ${actualRestored} 회복했습니다.`)
+    Logger.log(`${selectedCorpse.name}에게서 영혼을 추출하여 마나를 ${actualRestored} 회복했습니다.`)
   } else {
-    console.log('마나가 이미 가득 차 있습니다.')
+    Logger.log('마나가 이미 가득 차 있습니다.')
   }
 
   world.removeCorpse(selectedCorpse.id)

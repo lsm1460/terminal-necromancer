@@ -1,10 +1,11 @@
 import enquirer from 'enquirer'
 import _ from 'lodash'
-import { GameContext, NPC, Tile } from '~/types'
-import { NPCHandler } from './NPCHandler'
-import BossEvent from '~/systems/events/BossEvent'
+import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
+import BossEvent from '~/systems/events/BossEvent'
+import { GameContext, NPC, Tile } from '~/types'
 import { speak } from '~/utils'
+import { NPCHandler } from './NPCHandler'
 
 let count = 0
 let firstAnswer: boolean | null = null
@@ -121,7 +122,7 @@ async function firstEncounter() {
       : '카론: "그 눈빛... 왕관의 무게를 기억하는 자라면 마땅히 느껴야 할 갈증이 보이는군요."',
   ])
 
-  console.log('\n카론이 안개 속으로 모습을 감춥니다.')
+  Logger.log('\n카론이 안개 속으로 모습을 감춥니다.')
 }
 
 /** 2차 대면: 시스템에 대한 분노와 복수심 확인 */
@@ -143,7 +144,7 @@ async function secondEncounter() {
   secondAnswer = answer
   await speak(['카론: "알겠습니다. 당신이라는 존재의 무게를... 이제는 완전히 알 것 같군요."'])
 
-  console.log('\n카론의 기운이 격렬하게 일렁이다 사라집니다.')
+  Logger.log('\n카론의 기운이 격렬하게 일렁이다 사라집니다.')
 }
 
 /** 최종 대면: 답변 판단 및 최종 결판 */
@@ -221,7 +222,7 @@ async function handleBattle(player: Player, npc: NPC, context: GameContext, isMa
     await speak(['카론: "무례하군요. 제 이야기가 끝나기도 전에 칼을 뽑다니... 사신이 보낸 도살자답습니다."'])
   }
 
-  console.log(`\n카론과의 전투를 시작합니다!`)
+  Logger.log(`\n카론과의 전투를 시작합니다!`)
   const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
 
   if (isWin) {

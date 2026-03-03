@@ -2,6 +2,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import { Tile } from '~/types'
+import { Logger } from './Logger'
 import { Player } from './player/Player'
 
 interface SceneData {
@@ -65,9 +66,9 @@ export class MapManager {
     player.x = x
     player.y = y
 
-    console.log(`\n------------------------------------------`)
-    console.log(`📍 새로운 지역 진입: ${newScene.displayName}`)
-    console.log(`------------------------------------------`)
+    Logger.log(`\n------------------------------------------`)
+    Logger.log(`📍 새로운 지역 진입: ${newScene.displayName}`)
+    Logger.log(`------------------------------------------`)
   }
 
   private shuffleTiles(sceneId: string) {

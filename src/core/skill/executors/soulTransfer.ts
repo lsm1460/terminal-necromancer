@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { BattleTarget, ExecuteSkill } from '~/types'
 
 /**
@@ -12,7 +13,7 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
 
   // 1. 소환수 존재 여부 체크
   if (minions.length === 0) {
-    console.log('\n[실패] 상호작용할 미니언이 없습니다.')
+    Logger.log('\n[실패] 상호작용할 미니언이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -80,7 +81,7 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
 
     // 이미 체력이 가득 찬 경우 처리
     if (actualNeed <= 0) {
-      console.log(`\n🌿 ${targetMinion.name}의 영혼이 이미 충만하여 더 이상 생명력을 나눌 필요가 없습니다.`)
+      Logger.log(`\n🌿 ${targetMinion.name}의 영혼이 이미 충만하여 더 이상 생명력을 나눌 필요가 없습니다.`)
       return {
         isSuccess: true, // 기술 시전은 성공한 것으로 간주 (혹은 필요에 따라 false)
         isAggressive: false,
@@ -102,12 +103,12 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
       // 미니언 체력 증가
       targetMinion.ref.hp += finalTransferAmount
 
-      console.log(
+      Logger.log(
         `\n✨ [치유] ${player.name}의 영혼으로 ${targetMinion.name}의 상처를 메꿉니다. (${targetMinion.name} HP ${targetMinion.ref.hp} / ${targetMinion.ref.maxHp})`
       )
-      console.log(` └ 🩸 사령술사 HP -${finalTransferAmount} ➡️ ${targetMinion.name} HP +${finalTransferAmount}`)
+      Logger.log(` └ 🩸 사령술사 HP -${finalTransferAmount} ➡️ ${targetMinion.name} HP +${finalTransferAmount}`)
     } else {
-      console.log(`\n⚠️ ${player.name}의 체력이 너무 낮아 더 이상 생명력을 나누어줄 수 없습니다!`)
+      Logger.log(`\n⚠️ ${player.name}의 체력이 너무 낮아 더 이상 생명력을 나누어줄 수 없습니다!`)
 
       return {
         isSuccess: false,

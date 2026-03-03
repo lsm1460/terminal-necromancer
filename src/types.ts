@@ -198,7 +198,6 @@ export interface GameContext {
   battle: Battle
   broadcast: Broadcast
   monster: MonsterFactory
-  renderer: Renderer
 
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }

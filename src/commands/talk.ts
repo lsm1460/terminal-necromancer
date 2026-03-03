@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import npcHandlers from '~/npc'
 import { CommandFunction } from '~/types'
 
@@ -12,7 +13,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     .filter((npc) => npc.isAlive)
 
   if (availableNpcs.length < 1) {
-    console.log(`\n[알림] 이곳에는 대화할 상대가 없습니다.`)
+    Logger.log(`\n[알림] 이곳에는 대화할 상대가 없습니다.`)
     return false
   }
 
@@ -24,7 +25,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     selectedNpcId = npcIds.find((id) => context.npcs.getNPC(id)?.name === targetName)
 
     if (!selectedNpcId) {
-      console.log(`\n[알림] 이곳에 '${targetName}'은(는) 없습니다.`)
+      Logger.log(`\n[알림] 이곳에 '${targetName}'은(는) 없습니다.`)
       return false
     }
   }
@@ -56,22 +57,22 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
   const handler = npcHandlers[npc.id]
 
   if (!handler) {
-    console.log(`\n[${npc.name}]: "..."`)
+    Logger.log(`\n[${npc.name}]: "..."`)
     return false
   }
 
   const dialect = context.npcs.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
 
   // 2. 대화 인터페이스 출력
-  console.log(`\n──────────────────────────────────────────────────`)
-  console.log(`  👤 [${npc.name}] - ${npc.description}`)
-  console.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`)
-  console.log(`──────────────────────────────────────────────────`)
+  Logger.log(`\n──────────────────────────────────────────────────`)
+  Logger.log(`  👤 [${npc.name}] - ${npc.description}`)
+  Logger.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`)
+  Logger.log(`──────────────────────────────────────────────────`)
 
   npc.relation = npc.relation + 1
 
   try {
-    const printFarewell = () => console.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
+    const printFarewell = () => Logger.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
 
     // 유저가 'exit'를 선택할 때까지 무한 반복
     while (true) {

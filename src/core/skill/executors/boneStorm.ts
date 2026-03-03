@@ -1,3 +1,4 @@
+import { Logger } from '~/core/Logger'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -11,12 +12,12 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
 
   // 1. 발사체(스켈레톤) 확인
   if (skeletons.length === 0) {
-    console.log('\n[실패] 희생시킬 스켈레톤이 하나도 없습니다.')
+    Logger.log('\n[실패] 희생시킬 스켈레톤이 하나도 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   if (aliveEnemies.length === 0) {
-    console.log('\n[실패] 공격할 대상이 없습니다.')
+    Logger.log('\n[실패] 공격할 대상이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -25,8 +26,8 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
   const totalRawDamage = Math.floor(totalSkeletonHp * 0.3)
   const sacrificeCount = skeletons.length
 
-  console.log(`\n🌪️  ${player.name}이 모든 스켈레톤을 파괴하여 뼈의 폭풍을 일으킵니다!`)
-  console.log(` └ 🔥 총 ${sacrificeCount}구의 스켈레톤이 산산조각나며 파편이 휘몰아칩니다.`)
+  Logger.log(`\n🌪️  ${player.name}이 모든 스켈레톤을 파괴하여 뼈의 폭풍을 일으킵니다!`)
+  Logger.log(` └ 🔥 총 ${sacrificeCount}구의 스켈레톤이 산산조각나며 파편이 휘몰아칩니다.`)
 
   // 3. 모든 스켈레톤 희생 처리
   // 배열을 순회하며 모두 파괴
@@ -38,7 +39,7 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
 
   // 4. 모든 적에게 데미지 및 [출혈] 부여
   for (const enemy of aliveEnemies) {
-    console.log(` └ 🩸 날카로운 뼈 파편이 ${enemy.name}을 찢어발깁니다!`)
+    Logger.log(` └ 🩸 날카로운 뼈 파편이 ${enemy.name}을 찢어발깁니다!`)
 
     // 데미지 적용 (고정 데미지가 아니므로 적 방어력에 감쇄됨)
     await enemy.executeHit(player, {

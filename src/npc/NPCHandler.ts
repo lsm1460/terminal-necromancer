@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 import { makeItemMessage } from '~/utils'
@@ -10,14 +11,14 @@ export interface NPCHandler {
 
 export async function handleTalk(npc: NPC) {
   if (!npc.lines || npc.lines.length === 0) {
-    console.log(`\n💬 [${npc.name}]: ...`)
+    Logger.log(`\n💬 [${npc.name}]: ...`)
     return
   }
 
   const randomIndex = Math.floor(Math.random() * npc.lines.length)
   const selectedLine = npc.lines[randomIndex]
 
-  console.log(`\n💬 [${npc.name}]: "${selectedLine}"`)
+  Logger.log(`\n💬 [${npc.name}]: "${selectedLine}"`)
 }
 
 interface NPCWithContribution extends NPC {
@@ -45,7 +46,7 @@ export async function handleBuy(
 
   // 1. 재고 확인
   if (goods.length === 0) {
-    console.log(`\n[${npc.name}]: "${scripts.noStock}"`)
+    Logger.log(`\n[${npc.name}]: "${scripts.noStock}"`)
     return
   }
 
@@ -82,7 +83,7 @@ export async function handleBuy(
 
   choices.push({ name: 'cancel', message: '🔙 돌아가기', label: '취소', price: 0 })
 
-  console.log(`\n[${npc.name}]: "${scripts.greeting}"`)
+  Logger.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
   while (true) {
     const infoHeader = `[소지금: ${player.gold}G${npc.contribution !== undefined ? ` / 기여도: ${contribution}` : ''}]`
@@ -99,7 +100,7 @@ export async function handleBuy(
     })
 
     if (itemId === 'cancel') {
-      if (scripts.exit) console.log(`\n[${npc.name}]: "${scripts.exit}"`)
+      if (scripts.exit) Logger.log(`\n[${npc.name}]: "${scripts.exit}"`)
       return
     }
 
@@ -108,7 +109,7 @@ export async function handleBuy(
 
     // 3. 소지금 체크
     if (player.gold < selectedChoice.price) {
-      console.log(`\n[${npc.name}]: "${scripts.noGold}"`)
+      Logger.log(`\n[${npc.name}]: "${scripts.noGold}"`)
       continue
     }
 
@@ -124,7 +125,7 @@ export async function handleBuy(
     if (actualItem) {
       player.addItem(actualItem)
       const successMsg = scripts.success || `${selectedChoice.label}을(를) 구매했습니다.`
-      console.log(`\n✨ [${npc.name}]: "${successMsg}" (-${selectedChoice.price}G)`)
+      Logger.log(`\n✨ [${npc.name}]: "${successMsg}" (-${selectedChoice.price}G)`)
     }
   }
 }
@@ -132,12 +133,12 @@ export async function handleBuy(
 export async function handleSell(player: Player, npc: NPC, context: GameContext, scripts: ShopScripts) {
   let totalEarnedInSession = 0
 
-  console.log(`\n[${npc.name}]: "${scripts.greeting}"`)
+  Logger.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
   while (true) {
     // 2. 인벤토리 상태 확인
     if (player.inventory.length === 0) {
-      console.log(`\n[${npc.name}]: "${scripts.noItems}"`)
+      Logger.log(`\n[${npc.name}]: "${scripts.noItems}"`)
       break
     }
 
@@ -204,16 +205,16 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
       context.npcs.updateFactionContribution(npc.faction, 10)
     }
 
-    console.log(`\n💰 [${npc.name}]: "${scripts.success}" (+${totalEarned}G)`)
+    Logger.log(`\n💰 [${npc.name}]: "${scripts.success}" (+${totalEarned}G)`)
   }
 
   // 6. 거래 종료 보고
   if (totalEarnedInSession > 0) {
-    console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-    console.log(` 🧾 영수증: 이번 거래로 총 ${totalEarnedInSession}G를 벌었습니다.`)
-    console.log(` 💰 현재 소지금: ${player.gold}G`)
-    console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+    Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+    Logger.log(` 🧾 영수증: 이번 거래로 총 ${totalEarnedInSession}G를 벌었습니다.`)
+    Logger.log(` 💰 현재 소지금: ${player.gold}G`)
+    Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   }
 
-  scripts.exit && console.log(`\n[${npc.name}]: "${scripts.exit}"`)
+  scripts.exit && Logger.log(`\n[${npc.name}]: "${scripts.exit}"`)
 }

@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { CommandFunction, ItemType } from '~/types'
 import { makeItemMessage } from '~/utils'
 
@@ -8,7 +9,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const equipAbles = inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type))
 
   if (equipAbles.length < 1) {
-    console.log('장비할 아이템이 없습니다.')
+    Logger.log('장비할 아이템이 없습니다.')
     return false
   }
 
@@ -44,7 +45,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const targetItem = findItem(itemId)
 
   if (targetItem) {
-    console.log(`\n✨ [${targetItem.label}]을(를) 장비하였습니다.`)
+    Logger.log(`\n✨ [${targetItem.label}]을(를) 장비하였습니다.`)
     await player.equip(targetItem)
   }
 

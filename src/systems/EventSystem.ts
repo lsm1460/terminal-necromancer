@@ -1,6 +1,7 @@
 // systems/EventSystem.ts
 import fs from 'fs'
 import path from 'path'
+import { Logger } from '~/core/Logger'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Player } from '~/core/player/Player'
 import { GameContext, GameEvent, Tile } from '~/types'
@@ -55,7 +56,7 @@ export class EventSystem {
         this.subscribers.forEach((callback) => callback(eventId))
       }
     } catch (e) {
-      console.log(e)
+      Logger.log(e as string)
     }
   }
 

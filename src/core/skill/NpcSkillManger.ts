@@ -1,11 +1,12 @@
 import fs from 'fs'
+import _ from 'lodash'
 import path from 'path'
 import { BattleTarget, GameContext, ItemType, NpcSkill } from '~/types'
-import { Player } from '../player/Player'
-import { CombatUnit } from '../battle/CombatUnit'
-import _ from 'lodash'
-import { PASSIVE_EFFECTS } from './passiveHandlers'
 import { Battle } from '../battle/Battle'
+import { CombatUnit } from '../battle/CombatUnit'
+import { Logger } from '../Logger'
+import { Player } from '../player/Player'
+import { PASSIVE_EFFECTS } from './passiveHandlers'
 
 const SkillEffectHandlers: Record<
   string,
@@ -14,7 +15,7 @@ const SkillEffectHandlers: Record<
   heal: (target, skill) => {
     const healAmount = skill.power
     target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
-    console.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
+    Logger.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
   },
   buff: (target, skill) => {
     if (skill.buff) target.applyBuff(skill.buff)
@@ -37,22 +38,22 @@ const SkillEffectHandlers: Record<
     const { battle } = context
 
     if (!skill.options?.spawnMonsterId) {
-      console.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
+      Logger.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
       return
     }
 
     const reinforcement = battle._spawnMonster(skill.options.spawnMonsterId, context)
 
     if (!reinforcement) {
-      console.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
+      Logger.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
       return
     }
 
     // 3. 상황에 맞는 연출 문구 (스킬 ID나 이름으로 판별)
     if (skill.id.includes('divide')) {
-      console.log(`🧬 ${attacker.name}에게서 ${reinforcement.name}(이)가 분리되었습니다!`)
+      Logger.log(`🧬 ${attacker.name}에게서 ${reinforcement.name}(이)가 분리되었습니다!`)
     } else {
-      console.log(`👾 ${attacker.name}의 부름에 ${reinforcement.name}(이)가 나타났습니다!`)
+      Logger.log(`👾 ${attacker.name}의 부름에 ${reinforcement.name}(이)가 나타났습니다!`)
     }
   },
 }
@@ -72,7 +73,7 @@ const SpecialSkillLogics: Record<
       })
     }
     // 2. 시전자 즉사 처리
-    console.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
+    Logger.log(`💀 ${attacker.name}(은)는 모든 힘을 쏟아내고 소멸했습니다!`)
 
     attacker.dead()
   },
@@ -92,7 +93,7 @@ const SpecialSkillLogics: Record<
     const healAmount = Math.ceil(totalDamageDealt * 0.5)
     if (healAmount > 0) {
       attacker.ref.hp = Math.min(attacker.ref.maxHp, attacker.ref.hp + healAmount)
-      console.log(`💉 ${attacker.name}(이)가 적의 생명력을 흡수하여 HP를 ${healAmount}만큼 회복했습니다!`)
+      Logger.log(`💉 ${attacker.name}(이)가 적의 생명력을 흡수하여 HP를 ${healAmount}만큼 회복했습니다!`)
     }
   },
   item_steal: async (attacker, targets, skill) => {
@@ -103,7 +104,7 @@ const SpecialSkillLogics: Record<
       })
 
       if (target.type !== 'player') {
-        console.log(` > ${target.name}(은)는 훔칠 물건이 없습니다.`)
+        Logger.log(` > ${target.name}(은)는 훔칠 물건이 없습니다.`)
         continue
       }
 
@@ -117,7 +118,7 @@ const SpecialSkillLogics: Record<
         // 골드 탈취: 고정 수치와 비율 중 작은 값을 선택해 파산 방지
         const stealAmount = Math.min(player.gold, Math.floor(10 + player.gold * 0.05))
         player.gold -= stealAmount
-        console.log(
+        Logger.log(
           ` \x1b[33m[!] 소매치기!\x1b[0m ${attacker.name}(이)가 \x1b[33m${stealAmount}G\x1b[0m를 훔쳐 달아납니다!`
         )
       } else if (stealableCandidates.length > 0) {
@@ -128,13 +129,13 @@ const SpecialSkillLogics: Record<
         const actualItem = player.inventory.find((item) => item === targetItem)
         if (actualItem) {
           player.removeItem(actualItem.id, 1)
-          console.log(
+          Logger.log(
             ` \x1b[31m[!] 분실!\x1b[0m ${attacker.name}(이)가 배낭에서 \x1b[90m'${targetItem.label}'\x1b[0m을(를) 훔쳐 달아납니다!`
           )
         }
       } else {
         // 훔칠 골드도 없고, 훔칠 수 있는 일반 아이템도 없을 때
-        console.log(` > ${attacker.name}(이)가 당신의 주머니를 뒤졌지만, 땡전 한 푼 나오지 않습니다.`)
+        Logger.log(` > ${attacker.name}(이)가 당신의 주머니를 뒤졌지만, 땡전 한 푼 나오지 않습니다.`)
       }
     }
   },
@@ -214,7 +215,7 @@ export class NpcSkillManager {
 
       if (golem) {
         // 🔊 상황에 맞는 로그 출력
-        console.log(
+        Logger.log(
           `\n[📢 포효]: 골렘의 엔진이 과부하되며 굉음을 내지릅니다! ${attacker.name}의 시선이 골렘에게 고정됩니다.`
         )
 
@@ -230,12 +231,12 @@ export class NpcSkillManager {
     const skill = this.getSkill(skillId)
     if (!skill) return
 
-    console.log(`\n✨ ${attacker.name}의 [${skill.name}]!`)
-    console.log(`💬 ${skill.description}`)
+    Logger.log(`\n✨ ${attacker.name}의 [${skill.name}]!`)
+    Logger.log(`💬 ${skill.description}`)
 
     let targets = this.findTargets(...params)
     if (targets.length === 0) {
-      console.log(`하지만 대상을 찾을 수 없었다..`)
+      Logger.log(`하지만 대상을 찾을 수 없었다..`)
       return
     }
 

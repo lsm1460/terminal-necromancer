@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '~/consts'
+import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { SKILL_LIST, SkillUtils } from '~/core/skill'
 import { GameContext, Skill, SkillId } from '~/types'
@@ -91,7 +92,7 @@ async function handleIntro(context: GameContext) {
   const isB2Completed = context.events.isCompleted('first_boss')
 
   if (isFirst && !isB2Completed) {
-    console.log(`\n사신: "아직도 청소를 끝내지 못했나? 끝내고 나면 내게 돌아오도록.."`)
+    Logger.log(`\n사신: "아직도 청소를 끝내지 못했나? 끝내고 나면 내게 돌아오도록.."`)
     return
   }
 
@@ -105,7 +106,7 @@ async function handleIntro(context: GameContext) {
     '사신: "[아래]로 내려가면 지하로 내려갈 수 있는 엘리베이터가 있다. 청소를 끝내면 나에게 와서 보고하도록.."',
   ])
 
-  console.log(
+  Logger.log(
     `\n사신: \"실패하면? 걱정 마라. 네놈의 혼령 또한 저 고기 덩어리의 일부가 되어 영원히 선로나 닦게 될 테니까. 하하하!\"`
   )
 
@@ -119,7 +120,7 @@ async function handleSkillMenu(player: Player, context: GameContext) {
 
   const lockableSkills = Object.values(SKILL_LIST).filter((s) => !player.hasSkill(s.id))
   if (lockableSkills.length === 0) {
-    console.log('\n[알림] 이미 모든 기술을 터득하셨습니다.')
+    Logger.log('\n[알림] 이미 모든 기술을 터득하셨습니다.')
     return
   }
 
@@ -157,16 +158,16 @@ async function handleSkillMenu(player: Player, context: GameContext) {
   const skill = SKILL_LIST[skillId]
   if (SkillUtils.canLearn(player, skill)) {
     player.unlockSkill(skill)
-    console.log(`\n💀 [습득] '${skill.name}' 각인을 잊지말라구 끌끌..`)
+    Logger.log(`\n💀 [습득] '${skill.name}' 각인을 잊지말라구 끌끌..`)
   } else {
-    console.log(`\n[실패] 요구 조건을 충족하지 못했습니다.`)
+    Logger.log(`\n[실패] 요구 조건을 충족하지 못했습니다.`)
   }
 }
 
 async function handleLevelUp(player: Player) {
   const { required: nextExp, toNext: cost } = player.expToNextLevel()
 
-  console.log(`현재 가지고 있는 영혼 조각: `, player.exp)
+  Logger.log(`현재 가지고 있는 영혼 조각: ${player.exp}`)
 
   const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
     type: 'confirm',
@@ -176,14 +177,14 @@ async function handleLevelUp(player: Player) {
   })
 
   if (!proceed) {
-    console.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)
+    Logger.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)
     return
   }
 
   if (player.levelUp()) {
-    console.log(`\n✨ 축하합니다! 레벨이 올랐습니다. (현재 LV.${player.level})`)
+    Logger.log(`\n✨ 축하합니다! 레벨이 올랐습니다. (현재 LV.${player.level})`)
   } else {
-    console.log(`\n[실패] 가볍구나. 겨우 이 정도인가? (${player.exp}/${nextExp})`)
+    Logger.log(`\n[실패] 가볍구나. 겨우 이 정도인가? (${player.exp}/${nextExp})`)
   }
 }
 
@@ -194,10 +195,10 @@ async function handleMemorize(player: Player) {
     ? `💀 사신: "오호... 네 영혼의 그릇이 제법 커졌구나. 더 많은 기술을 감당할 수 있겠어."`
     : `💀 사신: "네 영혼에 새길 기술들을 선택하라..."`
 
-  console.log('\n──────────────────────────────────────────────────')
-  console.log(welcomeMessage)
-  console.log(`(현재 메모라이즈 제한: ${player.maxMemorize}개)`)
-  console.log('──────────────────────────────────────────────────\n')
+  Logger.log('\n──────────────────────────────────────────────────')
+  Logger.log(welcomeMessage)
+  Logger.log(`(현재 메모라이즈 제한: ${player.maxMemorize}개)`)
+  Logger.log('──────────────────────────────────────────────────\n')
 
   // 1. 선택지 구성 (ID를 명확히 찾기 위해 choices 변수 유지)
   const skillChoices = player.unlockedSkills
@@ -239,12 +240,12 @@ async function handleMemorize(player: Player) {
       ? `💀 사신: "그 비대해진 지식이 너를 파멸로 이끌지 않기를..."`
       : `💀 사신: "현명한 선택이기를 바란다..."`
 
-    console.log('\n──────────────────────────────────────────────────')
-    console.log(exitMessage)
-    console.log(`[ 시스템: ${player.memorize.length}개의 기술이 메모라이즈 되었습니다. ]`)
-    console.log('──────────────────────────────────────────────────\n')
+    Logger.log('\n──────────────────────────────────────────────────')
+    Logger.log(exitMessage)
+    Logger.log(`[ 시스템: ${player.memorize.length}개의 기술이 메모라이즈 되었습니다. ]`)
+    Logger.log('──────────────────────────────────────────────────\n')
   } catch (error) {
-    console.log('\n💀 사신: "망설임은 죽음뿐이다..." (선택이 취소되었습니다.)')
+    Logger.log('\n💀 사신: "망설임은 죽음뿐이다..." (선택이 취소되었습니다.)')
   }
 }
 
@@ -253,7 +254,7 @@ async function handleIncreaseLimit(player: Player) {
 
   // 1. 최대치 도달 체크 (5구 제한)
   if (currentLimit >= SKELETON_UPGRADE.MAX_LIMIT) {
-    console.log(
+    Logger.log(
       `\n사신: "분수를 모르는군. 네놈 같은 필멸자가 다룰 수 있는 망자의 수는 여기까지다. 더 탐했다간 네놈의 영혼부터 먹히게 될 게야."`
     )
     return
@@ -262,14 +263,14 @@ async function handleIncreaseLimit(player: Player) {
   // 2. 필요 경험치 계산
   const cost = SKELETON_UPGRADE.COSTS[currentLimit]
 
-  console.log(
+  Logger.log(
     `\n사신: "그 정도로는 역시 만족하지 못하는 건가? 좋다. 망자의 자리를 더 내어주지. 다만, 그에 걸맞은 영혼의 정수(${cost} EXP)는 준비했겠지?"`
   )
-  console.log(`현재 보유 영혼 조각: ${player.exp} / 필요 영혼 조각: ${cost}`)
+  Logger.log(`현재 보유 영혼 조각: ${player.exp} / 필요 영혼 조각: ${cost}`)
 
   // 3. 경험치 부족 체크
   if (player.exp < cost) {
-    console.log(
+    Logger.log(
       `사신: "흥, 빈손으로 내 권능을 빌리려 하다니. 가서 그 보잘것없는 목숨이라도 걸고 경험이나 더 쌓고 오거라."`
     )
     return
@@ -285,7 +286,7 @@ async function handleIncreaseLimit(player: Player) {
   })
 
   if (!proceed) {
-    console.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)
+    Logger.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)
     return
   }
 
@@ -293,11 +294,11 @@ async function handleIncreaseLimit(player: Player) {
   player.exp -= cost
   player._maxSkeleton = currentLimit + 1
 
-  console.log(`\n[💀 군단 규모 확장 완료]`)
-  console.log(
+  Logger.log(`\n[💀 군단 규모 확장 완료]`)
+  Logger.log(
     `사신: "계약은 성립되었다. 네놈 뒤를 따르는 시체 인형이 하나 더 늘었군. 부디 그놈들에게 잡아먹히지나 말라고, 크크크..."`
   )
-  console.log(`스켈레톤 최대 보유 수: ${currentLimit} ➔ ${player._maxSkeleton}`)
+  Logger.log(`스켈레톤 최대 보유 수: ${currentLimit} ➔ ${player._maxSkeleton}`)
 }
 
 async function handleTutorialOver(context: GameContext) {

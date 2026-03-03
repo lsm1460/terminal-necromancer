@@ -1,12 +1,14 @@
 import { Player } from './core/player/Player'
-import { GameContext, NPC, Tile } from './types'
+import { GameContext, NPC } from './types'
+
+import { Logger } from './core/Logger'
 
 export function printTileStatus(player: Player, context: GameContext) {
   const { map, npcs, world } = context
   const { x, y } = player.pos
   const tile = map.getTile(x, y)
 
-  console.log(`\n${tile.dialogue}`)
+  Logger.log(`\n${tile.dialogue}`)
 
   const npcList = (tile.npcIds || []).map((_id) => npcs.getNPC(_id)).filter((npc): npc is NPC => npc !== null)
 
@@ -17,13 +19,13 @@ export function printTileStatus(player: Player, context: GameContext) {
     const isSingular = alive.length === 1
     const aliveNames = alive.map((_npc) => _npc.name).join(', ')
 
-    console.log(`주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`)
+    Logger.log(`주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`)
   }
 
   if (corpses.length > 0) {
     const deadNames = corpses.map((_corpse) => `${_corpse.name}의 시체`).join(', ')
 
-    console.log(`주변의 시체: ${deadNames}`)
+    Logger.log(`주변의 시체: ${deadNames}`)
   }
 
   printLootStatus(player, context)
@@ -36,7 +38,7 @@ export function printTileStatus(player: Player, context: GameContext) {
   if (map.canMove(x - 1, y)) directions.push('왼쪽')
   if (map.canMove(x + 1, y)) directions.push('오른쪽')
 
-  console.log(`이동 가능 방향: ${directions.join(', ')}`)
+  Logger.log(`이동 가능 방향: ${directions.join(', ')}`)
 }
 
 export function printLootStatus(player: Player, { world, map }: GameContext) {
@@ -44,14 +46,14 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
   const tile = map.getTile(x, y)
 
   const bag = world.getLootBagAt(map.currentSceneId, tile.id)
-  if (bag) console.log(`\n나의 영혼 파편들을 발견했다.`)
+  if (bag) Logger.log(`\n나의 영혼 파편들을 발견했다.`)
 
   const drops = world.getDropsAt(x, y)
   if (drops?.length) {
-    console.log(`\n주변에 떨어진 아이템:`)
+    Logger.log(`\n주변에 떨어진 아이템:`)
     drops.forEach((d) => {
       const qtyText = !!d.quantity ? ` ${d.quantity}개` : ''
-      console.log(` - ${d.label}${qtyText}`)
+      Logger.log(` - ${d.label}${qtyText}`)
     })
   }
 }

@@ -1,3 +1,4 @@
+import { Logger } from '~/core/Logger'
 import { GameContext } from '~/types'
 import { delay } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -47,7 +48,7 @@ async function handleThreat(context: GameContext) {
     { text: '찬양... 찬양... 찬양하... [시스템 재부팅 중...]', delay: 2000 },
   ]
 
-  console.log(`\n\x1b[90m[ 기괴한 소음을 이어집니다... ]\x1b[0m`)
+  Logger.log(`\n\x1b[90m[ 기괴한 소음을 이어집니다... ]\x1b[0m`)
 
   for (const line of script) {
     await delay(line.delay)
@@ -56,7 +57,7 @@ async function handleThreat(context: GameContext) {
     const isBroadcast = line.text.startsWith('📢')
     const color = isBroadcast ? '\x1b[93m' : '\x1b[3m\x1b[90m'
 
-    console.log(`  ${color}"${line.text}"\x1b[0m`)
+    Logger.log(`  ${color}"${line.text}"\x1b[0m`)
   }
 
   context.events.completeEvent('b3_apostle')

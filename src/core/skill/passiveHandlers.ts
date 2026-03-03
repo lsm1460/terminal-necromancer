@@ -1,6 +1,7 @@
 import { NpcSkill } from '~/types'
 import { Battle, DamageOptions } from '../battle/Battle'
 import { CombatUnit } from '../battle/CombatUnit'
+import { Logger } from '../Logger'
 
 type PassiveEffect = (
   attacker: CombatUnit,
@@ -20,7 +21,7 @@ interface PassiveDefinition {
 export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
   death_aura: {
     onBeforeAttack: async (attacker, defender, skill, battle) => {
-      console.log(`\x1b[31m[!] ${attacker.name}의 죽음의 오라가 적들의 영혼을 옥죄기 시작합니다...\x1b[0m`)
+      Logger.log(`\x1b[31m[!] ${attacker.name}의 죽음의 오라가 적들의 영혼을 옥죄기 시작합니다...\x1b[0m`)
 
       const enemies = battle.getEnemiesOf(attacker)
 
@@ -54,7 +55,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
 
       const thornDamage = Math.max(1, Math.floor(defender.stats.atk * 0.05))
 
-      console.log(`\n[🦷 가시]: ${defender.name}의 가시가 ${attacker.name}의 살점을 찢습니다!`)
+      Logger.log(`\n[🦷 가시]: ${defender.name}의 가시가 ${attacker.name}의 살점을 찢습니다!`)
 
       // attacker가 이미 죽었는지 확인
       if (!attacker.ref.isAlive) return
@@ -75,7 +76,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       const enemies = battle.getEnemiesOf(unit)
       const explosionDamage = Math.floor(unit.ref.maxHp * 0.6)
 
-      console.log(`\n[🔥 종말]: ${unit.name}의 시체가 폭발하며 주변을 삼킵니다!`)
+      Logger.log(`\n[🔥 종말]: ${unit.name}의 시체가 폭발하며 주변을 삼킵니다!`)
 
       for (const enemy of enemies) {
         if (!enemy.ref.isAlive) continue

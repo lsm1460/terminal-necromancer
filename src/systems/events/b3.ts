@@ -1,8 +1,9 @@
 import enquirer from 'enquirer'
-import { EventHandler } from '.'
-import { delay } from '~/utils'
-import { GameContext, Tile } from '~/types'
+import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
+import { GameContext, Tile } from '~/types'
+import { delay } from '~/utils'
+import { EventHandler } from '.'
 
 export const b3Handlers: Record<string, EventHandler> = {
   'event-abandoned-corpse': async (tile, player, context) => {
@@ -19,9 +20,9 @@ export const b3Handlers: Record<string, EventHandler> = {
 
     if (!monster) return
 
-    console.log(`\n\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m`)
-    console.log(`🔍 \x1b[1m주변을 조사하던 중 차가운 바닥에서 무언가를 발견했습니다...\x1b[0m`)
-    console.log(`   [\x1b[31m${monster.name}\x1b[0m]의 시체입니다. 이미 숨이 끊어진 지 오래된 것 같습니다.`)
+    Logger.log(`\n\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m`)
+    Logger.log(`🔍 \x1b[1m주변을 조사하던 중 차가운 바닥에서 무언가를 발견했습니다...\x1b[0m`)
+    Logger.log(`   [\x1b[31m${monster.name}\x1b[0m]의 시체입니다. 이미 숨이 끊어진 지 오래된 것 같습니다.`)
 
     const flavorText = [
       '누군가에게 무참히 공격받은 흔적이 남아있습니다.',
@@ -29,8 +30,8 @@ export const b3Handlers: Record<string, EventHandler> = {
       '주머니는 이미 털려있고, 비릿한 피 냄새만이 코를 찌릅니다.',
       '시체는 부자연스럽게 뒤틀려 있어, 공포에 질린 채 죽었음을 짐작게 합니다.',
     ]
-    console.log(`   \x1b[3m"${flavorText[Math.floor(Math.random() * flavorText.length)]}"\x1b[0m`)
-    console.log(`\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m\n`)
+    Logger.log(`   \x1b[3m"${flavorText[Math.floor(Math.random() * flavorText.length)]}"\x1b[0m`)
+    Logger.log(`\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m\n`)
 
     world.addCorpse({
       ...monster,
@@ -41,7 +42,7 @@ export const b3Handlers: Record<string, EventHandler> = {
   'event-voice-recorder': async (tile, player, context) => {
     if (tile.isClear) return
 
-    console.log(`\n\x1b[90m[ 녹슨 선로 옆에 떨어진 공식 기록 장치를 발견했습니다 ]\x1b[0m`)
+    Logger.log(`\n\x1b[90m[ 녹슨 선로 옆에 떨어진 공식 기록 장치를 발견했습니다 ]\x1b[0m`)
 
     const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
       type: 'confirm',
@@ -67,7 +68,7 @@ export const b3Handlers: Record<string, EventHandler> = {
       { text: '……치이익.', delay: 1000 },
     ]
 
-    console.log(`\n\x1b[90m[ 관리실 시스템에 저장된 음성 로그 재생 중... ]\x1b[0m`)
+    Logger.log(`\n\x1b[90m[ 관리실 시스템에 저장된 음성 로그 재생 중... ]\x1b[0m`)
 
     for (const line of script) {
       await delay(line.delay)
@@ -76,11 +77,11 @@ export const b3Handlers: Record<string, EventHandler> = {
       const isReport = script.indexOf(line) < 4
       const color = isReport ? '\x1b[37m' : '\x1b[3m\x1b[90m'
 
-      console.log(`  ${color}"${line.text}"\x1b[0m`)
+      Logger.log(`  ${color}"${line.text}"\x1b[0m`)
     }
 
     await delay(1000)
-    console.log(`\n\x1b[90m[ 기록이 종료되었습니다. ]\x1b[0m`)
+    Logger.log(`\n\x1b[90m[ 기록이 종료되었습니다. ]\x1b[0m`)
   },
 
   'event-map-scan-once': async (tile, player, context) => {
@@ -97,7 +98,7 @@ export const b3Handlers: Record<string, EventHandler> = {
 
     if (!proceed) return
 
-    console.log(`\n\x1b[90m[ 쌓인 먼지를 털어내자, 하역장의 복잡한 선로 지도가 드러납니다 ]\x1b[0m`)
+    Logger.log(`\n\x1b[90m[ 쌓인 먼지를 털어내자, 하역장의 복잡한 선로 지도가 드러납니다 ]\x1b[0m`)
     await delay(1000)
 
     const allTiles: Tile[] = []
@@ -115,10 +116,10 @@ export const b3Handlers: Record<string, EventHandler> = {
     // 1. 중장비(골렘) 가동 구역 표기
     if (bossTile!) {
       bossTile.isSeen = true
-      console.log(
+      Logger.log(
         `\x1b[33m🔍 '제1 적재소' 위치에 [대형 자동 기중기 가동 중 - 접근 주의]라는 문구가 적혀 있습니다.\x1b[0m`
       )
-      console.log(`\x1b[90m   (누군가 그 위에 "골렘이 폭주함"이라고 비뚤비뚤하게 덧써놓았습니다.)\x1b[0m`)
+      Logger.log(`\x1b[90m   (누군가 그 위에 "골렘이 폭주함"이라고 비뚤비뚤하게 덧써놓았습니다.)\x1b[0m`)
       await delay(800)
     }
 
@@ -132,9 +133,9 @@ export const b3Handlers: Record<string, EventHandler> = {
       t.isSeen = true
     })
 
-    console.log(`\x1b[90m...\x1b[0m`)
-    console.log(`\x1b[32m✅ 훼손되지 않은 ${revealedTiles.length}곳의 구역 정보를 확인했습니다.\x1b[0m`)
-    console.log(`\x1b[90m(나머지 선로 정보는 녹이 슬어 알아볼 수 없습니다.)\x1b[0m\n`)
+    Logger.log(`\x1b[90m...\x1b[0m`)
+    Logger.log(`\x1b[32m✅ 훼손되지 않은 ${revealedTiles.length}곳의 구역 정보를 확인했습니다.\x1b[0m`)
+    Logger.log(`\x1b[90m(나머지 선로 정보는 녹이 슬어 알아볼 수 없습니다.)\x1b[0m\n`)
 
     tile.isClear = true
   },
@@ -210,17 +211,17 @@ const transportPlayerByConveyor = async (
 
   // 2. 이동 처리
   if (destinationTile && targetX !== -1 && targetY !== -1) {
-    console.log(`\n\x1b[90m[ ${message} ]\x1b[0m`)
+    Logger.log(`\n\x1b[90m[ ${message} ]\x1b[0m`)
     await delay(1200)
 
     player.x = targetX
     player.y = targetY
     destinationTile.isSeen = true
 
-    console.log(`\x1b[32m✨ 슈우우욱—! 목적지에 안전하게 도착했습니다. [${targetX}, ${targetY}]\x1b[0m\n`)
+    Logger.log(`\x1b[32m✨ 슈우우욱—! 목적지에 안전하게 도착했습니다. [${targetX}, ${targetY}]\x1b[0m\n`)
     return true // 이동 성공
   } else {
-    console.log(`\n\x1b[31m⚠️  치익... 연결된 하역 경로(${targetEvent})를 찾을 수 없습니다.\x1b[0m\n`)
+    Logger.log(`\n\x1b[31m⚠️  치익... 연결된 하역 경로(${targetEvent})를 찾을 수 없습니다.\x1b[0m\n`)
     return false // 이동 실패
   }
 }

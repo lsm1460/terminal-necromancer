@@ -1,4 +1,5 @@
 import enquirer from 'enquirer'
+import { Logger } from '~/core/Logger'
 import { CommandFunction } from '~/types'
 import { makeItemMessage } from '~/utils'
 
@@ -11,7 +12,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   const drops = context.world.getDropsAt(player.x, player.y)
 
   if (!drops.length && !lootBag) {
-    console.log('\n🕳️ 이곳에는 주울 수 있는 아이템이 없습니다.')
+    Logger.log('\n🕳️ 이곳에는 주울 수 있는 아이템이 없습니다.')
     return false
   }
 
@@ -22,8 +23,8 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   const availableSpace = player.inventoryMax - currentTotalQuantity
 
   if (availableSpace <= 0) {
-    console.log(`\n🎒 인벤토리가 가득 찼습니다! (${currentTotalQuantity}/${player.inventoryMax})`)
-    console.log('아이템을 버리거나 사용하여 공간을 확보하세요.')
+    Logger.log(`\n🎒 인벤토리가 가득 찼습니다! (${currentTotalQuantity}/${player.inventoryMax})`)
+    Logger.log('아이템을 버리거나 사용하여 공간을 확보하세요.')
     return false
   }
 
@@ -64,8 +65,8 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
 
   if (dropId === 'cancel') return false
   if (dropId === 'lootBag' && lootBag) {
-    console.log(`\n흩어져 있던 영혼의 조각(${lootBag.exp} EXP)과 낡은 금화(${lootBag.gold} G)를 수습합니다.`)
-    console.log(`"죽음은 끝이 아니었으나, 그 고통만큼은 고스란히 손끝에 전해집니다."`)
+    Logger.log(`\n흩어져 있던 영혼의 조각(${lootBag.exp} EXP)과 낡은 금화(${lootBag.gold} G)를 수습합니다.`)
+    Logger.log(`"죽음은 끝이 아니었으나, 그 고통만큼은 고스란히 손끝에 전해집니다."`)
 
     player.gainExp(lootBag.exp)
     player.gainGold(lootBag.gold)
@@ -91,13 +92,13 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
     })
 
     const qtyText = pickQty > 1 ? ` ${pickQty}개` : ''
-    console.log(`\n✨ [${drop.label}]${qtyText} 획득!`)
+    Logger.log(`\n✨ [${drop.label}]${qtyText} 획득!`)
 
     // 6. 월드 맵 데이터 업데이트
     if (remainQty > 0) {
       // 공간 부족으로 일부만 주운 경우: 바닥에 남은 수량 갱신
       drop.quantity = remainQty
-      console.log(`⚠️ 인벤토리 공간이 부족하여 ${remainQty}개는 바닥에 남았습니다.`)
+      Logger.log(`⚠️ 인벤토리 공간이 부족하여 ${remainQty}개는 바닥에 남았습니다.`)
     } else {
       // 전부 다 주운 경우: 월드에서 제거
       context.world.removeDropById(drop.id, player.pos)

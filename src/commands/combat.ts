@@ -1,5 +1,6 @@
 import enquirer from 'enquirer'
 import { CombatUnit } from '~/core/battle/CombatUnit'
+import { Logger } from '~/core/Logger'
 import { CommandFunction, NPC } from '~/types'
 
 export const attackCommand: CommandFunction = async (player, args, context) => {
@@ -17,7 +18,7 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
     })
 
     if (!proceed) {
-      console.log(`\n당신은 살의를 거두고 무기를 내립니다.`);
+      Logger.log(`\n당신은 살의를 거두고 무기를 내립니다.`);
       return false // 교체 중단
     }
   }
@@ -32,7 +33,7 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
 
   // 2. 공격 대상이 없으면 종료
   if (battleTargets.length === 0) {
-    console.log('\n[알림] 공격할 대상이 없습니다.')
+    Logger.log('\n[알림] 공격할 대상이 없습니다.')
     return false
   }
 

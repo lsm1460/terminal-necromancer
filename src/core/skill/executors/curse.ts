@@ -1,6 +1,7 @@
 import enquirer from 'enquirer'
-import { ExecuteSkill } from '~/types'
 import { TargetSelector } from '~/core/battle/TargetSelector'
+import { Logger } from '~/core/Logger'
+import { ExecuteSkill } from '~/types'
 
 /**
  * 저주 (Curse)
@@ -19,7 +20,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
   const displayName = isWide ? `광역 ${curseName}` : curseName
 
   if (aliveEnemies.length === 0) {
-    console.log(`\n[실패] ${displayName}의 대상이 없습니다.`)
+    Logger.log(`\n[실패] ${displayName}의 대상이 없습니다.`)
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -39,13 +40,13 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     // 로그 출력 분기
     const effectDetail = isCorrosion ? `방어력 -${defReduction}` : `공격력 -${atkReduction}`
 
-    console.log(` └ [약화] ${target.name}: ${effectDetail} (${duration}턴)`)
+    Logger.log(` └ [약화] ${target.name}: ${effectDetail} (${duration}턴)`)
   }
 
   try {
     // --- 1. 광역 효과 처리 ---
     if (isWide) {
-      console.log(`\n💀 ${player.name}의 ${displayName}가 전장에 퍼져나갑니다!`)
+      Logger.log(`\n💀 ${player.name}의 ${displayName}가 전장에 퍼져나갑니다!`)
       aliveEnemies.forEach((enemy) => applyCurse(enemy))
 
       return { isSuccess: true, isAggressive: true, gross: 120 }
@@ -69,7 +70,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     const target = aliveEnemies.find((e) => e.id === response.targetId)
     if (!target) return { isSuccess: false, isAggressive: false, gross: 0 }
 
-    console.log(`\n💀 ${player.name}이(가) ${target.name}에게 ${curseName}를 내립니다!`)
+    Logger.log(`\n💀 ${player.name}이(가) ${target.name}에게 ${curseName}를 내립니다!`)
     applyCurse(target)
 
     return {
