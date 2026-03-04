@@ -14,6 +14,7 @@ const loadJSON = (filePath: string) => {
 
 const assetsDir = path.join(__dirname, 'assets')
 const statePath = path.join(assetsDir, 'state.json')
+const initState = loadJSON(path.join(assetsDir, 'init_state.json'))
 
 const assets: GameAssets = {
   map: loadJSON(path.join(assetsDir, 'map.json')),
@@ -35,7 +36,7 @@ Logger.setRenderer(renderer)
 
 const engine = new GameEngine(assets, renderer, save)
 
-Title.gameStart(save, assets.state).then(async (playData) => {
+Title.gameStart(save, initState).then(async (playData) => {
   if (!playData) {
     console.error('게임 데이터를 불러오지 못했습니다.')
     return
@@ -44,5 +45,5 @@ Title.gameStart(save, assets.state).then(async (playData) => {
   await engine.init(playData)
   await engine.start()
 
-  createCLI(engine.player, engine.context)
+  await createCLI(engine.player, engine.context)
 })

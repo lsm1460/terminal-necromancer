@@ -11,6 +11,8 @@ import eventData from './events.json'
 import npcSkillData from './npcSkills.json'
 import broadcastData from './broadcast.json'
 
+import initState from './init_state.json'
+
 export const assets = {
   map: mapData,
   monsterGroup: monsterGroupData,
@@ -23,6 +25,10 @@ export const assets = {
   events: eventData,
   npcSkills: npcSkillData,
   broadcast: broadcastData,
+}
+
+export {
+  initState
 }
 
 // 타입 정의 (필요한 경우)

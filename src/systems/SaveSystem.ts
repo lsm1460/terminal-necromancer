@@ -27,7 +27,6 @@ export class SaveSystem {
       // 웹: 전달받은 객체를 기본값으로 저장
       this.defaultData = config
     } else {
-      console.log('DEBUG:: config',config)
       this.filePath = config
     }
   }
@@ -38,8 +37,7 @@ export class SaveSystem {
       const saved = localStorage.getItem('terminal_game_save')
       if (saved) return JSON.parse(saved)
 
-      // 2. 저장된 게 없으면 생성자에서 받은 기본 데이터(state.json) 반환
-      return this.defaultData || null
+      return null
     } else {
       // CLI: 파일이 있으면 읽고, 없으면 null
       if (!fs.existsSync(this.filePath)) return null

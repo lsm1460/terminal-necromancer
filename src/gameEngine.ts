@@ -1,4 +1,5 @@
 import { GameAssets } from './assets'
+import { handleCommand } from './commandHandler'
 import { MAP_IDS } from './consts'
 import { Battle } from './core/battle/Battle'
 import { Broadcast } from './core/Broadcast'
@@ -103,6 +104,6 @@ export class GameEngine {
   }
 
   public async processCommand(command: string): Promise<void> {
-    this.renderer.print(`입력된 명령어: ${command}`)
+    handleCommand(command, this.player, this.context)
   }
 }

@@ -1,15 +1,16 @@
 import { Player } from '~/core/player/Player'
+import { printStatus } from '~/statusPrinter'
 import { GameContext, Renderer } from '~/types'
 
 /**
  * 리액트 컴포넌트에서 UI 대기 상태를 관리하기 위한 인터페이스
  */
 export interface UIState {
-  type: 'SELECT' | 'MULTISELECT' | 'CONFIRM' | 'PROMPT' | 'NONE';
-  message: string;
-  choices?: { name: string; message: string }[];
-  options?: { initial?: string[]; maxChoices?: number };
-  resolve: (value: any) => void; // 유저가 클릭했을 때 Promise를 해결할 함수
+  type: 'SELECT' | 'MULTISELECT' | 'CONFIRM' | 'PROMPT' | 'NONE'
+  message: string
+  choices?: { name: string; message: string }[]
+  options?: { initial?: string[]; maxChoices?: number }
+  resolve: (value: any) => void // 유저가 클릭했을 때 Promise를 해결할 함수
 }
 
 export class ReactRenderer implements Renderer {
@@ -28,12 +29,12 @@ export class ReactRenderer implements Renderer {
 
   print(message: string): void {
     // 이전 로그 목록에 새로운 메시지를 한 줄 추가합니다.
-    this.setLogs((prev) => [...prev, message]);
+    this.setLogs((prev) => [...prev, message])
   }
 
   clear(): void {
-    this.setLogs([]);
-    this.setUI({ type: 'NONE', message: '', resolve: () => {} });
+    this.setLogs([])
+    this.setUI({ type: 'NONE', message: '', resolve: () => {} })
   }
 
   printStatus(player: Player, context: GameContext): void {
@@ -45,7 +46,9 @@ export class ReactRenderer implements Renderer {
       gold: player.gold,
       location: context.map.currentSceneId,
       // 필요한 다른 상태값들을 추가하세요 (예: 공격력, 방어력 등)
-    });
+    })
+
+    printStatus(player, context)
   }
 
   // --- 비동기 입력 메서드 (Logger.ts와 연결됨) ---
@@ -60,8 +63,8 @@ export class ReactRenderer implements Renderer {
         message,
         choices,
         resolve, // 유저가 리액트 버튼을 클릭하면 이 resolve가 실행되면서 await가 해제됩니다.
-      });
-    });
+      })
+    })
   }
 
   /**
@@ -73,21 +76,22 @@ export class ReactRenderer implements Renderer {
         type: 'CONFIRM',
         message,
         resolve,
-      });
-    });
+      })
+    })
   }
 
   /**
    * 메시지를 보여주고 "계속" 버튼을 누를 때까지 엔진 흐름을 일시 중단합니다. (인트로/대화용)
    */
   async prompt(message: string): Promise<void> {
+    this.setLogs
     return new Promise((resolve) => {
       this.setUI({
         type: 'PROMPT',
         message,
         resolve,
-      });
-    });
+      })
+    })
   }
 
   /**
@@ -105,7 +109,7 @@ export class ReactRenderer implements Renderer {
         choices,
         options,
         resolve,
-      });
-    });
+      })
+    })
   }
 }

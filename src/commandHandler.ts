@@ -63,7 +63,6 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   space: Commands.spaceCommand,
 }
 
-// --- handleCommand ---
 export async function handleCommand(rawCmd: string, player: Player, context: GameContext): Promise<string | boolean> {
   const trimmed = rawCmd.trim()
   if (!trimmed) return false

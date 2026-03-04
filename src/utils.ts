@@ -1,10 +1,10 @@
-import { randomBytes } from 'crypto'
+import { nanoid } from 'nanoid'
 import { Logger } from './core/Logger'
 import { Player } from './core/player/Player'
 import { Item, ItemType } from './types'
 
 export function generateId(baseId?: string, length = 8): string {
-  const uniqueHash = randomBytes(length).toString('hex')
+  const uniqueHash = nanoid(length)
   return baseId ? `${baseId}_${uniqueHash}` : uniqueHash
 }
 
@@ -16,7 +16,7 @@ export async function delay(amount: number = 1500) {
   await new Promise((resolve) => setTimeout(resolve, amount))
 }
 
-export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean, isSell?: boolean }) {
+export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean; isSell?: boolean }) {
   const typeMap: Partial<Record<ItemType, string>> = {
     weapon: '무기',
     armor: '방어구',
@@ -28,8 +28,8 @@ export function makeItemMessage(item: Item, player: Player, options?: { withPric
   let message = `[${typeLabel}] ${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`
 
   if (options?.withPrice) {
-    const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price;
-    
+    const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price
+
     message += ` (${displayPrice}gold)`
   }
 

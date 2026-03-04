@@ -1,5 +1,6 @@
 import { SaveSystem } from '~/systems/SaveSystem'
 import { Logger } from './Logger'
+import { speak } from '~/utils';
 
 /**
  * UI 환경(CLI/Web)에 따라 다르게 구현될 인터페이스
@@ -63,9 +64,7 @@ export class Title {
           }
 
           // 인트로 시퀀스 진행
-          for (const message of INTRO_DIALOGUES) {
-            await Logger.log(message)
-          }
+          await speak(INTRO_DIALOGUES)
 
           // 초기 데이터로 저장소 갱신
           save.save(initState)
