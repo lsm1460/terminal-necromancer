@@ -1,4 +1,4 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -12,18 +12,18 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
 
   // 1. 발사체(스켈레톤) 확인
   if (skeletons.length === 0) {
-    Logger.log('\n[실패] 희생시킬 스켈레톤이 없습니다.')
+    Terminal.log('\n[실패] 희생시킬 스켈레톤이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   // 2. 적 확인
   if (aliveEnemies.length === 0) {
-    Logger.log('\n[실패] 관통할 대상이 없습니다.')
+    Terminal.log('\n[실패] 관통할 대상이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   // 3. 희생시킬 스켈레톤 선택
-  const skeletonId = await Logger.select('어느 스켈레톤을 뼈 창으로 만드시겠습니까?', [
+  const skeletonId = await Terminal.select('어느 스켈레톤을 뼈 창으로 만드시겠습니까?', [
     ...skeletons.map((sk) => ({
       name: sk.id,
       message: `${sk.name} (현재 HP: ${sk.hp})`,
@@ -32,19 +32,19 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
   ])
 
   if (skeletonId === 'cancel') {
-    Logger.log('\n💬 스킬 사용을 취소했습니다.')
+    Terminal.log('\n💬 스킬 사용을 취소했습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   // 4. 스켈레톤 희생 처리
   const targetSkeleton = player.ref.skeleton.find((sk) => sk.id === skeletonId)
   if (targetSkeleton) {
-    Logger.log(`\n💀 ${player.name}이(가) ${targetSkeleton.name}을(를) 파괴하여 거대한 뼈 창을 빚어냅니다!`)
+    Terminal.log(`\n💀 ${player.name}이(가) ${targetSkeleton.name}을(를) 파괴하여 거대한 뼈 창을 빚어냅니다!`)
     targetSkeleton.hp = 0
     targetSkeleton.isAlive = false
     player.ref.removeMinion(skeletonId) // 미니언 목록에서 제거
   } else {
-    Logger.log('\n[실패] 희생시킬 스켈레톤이 없습니다.')
+    Terminal.log('\n[실패] 희생시킬 스켈레톤이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -66,7 +66,7 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
   for (let index in targets) {
     const target = targets[index]
     const logMsg = index == '0' ? logTemplate.primary(target.name) : logTemplate.secondary(target.name)
-    Logger.log(logMsg)
+    Terminal.log(logMsg)
 
     /**
      * skillAtkMult: 0.6 배율 적용

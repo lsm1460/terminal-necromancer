@@ -1,5 +1,5 @@
 import { SaveSystem } from '~/systems/SaveSystem'
-import { Logger } from './Logger'
+import { Terminal } from './Terminal'
 import { speak } from '~/utils';
 
 /**
@@ -44,20 +44,20 @@ export class Title {
           { name: 'exit', message: '종료' },
         ]
 
-        const menu = await Logger.select('시작하시겠습니까?', choices)
+        const menu = await Terminal.select('시작하시겠습니까?', choices)
 
         if (menu === 'exit') {
           return null
         }
 
         if (menu === 'load') {
-          Logger.log('\n데이터를 동기화합니다...\n')
+          Terminal.log('\n데이터를 동기화합니다...\n')
           return hasSave
         }
 
         if (menu === 'new') {
           if (hasSave) {
-            const overwrite = await Logger.confirm(
+            const overwrite = await Terminal.confirm(
               '이미 존재하는 저장 데이터가 있습니다. 덮어씌우시겠습니까?'
             )
             if (!overwrite) continue
@@ -68,7 +68,7 @@ export class Title {
 
           // 초기 데이터로 저장소 갱신
           save.save(initState)
-          Logger.log('새로운 운명이 시작됩니다.\n')
+          Terminal.log('새로운 운명이 시작됩니다.\n')
           return initState
         }
         break

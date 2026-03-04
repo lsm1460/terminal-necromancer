@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import GolemWrapper from '~/core/player/GolemWrapper'
 import { Player } from '~/core/player/Player'
 import { printStatus } from '~/statusPrinter'
@@ -9,24 +9,24 @@ import { makeItemMessage } from '~/utils'
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
   const { atk, def, crit, eva, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
-  Logger.log('🛡️ 상태창')
-  Logger.log(`레벨: ${level} (영혼 조각: ${exp})`)
+  Terminal.log('🛡️ 상태창')
+  Terminal.log(`레벨: ${level} (영혼 조각: ${exp})`)
 
   const { required: expNeeded } = player.expToNextLevel()
   if (expNeeded !== null) {
-    Logger.log(`다음 레벨까지 필요한 영혼 조각: ${expNeeded}`)
+    Terminal.log(`다음 레벨까지 필요한 영혼 조각: ${expNeeded}`)
   } else {
-    Logger.log('최고 레벨입니다.')
+    Terminal.log('최고 레벨입니다.')
   }
 
-  Logger.log(`HP: ${hp} / ${maxHp}`)
-  Logger.log(`MP: ${mp} / ${maxMp}`)
-  Logger.log(`공격력: ${atk} (+ ${atk - originAtk})`)
-  Logger.log(`방어력: ${def} (+ ${def - originDef})`)
-  Logger.log(`골드: ${gold}`)
+  Terminal.log(`HP: ${hp} / ${maxHp}`)
+  Terminal.log(`MP: ${mp} / ${maxMp}`)
+  Terminal.log(`공격력: ${atk} (+ ${atk - originAtk})`)
+  Terminal.log(`방어력: ${def} (+ ${def - originDef})`)
+  Terminal.log(`골드: ${gold}`)
 
-  Logger.log(`치명: ${Math.floor(crit * 100)}%`)
-  Logger.log(`회피: ${Math.floor(eva * 100)}%`)
+  Terminal.log(`치명: ${Math.floor(crit * 100)}%`)
+  Terminal.log(`회피: ${Math.floor(eva * 100)}%`)
 
   // 장착 장비 출력 (타입 가드 + 구조 분해 활용)
   let weaponText = '없음'
@@ -48,23 +48,23 @@ export const statusCommand: CommandFunction = (player, args, context) => {
       armorText += `\n   ㄴ축복 : [${equipped.armor.affix.name}] 효과 부여 (${equipped.armor.affix.description})`
   }
 
-  Logger.log(`무기: ${weaponText}`)
-  Logger.log(`방어구: ${armorText}`)
+  Terminal.log(`무기: ${weaponText}`)
+  Terminal.log(`방어구: ${armorText}`)
 
-  Logger.log('\n💀 [ 소환수 군단 상태 ]')
+  Terminal.log('\n💀 [ 소환수 군단 상태 ]')
   if (player.golem) {
     const golemStatus = player.golem.isAlive ? `[${player.golem.hp}/${player.golem.maxHp}]` : `[파괴됨]`
 
     const golemIcon = player.golem.isAlive ? '🤖' : '🛠️'
 
-    Logger.log(` └ ${golemIcon} ${player.golem.name}: ${golemStatus}`)
+    Terminal.log(` └ ${golemIcon} ${player.golem.name}: ${golemStatus}`)
   }
-  Logger.log(` └ 💀 해골 병사: ${skeleton.length} / ${maxSkeleton}`)
+  Terminal.log(` └ 💀 해골 병사: ${skeleton.length} / ${maxSkeleton}`)
 
   if (player.minions.length === 0) {
-    Logger.log('   (현재 소환된 미니언이 없습니다.)')
+    Terminal.log('   (현재 소환된 미니언이 없습니다.)')
   }
-  Logger.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+  Terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
 
   return false
 }
@@ -94,14 +94,14 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   // SKILL_LIST에서 실제 스킬 객체 로드
   const skillDetails = (target.skills || []).map((id) => npcSkills.getSkill(id)).filter(Boolean)
 
-  Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Logger.log(`${typeTag} ${target.name}`)
-  Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Logger.log(` HP  : ${hpBar} ${target.hp}/${target.maxHp}`)
-  Logger.log(` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)}`)
+  Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+  Terminal.log(`${typeTag} ${target.name}`)
+  Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+  Terminal.log(` HP  : ${hpBar} ${target.hp}/${target.maxHp}`)
+  Terminal.log(` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)}`)
 
   if (target.eva || target.crit) {
-    Logger.log(
+    Terminal.log(
       ` SEC : 회피 ${Math.floor((target.eva || 0) * 100)}% | 크리티컬 ${Math.floor((target.crit || 0) * 100)}%`
     )
   }
@@ -111,16 +111,16 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   }
 
   if (skillDetails.length > 0) {
-    Logger.log(`──────────────────────────────────────────────`)
-    Logger.log(` 보유 기술:`)
+    Terminal.log(`──────────────────────────────────────────────`)
+    Terminal.log(` 보유 기술:`)
     skillDetails.forEach((skill) => {
-      Logger.log(` • [${skill.name}]: ${skill.description}`)
+      Terminal.log(` • [${skill.name}]: ${skill.description}`)
     })
   }
 
-  Logger.log(`──────────────────────────────────────────────`)
-  Logger.log(` 💬 "${target.description}"`)
-  Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+  Terminal.log(`──────────────────────────────────────────────`)
+  Terminal.log(` 💬 "${target.description}"`)
+  Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 }
 
 const printGolem = (target: BattleTarget) => {
@@ -129,12 +129,12 @@ const printGolem = (target: BattleTarget) => {
   const limit = golem.upgradeLimit || 0 // 한계치 가져오기
   const currentCount = upgrades.length
 
-  Logger.log(`──────────────────────────────────────────────`)
+  Terminal.log(`──────────────────────────────────────────────`)
   const barLength = 10
   const filledLength = limit > 0 ? Math.round((currentCount / limit) * barLength) : 0
   const bar = '■'.repeat(filledLength) + '□'.repeat(Math.max(0, barLength - filledLength))
 
-  Logger.log(` 🛠️ 골렘 성장도: [${bar}] ${currentCount} / ${limit}`)
+  Terminal.log(` 🛠️ 골렘 성장도: [${bar}] ${currentCount} / ${limit}`)
 
   if (currentCount > 0) {
     const counts = _.countBy(upgrades)
@@ -142,10 +142,10 @@ const printGolem = (target: BattleTarget) => {
     const soulLv = counts['soul'] || 0
 
     if (machineLv > 0) {
-      Logger.log(` • \x1b[33m[⚙️ 기계 개조]\x1b[0m Lv.${machineLv}`)
+      Terminal.log(` • \x1b[33m[⚙️ 기계 개조]\x1b[0m Lv.${machineLv}`)
     }
     if (soulLv > 0) {
-      Logger.log(` • \x1b[36m[👻 영혼 주입]\x1b[0m Lv.${soulLv}`)
+      Terminal.log(` • \x1b[36m[👻 영혼 주입]\x1b[0m Lv.${soulLv}`)
     }
   }
 }
@@ -158,9 +158,9 @@ export const printItem = (item: Item) => {
     COMMON: '⟪⚪ 일반⟫',
   }
 
-  Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Logger.log(` ${rarityMap[item.rarity || 'COMMON']} ${item.label} ${item.quantity ? `(x${item.quantity})` : ''}`)
-  Logger.log(`──────────────────────────────────────────────`)
+  Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+  Terminal.log(` ${rarityMap[item.rarity || 'COMMON']} ${item.label} ${item.quantity ? `(x${item.quantity})` : ''}`)
+  Terminal.log(`──────────────────────────────────────────────`)
 
   const stats: string[] = []
   if ('atk' in item) stats.push(`공격력 +${item.atk}`, `치명타 ${item.crit * 100}%`)
@@ -168,22 +168,22 @@ export const printItem = (item: Item) => {
   if ('eva' in item && item.eva) stats.push(`회피율 +${item.eva * 100}%`)
   if ('hpHeal' in item) stats.push(`즉시 회복 HP ${item.hpHeal}`)
 
-  if (stats.length > 0) Logger.log(` 효과 : ${stats.join(' | ')}`)
+  if (stats.length > 0) Terminal.log(` 효과 : ${stats.join(' | ')}`)
 
-  if ('mana' in item && item.mana) Logger.log(` 마나 증가 : +${item.mana}MP`)
-  if ('maxSkeleton' in item && item.maxSkeleton) Logger.log(` 영령 : 최대 해골 소환수 +${item.maxSkeleton}`)
-  if ('affix' in item && item.affix) Logger.log(` 축복 : [${item.affix.name}] 효과 부여 (${item.affix.description})`)
+  if ('mana' in item && item.mana) Terminal.log(` 마나 증가 : +${item.mana}MP`)
+  if ('maxSkeleton' in item && item.maxSkeleton) Terminal.log(` 영령 : 최대 해골 소환수 +${item.maxSkeleton}`)
+  if ('affix' in item && item.affix) Terminal.log(` 축복 : [${item.affix.name}] 효과 부여 (${item.affix.description})`)
 
-  Logger.log(`──────────────────────────────────────────────`)
-  Logger.log(` 📝 ${item.description}`)
-  Logger.log(` 💰 가치: ${item.price} G (판매가 ${item.sellPrice} G)`)
-  Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+  Terminal.log(`──────────────────────────────────────────────`)
+  Terminal.log(` 📝 ${item.description}`)
+  Terminal.log(` 💰 가치: ${item.price} G (판매가 ${item.sellPrice} G)`)
+  Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 }
 
 const selectTarget = async (subChoices: { name: string; message: string }[]) => {
   subChoices.push({ name: 'back', message: '↩ 뒤로 가기' })
 
-  return await Logger.select('세부 대상을 선택하세요.', subChoices)
+  return await Terminal.select('세부 대상을 선택하세요.', subChoices)
 }
 
 const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) => {
@@ -232,14 +232,14 @@ const lookPath = async (
   if (selected !== 'back') {
     const target = paths.find((p) => p.label === selected)
     if (target) {
-      Logger.log(target.tile?.observe!)
+      Terminal.log(target.tile?.observe!)
       if (!target.tile?.isClear && target.tile?.event) {
         const eventId = target.tile.event
 
         if (eventId.includes('boss')) {
-          Logger.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`)
+          Terminal.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`)
         } else if (eventId.startsWith('monster')) {
-          Logger.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`)
+          Terminal.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`)
         }
       }
     }
@@ -262,10 +262,10 @@ const lookCorpse = async (corpse: Corpse[]) => {
     if (target) {
       const { name, maxHp, atk, def } = target
 
-      Logger.log(
+      Terminal.log(
         `\n차갑게 식어버린 ${name}의 사체가 있습니다.\n강령술을 통해 다시 움직이게 하기에 결함이 없는 보편적인 소체 상태입니다.`
       )
-      Logger.log(`========================================
+      Terminal.log(`========================================
 [ 대상 식별: ${name} ]
 ========================================
 - 체력: ${maxHp}
@@ -330,7 +330,7 @@ export const lookAll = async (
   ]
 
   // 1. 카테고리 선택
-  const category = await Logger.select('무엇을 확인하시겠습니까?', categoryChoices)
+  const category = await Terminal.select('무엇을 확인하시겠습니까?', categoryChoices)
 
   if (category === 'cancel') return
 

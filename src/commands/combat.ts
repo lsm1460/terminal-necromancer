@@ -1,5 +1,5 @@
 import { CombatUnit } from '~/core/battle/CombatUnit'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { CommandFunction, NPC } from '~/types'
 
 export const attackCommand: CommandFunction = async (player, args, context) => {
@@ -7,10 +7,10 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
   const tile = map.getTile(player.pos.x, player.pos.y)
 
   if ((tile.npcIds || [])?.length > 0) {
-    const proceed = await Logger.confirm(`\n[!] 눈앞의 망자를 살해하시겠습니까? 한 번 휘두른 무기는 되돌릴 수 없습니다.`)
+    const proceed = await Terminal.confirm(`\n[!] 눈앞의 망자를 살해하시겠습니까? 한 번 휘두른 무기는 되돌릴 수 없습니다.`)
 
     if (!proceed) {
-      Logger.log(`\n당신은 살의를 거두고 무기를 내립니다.`);
+      Terminal.log(`\n당신은 살의를 거두고 무기를 내립니다.`);
       return false // 교체 중단
     }
   }
@@ -25,7 +25,7 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
 
   // 2. 공격 대상이 없으면 종료
   if (battleTargets.length === 0) {
-    Logger.log('\n[알림] 공격할 대상이 없습니다.')
+    Terminal.log('\n[알림] 공격할 대상이 없습니다.')
     return false
   }
 

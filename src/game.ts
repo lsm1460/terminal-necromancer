@@ -3,7 +3,7 @@ import path from 'path'
 import { GameAssets } from './assets'
 import { createCLI } from './cli'
 import { CLIRenderer } from './cliRenderer'
-import { Logger } from './core/Logger'
+import { Terminal } from './core/Terminal'
 import { Title } from './core/Title'
 import { GameEngine } from './gameEngine'
 import { SaveSystem } from './systems/SaveSystem'
@@ -32,7 +32,7 @@ const assets: GameAssets = {
 
 const save = new SaveSystem(statePath)
 const renderer = new CLIRenderer()
-Logger.setRenderer(renderer)
+Terminal.setRenderer(renderer)
 
 const engine = new GameEngine(assets, renderer, save)
 

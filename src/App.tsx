@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { assets, initState } from './assets'
-import { Logger } from './core/Logger'
+import { Terminal } from './core/Terminal'
 import { Title } from './core/Title'
 import { GameEngine } from './gameEngine'
 import { ReactRenderer, UIState } from './renderers/ReactRenderer'
 import { SaveSystem } from './systems/SaveSystem'
 
 export const App = () => {
-  // --- 상태 관리 ---
   const [logs, setLogs] = useState<string[]>([])
   const [status, setStatus] = useState<any>(null)
   const [uiState, setUI] = useState<UIState>({
@@ -16,30 +15,27 @@ export const App = () => {
     resolve: () => {},
   })
 
-  // --- 참조(Ref) 관리 ---
   const engineRef = useRef<GameEngine | null>(null)
   const saveSystemRef = useRef(new SaveSystem(assets.state))
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  // --- 자동 스크롤 효과 ---
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
   }, [logs, uiState])
 
-  // --- 게임 초기화 및 실행 ---
   useEffect(() => {
     const initGame = async () => {
       // 1. 렌더러 및 로거 설정
       const renderer = new ReactRenderer(setLogs, setStatus, setUI)
-      Logger.setRenderer(renderer)
+      Terminal.setRenderer(renderer)
 
       // 2. 엔진 생성
       const engine = new GameEngine(assets, renderer, saveSystemRef.current)
       engineRef.current = engine
 
-      // 3. 타이틀 시퀀스 시작 (Logger를 통해 UIState와 연결됨)
+      // 3. 타이틀 시퀀스 시작 (Terminal를 통해 UIState와 연결됨)
       const playData = await Title.gameStart(saveSystemRef.current, initState)
       
       if (playData) {
@@ -53,7 +49,6 @@ export const App = () => {
 
   const disabledInput = useMemo(() => uiState.type !== 'NONE' && uiState.type !== 'PROMPT', [uiState])
 
-  // --- 명령어 입력 처리 ---
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.currentTarget.value.trim()) {
       const cmd = e.currentTarget.value
@@ -63,7 +58,6 @@ export const App = () => {
     }
   }
 
-  // --- 공통 UI 선택 처리 함수 ---
   const handleUIResolve = (value: any, displayValue?: string) => {
     if (displayValue) {
       setLogs((prev) => [...prev, displayValue])

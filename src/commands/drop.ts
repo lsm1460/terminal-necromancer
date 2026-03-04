@@ -1,11 +1,11 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { CommandFunction, Drop, Item } from '~/types'
 
 export const dropCommand: CommandFunction = async (player, args, context) => {
   const inventory = player.inventory
 
   if (inventory.length === 0) {
-    Logger.log('버릴 아이템이 없습니다.')
+    Terminal.log('버릴 아이템이 없습니다.')
     return false
   }
 
@@ -17,14 +17,14 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
       // 해당 이름을 가진 드랍 찾기
       const itemIndex = inventory.findIndex((d) => d.label === name)
       if (itemIndex === -1) {
-        Logger.log(`${name} 아이템이 해당 위치에 없습니다.`)
+        Terminal.log(`${name} 아이템이 해당 위치에 없습니다.`)
         return
       }
 
       itemToDrop = inventory[itemIndex]
     })
   } else {
-    const itemId = await Logger.select('어떤 아이템을 버리시겠습니까?', [
+    const itemId = await Terminal.select('어떤 아이템을 버리시겠습니까?', [
       ...inventory.map((item) => ({
         name: item.id,
         message: `${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`,
@@ -50,7 +50,7 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
     } as Drop)
 
     const qtyText = itemToDrop.quantity !== undefined ? ` 1개` : ''
-    Logger.log(`📦 [${itemToDrop.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
+    Terminal.log(`📦 [${itemToDrop.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
   }
 
   return false

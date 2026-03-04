@@ -1,4 +1,4 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { BattleTarget, CommandFunction } from '~/types'
 
@@ -10,14 +10,14 @@ export const spaceCommand: CommandFunction = async (player, args, context) => {
   const caronIsDead = events.isCompleted('caron_is_dead')
 
   if (!caronIsMine && !caronIsDead) {
-    Logger.log('\n(아공간의 권능을 소유하고 있지 않습니다.)')
+    Terminal.log('\n(아공간의 권능을 소유하고 있지 않습니다.)')
     return false
   }
 
   if (caronIsMine) {
-    Logger.log('\n카론: "(그림자 속에서 나직이 읊조리며) 차원의 문을 열겠습니다. 당신의 군세를 이곳에 맡기시지요."')
+    Terminal.log('\n카론: "(그림자 속에서 나직이 읊조리며) 차원의 문을 열겠습니다. 당신의 군세를 이곳에 맡기시지요."')
   } else {
-    Logger.log('\n[ 찬탈한 아공간의 틈새가 비정상적인 냉기를 뿜으며 뒤틀립니다. ]')
+    Terminal.log('\n[ 찬탈한 아공간의 틈새가 비정상적인 냉기를 뿜으며 뒤틀립니다. ]')
   }
 
   // 2. 가용 동작 판단
@@ -31,12 +31,12 @@ export const spaceCommand: CommandFunction = async (player, args, context) => {
 
   if (actionChoices.length === 1) {
     // 취소만 있는 경우
-    Logger.log('\n(현재 조작할 수 있는 스켈레톤이 아공간이나 필드에 없습니다.)')
+    Terminal.log('\n(현재 조작할 수 있는 스켈레톤이 아공간이나 필드에 없습니다.)')
     return false
   }
 
   // 3. 메인 액션 선택
-  const action = await Logger.select<'push' | 'pull' | 'cancel'>(
+  const action = await Terminal.select<'push' | 'pull' | 'cancel'>(
     '아공간에서 해방할 소환수를 선택하십시오.',
     actionChoices
   )
@@ -60,14 +60,14 @@ async function handlePush(player: Player) {
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
 
-  const targetId = await Logger.select('어떤 소환수를 아공간으로 보냅니까?', skeletonChoices)
+  const targetId = await Terminal.select('어떤 소환수를 아공간으로 보냅니까?', skeletonChoices)
 
   const target = player.skeleton.find((sk) => sk.id === targetId)
   if (!target) return
 
   player.skeleton = player.skeleton.filter((s) => s.id !== targetId)
   player.skeletonSubspace.push(target)
-  Logger.log(`\n✨ [봉인] ${target.name}이(가) 차원의 틈새로 사라졌습니다.`)
+  Terminal.log(`\n✨ [봉인] ${target.name}이(가) 차원의 틈새로 사라졌습니다.`)
 }
 
 /** 아공간 -> 필드 이동 (교체 로직 포함) */
@@ -78,7 +78,7 @@ async function handlePull(player: Player) {
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
 
-  const pullId = await Logger.select('아공간에서 해방할 소환수를 선택하십시오.', subspaceChoices)
+  const pullId = await Terminal.select('아공간에서 해방할 소환수를 선택하십시오.', subspaceChoices)
 
   const targetToPull = player.skeletonSubspace.find((sk) => sk.id === pullId)
   if (!targetToPull) return
@@ -97,14 +97,14 @@ async function handlePull(player: Player) {
 
 /** 🔄 필드와 아공간의 스켈레톤 교체 */
 async function handleSwap(player: Player, targetToPull: BattleTarget) {
-  Logger.log('\n⚠️ 필드 수용량이 가득 찼습니다. 대상을 교체해야 합니다.')
+  Terminal.log('\n⚠️ 필드 수용량이 가득 찼습니다. 대상을 교체해야 합니다.')
 
   const fieldChoices = player.skeleton.map((sk) => ({
     name: sk.id,
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
 
-  const pushId = await Logger.select(`[${targetToPull.name}] 대신 아공간으로 보낼 대상을 선택하십시오.`, fieldChoices)
+  const pushId = await Terminal.select(`[${targetToPull.name}] 대신 아공간으로 보낼 대상을 선택하십시오.`, fieldChoices)
 
   const targetToPush = player.skeleton.find((sk) => sk.id === pushId)
   if (!targetToPush) return
@@ -126,5 +126,5 @@ function renderSuccessMessage(name: string, type: 'push' | 'pull' | 'swap') {
     pull: `\n💀 [해방] ${name}이(가) 지면에서 솟아오릅니다.`,
     swap: `\n🔄 [교체] ${name}의 위치가 아공간의 비틀림 속에서 뒤바뀌었습니다.`,
   }
-  Logger.log(messages[type])
+  Terminal.log(messages[type])
 }

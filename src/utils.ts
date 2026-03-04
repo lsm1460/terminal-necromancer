@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { Logger } from './core/Logger'
+import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
 import { Item, ItemType } from './types'
 
@@ -50,6 +50,6 @@ export function makeItemMessage(item: Item, player: Player, options?: { withPric
 
 export async function speak(messages: string[]) {
   for (const message of messages) {
-    await Logger.prompt(message)
+    await Terminal.prompt(message)
   }
 }

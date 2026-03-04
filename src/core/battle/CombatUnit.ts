@@ -1,5 +1,5 @@
 import { AttackType, BattleTarget } from '~/types'
-import { Logger } from '../Logger'
+import { Terminal } from '../Terminal'
 import { Player } from '../player/Player'
 import { Battle, Buff, DamageOptions } from './Battle'
 
@@ -62,7 +62,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   applyBuff(b: Buff) {
     switch (b.name) {
       case '광폭화':
-        Logger.log(
+        Terminal.log(
           `\n[🔥 강화] ${this.name}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! (${this.name} HP ${this.ref.hp} / ${this.ref.maxHp})`
         )
         break
@@ -77,40 +77,40 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public applyDeBuff(d: Buff) {
     switch (d.name) {
       case '마비':
-        Logger.log(`\n [!] ${this.name}은/는 마비되어 움직일 수 없습니다!`)
+        Terminal.log(`\n [!] ${this.name}은/는 마비되어 움직일 수 없습니다!`)
         break
       case '구속':
-        Logger.log(`\n [!] ${this.name}은/는 구속되어 움직일 수 없습니다!`)
+        Terminal.log(`\n [!] ${this.name}은/는 구속되어 움직일 수 없습니다!`)
         break
       case '출혈':
-        Logger.log(`\n [!] ${this.name}은/는 깊은 상처를 입고 피를 흘리기 시작합니다!`)
+        Terminal.log(`\n [!] ${this.name}은/는 깊은 상처를 입고 피를 흘리기 시작합니다!`)
         break
       case '화상':
-        Logger.log(`\n [!] ${this.name}의 피부가 화염에 그을립니다.`)
+        Terminal.log(`\n [!] ${this.name}의 피부가 화염에 그을립니다.`)
         break
       case '중독':
-        Logger.log(`\n [!] ${this.name}은/는 치명적인 독소에 노출되어 안색이 창백해집니다.`)
+        Terminal.log(`\n [!] ${this.name}은/는 치명적인 독소에 노출되어 안색이 창백해집니다.`)
         break
       case '동결':
-        Logger.log(`\n [!] ${this.name}은/는 추위에 노출되어 피부가 얼어붙어갑니다.`)
+        Terminal.log(`\n [!] ${this.name}은/는 추위에 노출되어 피부가 얼어붙어갑니다.`)
         break
       case '조롱':
-        Logger.log(`\n [!] ${this.name}(은)는 분노를 참지 못해 방어 태세가 흐트러집니다!`)
+        Terminal.log(`\n [!] ${this.name}(은)는 분노를 참지 못해 방어 태세가 흐트러집니다!`)
         break
       case '연막':
-        Logger.log(`\n [!] 자욱한 연기가 ${this.name}의 시야를 완전히 가려버립니다!`)
+        Terminal.log(`\n [!] 자욱한 연기가 ${this.name}의 시야를 완전히 가려버립니다!`)
         break
       case '뼈 감옥':
-        Logger.log(`\n [!] 거친 뼈 창살이 ${this.name}의 사지를 옥죄며 솟아오릅니다!`)
+        Terminal.log(`\n [!] 거친 뼈 창살이 ${this.name}의 사지를 옥죄며 솟아오릅니다!`)
         break
       case '심연의 한기':
-        Logger.log(`\n[❄️] 심연의 한기가 대상(${this.name})을 얼려버립니다.`)
+        Terminal.log(`\n[❄️] 심연의 한기가 대상(${this.name})을 얼려버립니다.`)
         break
       case '노화':
-        Logger.log(`\n[⏳] ${this.name}의 피부가 급격히 메마르며 숨이 가빠집니다! 모든 반응이 눈에 띄게 둔해집니다.`)
+        Terminal.log(`\n[⏳] ${this.name}의 피부가 급격히 메마르며 숨이 가빠집니다! 모든 반응이 눈에 띄게 둔해집니다.`)
         break
       case '부상':
-        Logger.log(`\n[⏳] ${this.name}의 발목에 부상을 입습니다! 움직임이 눈에 띄게 둔해집니다.`)
+        Terminal.log(`\n[⏳] ${this.name}의 발목에 부상을 입습니다! 움직임이 눈에 띄게 둔해집니다.`)
         break
 
       default:
@@ -204,14 +204,14 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
     // 1. 회피했을 경우
     if (isEscape) {
-      Logger.log(
+      Terminal.log(
         `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! 💨 \x1b[37m${this.name}\x1b[0m이(가) 회피했습니다. ${hpStatus}`
       )
       return
     }
 
     if (damage <= 0) {
-      Logger.log(
+      Terminal.log(
         `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! 🛡️ 하지만 \x1b[37m${this.name}\x1b[0m에게 피해를 주지 못했습니다. ${hpStatus}`
       )
       return
@@ -224,7 +224,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       damageMsg = `\x1b[31m${damage}\x1b[0m`
     }
 
-    Logger.log(
+    Terminal.log(
       `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! \x1b[37m${this.name}\x1b[0m에게 ${damageMsg}의 피해! ${hpStatus}`
     )
   }
@@ -247,7 +247,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     if (canReveal) {
       this.buff = this.buff.filter((b) => b.type !== 'stealth' || b.isLocked)
 
-      Logger.log(` \x1b[90m[!] ${this.name}의 은신이 해제되어 정체가 드러났습니다!\x1b[0m`)
+      Terminal.log(` \x1b[90m[!] ${this.name}의 은신이 해제되어 정체가 드러났습니다!\x1b[0m`)
       this.applyDeBuff({ name: '드러난 자', duration: 2, type: 'expose' })
     }
   }
@@ -258,7 +258,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     const randomIndex = Math.floor(Math.random() * this.deBuff.length)
     const removed = this.deBuff.splice(randomIndex, 1)[0]
 
-    Logger.log(` \x1b[32m[!] ${this.name}(은)는 기운을 차려 '${removed.name}' 효과에서 벗어났습니다!\x1b[0m`)
+    Terminal.log(` \x1b[32m[!] ${this.name}(은)는 기운을 차려 '${removed.name}' 효과에서 벗어났습니다!\x1b[0m`)
   }
 
   public removeBuff(name: string, force = false): void {
@@ -274,7 +274,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     })
 
     if (this.buff.length < initialLength) {
-      Logger.log(`\n✨ [상태 변화] ${this.name}에게서 [${name}] 효과가 사라졌습니다.`)
+      Terminal.log(`\n✨ [상태 변화] ${this.name}에게서 [${name}] 효과가 사라졌습니다.`)
     }
   }
 
@@ -291,7 +291,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     })
 
     if (this.deBuff.length < initialLength) {
-      Logger.log(`\n✨ [상태 변화] ${this.name}에게서 [${name}] 효과가 사라졌습니다.`)
+      Terminal.log(`\n✨ [상태 변화] ${this.name}에게서 [${name}] 효과가 사라졌습니다.`)
     }
   }
 
@@ -301,6 +301,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     const randomIndex = Math.floor(Math.random() * this.buff.length)
     const removed = this.buff.splice(randomIndex, 1)[0]
 
-    Logger.log(` \x1b[31m[!] ${this.name}에게 걸려있던 '${removed.name}' 효과가 강제로 해제되었습니다!\x1b[0m`)
+    Terminal.log(` \x1b[31m[!] ${this.name}에게 걸려있던 '${removed.name}' 효과가 강제로 해제되었습니다!\x1b[0m`)
   }
 }

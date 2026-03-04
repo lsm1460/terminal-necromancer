@@ -1,5 +1,5 @@
 import { MAP_IDS, MapId } from '~/consts'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { printTileStatus } from '~/statusPrinter'
 import { GameContext } from '~/types'
@@ -41,13 +41,13 @@ async function handleElevate(player: Player, context: GameContext) {
     })
 
   if (choices.length < 1) {
-    Logger.log('❌ 엘리베이터 사용이 허락되지 않는 망자입니다..')
+    Terminal.log('❌ 엘리베이터 사용이 허락되지 않는 망자입니다..')
     return true
   }
 
   choices.push({ name: 'cancel', message: '🔙 그대로 머물기' })
 
-  const sceneId = await Logger.select('어느 층으로 이동하시겠습니까?', choices)
+  const sceneId = await Terminal.select('어느 층으로 이동하시겠습니까?', choices)
 
   if (sceneId === 'cancel') {
     return true
@@ -61,23 +61,23 @@ async function handleElevate(player: Player, context: GameContext) {
     enterMessage = '⚠️ 안전구역을 벗어납니다. 정말 이동하시겠습니까?'
   }
 
-  const proceed = await Logger.confirm(enterMessage)
+  const proceed = await Terminal.confirm(enterMessage)
 
   if (!proceed) {
-    Logger.log('❌ 이동을 취소했습니다.')
+    Terminal.log('❌ 이동을 취소했습니다.')
     return true
   }
 
   const targetMapData = map.getMap(sceneId)
 
   if (targetMapData) {
-    Logger.log(`\n⚙️ 엘리베이터가 작동합니다. 웅성거리는 기계음과 함께 층이 바뀝니다...`)
+    Terminal.log(`\n⚙️ 엘리베이터가 작동합니다. 웅성거리는 기계음과 함께 층이 바뀝니다...`)
 
     // 맵 시스템의 changeScene을 호출하여 플레이어 이동 및 맵 데이터 갱신
     world.clearFloor()
     await map.changeScene(sceneId as MapId, player)
 
-    Logger.log(`✨ [도착] ${targetMapData.displayName}에 도착했습니다.\n`)
+    Terminal.log(`✨ [도착] ${targetMapData.displayName}에 도착했습니다.\n`)
 
     const tile = map.getTile(player.x, player.y)
     tile.isSeen = true

@@ -1,19 +1,19 @@
 import { MAP_IDS } from '~/consts'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { CommandFunction } from '~/types'
 
 export const mapCommand: CommandFunction = async (player, args, context) => {
   const { events, map } = context
 
   if (!events.isCompleted('first_boss')) {
-    Logger.log('📜 지도가 없습니다.')
+    Terminal.log('📜 지도가 없습니다.')
     return false
   }
 
   const sceneId = map.currentSceneId
 
   if (sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
-    Logger.log('📜 지도가 없습니다.')
+    Terminal.log('📜 지도가 없습니다.')
     return false
   }
 
@@ -22,7 +22,7 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
 
   const isFullyVisible = ([MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE] as string[]).includes(sceneId)
 
-  Logger.log(`\n--- 🗺️ ${map.currentScene.displayName} ---`)
+  Terminal.log(`\n--- 🗺️ ${map.currentScene.displayName} ---`)
 
   const mapDisplay = tiles
     .map((row, y) => {
@@ -60,11 +60,11 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
     })
     .join('\n')
 
-  Logger.log(mapDisplay)
-  Logger.log('\n[ 지도 범례 ]')
-  Logger.log('📍:현재위치 | ☁️ :미탐사 | ⬜:안전한 길 | ⚔️ :전투 필요')
-  Logger.log('👹:보스     | 🛗:승강기   | 💀:죽음       | 👤:NPC')
-  Logger.log('---------------------------------------')
+  Terminal.log(mapDisplay)
+  Terminal.log('\n[ 지도 범례 ]')
+  Terminal.log('📍:현재위치 | ☁️ :미탐사 | ⬜:안전한 길 | ⚔️ :전투 필요')
+  Terminal.log('👹:보스     | 🛗:승강기   | 💀:죽음       | 👤:NPC')
+  Terminal.log('---------------------------------------')
 
   return false
 }

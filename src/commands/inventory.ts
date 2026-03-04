@@ -1,4 +1,4 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
 import { makeItemMessage } from '~/utils'
 import { printItem } from './overview'
@@ -7,7 +7,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
   const inventory = player.inventory
 
   if (inventory.length === 0) {
-    Logger.log('\n🎒 인벤토리가 텅 비어 있습니다.')
+    Terminal.log('\n🎒 인벤토리가 텅 비어 있습니다.')
     return false
   }
 
@@ -20,7 +20,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
   itemChoices.push({ name: 'cancel', message: '↩ 닫기' })
 
   try {
-    const itemId = await Logger.select('조회할 아이템을 선택하세요', itemChoices)
+    const itemId = await Terminal.select('조회할 아이템을 선택하세요', itemChoices)
 
     if (itemId === 'cancel') return false
 
@@ -48,7 +48,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
     actions.push({ name: 'drop', message: '🗑️ 버리기' })
     actions.push({ name: 'back', message: '↩ 뒤로 가기' })
 
-    const action = await Logger.select(`[${selectedItem.label}] 무엇을 하시겠습니까?`, actions)
+    const action = await Terminal.select(`[${selectedItem.label}] 무엇을 하시겠습니까?`, actions)
 
     // 5. 액션 처리
     switch (action) {
@@ -56,7 +56,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
         printItem(selectedItem)
         break
       case 'equip':
-        Logger.log(`\n✨ [${selectedItem.label}]을(를) 장비하였습니다.`)
+        Terminal.log(`\n✨ [${selectedItem.label}]을(를) 장비하였습니다.`)
         await player.equip(selectedItem)
         break
       case 'use':
@@ -76,7 +76,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
           } as Drop)
 
           const qtyText = selectedItem.quantity !== undefined ? ` 1개` : ''
-          Logger.log(`📦 [${selectedItem.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
+          Terminal.log(`📦 [${selectedItem.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
         }
         break
       case 'back':

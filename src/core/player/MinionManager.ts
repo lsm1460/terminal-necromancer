@@ -1,6 +1,6 @@
 import { BattleTarget } from '~/types'
 import { ItemRarity } from '../item/consts'
-import { Logger } from '../Logger'
+import { Terminal } from '../Terminal'
 import GolemWrapper from './GolemWrapper'
 import KnightWrapper from './KnightWrapper'
 import { Player, PlayerSaveData } from './Player'
@@ -93,7 +93,7 @@ export class MinionManager {
       const removedSkeleton = this.skeleton.pop()
 
       if (removedSkeleton) {
-        Logger.log(` └ ⚠️ 장비가 해제되어 ${removedSkeleton.name}이(가) 소멸했습니다.`)
+        Terminal.log(` └ ⚠️ 장비가 해제되어 ${removedSkeleton.name}이(가) 소멸했습니다.`)
       }
     }
   }
@@ -203,7 +203,7 @@ export class MinionManager {
       skills: ['power_smash'],
     }
 
-    Logger.log('[영혼이 귀속된 발타자르]를 획득했다.')
+    Terminal.log('[영혼이 귀속된 발타자르]를 획득했다.')
   }
 
   public toJSON() {

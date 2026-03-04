@@ -1,4 +1,4 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 import { makeItemMessage } from '~/utils'
@@ -10,14 +10,14 @@ export interface NPCHandler {
 
 export async function handleTalk(npc: NPC) {
   if (!npc.lines || npc.lines.length === 0) {
-    Logger.log(`\n💬 [${npc.name}]: ...`)
+    Terminal.log(`\n💬 [${npc.name}]: ...`)
     return
   }
 
   const randomIndex = Math.floor(Math.random() * npc.lines.length)
   const selectedLine = npc.lines[randomIndex]
 
-  Logger.log(`\n💬 [${npc.name}]: "${selectedLine}"`)
+  Terminal.log(`\n💬 [${npc.name}]: "${selectedLine}"`)
 }
 
 interface NPCWithContribution extends NPC {
@@ -45,7 +45,7 @@ export async function handleBuy(
 
   // 1. 재고 확인
   if (goods.length === 0) {
-    Logger.log(`\n[${npc.name}]: "${scripts.noStock}"`)
+    Terminal.log(`\n[${npc.name}]: "${scripts.noStock}"`)
     return
   }
 
@@ -82,15 +82,15 @@ export async function handleBuy(
 
   choices.push({ name: 'cancel', message: '🔙 돌아가기', label: '취소', price: 0 })
 
-  Logger.log(`\n[${npc.name}]: "${scripts.greeting}"`)
+  Terminal.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
   while (true) {
     const infoHeader = `[소지금: ${player.gold}G${npc.contribution !== undefined ? ` / 기여도: ${contribution}` : ''}]`
 
-    const itemId = await Logger.select(`${infoHeader} 구매할 물건 선택`, choices)
+    const itemId = await Terminal.select(`${infoHeader} 구매할 물건 선택`, choices)
 
     if (itemId === 'cancel') {
-      if (scripts.exit) Logger.log(`\n[${npc.name}]: "${scripts.exit}"`)
+      if (scripts.exit) Terminal.log(`\n[${npc.name}]: "${scripts.exit}"`)
       return
     }
 
@@ -99,7 +99,7 @@ export async function handleBuy(
 
     // 3. 소지금 체크
     if (player.gold < selectedChoice.price) {
-      Logger.log(`\n[${npc.name}]: "${scripts.noGold}"`)
+      Terminal.log(`\n[${npc.name}]: "${scripts.noGold}"`)
       continue
     }
 
@@ -115,7 +115,7 @@ export async function handleBuy(
     if (actualItem) {
       player.addItem(actualItem)
       const successMsg = scripts.success || `${selectedChoice.label}을(를) 구매했습니다.`
-      Logger.log(`\n✨ [${npc.name}]: "${successMsg}" (-${selectedChoice.price}G)`)
+      Terminal.log(`\n✨ [${npc.name}]: "${successMsg}" (-${selectedChoice.price}G)`)
     }
   }
 }
@@ -123,12 +123,12 @@ export async function handleBuy(
 export async function handleSell(player: Player, npc: NPC, context: GameContext, scripts: ShopScripts) {
   let totalEarnedInSession = 0
 
-  Logger.log(`\n[${npc.name}]: "${scripts.greeting}"`)
+  Terminal.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
   while (true) {
     // 2. 인벤토리 상태 확인
     if (player.inventory.length === 0) {
-      Logger.log(`\n[${npc.name}]: "${scripts.noItems}"`)
+      Terminal.log(`\n[${npc.name}]: "${scripts.noItems}"`)
       break
     }
 
@@ -153,7 +153,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
     const bonusInfo = hasContribution ? ` / 보너스: +${(bonusRate * 100).toFixed(1)}%` : ''
 
-    const choiceName = await Logger.select(
+    const choiceName = await Terminal.select(
       `[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`,
       choices
     )
@@ -165,8 +165,8 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
     let sellCount = 1
     if (targetItem.quantity && targetItem.quantity > 1) {
-      // TODO: Logger에 numeral/text prompt 추가 필요. 일단 1로 고정
-      Logger.log(
+      // TODO: Terminal에 numeral/text prompt 추가 필요. 일단 1로 고정
+      Terminal.log(
         `\n[알림] 현재 판매 수량 선택 기능은 지원되지 않습니다. 1개만 판매합니다. (${targetItem.quantity}개 보유)`
       )
       sellCount = 1
@@ -183,16 +183,16 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
       context.npcs.updateFactionContribution(npc.faction, 10)
     }
 
-    Logger.log(`\n💰 [${npc.name}]: "${scripts.success}" (+${totalEarned}G)`)
+    Terminal.log(`\n💰 [${npc.name}]: "${scripts.success}" (+${totalEarned}G)`)
   }
 
   // 6. 거래 종료 보고
   if (totalEarnedInSession > 0) {
-    Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-    Logger.log(` 🧾 영수증: 이번 거래로 총 ${totalEarnedInSession}G를 벌었습니다.`)
-    Logger.log(` 💰 현재 소지금: ${player.gold}G`)
-    Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+    Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+    Terminal.log(` 🧾 영수증: 이번 거래로 총 ${totalEarnedInSession}G를 벌었습니다.`)
+    Terminal.log(` 💰 현재 소지금: ${player.gold}G`)
+    Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   }
 
-  scripts.exit && Logger.log(`\n[${npc.name}]: "${scripts.exit}"`)
+  scripts.exit && Terminal.log(`\n[${npc.name}]: "${scripts.exit}"`)
 }

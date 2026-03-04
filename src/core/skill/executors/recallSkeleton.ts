@@ -1,10 +1,10 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/types'
 
 export const recallSkeleton: ExecuteSkill = async (player, context) => {
   const skeletons = player.ref.skeleton
 
-  const corpseId = await Logger.select('어떤 시체를 소모하시겠습니까?', [
+  const corpseId = await Terminal.select('어떤 시체를 소모하시겠습니까?', [
     ...skeletons.map((s) => ({
       name: s.id,
       message: s.name,
@@ -13,7 +13,7 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
   ])
 
   if (corpseId === 'cancel') {
-    Logger.log('\n💬 스킬 사용을 취소했습니다.')
+    Terminal.log('\n💬 스킬 사용을 취소했습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -24,7 +24,7 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
   const selectedCorpse = skeletons.find((target) => target.id === corpseId)
 
   if (!selectedCorpse) {
-    Logger.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+    Terminal.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -42,8 +42,8 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
 
   player.ref.mp = Math.min(player.ref.mp + 5, player.ref.maxMp)
 
-  Logger.log(`[역소환 성공] ${selectedCorpse.name || '스켈레톤'} 이(가) 영혼으로 환원되었습니다.`)
-  Logger.log(`[자원 회수] 마나 +5 회복 | 현재 마나: ${player.ref.mp}`)
+  Terminal.log(`[역소환 성공] ${selectedCorpse.name || '스켈레톤'} 이(가) 영혼으로 환원되었습니다.`)
+  Terminal.log(`[자원 회수] 마나 +5 회복 | 현재 마나: ${player.ref.mp}`)
 
   return {
     isSuccess: true,

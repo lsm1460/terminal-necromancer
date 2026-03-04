@@ -1,6 +1,6 @@
 import { EventSystem } from '~/systems/EventSystem'
 import { BroadcastScript } from '~/types'
-import { Logger } from './Logger'
+import { Terminal } from './Terminal'
 import { NPCManager } from './NpcManager'
 
 export class Broadcast {
@@ -96,10 +96,10 @@ export class Broadcast {
         const randomIndex = Math.floor(Math.random() * this.terminalMessages.length)
         const message = this.terminalMessages[randomIndex]
 
-        Logger.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-        Logger.log(`📡 [터미널 브로드캐스팅: 에코]`)
-        Logger.log(`  ${message}`)
-        Logger.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        Terminal.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        Terminal.log(`📡 [터미널 브로드캐스팅: 에코]`)
+        Terminal.log(`  ${message}`)
+        Terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
       }
 
       return
@@ -110,13 +110,13 @@ export class Broadcast {
     const currentIndex = this.playProgress[currentEventId] || 0
 
     // 2. 헤더 출력
-    Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-    Logger.log(`📡 [터미널 브로드캐스팅: 에코]`)
+    Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+    Terminal.log(`📡 [터미널 브로드캐스팅: 에코]`)
 
     // 3. 브릿지 멘트 출력 조건 (새 이벤트 시작 + 이전 이벤트가 방금 끝났을 때)
     if (currentIndex === 0 && this.justFinishedEvent) {
       const randomBridge = this.bridgeMemos[Math.floor(Math.random() * this.bridgeMemos.length)]
-      Logger.log(`  ${randomBridge}`)
+      Terminal.log(`  ${randomBridge}`)
 
       // 브릿지를 한 번 출력했으므로 플래그 초기화
       this.justFinishedEvent = false
@@ -127,7 +127,7 @@ export class Broadcast {
     const lines = isHostile ? content.hostile : content.normal
 
     if (currentIndex < lines.length) {
-      Logger.log(`  📢 "${lines[currentIndex]}"`)
+      Terminal.log(`  📢 "${lines[currentIndex]}"`)
 
       // 진행도 업데이트
       this.playProgress[currentEventId] = currentIndex + 1
@@ -138,7 +138,7 @@ export class Broadcast {
       }
     }
 
-    Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+    Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 
     // 5. 이벤트가 완전히 종료되었다면 큐에서 제거하고 플래그 세우기
     if (this.playedState[currentEventId]) {

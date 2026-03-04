@@ -17,7 +17,7 @@ export class CLIRenderer implements Renderer {
     printStatus(player, context)
   }
 
-  // --- 입력 메서드 (Logger가 호출할 비동기 로직) ---
+  // --- 입력 메서드 (Terminal가 호출할 비동기 로직) ---
 
   /**
    * 터미널 선택 메뉴를 띄웁니다.

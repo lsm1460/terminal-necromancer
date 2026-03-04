@@ -51,7 +51,7 @@ export class ReactRenderer implements Renderer {
     printStatus(player, context)
   }
 
-  // --- 비동기 입력 메서드 (Logger.ts와 연결됨) ---
+  // --- 비동기 입력 메서드 (Terminal.ts와 연결됨) ---
 
   /**
    * 리액트 로그 창 하단에 선택 버튼들을 띄우고 유저가 클릭할 때까지 대기합니다.

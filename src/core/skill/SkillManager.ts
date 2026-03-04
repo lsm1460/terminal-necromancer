@@ -1,5 +1,5 @@
 import { ExecuteSkill, GameContext, SkillId } from '~/types'
-import { Logger } from '../Logger'
+import { Terminal } from '../Terminal'
 import { Player } from '../player/Player'
 import { SKILL_LIST } from './skill'
 
@@ -15,7 +15,7 @@ export class SkillManager {
     const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.ref.memorize.includes(skill.id))
 
     // 2. 스킬 선택 UI
-    const skillId = await Logger.select(`스킬 선택 (현재 MP: ${player.ref.mp})`, [
+    const skillId = await Terminal.select(`스킬 선택 (현재 MP: ${player.ref.mp})`, [
       ...availableSkills.map((s) => ({
         name: s.id,
         message: `${s.name} (MP: ${s.cost}) - ${s.description}`,
@@ -29,7 +29,7 @@ export class SkillManager {
 
     // 3. 자원 체크
     if (player.ref.mp < targetSkill.cost) {
-      Logger.log(`\n🚫 마력이 부족합니다! (필요: ${targetSkill.cost} / 현재: ${player.ref.mp})`)
+      Terminal.log(`\n🚫 마력이 부족합니다! (필요: ${targetSkill.cost} / 현재: ${player.ref.mp})`)
       return failResult
     }
 
@@ -49,7 +49,7 @@ export class SkillManager {
 
     const corpses = world.getCorpsesAt(x, y)
     if (corpses.length === 0) {
-      Logger.log('\n💬 주변에 활용할 시체가 없습니다.')
+      Terminal.log('\n💬 주변에 활용할 시체가 없습니다.')
       return false
     }
 
@@ -61,10 +61,10 @@ export class SkillManager {
       { name: 'cancel', message: '🔙 취소하기' },
     ]
 
-    const corpseId = await Logger.select('어떤 시체를 소모하시겠습니까?', corpseChoices)
+    const corpseId = await Terminal.select('어떤 시체를 소모하시겠습니까?', corpseChoices)
 
     if (corpseId === 'cancel') {
-      Logger.log('\n💬 스킬 사용을 취소했습니다.')
+      Terminal.log('\n💬 스킬 사용을 취소했습니다.')
       return false
     }
 

@@ -1,5 +1,5 @@
 import { TargetSelector } from '~/core/battle/TargetSelector'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -19,7 +19,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
   const displayName = isWide ? `광역 ${curseName}` : curseName
 
   if (aliveEnemies.length === 0) {
-    Logger.log(`\n[실패] ${displayName}의 대상이 없습니다.`)
+    Terminal.log(`\n[실패] ${displayName}의 대상이 없습니다.`)
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -39,13 +39,13 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     // 로그 출력 분기
     const effectDetail = isCorrosion ? `방어력 -${defReduction}` : `공격력 -${atkReduction}`
 
-    Logger.log(` └ [약화] ${target.name}: ${effectDetail} (${duration}턴)`)
+    Terminal.log(` └ [약화] ${target.name}: ${effectDetail} (${duration}턴)`)
   }
 
   try {
     // --- 1. 광역 효과 처리 ---
     if (isWide) {
-      Logger.log(`\n💀 ${player.name}의 ${displayName}가 전장에 퍼져나갑니다!`)
+      Terminal.log(`\n💀 ${player.name}의 ${displayName}가 전장에 퍼져나갑니다!`)
       aliveEnemies.forEach((enemy) => applyCurse(enemy))
 
       return { isSuccess: true, isAggressive: true, gross: 120 }
@@ -57,7 +57,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
       .labelIf((e) => e.deBuff.some((d) => d.name === curseName), ` (이미 ${curseName} 상태)`)
       .build()
 
-    const targetId = await Logger.select(`${displayName}의 대상을 선택하세요`, [
+    const targetId = await Terminal.select(`${displayName}의 대상을 선택하세요`, [
       ...choices,
       { name: 'cancel', message: '↩ 뒤로 가기' },
     ])
@@ -67,7 +67,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     const target = aliveEnemies.find((e) => e.id === targetId)
     if (!target) return { isSuccess: false, isAggressive: false, gross: 0 }
 
-    Logger.log(`\n💀 ${player.name}이(가) ${target.name}에게 ${curseName}를 내립니다!`)
+    Terminal.log(`\n💀 ${player.name}이(가) ${target.name}에게 ${curseName}를 내립니다!`)
     applyCurse(target)
 
     return {

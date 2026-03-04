@@ -1,6 +1,6 @@
 import { HOSTILITY_LIMIT } from '~/consts'
 import { NPC, NPCState } from '~/types'
-import { Logger } from './Logger'
+import { Terminal } from './Terminal'
 import { Player } from './player/Player'
 
 export class NPCManager {
@@ -96,14 +96,14 @@ export class NPCManager {
     // 3. 100 도달 시 처리 (고정 및 알림)
     if (this.factionHostility[faction] >= HOSTILITY_LIMIT) {
       this.factionHostility[faction] = HOSTILITY_LIMIT
-      Logger.log(`\n🚫 [영구 적대] ${faction} 소속과는 이제 돌이킬 수 없는 강을 건넜습니다.`)
-      Logger.log(`🛡️ 해당 소속원들이 당신을 발견하는 즉시 공격할 것입니다!`)
+      Terminal.log(`\n🚫 [영구 적대] ${faction} 소속과는 이제 돌이킬 수 없는 강을 건넜습니다.`)
+      Terminal.log(`🛡️ 해당 소속원들이 당신을 발견하는 즉시 공격할 것입니다!`)
       return
     }
 
     // 4. 최초 적대 시 알림 (기존 로직 유지)
     if (this.factionHostility[faction] > 0 && amount > 0) {
-      Logger.log(
+      Terminal.log(
         `\n⚠️ [경고] ${faction} 소속과의 관계가 악화되었습니다. (현재: ${this.factionHostility[faction]}/${HOSTILITY_LIMIT})`
       )
     }

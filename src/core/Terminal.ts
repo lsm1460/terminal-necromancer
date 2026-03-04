@@ -1,6 +1,6 @@
 import { Renderer } from '../types'
 
-export class Logger {
+export class Terminal {
   private static renderer: Renderer | null = null
 
   public static setRenderer(renderer: Renderer): void {

@@ -1,5 +1,5 @@
 import { DIRECTIONS } from '~/consts'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { CommandFunction } from '~/types'
 
 // --- 공통 이동 함수 ---
@@ -20,7 +20,7 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
     const target = blockingMonster || blockingNPC
 
     if (target) {
-      Logger.log(`\n🚫 ${target.name}이(가) 주시하고 있어 도망칠 수 없다.`)
+      Terminal.log(`\n🚫 ${target.name}이(가) 주시하고 있어 도망칠 수 없다.`)
       return false
     }
 
@@ -33,7 +33,7 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
       return true
     }
     
-    Logger.log('지나갈 수 없다.')
+    Terminal.log('지나갈 수 없다.')
     return false
   }
 }

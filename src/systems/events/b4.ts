@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { relocateCaron } from '~/npc/caron'
 import { Tile } from '~/types'
 import { EventHandler } from '.'
@@ -24,7 +24,7 @@ export const b4Handlers: Record<string, EventHandler> = {
         player.x = target.x
         player.y = target.y
 
-        Logger.log('공간이 거울처럼 조각나며 당신을 낯선 곳으로 내던집니다.')
+        Terminal.log('공간이 거울처럼 조각나며 당신을 낯선 곳으로 내던집니다.')
       }
     }
   },

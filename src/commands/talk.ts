@@ -1,4 +1,4 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import npcHandlers from '~/npc'
 import { CommandFunction } from '~/types'
 
@@ -12,7 +12,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     .filter((npc) => npc.isAlive)
 
   if (availableNpcs.length < 1) {
-    Logger.log(`\n[알림] 이곳에는 대화할 상대가 없습니다.`)
+    Terminal.log(`\n[알림] 이곳에는 대화할 상대가 없습니다.`)
     return false
   }
 
@@ -24,13 +24,13 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     selectedNpcId = npcIds.find((id) => context.npcs.getNPC(id)?.name === targetName)
 
     if (!selectedNpcId) {
-      Logger.log(`\n[알림] 이곳에 '${targetName}'은(는) 없습니다.`)
+      Terminal.log(`\n[알림] 이곳에 '${targetName}'은(는) 없습니다.`)
       return false
     }
   }
-  // 2. 인자가 없는 경우: Logger 선택창 띄우기
+  // 2. 인자가 없는 경우: Terminal 선택창 띄우기
   else {
-    const npcId = await Logger.select('누구와 대화하시겠습니까?', [
+    const npcId = await Terminal.select('누구와 대화하시겠습니까?', [
       ...availableNpcs.map((npc) => ({
         name: npc.id,
         message: `👤 ${npc.name}`,
@@ -46,27 +46,27 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
   const handler = npcHandlers[npc.id]
 
   if (!handler) {
-    Logger.log(`\n[${npc.name}]: "..."`)
+    Terminal.log(`\n[${npc.name}]: "..."`)
     return false
   }
 
   const dialect = context.npcs.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
 
   // 2. 대화 인터페이스 출력
-  Logger.log(`\n──────────────────────────────────────────────────`)
-  Logger.log(`  👤 [${npc.name}] - ${npc.description}`)
-  Logger.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`)
-  Logger.log(`──────────────────────────────────────────────────`)
+  Terminal.log(`\n──────────────────────────────────────────────────`)
+  Terminal.log(`  👤 [${npc.name}] - ${npc.description}`)
+  Terminal.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`)
+  Terminal.log(`──────────────────────────────────────────────────`)
 
   npc.relation = npc.relation + 1
 
   try {
-    const printFarewell = () => Logger.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
+    const printFarewell = () => Terminal.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
 
     // 유저가 'exit'를 선택할 때까지 무한 반복
     while (true) {
       const menuChoices = [...handler.getChoices(player, npc, context), { name: 'exit', message: '🏃 떠나기' }]
-      const action = await Logger.select('무엇을 하시겠습니까?', menuChoices)
+      const action = await Terminal.select('무엇을 하시겠습니까?', menuChoices)
 
       // 1. 종료 조건 체크
       if (action === 'exit') {

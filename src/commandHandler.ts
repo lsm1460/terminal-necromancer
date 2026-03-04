@@ -1,6 +1,6 @@
 import * as Commands from './commands'
 import { COMMAND_GROUPS, CommandKey } from './consts'
-import { Logger } from './core/Logger'
+import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
 import { printStatus } from './statusPrinter'
 import { GameContext } from './types'
@@ -71,7 +71,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
   const cmd = mapInput(rawCmdName)
 
   if (!cmd || !COMMANDS[cmd]) {
-    Logger.log(`\n유효하지 않은 명령입니다.`)
+    Terminal.log(`\n유효하지 않은 명령입니다.`)
     return false
   }
 

@@ -1,4 +1,4 @@
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Player } from '~/core/player/Player'
 import { GameContext, GameEvent, Tile } from '~/types'
@@ -59,7 +59,7 @@ export class EventSystem {
         this.subscribers.forEach((callback) => callback(eventId))
       }
     } catch (e) {
-      Logger.log(e as string)
+      Terminal.log(e as string)
     }
   }
 
