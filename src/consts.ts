@@ -19,7 +19,6 @@ export const COMMAND_KEYS = {
   TALK: 'talk', // 대화 추가
   EXIT: 'exit',
   MAP: 'map',
-  SPACE: 'space',
 } as const
 
 export type CommandKey = (typeof COMMAND_KEYS)[keyof typeof COMMAND_KEYS]
@@ -42,7 +41,6 @@ export const COMMAND_GROUPS: Record<CommandKey, string[]> = {
   [COMMAND_KEYS.SKILL]: ['skill', '스킬', '마법', 'sk'],
   [COMMAND_KEYS.TALK]: ['talk', '대화', 'tk'],
   [COMMAND_KEYS.MAP]: ['map', '지도', 'm'],
-  [COMMAND_KEYS.SPACE]: ['space', '아공간', 'sp'],
   [COMMAND_KEYS.EXIT]: ['exit'],
 }
 

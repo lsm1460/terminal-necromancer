@@ -104,6 +104,6 @@ export class GameEngine {
   }
 
   public async processCommand(command: string): Promise<void> {
-    handleCommand(command, this.player, this.context)
+    await handleCommand(command, this.player, this.context)
   }
 }

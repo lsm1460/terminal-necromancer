@@ -60,7 +60,6 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   talk: Commands.talkCommand,
   use: Commands.useCommand,
   map: Commands.mapCommand,
-  space: Commands.spaceCommand,
 }
 
 export async function handleCommand(rawCmd: string, player: Player, context: GameContext): Promise<string | boolean> {
