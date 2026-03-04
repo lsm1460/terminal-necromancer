@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { ExecuteSkill, GameContext, SkillId } from '~/types'
 import { Logger } from '../Logger'
 import { Player } from '../player/Player'
@@ -16,23 +15,13 @@ export class SkillManager {
     const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.ref.memorize.includes(skill.id))
 
     // 2. 스킬 선택 UI
-    const { skillId } = await enquirer.prompt<{ skillId: string }>({
-      type: 'select',
-      name: 'skillId',
-      message: `스킬 선택 (현재 MP: ${player.ref.mp})`,
-      choices: [
-        ...availableSkills.map((s) => ({
-          name: s.id,
-          message: `${s.name} (MP: ${s.cost}) - ${s.description}`,
-        })),
-        { name: 'cancel', message: '🔙 취소하기' },
-      ],
-      format(value) {
-        if (value === 'cancel') return '취소됨'
-        const selected = availableSkills.find((s) => s.id === value)
-        return selected ? `[${selected.name}]` : value
-      },
-    })
+    const skillId = await Logger.select(`스킬 선택 (현재 MP: ${player.ref.mp})`, [
+      ...availableSkills.map((s) => ({
+        name: s.id,
+        message: `${s.name} (MP: ${s.cost}) - ${s.description}`,
+      })),
+      { name: 'cancel', message: '🔙 취소하기' },
+    ])
 
     if (skillId === 'cancel') return failResult
 
@@ -72,18 +61,7 @@ export class SkillManager {
       { name: 'cancel', message: '🔙 취소하기' },
     ]
 
-    const { corpseId } = await enquirer.prompt<{ corpseId: string }>({
-      type: 'select',
-      name: 'corpseId',
-      message: '어떤 시체를 소모하시겠습니까?',
-      choices: corpseChoices,
-      format(value) {
-        if (value === 'cancel') return '취소됨'
-
-        const target = corpses.find((c, idx) => (c.id || idx.toString()) === value)
-        return target ? `[${target.name}]` : value
-      },
-    })
+    const corpseId = await Logger.select('어떤 시체를 소모하시겠습니까?', corpseChoices)
 
     if (corpseId === 'cancel') {
       Logger.log('\n💬 스킬 사용을 취소했습니다.')

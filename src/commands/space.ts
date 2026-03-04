@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { BattleTarget, CommandFunction } from '~/types'
@@ -37,12 +36,10 @@ export const spaceCommand: CommandFunction = async (player, args, context) => {
   }
 
   // 3. 메인 액션 선택
-  const { action } = await enquirer.prompt<{ action: 'push' | 'pull' | 'cancel' }>({
-    type: 'select',
-    name: 'action',
-    message: `[ 아공간 점유: ${player.skeletonSubspace.length}/${player.subspaceLimit} ]`,
-    choices: actionChoices,
-  })
+  const action = await Logger.select<'push' | 'pull' | 'cancel'>(
+    '아공간에서 해방할 소환수를 선택하십시오.',
+    actionChoices
+  )
 
   if (action === 'cancel') return false
 
@@ -63,12 +60,7 @@ async function handlePush(player: Player) {
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
 
-  const { targetId } = await enquirer.prompt<{ targetId: string }>({
-    type: 'select',
-    name: 'targetId',
-    message: '어떤 소환수를 아공간으로 보냅니까?',
-    choices: skeletonChoices,
-  })
+  const targetId = await Logger.select('어떤 소환수를 아공간으로 보냅니까?', skeletonChoices)
 
   const target = player.skeleton.find((sk) => sk.id === targetId)
   if (!target) return
@@ -86,12 +78,7 @@ async function handlePull(player: Player) {
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
 
-  const { pullId } = await enquirer.prompt<{ pullId: string }>({
-    type: 'select',
-    name: 'pullId',
-    message: '아공간에서 해방할 소환수를 선택하십시오.',
-    choices: subspaceChoices,
-  })
+  const pullId = await Logger.select('아공간에서 해방할 소환수를 선택하십시오.', subspaceChoices)
 
   const targetToPull = player.skeletonSubspace.find((sk) => sk.id === pullId)
   if (!targetToPull) return
@@ -117,12 +104,7 @@ async function handleSwap(player: Player, targetToPull: BattleTarget) {
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
 
-  const { pushId } = await enquirer.prompt<{ pushId: string }>({
-    type: 'select',
-    name: 'pushId',
-    message: `[${targetToPull.name}] 대신 아공간으로 보낼 대상을 선택하십시오.`,
-    choices: fieldChoices,
-  })
+  const pushId = await Logger.select(`[${targetToPull.name}] 대신 아공간으로 보낼 대상을 선택하십시오.`, fieldChoices)
 
   const targetToPush = player.skeleton.find((sk) => sk.id === pushId)
   if (!targetToPush) return

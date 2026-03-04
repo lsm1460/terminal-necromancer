@@ -5,9 +5,10 @@ import { GameContext, Renderer } from '~/types'
  * 리액트 컴포넌트에서 UI 대기 상태를 관리하기 위한 인터페이스
  */
 export interface UIState {
-  type: 'SELECT' | 'CONFIRM' | 'PROMPT' | 'NONE';
+  type: 'SELECT' | 'MULTISELECT' | 'CONFIRM' | 'PROMPT' | 'NONE';
   message: string;
   choices?: { name: string; message: string }[];
+  options?: { initial?: string[]; maxChoices?: number };
   resolve: (value: any) => void; // 유저가 클릭했을 때 Promise를 해결할 함수
 }
 
@@ -31,14 +32,11 @@ export class ReactRenderer implements Renderer {
   }
 
   clear(): void {
-    // 로그 창을 비웁니다.
     this.setLogs([]);
-    // 진행 중인 입력 UI도 초기화합니다.
     this.setUI({ type: 'NONE', message: '', resolve: () => {} });
   }
 
   printStatus(player: Player, context: GameContext): void {
-    // UI 컴포넌트에서 필요한 데이터만 객체로 묶어 전달합니다.
     this.setStatus({
       hp: player.hp,
       maxHp: player.maxHp,
@@ -87,6 +85,25 @@ export class ReactRenderer implements Renderer {
       this.setUI({
         type: 'PROMPT',
         message,
+        resolve,
+      });
+    });
+  }
+
+  /**
+   * 다중 선택지를 띄우고 결과를 기다립니다.
+   */
+  async multiselect(
+    message: string,
+    choices: { name: string; message: string }[],
+    options?: { initial?: string[]; maxChoices?: number }
+  ): Promise<string[]> {
+    return new Promise((resolve) => {
+      this.setUI({
+        type: 'MULTISELECT',
+        message,
+        choices,
+        options,
         resolve,
       });
     });

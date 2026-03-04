@@ -1,8 +1,8 @@
-import enquirer from 'enquirer'
 import { MAP_IDS } from '~/consts'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
+import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const JaxHandler: NPCHandler = {
@@ -49,26 +49,14 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
   ]
 
   // 1. 순차적 대화 노출
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   // 2. 최종 선택
-  const { choice } = await enquirer.prompt<{ choice: 'join' | 'kill' | 'leave' }>({
-    type: 'select',
-    name: 'choice',
-    message: '잭스의 비릿한 제안에 어떻게 답하시겠습니까?',
-    choices: [
-      { message: '💬 레지스탕스에 협력한다', name: 'join' },
-      { message: '💀 뼈를 수거한다 (전투 시작)', name: 'kill' },
-      { message: '💬 무시하고 떠난다', name: 'leave' },
-    ],
-  })
+  const choice = (await Logger.select('잭스의 비릿한 제안에 어떻게 답하시겠습니까?', [
+    { message: '💬 레지스탕스에 협력한다', name: 'join' },
+    { message: '💀 뼈를 수거한다 (전투 시작)', name: 'kill' },
+    { message: '💬 무시하고 떠난다', name: 'leave' },
+  ])) as 'join' | 'kill' | 'leave'
 
   // 3. 결과 처리
   switch (choice) {
@@ -77,12 +65,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
       events.completeEvent('RESISTANCE_BASE')
 
       // 바로 이동할지 묻는 confirm 분기
-      const { goToBase } = await enquirer.prompt<{ goToBase: boolean }>({
-        type: 'confirm',
-        name: 'goToBase',
-        message: '잭스를 따라 지금 즉시 레지스탕스 본부로 이동하시겠습니까?',
-        initial: true,
-      })
+      const goToBase = await Logger.confirm('잭스를 따라 지금 즉시 레지스탕스 본부로 이동하시겠습니까?')
 
       if (goToBase) {
         handleEnter(player, context)

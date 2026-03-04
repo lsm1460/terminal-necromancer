@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { BattleTarget, ExecuteSkill } from '~/types'
 
@@ -17,29 +16,15 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
-  // 2. 대상 미니언 선택 (Enquirer Select)
-  const { minionId } = await enquirer.prompt<{ minionId: string }>({
-    type: 'select',
-    name: 'minionId',
-    message: '어느 미니언과 영혼을 공명하시겠습니까?',
-    choices: [
-      ...minions.map((m) => ({
-        name: m.id,
-        message: `${m.name} (HP: ${m.ref.hp}/${m.ref.maxHp})`,
-        value: m.id,
-      })),
-      { name: 'cancel', message: '🔙 취소하기', value: 'cancel' },
-    ],
-    result(name) {
-      // name(message)이 아닌 실제 value(id)를 반환하도록 처리
-      return (this as any).choices.find((c: any) => c.name === name).value
-    },
-    format(value) {
-      if (value === 'cancel') return '시전 취소'
-      const target = minions.find((m) => m.id === value)
-      return target ? `[${target.name}]` : value
-    },
-  })
+  // 2. 대상 미니언 선택
+  const minionId = await Logger.select('어느 미니언과 영혼을 공명하시겠습니까?', [
+    ...minions.map((m) => ({
+      name: m.id,
+      message: `${m.name} (HP: ${m.ref.hp}/${m.ref.maxHp})`,
+      value: m.id,
+    })),
+    { name: 'cancel', message: '🔙 취소하기', value: 'cancel' },
+  ])
 
   // 3. 취소 처리
   if (minionId === 'cancel') {

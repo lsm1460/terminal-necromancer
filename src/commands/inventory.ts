@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
 import { makeItemMessage } from '~/utils'
@@ -21,17 +20,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
   itemChoices.push({ name: 'cancel', message: '↩ 닫기' })
 
   try {
-    const { itemId } = await enquirer.prompt<{ itemId: string }>({
-      type: 'select',
-      name: 'itemId',
-      message: '조회할 아이템을 선택하세요',
-      choices: itemChoices,
-      format(value) {
-        const choice = itemChoices.find((c) => c.name === value)
-
-        return choice?.message || ''
-      },
-    })
+    const itemId = await Logger.select('조회할 아이템을 선택하세요', itemChoices)
 
     if (itemId === 'cancel') return false
 
@@ -59,17 +48,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
     actions.push({ name: 'drop', message: '🗑️ 버리기' })
     actions.push({ name: 'back', message: '↩ 뒤로 가기' })
 
-    const { action } = await enquirer.prompt<{ action: string }>({
-      type: 'select',
-      name: 'action',
-      message: `[${selectedItem.label}] 무엇을 하시겠습니까?`,
-      choices: actions,
-      format(value) {
-        const choice = actions.find((c) => c.name === value)
-
-        return choice?.message || ''
-      },
-    })
+    const action = await Logger.select(`[${selectedItem.label}] 무엇을 하시겠습니까?`, actions)
 
     // 5. 액션 처리
     switch (action) {

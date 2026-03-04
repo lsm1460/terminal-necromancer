@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import _ from 'lodash'
 import { Logger } from '~/core/Logger'
 import GolemWrapper from '~/core/player/GolemWrapper'
@@ -99,9 +98,7 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   Logger.log(`${typeTag} ${target.name}`)
   Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   Logger.log(` HP  : ${hpBar} ${target.hp}/${target.maxHp}`)
-  Logger.log(
-    ` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)}`
-  )
+  Logger.log(` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)}`)
 
   if (target.eva || target.crit) {
     Logger.log(
@@ -186,20 +183,7 @@ export const printItem = (item: Item) => {
 const selectTarget = async (subChoices: { name: string; message: string }[]) => {
   subChoices.push({ name: 'back', message: '↩ 뒤로 가기' })
 
-  const { targetId } = await enquirer.prompt<{ targetId: string }>({
-    type: 'select',
-    name: 'targetId',
-    message: '세부 대상을 선택하세요.',
-    choices: subChoices,
-    format(value) {
-      if (value === 'back') return '↩ 뒤로 가기'
-      const target = subChoices.find((n) => n.name === value)
-
-      return target ? target.message : value
-    },
-  })
-
-  return targetId
+  return await Logger.select('세부 대상을 선택하세요.', subChoices)
 }
 
 const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) => {
@@ -346,18 +330,7 @@ export const lookAll = async (
   ]
 
   // 1. 카테고리 선택
-  const { category } = await enquirer.prompt<{ category: string }>({
-    type: 'select',
-    name: 'category',
-    message: '무엇을 확인하시겠습니까?',
-    choices: categoryChoices,
-    format(value) {
-      if (value === 'cancel') return '취소'
-      const target = categoryChoices.find((n) => n.name === value)
-
-      return target ? target.message : value
-    },
-  })
+  const category = await Logger.select('무엇을 확인하시겠습니까?', categoryChoices)
 
   if (category === 'cancel') return
 

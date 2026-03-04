@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '~/consts'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
@@ -138,18 +137,11 @@ async function handleSkillMenu(player: Player, context: GameContext) {
     }
   })
 
-  // 1. Enquirer Select 메뉴 생성
-  const { skillId } = await enquirer.prompt<{ skillId: SkillId | 'back' }>({
-    type: 'select',
-    name: 'skillId',
-    message: '전수받을 기술을 선택하세요: 현재 사용 가능한 영혼 조각: ' + player.exp,
-    choices: [...choices, { name: 'back', message: '🔙 뒤로 가기' }],
-    format: (value) => {
-      const selected = choices.find((c) => c.name === value)
-
-      return selected ? selected.message : value
-    },
-  })
+  // 1. Logger.select 메뉴 생성
+  const skillId = (await Logger.select('전수받을 기술을 선택하세요: 현재 사용 가능한 영혼 조각: ' + player.exp, [
+    ...choices,
+    { name: 'back', message: '🔙 뒤로 가기' },
+  ])) as SkillId | 'back'
 
   if (skillId === 'back') {
     return
@@ -169,12 +161,9 @@ async function handleLevelUp(player: Player) {
 
   Logger.log(`현재 가지고 있는 영혼 조각: ${player.exp}`)
 
-  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-    type: 'confirm',
-    name: 'proceed',
-    message: `${cost}개의 영혼 조각을 바친다면, 네 전성기의 힘을 조금이나마 되돌아올지도 모르지..`,
-    initial: false,
-  })
+  const proceed = await Logger.confirm(
+    `${cost}개의 영혼 조각을 바친다면, 네 전성기의 힘을 조금이나마 되돌아올지도 모르지..`
+  )
 
   if (!proceed) {
     Logger.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)
@@ -212,24 +201,20 @@ async function handleMemorize(player: Player) {
     })
 
   try {
-    // 2. prompt 설정 (hint 제거 및 result 로직 수정)
-    const { selectedSkills } = await enquirer.prompt<{ selectedSkills: string[] }>({
-      type: 'multiselect',
-      name: 'selectedSkills',
-      message: `메모라이즈할 스킬을 선택하세요 (최대 ${player.maxMemorize}개)`,
-      choices: skillChoices,
-
-      // ✅ 초기 체크는 "name 배열"
-      initial: player.memorize.map((skillId) => SKILL_LIST[skillId].name),
-
-      maxChoices: player.maxMemorize,
-
-      validate(value: string[]) {
-        if (value.length === 0) return '최소 한 개의 스킬은 선택해야 합니다.'
-        if (value.length > player.maxMemorize) return `최대 ${player.maxMemorize}개까지만 가능합니다.`
-        return true
-      },
-    } as any)
+    // 2. Logger.multiselect 호출
+    const selectedSkills = await Logger.multiselect(
+      `메모라이즈할 스킬을 선택하세요 (최대 ${player.maxMemorize}개)`,
+      skillChoices,
+      {
+        initial: player.memorize.map((skillId) => SKILL_LIST[skillId].name),
+        maxChoices: player.maxMemorize,
+        validate(value: string[]) {
+          if (value.length === 0) return '최소 한 개의 스킬은 선택해야 합니다.'
+          if (value.length > player.maxMemorize) return `최대 ${player.maxMemorize}개까지만 가능합니다.`
+          return true
+        },
+      }
+    )
 
     // 3. 플레이어 상태 업데이트
     player.memorize = selectedSkills.map(
@@ -276,14 +261,9 @@ async function handleIncreaseLimit(player: Player) {
     return
   }
 
-  // 4. 확인 절차 (Enquirer)
+  // 4. 확인 절차 (Logger)
   const warningMsg = `정말로 ${cost}개의 영혼 조각을 바쳐 군단을 확장하겠느냐? 되돌릴 수 없는 계약이다.`
-  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-    type: 'confirm',
-    name: 'proceed',
-    message: warningMsg,
-    initial: false,
-  })
+  const proceed = await Logger.confirm(warningMsg)
 
   if (!proceed) {
     Logger.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)

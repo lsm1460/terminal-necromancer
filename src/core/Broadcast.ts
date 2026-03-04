@@ -76,10 +76,8 @@ export class Broadcast {
     private npcManager: NPCManager,
     eventSystem: EventSystem
   ) {
-    // 1. fs.readFileSync 로직 제거 후 주입받은 객체 바로 할당
     this.scripts = scriptData
 
-    // 2. 이벤트 시스템 구독 설정
     eventSystem.subscribe((eventId) => this.onEventCleared(eventId))
   }
 

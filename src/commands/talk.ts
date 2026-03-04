@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import npcHandlers from '~/npc'
 import { CommandFunction } from '~/types'
@@ -29,25 +28,15 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
       return false
     }
   }
-  // 2. 인자가 없는 경우: Enquirer 선택창 띄우기
+  // 2. 인자가 없는 경우: Logger 선택창 띄우기
   else {
-    const { npcId } = await enquirer.prompt<{ npcId: string }>({
-      type: 'select',
-      name: 'npcId',
-      message: '누구와 대화하시겠습니까?',
-      choices: [
-        ...availableNpcs.map((npc) => ({
-          name: npc.id,
-          message: `👤 ${npc.name}`,
-        })),
-        { name: 'cancel', message: '🔙 돌아가기' },
-      ],
-      format(value) {
-        if (value === 'cancel') return '취소'
-        const target = availableNpcs.find((n) => n.id === value)
-        return target ? target.name : value
-      },
-    })
+    const npcId = await Logger.select('누구와 대화하시겠습니까?', [
+      ...availableNpcs.map((npc) => ({
+        name: npc.id,
+        message: `👤 ${npc.name}`,
+      })),
+      { name: 'cancel', message: '🔙 돌아가기' },
+    ])
 
     if (npcId === 'cancel') return false
     selectedNpcId = npcId
@@ -77,16 +66,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     // 유저가 'exit'를 선택할 때까지 무한 반복
     while (true) {
       const menuChoices = [...handler.getChoices(player, npc, context), { name: 'exit', message: '🏃 떠나기' }]
-      const choiceMap = new Map(menuChoices.map((c) => [c.name, c.message]))
-
-      const { action } = await enquirer.prompt<{ action: string }>({
-        type: 'select',
-        name: 'action',
-        message: '무엇을 하시겠습니까?',
-        choices: menuChoices,
-        format: (val) => choiceMap.get(val) || val,
-        result: (val) => val,
-      })
+      const action = await Logger.select('무엇을 하시겠습니까?', menuChoices)
 
       // 1. 종료 조건 체크
       if (action === 'exit') {

@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { GameContext, Tile } from '~/types'
@@ -44,12 +43,7 @@ export const b3Handlers: Record<string, EventHandler> = {
 
     Logger.log(`\n\x1b[90m[ 녹슨 선로 옆에 떨어진 공식 기록 장치를 발견했습니다 ]\x1b[0m`)
 
-    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-      type: 'confirm',
-      name: 'proceed',
-      message: '📽️ "터미널 관리실 제출용" 음성 기록을 재생하시겠습니까?',
-      initial: false,
-    })
+    const proceed = await Logger.confirm('📽️ "터미널 관리실 제출용" 음성 기록을 재생하시겠습니까?')
 
     if (!proceed) return
 
@@ -89,12 +83,7 @@ export const b3Handlers: Record<string, EventHandler> = {
 
     const { map } = context
 
-    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-      type: 'confirm',
-      name: 'proceed',
-      message: '📍 칠이 벗겨진 터미널 하역 안내판을 발견했습니다. 살펴보시겠습니까?',
-      initial: false,
-    })
+    const proceed = await Logger.confirm('📍 칠이 벗겨진 터미널 하역 안내판을 발견했습니다. 살펴보시겠습니까?')
 
     if (!proceed) return
 
@@ -141,12 +130,7 @@ export const b3Handlers: Record<string, EventHandler> = {
   },
 
   'event-conveyor-control-1': async (tile, player, context) => {
-    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-      type: 'confirm',
-      name: 'proceed',
-      message: '⚙️ 2번 플랫폼으로 향하는 컨베이어에 몸을 실으시겠습니까?',
-      initial: false,
-    })
+    const proceed = await Logger.confirm('⚙️ 2번 플랫폼으로 향하는 컨베이어에 몸을 실으시겠습니까?')
 
     if (proceed) {
       await transportPlayerByConveyor(
@@ -159,12 +143,7 @@ export const b3Handlers: Record<string, EventHandler> = {
   },
 
   'event-conveyor-control-2': async (tile, player, context) => {
-    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-      type: 'confirm',
-      name: 'proceed',
-      message: '⚙️ 1번 플랫폼으로 향하는 컨베이어를 작동시키겠습니까?',
-      initial: false,
-    })
+    const proceed = await Logger.confirm('⚙️ 1번 플랫폼으로 향하는 컨베이어를 작동시키겠습니까?')
 
     if (proceed) {
       await transportPlayerByConveyor(

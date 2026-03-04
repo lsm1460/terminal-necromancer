@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
-    "y": 0,
+    "x": 2,
+    "y": 1,
     "_maxHp": 74,
     "hp": 74,
     "_maxMp": 74,
@@ -20,8 +20,8 @@
     "_maxMemorize": 4,
     "memorize": [
       "RAISE_SKELETON",
+      "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
-      "SOUL_HARVEST",
       "CURSE"
     ],
     "equipped": {

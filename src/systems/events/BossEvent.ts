@@ -1,9 +1,9 @@
-import enquirer from 'enquirer'
 import _ from 'lodash'
 import { CombatUnit } from '~/core/battle/CombatUnit'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { GameContext, Tile } from '~/types'
+import { speak } from '~/utils'
 import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
@@ -28,7 +28,7 @@ class BossEvent {
 
     // 3. 전투 전 인카운터 연출 및 대화
     this.printEncounterHeader(bossNpc.name)
-    await this.playDialogues(eventData?.postTalk || ['...네놈이 죽을 자리를 찾아왔구나.'])
+    await speak(eventData?.postTalk || ['...네놈이 죽을 자리를 찾아왔구나.'])
 
     // 4. 적 유닛 구성 (보스 클래스에 위임)
     Logger.log(`\n⚔️  전투가 시작됩니다!`)
@@ -69,7 +69,7 @@ class BossEvent {
 
       // 전투 후 마무리 대화
       if (eventData?.defeatTalk) {
-        await this.playDialogues(eventData.defeatTalk)
+        await speak(eventData.defeatTalk)
       }
     }
   }
@@ -81,21 +81,6 @@ class BossEvent {
     Logger.log(`\n━━━━━━━━━━━━━━━ BOSS ENCOUNTER ━━━━━━━━━━━━━━━`)
     Logger.log(`   [ ${name} ] 이(가) 앞을 가로막습니다.`)
     Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
-  }
-
-  /**
-   * 순차적 대화 노출 (사용자가 Enter를 칠 때마다 다음 문장)
-   */
-  private static async playDialogues(messages: string[]) {
-    for (const message of messages) {
-      await enquirer.prompt({
-        type: 'input',
-        name: 'confirm',
-        message,
-        result: () => '',
-        format: () => ' (Enter ⏎)',
-      })
-    }
   }
 
   /**

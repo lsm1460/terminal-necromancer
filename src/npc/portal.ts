@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { printStatus } from '~/statusPrinter'
@@ -22,12 +21,7 @@ const PortalHandler: NPCHandler = {
 async function handlePortal(player: Player, context: GameContext) {
   const { map, events, broadcast } = context
 
-  const { confirm } = await enquirer.prompt<{ confirm: boolean }>({
-    type: 'confirm',
-    name: 'confirm',
-    message: '이 구역의 시작 지점으로 이동하시겠습니까?',
-    initial: false,
-  })
+  const confirm = await Logger.confirm('이 구역의 시작 지점으로 이동하시겠습니까?')
 
   if (confirm) {
     const currentScene = map.currentScene

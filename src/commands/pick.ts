@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { CommandFunction } from '~/types'
 import { makeItemMessage } from '~/utils'
@@ -49,19 +48,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
     { name: 'cancel', message: '🔙 취소' },
   ]
 
-  const { dropId } = await enquirer.prompt<{ dropId: string }>({
-    type: 'select',
-    name: 'dropId',
-    message: `무엇을 획득하시겠습니까? (공간: ${availableSpace}칸 남음)`,
-    choices,
-    format(value) {
-      if (value === 'cancel') return '취소'
-      if (value === 'lootBag') return '영혼 조각'
-
-      const target = findDrop(value)
-      return target ? target.label : value
-    },
-  })
+  const dropId = await Logger.select(`무엇을 획득하시겠습니까? (공간: ${availableSpace}칸 남음)`, choices)
 
   if (dropId === 'cancel') return false
   if (dropId === 'lootBag' && lootBag) {

@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import _ from 'lodash'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
@@ -108,12 +107,7 @@ async function firstEncounter() {
     '카론: "관리자이기 전에 부모였던 저로서는, 그 공정함이 무엇보다 시리고 잔혹하게 느껴지더군요."',
   ])
 
-  const { answer } = await enquirer.prompt<{ answer: boolean }>({
-    type: 'confirm',
-    name: 'answer',
-    message: '카론: "당신 또한 사신의 법도 아래서, 기계적인 숙청을 반복하는 노예의 삶에 만족하십니까?"',
-    initial: false,
-  })
+  const answer = await Logger.confirm('카론: "당신 또한 사신의 법도 아래서, 기계적인 숙청을 반복하는 노예의 삶에 만족하십니까?"')
 
   firstAnswer = answer
   await speak([
@@ -133,13 +127,7 @@ async function secondEncounter() {
     '카론: "저는 증오합니다. 슬픔조차 허용하지 않는 그 차가운 질서를,\n그리고 내 아이를 한 줌의 연기로 만든 그 무미건조한 손길을!"',
   ])
 
-  const { answer } = await enquirer.prompt<{ answer: boolean }>({
-    type: 'confirm',
-    name: 'answer',
-    message:
-      '카론: "집행관이여, 당신도 만약 사신의 원칙이 당신의 소중한 것을 파괴한다면,\n그분에게 칼끝을 겨누겠습니까?"',
-    initial: false,
-  })
+  const answer = await Logger.confirm('카론: "집행관이여, 당신도 만약 사신의 원칙이 당신의 소중한 것을 파괴한다면,\n그분에게 칼끝을 겨누겠습니까?"')
 
   secondAnswer = answer
   await speak(['카론: "알겠습니다. 당신이라는 존재의 무게를... 이제는 완전히 알 것 같군요."'])
@@ -182,12 +170,7 @@ async function finalEncounter(player: Player, npc: NPC, context: GameContext) {
     '카론: "마지막 제안입니다. 사신께는 제 영혼의 껍데기를 바치고,\n제 본질은 당신의 그림자가 되어 그분의 완벽한 시스템에 \'비공식적인 오점\'을 남겨보겠습니다."',
   ])
 
-  const { choice } = await enquirer.prompt<{ choice: boolean }>({
-    type: 'confirm',
-    name: 'choice',
-    message: '카론: "저와 함께 사신을 기만하고, 언젠가 그분의 목을 칠 기회를 엿보겠습니까?"',
-    initial: true,
-  })
+  const choice = await Logger.confirm('카론: "저와 함께 사신을 기만하고, 언젠가 그분의 목을 칠 기회를 엿보겠습니까?"')
 
   if (choice) {
     await speak([

@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { TargetSelector } from '~/core/battle/TargetSelector'
 import { Logger } from '~/core/Logger'
 import { ExecuteSkill } from '~/types'
@@ -25,16 +24,11 @@ export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } 
       .labelIf((e) => e.deBuff.some((d) => d.name === curseName), ` (이미 ${curseName} 상태)`)
       .build()
 
-    const response = await enquirer.prompt<{ targetId: string }>({
-      type: 'select',
-      name: 'targetId',
-      message: `대상을 선택하세요`,
-      choices: [...choices, { name: 'cancel', message: '↩ 뒤로 가기', value: 'cancel' }],
-    })
+    const targetId = await Logger.select(`대상을 선택하세요`, [...choices, { name: 'cancel', message: '↩ 뒤로 가기' }])
 
-    if (response.targetId === 'cancel') return { isSuccess: false, isAggressive: false, gross: 0 }
+    if (targetId === 'cancel') return { isSuccess: false, isAggressive: false, gross: 0 }
 
-    const target = aliveEnemies.find((e) => e.id === response.targetId)
+    const target = aliveEnemies.find((e) => e.id === targetId)
     if (!target) return { isSuccess: false, isAggressive: false, gross: 0 }
 
     Logger.log(`\n[!] ${player.name}이(가) ${target.name}에게 서늘한 죽음의 손짓을 보냅니다!`)

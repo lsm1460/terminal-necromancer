@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { ArmorItem, ConsumableItem, Item, ItemType, WeaponItem } from '~/types'
 import { Logger } from '../Logger'
 import { Player } from './Player'
@@ -7,7 +6,10 @@ export class InventoryManager {
   inventoryMax = 15
   inventory: Item[] = []
 
-  constructor(private player: Player, saved?: Partial<Player>) {
+  constructor(
+    private player: Player,
+    saved?: Partial<Player>
+  ) {
     if (saved) {
       this.inventoryMax = saved.inventoryMax || 15
       this.inventory = saved.inventory || []
@@ -38,12 +40,7 @@ export class InventoryManager {
       const warningMsg =
         caution.metadata?.unEquipCaution || `⚠️ [${caution.name}] 어픽스가 해제됩니다. 진행하시겠습니까?`
 
-      const { proceed } = await enquirer.prompt<{ proceed: boolean }> ({
-        type: 'confirm',
-        name: 'proceed',
-        message: warningMsg,
-        initial: false,
-      })
+      const proceed = await Logger.confirm(warningMsg)
 
       if (!proceed) {
         return false
@@ -123,26 +120,15 @@ export class InventoryManager {
     }
 
     if (!targetItem) {
-      const { itemId } = await enquirer.prompt<{ itemId: string }> ({
-        type: 'select',
-        name: 'itemId',
-        message: '어떤 아이템을 사용하시겠습니까?',
-        choices: [
-          ...consumables.map((item) => ({
-            name: item.id,
-            message: `${item.label} (x${item.quantity || 1}) ${
-              item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
-            }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
-          })),
-          { name: 'cancel', message: '🔙 취소' },
-        ],
-        format(value) {
-          if (value === 'cancel') return '취소'
-          const item = consumables.find((i) => i.id === value)
-
-          return item ? item.label : value
-        },
-      })
+      const itemId = await Logger.select('어떤 아이템을 사용하시겠습니까?', [
+        ...consumables.map((item) => ({
+          name: item.id,
+          message: `${item.label} (x${item.quantity || 1}) ${
+            item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
+          }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
+        })),
+        { name: 'cancel', message: '🔙 취소' },
+      ])
 
       if (itemId === 'cancel') return false
       targetItem = consumables.find((i) => i.id === itemId)
@@ -178,6 +164,6 @@ export class InventoryManager {
     return {
       inventory: this.inventory,
       inventoryMax: this.inventoryMax,
-    };
+    }
   }
 }

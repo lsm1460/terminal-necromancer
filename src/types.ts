@@ -189,6 +189,11 @@ export interface Renderer {
   select(message: string, choices: { name: string; message: string }[]): Promise<string>
   confirm(message: string): Promise<boolean>
   prompt(message: string): Promise<void> // 기존의 alert 역할을 prompt로 명칭 변경
+  multiselect(
+    message: string,
+    choices: { name: string; message: string }[],
+    options?: { initial?: string[]; maxChoices?: number }
+  ): Promise<string[]>
 }
 
 export interface GameContext {

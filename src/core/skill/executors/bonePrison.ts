@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { TargetSelector } from '~/core/battle/TargetSelector'
 import { Logger } from '~/core/Logger'
 import { ExecuteSkill } from '~/types'
@@ -22,18 +21,10 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
     .excludeIf((u) => u.deBuff.some((d) => d.name === '뼈 감옥'), '(이미 갇힘)')
     .build()
 
-  const { targetId } = await enquirer.prompt<{ targetId: string }>({
-    type: 'select',
-    name: 'targetId',
-    message: '뼈 감옥으로 가둘 대상을 선택하세요',
-    choices: [...choices, { name: 'cancel', message: '🔙 취소하기', value: 'cancel' }],
-    format(value) {
-      if (value === 'cancel') return '시전 취소'
-      const target = aliveEnemies.find((e) => e.id === value)
-
-      return target ? `${target.name}에게 뼈의 구속을...` : ''
-    },
-  })
+  const targetId = await Logger.select('뼈 감옥으로 가둘 대상을 선택하세요', [
+    ...choices,
+    { name: 'cancel', message: '🔙 취소하기' },
+  ])
 
   if (targetId === 'cancel') {
     Logger.log('\n💬 스킬 사용을 취소했습니다.')

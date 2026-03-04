@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import _ from 'lodash'
 import { Logger } from '~/core/Logger'
 import { delay } from '~/utils'
@@ -14,17 +13,12 @@ export const commonHandlers: Record<string, EventHandler> = {
   'heal-once': async (tile, player, context) => {
     if (tile.isClear) return
 
-    Logger.log(
-      `\n\x1b[93m[ 철과 먼지뿐인 이곳에서, 기적처럼 푸른 이끼와 작은 꽃이 피어난 구석을 발견했습니다 ]\x1b[0m`
-    )
+    Logger.log(`\n\x1b[93m[ 철과 먼지뿐인 이곳에서, 기적처럼 푸른 이끼와 작은 꽃이 피어난 구석을 발견했습니다 ]\x1b[0m`)
     Logger.log(`\x1b[90m(사신의 서늘한 기운이 닿지 않는, 누군가 의도적으로 숨겨둔 듯한 따스한 공간입니다)\x1b[0m`)
 
-    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-      type: 'confirm',
-      name: 'proceed',
-      message: '🌿 생명의 온기가 서린 이 자리에 앉아 쉬시겠습니까? (단 한 번만 허락되는 안식입니다)',
-      initial: false,
-    })
+    const proceed = await Logger.confirm(
+      '🌿 생명의 온기가 서린 이 자리에 앉아 쉬시겠습니까? (단 한 번만 허락되는 안식입니다)'
+    )
 
     if (!proceed) {
       Logger.log(' > 당신은 이 소중한 온기를 나중을 위해 아껴두기로 합니다.')

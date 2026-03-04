@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
@@ -88,16 +87,7 @@ export async function handleBuy(
   while (true) {
     const infoHeader = `[소지금: ${player.gold}G${npc.contribution !== undefined ? ` / 기여도: ${contribution}` : ''}]`
 
-    const { itemId } = await enquirer.prompt<{ itemId: string }>({
-      type: 'select',
-      name: 'itemId',
-      message: `${infoHeader} 구매할 물건 선택`,
-      choices: choices,
-      format(value) {
-        const selected = choices.find((c) => c.name === value)
-        return selected ? selected.label : ''
-      },
-    })
+    const itemId = await Logger.select(`${infoHeader} 구매할 물건 선택`, choices)
 
     if (itemId === 'cancel') {
       if (scripts.exit) Logger.log(`\n[${npc.name}]: "${scripts.exit}"`)
@@ -163,16 +153,10 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
     const bonusInfo = hasContribution ? ` / 보너스: +${(bonusRate * 100).toFixed(1)}%` : ''
 
-    const { choiceName } = await enquirer.prompt<{ choiceName: string }>({
-      type: 'select',
-      name: 'choiceName',
-      message: `[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`,
-      choices,
-      format(value) {
-        const selected = choices.find((c) => c.name === value)
-        return selected ? selected.label : ''
-      },
-    })
+    const choiceName = await Logger.select(
+      `[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`,
+      choices
+    )
 
     if (choiceName === 'cancel') break
 
@@ -181,17 +165,11 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
     let sellCount = 1
     if (targetItem.quantity && targetItem.quantity > 1) {
-      const { count } = await enquirer.prompt<{ count: number }>({
-        type: 'numeral',
-        name: 'count',
-        message: `몇 개를 파시겠습니까? (1~${targetItem.quantity})`,
-        initial: 1,
-        validate: (val) => {
-          const quantity = Number(val)
-          return quantity > 0 && quantity <= targetItem.quantity! ? true : '수량이 올바르지 않습니다.'
-        },
-      })
-      sellCount = count
+      // TODO: Logger에 numeral/text prompt 추가 필요. 일단 1로 고정
+      Logger.log(
+        `\n[알림] 현재 판매 수량 선택 기능은 지원되지 않습니다. 1개만 판매합니다. (${targetItem.quantity}개 보유)`
+      )
+      sellCount = 1
     }
 
     const totalEarned = selected.price * sellCount

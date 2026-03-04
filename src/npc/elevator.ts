@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { MAP_IDS, MapId } from '~/consts'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
@@ -48,16 +47,7 @@ async function handleElevate(player: Player, context: GameContext) {
 
   choices.push({ name: 'cancel', message: '🔙 그대로 머물기' })
 
-  const { sceneId } = await enquirer.prompt<{ sceneId: string }>({
-    type: 'select',
-    name: 'sceneId',
-    message: '어느 층으로 이동하시겠습니까?',
-    choices: choices,
-    format(value) {
-      const selected = choices.find((c) => c.name === value)
-      return selected ? selected.message : value
-    },
-  })
+  const sceneId = await Logger.select('어느 층으로 이동하시겠습니까?', choices)
 
   if (sceneId === 'cancel') {
     return true
@@ -71,12 +61,7 @@ async function handleElevate(player: Player, context: GameContext) {
     enterMessage = '⚠️ 안전구역을 벗어납니다. 정말 이동하시겠습니까?'
   }
 
-  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-    type: 'confirm',
-    name: 'proceed', // 반환 객체의 키값이 됩니다.
-    message: enterMessage,
-    initial: false, // 기본 선택값 (default 대신 initial 사용)
-  })
+  const proceed = await Logger.confirm(enterMessage)
 
   if (!proceed) {
     Logger.log('❌ 이동을 취소했습니다.')

@@ -1,5 +1,5 @@
 import { randomBytes } from 'crypto'
-import enquirer from 'enquirer'
+import { Logger } from './core/Logger'
 import { Player } from './core/player/Player'
 import { Item, ItemType } from './types'
 
@@ -50,11 +50,6 @@ export function makeItemMessage(item: Item, player: Player, options?: { withPric
 
 export async function speak(messages: string[]) {
   for (const message of messages) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
+    await Logger.prompt(message)
   }
 }

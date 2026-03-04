@@ -58,4 +58,24 @@ export class CLIRenderer implements Renderer {
       format: () => ' [Enter를 누르면 계속]',
     })
   }
+
+  /**
+   * 다중 선택 메뉴를 띄웁니다.
+   */
+  async multiselect(
+    message: string,
+    choices: { name: string; message: string }[],
+    options?: { initial?: string[]; maxChoices?: number; validate?: (value: string[]) => string | true }
+  ): Promise<string[]> {
+    const { result } = await enquirer.prompt<{ result: string[] }>({
+      type: 'multiselect',
+      name: 'result',
+      message,
+      choices: choices.map((c) => ({ name: c.name, message: c.message })),
+      initial: options?.initial,
+      maxChoices: options?.maxChoices,
+      validate: options?.validate
+    } as any)
+    return result
+  }
 }

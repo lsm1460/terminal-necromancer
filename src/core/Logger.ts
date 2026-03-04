@@ -15,9 +15,9 @@ export class Logger {
     this.renderer ? this.renderer.clear() : console.clear()
   }
 
-  public static async select(message: string, choices: { name: string; message: string }[]): Promise<string> {
+  public static async select<T extends string>(message: string, choices: { name: string; message: string }[]): Promise<T> {
     if (!this.renderer) throw new Error('Renderer not initialized')
-    return await this.renderer.select(message, choices)
+    return await this.renderer.select(message, choices) as T
   }
 
   public static async confirm(message: string): Promise<boolean> {
@@ -28,5 +28,14 @@ export class Logger {
   public static async prompt(message: string): Promise<void> {
     if (!this.renderer) throw new Error('Renderer not initialized')
     await this.renderer.prompt(message)
+  }
+
+  public static async multiselect(
+    message: string,
+    choices: { name: string; message: string }[],
+    options?: { initial?: string[]; maxChoices?: number, validate?: (value: string[]) => string | true }
+  ): Promise<string[]> {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+    return await this.renderer.multiselect(message, choices, options)
   }
 }

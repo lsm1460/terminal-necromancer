@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { CommandFunction, Drop, Item } from '~/types'
 
@@ -24,27 +23,14 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
 
       itemToDrop = inventory[itemIndex]
     })
-  }
-  // 2. 인자가 없는 경우: Enquirer 선택창 띄우기
-  else {
-    const { itemId } = await enquirer.prompt<{ itemId: string }>({
-      type: 'select',
-      name: 'itemId',
-      message: '어떤 아이템을 버리시겠습니까?',
-      choices: [
-        ...inventory.map((item) => ({
-          name: item.id,
-          message: `${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`,
-        })),
-        { name: 'cancel', message: '🔙 취소' },
-      ],
-      format(value) {
-        if (value === 'cancel') return '취소'
-        const target = inventory.find((i) => i.id === value)
-
-        return target ? target.label : value
-      },
-    })
+  } else {
+    const itemId = await Logger.select('어떤 아이템을 버리시겠습니까?', [
+      ...inventory.map((item) => ({
+        name: item.id,
+        message: `${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`,
+      })),
+      { name: 'cancel', message: '🔙 취소' },
+    ])
 
     if (itemId === 'cancel') return false
     itemToDrop = inventory.find((i) => i.id === itemId)

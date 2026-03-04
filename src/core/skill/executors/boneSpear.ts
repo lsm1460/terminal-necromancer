@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { ExecuteSkill } from '~/types'
 
@@ -24,24 +23,13 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
   }
 
   // 3. 희생시킬 스켈레톤 선택
-  const { skeletonId } = await enquirer.prompt<{ skeletonId: string }>({
-    type: 'select',
-    name: 'skeletonId',
-    message: '어느 스켈레톤을 뼈 창으로 만드시겠습니까?',
-    choices: [
-      ...skeletons.map((sk) => ({
-        name: sk.id,
-        message: `${sk.name} (현재 HP: ${sk.hp})`,
-      })),
-      { name: 'cancel', message: '🔙 취소하기', value: 'cancel' },
-    ],
-    format(value) {
-      if (value === 'cancel') return '취소됨'
-
-      const target = skeletons.find((c, idx) => (c.id || idx.toString()) === value)
-      return target ? `[${target.name}]` : value
-    },
-  })
+  const skeletonId = await Logger.select('어느 스켈레톤을 뼈 창으로 만드시겠습니까?', [
+    ...skeletons.map((sk) => ({
+      name: sk.id,
+      message: `${sk.name} (현재 HP: ${sk.hp})`,
+    })),
+    { name: 'cancel', message: '🔙 취소하기' },
+  ])
 
   if (skeletonId === 'cancel') {
     Logger.log('\n💬 스킬 사용을 취소했습니다.')
@@ -87,7 +75,7 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
       skillAtkMult: 0.6,
       isIgnoreDef: false,
       isSureHit: false,
-      attackType: 'ranged'
+      attackType: 'ranged',
     })
 
     target.applyDeBuff({

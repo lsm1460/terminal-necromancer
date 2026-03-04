@@ -151,14 +151,13 @@ export class NpcSkillManager {
   private skillData: Record<string, NpcSkill>
 
   /**
-   * @param skillData - 이제 경로 문자열이 아닌 JSON 객체 데이터를 직접 받습니다.
+   * @param skillData
    * @param player - 스킬 효과 적용을 위한 플레이어 인스턴스
    */
   constructor(
     skillData: any,
     public player: Player
   ) {
-    // fs.readFileSync 및 JSON.parse 로직 제거 후 바로 할당
     this.skillData = skillData
   }
 

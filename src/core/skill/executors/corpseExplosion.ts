@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { ExecuteSkill } from '~/types'
 
@@ -20,24 +19,13 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
     ...skeletons.map((sk) => ({ id: sk.id, name: sk.name, type: 'skeleton' as const, maxHp: sk.maxHp })),
   ]
 
-  const { corpseId } = await enquirer.prompt<{ corpseId: string }>({
-    type: 'select',
-    name: 'corpseId',
-    message: '어떤 시체를 소모하시겠습니까?',
-    choices: [
-      ...targets.map((s) => ({
-        name: s.id,
-        message: s.name,
-      })),
-      { name: 'cancel', message: '🔙 취소하기' },
-    ],
-    format(value) {
-      if (value === 'cancel') return '취소됨'
-
-      const target = targets.find((c, idx) => (c.id || idx.toString()) === value)
-      return target ? `[${target.name}]` : value
-    },
-  })
+  const corpseId = await Logger.select('어떤 시체를 소모하시겠습니까?', [
+    ...targets.map((s) => ({
+      name: s.id,
+      message: s.name,
+    })),
+    { name: 'cancel', message: '🔙 취소하기' },
+  ])
 
   if (corpseId === 'cancel') {
     Logger.log('\n💬 스킬 사용을 취소했습니다.')

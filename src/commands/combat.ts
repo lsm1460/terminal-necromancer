@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import { CombatUnit } from '~/core/battle/CombatUnit'
 import { Logger } from '~/core/Logger'
 import { CommandFunction, NPC } from '~/types'
@@ -7,15 +6,8 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
   const { map, npcs, battle } = context
   const tile = map.getTile(player.pos.x, player.pos.y)
 
-  const warningMsg = `\n[!] 눈앞의 망자를 살해하시겠습니까? 한 번 휘두른 무기는 되돌릴 수 없습니다.`;
-
   if ((tile.npcIds || [])?.length > 0) {
-    const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-      type: 'confirm',
-      name: 'proceed', // 반환 객체의 키값이 됩니다.
-      message: warningMsg,
-      initial: false, // 기본 선택값 (default 대신 initial 사용)
-    })
+    const proceed = await Logger.confirm(`\n[!] 눈앞의 망자를 살해하시겠습니까? 한 번 휘두른 무기는 되돌릴 수 없습니다.`)
 
     if (!proceed) {
       Logger.log(`\n당신은 살의를 거두고 무기를 내립니다.`);

@@ -1,4 +1,3 @@
-import enquirer from 'enquirer'
 import _ from 'lodash'
 import { AttackType, BattleTarget, Drop, GameContext, NPC } from '~/types'
 import { delay } from '~/utils'
@@ -220,12 +219,10 @@ export class Battle {
     // enemies: CombatUnit[],
     context: GameContext
   ): Promise<boolean> {
-    const { action } = await enquirer.prompt<{ action: string }>({
-      type: 'select',
-      name: 'action',
-      message: '당신의 행동을 선택하세요:',
-      choices: ['상태', '공격', '방어', '스킬', '아이템', '도망'],
-    })
+    const action = await Logger.select(
+      '당신의 행동을 선택하세요:',
+      ['상태', '공격', '방어', '스킬', '아이템', '도망'].map((v) => ({ name: v, message: v }))
+    )
 
     const renderLine = (unit: CombatUnit, isLead: boolean) => {
       const leadLabel = isLead ? '🚩 [선두]' : '         '
@@ -275,21 +272,10 @@ export class Battle {
         {
           const { choices } = new TargetSelector(this.aliveEnemies).excludeStealth().build()
 
-          const { targetId } = await enquirer.prompt<{ targetId: string }>({
-            type: 'select',
-            name: 'targetId',
-            message: '누구를 공격하시겠습니까?',
-            choices: [
-              ...choices,
-              { name: 'cancel', message: '🔙 뒤로가기' }, // 취소 옵션 추가
-            ],
-            format: (value) => {
-              if (value === 'cancel') return '취소'
-              const target = this.aliveEnemies.find((e) => e.id === value)
-
-              return target ? target.name : value
-            },
-          })
+          const targetId = await Logger.select('누구를 공격하시겠습니까?', [
+            ...choices,
+            { name: 'cancel', message: '🔙 뒤로가기' }, // 취소 옵션 추가
+          ])
 
           // 취소 선택 시 다시 행동 선택창으로 재귀 호출
           if (targetId === 'cancel') {
@@ -378,7 +364,7 @@ export class Battle {
     }
 
     const autoSkill = this.npcSkills.getRandomSkill(attacker)
-    
+
     if (autoSkill) {
       await this.npcSkills.execute(autoSkill.id, attacker, ally, visibleTargets, context)
     } else {
@@ -421,7 +407,7 @@ export class Battle {
   private handleUnitDeath(target: BattleTarget, context: GameContext) {
     const { world, drop: dropTable, npcs } = context
     const { x, y } = this.player.pos // 현재 위치
-    
+
     // 1. 기본 사망 상태 설정
     target.hp = 0
     target.isAlive = false

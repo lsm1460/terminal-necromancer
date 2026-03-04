@@ -1,8 +1,8 @@
-import enquirer from 'enquirer'
 import { Logger } from '~/core/Logger'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 import { handleBuy, handleSell, handleTalk, NPCHandler } from './NPCHandler'
+import { speak } from '~/utils'
 
 const MayaHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -125,14 +125,7 @@ async function handleJoin(player: Player, context: GameContext) {
 
   dialogues.push('마야: "헤헤, 그럼 난 마저 기름 좀 칠하고 있을게. 필요한 거 있으면 언제든 말해!"')
 
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   events.completeEvent('maya_1')
 }
@@ -152,23 +145,11 @@ async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) 
   ]
 
   // 1. 순차적 대화 노출
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   // 3. 최종 확인
   const warningMsg = `핵에 사신의 마력을 주입합니다. 골렘이 불완전하게 깨어나며 폭주할 위험이 있습니다. 강행하시겠습니까?`
-  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-    type: 'confirm',
-    name: 'proceed',
-    message: warningMsg,
-    initial: false,
-  })
+  const proceed = await Logger.confirm(warningMsg)
 
   if (!proceed) {
     // 강행하지 않기로 했을 때
@@ -221,12 +202,10 @@ async function handleUpgradeGolem(player: Player) {
     },
   ]
 
-  const { action } = await enquirer.prompt<{ action: string }>({
-    type: 'select',
-    name: 'action',
-    message: `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ] / 내 골드: ${player.gold}G`,
-    choices,
-  })
+  const action = await Logger.select(
+    `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ] / 내 골드: ${player.gold}G`,
+    choices
+  )
 
   // 4. 실행 로직
   if (action === 'machine_upgrade') {
