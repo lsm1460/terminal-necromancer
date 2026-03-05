@@ -3,7 +3,7 @@
     "id": "player",
     "name": "player",
     "x": 0,
-    "y": 1,
+    "y": 2,
     "_maxHp": 50,
     "hp": 50,
     "_maxMp": 50,
@@ -13,8 +13,8 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 0,
-    "exp": 0,
+    "gold": 19,
+    "exp": 11,
     "level": 1,
     "karma": 0,
     "_maxMemorize": 5,
@@ -24,17 +24,140 @@
       "FOCUS_FIRE"
     ],
     "equipped": {
-      "weapon": null,
-      "armor": null
+      "weapon": {
+        "id": "iron_sword_Zcig-Aae",
+        "label": "\u001b[35m🟣 [기억] 필멸의 철검\u001b[0m",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          2,
+          4
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
+        "quantity": 1,
+        "atk": 4,
+        "crit": 0.05,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "MEMORY",
+          "name": "기억",
+          "description": "메모라이즈 슬롯 수가 증가합니다.",
+          "valueRange": [
+            1,
+            2
+          ],
+          "metadata": {
+            "needsConfirmOnUnequip": true,
+            "unEquipCaution": "장비 해제 시 각인된 마법 일부가 사라집니다."
+          },
+          "value": 1
+        },
+        "x": 0,
+        "y": 1
+      },
+      "armor": {
+        "id": "leather_armor_bdSZRArr",
+        "label": "\u001b[37m⚪ 가죽 갑옷\u001b[0m",
+        "type": "armor",
+        "defRange": [
+          2,
+          5
+        ],
+        "evaRange": [
+          0,
+          0.02
+        ],
+        "price": 400,
+        "sellPrice": 100,
+        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
+        "quantity": 1,
+        "def": 4,
+        "eva": 0.02,
+        "rarity": "COMMON",
+        "x": 0,
+        "y": 1
+      }
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
-    "inventory": [],
+    "inventory": [
+      {
+        "id": "pizza",
+        "label": "피자",
+        "type": "food",
+        "hpHeal": 5,
+        "price": 15,
+        "sellPrice": 3,
+        "description": "지하에 살던 거북이들이 좋아했던 피자",
+        "quantity": 2,
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "mana_potion_small",
+        "label": "작은 마나 포션",
+        "type": "consumable",
+        "mpHeal": 20,
+        "price": 45,
+        "sellPrice": 6,
+        "description": "작은 마나 회복 포션으로, mp 20을 보충할 수 있습니다.",
+        "quantity": 1,
+        "x": 0,
+        "y": 1
+      }
+    ],
     "inventoryMax": 15,
-    "skeleton": [],
+    "skeleton": [
+      {
+        "id": "skeleton_1772670624878",
+        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 방패병",
+        "attackType": "melee",
+        "maxHp": 43,
+        "hp": 35,
+        "atk": 8,
+        "def": 9,
+        "agi": 6,
+        "skills": [],
+        "exp": 0,
+        "description": "선로 랫맨의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 4
+      },
+      {
+        "id": "skeleton_1772670559634",
+        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 검사",
+        "attackType": "melee",
+        "maxHp": 32,
+        "hp": 32,
+        "atk": 11,
+        "def": 5,
+        "agi": 10,
+        "skills": [
+          "power_smash"
+        ],
+        "exp": 0,
+        "description": "선로 랫맨의 유골로 만들어진 소환수입니다.",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 15
+      }
+    ],
     "skeletonSubspace": [],
     "subspaceLimit": 15,
     "_maxSkeleton": 2,
@@ -42,7 +165,7 @@
     "knightUpgrade": [],
     "upgradeLimit": 5
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -157,9 +280,17 @@
     "factionHostility": {},
     "factionContribution": {}
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B2_Transit_Area",
+    "id": "eMt1qsz3",
+    "tileId": "19",
+    "exp": 10,
+    "gold": 5
+  },
   "completedEvents": [
     "START_GAME",
-    "item-tutorial"
+    "item-tutorial",
+    "talk_death_1",
+    "b2_ratty"
   ]
 }

@@ -1,11 +1,11 @@
 import { CombatUnit } from './CombatUnit'
 
 export interface BattleRenderer {
-  start(): Promise<void>
   end(): Promise<void>
   setUnits(units: { playerSide: CombatUnit[]; enemiesSide: CombatUnit[] }): Promise<void>
-  playAttack(id: string, targetId: string, skillId?: string): Promise<void>
+  playAttack(id: string, skillId?: string): Promise<void>
   playHit(id: string): Promise<void>
+  playEscape(id: string): Promise<void>
   playDie(id: string): Promise<void>
 }
 
@@ -14,11 +14,6 @@ export class BattleDirector {
 
   public static setRenderer(renderer: BattleRenderer): void {
     this.renderer = renderer
-  }
-
-  public static async start() {
-    if (!this.renderer) return
-    await this.renderer.start()
   }
 
   public static async end() {
@@ -33,12 +28,17 @@ export class BattleDirector {
 
   public static async playAttack(id: string, targetId: string, skillId?: string) {
     if (!this.renderer) return
-    await this.renderer.playAttack(id, targetId, skillId)
+    await this.renderer.playAttack(id, skillId)
   }
 
   public static async playHit(id: string) {
     if (!this.renderer) return
     await this.renderer.playHit(id)
+  }
+
+  public static async playEscape(id: string) {
+    if (!this.renderer) return
+    await this.renderer.playEscape(id)
   }
 
   public static async playDie(id: string) {

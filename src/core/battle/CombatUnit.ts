@@ -33,12 +33,22 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.updateStats()
   }
 
-  public get isPlayerSide(): boolean {
+  public get isPlayerSide() {
     return this.type === 'player' || this.type === 'minion'
   }
 
-  public get isEnemySide(): boolean {
+  public get isEnemySide() {
     return this.type === 'monster' || this.type === 'npc'
+  }
+
+  public get sprites() {
+    return {
+      idle: [],
+      attack: '',
+      hit: '',
+      die: '',
+      escape: '',
+    }
   }
 
   public updateStats() {
