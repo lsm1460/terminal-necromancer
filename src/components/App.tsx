@@ -1,3 +1,5 @@
+import '~/assets/style/App.css'
+//
 import { useEffect, useRef } from 'react'
 import { assets, initState } from '~/assets'
 import { Terminal } from '~/core/Terminal'
@@ -7,9 +9,9 @@ import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { SaveSystem } from '~/systems/SaveSystem'
 
 // 하위 컴포넌트들
+import { GameInput } from './GameInput'
 import { LogWindow } from './LogWindow'
 import { StatusBar } from './StatusBar'
-import { GameInput } from './GameInput'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
@@ -33,7 +35,7 @@ export const App = () => {
   }, [])
 
   return (
-    <div className="terminal-container">
+    <div className="h-dvh flex flex-col bg-grey-900 text-primary font-mono">
       <StatusBar />
       <LogWindow />
 

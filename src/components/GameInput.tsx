@@ -19,10 +19,10 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
         resolveUI(undefined)
         return
       }
-      
+
       const inputElement = e.currentTarget
       const cmd = inputElement.value.trim()
-      
+
       if (cmd) {
         addLog(`> ${cmd}`) // 유저 입력 기록
         inputElement.value = '' // 입력창 비우기
@@ -32,9 +32,10 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
   }
 
   return (
-    <div className="input-area">
-      <span className="prompt-char">{'>'}</span>
+    <div className="flex items-center p-4 border-t border-primary">
+      <span className="mr-2.5 text-primary">{'>'}</span>
       <input
+        className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
         autoFocus
         onKeyDown={handleCommand}
         placeholder={disabledInput ? '선택지를 클릭하세요...' : '명령어를 입력하세요...'}
