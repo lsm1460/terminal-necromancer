@@ -2,6 +2,7 @@ import { AttackType, BattleTarget } from '~/types'
 import { Terminal } from '../Terminal'
 import { Player } from '../player/Player'
 import { Battle, Buff, DamageOptions } from './Battle'
+import { BattleDirector } from './BattleDirector'
 
 type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
 
@@ -49,6 +50,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       die: '',
       escape: '',
     }
+  }
+
+  public get isStealth() {
+    return this.buff.some((b) => b.type === 'stealth')
   }
 
   public updateStats() {
@@ -186,6 +191,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       this.ref.hp = Math.max(0, this.ref.hp - result.damage)
     }
 
+    BattleDirector.playHit(this.id, result)
     this.logDamage(attacker, result, options)
     return { ...result, currentHp: this.ref.hp, isDead: this.ref.hp <= 0 }
   }
@@ -195,6 +201,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       return
     }
 
+    BattleDirector.playDie(this.id)
     this.ref.isAlive = false
 
     if (this.onDeath) await this.onDeath()

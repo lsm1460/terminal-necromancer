@@ -15,11 +15,11 @@ export class WebBattleRenderer implements BattleRenderer {
   }
 
   async playAttack(id: string, skillId?: string): Promise<void> {
-    await this.store.triggerAction(id, 'ATTACK', skillId)
+    await this.store.triggerAction(id, 'ATTACK', { skillId })
   }
 
-  async playHit(id: string): Promise<void> {
-    await this.store.triggerAction(id, 'HIT')
+  async playHit(id: string, options: { damage: number; isCritical: boolean }): Promise<void> {
+    await this.store.triggerAction(id, 'HIT', options)
   }
 
   async playEscape(id: string): Promise<void> {

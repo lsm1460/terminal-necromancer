@@ -7,6 +7,7 @@ import { BattleTarget, GameContext, NpcSkill } from '~/types'
 import { PASSIVE_EFFECTS } from '../passiveHandlers'
 import { SkillEffectHandlers } from './SkillEffectHandlers'
 import { SpecialSkillLogics } from './SpecialSkillLogics'
+import { BattleDirector } from '~/core/battle/BattleDirector'
 
 type SkillExecutor<T = void> = (
   skillId: string,
@@ -111,6 +112,8 @@ export class NpcSkillManager {
       return
     }
 
+    BattleDirector.playAttack(attacker.id, skillId)
+    
     // 1. 특수 로직(ID 기반)이 있는지 먼저 확인
     if (SpecialSkillLogics[skillId]) {
       await SpecialSkillLogics[skillId](attacker, targets, skill)

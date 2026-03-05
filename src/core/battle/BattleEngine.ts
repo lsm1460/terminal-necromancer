@@ -79,8 +79,4 @@ export class BattleEngine {
       await this.hooks.onRoundEnd(this.round)
     }
   }
-
-  public stop() {
-    this.state = BattleState.FINISHED
-  }
 }

@@ -12,6 +12,7 @@ import { SaveSystem } from '~/systems/SaveSystem'
 import { GameInput } from './GameInput'
 import { LogWindow } from './LogWindow'
 import { StatusBar } from './StatusBar'
+import { BattleStage } from './battle/BattleStage'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
@@ -38,6 +39,7 @@ export const App = () => {
     <div className="h-dvh flex flex-col bg-grey-900 text-primary font-mono">
       <StatusBar />
       <LogWindow />
+      <BattleStage />
 
       <GameInput engine={engineRef}/>
     </div>

@@ -10,6 +10,7 @@ import { BattleUnitManager } from './BattleUnitManager'
 import { CombatService, DamageOptions } from './CombatService'
 import { CombatUnit } from './CombatUnit'
 import { BattleResult } from './types'
+import { BattleDirector } from './BattleDirector'
 
 export type { DamageOptions } from './CombatService'
 
@@ -116,13 +117,20 @@ export class Battle implements BattleManager {
       onRoundStart: async (round) => {
         this.initPlayerUnit()
         Terminal.log(`\n============== turn: ${round} ==============`)
+
+        BattleDirector.setUnits({
+          playerSide: this.units.getPlayerSide(),
+          enemiesSide: this.units.getAliveEnemies(),
+        })
       }
     })
 
     const result = await engine.start()
-    this.rewards.handleBattleEnd(result.isVictory)
+    this.rewards.handleBattleEnd(result)
     this.units.clear()
     this.currentContext = null
+
+    BattleDirector.end()
 
     return result.isVictory
   }

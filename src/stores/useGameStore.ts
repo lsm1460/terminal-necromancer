@@ -34,7 +34,6 @@ export const useGameStore = create<GameState>((set, get) => ({
     const { uiState, addLog } = get()
 
     if (message) {
-      console.log('DEBUG::', message)
       addLog(message)
     }
 

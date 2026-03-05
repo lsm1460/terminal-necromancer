@@ -7,6 +7,7 @@ import { AffixManager } from './AffixManager'
 import { CombatUnit } from './CombatUnit'
 import { TargetSelector } from './TargetSelector'
 import { BattleUnitManager } from './BattleUnitManager'
+import { BattleDirector } from './BattleDirector'
 
 export class BattleActionHandler {
   constructor(
@@ -121,6 +122,8 @@ export class BattleActionHandler {
 
     const target = enemies.find((e) => e.id === targetId)
     if (target) {
+      BattleDirector.playAttack(playerUnit.id)
+
       await target.executeHit(playerUnit, { attackType: playerUnit.attackType })
       return true
     }
@@ -142,6 +145,9 @@ export class BattleActionHandler {
       ally,
       enemies: this.unitManager.getAliveEnemies(),
     })
+
+    isSuccess && BattleDirector.playAttack(playerUnit.id)
+
     return isSuccess
   }
 
@@ -170,7 +176,7 @@ export class BattleActionHandler {
     ally: CombatUnit[],
     context: GameContext
   ) {
-    const visibleTargets = targets.filter((t) => !t.buff.some((b) => b.type === 'stealth'))
+    const visibleTargets = targets.filter((t) => !t.isStealth)
     if (visibleTargets.length === 0) {
       Terminal.log(` > ${attacker.name}(이)가 공격할 대상을 찾지 못해 두리번거립니다...`)
       return
@@ -192,6 +198,8 @@ export class BattleActionHandler {
       }
 
       if (attacker.stats.atk > 0) {
+        BattleDirector.playAttack(attacker.id)
+
         await target.executeHit(attacker, { attackType: attacker.attackType })
       } else {
         Terminal.log(`${attacker.name}은 가만히 서있을 뿐이다.`)

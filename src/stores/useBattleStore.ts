@@ -5,7 +5,7 @@ export type UnitActionType = 'ATTACK' | 'HIT' | 'DIE' | 'ESCAPE' | 'IDLE'
 
 interface UnitAction {
   type: UnitActionType
-  skillId?: string
+  options?: { damage?: number; skillId?: string; isCritical?: boolean }
   onComplete?: () => void
 }
 
@@ -20,7 +20,7 @@ interface BattleState {
   setBattleUnits: (units: { playerSide: CombatUnit[]; enemiesSide: CombatUnit[] }) => void
   removeUnit: (id: string) => void
 
-  triggerAction: (id: string, type: UnitActionType, skillId?: string) => Promise<void>
+  triggerAction: (id: string, type: UnitActionType, options?: UnitAction['options']) => Promise<void>
 }
 
 export const useBattleStore = create<BattleState>((set, get) => ({
@@ -51,14 +51,14 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       enemiesSide: state.enemiesSide.filter((u) => u.id !== id),
     })),
 
-  triggerAction: (id, type, skillId) => {
+  triggerAction: (id, type, options) => {
     return new Promise((resolve) => {
       set((state) => ({
         unitActions: {
           ...state.unitActions,
           [id]: {
             type,
-            skillId,
+            options,
             onComplete: () => {
               set((s) => {
                 const nextActions = { ...s.unitActions }
