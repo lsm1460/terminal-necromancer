@@ -9,6 +9,7 @@ import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { SaveSystem } from '~/systems/SaveSystem'
 
 // 하위 컴포넌트들
+import { assetManager } from '~/core/WebAssetManager'
 import { GameInput } from './GameInput'
 import { LogWindow } from './LogWindow'
 import { StatusBar } from './StatusBar'
@@ -28,6 +29,7 @@ export const App = () => {
 
       const playData = await Title.gameStart(saveSystemRef.current, initState)
       if (playData) {
+        await assetManager.loadInitialAssets()
         await engine.init(playData)
         await engine.start()
       }

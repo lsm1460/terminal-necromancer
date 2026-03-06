@@ -9,6 +9,7 @@ interface GameState {
   // Actions
   setLogs: (updater: (prev: string[]) => string[]) => void
   addLog: (log: string) => void
+  updateLastLog: (log: string) => void
   clearLogs: () => void
   setStatus: (status: any) => void
   setUI: (uiState: UIState) => void
@@ -26,6 +27,13 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   setLogs: (updater) => set((state) => ({ logs: updater(state.logs) })),
   addLog: (log) => set((state) => ({ logs: [...state.logs, log] })),
+  updateLastLog: (newLog: string) =>
+    set((state) => {
+      if (state.logs.length === 0) return { logs: [newLog] }
+      const newLogs = [...state.logs]
+      newLogs[newLogs.length - 1] = newLog // 마지막 요소 교체
+      return { logs: newLogs }
+    }),
   clearLogs: () => set({ logs: [] }),
   setStatus: (status) => set({ status }),
   setUI: (uiState) => set({ uiState }),

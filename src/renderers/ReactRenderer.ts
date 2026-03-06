@@ -22,6 +22,10 @@ export class ReactRenderer implements Renderer {
     this.store.addLog(message)
   }
 
+  update(message: string): void {
+    this.store.updateLastLog(message)
+  }
+
   clear(): void {
     this.store.clearLogs()
     this.store.setUI({ type: 'NONE', message: '', resolve: () => {} })

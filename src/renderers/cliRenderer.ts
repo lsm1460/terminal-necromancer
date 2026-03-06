@@ -9,6 +9,10 @@ export class CLIRenderer implements Renderer {
     console.log(message)
   }
 
+  update(message: string): void {
+    process.stdout.write(`\rmessage`)
+  }
+
   clear(): void {
     console.clear()
   }

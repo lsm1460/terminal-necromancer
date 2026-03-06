@@ -19,9 +19,7 @@ export const LogWindow = () => {
       ref={scrollRef}
     >
       {logs.map((log, i) => (
-        <div key={i} className="mb-1">
-          {log}
-        </div>
+        <div key={i} className="mb-1" dangerouslySetInnerHTML={{ __html: log }} />
       ))}
 
       {uiState.type !== 'NONE' && (

@@ -1,16 +1,9 @@
 import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
-import { Tile } from '~/types'
+import { SceneData, Tile } from '~/types'
 import { Terminal } from './Terminal'
 import { Player } from './player/Player'
-
-interface SceneData {
-  displayName: string
-  unlocks?: string[]
-  start_pos: { x: number; y: number }
-  move_pos?: { x: number; y: number }
-  tiles: Tile[][]
-}
+import { assetManager } from './WebAssetManager'
 
 export class MapManager {
   private originMapData: Record<string, SceneData>
@@ -45,15 +38,15 @@ export class MapManager {
     return this.mapData[sceneId]
   }
 
-  changeScene(targetSceneId: MapId, player: Player) {
+  async changeScene(targetSceneId: MapId, player: Player) {
     if (!this.mapData[targetSceneId]) {
       console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
       return
     }
 
     this.currentSceneId = targetSceneId
-    const newScene = this.currentScene
-
+    const newScene = this.getMap(targetSceneId)
+    await assetManager.loadSceneAssets(newScene)
     const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE, MAP_IDS.B4_Waste_Disposal_Area]
 
     if (!fixedArea.includes(targetSceneId)) {

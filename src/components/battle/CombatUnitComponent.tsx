@@ -3,14 +3,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
 
-const FALLBACK_SPRITES = {
-  idle: ['https://via.placeholder.com/128/444/fff?text=Idle_1', 'https://via.placeholder.com/128/333/fff?text=Idle_2'],
-  attack: 'https://via.placeholder.com/128/aa3333/fff?text=Attack',
-  hit: 'https://via.placeholder.com/128/ff8800/fff?text=Hit',
-  die: 'https://via.placeholder.com/128/000/fff?text=Die',
-  escape: 'https://via.placeholder.com/128/555/fff?text=Escape',
-}
-
 interface CombatUnitProps {
   unit: CombatUnit
   isEnemy?: boolean

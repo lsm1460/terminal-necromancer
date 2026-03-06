@@ -183,6 +183,7 @@ export type LootBag = {
 
 export interface Renderer {
   print(message: string): void
+  update(message: string): void
   clear(): void
   printStatus(player: Player, context: GameContext): void
   // 입력 관련 메서드 추가
@@ -369,4 +370,20 @@ export interface Affix {
 export type BroadcastScript = {
   hostile: string[]
   normal: string[]
+}
+
+export interface UnitSprites {
+  idle: HTMLImageElement[];
+  attack: HTMLImageElement | null;
+  hit: HTMLImageElement | null;
+  die: HTMLImageElement | null;
+  escape: HTMLImageElement | null;
+}
+
+export interface SceneData {
+  displayName: string
+  unlocks?: string[]
+  start_pos: { x: number; y: number }
+  move_pos?: { x: number; y: number }
+  tiles: Tile[][]
 }

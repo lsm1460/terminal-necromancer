@@ -1,0 +1,182 @@
+import { SceneData, UnitSprites } from '~/types'
+import { Terminal } from './Terminal'
+import { assets } from '~/assets'
+
+interface AssetSource {
+  id: string
+  src: string
+}
+
+export class WebAssetManager {
+  private images: Map<string, HTMLImageElement> = new Map()
+  private audios: Map<string, HTMLAudioElement> = new Map()
+  private spriteCache: Map<string, UnitSprites> = new Map()
+
+  private readonly commonManifest = {
+    images: [
+      { id: 'player_idle_0', src: 'assets/images/player/idle_0.png' },
+      { id: 'player_idle_1', src: 'assets/images/player/idle_1.png' },
+      { id: 'player_attack', src: 'assets/images/player/attack.png' },
+      { id: 'player_hit', src: 'assets/images/player/hit.png' },
+      { id: 'player_die', src: 'assets/images/player/die.png' },
+      { id: 'player_escape', src: 'assets/images/player/escape.png' },
+      // 에셋이 없을 때를 대비한 기본 이미지
+      { id: 'default_idle_0', src: 'assets/images/default_idle_0.png' },
+      { id: 'default_idle_1', src: 'assets/images/default_idle_1.png' },
+      { id: 'default_attack', src: 'assets/images/default_attack.png' },
+      { id: 'default_hit', src: 'assets/images/default_hit.png' },
+      { id: 'default_die', src: 'assets/images/default_die.png' },
+      { id: 'default_escape', src: 'assets/images/default_escape.png' },
+    ] as AssetSource[],
+    audios: [
+      { id: 'sfx_hit', src: 'assets/audio/sfx/hit.wav' },
+      { id: 'sfx_die', src: 'assets/audio/sfx/die.wav' },
+      { id: 'sfx_escape', src: 'assets/audio/sfx/escape.wav' },
+    ] as AssetSource[],
+  }
+
+  private async loadWithProgress(imageTasks: AssetSource[], audioTasks: AssetSource[]): Promise<void> {
+    const total = imageTasks.length + audioTasks.length
+    let loaded = 0
+
+    if (total === 0) return
+
+    Terminal.log(`[Loading] 준비 중...`);
+
+    // 진행률 업데이트 함수
+    const updateProgress = (id: string) => {
+      loaded++
+      const percent = Math.floor((loaded / total) * 100)
+      
+      Terminal.update(`[Loading] ${percent}% ...`)
+    }
+
+    const imagePromises = imageTasks.map(async (img) => {
+      await this.loadImage(img.id, img.src)
+      updateProgress(img.id)
+    })
+
+    const audioPromises = audioTasks.map(async (aud) => {
+      await this.loadAudio(aud.id, aud.src)
+      updateProgress(aud.id)
+    })
+
+    await Promise.allSettled([...imagePromises, ...audioPromises])
+  }
+
+  public async loadInitialAssets(): Promise<void> {
+    Terminal.log('\x1b[36m[System] 필수 리소스(사운드/플레이어) 로딩 중...\x1b[0m')
+    await this.loadWithProgress(this.commonManifest.images, this.commonManifest.audios)
+    Terminal.log('\x1b[32m[System] 필수 리소스 로드 완료.\x1b[0m\n')
+  }
+
+  public async loadSceneAssets(sceneData: SceneData): Promise<void> {
+    if (typeof window === 'undefined') return
+    if (!sceneData) return
+
+    this.clearMonsterAssets()
+    this.spriteCache.clear()
+
+    const resourceIds = new Set<string>()
+
+    sceneData.tiles.flat().forEach((tile) => {
+      if (!tile) return
+      tile.npcIds?.forEach((id) => resourceIds.add(id))
+      if (tile.event) {
+        const group = (assets.monsterGroup as any)[tile.event]
+        if (group) group.forEach((m: any) => resourceIds.add(m.id))
+      }
+    })
+
+    const manifest = this.buildUnitManifest(Array.from(resourceIds))
+
+    Terminal.log(`\n\x1b[34m[System] '${sceneData.displayName}' 리소스 로드 중...\x1b[0m`)
+    // 장면 로딩은 이미지만 있으므로 오디오는 빈 배열 전달
+    await this.loadWithProgress(manifest, [])
+    Terminal.log('\x1b[32m[System] 장면 전환 완료.\x1b[0m')
+  }
+
+  public getSprites(originId: string): UnitSprites | void {
+    if (typeof window === 'undefined') return
+
+    if (this.spriteCache.has(originId)) {
+      return this.spriteCache.get(originId)!
+    }
+
+    const getWithFallback = (suffix: string) => {
+      return this.images.get(`${originId}${suffix}`) || this.images.get(`default${suffix}`) || null
+    }
+
+    const states = ['attack', 'hit', 'die', 'escape'] as const
+    const sprites = {
+      idle: [getWithFallback('_idle_0'), getWithFallback('_idle_1')].filter(Boolean),
+    } as any
+
+    states.forEach((state) => {
+      sprites[state] = getWithFallback(`_${state}`)
+    })
+
+    this.spriteCache.set(originId, sprites)
+
+    return sprites as UnitSprites
+  }
+
+  public playSound(id: string, volume: number = 0.5): void {
+    const audio = this.audios.get(id)
+    if (audio) {
+      const sound = audio.cloneNode() as HTMLAudioElement
+      sound.volume = volume
+      sound.play().catch(() => {}) // 브라우저 정책 방어
+    }
+  }
+
+  // --- 내부 지원 메서드 ---
+  private buildUnitManifest(originIds: string[]): AssetSource[] {
+    const manifest: AssetSource[] = []
+    originIds.forEach((id) => {
+      ;['idle_0', 'idle_1', 'attack', 'hit', 'die', 'escape'].forEach((state) => {
+        manifest.push({ id: `${id}_${state}`, src: `assets/images/units/${id}_${state}.png` })
+      })
+    })
+    return manifest
+  }
+
+  private async loadImage(id: string, src: string): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.images.has(id)) return resolve()
+      const img = new Image()
+      img.src = src
+      img.onload = () => {
+        this.images.set(id, img)
+        resolve()
+      }
+      img.onerror = () => {
+        resolve()
+      }
+    })
+  }
+
+  private async loadAudio(id: string, src: string): Promise<void> {
+    return new Promise((resolve) => {
+      const audio = new Audio()
+      audio.src = src
+      audio.oncanplaythrough = () => {
+        this.audios.set(id, audio)
+        resolve()
+      }
+      audio.onerror = () => {
+        resolve()
+      }
+    })
+  }
+
+  private clearMonsterAssets(): void {
+    for (const key of this.images.keys()) {
+      if (!key.startsWith('player_') && key !== 'default_placeholder') {
+        this.images.delete(key)
+      }
+    }
+  }
+}
+
+export const assetManager = new WebAssetManager()

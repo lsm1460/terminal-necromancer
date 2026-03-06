@@ -1,9 +1,10 @@
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
-import { AttackType, BattleTarget } from '~/types'
+import { AttackType, BattleTarget, UnitSprites } from '~/types'
 import { Battle, Buff, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
 import { EFFECT_MESSAGES } from './consts'
+import { assetManager } from '~/core/WebAssetManager'
 
 type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
 
@@ -43,15 +44,9 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     return this.type === 'monster' || this.type === 'npc'
   }
 
-  public get sprites() {
+  public get sprites(): UnitSprites | void {
     const originId = this.id.split('::')[0]
-    return {
-      idle: [`${originId}_idle_0`, `${originId}_idle_1`],
-      attack: `${originId}_attack`,
-      hit: `${originId}_hit`,
-      die: `${originId}_die`,
-      escape: `${originId}_escape`,
-    }
+    return assetManager.getSprites(originId)
   }
 
   public get isStealth() {

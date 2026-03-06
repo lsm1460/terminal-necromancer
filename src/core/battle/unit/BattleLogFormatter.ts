@@ -1,4 +1,4 @@
-import { DamageOptions } from './Battle'
+import { DamageOptions } from '../Battle'
 
 export class BattleLogFormatter {
   public static formatDamageLog(
