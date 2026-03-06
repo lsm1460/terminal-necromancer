@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 
 export type UnitActionType = 'ATTACK' | 'HIT' | 'DIE' | 'ESCAPE' | 'IDLE'
 

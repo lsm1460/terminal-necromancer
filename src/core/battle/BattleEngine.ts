@@ -1,4 +1,4 @@
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 import { BattleState, BattleHooks, BattleResult } from './types'
 import { delay } from '~/utils'
 

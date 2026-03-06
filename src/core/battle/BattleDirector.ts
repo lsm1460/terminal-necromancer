@@ -1,4 +1,4 @@
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 
 export interface BattleRenderer {
   end(): Promise<void>

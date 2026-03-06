@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { Battle } from '~/core/battle/Battle'
-import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import { BattleTarget, GameContext, NpcSkill } from '~/types'

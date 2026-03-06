@@ -1,4 +1,4 @@
-import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
 import { GameContext, NpcSkill } from '~/types'
 

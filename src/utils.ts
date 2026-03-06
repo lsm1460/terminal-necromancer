@@ -5,7 +5,7 @@ import { Item, ItemType } from './types'
 
 export function generateId(baseId?: string, length = 8): string {
   const uniqueHash = nanoid(length)
-  return baseId ? `${baseId}_${uniqueHash}` : uniqueHash
+  return baseId ? `${baseId}::${uniqueHash}` : uniqueHash
 }
 
 export function randomRange(min: number, max: number) {

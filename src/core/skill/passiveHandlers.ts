@@ -1,6 +1,6 @@
 import { NpcSkill } from '~/types'
 import { Battle, DamageOptions } from '../battle/Battle'
-import { CombatUnit } from '../battle/CombatUnit'
+import { CombatUnit } from '../battle/unit/CombatUnit'
 import { Terminal } from '../Terminal'
 
 type PassiveEffect = (

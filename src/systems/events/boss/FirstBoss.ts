@@ -1,4 +1,4 @@
-import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { GameContext, GameEvent, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
 

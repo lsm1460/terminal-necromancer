@@ -8,7 +8,7 @@ import { BattleEngine, BattleManager } from './BattleEngine'
 import { BattleRewardSystem } from './BattleRewardSystem'
 import { BattleUnitManager } from './BattleUnitManager'
 import { CombatService, DamageOptions } from './CombatService'
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 import { BattleResult } from './types'
 import { BattleDirector } from './BattleDirector'
 

@@ -1,7 +1,7 @@
 import { BattleTarget } from '~/types'
 import { Terminal } from '../Terminal'
 import { Player } from '../player/Player'
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 
 export class AffixManager {
 

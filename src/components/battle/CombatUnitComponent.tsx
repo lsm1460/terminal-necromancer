@@ -1,6 +1,6 @@
 import { motion, useAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useState } from 'react'
-import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
 
 const FALLBACK_SPRITES = {

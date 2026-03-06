@@ -1,4 +1,4 @@
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 
 export class TargetSelector {
   private choices: { name: string; message: string; disabled: boolean; unit: CombatUnit }[]

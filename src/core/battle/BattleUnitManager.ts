@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 import { Player } from '../player/Player'
 import { BattleTarget } from '~/types'
 

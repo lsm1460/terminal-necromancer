@@ -1,4 +1,4 @@
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 import { AttackType } from '~/types'
 
 export type DamageOptions = {
