@@ -10,6 +10,7 @@ import { SaveSystem } from '~/systems/SaveSystem'
 
 // 하위 컴포넌트들
 import { assetManager } from '~/core/WebAssetManager'
+import { useShortcuts } from '~/hooks/useShortcuts'
 import { GameInput } from './GameInput'
 import { LogWindow } from './LogWindow'
 import { StatusBar } from './StatusBar'
@@ -18,6 +19,8 @@ import { BattleStage } from './battle/BattleStage'
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
   const saveSystemRef = useRef(new SaveSystem(assets.state))
+
+  useShortcuts(engineRef)
 
   useEffect(() => {
     const initGame = async () => {

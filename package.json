@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
     "@types/lodash": "^4.17.21",
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
@@ -28,7 +29,9 @@
     "vite-tsconfig-paths": "^6.1.1"
   },
   "dependencies": {
+    "ansi-to-react": "^6.2.6",
     "enquirer": "^2.4.1",
+    "framer-motion": "^12.35.0",
     "lodash": "^4.17.21",
     "nanoid": "^5.1.6",
     "react": "^19.2.4",

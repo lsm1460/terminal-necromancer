@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { useGameStore } from '~/stores/useGameStore'
 import { GameEngine } from '~/gameEngine'
 
@@ -8,13 +8,28 @@ interface GameInputProps {
 
 export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
   const { uiState, addLog, resolveUI } = useGameStore()
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  // 입력창 활성화 여부 계산
   const disabledInput = useMemo(() => uiState.type !== 'NONE' && uiState.type !== 'PROMPT', [uiState.type])
+
+  // 2. 포커스 복구 로직
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      if (!disabledInput) {
+        inputRef.current?.focus()
+      }
+    }
+
+    if (!disabledInput) {
+      inputRef.current?.focus()
+    }
+
+    window.addEventListener('click', handleGlobalClick)
+    return () => window.removeEventListener('click', handleGlobalClick)
+  }, [disabledInput])
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      // PROMPT 상태(계속하려면 Enter)일 때 처리
       if (uiState.type === 'PROMPT') {
         resolveUI(undefined)
         return
@@ -24,9 +39,10 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
       const cmd = inputElement.value.trim()
 
       if (cmd) {
-        addLog(`> ${cmd}`) // 유저 입력 기록
-        inputElement.value = '' // 입력창 비우기
-        await engine.current?.processCommand(cmd) // 엔진에 명령어 전달
+        addLog(`\n> ${cmd}`)
+        inputElement.value = ''
+
+        await engine.current?.processCommand(cmd)
       }
     }
   }
@@ -35,6 +51,7 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
     <div className="flex items-center p-4 border-t border-primary">
       <span className="mr-2.5 text-primary">{'>'}</span>
       <input
+        ref={inputRef}
         className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
         autoFocus
         onKeyDown={handleCommand}

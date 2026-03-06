@@ -1,25 +1,23 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 
-interface ThemedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode
-}
-
-const ThemedButton = ({ children, onClick, className = '', ...props }: ThemedButtonProps) => {
-  return (
-    <button
-      onClick={onClick}
-      className={`
+export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={`
         bg-transparent border border-transparent 
         text-primary cursor-pointer font-inherit text-base 
         px-2.5 py-1 transition-colors
         hover:bg-primary hover:text-black
         ${className} 
-      `}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-}
+        `}
+        {...props}
+      >
+        {children}
+      </button>
+    )
+  }
+)
 
-export default ThemedButton
+ThemedButton.displayName = 'ThemedButton';

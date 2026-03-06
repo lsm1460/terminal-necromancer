@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { UIState } from '~/renderers/ReactRenderer'
 
+const MAX_LOGS = 100
+
 interface GameState {
   logs: string[]
   status: any
@@ -26,7 +28,16 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   setLogs: (updater) => set((state) => ({ logs: updater(state.logs) })),
-  addLog: (log) => set((state) => ({ logs: [...state.logs, log] })),
+  addLog: (log) =>
+    set((state) => {
+      const updatedLogs = [...state.logs, log]
+
+      if (updatedLogs.length > MAX_LOGS) {
+        return { logs: updatedLogs.slice(updatedLogs.length - MAX_LOGS) }
+      }
+
+      return { logs: updatedLogs }
+    }),
   updateLastLog: (newLog: string) =>
     set((state) => {
       if (state.logs.length === 0) return { logs: [newLog] }
