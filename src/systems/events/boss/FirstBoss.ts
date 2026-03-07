@@ -1,6 +1,7 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { GameContext, GameEvent, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
+import { Player } from '~/core/player/Player'
 
 export class FirstBoss implements BossLogic {
   createEnemies(bossNpc: NPC, eventData: GameEvent, context: GameContext): CombatUnit[] {
@@ -16,5 +17,9 @@ export class FirstBoss implements BossLogic {
     }
 
     return enemies
+  }
+
+  async onVictory(player: Player, context: GameContext) {
+    context.events.completeEvent('got_terminal_map')
   }
 }

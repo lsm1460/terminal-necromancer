@@ -5,7 +5,7 @@ import { CommandFunction } from '~/types'
 export const mapCommand: CommandFunction = async (player, args, context) => {
   const { events, map } = context
 
-  if (!events.isCompleted('first_boss')) {
+  if (!events.isCompleted('got_terminal_map')) {
     Terminal.log('📜 지도가 없습니다.')
     return false
   }

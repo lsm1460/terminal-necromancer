@@ -15,6 +15,7 @@ import { GameInput } from './GameInput'
 import { LogWindow } from './LogWindow'
 import { StatusBar } from './StatusBar'
 import { BattleStage } from './battle/BattleStage'
+import { MiniMap } from './MiniMap'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
@@ -43,10 +44,11 @@ export const App = () => {
   return (
     <div className="h-dvh flex flex-col bg-grey-900 text-primary font-mono">
       <StatusBar />
+      <MiniMap engine={engineRef} />
       <LogWindow />
       <BattleStage />
 
-      <GameInput engine={engineRef}/>
+      <GameInput engine={engineRef} />
     </div>
   )
 }
