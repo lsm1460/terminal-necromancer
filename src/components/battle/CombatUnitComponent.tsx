@@ -13,8 +13,6 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
   const currentAction = useBattleStore((state) => state.unitActions[unit.id])
   const [idleFrame, setIdleFrame] = useState(0)
 
-  const [failedPaths, setFailedPaths] = useState<Set<string>>(new Set())
-
   useEffect(() => {
     if (currentAction) return
     const timer = setInterval(() => setIdleFrame((prev) => (prev === 0 ? 1 : 0)), 600)
@@ -40,11 +38,7 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
               x: isEnemy ? -100 : 100,
               transition: { duration: 0.15, ease: 'easeOut' },
             })
-            await new Promise((resolve) => setTimeout(resolve, 100))
-            await controls.start({
-              x: 0,
-              transition: { duration: 0.2, ease: 'anticipate' },
-            })
+
             break
 
           case 'HIT':
@@ -70,7 +64,7 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
           case 'ESCAPE':
             // 뒤로 빠르게 사라짐
             await controls.start({
-              x: isEnemy ? 150 : -150,
+              x: isEnemy ? 20 : -20,
               transition: { duration: 0.4, ease: 'easeIn' },
             })
             break
@@ -84,6 +78,11 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
           setTimeout(() => {
             if (!isCancelled) {
               currentAction.onComplete?.()
+
+              controls.start({
+                x: 0,
+                transition: { duration: 0, type: false }, // 시간을 0으로 설정하여 즉시 이동
+              })
             }
           }, 1000)
         }
@@ -102,37 +101,29 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
   }, [currentAction, controls, isEnemy])
 
   const displayImage = useMemo(() => {
-    // const s = unit.sprites || {}
+    const s = unit.sprites
 
-    // const getValidImage = (primary: string | undefined, fallback: string) => {
-    //   if (!primary || failedPaths.has(primary)) return fallback
-    //   return primary
-    // }
+    if (!s) {
+      return `/src/assets/default_${currentAction.type.toLowerCase()}.png`
+    }
 
-    // if (currentAction) {
-    //   switch (currentAction.type) {
-    //     case 'ATTACK':
-    //       return getValidImage(s.attack, FALLBACK_SPRITES.attack)
-    //     case 'HIT':
-    //       return getValidImage(s.hit, FALLBACK_SPRITES.hit)
-    //     case 'DIE':
-    //       return getValidImage(s.die, FALLBACK_SPRITES.die)
-    //     case 'ESCAPE':
-    //       return getValidImage(s.escape, FALLBACK_SPRITES.escape)
-    //   }
-    // }
+    if (currentAction) {
+      switch (currentAction.type) {
+        case 'ATTACK':
+          return s.attack?.src
+        case 'HIT':
+          return s.hit?.src
+        case 'DIE':
+          return s.die?.src
+        case 'ESCAPE':
+          return s.escape?.src
+      }
+    }
 
-    // const primaryIdle = Array.isArray(s.idle) ? s.idle[idleFrame] : undefined
-    // const fallbackIdle = FALLBACK_SPRITES.idle[idleFrame] || FALLBACK_SPRITES.idle[0]
+    const primaryIdle = Array.isArray(s.idle) ? s.idle[idleFrame] : undefined
 
-    // return getValidImage(primaryIdle, fallbackIdle)
-
-    return unit.name
-  }, [currentAction, idleFrame, unit, failedPaths])
-
-  const handleImageError = () => {
-    setFailedPaths((prev) => new Set(prev).add(displayImage))
-  }
+    return primaryIdle?.src
+  }, [currentAction, idleFrame, unit])
 
   const hpPercentage = Math.max(0, (unit.ref.hp / unit.ref.maxHp) * 100)
 
@@ -146,13 +137,18 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
     <motion.div
       tabIndex={0}
       animate={controls}
-      className="group relative flex flex-col items-center transition-all duration-200 hover:scale-110 hover:z-30 focus:scale-110 focus:z-30 outline-none cursor-pointer"
+      className="group relative flex flex-col items-center hover:scale-110 hover:z-30 focus:scale-110 focus:z-30 outline-none cursor-pointer"
     >
       <div className="w-20 h-28 border border-dashed border-cyan-700 flex items-center justify-center bg-black/60 group-hover:border-cyan-400 group-focus:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
+        <img
+          src={displayImage}
+          alt={unit.name}
+          className={`w-32 h-32 object-contain pixelated ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}
+        />
         <span
-          className={`text-xs drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}
+          className={`absolute left-1/2 top-1 -translate-x-1/2 w-full text-xs drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] text-center`}
         >
-          {displayImage}
+          {unit.name}
         </span>
       </div>
       <div className="w-16 h-1 mt-1 bg-slate-900 border border-cyan-900 overflow-hidden">
@@ -168,39 +164,4 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
       </div>
     </motion.div>
   )
-
-  // return (
-  //   <motion.div animate={controls} className={`relative ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}>
-  //     <img
-  //       src={displayImage}
-  //       alt={unit.name}
-  //       onError={handleImageError}
-  //       className="w-32 h-32 object-contain pixelated"
-  //     />
-
-  //     <div className={`mt-1 w-full ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}>
-  //       <div className="text-[12px] font-bold text-white text-center drop-shadow-[1px_1px_2px_rgba(0,0,0,1)] mb-0.5">
-  //         {unit.name}
-  //       </div>
-
-  //       <div className="w-[100px] mx-auto relative">
-  //         <div className="w-full h-2 bg-[#333] rounded-full border-[1.5px] border-black overflow-hidden shadow-[inset_0_1px_3px_rgba(0,0,0,0.5)]">
-  //           <motion.div
-  //             initial={false}
-  //             animate={{
-  //               width: `${hpPercentage}%`,
-  //               backgroundColor: getHpColor(),
-  //             }}
-  //             transition={{ duration: 0.5, ease: 'easeOut' }}
-  //             className="h-full rounded-sm"
-  //           />
-  //         </div>
-
-  //         <div className="text-[9px] text-white text-right mt-0.5 font-mono drop-shadow-[1px_1px_1px_rgba(0,0,0,1)]">
-  //           {Math.ceil(unit.ref.hp)} / {unit.ref.maxHp}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </motion.div>
-  // )
 }

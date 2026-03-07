@@ -9,7 +9,8 @@ export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttrib
         bg-transparent border border-transparent 
         text-primary cursor-pointer font-inherit text-base 
         px-2.5 py-1 transition-colors
-        hover:bg-primary hover:text-black
+        hover:bg-primary hover:text-gray-900
+        focus:bg-primary focus:text-gray-900
         ${className} 
         `}
         {...props}
@@ -20,4 +21,4 @@ export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttrib
   }
 )
 
-ThemedButton.displayName = 'ThemedButton';
+ThemedButton.displayName = 'ThemedButton'

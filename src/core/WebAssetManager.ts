@@ -1,6 +1,6 @@
+import { assets } from '~/assets'
 import { SceneData, UnitSprites } from '~/types'
 import { Terminal } from './Terminal'
-import { assets } from '~/assets'
 
 interface AssetSource {
   id: string
@@ -14,24 +14,24 @@ export class WebAssetManager {
 
   private readonly commonManifest = {
     images: [
-      { id: 'player_idle_0', src: 'assets/images/player/idle_0.png' },
-      { id: 'player_idle_1', src: 'assets/images/player/idle_1.png' },
-      { id: 'player_attack', src: 'assets/images/player/attack.png' },
-      { id: 'player_hit', src: 'assets/images/player/hit.png' },
-      { id: 'player_die', src: 'assets/images/player/die.png' },
-      { id: 'player_escape', src: 'assets/images/player/escape.png' },
+      { id: 'player_idle_0', src: '/images/player/idle_0.png' },
+      { id: 'player_idle_1', src: '/images/player/idle_1.png' },
+      { id: 'player_attack', src: '/images/player/attack.png' },
+      { id: 'player_hit', src: '/images/player/hit.png' },
+      { id: 'player_die', src: '/images/player/die.png' },
+      { id: 'player_escape', src: '/images/player/escape.png' },
       // 에셋이 없을 때를 대비한 기본 이미지
-      { id: 'default_idle_0', src: 'assets/images/default_idle_0.png' },
-      { id: 'default_idle_1', src: 'assets/images/default_idle_1.png' },
-      { id: 'default_attack', src: 'assets/images/default_attack.png' },
-      { id: 'default_hit', src: 'assets/images/default_hit.png' },
-      { id: 'default_die', src: 'assets/images/default_die.png' },
-      { id: 'default_escape', src: 'assets/images/default_escape.png' },
+      { id: 'default_idle_0', src: '/images/default_idle_0.png' },
+      { id: 'default_idle_1', src: '/images/default_idle_1.png' },
+      { id: 'default_attack', src: '/images/default_attack.png' },
+      { id: 'default_hit', src: '/images/default_hit.png' },
+      { id: 'default_die', src: '/images/default_die.png' },
+      { id: 'default_escape', src: '/images/default_escape.png' },
     ] as AssetSource[],
     audios: [
-      { id: 'sfx_hit', src: 'assets/audio/sfx/hit.wav' },
-      { id: 'sfx_die', src: 'assets/audio/sfx/die.wav' },
-      { id: 'sfx_escape', src: 'assets/audio/sfx/escape.wav' },
+      { id: 'sfx_hit', src: '/audio/sfx/hit.wav' },
+      { id: 'sfx_die', src: '/audio/sfx/die.wav' },
+      { id: 'sfx_escape', src: '/audio/sfx/escape.wav' },
     ] as AssetSource[],
   }
 
@@ -41,13 +41,13 @@ export class WebAssetManager {
 
     if (total === 0) return
 
-    Terminal.log(`[Loading] 준비 중...`);
+    Terminal.log(`[Loading] 준비 중...`)
 
     // 진행률 업데이트 함수
     const updateProgress = (id: string) => {
       loaded++
       const percent = Math.floor((loaded / total) * 100)
-      
+
       Terminal.update(`[Loading] ${percent}% ...`)
     }
 
@@ -135,7 +135,7 @@ export class WebAssetManager {
     const manifest: AssetSource[] = []
     originIds.forEach((id) => {
       ;['idle_0', 'idle_1', 'attack', 'hit', 'die', 'escape'].forEach((state) => {
-        manifest.push({ id: `${id}_${state}`, src: `assets/images/units/${id}_${state}.png` })
+        manifest.push({ id: `${id}_${state}`, src: `/images/units/${id}_${state}.png` })
       })
     })
     return manifest
@@ -171,8 +171,13 @@ export class WebAssetManager {
   }
 
   private clearMonsterAssets(): void {
+    const preserveIds = ['player', 'default', 'skeleton', 'golem', 'knight']
+
+    const pattern = preserveIds.map((id) => `${id}_`).join('|')
+    const preserveRegex = new RegExp(`^(${pattern})`)
+
     for (const key of this.images.keys()) {
-      if (!key.startsWith('player_') && key !== 'default_placeholder') {
+      if (!preserveRegex.test(key)) {
         this.images.delete(key)
       }
     }

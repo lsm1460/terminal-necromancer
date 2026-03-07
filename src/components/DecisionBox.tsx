@@ -54,7 +54,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
               onFocus={() => setFocusedIndex(i)}
               onClick={() => resolveUI(c.name, c.message)}
             >
-              [{c.message}]
+              {c.message}
             </ThemedButton>
           ))}
 
