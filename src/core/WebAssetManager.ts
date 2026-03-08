@@ -14,12 +14,12 @@ export class WebAssetManager {
 
   private readonly commonManifest = {
     images: [
-      { id: 'player_idle_0', src: '/images/player/idle_0.png' },
-      { id: 'player_idle_1', src: '/images/player/idle_1.png' },
-      { id: 'player_attack', src: '/images/player/attack.png' },
-      { id: 'player_hit', src: '/images/player/hit.png' },
-      { id: 'player_die', src: '/images/player/die.png' },
-      { id: 'player_escape', src: '/images/player/escape.png' },
+      { id: 'player_idle_0', src: '/images/player/player_idle_0.png' },
+      { id: 'player_idle_1', src: '/images/player/player_idle_1.png' },
+      { id: 'player_attack', src: '/images/player/player_attack.png' },
+      { id: 'player_hit', src: '/images/player/player_hit.png' },
+      { id: 'player_die', src: '/images/player/player_die.png' },
+      { id: 'player_escape', src: '/images/player/player_escape.png' },
       // 에셋이 없을 때를 대비한 기본 이미지
       { id: 'default_idle_0', src: '/images/default_idle_0.png' },
       { id: 'default_idle_1', src: '/images/default_idle_1.png' },
@@ -135,7 +135,7 @@ export class WebAssetManager {
     const manifest: AssetSource[] = []
     originIds.forEach((id) => {
       ;['idle_0', 'idle_1', 'attack', 'hit', 'die', 'escape'].forEach((state) => {
-        manifest.push({ id: `${id}_${state}`, src: `/images/units/${id}_${state}.png` })
+        manifest.push({ id: `${id}_${state}`, src: `/images/${id}/${id}_${state}.png` })
       })
     })
     return manifest
