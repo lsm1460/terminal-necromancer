@@ -2,23 +2,20 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { AnsiHtml } from '../Ansi'
+import { getHpColor } from '~/utils'
 
 export const UnitVisual: React.FC<{
   unit: CombatUnit
   controls: any
   isEnemy: boolean
-  displayImage: string | undefined
-}> = ({ unit, controls, isEnemy, displayImage }) => {
+  displayImage?: string
+  children?: React.ReactNode
+}> = ({ unit, controls, isEnemy, displayImage, children }) => {
   const hpPercentage = Math.max(0, (unit.ref.hp / unit.ref.maxHp) * 100)
 
-  const getHpColor = () => {
-    if (hpPercentage > 50) return '#4caf50' // 녹색
-    if (hpPercentage > 20) return '#ffeb3b' // 황색
-    return '#f44336' // 적색
-  }
-
   return (
-    <motion.div animate={controls} className="flex flex-col items-center">
+    <motion.div animate={controls} className="flex flex-col items-center relative">
+      {children}
       <div className="w-20 h-28 border border-dashed border-cyan-700 flex items-center justify-center bg-black/80 group-hover:bg-gray-900 group-hover:border-cyan-400 group-focus:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
         <img
           src={displayImage}
@@ -36,7 +33,7 @@ export const UnitVisual: React.FC<{
           initial={false}
           animate={{
             width: `${hpPercentage}%`,
-            backgroundColor: getHpColor(),
+            backgroundColor: getHpColor(hpPercentage),
           }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="h-full rounded-sm"

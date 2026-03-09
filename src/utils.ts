@@ -53,3 +53,9 @@ export async function speak(messages: string[]) {
     await Terminal.prompt(message)
   }
 }
+
+export const getHpColor = (hpPercentage: number) => {
+  if (hpPercentage > 50) return '#4caf50'
+  if (hpPercentage > 20) return '#ffeb3b'
+  return '#f44336'
+}

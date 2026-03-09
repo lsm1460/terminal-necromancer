@@ -102,7 +102,7 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
 
   if (target.eva || target.crit) {
     Terminal.log(
-      ` SEC : 회피 ${Math.floor((target.eva || 0) * 100)}% | 크리티컬 ${Math.floor((target.crit || 0) * 100)}%`
+      ` EVA : 회피 ${Math.floor((target.eva || 0) * 100)}% | 크리티컬 ${Math.floor((target.crit || 0) * 100)}%`
     )
   }
 

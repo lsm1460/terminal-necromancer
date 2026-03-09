@@ -3,6 +3,7 @@ import { CombatUnit } from './unit/CombatUnit'
 export interface BattleRenderer {
   end(): Promise<void>
   setUnits(units: { playerSide: CombatUnit[]; enemiesSide: CombatUnit[] }): Promise<void>
+  updateUnits(units: { playerSide?: CombatUnit[]; enemiesSide?: CombatUnit[] }): Promise<void>
   playAttack(id: string, skillId?: string): Promise<void>
   playHit(id: string, options: { damage: number; isCritical: boolean }): Promise<void>
   playEscape(id: string): Promise<void>
@@ -24,6 +25,11 @@ export class BattleDirector {
   public static async setUnits(units: { playerSide: CombatUnit[]; enemiesSide: CombatUnit[] }) {
     if (!this.renderer) return
     await this.renderer.setUnits(units)
+  }
+
+  public static async updateUnits(units: { playerSide?: CombatUnit[]; enemiesSide?: CombatUnit[] }) {
+    if (!this.renderer) return
+    await this.renderer.updateUnits(units)
   }
 
   public static async playAttack(id: string, skillId?: string) {

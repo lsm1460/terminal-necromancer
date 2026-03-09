@@ -18,6 +18,7 @@ interface BattleState {
 
   clear: () => void
   setBattleUnits: (units: { playerSide: CombatUnit[]; enemiesSide: CombatUnit[] }) => void
+  updateBattleUnits: (units: { playerSide?: CombatUnit[]; enemiesSide?: CombatUnit[] }) => void
   removeUnit: (id: string) => void
 
   triggerAction: (id: string, type: UnitActionType, options?: UnitAction['options']) => Promise<void>
@@ -36,6 +37,12 @@ export const useBattleStore = create<BattleState>((set, get) => ({
       enemiesSide: units.enemiesSide,
       unitActions: {},
     }),
+
+  updateBattleUnits: (units) =>
+    set((state) => ({
+      playerSide: units.playerSide ?? state.playerSide,
+      enemiesSide: units.enemiesSide ?? state.enemiesSide,
+    })),
 
   clear: () =>
     set({

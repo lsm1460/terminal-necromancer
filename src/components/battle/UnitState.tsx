@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { AnsiHtml } from '../Ansi'
+import { getHpColor } from '~/utils'
 
 export const UnitState: React.FC<{
   unit: CombatUnit
@@ -8,21 +9,15 @@ export const UnitState: React.FC<{
 }> = ({ unit, isEnemy }) => {
   const hpPercentage = Math.max(0, (unit.ref.hp / unit.ref.maxHp) * 100)
 
-  // HP 색상 로직은 그대로 유지
-  const getHpColor = () => {
-    if (hpPercentage > 50) return '#4caf50'
-    if (hpPercentage > 20) return '#ffeb3b'
-    return '#f44336'
-  }
+  const hasBuff = unit.buff.length > 0 || unit.deBuff.length > 0
 
-  const hasStatus = unit.buff.length > 0 || unit.deBuff.length > 0
-
-  const description = useMemo(() => unit.ref.description, [unit])
+  const evaRate = Math.floor((unit.ref.eva || 0) * 100)
+  const critRate = Math.floor((unit.ref.crit || 0) * 100)
 
   return (
     <div
       className={`
-        absolute top-5 w-2xs backdrop-blur-md hidden group-focus:block border border-primary pointer-events-none z-50 bg-black/80
+        absolute top-5 w-2xs backdrop-blur-md border border-primary pointer-events-none z-50 bg-black/80
         after:content-[''] after:absolute after:top-2 after:w-3 after:h-3 after:bg-grey-800 after:border-l after:border-t after:border-primary
         ${isEnemy ? 'after:-right-[7px] after:rotate-[135deg]' : 'after:-left-[7px] after:rotate-[-45deg]'}
       `}
@@ -42,18 +37,37 @@ export const UnitState: React.FC<{
         <div className="w-full h-1 bg-slate-800 border border-slate-700">
           <div
             className="h-full transition-all duration-500 shadow-[0_0_8px_rgba(0,0,0,0.5)]"
-            style={{ width: `${hpPercentage}%`, backgroundColor: getHpColor() }}
+            style={{ width: `${hpPercentage}%`, backgroundColor: getHpColor(hpPercentage) }}
           />
         </div>
 
-        {description && (
-          <div className="pt-1 border-t border-slate-700/50">
-            <p className="text-[10px] leading-relaxed text-slate-300 break-all whitespace-pre-wrap">{description}</p>
+        <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 border-t border-slate-700/30 pt-1.5 font-mono text-[10px]">
+          <div className="flex justify-between border-b border-slate-800 pb-0.5">
+            <span className="text-slate-500 uppercase">공격력</span>
+            <span className="text-orange-400 font-bold">{unit.ref.atk}</span>
           </div>
-        )}
+          <div className="flex justify-between border-b border-slate-800 pb-0.5">
+            <span className="text-slate-500 uppercase">방어력</span>
+            <span className="text-blue-400 font-bold">{unit.ref.def}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500 uppercase">회피</span>
+            <span className="text-emerald-400">{evaRate}%</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500 uppercase">치명</span>
+            <span className="text-red-400">{critRate}%</span>
+          </div>
+        </div>
+
+        <div className="pt-1 border-t border-slate-700/50">
+          <p className="text-[10px] leading-relaxed text-slate-300 break-keep whitespace-pre-wrap">
+            {unit.ref.description}
+          </p>
+        </div>
       </div>
 
-      {hasStatus && (
+      {hasBuff && (
         <div className="border-t border-primary/30 p-1.5 bg-black/40 flex flex-wrap gap-1">
           {unit.buff.map((b, i) => (
             <span key={`buff-${i}`} className="text-xs text-green-400 font-mono">

@@ -14,6 +14,10 @@ export class WebBattleRenderer implements BattleRenderer {
     this.store.setBattleUnits(units)
   }
 
+  async updateUnits(units: { playerSide: any[]; enemiesSide: any[] }): Promise<void> {
+    this.store.updateBattleUnits(units)
+  }
+
   async playAttack(id: string, skillId?: string): Promise<void> {
     await this.store.triggerAction(id, 'ATTACK', { skillId })
   }

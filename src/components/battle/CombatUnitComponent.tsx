@@ -1,11 +1,10 @@
 import { useAnimation } from 'framer-motion'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
-import { AnsiHtml } from '../Ansi'
 import { DamageDisplay } from './DamageDisplay'
-import { UnitVisual } from './UnitVisual'
 import { UnitState } from './UnitState'
+import { UnitVisual } from './UnitVisual'
 
 interface CombatUnitProps {
   unit: CombatUnit
@@ -16,6 +15,8 @@ interface CombatUnitProps {
 export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, isEnemy = false }) => {
   const controls = useAnimation()
   const currentAction = useBattleStore((state) => state.unitActions[unit.id])
+
+  const [isFocus, setIsFocus] = useState(false)
   const [idleFrame, setIdleFrame] = useState(0)
   const [damageList, setDamageList] = useState<{ id: number; val: number; isCrit: boolean }[]>([])
 
@@ -142,11 +143,28 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, i
     return primaryIdle?.src
   }, [currentAction, idleFrame, unit])
 
+  const wrapperRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: Event) {
+      if (wrapperRef.current && !(wrapperRef.current as HTMLDivElement).contains(event.target as HTMLElement)) {
+        setIsFocus(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [wrapperRef])
+
   return (
     <div
-      tabIndex={0}
+      ref={wrapperRef}
       className="group relative flex flex-col items-center hover:z-30! focus:z-30! focus:scale-110! outline-none cursor-pointer"
       style={{ zIndex }}
+      onClick={() => setIsFocus(true)}
     >
       <div className="absolute top-0 pointer-events-none z-50">
         {damageList.map((d) => (
@@ -154,9 +172,9 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, i
         ))}
       </div>
 
-      <UnitVisual unit={unit} controls={controls} isEnemy={isEnemy} displayImage={displayImage} />
-
-      <UnitState unit={unit} isEnemy={isEnemy}/>
+      <UnitVisual unit={unit} controls={controls} isEnemy={isEnemy} displayImage={displayImage}>
+        {isFocus && <UnitState unit={unit} isEnemy={isEnemy} />}
+      </UnitVisual>
     </div>
   )
 }

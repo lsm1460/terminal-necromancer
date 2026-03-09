@@ -71,7 +71,7 @@ export class Battle implements BattleManager {
 
     Terminal.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
     this.updateEffectsDuration(unit)
-    
+
     if (await this.actions.handleUnitDeBuff(unit)) return
 
     const enemiesSide = this.units.getEnemiesOf(unit)
@@ -84,7 +84,12 @@ export class Battle implements BattleManager {
         return true
       }
     } else {
-      await this.actions.executeAutoAttack(unit, enemiesSide as CombatUnit<BattleTarget>[], allySide, this.currentContext)
+      await this.actions.executeAutoAttack(
+        unit,
+        enemiesSide as CombatUnit<BattleTarget>[],
+        allySide,
+        this.currentContext
+      )
     }
   }
 
@@ -97,7 +102,9 @@ export class Battle implements BattleManager {
     return {
       isVictory: this.player.isAlive && this.units.getAliveEnemies().length === 0,
       isEscaped: false,
-      gold: 0, exp: 0, drops: [],
+      gold: 0,
+      exp: 0,
+      drops: [],
     }
   }
 
@@ -111,7 +118,12 @@ export class Battle implements BattleManager {
     })
 
     Terminal.log(`\n⚔️ 전투가 시작되었습니다!`)
-    Terminal.log(`적: ${this.units.getAliveEnemies().map((e) => e.name).join(', ')}`)
+    Terminal.log(
+      `적: ${this.units
+        .getAliveEnemies()
+        .map((e) => e.name)
+        .join(', ')}`
+    )
 
     const engine = new BattleEngine(this, {
       onRoundStart: async (round) => {
@@ -122,7 +134,7 @@ export class Battle implements BattleManager {
           playerSide: this.units.getPlayerSide(),
           enemiesSide: this.units.getAliveEnemies(),
         })
-      }
+      },
     })
 
     const result = await engine.start()
@@ -184,11 +196,16 @@ export class Battle implements BattleManager {
     if (!monster) return
     const unit = this.toCombatUnit(monster, 'monster')
     this.units.registerUnit(unit)
+    BattleDirector.updateUnits({ enemiesSide: this.units.getAliveEnemies() })
     unit.onDeath = async () => this.rewards.handleUnitDeath(monster as BattleTarget, context)
     return unit
   }
 
   // Exposed for skill executors
-  public getEnemiesOf(attacker: CombatUnit): CombatUnit[] { return this.units.getEnemiesOf(attacker) }
-  public getAllysOf(attacker: CombatUnit): CombatUnit[] { return this.units.getAllysOf(attacker) }
+  public getEnemiesOf(attacker: CombatUnit): CombatUnit[] {
+    return this.units.getEnemiesOf(attacker)
+  }
+  public getAllysOf(attacker: CombatUnit): CombatUnit[] {
+    return this.units.getAllysOf(attacker)
+  }
 }
