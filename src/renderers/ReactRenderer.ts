@@ -26,21 +26,21 @@ export class ReactRenderer implements Renderer {
     this.store.updateLastLog(message)
   }
 
+  say(nameList: string[]) {
+    const isSingular = nameList.length === 1
+    const aliveNames = nameList.map((name) => `<button style="color: white; cursor: pointer;" data-command="대화" data-arg="${name}">${name}</button>`).join(', ')
+
+    const message = `주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`
+
+    this.store.addLog(message)
+  }
+
   clear(): void {
     this.store.clearLogs()
     this.store.setUI({ type: 'NONE', message: '', resolve: () => {} })
   }
 
   printStatus(player: Player, context: GameContext): void {
-    this.store.setStatus({
-      hp: player.hp,
-      maxHp: player.maxHp,
-      level: player.level,
-      exp: player.exp,
-      gold: player.gold,
-      location: context.map.currentSceneId,
-    })
-
     printStatus(player, context)
   }
 

@@ -16,10 +16,9 @@ export function printTileStatus(player: Player, context: GameContext) {
   const corpses = world.getCorpsesAt(x, y)
 
   if (alive.length > 0) {
-    const isSingular = alive.length === 1
-    const aliveNames = alive.map((_npc) => _npc.name).join(', ')
+    const aliveNames = alive.map((_npc) => _npc.name)
 
-    Terminal.log(`주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`)
+    Terminal.say(aliveNames)
   }
 
   if (corpses.length > 0) {

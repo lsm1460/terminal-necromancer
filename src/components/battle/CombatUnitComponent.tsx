@@ -1,17 +1,23 @@
-import { motion, useAnimation } from 'framer-motion'
+import { useAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useState } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
+import { AnsiHtml } from '../Ansi'
+import { DamageDisplay } from './DamageDisplay'
+import { UnitVisual } from './UnitVisual'
+import { UnitState } from './UnitState'
 
 interface CombatUnitProps {
   unit: CombatUnit
+  zIndex: number
   isEnemy?: boolean
 }
 
-export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy = false }) => {
+export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, isEnemy = false }) => {
   const controls = useAnimation()
   const currentAction = useBattleStore((state) => state.unitActions[unit.id])
   const [idleFrame, setIdleFrame] = useState(0)
+  const [damageList, setDamageList] = useState<{ id: number; val: number; isCrit: boolean }[]>([])
 
   useEffect(() => {
     if (currentAction) return
@@ -27,22 +33,19 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
     let isCancelled = false
 
     const execute = async () => {
-      // 1. 새로운 애니메이션 시작 전 이전 동작 즉시 중단 및 위치 초기화
       controls.stop()
 
       try {
         switch (currentAction.type) {
           case 'ATTACK':
-            // 앞으로 돌진 후 잠시 대기했다가 복귀
             await controls.start({
               x: isEnemy ? -100 : 100,
+              scale: 1.1,
               transition: { duration: 0.15, ease: 'easeOut' },
             })
-
             break
 
           case 'HIT':
-            // 뒤로 툭 밀렸다가 빠르게 제자리로 돌아오며 흔들림
             await controls.start({
               x: isEnemy ? 15 : -15,
               transition: { duration: 0.05 },
@@ -54,7 +57,6 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
             break
 
           case 'DIE':
-            // 도스 게임 느낌으로 깜빡거리며 사라짐
             await controls.start({
               opacity: [1, 0, 1, 0, 0],
               transition: { duration: 0.4, times: [0, 0.2, 0.4, 0.6, 1] },
@@ -62,7 +64,6 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
             break
 
           case 'ESCAPE':
-            // 뒤로 빠르게 사라짐
             await controls.start({
               x: isEnemy ? 20 : -20,
               transition: { duration: 0.4, ease: 'easeIn' },
@@ -73,7 +74,6 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
             break
         }
 
-        // 2. 모든 애니메이션 시퀀스가 끝난 후 1000ms 대기
         if (!isCancelled) {
           setTimeout(() => {
             if (!isCancelled) {
@@ -81,30 +81,47 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
 
               controls.start({
                 x: 0,
-                transition: { duration: 0, type: false }, // 시간을 0으로 설정하여 즉시 이동
+                scale: 1,
+                opacity: 1, // 죽었을 때 투명해진 상태를 복구 (만약 유닛이 재사용된다면 필요)
+                transition: { duration: 0, type: false },
               })
             }
           }, 1000)
         }
       } catch (error) {
-        // 애니메이션 도중 controls.stop() 등으로 인한 에러 발생 시 처리
         console.error('Animation interrupted', error)
       }
     }
 
     execute()
 
-    // 3. Cleanup 함수: 액션이 도중에 바뀌면 이전 setTimeout과 로직 무효화
     return () => {
       isCancelled = true
     }
   }, [currentAction, controls, isEnemy])
 
+  useEffect(() => {
+    if (currentAction?.options?.damage) {
+      const newDamage = {
+        id: Date.now() + Math.random(),
+        val: currentAction.options.damage,
+        isCrit: !!currentAction.options.isCritical,
+      }
+
+      setDamageList((prev) => [...prev, newDamage])
+
+      setTimeout(() => {
+        setDamageList((prev) => prev.filter((d) => d.id !== newDamage.id))
+      }, 1000)
+    }
+  }, [currentAction])
+
   const displayImage = useMemo(() => {
     const s = unit.sprites
 
     if (!s) {
-      return `/src/assets/default_${currentAction.type.toLowerCase()}.png`
+      const type = currentAction?.type?.toLowerCase() || 'idle'
+      return `/src/assets/default_${type}.png`
     }
 
     if (currentAction) {
@@ -125,43 +142,21 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isEnemy =
     return primaryIdle?.src
   }, [currentAction, idleFrame, unit])
 
-  const hpPercentage = Math.max(0, (unit.ref.hp / unit.ref.maxHp) * 100)
-
-  const getHpColor = () => {
-    if (hpPercentage > 50) return '#4caf50' // 녹색
-    if (hpPercentage > 20) return '#ffeb3b' // 황색
-    return '#f44336' // 적색
-  }
-
   return (
-    <motion.div
+    <div
       tabIndex={0}
-      animate={controls}
-      className="group relative flex flex-col items-center hover:scale-110 hover:z-30 focus:scale-110 focus:z-30 outline-none cursor-pointer"
+      className="group relative flex flex-col items-center hover:z-30! focus:z-30! focus:scale-110! outline-none cursor-pointer"
+      style={{ zIndex }}
     >
-      <div className="w-20 h-28 border border-dashed border-cyan-700 flex items-center justify-center bg-black/60 group-hover:border-cyan-400 group-focus:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
-        <img
-          src={displayImage}
-          alt={unit.name}
-          className={`w-32 h-32 object-contain pixelated ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}
-        />
-        <span
-          className={`absolute left-1/2 top-1 -translate-x-1/2 w-full text-xs drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] text-center`}
-        >
-          {unit.name}
-        </span>
+      <div className="absolute top-0 pointer-events-none z-50">
+        {damageList.map((d) => (
+          <DamageDisplay key={d.id} damage={d.val} isCritical={d.isCrit} />
+        ))}
       </div>
-      <div className="w-16 h-1 mt-1 bg-slate-900 border border-cyan-900 overflow-hidden">
-        <motion.div
-          initial={false}
-          animate={{
-            width: `${hpPercentage}%`,
-            backgroundColor: getHpColor(),
-          }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="h-full rounded-sm"
-        />
-      </div>
-    </motion.div>
+
+      <UnitVisual unit={unit} controls={controls} isEnemy={isEnemy} displayImage={displayImage} />
+
+      <UnitState unit={unit} isEnemy={isEnemy}/>
+    </div>
   )
 }

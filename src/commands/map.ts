@@ -1,4 +1,4 @@
-import { MAP_IDS } from '~/consts'
+import { FULL_VISIBLE_MAP_ID_LIST, MAP_IDS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { CommandFunction } from '~/types'
 
@@ -20,7 +20,7 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
   const tiles = map.currentScene.tiles
   if (!tiles) return false
 
-  const isFullyVisible = ([MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE] as string[]).includes(sceneId)
+  const isFullyVisible = (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
 
   Terminal.log(`\n--- 🗺️ ${map.currentScene.displayName} ---`)
 

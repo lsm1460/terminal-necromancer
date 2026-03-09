@@ -13,6 +13,13 @@ export class CLIRenderer implements Renderer {
     process.stdout.write(`\rmessage`)
   }
 
+  say(nameList: string[]) {
+    const isSingular = nameList.length === 1
+    const aliveNames = nameList.join(', ')
+
+    console.log(`주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`)
+  }
+
   clear(): void {
     console.clear()
   }
@@ -78,7 +85,7 @@ export class CLIRenderer implements Renderer {
       choices: choices.map((c) => ({ name: c.name, message: c.message })),
       initial: options?.initial,
       maxChoices: options?.maxChoices,
-      validate: options?.validate
+      validate: options?.validate,
     } as any)
     return result
   }

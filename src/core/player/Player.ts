@@ -201,6 +201,13 @@ export class Player {
     this.hp = 0
   }
 
+  get description() {
+    if (this.karma <= 0) return "망자를 기리며 질서를 수호하는 영혼의 인도자입니다."
+    if (this.karma <= 5) return "살생의 무게가 그림자에 서서히 스며들고 있습니다."
+    if (this.karma <= 10) return "부패한 마력이 양심을 잠식하며 눈빛이 탁해집니다."
+    return "이승의 법도를 초월한, 사신의 잔혹한 하수인입니다."
+  }
+
   get affixes(): Affix[] {
     return [this.equipped.weapon, this.equipped.armor]
       .filter((item): item is WeaponItem | ArmorItem => !!item && !!item.affix)

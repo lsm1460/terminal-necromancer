@@ -11,6 +11,10 @@ export class Terminal {
     this.renderer ? this.renderer.print(message) : console.log(message)
   }
 
+  public static say(nameList: string[]): void {
+    this.renderer ? this.renderer.say(nameList) : console.log(`${nameList.join(', ')}`)
+  }
+
   public static update(message: string) {
     this.renderer ? this.renderer.update(message) : process.stdout.write(`\rmessage`)
   }

@@ -184,6 +184,7 @@ export type LootBag = {
 export interface Renderer {
   print(message: string): void
   update(message: string): void
+  say(nameList: string[]): void
   clear(): void
   printStatus(player: Player, context: GameContext): void
   // 입력 관련 메서드 추가

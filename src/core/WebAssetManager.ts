@@ -1,4 +1,5 @@
 import { assets } from '~/assets'
+import { useGameStore } from '~/stores/useGameStore'
 import { SceneData, UnitSprites } from '~/types'
 import { Terminal } from './Terminal'
 
@@ -41,7 +42,11 @@ export class WebAssetManager {
 
     if (total === 0) return
 
+    const store = useGameStore.getState()
+
     Terminal.log(`[Loading] 준비 중...`)
+
+    store.setIsLoading(true)
 
     // 진행률 업데이트 함수
     const updateProgress = (id: string) => {
@@ -62,6 +67,8 @@ export class WebAssetManager {
     })
 
     await Promise.allSettled([...imagePromises, ...audioPromises])
+
+    store.setIsLoading(false)
   }
 
   public async loadInitialAssets(): Promise<void> {

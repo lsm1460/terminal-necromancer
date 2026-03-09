@@ -42,13 +42,30 @@ export const App = () => {
   }, [])
 
   return (
-    <div className="h-dvh flex flex-col bg-grey-900 text-primary font-mono">
-      <StatusBar />
-      <MiniMap engine={engineRef} />
-      <LogWindow />
-      <BattleStage />
+    <div
+      className="relative grid h-dvh w-full bg-grey-900 text-primary
+        grid-cols-1 grid-rows-[auto_1fr_auto_auto] 
+        xl:grid-cols-[1fr_300px] xl:grid-rows-[auto_1fr_auto]
+        [grid-template-areas:'status''window''side''input']
+        xl:[grid-template-areas:'status_side''window_side''input_side']"
+    >
+      <StatusBar engine={engineRef} />
 
-      <GameInput engine={engineRef} />
+      <div className="relative flex flex-col overflow-hidden">
+        <BattleStage />
+        <LogWindow engine={engineRef}/>
+      </div>
+
+      <div className="[grid-area:side] flex flex-col relative xl:border-l border-primary">
+        <MiniMap engine={engineRef} />
+        <div className="btns flex-1">
+          <div />
+        </div>
+      </div>
+
+      <div className="[grid-area:input]">
+        <GameInput engine={engineRef} />
+      </div>
     </div>
   )
 }

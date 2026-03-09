@@ -19,6 +19,8 @@ export class GameEngine {
   public player!: Player
   public context!: GameContext
 
+  isProcessing = false
+
   // 생성자에서 받는 assets는 이제 경로가 아닌 실제 JSON 데이터 덩어리입니다.
   constructor(
     private assets: GameAssets,
@@ -103,7 +105,21 @@ export class GameEngine {
     await events.handle(currentTile, this.player, this.context)
   }
 
-  public async processCommand(command: string): Promise<void> {
-    await handleCommand(command, this.player, this.context)
+  public async processCommand(
+    command: string,
+    options?: {
+      onBeforeExecute?: () => void
+    }
+  ): Promise<void> {
+    if (this.isProcessing) return
+
+    options?.onBeforeExecute?.()
+
+    this.isProcessing = true
+    try {
+      await handleCommand(command, this.player, this.context)
+    } finally {
+      this.isProcessing = false
+    }
   }
 }

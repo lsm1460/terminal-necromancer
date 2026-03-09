@@ -4,10 +4,10 @@ import { ExecuteSkill } from '~/types'
 export const recallSkeleton: ExecuteSkill = async (player, context) => {
   const skeletons = player.ref.skeleton
 
-  const corpseId = await Terminal.select('어떤 시체를 소모하시겠습니까?', [
+  const corpseId = await Terminal.select('어떤 개체를 마나로 환원하시겠습니까?', [
     ...skeletons.map((s) => ({
       name: s.id,
-      message: s.name,
+      message: `${s.name} (${s.hp}/${s.maxHp})`,
     })),
     { name: 'cancel', message: '🔙 취소하기' },
   ])

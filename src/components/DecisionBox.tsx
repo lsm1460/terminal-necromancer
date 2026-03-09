@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { UIState } from '~/renderers/ReactRenderer'
+import { AnsiHtml } from './Ansi'
 import { ThemedButton } from './common/ThemedButton'
 
 interface DecisionBoxProps {
@@ -43,41 +44,46 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
       onKeyDown={handleKeyDown}
     >
       <div className="mb-2.5 text-[#ffff00] font-bold">▶ {uiState.message}</div>
-      <div className="flex gap-4 flex-wrap">
+      <div className="flex flex-col gap-2 flex-wrap">
         {uiState.type === 'SELECT' &&
           uiState.choices?.map((c, i) => (
-            <ThemedButton
-              key={c.name}
-              ref={(el) => {
-                buttonRefs.current[i] = el
-              }}
-              onFocus={() => setFocusedIndex(i)}
-              onClick={() => resolveUI(c.name, c.message)}
-            >
-              {c.message}
-            </ThemedButton>
+            <div key={c.name}>
+              <ThemedButton
+                ref={(el) => {
+                  buttonRefs.current[i] = el
+                }}
+                onFocus={() => setFocusedIndex(i)}
+                onClick={() => resolveUI(c.name, c.message)}
+              >
+                <AnsiHtml message={c.message}/>
+              </ThemedButton>
+            </div>
           ))}
 
         {uiState.type === 'CONFIRM' && (
           <>
-            <ThemedButton
-              ref={(el) => {
-                buttonRefs.current[0] = el
-              }}
-              onFocus={() => setFocusedIndex(0)}
-              onClick={() => resolveUI(true, '예')}
-            >
-              [예]
-            </ThemedButton>
-            <ThemedButton
-              ref={(el) => {
-                buttonRefs.current[1] = el
-              }}
-              onFocus={() => setFocusedIndex(1)}
-              onClick={() => resolveUI(false, '아니오')}
-            >
-              [아니오]
-            </ThemedButton>
+            <div>
+              <ThemedButton
+                ref={(el) => {
+                  buttonRefs.current[0] = el
+                }}
+                onFocus={() => setFocusedIndex(0)}
+                onClick={() => resolveUI(true, '예')}
+              >
+                [예]
+              </ThemedButton>
+            </div>
+            <div>
+              <ThemedButton
+                ref={(el) => {
+                  buttonRefs.current[1] = el
+                }}
+                onFocus={() => setFocusedIndex(1)}
+                onClick={() => resolveUI(false, '아니오')}
+              >
+                [아니오]
+              </ThemedButton>
+            </div>
           </>
         )}
 

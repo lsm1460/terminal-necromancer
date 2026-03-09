@@ -63,6 +63,8 @@ export const MAP_IDS = {
   B5_VIP_lounge: 'B5_VIP_lounge',
 } as const
 
+export const FULL_VISIBLE_MAP_ID_LIST = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE]
+
 export type MapId = (typeof MAP_IDS)[keyof typeof MAP_IDS]
 
 export type SkeletonRarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'

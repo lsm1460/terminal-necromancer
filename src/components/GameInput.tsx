@@ -7,10 +7,13 @@ interface GameInputProps {
 }
 
 export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
-  const { uiState, addLog, resolveUI } = useGameStore()
+  const { uiState, isLoading, addLog, resolveUI } = useGameStore()
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const disabledInput = useMemo(() => uiState.type !== 'NONE' && uiState.type !== 'PROMPT', [uiState.type])
+  const disabledInput = useMemo(() => {
+    if (isLoading) return true
+
+    return uiState.type !== 'NONE' && uiState.type !== 'PROMPT'}, [uiState.type, isLoading])
 
   // 2. 포커스 복구 로직
   useEffect(() => {
@@ -29,6 +32,8 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
   }, [disabledInput])
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isLoading) return
+
     if (e.key === 'Enter') {
       if (uiState.type === 'PROMPT') {
         resolveUI(undefined)
@@ -39,10 +44,12 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
       const cmd = inputElement.value.trim()
 
       if (cmd) {
-        addLog(`\n> ${cmd}`)
-        inputElement.value = ''
-
-        await engine.current?.processCommand(cmd)
+        await engine.current?.processCommand(cmd, {
+          onBeforeExecute() {
+            addLog(`\n> ${cmd}`)
+            inputElement.value = ''
+          },
+        })
       }
     }
   }

@@ -1,10 +1,13 @@
-import Ansi from 'ansi-to-react'
 import { useEffect, useRef } from 'react'
 import { useGameStore } from '~/stores/useGameStore'
+import { AnsiHtml } from './Ansi'
 import { DecisionBox } from './DecisionBox'
+import { GameEngine } from '~/gameEngine'
 
-export const LogWindow = () => {
-  const { logs, uiState, resolveUI } = useGameStore()
+export const LogWindow: React.FC<{
+  engine: React.RefObject<GameEngine | null>
+}> = ({ engine }) => {
+  const { logs, uiState, addLog, resolveUI } = useGameStore()
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -13,15 +16,34 @@ export const LogWindow = () => {
     }
   }, [logs, uiState])
 
+  const handleLogCommand = async (event: any) => {
+    let { command, arg } = event.target.dataset
+
+    if (!command) {
+      return
+    }
+
+    if (arg) {
+      command += ` --${arg}`
+    }
+
+    await engine.current?.processCommand(command, {
+      onBeforeExecute() {
+        addLog(command)
+      },
+    })
+  }
+
   return (
     <div
       className="flex-1 overflow-y-auto p-5 whitespace-pre-wrap leading-relaxed 
              scrollbar-thin scrollbar-track-[#1e1e1e] scrollbar-thumb-[#444] hover:scrollbar-thumb-[#555]"
       ref={scrollRef}
+      onClick={handleLogCommand}
     >
       {logs.map((log, i) => (
         <div key={i} className="mb-1">
-          <Ansi>{log}</Ansi>
+          <AnsiHtml message={log} />
         </div>
       ))}
 

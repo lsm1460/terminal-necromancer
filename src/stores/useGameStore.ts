@@ -5,29 +5,30 @@ const MAX_LOGS = 100
 
 interface GameState {
   logs: string[]
-  status: any
   uiState: UIState
+  isLoading: boolean
 
   // Actions
   setLogs: (updater: (prev: string[]) => string[]) => void
+  setIsLoading: (isLoading: boolean) => void
   addLog: (log: string) => void
   updateLastLog: (log: string) => void
   clearLogs: () => void
-  setStatus: (status: any) => void
   setUI: (uiState: UIState) => void
   resolveUI: (value: any, message?: string) => void
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
   logs: [],
-  status: null,
   uiState: {
     type: 'NONE',
     message: '',
     resolve: () => {},
   },
+  isLoading: false,
 
   setLogs: (updater) => set((state) => ({ logs: updater(state.logs) })),
+  setIsLoading: (isLoading) => set((state) => ({ isLoading })),
   addLog: (log) =>
     set((state) => {
       const updatedLogs = [...state.logs, log]
@@ -46,7 +47,6 @@ export const useGameStore = create<GameState>((set, get) => ({
       return { logs: newLogs }
     }),
   clearLogs: () => set({ logs: [] }),
-  setStatus: (status) => set({ status }),
   setUI: (uiState) => set({ uiState }),
 
   resolveUI: (value: any, message?: string) => {
