@@ -61,6 +61,9 @@ export class NPCManager {
       updateHostility: (_amount: number) => {
         this.updateFactionHostility(base.faction, _amount)
       },
+      updateContribution: (_amount: number) => {
+        this.updateFactionContribution(base.faction, _amount)
+      },
       dead: (_karma = 1) => {
         this.player.karma += _karma
         this.states[id].isAlive = false
@@ -141,7 +144,7 @@ export class NPCManager {
     return false
   }
 
-  getDialectType(hostility: number) {
+  static getDialectType(hostility: number) {
     if (hostility <= -20) return 'friendly'
     if (hostility >= 40) return 'hostile'
     return 'normal'

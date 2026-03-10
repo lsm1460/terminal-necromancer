@@ -159,7 +159,7 @@ async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) 
 
   player.unlockGolem('maya')
 
-  context.npcs.updateFactionContribution(npc.faction, 40)
+  npc.updateContribution(40)
 
   // 성공 시 대사
   Terminal.log(`\n[⚙️ 골렘 기동 성공]`)

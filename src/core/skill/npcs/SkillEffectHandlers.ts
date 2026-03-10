@@ -7,7 +7,7 @@ export const SkillEffectHandlers: Record<
   (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit, context: GameContext) => void
 > = {
   heal: (target, skill) => {
-    const healAmount = skill.power
+    const healAmount = Math.floor(target.ref.maxHp * skill.power);
     target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
     Terminal.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
   },

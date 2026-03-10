@@ -35,7 +35,7 @@ const JaxHandler: NPCHandler = {
 }
 
 async function handleJoin(player: Player, npc: NPC, context: GameContext) {
-  const { map, npcs, events, battle } = context
+  const { map, events, battle } = context
 
   const tile = map.getTile(player.pos.x, player.pos.y)
 
@@ -83,9 +83,9 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
 
       if (isWin) {
         events.completeEvent('RESISTANCE_BASE')
-        npcs.updateFactionHostility('resistance', 40)
+        npc.updateHostility(40)
       } else {
-        npcs.updateFactionHostility('resistance', 10)
+        npc.updateHostility(10)
       }
 
       tile.isClear = true

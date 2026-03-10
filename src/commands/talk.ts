@@ -1,3 +1,4 @@
+import { NPCManager } from '~/core/NpcManager'
 import { Terminal } from '~/core/Terminal'
 import npcHandlers from '~/npc'
 import { CommandFunction } from '~/types'
@@ -50,7 +51,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     return false
   }
 
-  const dialect = context.npcs.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
+  const dialect = NPCManager.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
 
   // 2. 대화 인터페이스 출력
   Terminal.log(`\n──────────────────────────────────────────────────`)
