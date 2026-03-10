@@ -15,12 +15,20 @@ export class WebAssetManager {
 
   private readonly commonManifest = {
     images: [
+      //player
       { id: 'player_idle_0', src: '/images/player/player_idle_0.png' },
       { id: 'player_idle_1', src: '/images/player/player_idle_1.png' },
       { id: 'player_attack', src: '/images/player/player_attack.png' },
       { id: 'player_hit', src: '/images/player/player_hit.png' },
       { id: 'player_die', src: '/images/player/player_die.png' },
       { id: 'player_escape', src: '/images/player/player_escape.png' },
+      // skeleton
+      { id: 'skeleton_idle_0', src: '/images/skeleton/skeleton_idle_0.png' },
+      { id: 'skeleton_idle_1', src: '/images/skeleton/skeleton_idle_1.png' },
+      { id: 'skeleton_attack', src: '/images/skeleton/skeleton_attack.png' },
+      { id: 'skeleton_hit', src: '/images/skeleton/skeleton_hit.png' },
+      { id: 'skeleton_die', src: '/images/skeleton/skeleton_die.png' },
+      { id: 'skeleton_escape', src: '/images/skeleton/skeleton_escape.png' },
       // 에셋이 없을 때를 대비한 기본 이미지
       { id: 'default_idle_0', src: '/images/default_idle_0.png' },
       { id: 'default_idle_1', src: '/images/default_idle_1.png' },
