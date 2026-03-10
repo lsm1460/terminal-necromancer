@@ -4,7 +4,7 @@ import { Player } from '../player/Player'
 import { SKILL_LIST } from './skill'
 
 type EnhancedSkillResult =
-  | (SkillResult & { isSuccess: true; skillId: string })
+  | (SkillResult & { isSuccess: boolean; skillId: string })
   | (SkillResult & { isSuccess: false; skillId?: undefined })
 
 export class SkillManager {
@@ -51,7 +51,6 @@ export class SkillManager {
     return {
       ...result,
       skillId,
-      isSuccess: true,
     }
   }
 
