@@ -1,17 +1,38 @@
 import _ from 'lodash'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BattleDirector } from '~/core/battle/BattleDirector'
+import { GameEngine } from '~/gameEngine'
 import { WebBattleRenderer } from '~/renderers/BattleRenderer'
 import { useBattleStore } from '~/stores/useBattleStore'
+import { useGameStore } from '~/stores/useGameStore'
 import { CombatUnitComponent } from './CombatUnitComponent'
 
-export const BattleStage: React.FC = () => {
+export const BattleStage: React.FC<{
+  engine: React.RefObject<GameEngine | null>
+}> = ({ engine }) => {
+  const logs = useGameStore((state) => state.logs)
   const { inBattle, playerSide: originPlayerSide, enemiesSide } = useBattleStore()
+
+  const [corpsesCount, setCorpsesCount] = useState(0)
 
   useEffect(() => {
     const renderer = new WebBattleRenderer()
     BattleDirector.setRenderer(renderer)
   }, [])
+
+  useEffect(() => {
+    const _engine = engine.current
+
+    if (_engine && _engine.context) {
+      const { x, y } = _engine.player
+
+      const { world } = _engine.context
+
+      const corpses = world.getCorpsesAt(x, y)
+
+      setCorpsesCount(corpses.length)
+    }
+  }, [logs, engine])
 
   const playerSide = useMemo(
     () =>
@@ -37,23 +58,25 @@ export const BattleStage: React.FC = () => {
           <span className="animate-pulse">SYSTEM_READY</span>
         </div>
 
-        <div className="relative h-64 flex justify-between items-center px-4">
+        <div className="relative h-60 flex justify-between items-center px-4">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(rgba(0,255,255,0.1)_1px,transparent_1px)] bg-[size:100%_4px]"></div>
 
           <div className="relative flex -space-x-8">
             {playerSide.map((unit, i) => (
-              <CombatUnitComponent unit={unit} key={unit.id} zIndex={playerSide.length - i}/>
+              <CombatUnitComponent unit={unit} key={unit.id} zIndex={playerSide.length - i} />
             ))}
-            
           </div>
 
-          <div className="text-cyan-900 text-[10px] font-black italic opacity-30 select-none">- VS -</div>
+          <div className="text-primary text-xs font-black italic opacity-50 select-none">- VS -</div>
 
           <div className="relative flex -space-x-8">
             {enemiesSide.map((unit, i) => (
-              <CombatUnitComponent unit={unit} key={unit.id} isEnemy zIndex={i}/>
+              <CombatUnitComponent unit={unit} key={unit.id} isEnemy zIndex={i + 10} />
             ))}
           </div>
+        </div>
+        <div className="px-4 pb-4">
+          <p className="text-right">사용 가능한 시체 수: {corpsesCount}</p>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export const UnitVisual: React.FC<{
   return (
     <motion.div animate={controls} className="flex flex-col items-center relative">
       {children}
-      <div className="w-20 h-28 border border-dashed border-cyan-700 flex items-center justify-center bg-black/80 group-hover:bg-gray-900 group-hover:border-cyan-400 group-focus:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
+      <div className="w-20 h-28 border border-dashed border-cyan-700 flex items-center justify-center bg-black/80 group-hover:bg-grey-900 group-hover:border-cyan-400 group-focus:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
         <img
           src={displayImage}
           alt={unit.name}

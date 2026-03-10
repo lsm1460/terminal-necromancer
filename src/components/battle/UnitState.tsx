@@ -17,11 +17,17 @@ export const UnitState: React.FC<{
   return (
     <div
       className={`
-        absolute top-5 w-2xs backdrop-blur-md border border-primary pointer-events-none z-50 bg-black/80
-        after:content-[''] after:absolute after:top-2 after:w-3 after:h-3 after:bg-grey-800 after:border-l after:border-t after:border-primary
-        ${isEnemy ? 'after:-right-[7px] after:rotate-[135deg]' : 'after:-left-[7px] after:rotate-[-45deg]'}
-      `}
-      style={isEnemy ? { left: -12, transform: 'translateX(-100%)' } : { right: -12, transform: 'translateX(100%)' }}
+    absolute w-2xs backdrop-blur-md border border-primary pointer-events-none z-50 bg-black/80
+    /* 위치: 유닛의 아래쪽으로 배치 */
+    top-full mt-3 
+    /* 꼬리 공통 설정: 말풍선 위쪽 중앙 근처 */
+    after:content-[''] after:absolute after:-top-[7px] after:w-3 after:h-3 after:bg-grey-800 after:border-l after:border-t after:border-primary after:rotate-45
+    ${
+      isEnemy
+        ? 'right-0 after:right-8' // 적군: 말풍선이 왼쪽에 치우쳐 보인다면 우측 정렬 및 꼬리 우측
+        : 'left-0 after:left-8' // 아군: 말풍선이 오른쪽에 치우쳐 보인다면 좌측 정렬 및 꼬리 좌측
+    }
+  `}
     >
       <div className="border-b border-primary p-1 bg-grey-800">
         <AnsiHtml message={unit.name} className="text-xs font-bold relative z-10" />

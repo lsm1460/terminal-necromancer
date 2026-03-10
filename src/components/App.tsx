@@ -1,6 +1,6 @@
 import '~/assets/style/App.css'
 //
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { assets, initState } from '~/assets'
 import { Terminal } from '~/core/Terminal'
 import { Title } from '~/core/Title'
@@ -11,15 +11,18 @@ import { SaveSystem } from '~/systems/SaveSystem'
 // 하위 컴포넌트들
 import { assetManager } from '~/core/WebAssetManager'
 import { useShortcuts } from '~/hooks/useShortcuts'
+import { BattleStage } from './battle/BattleStage'
+import { ButtonList } from './ButtonList'
 import { GameInput } from './GameInput'
 import { LogWindow } from './LogWindow'
-import { StatusBar } from './StatusBar'
-import { BattleStage } from './battle/BattleStage'
 import { MiniMap } from './MiniMap'
+import { StatusBar } from './StatusBar'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
   const saveSystemRef = useRef(new SaveSystem(assets.state))
+
+  const [isGameOn, setIsGameOn] = useState(false)
 
   useShortcuts(engineRef)
 
@@ -36,6 +39,8 @@ export const App = () => {
         await assetManager.loadInitialAssets()
         await engine.init(playData)
         await engine.start()
+
+        setIsGameOn(true)
       }
     }
     initGame()
@@ -52,15 +57,13 @@ export const App = () => {
       <StatusBar engine={engineRef} />
 
       <div className="relative flex flex-col overflow-hidden">
-        <BattleStage />
-        <LogWindow engine={engineRef}/>
+        <BattleStage engine={engineRef} />
+        <LogWindow engine={engineRef} />
       </div>
 
       <div className="[grid-area:side] flex flex-col relative xl:border-l border-primary">
         <MiniMap engine={engineRef} />
-        <div className="btns flex-1">
-          <div />
-        </div>
+        {isGameOn && <ButtonList engine={engineRef} />}
       </div>
 
       <div className="[grid-area:input]">

@@ -1,38 +1,35 @@
-import React, { useEffect, useMemo, useRef } from 'react'
-import { useGameStore } from '~/stores/useGameStore'
+import React, { useEffect, useRef } from 'react'
 import { GameEngine } from '~/gameEngine'
+import { useInputLock } from '~/hooks/useInputLock'
+import { useGameStore } from '~/stores/useGameStore'
 
 interface GameInputProps {
   engine: React.RefObject<GameEngine | null>
 }
 
 export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
-  const { uiState, isLoading, addLog, resolveUI } = useGameStore()
+  const { uiState, addLog, resolveUI } = useGameStore()
+  const disabled = useInputLock()
+
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const disabledInput = useMemo(() => {
-    if (isLoading) return true
-
-    return uiState.type !== 'NONE' && uiState.type !== 'PROMPT'}, [uiState.type, isLoading])
-
-  // 2. 포커스 복구 로직
   useEffect(() => {
     const handleGlobalClick = () => {
-      if (!disabledInput) {
+      if (!disabled) {
         inputRef.current?.focus()
       }
     }
 
-    if (!disabledInput) {
+    if (!disabled) {
       inputRef.current?.focus()
     }
 
     window.addEventListener('click', handleGlobalClick)
     return () => window.removeEventListener('click', handleGlobalClick)
-  }, [disabledInput])
+  }, [disabled])
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isLoading) return
+    if (disabled) return
 
     if (e.key === 'Enter') {
       if (uiState.type === 'PROMPT') {
@@ -62,8 +59,8 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
         className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
         autoFocus
         onKeyDown={handleCommand}
-        placeholder={disabledInput ? '선택지를 클릭하세요...' : '명령어를 입력하세요...'}
-        disabled={disabledInput}
+        placeholder={disabled ? '선택지를 클릭하세요...' : '명령어를 입력하세요...'}
+        disabled={disabled}
       />
     </div>
   )

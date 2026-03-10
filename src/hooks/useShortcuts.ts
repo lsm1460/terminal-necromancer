@@ -1,13 +1,26 @@
 import { useCallback, useEffect } from 'react'
 import { GameEngine } from '~/gameEngine'
 import { useGameStore } from '~/stores/useGameStore'
+import { useInputLock } from './useInputLock'
+
+export const COMMAND_MAP: Record<string, string> = {
+  a: '공격',
+  k: '스킬',
+  s: '상태',
+  i: '인벤토리',
+  m: '지도',
+  g: '줍기',
+  l: '보기',
+  h: '도움말',
+}
 
 export const useShortcuts = (engine: React.RefObject<GameEngine | null>) => {
-  const { uiState, isLoading, addLog } = useGameStore()
+  const disabled = useInputLock()
+  const { addLog } = useGameStore()
 
   const submitCommand = useCallback(
     async (cmd: string) => {
-      if (isLoading) return
+      if (disabled) return
 
       await engine.current?.processCommand(cmd, {
         onBeforeExecute() {
@@ -15,38 +28,25 @@ export const useShortcuts = (engine: React.RefObject<GameEngine | null>) => {
         },
       })
     },
-    [isLoading, addLog]
+    [disabled, addLog]
   )
 
   useEffect(() => {
     const handleKeyDown = async (e: KeyboardEvent) => {
-      if (isLoading) return
+      if (disabled) return
 
-      const isModifier = e.ctrlKey || e.metaKey
+      const isModifier = e.altKey
       const key = e.key
 
       if (isModifier) {
-        const commandMap: Record<string, string> = {
-          a: '공격',
-          k: '스킬',
-          i: '인벤토리',
-          s: '상태',
-          m: '지도',
-          g: '줍기',
-          l: '보기',
-          h: '도움말',
-        }
-
-        if (key in commandMap) {
+        if (key in COMMAND_MAP) {
           e.preventDefault()
-          await submitCommand(commandMap[key])
+          await submitCommand(COMMAND_MAP[key])
         }
         return
       }
 
-      const isNavigable = uiState.type === 'NONE'
-
-      if (isNavigable) {
+      if (!disabled) {
         const arrowMap: Record<string, string> = {
           ArrowUp: '위',
           ArrowDown: '아래',
@@ -63,5 +63,5 @@ export const useShortcuts = (engine: React.RefObject<GameEngine | null>) => {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [uiState.type, isLoading, submitCommand])
+  }, [disabled, submitCommand])
 }

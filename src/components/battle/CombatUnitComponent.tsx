@@ -162,8 +162,11 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, i
   return (
     <div
       ref={wrapperRef}
-      className="group relative flex flex-col items-center hover:z-30! focus:z-30! focus:scale-110! outline-none cursor-pointer"
-      style={{ zIndex }}
+      className="group relative flex flex-col items-center outline-none cursor-pointer transition-transform duration-200"
+      style={{
+        zIndex: isFocus ? 100 : zIndex,
+        transform: isFocus ? 'scale(1.1)' : 'scale(1)',
+      }}
       onClick={() => setIsFocus(true)}
     >
       <div className="absolute top-0 pointer-events-none z-50">
