@@ -1,3 +1,4 @@
+import { throttle } from 'lodash'
 import { assets } from '~/assets'
 import { useGameStore } from '~/stores/useGameStore'
 import { SceneData, UnitSprites } from '~/types'
@@ -56,22 +57,29 @@ export class WebAssetManager {
 
     store.setIsLoading(true)
 
-    // 진행률 업데이트 함수
-    const updateProgress = (id: string) => {
+    const throttledUIUpdate = throttle((percent: number) => {
+      Terminal.update(`[Loading] ${percent}% ...`)
+    }, 100)
+
+    const updateProgress = () => {
       loaded++
       const percent = Math.floor((loaded / total) * 100)
 
-      Terminal.update(`[Loading] ${percent}% ...`)
+      throttledUIUpdate(percent)
+
+      if (loaded === total) {
+        throttledUIUpdate.flush()
+      }
     }
 
     const imagePromises = imageTasks.map(async (img) => {
       await this.loadImage(img.id, img.src)
-      updateProgress(img.id)
+      updateProgress()
     })
 
     const audioPromises = audioTasks.map(async (aud) => {
       await this.loadAudio(aud.id, aud.src)
-      updateProgress(aud.id)
+      updateProgress()
     })
 
     await Promise.allSettled([...imagePromises, ...audioPromises])
