@@ -32,7 +32,9 @@ export class BattleActionHandler {
 
     const bindEffect = unit.deBuff.find((d) => d.type === 'bind')
     if (bindEffect) {
-      Terminal.log(`\n⛓️  ${unit.name}은(는) ${bindEffect.name}(으)로 인해 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`)
+      Terminal.log(
+        `\n⛓️  ${unit.name}은(는) ${bindEffect.name}(으)로 인해 움직일 수 없습니다! (남은 기간: ${bindEffect.duration}턴)`
+      )
       return true
     }
 
@@ -141,12 +143,17 @@ export class BattleActionHandler {
     context: GameContext
   ): Promise<boolean> {
     const ally = playerSide.filter((unit) => unit.type !== 'player')
-    const { isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, {
+    const { skillId, isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, {
       ally,
       enemies: this.unitManager.getAliveEnemies(),
     })
 
-    isSuccess && BattleDirector.playAttack(playerUnit.id)
+    if (isSuccess) {
+      await this.unitManager.refreshPlayerSide()
+
+      BattleDirector.updateUnits({ playerSide: this.unitManager.getPlayerSide() })
+      BattleDirector.playAttack(playerUnit.id)
+    }
 
     return isSuccess
   }

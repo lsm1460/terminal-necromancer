@@ -47,7 +47,7 @@ export class Battle implements BattleManager {
     public monster: MonsterFactory,
     public npcSkills: NpcSkillManager
   ) {
-    this.units = new BattleUnitManager(player)
+    this.units = new BattleUnitManager(player, this, npcSkills)
     this.rewards = new BattleRewardSystem(player, this.units)
     this.actions = new BattleActionHandler(player, this.units, npcSkills)
   }
@@ -127,7 +127,7 @@ export class Battle implements BattleManager {
 
     const engine = new BattleEngine(this, {
       onRoundStart: async (round) => {
-        this.initPlayerUnit()
+        this.units.refreshPlayerSide()
         Terminal.log(`\n============== turn: ${round} ==============`)
 
         BattleDirector.setUnits({
@@ -147,31 +147,8 @@ export class Battle implements BattleManager {
     return result.isVictory
   }
 
-  private initPlayerUnit() {
-    this.units.registerUnit(this.toCombatUnit(this.player, 'player'))
-    if (this.player.minions) {
-      this.player.minions.forEach((m) => {
-        if (m.isAlive) {
-          const mUnit = this.toCombatUnit(m, 'minion')
-          this.units.registerUnit(mUnit)
-          mUnit.onDeath = async () => {
-            this.units.unregisterUnit(m.id)
-            m.hp = 0
-            m.isAlive = false
-            this.player.removeMinion(m.id)
-            Terminal.log(`\n💀 ${m.name}이(가) 쓰러졌습니다!`)
-          }
-        }
-      })
-    }
-  }
-
   public toCombatUnit<T extends Player | BattleTarget>(unit: T, type: CombatUnit['type']): CombatUnit<T> {
-    const cached = this.units.getUnit(unit.id)
-    if (cached) return cached as CombatUnit<T>
-    const combatUnit = new CombatUnit<T>(unit, type)
-    this.npcSkills.setupPassiveHook(combatUnit, this)
-    return combatUnit
+    return this.units.toCombatUnit(unit, type)
   }
 
   static calcDamage(attacker: CombatUnit, target: CombatUnit, options: DamageOptions = {}) {

@@ -2,15 +2,55 @@ import _ from 'lodash'
 import { CombatUnit } from './unit/CombatUnit'
 import { Player } from '../player/Player'
 import { BattleTarget } from '~/types'
+import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
+import { Terminal } from '../Terminal'
+import { Battle } from './Battle'
 
 export class BattleUnitManager {
   private unitCache = new Map<any, CombatUnit>()
 
-  constructor(private player: Player) {}
+  constructor(
+    private player: Player,
+    private manager: Battle,
+    private npcSkills: NpcSkillManager
+  ) {}
+
+  public toCombatUnit<T extends Player | BattleTarget>(unit: T, type: CombatUnit['type']): CombatUnit<T> {
+    const cached = this.getUnit(unit.id)
+    if (cached) return cached as CombatUnit<T>
+    const combatUnit = new CombatUnit<T>(unit, type)
+    this.npcSkills.setupPassiveHook(combatUnit, this.manager)
+    return combatUnit
+  }
+
+  refreshPlayerSide() {
+    this.registerUnit(this.toCombatUnit(this.player, 'player'))
+
+    if (this.player.minions) {
+      this.player.minions.forEach((m) => {
+        if (m.isAlive) {
+          const mUnit = this.toCombatUnit(m, 'minion')
+          const _res = this.registerUnit(mUnit)
+
+          if (_res) {
+            mUnit.onDeath = async () => {
+              this.unregisterUnit(m.id)
+              m.hp = 0
+              m.isAlive = false
+              this.player.removeMinion(m.id)
+              Terminal.log(`\n💀 ${m.name}이(가) 쓰러졌습니다!`)
+            }
+          }
+        }
+      })
+    }
+  }
 
   registerUnit(unit: CombatUnit) {
-    if (this.unitCache.has(unit.id)) return
+    if (this.unitCache.has(unit.id)) return false
     this.unitCache.set(unit.id, unit)
+
+    return true
   }
 
   unregisterUnit(target: any) {

@@ -1,15 +1,23 @@
-import { ExecuteSkill, GameContext, SkillId } from '~/types'
+import { ExecuteSkill, GameContext, SkillId, SkillResult } from '~/types'
 import { Terminal } from '../Terminal'
 import { Player } from '../player/Player'
 import { SKILL_LIST } from './skill'
 
+type EnhancedSkillResult =
+  | (SkillResult & { isSuccess: true; skillId: string })
+  | (SkillResult & { isSuccess: false; skillId?: undefined })
+
 export class SkillManager {
-  static requestAndExecuteSkill: ExecuteSkill = async (player, context, units) => {
+  static requestAndExecuteSkill: (...args: Parameters<ExecuteSkill>) => Promise<EnhancedSkillResult> = async (
+    player,
+    context,
+    units
+  ) => {
     const failResult = {
       isSuccess: false,
       isAggressive: false,
       gross: 0,
-    }
+    } as const
 
     // 1. 가능 스킬 필터링
     const availableSkills = Object.values(SKILL_LIST).filter((skill) => player.ref.memorize.includes(skill.id))
@@ -40,7 +48,11 @@ export class SkillManager {
       player.ref.mp -= targetSkill.cost
     }
 
-    return result
+    return {
+      ...result,
+      skillId,
+      isSuccess: true,
+    }
   }
 
   static async selectCorpse(player: Player, context: GameContext) {
