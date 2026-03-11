@@ -1,3 +1,4 @@
+import { throttle } from 'lodash'
 import { assets } from '~/assets'
 import { useGameStore } from '~/stores/useGameStore'
 import { SceneData, UnitSprites } from '~/types'
@@ -15,12 +16,20 @@ export class WebAssetManager {
 
   private readonly commonManifest = {
     images: [
+      //player
       { id: 'player_idle_0', src: '/images/player/player_idle_0.png' },
       { id: 'player_idle_1', src: '/images/player/player_idle_1.png' },
       { id: 'player_attack', src: '/images/player/player_attack.png' },
       { id: 'player_hit', src: '/images/player/player_hit.png' },
       { id: 'player_die', src: '/images/player/player_die.png' },
       { id: 'player_escape', src: '/images/player/player_escape.png' },
+      // skeleton
+      { id: 'skeleton_idle_0', src: '/images/skeleton/skeleton_idle_0.png' },
+      { id: 'skeleton_idle_1', src: '/images/skeleton/skeleton_idle_1.png' },
+      { id: 'skeleton_attack', src: '/images/skeleton/skeleton_attack.png' },
+      { id: 'skeleton_hit', src: '/images/skeleton/skeleton_hit.png' },
+      { id: 'skeleton_die', src: '/images/skeleton/skeleton_die.png' },
+      { id: 'skeleton_escape', src: '/images/skeleton/skeleton_escape.png' },
       // 에셋이 없을 때를 대비한 기본 이미지
       { id: 'default_idle_0', src: '/images/default_idle_0.png' },
       { id: 'default_idle_1', src: '/images/default_idle_1.png' },
@@ -48,22 +57,29 @@ export class WebAssetManager {
 
     store.setIsLoading(true)
 
-    // 진행률 업데이트 함수
-    const updateProgress = (id: string) => {
+    const throttledUIUpdate = throttle((percent: number) => {
+      Terminal.update(`[Loading] ${percent}% ...`)
+    }, 100)
+
+    const updateProgress = () => {
       loaded++
       const percent = Math.floor((loaded / total) * 100)
 
-      Terminal.update(`[Loading] ${percent}% ...`)
+      throttledUIUpdate(percent)
+
+      if (loaded === total) {
+        throttledUIUpdate.flush()
+      }
     }
 
     const imagePromises = imageTasks.map(async (img) => {
       await this.loadImage(img.id, img.src)
-      updateProgress(img.id)
+      updateProgress()
     })
 
     const audioPromises = audioTasks.map(async (aud) => {
       await this.loadAudio(aud.id, aud.src)
-      updateProgress(aud.id)
+      updateProgress()
     })
 
     await Promise.allSettled([...imagePromises, ...audioPromises])
