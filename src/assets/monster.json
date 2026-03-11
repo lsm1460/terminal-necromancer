@@ -382,7 +382,7 @@
     "orderWeight": 10,
     "noCorpse": true,
     "exp": 120,
-    "dropTableId": "b4_vip_mech"
+    "dropTableId": "b5_vip_mech"
   },
   "modified_fury_hound": {
     "id": "modified_fury_hound",
@@ -399,7 +399,7 @@
     "noEscape": true,
     "preemptive": true,
     "exp": 75,
-    "dropTableId": "b4_vip_melee_bio"
+    "dropTableId": "b5_vip_melee_bio"
   },
   "clinging_concierge": {
     "id": "clinging_concierge",
@@ -415,7 +415,7 @@
     "orderWeight": 15,
     "noEscape": true,
     "exp": 80,
-    "dropTableId": "b4_vip_wraith"
+    "dropTableId": "b5_vip_wraith"
   },
   "corrupted_noble_wraith": {
     "id": "corrupted_noble_wraith",
@@ -431,7 +431,7 @@
     "orderWeight": 65,
     "preemptive": true,
     "exp": 110,
-    "dropTableId": "b4_vip_wraith"
+    "dropTableId": "b5_vip_wraith"
   },
   "masked_intruder_wraith": {
     "id": "masked_intruder_wraith",
@@ -446,7 +446,7 @@
     "description": "보물을 노리는 망령입니다. 매우 기민하여 먼저 공격해올 확률이 높습니다.",
     "orderWeight": 50,
     "exp": 105,
-    "dropTableId": "b4_vip_wraith"
+    "dropTableId": "b5_vip_wraith"
   },
   "security_guard": {
     "id": "security_guard",
@@ -462,7 +462,7 @@
     "orderWeight": 35,
     "exp": 85,
     "noEscape": true,
-    "dropTableId": "b4_vip_melee_bio"
+    "dropTableId": "b5_vip_melee_bio"
   },
   "security_guard_no_gain": {
     "id": "security_guard_no_gain",
@@ -494,7 +494,7 @@
     "orderWeight": 80,
     "exp": 90,
     "noEscape": true,
-    "dropTableId": "b4_vip_ranged_bio"
+    "dropTableId": "b5_vip_ranged_bio"
   },
   "security_priest_no_gain": {
     "id": "security_priest_no_gain",
@@ -526,7 +526,7 @@
     "orderWeight": 40,
     "exp": 85,
     "noEscape": true,
-    "dropTableId": "b4_vip_ranged_bio"
+    "dropTableId": "b5_vip_ranged_bio"
   },
   "optical_surveillance_unit": {
     "id": "optical_surveillance_unit",
@@ -542,6 +542,6 @@
     "orderWeight": 95,
     "noCorpse": true,
     "exp": 60,
-    "dropTableId": "b4_vip_mech"
+    "dropTableId": "b5_vip_mech"
   }
 }

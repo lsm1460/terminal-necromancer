@@ -1,8 +1,6 @@
-import fs from 'fs'
-import path from 'path'
 import { EventSystem } from '~/systems/EventSystem'
 import { BroadcastScript } from '~/types'
-import { Logger } from './Logger'
+import { Terminal } from './Terminal'
 import { NPCManager } from './NpcManager'
 
 export class Broadcast {
@@ -68,12 +66,17 @@ export class Broadcast {
     "📢 \"치익... 분실된 개체 '에이미(7세)'의 인식표가 파손된 채 발견되었습니다. 그냥 그렇다고요.\"",
   ]
 
+  /**
+   * @param scriptData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
+   * @param npcManager - NPC 상태 확인을 위한 매니저
+   * @param eventSystem - 이벤트 구독을 위한 시스템
+   */
   constructor(
-    scriptPath: string,
+    scriptData: any,
     private npcManager: NPCManager,
     eventSystem: EventSystem
   ) {
-    this.scripts = JSON.parse(fs.readFileSync(path.resolve(scriptPath), 'utf-8'))
+    this.scripts = scriptData
 
     eventSystem.subscribe((eventId) => this.onEventCleared(eventId))
   }
@@ -93,10 +96,10 @@ export class Broadcast {
         const randomIndex = Math.floor(Math.random() * this.terminalMessages.length)
         const message = this.terminalMessages[randomIndex]
 
-        Logger.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-        Logger.log(`📡 [터미널 브로드캐스팅: 에코]`)
-        Logger.log(`  ${message}`)
-        Logger.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        Terminal.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        Terminal.log(`📡 [터미널 브로드캐스팅: 에코]`)
+        Terminal.log(`  ${message}`)
+        Terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
       }
 
       return
@@ -107,13 +110,13 @@ export class Broadcast {
     const currentIndex = this.playProgress[currentEventId] || 0
 
     // 2. 헤더 출력
-    Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-    Logger.log(`📡 [터미널 브로드캐스팅: 에코]`)
+    Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+    Terminal.log(`📡 [터미널 브로드캐스팅: 에코]`)
 
     // 3. 브릿지 멘트 출력 조건 (새 이벤트 시작 + 이전 이벤트가 방금 끝났을 때)
     if (currentIndex === 0 && this.justFinishedEvent) {
       const randomBridge = this.bridgeMemos[Math.floor(Math.random() * this.bridgeMemos.length)]
-      Logger.log(`  ${randomBridge}`)
+      Terminal.log(`  ${randomBridge}`)
 
       // 브릿지를 한 번 출력했으므로 플래그 초기화
       this.justFinishedEvent = false
@@ -124,7 +127,7 @@ export class Broadcast {
     const lines = isHostile ? content.hostile : content.normal
 
     if (currentIndex < lines.length) {
-      Logger.log(`  📢 "${lines[currentIndex]}"`)
+      Terminal.log(`  📢 "${lines[currentIndex]}"`)
 
       // 진행도 업데이트
       this.playProgress[currentEventId] = currentIndex + 1
@@ -135,7 +138,7 @@ export class Broadcast {
       }
     }
 
-    Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+    Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 
     // 5. 이벤트가 완전히 종료되었다면 큐에서 제거하고 플래그 세우기
     if (this.playedState[currentEventId]) {

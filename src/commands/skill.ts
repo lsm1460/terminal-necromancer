@@ -1,4 +1,4 @@
-import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { SkillManager } from '~/core/skill'
 import { CommandFunction, NPC } from '~/types'
 import { delay } from '~/utils'

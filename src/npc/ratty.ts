@@ -1,5 +1,5 @@
-import enquirer from 'enquirer'
 import { GameContext } from '~/types'
+import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const RattyHandler: NPCHandler = {
@@ -35,14 +35,7 @@ async function handleThreat(context: GameContext) {
     '래티: "아니면 무릎이라도 꿇고 빌어보던가. 그럼 내 전성기 시절 비법이라도 하나 전수해 줄지 누가 알아?"',
   ]
 
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   context.events.completeEvent('b2_ratty')
 }

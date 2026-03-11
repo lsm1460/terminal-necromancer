@@ -1,7 +1,7 @@
-import enquirer from 'enquirer'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { GameContext } from '~/types'
+import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const ZedHandler: NPCHandler = {
@@ -58,8 +58,8 @@ function handleHeal(player: Player) {
     minion.hp = minion.maxHp
   })
 
-  Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Logger.log(`💉 [의무실 기록: 닥터 제드]`)
+  Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+  Terminal.log(`💉 [의무실 기록: 닥터 제드]`)
 
   // 상황에 따른 제드의 대사 (랜덤 혹은 고정)
   const medicalLogs = [
@@ -70,9 +70,9 @@ function handleHeal(player: Player) {
   ]
   const randomLog = medicalLogs[Math.floor(Math.random() * medicalLogs.length)]
 
-  Logger.log(randomLog)
-  Logger.log(`✨ HP/MP와 모든 소환수의 상태가 완벽하게 복구되었습니다.`)
-  Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+  Terminal.log(randomLog)
+  Terminal.log(`✨ HP/MP와 모든 소환수의 상태가 완벽하게 복구되었습니다.`)
+  Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 }
 
 async function handleGossip(context: GameContext) {
@@ -105,14 +105,7 @@ async function handleGossip(context: GameContext) {
   }
 
   // 1. 순차적 대화 노출
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   events.completeEvent('HEARD_RESISTANCE')
 }
@@ -131,8 +124,8 @@ async function handleUpgradeGolem(player: Player) {
 
   // 2. 입장 시 기계 혐오 대사
   if (machineStacks > 0) {
-    Logger.log(`\n닥터 제드: "우아악! 이 비린내 나는 쇳덩어리들은 뭐죠?! 당장 내 눈앞에서 치워주시겠어요?!"`)
-    Logger.log(`닥터 제드: "이런 고철 쓰레기들 때문에 내 정수가 들어갈 자리가 없다고요!"`)
+    Terminal.log(`\n닥터 제드: "우아악! 이 비린내 나는 쇳덩어리들은 뭐죠?! 당장 내 눈앞에서 치워주시겠어요?!"`)
+    Terminal.log(`닥터 제드: "이런 고철 쓰레기들 때문에 내 정수가 들어갈 자리가 없다고요!"`)
   }
 
   // 3. 메뉴 구성
@@ -151,24 +144,22 @@ async function handleUpgradeGolem(player: Player) {
     },
   ]
 
-  const { action } = await enquirer.prompt<{ action: string }>({
-    type: 'select',
-    name: 'action',
-    message: `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ] / 보유 영혼 조각: ${player.exp}`,
-    choices,
-  })
+  const action = await Terminal.select(
+    `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ] / 보유 영혼 조각: ${player.exp}`,
+    choices
+  )
 
   // 4. 실행 로직
   if (action === 'soul_upgrade') {
     if (totalStacks === player.upgradeLimit) {
-      Logger.log(`\n닥터 제드: (메스를 부들부들 떨며) "슬롯이 없다고? 아니, 내가 '만들면' 있는 겁니다!"`)
+      Terminal.log(`\n닥터 제드: (메스를 부들부들 떨며) "슬롯이 없다고? 아니, 내가 '만들면' 있는 겁니다!"`)
     } else if (totalStacks >= ZED_LIMIT) {
-      Logger.log(`\n닥터 제드: "더 이상은 안 됩니다. 이 이상 넣으면 골렘이 아니라 폭발하는 고기 풍선이 될 뿐이에요."`)
+      Terminal.log(`\n닥터 제드: "더 이상은 안 됩니다. 이 이상 넣으면 골렘이 아니라 폭발하는 고기 풍선이 될 뿐이에요."`)
       return
     }
 
     if (player.exp < upgradeCost) {
-      Logger.log(`\n닥터 제드: "영혼 조각이 부족하잖아!"`)
+      Terminal.log(`\n닥터 제드: "영혼 조각이 부족하잖아!"`)
       return
     }
 
@@ -176,21 +167,21 @@ async function handleUpgradeGolem(player: Player) {
     player.golemUpgrade.push('soul')
 
     if (totalStacks === player.upgradeLimit) {
-      Logger.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-      Logger.log(`💉 [광기의 한계 돌파 집도 완료]`)
-      Logger.log(`닥터 제드: "하하하! 억지로 쑤셔 넣으니 결국 들어가잖아! 이제야 좀 '살아있는' 것 같군!"`)
-      Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+      Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+      Terminal.log(`💉 [광기의 한계 돌파 집도 완료]`)
+      Terminal.log(`닥터 제드: "하하하! 억지로 쑤셔 넣으니 결국 들어가잖아! 이제야 좀 '살아있는' 것 같군!"`)
+      Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
     } else {
-      Logger.log('\n💉 [집도 완료] 닥터 제드: "히히히! 보라고, 이 영혼이 강철 속에서 비명을 지르며 요동치고 있어!"')
+      Terminal.log('\n💉 [집도 완료] 닥터 제드: "히히히! 보라고, 이 영혼이 강철 속에서 비명을 지르며 요동치고 있어!"')
     }
   } else if (action === 'remove_soul') {
     if (soulStacks === 0) {
-      Logger.log(`\n닥터 제드: "내 정수가 하나도 없는데요?"`)
+      Terminal.log(`\n닥터 제드: "내 정수가 하나도 없는데요?"`)
       return
     }
 
     if (player.exp < removeCost) {
-      Logger.log(`\n닥터 제드: "적출 수술비도 없으면서 날 부려먹으려고? 영혼 조각이나 더 모아오세요."`)
+      Terminal.log(`\n닥터 제드: "적출 수술비도 없으면서 날 부려먹으려고? 영혼 조각이나 더 모아오세요."`)
       return
     }
 
@@ -198,16 +189,16 @@ async function handleUpgradeGolem(player: Player) {
     const lastSoulIndex = player.golemUpgrade.lastIndexOf('soul')
     player.golemUpgrade.splice(lastSoulIndex, 1)
 
-    Logger.log(`\n🧪 [생체 적출 완료] 닥터 제드가 만족스러운 미소로 도려낸 조직을 챙깁니다.`)
+    Terminal.log(`\n🧪 [생체 적출 완료] 닥터 제드가 만족스러운 미소로 도려낸 조직을 챙깁니다.`)
   } else if (action === 'exit') {
-    Logger.log(`\n닥터 제드: "나갈 때 문 닫으세요. 먼지 들어와"`)
+    Terminal.log(`\n닥터 제드: "나갈 때 문 닫으세요. 먼지 들어와"`)
   }
 }
 
 async function handleAwakeGolem(player: Player, context: GameContext) {
   const { events } = context
   if (player.golem) {
-    Logger.log(`\n제드: "이미 기동 중인 개체입니다. 중복 출력은 자원 낭비일 뿐이죠."`)
+    Terminal.log(`\n제드: "이미 기동 중인 개체입니다. 중복 출력은 자원 낭비일 뿐이죠."`)
     return
   }
 
@@ -219,37 +210,25 @@ async function handleAwakeGolem(player: Player, context: GameContext) {
   ]
 
   // 1. 순차적 대화 노출
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   // 3. 최종 확인
   const warningMsg = `핵에 사신의 마력을 주입합니다. 골렘이 불완전하게 깨어나며 폭주할 위험이 있습니다. 강행하시겠습니까?`
-  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-    type: 'confirm',
-    name: 'proceed',
-    message: warningMsg,
-    initial: false,
-  })
+  const proceed = await Terminal.confirm(warningMsg)
 
   if (!proceed) {
     events.completeEvent('golem_generation_denied_zed')
 
-    Logger.log('\n제드: "현명한 선택입니다. 아직 금속의 비명이 멈추지 않았으니까요."')
+    Terminal.log('\n제드: "현명한 선택입니다. 아직 금속의 비명이 멈추지 않았으니까요."')
     return
   }
 
   player.unlockGolem('zed')
 
-  Logger.log(`\n[⚙️ 골렘 기동 성공]`)
-  Logger.log(`제드: "시스템 로드 완료. 보시다시피... 꽤 훌륭한 살육 병기가 되었군요."`)
-  Logger.log(`제드: "이제 이 고철 덩어리는 당신의 그림자를 따라다니며 앞길을 가로막는 것들을 짓이겨 놓을 겁니다."`)
-  Logger.log(`제드: "원한다면 골렘을 강화시킬 방법이 있을지도 모릅니다.."`)
+  Terminal.log(`\n[⚙️ 골렘 기동 성공]`)
+  Terminal.log(`제드: "시스템 로드 완료. 보시다시피... 꽤 훌륭한 살육 병기가 되었군요."`)
+  Terminal.log(`제드: "이제 이 고철 덩어리는 당신의 그림자를 따라다니며 앞길을 가로막는 것들을 짓이겨 놓을 겁니다."`)
+  Terminal.log(`제드: "원한다면 골렘을 강화시킬 방법이 있을지도 모릅니다.."`)
 }
 
 export default ZedHandler

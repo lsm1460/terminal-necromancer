@@ -2,131 +2,145 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
-    "y": 2,
-    "_maxHp": 74,
-    "hp": 74,
-    "_maxMp": 74,
-    "mp": 124,
-    "atk": 24,
-    "def": 11,
+    "x": 1,
+    "y": 1,
+    "_maxHp": 50,
+    "hp": 27,
+    "_maxMp": 50,
+    "mp": 40,
+    "atk": 10,
+    "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 8826,
-    "exp": 1047,
-    "level": 5,
-    "karma": 1,
-    "_maxMemorize": 4,
+    "gold": 26,
+    "exp": 20,
+    "level": 1,
+    "karma": 0,
+    "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
-      "CORPSE_EXPLOSION",
-      "SOUL_HARVEST",
-      "CURSE"
+      "RECALL_SKELETON",
+      "FOCUS_FIRE"
     ],
     "equipped": {
       "weapon": {
-        "id": "golem_core_staff_84ea5314a352d0b8",
-        "label": "\u001b[34m🔵 숙련된 강철 수호자의 과부하 지팡이\u001b[0m",
+        "id": "iron_sword_Zcig-Aae",
+        "label": "\u001b[35m🟣 [기억] 필멸의 철검\u001b[0m",
         "type": "weapon",
-        "attackType": "ranged",
+        "attackType": "melee",
         "atkRange": [
-          16,
-          28
+          2,
+          4
         ],
         "critRange": [
-          0.12,
-          0.18
+          0,
+          0.05
         ],
-        "maxSkeletonRange": [
-          1,
-          2
-        ],
-        "price": 4200,
-        "sellPrice": 1150,
-        "description": "쓰러진 강철 골렘의 가동부에서 적출한 육중한 지팡이입니다. 중심부의 코어에서는 여전히 불안정한 전류가 흐르며, 휘두를 때마다 웅웅거리는 진동이 손목을 타고 전해집니다.",
-        "mp": 50,
+        "price": 500,
+        "sellPrice": 120,
+        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
         "quantity": 1,
-        "minRarity": "RARE",
-        "atk": 25,
-        "crit": 0.12,
-        "maxSkeleton": 1,
-        "rarity": "RARE",
-        "x": 2,
-        "y": 3
+        "atk": 4,
+        "crit": 0.05,
+        "rarity": "EPIC",
+        "affix": {
+          "id": "MEMORY",
+          "name": "기억",
+          "description": "메모라이즈 슬롯 수가 증가합니다.",
+          "valueRange": [
+            1,
+            2
+          ],
+          "metadata": {
+            "needsConfirmOnUnequip": true,
+            "unEquipCaution": "장비 해제 시 각인된 마법 일부가 사라집니다."
+          },
+          "value": 1
+        },
+        "x": 0,
+        "y": 1
       },
       "armor": {
-        "id": "rebel_iron_plate_bd148f407f7df41b",
-        "label": "\u001b[34m🔵 날카로운 낡은 반란군의 흉갑\u001b[0m",
+        "id": "leather_armor_bdSZRArr",
+        "label": "\u001b[37m⚪ 가죽 갑옷\u001b[0m",
         "type": "armor",
         "defRange": [
-          20,
-          24
+          2,
+          5
         ],
         "evaRange": [
           0,
           0.02
         ],
-        "price": 2300,
-        "sellPrice": 600,
-        "description": "하역장 컨테이너의 철판을 떼어내 가슴에 덧댔습니다.",
+        "price": 400,
+        "sellPrice": 100,
+        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
         "quantity": 1,
-        "minRarity": "RARE",
-        "def": 25,
-        "eva": 0.01,
-        "rarity": "RARE",
-        "x": 2,
-        "y": 3
+        "def": 4,
+        "eva": 0.02,
+        "rarity": "COMMON",
+        "x": 0,
+        "y": 1
       }
     },
     "unlockedSkills": [
       "RAISE_SKELETON",
-      "FOCUS_FIRE",
-      "CORPSE_EXPLOSION",
-      "SOUL_HARVEST",
-      "SOUL_TRANSFER",
-      "CURSE"
+      "RECALL_SKELETON",
+      "FOCUS_FIRE"
     ],
-    "_golem": {
-      "id": "golem",
-      "name": "하역장의 기계 골렘",
-      "attackType": "melee",
-      "baseMaxHp": 90,
-      "maxHp": 90,
-      "hp": 100,
-      "baseAtk": 20,
-      "atk": 20,
-      "baseDef": 40,
-      "def": 40,
-      "agi": 3,
-      "exp": 0,
-      "description": "하역장에서 수거한 핵으로 마야가 부활시킨 거대 병기입니다.",
-      "dropTableId": "",
-      "encounterRate": 0,
-      "isAlive": true,
-      "skills": [
-        "power_smash"
-      ],
-      "isMinion": true,
-      "isGolem": true,
-      "deathLine": "(알 수 없는 기계음)",
-      "orderWeight": -15
-    },
-    "inventory": [],
+    "inventory": [
+      {
+        "id": "pizza",
+        "label": "피자",
+        "type": "food",
+        "hpHeal": 5,
+        "price": 15,
+        "sellPrice": 3,
+        "description": "지하에 살던 거북이들이 좋아했던 피자",
+        "quantity": 2,
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "mana_potion_small",
+        "label": "작은 마나 포션",
+        "type": "consumable",
+        "mpHeal": 20,
+        "price": 45,
+        "sellPrice": 6,
+        "description": "작은 마나 회복 포션으로, mp 20을 보충할 수 있습니다.",
+        "quantity": 1,
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "potion_small",
+        "label": "작은 체력 포션",
+        "type": "consumable",
+        "hpHeal": 20,
+        "price": 20,
+        "sellPrice": 5,
+        "description": "작은 체력 회복 포션으로, hp 20을 보충할 수 있습니다.",
+        "quantity": 1,
+        "x": 1,
+        "y": 1
+      }
+    ],
     "inventoryMax": 15,
     "skeleton": [
       {
-        "id": "skeleton_1771984088909",
+        "id": "skeleton_1773103173336",
         "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 방패병",
         "attackType": "melee",
-        "maxHp": 115,
-        "hp": 115,
-        "atk": 14,
-        "def": 15,
-        "agi": 13,
+        "maxHp": 43,
+        "hp": 20,
+        "atk": 8,
+        "def": 9,
+        "agi": 6,
         "skills": [],
         "exp": 0,
-        "description": "터미널 보안 사수의 유골로 만들어진 소환수입니다.",
+        "description": "선로 랫맨의 유골로 만들어진 소환수입니다.",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
@@ -135,79 +149,33 @@
         "orderWeight": 4
       },
       {
-        "id": "skeleton_1771477381447",
-        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 힐러",
-        "attackType": "ranged",
-        "maxHp": 52,
-        "hp": 52,
-        "atk": 9,
-        "def": 10,
-        "agi": 16,
-        "skills": [
-          "minor_heal"
-        ],
+        "id": "skeleton_1773103204521",
+        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
+        "attackType": "melee",
+        "maxHp": 19,
+        "hp": 19,
+        "atk": 8,
+        "def": 5,
+        "agi": 8,
+        "skills": [],
         "exp": 0,
-        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "description": "선로 랫맨의 유골로 만들어진 소환수입니다.",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
-        "id": "skeleton_1771477776052",
-        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 화염술사",
-        "attackType": "ranged",
-        "maxHp": 52,
-        "hp": 52,
-        "atk": 9,
-        "def": 10,
-        "agi": 16,
-        "skills": [
-          "fire_bolt"
-        ],
-        "exp": 0,
-        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
-        "id": "skeleton_1771482629201",
-        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 힐러",
-        "attackType": "ranged",
-        "maxHp": 32,
-        "hp": 32,
-        "atk": 10,
-        "def": 3,
-        "agi": 33,
-        "skills": [
-          "minor_heal"
-        ],
-        "exp": 0,
-        "description": "하역장 사냥개의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
+        "orderWeight": 10
       }
     ],
     "skeletonSubspace": [],
     "subspaceLimit": 15,
-    "_maxSkeleton": 3,
-    "golemUpgrade": [
-      "soul"
-    ],
+    "_maxSkeleton": 2,
+    "golemUpgrade": [],
     "knightUpgrade": [],
     "upgradeLimit": 5
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -248,13 +216,13 @@
       },
       "first_boss": {
         "hp": 80,
-        "isAlive": false,
-        "reborn": true,
+        "isAlive": true,
+        "reborn": false,
         "relation": 0
       },
       "second_boss": {
         "hp": 500,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -301,8 +269,8 @@
         "relation": 0
       },
       "caron": {
-        "hp": 1000,
-        "isAlive": false,
+        "hp": 500,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -319,30 +287,20 @@
         "relation": 0
       }
     },
-    "factionHostility": {
-      "untouchable": 100,
-      "resistance": -47
-    },
-    "factionContribution": {
-      "untouchable": 95,
-      "resistance": 505
-    }
+    "factionHostility": {},
+    "factionContribution": {}
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B2_Transit_Area",
+    "id": "ucPWV-5u",
+    "tileId": "11",
+    "exp": 0,
+    "gold": 1
+  },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
     "talk_death_1",
-    "first_boss",
-    "talk_death_2",
-    "b3_apostle",
-    "RESISTANCE_BASE",
-    "maya_1",
-    "kane_1",
-    "b2_ratty",
-    "second_boss",
-    "talk_death_3",
-    "caron_is_mine",
-    "report_caron_to_death"
+    "b2_ratty"
   ]
 }

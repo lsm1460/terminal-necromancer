@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
     "outDir": "./dist",
     "types": ["node"],
     "baseUrl": ".", 
     "paths": {
       "~/*": ["src/*"]
     }
-  }
+  },
+  "include": ["src"]
 }

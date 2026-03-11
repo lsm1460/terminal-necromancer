@@ -1,6 +1,5 @@
-import enquirer from 'enquirer'
 import _ from 'lodash'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import BossEvent from '~/systems/events/BossEvent'
 import { GameContext, NPC, Tile } from '~/types'
@@ -108,12 +107,7 @@ async function firstEncounter() {
     '카론: "관리자이기 전에 부모였던 저로서는, 그 공정함이 무엇보다 시리고 잔혹하게 느껴지더군요."',
   ])
 
-  const { answer } = await enquirer.prompt<{ answer: boolean }>({
-    type: 'confirm',
-    name: 'answer',
-    message: '카론: "당신 또한 사신의 법도 아래서, 기계적인 숙청을 반복하는 노예의 삶에 만족하십니까?"',
-    initial: false,
-  })
+  const answer = await Terminal.confirm('카론: "당신 또한 사신의 법도 아래서, 기계적인 숙청을 반복하는 노예의 삶에 만족하십니까?"')
 
   firstAnswer = answer
   await speak([
@@ -122,7 +116,7 @@ async function firstEncounter() {
       : '카론: "그 눈빛... 왕관의 무게를 기억하는 자라면 마땅히 느껴야 할 갈증이 보이는군요."',
   ])
 
-  Logger.log('\n카론이 안개 속으로 모습을 감춥니다.')
+  Terminal.log('\n카론이 안개 속으로 모습을 감춥니다.')
 }
 
 /** 2차 대면: 시스템에 대한 분노와 복수심 확인 */
@@ -133,18 +127,12 @@ async function secondEncounter() {
     '카론: "저는 증오합니다. 슬픔조차 허용하지 않는 그 차가운 질서를,\n그리고 내 아이를 한 줌의 연기로 만든 그 무미건조한 손길을!"',
   ])
 
-  const { answer } = await enquirer.prompt<{ answer: boolean }>({
-    type: 'confirm',
-    name: 'answer',
-    message:
-      '카론: "집행관이여, 당신도 만약 사신의 원칙이 당신의 소중한 것을 파괴한다면,\n그분에게 칼끝을 겨누겠습니까?"',
-    initial: false,
-  })
+  const answer = await Terminal.confirm('카론: "집행관이여, 당신도 만약 사신의 원칙이 당신의 소중한 것을 파괴한다면,\n그분에게 칼끝을 겨누겠습니까?"')
 
   secondAnswer = answer
   await speak(['카론: "알겠습니다. 당신이라는 존재의 무게를... 이제는 완전히 알 것 같군요."'])
 
-  Logger.log('\n카론의 기운이 격렬하게 일렁이다 사라집니다.')
+  Terminal.log('\n카론의 기운이 격렬하게 일렁이다 사라집니다.')
 }
 
 /** 최종 대면: 답변 판단 및 최종 결판 */
@@ -182,12 +170,7 @@ async function finalEncounter(player: Player, npc: NPC, context: GameContext) {
     '카론: "마지막 제안입니다. 사신께는 제 영혼의 껍데기를 바치고,\n제 본질은 당신의 그림자가 되어 그분의 완벽한 시스템에 \'비공식적인 오점\'을 남겨보겠습니다."',
   ])
 
-  const { choice } = await enquirer.prompt<{ choice: boolean }>({
-    type: 'confirm',
-    name: 'choice',
-    message: '카론: "저와 함께 사신을 기만하고, 언젠가 그분의 목을 칠 기회를 엿보겠습니까?"',
-    initial: true,
-  })
+  const choice = await Terminal.confirm('카론: "저와 함께 사신을 기만하고, 언젠가 그분의 목을 칠 기회를 엿보겠습니까?"')
 
   if (choice) {
     await speak([
@@ -222,7 +205,7 @@ async function handleBattle(player: Player, npc: NPC, context: GameContext, isMa
     await speak(['카론: "무례하군요. 제 이야기가 끝나기도 전에 칼을 뽑다니... 사신이 보낸 도살자답습니다."'])
   }
 
-  Logger.log(`\n카론과의 전투를 시작합니다!`)
+  Terminal.log(`\n카론과의 전투를 시작합니다!`)
   const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
 
   if (isWin) {

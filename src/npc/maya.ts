@@ -1,8 +1,8 @@
-import enquirer from 'enquirer'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 import { handleBuy, handleSell, handleTalk, NPCHandler } from './NPCHandler'
+import { speak } from '~/utils'
 
 const MayaHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -67,7 +67,7 @@ const MayaHandler: NPCHandler = {
         await handleUpgradeGolem(player)
         break
       case 'modify_knight':
-        Logger.log('\n[마야]: "다크나이트의 무장 상태를 변경할게."')
+        Terminal.log('\n[마야]: "다크나이트의 무장 상태를 변경할게."')
         // TODO: 다크나이트 장비 관리 호출
         break
       default:
@@ -125,14 +125,7 @@ async function handleJoin(player: Player, context: GameContext) {
 
   dialogues.push('마야: "헤헤, 그럼 난 마저 기름 좀 칠하고 있을게. 필요한 거 있으면 언제든 말해!"')
 
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   events.completeEvent('maya_1')
 }
@@ -140,7 +133,7 @@ async function handleJoin(player: Player, context: GameContext) {
 async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) {
   if (player.golem) {
     // 이미 골렘을 가지고 있는 경우
-    Logger.log(`\n마야: "뭐야, 이미 골렘 한 마리 데리고 있잖아? 욕심도 많네. 걔나 잘 관리해."`)
+    Terminal.log(`\n마야: "뭐야, 이미 골렘 한 마리 데리고 있잖아? 욕심도 많네. 걔나 잘 관리해."`)
     return
   }
 
@@ -152,39 +145,27 @@ async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) 
   ]
 
   // 1. 순차적 대화 노출
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
-  }
+  await speak(dialogues)
 
   // 3. 최종 확인
   const warningMsg = `핵에 사신의 마력을 주입합니다. 골렘이 불완전하게 깨어나며 폭주할 위험이 있습니다. 강행하시겠습니까?`
-  const { proceed } = await enquirer.prompt<{ proceed: boolean }>({
-    type: 'confirm',
-    name: 'proceed',
-    message: warningMsg,
-    initial: false,
-  })
+  const proceed = await Terminal.confirm(warningMsg)
 
   if (!proceed) {
     // 강행하지 않기로 했을 때
-    Logger.log('\n마야: "쫄긴. 뭐, 죽기 싫으면 관두는 게 현명하긴 하지. 다시 생각나면 가져오든가."')
+    Terminal.log('\n마야: "쫄긴. 뭐, 죽기 싫으면 관두는 게 현명하긴 하지. 다시 생각나면 가져오든가."')
     return
   }
 
   player.unlockGolem('maya')
 
-  context.npcs.updateFactionContribution(npc.faction, 40)
+  npc.updateContribution(40)
 
   // 성공 시 대사
-  Logger.log(`\n[⚙️ 골렘 기동 성공]`)
-  Logger.log(`마야: "좋아, 사신의 마력이 제대로 스며들었어. 눈 떠, 이 고물덩어리야!"`)
-  Logger.log(`마야: "(끼릭거리는 기계음과 함께) 봐, 완벽하지? 이제 이 녀석은 네 명령만 들을 거야."`)
-  Logger.log(`마야: "폭주해서 너까지 밟아버리지 않게 조심하라고. 난 책임 안 진다?"`)
+  Terminal.log(`\n[⚙️ 골렘 기동 성공]`)
+  Terminal.log(`마야: "좋아, 사신의 마력이 제대로 스며들었어. 눈 떠, 이 고물덩어리야!"`)
+  Terminal.log(`마야: "(끼릭거리는 기계음과 함께) 봐, 완벽하지? 이제 이 녀석은 네 명령만 들을 거야."`)
+  Terminal.log(`마야: "폭주해서 너까지 밟아버리지 않게 조심하라고. 난 책임 안 진다?"`)
 }
 
 async function handleUpgradeGolem(player: Player) {
@@ -199,8 +180,8 @@ async function handleUpgradeGolem(player: Player) {
 
   // 2. 입장 시 생체(Soul) 혐오 대사
   if (soulStacks > 0) {
-    Logger.log(`\n마야: "우으으... 이 끈적거리고 기분 나쁜 검은 안개는 뭐야? 그 안경잡이 아저씨 짓이지?!"`)
-    Logger.log(
+    Terminal.log(`\n마야: "우으으... 이 끈적거리고 기분 나쁜 검은 안개는 뭐야? 그 안경잡이 아저씨 짓이지?!"`)
+    Terminal.log(
       `마야: "기계 속에 이런 오물을 집어넣다니... 으, 닦아내는 데 세척비랑 공임비 더 받을 거야! 금화 넉넉히 챙겨왔지?"`
     )
   }
@@ -221,38 +202,36 @@ async function handleUpgradeGolem(player: Player) {
     },
   ]
 
-  const { action } = await enquirer.prompt<{ action: string }>({
-    type: 'select',
-    name: 'action',
-    message: `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ] / 내 골드: ${player.gold}G`,
-    choices,
-  })
+  const action = await Terminal.select(
+    `[ 현재 슬롯: ${player.golemUpgrade.join(' | ') || 'EMPTY'} ] / 내 골드: ${player.gold}G`,
+    choices
+  )
 
   // 4. 실행 로직
   if (action === 'machine_upgrade') {
     if (totalStacks >= player.upgradeLimit) {
-      Logger.log(`\n마야: "미안하지만 공간이 꽉 찼어! 억지로 끼워 넣으면 프레임이 휘어버릴걸? 그건 기술자의 수치야!"`)
+      Terminal.log(`\n마야: "미안하지만 공간이 꽉 찼어! 억지로 끼워 넣으면 프레임이 휘어버릴걸? 그건 기술자의 수치야!"`)
       return
     }
 
     if (player.gold < upgradeCost) {
-      Logger.log(`\n마야: "에이, 돈이 모자라잖아! 레지스탕스도 공짜로는 부품 못 구해온다구. 얼른 벌어와!"`)
+      Terminal.log(`\n마야: "에이, 돈이 모자라잖아! 레지스탕스도 공짜로는 부품 못 구해온다구. 얼른 벌어와!"`)
       return
     }
 
     player.gold -= upgradeCost
     player.golemUpgrade.push('machine')
 
-    Logger.log(`\n🛠️ [공정 완료] 마야가 렌치로 마지막 볼트를 조였습니다!`)
-    Logger.log(`마야: "보라고! 이 매끈하고 단단한 강철의 광택! 영혼 따위 안 섞여도 이게 바로 진짜 기술의 힘이지!"`)
+    Terminal.log(`\n🛠️ [공정 완료] 마야가 렌치로 마지막 볼트를 조였습니다!`)
+    Terminal.log(`마야: "보라고! 이 매끈하고 단단한 강철의 광택! 영혼 따위 안 섞여도 이게 바로 진짜 기술의 힘이지!"`)
   } else if (action === 'remove_machine') {
     if (machineStacks === 0) {
-      Logger.log(`\n마야: "내가 달아준 파츠가 하나도 없는데 뭘 떼라는 거야? 이상한 사람이라니까!"`)
+      Terminal.log(`\n마야: "내가 달아준 파츠가 하나도 없는데 뭘 떼라는 거야? 이상한 사람이라니까!"`)
       return
     }
 
     if (player.gold < removeCost) {
-      Logger.log(`\n마야: "해체하는 것도 다 인건비라고! 정당한 골드를 주지 않으면 드라이버 한 번 안 움직일 거야!"`)
+      Terminal.log(`\n마야: "해체하는 것도 다 인건비라고! 정당한 골드를 주지 않으면 드라이버 한 번 안 움직일 거야!"`)
       return
     }
 
@@ -260,10 +239,10 @@ async function handleUpgradeGolem(player: Player) {
     const lastMachineIndex = player.golemUpgrade.lastIndexOf('machine')
     player.golemUpgrade.splice(lastMachineIndex, 1)
 
-    Logger.log(`\n🔧 [파츠 해체 완료] 마야가 아쉬운 표정으로 깔끔하게 떼어낸 부품을 챙깁니다.`)
-    Logger.log(`마야: "치, 이렇게 좋은 파츠를 왜 버리는 건지 모르겠네... 중고로 팔아버릴 거야!"`)
+    Terminal.log(`\n🔧 [파츠 해체 완료] 마야가 아쉬운 표정으로 깔끔하게 떼어낸 부품을 챙깁니다.`)
+    Terminal.log(`마야: "치, 이렇게 좋은 파츠를 왜 버리는 건지 모르겠네... 중고로 팔아버릴 거야!"`)
   } else if (action === 'exit') {
-    Logger.log(`\n마야: "다음에 또 봐! 기름칠하는 거 잊지 말고!"`)
+    Terminal.log(`\n마야: "다음에 또 봐! 기름칠하는 거 잊지 말고!"`)
   }
 }
 

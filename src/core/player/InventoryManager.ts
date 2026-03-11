@@ -1,13 +1,15 @@
-import enquirer from 'enquirer'
 import { ArmorItem, ConsumableItem, Item, ItemType, WeaponItem } from '~/types'
-import { Logger } from '../Logger'
+import { Terminal } from '../Terminal'
 import { Player } from './Player'
 
 export class InventoryManager {
   inventoryMax = 15
   inventory: Item[] = []
 
-  constructor(private player: Player, saved?: Partial<Player>) {
+  constructor(
+    private player: Player,
+    saved?: Partial<Player>
+  ) {
     if (saved) {
       this.inventoryMax = saved.inventoryMax || 15
       this.inventory = saved.inventory || []
@@ -17,7 +19,7 @@ export class InventoryManager {
   async equip(newItem: Item) {
     const itemIndex = this.inventory.findIndex((i) => i.id === newItem.id)
     if (itemIndex === -1) {
-      Logger.log('❌ 인벤토리에 해당 아이템이 없습니다.')
+      Terminal.log('❌ 인벤토리에 해당 아이템이 없습니다.')
       return false
     }
 
@@ -28,7 +30,7 @@ export class InventoryManager {
 
     const slot = slotMap[newItem.type]
     if (!slot) {
-      Logger.log('⚠️ 장착할 수 없는 아이템 타입입니다.')
+      Terminal.log('⚠️ 장착할 수 없는 아이템 타입입니다.')
       return false
     }
 
@@ -38,12 +40,7 @@ export class InventoryManager {
       const warningMsg =
         caution.metadata?.unEquipCaution || `⚠️ [${caution.name}] 어픽스가 해제됩니다. 진행하시겠습니까?`
 
-      const { proceed } = await enquirer.prompt<{ proceed: boolean }> ({
-        type: 'confirm',
-        name: 'proceed',
-        message: warningMsg,
-        initial: false,
-      })
+      const proceed = await Terminal.confirm(warningMsg)
 
       if (!proceed) {
         return false
@@ -92,7 +89,7 @@ export class InventoryManager {
     const itemIndex = this.inventory.findIndex((item) => item.id === itemId)
 
     if (itemIndex === -1) {
-      Logger.log('❌ 인벤토리에 해당 아이템이 없습니다.')
+      Terminal.log('❌ 인벤토리에 해당 아이템이 없습니다.')
       return false
     }
 
@@ -118,55 +115,44 @@ export class InventoryManager {
     )
 
     if (consumables.length === 0) {
-      Logger.log('\n🎒 사용할 수 있는 소비 아이템이 없습니다.')
+      Terminal.log('\n🎒 사용할 수 있는 소비 아이템이 없습니다.')
       return false
     }
 
     if (!targetItem) {
-      const { itemId } = await enquirer.prompt<{ itemId: string }> ({
-        type: 'select',
-        name: 'itemId',
-        message: '어떤 아이템을 사용하시겠습니까?',
-        choices: [
-          ...consumables.map((item) => ({
-            name: item.id,
-            message: `${item.label} (x${item.quantity || 1}) ${
-              item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
-            }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
-          })),
-          { name: 'cancel', message: '🔙 취소' },
-        ],
-        format(value) {
-          if (value === 'cancel') return '취소'
-          const item = consumables.find((i) => i.id === value)
-
-          return item ? item.label : value
-        },
-      })
+      const itemId = await Terminal.select('어떤 아이템을 사용하시겠습니까?', [
+        ...consumables.map((item) => ({
+          name: item.id,
+          message: `${item.label} (x${item.quantity || 1}) ${
+            item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
+          }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
+        })),
+        { name: 'cancel', message: '🔙 취소' },
+      ])
 
       if (itemId === 'cancel') return false
       targetItem = consumables.find((i) => i.id === itemId)
     }
 
     if (!targetItem) {
-      Logger.log('해당 아이템이 존재하지 않습니다..')
+      Terminal.log('해당 아이템이 존재하지 않습니다..')
       return false
     }
 
-    Logger.log(`\n [${targetItem.label}]을(를) 사용합니다...`)
+    Terminal.log(`\n [${targetItem.label}]을(를) 사용합니다...`)
 
     if (targetItem.hpHeal) {
       const beforeHp = this.player.hp
       this.player.hp = Math.min(this.player.maxHp, this.player.hp + targetItem.hpHeal)
       const recovered = this.player.hp - beforeHp
-      Logger.log(`❤️ 체력이 ${recovered} 회복되었습니다. (현재: ${this.player.hp}/${this.player.maxHp})`)
+      Terminal.log(`❤️ 체력이 ${recovered} 회복되었습니다. (현재: ${this.player.hp}/${this.player.maxHp})`)
     }
 
     if (targetItem.mpHeal) {
       const beforeMp = this.player.mp
       this.player.mp = Math.min(this.player.maxMp, this.player.mp + targetItem.mpHeal)
       const recovered = this.player.mp - beforeMp
-      Logger.log(`🧪 마나가 ${recovered} 회복되었습니다. (현재: ${this.player.mp}/${this.player.maxMp})`)
+      Terminal.log(`🧪 마나가 ${recovered} 회복되었습니다. (현재: ${this.player.mp}/${this.player.maxMp})`)
     }
 
     this.removeItem(targetItem.id, 1)
@@ -178,6 +164,6 @@ export class InventoryManager {
     return {
       inventory: this.inventory,
       inventoryMax: this.inventoryMax,
-    };
+    }
   }
 }

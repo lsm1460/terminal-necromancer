@@ -1,5 +1,4 @@
-import enquirer from 'enquirer'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -20,27 +19,16 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
     ...skeletons.map((sk) => ({ id: sk.id, name: sk.name, type: 'skeleton' as const, maxHp: sk.maxHp })),
   ]
 
-  const { corpseId } = await enquirer.prompt<{ corpseId: string }>({
-    type: 'select',
-    name: 'corpseId',
-    message: '어떤 시체를 소모하시겠습니까?',
-    choices: [
-      ...targets.map((s) => ({
-        name: s.id,
-        message: s.name,
-      })),
-      { name: 'cancel', message: '🔙 취소하기' },
-    ],
-    format(value) {
-      if (value === 'cancel') return '취소됨'
-
-      const target = targets.find((c, idx) => (c.id || idx.toString()) === value)
-      return target ? `[${target.name}]` : value
-    },
-  })
+  const corpseId = await Terminal.select('어떤 시체를 소모하시겠습니까?', [
+    ...targets.map((s) => ({
+      name: s.id,
+      message: s.name,
+    })),
+    { name: 'cancel', message: '🔙 취소하기' },
+  ])
 
   if (corpseId === 'cancel') {
-    Logger.log('\n💬 스킬 사용을 취소했습니다.')
+    Terminal.log('\n💬 스킬 사용을 취소했습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -51,7 +39,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   const selectedCorpse = targets.find((target) => target.id === corpseId)
 
   if (!selectedCorpse) {
-    Logger.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+    Terminal.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
     return {
       isSuccess: false,
       isAggressive: false,
@@ -63,7 +51,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   // 시체 maxHp의 60%를 폭발의 순수 위력으로 설정합니다.
   const rawExplosionDamage = Math.floor(selectedCorpse.maxHp * 0.6)
 
-  Logger.log(`\n💥 ${player.name}이(가) 시체를 터뜨렸습니다! (기초 위력: ${rawExplosionDamage})`)
+  Terminal.log(`\n💥 ${player.name}이(가) 시체를 터뜨렸습니다! (기초 위력: ${rawExplosionDamage})`)
 
   // 3. 주변 적들에게 데미지 적용
   // player를 공격자(attacker)로 넘기되, 계산 방식은 rawDamage 기반으로 수행하도록 전달합니다.
@@ -71,7 +59,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   let isAggressive = true
 
   if (enemies.length === 0) {
-    Logger.log(' 주변에 휘말린 적이 없습니다.')
+    Terminal.log(' 주변에 휘말린 적이 없습니다.')
     isAggressive = false
   } else {
     for (const enemy of enemies) {

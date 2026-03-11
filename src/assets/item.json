@@ -46,6 +46,15 @@
     "sellPrice": 5,
     "description": "피로를 풀고 마력을 회복하는 데 도움을 줍니다."
   },
+  "premium_vodka": {
+    "id": "premium_vodka",
+    "label": "프리미엄 보드카",
+    "type": "food",
+    "mpHeal": 30,
+    "price": 1000,
+    "sellPrice": 20,
+    "description": "바에서 가져온 독한 술입니다."
+  },
   "tainted_core": {
     "id": "tainted_core",
     "label": "오염된 핵",
@@ -439,5 +448,37 @@
     "price": 2000,
     "sellPrice": 450,
     "description": "망령의 엑토플라즘이 깃든 지팡이입니다. 휘두를 때마다 기분 나쁜 비명이 들리며 마력을 방출합니다."
+  },
+  "caron_staff": {
+    "id": "caron_staff",
+    "label": "카론의 지팡이",
+    "type": "weapon",
+    "attackType": "ranged",
+    "atkRange": [10, 12],
+    "critRange": [0.08, 0.15],
+    "maxSkeletonRange": [2, 3],
+    "minRebornRarity": 1,
+    "price": 2500,
+    "sellPrice": 600,
+    "description": "카론이 애용하던 지팡이입니다. 공간을 다루는 힘이 느껴집니다."
+  },
+  "luxury_shoes": {
+    "id": "luxury_shoes",
+    "label": "피 묻은 구두",
+    "type": "item",
+    "price": 2500,
+    "sellPrice": 100,
+    "description": "피가 묻어 비싼 값 주고 되팔기는 글렀습니다."
+  },
+  "small_pistol": {
+    "id": "small_pistol",
+    "label": "작은 권총",
+    "type": "weapon",
+    "attackType": "ranged",
+    "atkRange": [6, 8],
+    "critRange": [0.12, 0.18],
+    "price": 1950,
+    "sellPrice": 180,
+    "description": "작은 크기이지만 호신용으로는 나쁘지 않아보입니다."
   }
 }

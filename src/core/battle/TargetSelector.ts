@@ -1,4 +1,4 @@
-import { CombatUnit } from './CombatUnit'
+import { CombatUnit } from './unit/CombatUnit'
 
 export class TargetSelector {
   private choices: { name: string; message: string; disabled: boolean; unit: CombatUnit }[]
@@ -16,7 +16,7 @@ export class TargetSelector {
   // 1. 공통: 은신 체크 (기본으로 적용하거나 선택적으로 호출)
   excludeStealth() {
     this.choices.forEach((c) => {
-      if (c.unit.buff.some((d) => d.type === 'stealth')) {
+      if (c.unit.isStealth) {
         c.disabled = true
         c.message += ' \x1b[90m(은신)\x1b[0m'
       }

@@ -4,25 +4,39 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && tsc-alias && cpx \"src/assets/**/*\" dist/assets",
+    "build:cli": "tsc && tsc-alias && cpx \"src/assets/**/*\" dist/assets",
     "start": "node dist/game.js",
-    "dev": "ts-node -r tsconfig-paths/register src/game.ts"
+    "dev:cli": "ts-node -r tsconfig-paths/register src/game.ts",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
     "@types/lodash": "^4.17.21",
-    "@types/node": "^25.0.2",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
     "cpx": "^1.5.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "dependencies": {
+    "ansi-to-html": "^0.7.2",
     "enquirer": "^2.4.1",
+    "framer-motion": "^12.35.0",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.577.0",
+    "nanoid": "^5.1.6",
     "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "zustand": "^5.0.11"
   }
 }

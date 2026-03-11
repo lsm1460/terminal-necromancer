@@ -1,5 +1,5 @@
-import { CombatUnit } from '~/core/battle/CombatUnit'
-import { Logger } from '~/core/Logger'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { GameContext, GameEvent, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
@@ -33,7 +33,7 @@ export class SecondBoss implements BossLogic {
       if (options.attackType !== 'explode') {
         options.rawDamage = 1 // 대미지를 1로 고정
 
-        Logger.log(
+        Terminal.log(
           `\n🛡️ [장갑] 견고한 장갑판이 공격을 튕겨냅니다!\n(장갑의 틈새를 공략할 강력한 '폭발'이 필요할 것 같습니다...)`
         )
       } else {
@@ -46,11 +46,11 @@ export class SecondBoss implements BossLogic {
       coreUnit.removeBuff('은신', true)
 
       // 2. 연출 로그 출력
-      Logger.log(`\n━━━━━━━━━━━━━━━ ⚠️  CORE EXPOSED ━━━━━━━━━━━━━━━`)
-      Logger.log(`💥 콰아앙! 견고했던 가슴 장갑판이 완전히 산산조각납니다!`)
-      Logger.log(`🔍 안개처럼 자욱했던 [은신] 장치가 과부하로 멈추며,`)
-      Logger.log(`✨ 보스의 중심부에서 빛나는 [기계 코어]가 모습을 드러냅니다!`)
-      Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+      Terminal.log(`\n━━━━━━━━━━━━━━━ ⚠️  CORE EXPOSED ━━━━━━━━━━━━━━━`)
+      Terminal.log(`💥 콰아앙! 견고했던 가슴 장갑판이 완전히 산산조각납니다!`)
+      Terminal.log(`🔍 안개처럼 자욱했던 [은신] 장치가 과부하로 멈추며,`)
+      Terminal.log(`✨ 보스의 중심부에서 빛나는 [기계 코어]가 모습을 드러냅니다!`)
+      Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
     })
 
     enemies.push(amorUnit)

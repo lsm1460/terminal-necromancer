@@ -569,6 +569,7 @@
           "x": 1,
           "y": 0,
           "event": "monster-b5-standard-security",
+          "spawn_limit": 4,
           "npcIds": [],
           "dialogue": "바닥에 깔린 붉은 카펫이 발소리를 완벽하게 흡수합니다. 벽면의 금색 장식들이 조명을 받아 날카롭게 빛납니다.",
           "observe": "화려한 문양의 카펫이 깔린 로비 입구입니다."
@@ -579,6 +580,7 @@
           "x": 3,
           "y": 0,
           "event": "monster-b5-hidden-assault",
+          "spawn_limit": 3,
           "npcIds": [],
           "dialogue": "거대한 인공 열대 식물들이 복도를 따라 늘어서 있어 시야를 가립니다. 잎사귀 사이로 차가운 금속 광택이 언뜻 보입니다.",
           "observe": "무성한 실내 식물들이 줄지어 있는 복도 구석입니다."
@@ -588,7 +590,7 @@
           "x": 4,
           "y": 0,
           "event": "none",
-          "npcIds": [],
+          "npcIds": ["flint"],
           "dialogue": "벽면 전체를 채운 디지털 캔버스에서 추상적인 기하학 무늬가 일렁입니다. 그 빛이 주변의 모든 것을 기괴한 색으로 물들입니다.",
           "observe": "끊임없이 색이 변하는 거대한 발광 벽면입니다."
         }
@@ -599,6 +601,7 @@
           "x": 0,
           "y": 1,
           "event": "monster-b5-lounge-patrol",
+          "spawn_limit": 5,
           "npcIds": [],
           "dialogue": "천장의 매립형 조명이 깜빡이며 긴 복도에 규칙적인 그림자를 만들어냅니다. 환풍구에서는 미세한 기계음이 들려옵니다.",
           "observe": "길게 뻗은 정적 속의 복도입니다."
@@ -609,7 +612,7 @@
           "x": 2,
           "y": 1,
           "event": "none",
-          "npcIds": [],
+          "npcIds": ["vesper", "kael"],
           "dialogue": "고급스러운 티크재 테이블과 가죽 소파들이 어지럽게 뒤섞여 있습니다. 깨진 와인잔 파편들이 바닥에서 반짝입니다.",
           "observe": "가구들이 흐트러진 휴게 공간입니다."
         },
@@ -618,6 +621,7 @@
           "x": 3,
           "y": 1,
           "event": "monster-b5-noble-escort",
+          "spawn_limit": 4,
           "npcIds": [],
           "dialogue": "라운지의 안쪽 깊숙한 곳, 두꺼운 벨벳 커튼이 드리워진 개인실 구역입니다. 장식장에는 고가의 유물들이 전시되어 있습니다.",
           "observe": "커튼으로 가려진 은밀한 개인실 입구입니다."
@@ -630,6 +634,7 @@
           "x": 0,
           "y": 2,
           "event": "monster-b5-hidden-assault",
+          "spawn_limit": 5,
           "npcIds": [],
           "dialogue": "천장이 유독 낮아지는 연결 통로입니다. 매끄러운 벽면 곳곳에 보안용 카메라 렌즈가 박혀 있습니다.",
           "observe": "폐쇄적인 느낌을 주는 좁은 연결 통로입니다."
@@ -647,7 +652,7 @@
           "id": "tile_509",
           "x": 2,
           "y": 2,
-          "event": "monster-b5-standard-security",
+          "event": "event-map-scan-once",
           "npcIds": [],
           "dialogue": "강화유리 너머로 보안 관제실의 모니터들이 보입니다. 붉은색 경보등이 회전하며 주변을 위협적으로 훑습니다.",
           "observe": "붉은 조명이 깜빡이는 삼엄한 방호 구역입니다."
@@ -658,7 +663,7 @@
           "x": 4,
           "y": 2,
           "event": "none",
-          "npcIds": [],
+          "npcIds": ["julian"],
           "dialogue": "고급 멤버십 라운지의 바(Bar) 구역입니다. 선반에는 이름 모를 푸른 술병들이 질서 정연하게 놓여 있습니다.",
           "observe": "수많은 병이 진열된 어두운 바 카운터입니다."
         }
@@ -670,6 +675,7 @@
           "x": 1,
           "y": 3,
           "event": "monster-b5-noble-escort",
+          "spawn_limit": 5,
           "npcIds": [],
           "dialogue": "은색 금속으로 마감된 원형 기둥들이 천장을 받치고 있습니다. 바닥의 거울 같은 대리석에 주변 풍경이 선명하게 비칩니다.",
           "observe": "금속 기둥들이 줄지어 선 홀입니다."
@@ -679,7 +685,7 @@
           "x": 2,
           "y": 3,
           "event": "none",
-          "npcIds": [],
+          "npcIds": ["oliver"],
           "dialogue": "주방과 연결된 간이 식당입니다. 정교하게 세팅된 식탁보 위로 은식기들이 어지럽게 흩어져 있습니다.",
           "observe": "식기 부딪히는 소리가 들릴 법한 다이닝 구역입니다."
         },
@@ -688,6 +694,7 @@
           "x": 3,
           "y": 3,
           "event": "monster-b5-standard-security",
+          "spawn_limit": 4,
           "npcIds": [],
           "dialogue": "터미널로 이어지는 중갑 게이트 앞입니다. 육중한 강철 문이 굳게 닫혀 있으며, 주변에는 방어용 엄폐물들이 설치되어 있습니다.",
           "observe": "거대한 금속 게이트가 가로막은 통로입니다."
@@ -697,6 +704,7 @@
           "x": 4,
           "y": 3,
           "event": "monster-b5-hidden-assault",
+          "spawn_limit": 4,
           "npcIds": [],
           "dialogue": "조명이 완전히 꺼진 복도 끝입니다. 오직 보안 단말기의 작은 LED 전구만이 어둠 속에서 깜빡거립니다.",
           "observe": "칠흑 같은 어둠이 깔린 막다른 복도입니다."
@@ -708,6 +716,7 @@
           "x": 0,
           "y": 4,
           "event": "monster-b5-lounge-patrol",
+          "spawn_limit": 5,
           "npcIds": [],
           "dialogue": "와인 창고의 자동문 틈새로 하얀 냉기가 바닥을 타고 흘러나옵니다. 공기 중에 알싸한 냉소독제 냄새가 섞여 있습니다.",
           "observe": "바닥에 냉기가 깔린 창고 입구입니다."
@@ -718,7 +727,7 @@
           "x": 2,
           "y": 4,
           "event": "none",
-          "npcIds": [],
+          "npcIds": ["adrian"],
           "dialogue": "안내 데스크의 화려한 금색 상판이 날카로운 물체에 긁혀 있습니다. 바닥에는 서류들이 눈송이처럼 널브러져 있습니다.",
           "observe": "파손된 흔적이 역력한 안내 데스크입니다."
         },
@@ -727,6 +736,7 @@
           "x": 3,
           "y": 4,
           "event": "monster-b5-noble-escort",
+          "spawn_limit": 4,
           "npcIds": [],
           "dialogue": "VIP용 비상 탈출 캡슐들이 늘어선 승강장입니다. 노란색 안전선이 바닥에 선명하게 그어져 있습니다.",
           "observe": "기계 장치들이 가동 중인 탈출 승강장입니다."
@@ -735,7 +745,7 @@
           "id": "tile_518",
           "x": 4,
           "y": 4,
-          "event": "none",
+          "event": "event-map-scan-once",
           "npcIds": [],
           "dialogue": "지하 5층의 핵심 제어 장치가 있는 원형 방입니다. 수십 개의 홀로그램 화면이 공중에 떠서 실시간 데이터를 쏟아냅니다.",
           "observe": "중앙에서 강한 빛을 내뿜는 제어실입니다."
@@ -747,6 +757,7 @@
           "x": 0,
           "y": 5,
           "event": "monster-b5-standard-security",
+          "spawn_limit": 5,
           "npcIds": [],
           "dialogue": "작은 비상용 출입문입니다. 투박한 금속 질감이 주변의 화려한 장식과 이질적인 조화를 이룹니다.",
           "observe": "구석진 곳에 위치한 철제 비상문입니다."
@@ -766,6 +777,7 @@
           "x": 3,
           "y": 5,
           "event": "monster-b5-lounge-patrol",
+          "spawn_limit": 4,
           "npcIds": [],
           "dialogue": "금색 몰딩이 처리된 천장 구석에서 작은 환기 팬들이 빠르게 회전하고 있습니다. 미세한 타는 냄새가 공기 중에 맴돕니다.",
           "observe": "천장 조명이 어지럽게 빛나는 공간입니다."
@@ -775,7 +787,7 @@
           "x": 4,
           "y": 5,
           "event": "none",
-          "npcIds": [],
+          "npcIds": ["baron_valter"],
           "dialogue": "고급스러운 카펫 가장자리가 말려 올라가 있습니다. 그 틈새로 반짝이는 금속 물체가 살짝 보입니다.",
           "observe": "카펫이 흐트러진 방의 구석자리입니다."
         }

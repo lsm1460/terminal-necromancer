@@ -1,4 +1,4 @@
-import { CombatUnit } from '~/core/battle/CombatUnit'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 

@@ -151,7 +151,7 @@
     "attackType": "ranged",
     "description": "가장 부상이 심한 아군이 체력을 약간 회복시킵니다.",
     "chance": 0.3,
-    "power": 15,
+    "power": 0.15,
     "targetType": "ALLY_LOWEST_HP",
     "type": "heal"
   },
@@ -161,7 +161,17 @@
     "attackType": "ranged",
     "description": "가장 부상이 심한 아군을 회복시킵니다.",
     "chance": 0.3,
-    "power": 30,
+    "power": 0.3,
+    "targetType": "ALLY_LOWEST_HP",
+    "type": "heal"
+  },
+  "greater_heal": {
+    "id": "greater_heal",
+    "name": "상급 치유",
+    "attackType": "ranged",
+    "description": "가장 부상이 심한 아군의 체력을 대폭 회복시킵니다.",
+    "chance": 0.35,
+    "power": 0.5,
     "targetType": "ALLY_LOWEST_HP",
     "type": "heal"
   },

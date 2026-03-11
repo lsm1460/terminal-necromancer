@@ -1,30 +1,22 @@
-import fs from 'fs'
 import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
-import { Tile } from '~/types'
-import { Logger } from './Logger'
+import { SceneData, Tile } from '~/types'
+import { Terminal } from './Terminal'
 import { Player } from './player/Player'
-
-interface SceneData {
-  displayName: string
-  unlocks?: string[]
-  start_pos: { x: number; y: number }
-  move_pos?: { x: number; y: number }
-  tiles: Tile[][]
-}
+import { assetManager } from './WebAssetManager'
 
 export class MapManager {
   private originMapData: Record<string, SceneData>
   private mapData: Record<string, SceneData>
   public currentSceneId: MapId
 
-  constructor(path: string) {
-    // 1. map.json 데이터 로드
-    const data = fs.readFileSync(path, 'utf-8')
-    this.mapData = JSON.parse(data)
-    this.originMapData = JSON.parse(data)
+  /**
+   * @param mapData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
+   */
+  constructor(mapData: any) {
+    this.mapData = JSON.parse(JSON.stringify(mapData))
+    this.originMapData = JSON.parse(JSON.stringify(mapData))
 
-    // 2. 초기 씬 ID 설정
     this.currentSceneId = MAP_IDS.B1_SUBWAY
   }
 
@@ -46,15 +38,15 @@ export class MapManager {
     return this.mapData[sceneId]
   }
 
-  changeScene(targetSceneId: MapId, player: Player) {
+  async changeScene(targetSceneId: MapId, player: Player) {
     if (!this.mapData[targetSceneId]) {
       console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
       return
     }
 
     this.currentSceneId = targetSceneId
-    const newScene = this.currentScene
-
+    const newScene = this.getMap(targetSceneId)
+    await assetManager.loadSceneAssets(newScene)
     const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE, MAP_IDS.B4_Waste_Disposal_Area]
 
     if (!fixedArea.includes(targetSceneId)) {
@@ -66,9 +58,9 @@ export class MapManager {
     player.x = x
     player.y = y
 
-    Logger.log(`\n------------------------------------------`)
-    Logger.log(`📍 새로운 지역 진입: ${newScene.displayName}`)
-    Logger.log(`------------------------------------------`)
+    Terminal.log(`\n------------------------------------------`)
+    Terminal.log(`📍 새로운 지역 진입: ${newScene.displayName}`)
+    Terminal.log(`------------------------------------------`)
   }
 
   private shuffleTiles(sceneId: string) {

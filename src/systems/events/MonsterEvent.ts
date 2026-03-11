@@ -1,5 +1,5 @@
-import { CombatUnit } from '~/core/battle/CombatUnit'
-import { Logger } from '~/core/Logger'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { Terminal } from '~/core/Terminal'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Player } from '~/core/player/Player'
 import { GameContext, Monster, Tile } from '~/types'
@@ -34,19 +34,19 @@ export class MonsterEvent {
 
       if (newlySpawned.length > 0) {
         tile.monsters.push(...newlySpawned)
-        newlySpawned.forEach((m) => Logger.log(`👾 ${m.name} 등장!`))
+        newlySpawned.forEach((m) => Terminal.log(`👾 ${m.name} 등장!`))
       }
     }
 
     // 3. 최종 상태 보고
     const finalAlive = tile.monsters.filter((m) => m.isAlive)
     if (finalAlive.length > 0) {
-      Logger.log(`⚠️  현재 적: ${finalAlive.map((m) => m.name).join(', ')}`)
+      Terminal.log(`⚠️  현재 적: ${finalAlive.map((m) => m.name).join(', ')}`)
 
       const preemptiveEnemy = finalAlive.find((_monster) => _monster.preemptive)
 
       if (preemptiveEnemy) {
-        Logger.log(`⚠️  적: ${preemptiveEnemy.name}의 기습!`)
+        Terminal.log(`⚠️  적: ${preemptiveEnemy.name}의 기습!`)
 
         await delay()
 

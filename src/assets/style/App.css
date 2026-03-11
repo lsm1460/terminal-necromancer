@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-grey-600: #4b5563;
+  --color-grey-700: #374151;
+  --color-grey-800: #1f2937;
+  --color-grey-900: #181818;
+  --color-grey-950: #121212;
+
+  --color-primary: #78e75e;
+
+  @keyframes glitch {
+    0%, 20%, 45%, 50%, 70%, 95%, 100% { opacity: 0.5; }
+    22%, 47%, 72% { opacity: 0.3; }  /* 순간적으로 어두워짐 */
+    25%, 75% { opacity: 0.6; }       /* 약간 흐릿하게 유지 */
+
+    0% {
+      clip-path: inset(20% 0 50% 0);
+      transform: translate(-4px, 1px);
+    }
+    2% {
+      clip-path: inset(60% 0 10% 0);
+      transform: translate(4px, -1px);
+    }
+    4% {
+      clip-path: inset(0 0 0 0);
+      transform: translate(0);
+    }
+    6% {
+      clip-path: inset(0 0 0 0);
+      transform: translate(0);
+    }
+  }
+  --animate-glitch: glitch 3s ease-in-out infinite;
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 10px;               /* 세로 스크롤바 너비 */
+    height: 10px;              /* 가로 스크롤바 높이 */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;    /* 배경은 투명하게 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #424242;  /* VS Code 기본 회색 */
+    border: 2px solid #1e1e1e;  /* 주변 배경색과 맞추면 여백 효과가 납니다 */
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #4f4f4f;  /* 마우스 올리면 더 밝게 */
+  }
+}

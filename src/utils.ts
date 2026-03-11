@@ -1,11 +1,11 @@
-import { randomBytes } from 'crypto'
-import enquirer from 'enquirer'
+import { nanoid } from 'nanoid'
+import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
 import { Item, ItemType } from './types'
 
 export function generateId(baseId?: string, length = 8): string {
-  const uniqueHash = randomBytes(length).toString('hex')
-  return baseId ? `${baseId}_${uniqueHash}` : uniqueHash
+  const uniqueHash = nanoid(length)
+  return baseId ? `${baseId}::${uniqueHash}` : uniqueHash
 }
 
 export function randomRange(min: number, max: number) {
@@ -16,7 +16,7 @@ export async function delay(amount: number = 1500) {
   await new Promise((resolve) => setTimeout(resolve, amount))
 }
 
-export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean, isSell?: boolean }) {
+export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean; isSell?: boolean }) {
   const typeMap: Partial<Record<ItemType, string>> = {
     weapon: '무기',
     armor: '방어구',
@@ -28,8 +28,8 @@ export function makeItemMessage(item: Item, player: Player, options?: { withPric
   let message = `[${typeLabel}] ${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`
 
   if (options?.withPrice) {
-    const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price;
-    
+    const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price
+
     message += ` (${displayPrice}gold)`
   }
 
@@ -50,11 +50,12 @@ export function makeItemMessage(item: Item, player: Player, options?: { withPric
 
 export async function speak(messages: string[]) {
   for (const message of messages) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    })
+    await Terminal.prompt(message)
   }
+}
+
+export const getHpColor = (hpPercentage: number) => {
+  if (hpPercentage > 50) return '#4caf50'
+  if (hpPercentage > 20) return '#ffeb3b'
+  return '#f44336'
 }

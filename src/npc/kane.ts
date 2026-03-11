@@ -1,6 +1,6 @@
-import enquirer from 'enquirer'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
+import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const KaneHandler: NPCHandler = {
@@ -60,14 +60,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
     '케인: "선택은 네놈의 몫이다. 하지만 기억해라.\n사신의 개로 살다 버려지는 것보다, 인간으로서 저항하다 사라지는 것이 훨씬 가치 있다는 걸."'
   );
 
-  for (const message of dialogues) {
-    await enquirer.prompt({
-      type: 'input',
-      name: 'confirm',
-      message,
-      format: () => ' (Enter ⏎)',
-    });
-  }
+  await speak(dialogues)
 
   events.completeEvent('kane_1');
 }

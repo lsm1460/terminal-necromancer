@@ -1,12 +1,11 @@
-import enquirer from 'enquirer'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { CommandFunction, Drop, Item } from '~/types'
 
 export const dropCommand: CommandFunction = async (player, args, context) => {
   const inventory = player.inventory
 
   if (inventory.length === 0) {
-    Logger.log('버릴 아이템이 없습니다.')
+    Terminal.log('버릴 아이템이 없습니다.')
     return false
   }
 
@@ -18,33 +17,20 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
       // 해당 이름을 가진 드랍 찾기
       const itemIndex = inventory.findIndex((d) => d.label === name)
       if (itemIndex === -1) {
-        Logger.log(`${name} 아이템이 해당 위치에 없습니다.`)
+        Terminal.log(`${name} 아이템이 해당 위치에 없습니다.`)
         return
       }
 
       itemToDrop = inventory[itemIndex]
     })
-  }
-  // 2. 인자가 없는 경우: Enquirer 선택창 띄우기
-  else {
-    const { itemId } = await enquirer.prompt<{ itemId: string }>({
-      type: 'select',
-      name: 'itemId',
-      message: '어떤 아이템을 버리시겠습니까?',
-      choices: [
-        ...inventory.map((item) => ({
-          name: item.id,
-          message: `${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`,
-        })),
-        { name: 'cancel', message: '🔙 취소' },
-      ],
-      format(value) {
-        if (value === 'cancel') return '취소'
-        const target = inventory.find((i) => i.id === value)
-
-        return target ? target.label : value
-      },
-    })
+  } else {
+    const itemId = await Terminal.select('어떤 아이템을 버리시겠습니까?', [
+      ...inventory.map((item) => ({
+        name: item.id,
+        message: `${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`,
+      })),
+      { name: 'cancel', message: '🔙 취소' },
+    ])
 
     if (itemId === 'cancel') return false
     itemToDrop = inventory.find((i) => i.id === itemId)
@@ -64,7 +50,7 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
     } as Drop)
 
     const qtyText = itemToDrop.quantity !== undefined ? ` 1개` : ''
-    Logger.log(`📦 [${itemToDrop.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
+    Terminal.log(`📦 [${itemToDrop.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
   }
 
   return false

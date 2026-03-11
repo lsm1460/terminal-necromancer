@@ -1,4 +1,3 @@
-import fs from 'fs'
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import {
   Affix,
@@ -49,17 +48,31 @@ export class Player {
   private inventoryManager: InventoryManager
   private minionManager: MinionManager
 
-  constructor(levelPath: string, saved?: PlayerSaveData) {
+  /**
+   * @param levelData - 이제 경로 문자열이 아닌 JSON 객체 데이터를 직접 받습니다.
+   * @param saved - 저장된 플레이어 데이터
+   */
+  constructor(levelData: any, saved?: PlayerSaveData) {
     if (saved) {
-      const { inventory, inventoryMax, skeletonSubspace, subspaceLimit, skeleton, _maxSkeleton, upgradeLimit, golemUpgrade, knightUpgrade, ...rest } = saved
+      const {
+        inventory,
+        inventoryMax,
+        skeletonSubspace,
+        subspaceLimit,
+        skeleton,
+        _maxSkeleton,
+        upgradeLimit,
+        golemUpgrade,
+        knightUpgrade,
+        ...rest
+      } = saved
       Object.assign(this, rest)
     }
 
     this.x = 0
     this.y = 0
 
-    // 레벨 테이블 로드
-    this.levelTable = JSON.parse(fs.readFileSync(levelPath, 'utf-8'))
+    this.levelTable = levelData
     this.inventoryManager = new InventoryManager(this, saved)
     this.minionManager = new MinionManager(this, saved)
   }
@@ -186,6 +199,13 @@ export class Player {
 
   set isAlive(_) {
     this.hp = 0
+  }
+
+  get description() {
+    if (this.karma <= 0) return "망자를 기리며 질서를 수호하는 영혼의 인도자입니다."
+    if (this.karma <= 5) return "살생의 무게가 그림자에 서서히 스며들고 있습니다."
+    if (this.karma <= 10) return "부패한 마력이 양심을 잠식하며 눈빛이 탁해집니다."
+    return "이승의 법도를 초월한, 사신의 잔혹한 하수인입니다."
   }
 
   get affixes(): Affix[] {

@@ -1,6 +1,5 @@
-import enquirer from 'enquirer'
 import { TargetSelector } from '~/core/battle/TargetSelector'
-import { Logger } from '~/core/Logger'
+import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -12,7 +11,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
   if (aliveEnemies.length === 0) {
-    Logger.log('\n[실패] 감옥을 생성할 대상이 없습니다.')
+    Terminal.log('\n[실패] 감옥을 생성할 대상이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -22,27 +21,19 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
     .excludeIf((u) => u.deBuff.some((d) => d.name === '뼈 감옥'), '(이미 갇힘)')
     .build()
 
-  const { targetId } = await enquirer.prompt<{ targetId: string }>({
-    type: 'select',
-    name: 'targetId',
-    message: '뼈 감옥으로 가둘 대상을 선택하세요',
-    choices: [...choices, { name: 'cancel', message: '🔙 취소하기', value: 'cancel' }],
-    format(value) {
-      if (value === 'cancel') return '시전 취소'
-      const target = aliveEnemies.find((e) => e.id === value)
-
-      return target ? `${target.name}에게 뼈의 구속을...` : ''
-    },
-  })
+  const targetId = await Terminal.select('뼈 감옥으로 가둘 대상을 선택하세요', [
+    ...choices,
+    { name: 'cancel', message: '🔙 취소하기' },
+  ])
 
   if (targetId === 'cancel') {
-    Logger.log('\n💬 스킬 사용을 취소했습니다.')
+    Terminal.log('\n💬 스킬 사용을 취소했습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   const target = aliveEnemies.find((e) => e.id === targetId)
   if (!target) {
-    Logger.log('\n[실패] 대상이 없습니다.')
+    Terminal.log('\n[실패] 대상이 없습니다.')
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -55,7 +46,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
     duration: duration + 1,
   })
 
-  Logger.log(` └ [속박] ${target.name}이(가) ${duration}턴 동안 속박되었습니다.`)
+  Terminal.log(` └ [속박] ${target.name}이(가) ${duration}턴 동안 속박되었습니다.`)
 
   return {
     isSuccess: true,

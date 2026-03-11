@@ -3,13 +3,13 @@
     "id": "kane_leader",
     "name": "대장 케인",
     "faction": "resistance",
-    "attackType": "melee",
+    "attackType": "ranged",
     "hp": 150,
     "maxHp": 150,
-    "atk": 25,
-    "def": 10,
+    "atk": 30,
+    "def": 15,
     "eva": 0.03,
-    "exp": 100,
+    "exp": 200,
     "isAlive": true,
     "reborn": false,
     "noEscape": true,
@@ -30,7 +30,9 @@
     },
     "deathLine": "케인이 끝까지 검을 놓지 않은 채 쓰러졌습니다.",
     "description": "이 레지스탕스의 대장",
-    "dropTableId": "resistance"
+    "dropTableId": "resistance",
+    "minRebornRarity": "epic",
+    "skills": ["rapid_fire", "aim_arrow", "vitals_strike"]
   },
   "maya_tech": {
     "id": "maya_tech",
@@ -538,7 +540,7 @@
     },
     "deathLine": "아... 아아... 나의 아이여... 결국 복수에 닿지 못한 채...",
     "description": "비틀린 시공간의 틈새를 찢고 나타난 카론이, 심연의 살기를 뿜으며 당신을 응시합니다.",
-    "dropTableId": "",
+    "dropTableId": "b4_caron",
     "skills": ["distortion_shroud", "soul_anchor", "dimensional_collapse"]
   },
   "caron_alive": {
@@ -610,5 +612,247 @@
     "description": "찬탈당한 카론의 정수로 빚어낸 기괴한 사역마입니다. 자아는 소멸되었으며, 오직 주인인 당신의 마력에 반응하여 아공간을 조작합니다.",
     "dropTableId": "item-void-dust",
     "skills": []
+  },
+  "adrian": {
+    "id": "adrian",
+    "name": "겁에 질린 안내 직원, 에이드리언",
+    "attackType": "melee",
+    "hp": 20,
+    "maxHp": 20,
+    "atk": 5,
+    "def": 2,
+    "eva": 0,
+    "exp": 60,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "제발... 로비에서 총격전이라니... 규정집 제4조 2항에...",
+      "안내 데스크 아래는 이미 꽉 찼단 말입니다! 저 혼자 숨기도 좁아요!"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "아... 당신도 피난처를 찾으시나요? 죄송하지만 모든 비상구는 이미 폐쇄되었습니다...",
+        "farewell": "부디... 바깥의 연기가 가라앉을 때까지만이라도 무사하시길."
+      },
+      "normal": {
+        "greeting": "체크인... 그런 건 이제 의미 없겠죠? 저 기둥 뒤에 시체가... 으윽...",
+        "farewell": "조심하세요. 위층에서 레지스탕스들이 내려오고 있다고 들었습니다."
+      },
+      "hostile": {
+        "greeting": "당신들도 그 폭도들 중 하나입니까? 더 이상 부술 것도 없는데 대체 왜!",
+        "farewell": "당신들의 '방문 기록'은... 반드시 지옥의 명부에 남을 겁니다!"
+      }
+    },
+    "deathLine": "오늘... 퇴근은... 글렀네요... 정산도... 못했는데...",
+    "description": "어떤 복잡한 예약 상황도 차분하게 해결할 것 같은 신뢰감을 줍니다.",
+    "dropTableId": "b5_adrian",
+    "minRebornRarity": "elite",
+    "skills": []
+  },
+  "flint": {
+    "id": "flint",
+    "name": "돌격대장 플린트",
+    "faction": "resistance",
+    "attackType": "ranged",
+    "hp": 80,
+    "maxHp": 80,
+    "atk": 27,
+    "def": 12,
+    "eva": 0.15,
+    "exp": 120,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "저 캔버스가 타들어 가는 냄새가 여기까지 나는군. 아주 고소해.",
+      "인질들이 비명을 지르며 쏟아져 나올 때가 진짜 시작이다. 준비해둬.",
+      "이 구역의 전력을 차단하면, 저 밑바닥 사람들도 오늘만큼은 밝은 밤을 보내겠지."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "왔나? 네가 합류한 덕분에 일이 수월해졌어. 등 뒤는 내가 맡지.",
+        "farewell": "먼저 가라. 난 이 빌어먹을 장치가 완전히 잿더미가 되는 걸 보고 가야겠어."
+      },
+      "normal": {
+        "greeting": "어슬렁거리지 마. 눈먼 총알에 구멍 나기 싫으면 말이야.",
+        "farewell": "살고 싶으면 알아서 몸 사려. 난 짐덩어리를 챙길 여유 따윈 없으니까."
+      },
+      "hostile": {
+        "greeting": "아직도 안 꺼졌나? 아까 그 기습으로 끝내지 못한 게 네 놈 일생의 한이 될 거다.",
+        "farewell": "도망쳐봐야 이 층을 나갈 순 없어. 다음엔 네 놈 심장에 부싯돌을 박아주지."
+      }
+    },
+    "deathLine": "불꽃은... 아직... 꺼지지 않았다...",
+    "description": "레지스탕스의 돌격대장. 부싯돌(Flint)이라는 이름처럼 거칠고 폭발적인 성격",
+    "dropTableId": "resistance",
+    "minRebornRarity": "elite",
+    "skills": ["rapid_fire", "vitals_strike"]
+  },
+  "julian": {
+    "id": "julian",
+    "name": "냉소적인 바텐더, 줄리안",
+    "attackType": "ranged",
+    "hp": 25,
+    "maxHp": 25,
+    "atk": 4,
+    "def": 2,
+    "eva": 0,
+    "exp": 60,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "최악의 마리아주군요. 고급 위스키와 피 냄새라니.",
+      "보안팀 놈들의 무능함은 안주로 내놓기에도 부족할 지경입니다.",
+      "바 테이블 뒤가 이렇게 안전하지 않을 줄 알았으면 진작 사표를 냈어야 했는데."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "어서 오십시오. 이 난장판 속에서 유일하게 대화가 통할 분이 오셨군요.",
+        "farewell": "부디 몸 조심하십시오. 당신마저 잘못되면 이 층엔 무식한 폭도들뿐일 테니까요."
+      },
+      "normal": {
+        "greeting": "주문하시겠습니까? 아, 보시다시피 셰이커 대신 권총을 잡아야 할 판이라서요.",
+        "farewell": "용건이 끝나셨으면 이동하시죠. 깨진 유리 조각을 치울 여유조차 없으니까요."
+      },
+      "hostile": {
+        "greeting": "무례한 손님에겐 서비스가 나가지 않는 법이죠. 당신을 위한 특별한 '독주'를 준비해 드릴까요?",
+        "farewell": "사라지세요. 당신 같은 부류와 섞이는 건 제 취향이 아닙니다."
+      }
+    },
+    "deathLine": "마지막... 잔은... 제가 직접... 내리고 싶었는데...",
+    "description": "VIP 층의 바를 담당하던 세련된 바텐더입니다.",
+    "dropTableId": "b5_julian"
+  },
+  "oliver": {
+    "id": "oliver",
+    "name": "죽어가는 웨이터, 올리버",
+    "attackType": "melee",
+    "hp": 2,
+    "maxHp": 32,
+    "atk": 8,
+    "def": 4,
+    "eva": 0,
+    "exp": 60,
+    "isAlive": true,
+    "reborn": false,
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "당신도... 그분들의 동료인가요? 어서 가서... 저 가짜 낙원을 불태워주세요.",
+        "farewell": "걱정 마십시오... 이 장관을 끝까지 지켜보기 전엔 죽지 않을 테니."
+      },
+      "normal": {
+        "greeting": "누구든 상관없어. 오늘 밤 이 VIP 층은... 우리 모두의 무덤이 될 테니까.",
+        "farewell": "가서 전하십시오. 식사는 준비됐고... 이제 심판을 받을 시간이라고."
+      },
+      "hostile": {
+        "greeting": "아직도 상층부 놈들의 편을 드는 개가 남아있었나? 내 마지막 남은 힘으로라도 네 숨통을 끊어주마!",
+        "farewell": "죽여라... 내가 죽어도 혁명의 불길은... 네 놈들을 모조리 삼킬 테니!"
+      }
+    },
+    "deathLine": "드디어... 퇴근이군... 불바다가 된... 로비로...",
+    "description": "주방에서 평생을 멸시받으며 일해온 웨이터입니다. 치명상을 입은 상태에서도 레지스탕스의 습격을 신의 구원처럼 여기며, 상류층을 향한 깊은 원한을 쏟아냅니다.",
+    "minRebornRarity": "epic",
+    "dropTableId": ""
+  },
+  "kael": {
+    "id": "kael",
+    "name": "냉정한 카엘",
+    "attackType": "melee",
+    "hp": 28,
+    "maxHp": 28,
+    "atk": 22,
+    "def": 8,
+    "eva": 0.25,
+    "exp": 100,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "감정에 휘둘리면 방아쇠를 당길 수 없어.",
+      "플린트 형님은 옳아. 부수지 않으면 아무것도 변하지 않으니까.",
+      "베스퍼를 울리는 놈은 내 방식대로 처리한다."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "형님이 말한 사람이 당신이었군. 꽤 강해 보여.",
+        "farewell": "앞길 조심해. VIP 층의 보안 요원들은 끈질기니까."
+      },
+      "hostile": {
+        "greeting": "미안하지만 개인적인 원한은 없어. 그저 네가 제거 대상일 뿐이지.",
+        "farewell": "다음엔 더 정밀하게 조준해주마."
+      }
+    },
+    "description": "수용소 출신의 어린 소년. 베스퍼를 지키는 것을 자신의 유일한 사명으로 여깁니다.",
+    "skills": ["power_shot", "smoke_bomb", "poison_dagger"],
+    "minRebornRarity": "elite",
+    "dropTableId": "resistance"
+  },
+  "vesper": {
+    "id": "vesper",
+    "name": "어리숙한 베스퍼",
+    "attackType": "ranged",
+    "hp": 20,
+    "maxHp": 20,
+    "atk": 26,
+    "def": 4,
+    "eva": 0.4,
+    "exp": 90,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "저 위층 아줌마들이 쓰던 보석, 우리 마을에선 밥 열 그릇 값도 안 될 텐데.",
+      "카엘! 너무 멀리 가지 마! 내 석궁 사거리 밖으로 나가지 말라고!",
+      "혁명이라는 거, 생각보다 배가 많이 고픈 일이네."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "안녕! 혹시 먹을 거 있어? 아드레날린 말고 진짜 음식 말이야!",
+        "farewell": "다음에 보면 맛있는 거 하나만 줘! 내가 살려준 셈 치고!"
+      },
+      "hostile": {
+        "greeting": "우와, 진짜 VIP 냄새가 나네! 이 석궁 화살이 얼마나 아픈지 시험해볼래?",
+        "farewell": "메롱! 못 맞췄지? 다음에 보면 진짜 구멍 내줄 거야!"
+      }
+    },
+    "description": "전쟁의 공포를 장난스러운 태도로 가리고 있지만, 상류층에 대한 증오는 카엘 못지않게 깊습니다.",
+    "skills": ["aim_arrow", "piercing_arrow", "rapid_fire"],
+    "minRebornRarity": "epic",
+    "dropTableId": "resistance"
+  },
+  "baron_valter": {
+    "id": "baron_valter",
+    "name": "오만한 지배자, 발터",
+    "attackType": "melee",
+    "hp": 480,
+    "maxHp": 480,
+    "atk": 35,
+    "def": 20,
+    "eva": 0.05,
+    "exp": 1500,
+    "isAlive": true,
+    "reborn": false,
+    "lines": [
+      "먼지들이 날뛰는군. 청소부들은 대체 뭘 하고 있는 거지?",
+      "이 와인에 화약 가루가 섞였어. 지배인에게 이 무례함을 어떻게 사과할지 묻고 싶군.",
+      "레지스탕스? 굶주린 개들이 짖는 소리에 내가 놀랄 거라 생각했나?"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "그나마 말귀를 알아듣는 사냥개가 왔군. 내 앞길을 치워라. 보상은 섭섭지 않게 주지.",
+        "farewell": "물러가라. 네 놈의 땀 냄새가 내 빈티지 향을 망치고 있으니까."
+      },
+      "normal": {
+        "greeting": "누구냐? 고용된 용병인가? 아니면 길을 잃은 불청객인가?",
+        "farewell": "용건이 끝났으면 사라져라. 내 인내심은 이 잔에 남은 와인보다 적으니."
+      },
+      "hostile": {
+        "greeting": "감히 이 구역에 발을 들이고도 무사할 거라 믿었나? 하등 생물의 오만함이란.",
+        "farewell": "네 놈의 비명은 예술적 가치조차 없군. 불쾌하기 짝이 없어."
+      }
+    },
+    "deathLine": "나의... 이 고귀한 피가... 바닥의 먼지와 섞이다니... 절대... 용서 못 한다...",
+    "description": "도시 전력망의 지분을 소유한 거대 자본가입니다. 레지스탕스의 습격조차 자신의 휴식을 방해하는 사소한 결례로 여기며, 금박을 입힌 특제 리볼버로 침입자를 직접 처단합니다.",
+    "dropTableId": "b5_baron",
+    "minRebornRarity": "epic",
+    "skills": ["vitals_strike", "whirlwind", "greater_heal"]
   }
 }

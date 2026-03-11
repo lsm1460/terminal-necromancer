@@ -1,9 +1,9 @@
-import enquirer from 'enquirer'
 import _ from 'lodash'
-import { CombatUnit } from '~/core/battle/CombatUnit'
-import { Logger } from '~/core/Logger'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { GameContext, Tile } from '~/types'
+import { speak } from '~/utils'
 import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
@@ -28,10 +28,10 @@ class BossEvent {
 
     // 3. 전투 전 인카운터 연출 및 대화
     this.printEncounterHeader(bossNpc.name)
-    await this.playDialogues(eventData?.postTalk || ['...네놈이 죽을 자리를 찾아왔구나.'])
+    await speak(eventData?.postTalk || ['...네놈이 죽을 자리를 찾아왔구나.'])
 
     // 4. 적 유닛 구성 (보스 클래스에 위임)
-    Logger.log(`\n⚔️  전투가 시작됩니다!`)
+    Terminal.log(`\n⚔️  전투가 시작됩니다!`)
 
     let enemies: CombatUnit[] = []
     if (bossLogic) {
@@ -57,7 +57,7 @@ class BossEvent {
       bossNpc.isAlive = false
       
       events.completeEvent(bossId)
-      Logger.log(`\n🏆 위협적인 적, ${bossNpc.name}를 처치했습니다!`)
+      Terminal.log(`\n🏆 위협적인 적, ${bossNpc.name}를 처치했습니다!`)
 
       // 차원문 생성
       this.spawnPortal(tile)
@@ -69,7 +69,7 @@ class BossEvent {
 
       // 전투 후 마무리 대화
       if (eventData?.defeatTalk) {
-        await this.playDialogues(eventData.defeatTalk)
+        await speak(eventData.defeatTalk)
       }
     }
   }
@@ -78,24 +78,9 @@ class BossEvent {
    * 보스 등장 헤더 출력
    */
   private static printEncounterHeader(name: string) {
-    Logger.log(`\n━━━━━━━━━━━━━━━ BOSS ENCOUNTER ━━━━━━━━━━━━━━━`)
-    Logger.log(`   [ ${name} ] 이(가) 앞을 가로막습니다.`)
-    Logger.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
-  }
-
-  /**
-   * 순차적 대화 노출 (사용자가 Enter를 칠 때마다 다음 문장)
-   */
-  private static async playDialogues(messages: string[]) {
-    for (const message of messages) {
-      await enquirer.prompt({
-        type: 'input',
-        name: 'confirm',
-        message,
-        result: () => '',
-        format: () => ' (Enter ⏎)',
-      })
-    }
+    Terminal.log(`\n━━━━━━━━━━━━━━━ BOSS ENCOUNTER ━━━━━━━━━━━━━━━`)
+    Terminal.log(`   [ ${name} ] 이(가) 앞을 가로막습니다.`)
+    Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
   }
 
   /**
@@ -103,7 +88,7 @@ class BossEvent {
    */
   static spawnPortal(tile: Tile) {
     tile.npcIds = _.uniq([...(tile.npcIds || []), 'portal'])
-    Logger.log('\n✨ [알림] 정적이 흐르는 방 한가운데에 시작 지점으로 연결되는 [차원문]이 일렁입니다.')
+    Terminal.log('\n✨ [알림] 정적이 흐르는 방 한가운데에 시작 지점으로 연결되는 [차원문]이 일렁입니다.')
   }
 }
 
