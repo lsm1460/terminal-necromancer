@@ -70,6 +70,7 @@ export type MapId = (typeof MAP_IDS)[keyof typeof MAP_IDS]
 export type SkeletonRarity = 'common' | 'rare' | 'elite' | 'epic' | 'legendary'
 
 type SubClass = {
+  id: string
   name: string
   statMod: { atk: number; def: number; hp: number; agi: number }
   skills: string[]
@@ -84,6 +85,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     weight: 500,
     subClasses: [
       {
+        id: 'skeleton',
         name: '병사',
         orderWeight: 10,
         statMod: { atk: 1, def: 1, hp: 1, agi: 1 },
@@ -98,6 +100,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     weight: 375,
     subClasses: [
       {
+        id: 'skeleton_shield_bearer',
         name: '방패병',
         orderWeight: 4,
         statMod: { atk: 0.6, def: 2.5, hp: 2, agi: 0.7 },
@@ -106,6 +109,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'melee',
       },
       {
+        id: 'skeleton_swordsman',
         name: '검사',
         orderWeight: 15,
         statMod: { atk: 1.2, def: 1, hp: 1.5, agi: 1.1 },
@@ -114,6 +118,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'melee',
       },
       {
+        id: 'skeleton_pyromancer',
         name: '화염술사',
         orderWeight: 30,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
@@ -122,6 +127,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'ranged',
       },
       {
+        id: 'skeleton_healer',
         name: '힐러',
         orderWeight: 30,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
@@ -136,6 +142,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     weight: 100,
     subClasses: [
       {
+        id: 'skeleton_great_shield_bearer',
         name: '대형 방패병',
         orderWeight: 5,
         statMod: { atk: 0.8, def: 2.8, hp: 2.5, agi: 0.7 },
@@ -144,6 +151,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'melee',
       },
       {
+        id: 'skeleton_archer',
         name: '궁수',
         orderWeight: 25,
         statMod: { atk: 1.3, def: 1, hp: 1, agi: 1.5 },
@@ -152,6 +160,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'ranged',
       },
       {
+        id: 'skeleton_cryomancer',
         name: '빙결술사',
         orderWeight: 30,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
@@ -160,6 +169,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'ranged',
       },
       {
+        id: 'skeleton_monk',
         name: '수도자',
         orderWeight: 35,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
@@ -174,6 +184,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     weight: 20,
     subClasses: [
       {
+        id: 'skeleton_warrior',
         name: '워리어',
         orderWeight: 7,
         statMod: { atk: 1.5, def: 1.2, hp: 1.2, agi: 1.0 },
@@ -182,6 +193,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'melee',
       },
       {
+        id: 'skeleton_electromancer',
         name: '전격술사',
         orderWeight: 30,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
@@ -190,6 +202,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         attackType: 'ranged',
       },
       {
+        id: 'skeleton_priest',
         name: '사제',
         orderWeight: 45,
         statMod: { atk: 0.6, def: 0.9, hp: 1.0, agi: 1.1 },
@@ -204,6 +217,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
     weight: 5,
     subClasses: [
       {
+        id: 'skeleton_king',
         name: '해골 왕',
         orderWeight: 55,
         statMod: { atk: 2.0, def: 1.5, hp: 1.5, agi: 1.5 },

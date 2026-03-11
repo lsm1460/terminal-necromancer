@@ -64,7 +64,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     const rarityTag = `${color}[${finalRarity.toUpperCase()}]${resetColor}`
 
     const skeleton: BattleTarget = {
-      id: `skeleton_${Date.now()}`,
+      id: `${selectedClass.id}::${Date.now()}`,
       name: `${rarityTag} 스켈레톤 ${selectedClass.name}`,
       attackType: selectedClass.attackType,
       maxHp: Math.floor(corpse.maxHp * m * s.hp),
