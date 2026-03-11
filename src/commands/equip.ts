@@ -1,6 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import { CommandFunction, ItemType } from '~/types'
-import { makeItemMessage } from '~/utils'
+import { getItemLabel, makeItemMessage } from '~/utils'
 
 export const equipCommand: CommandFunction = async (player, args, context) => {
   const inventory = player.inventory
@@ -33,7 +33,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const targetItem = findItem(itemId)
 
   if (targetItem) {
-    Terminal.log(`\n✨ [${targetItem.label}]을(를) 장비하였습니다.`)
+    Terminal.log(`\n✨ [${getItemLabel(targetItem)}]을(를) 장비하였습니다.`)
     await player.equip(targetItem)
   }
 

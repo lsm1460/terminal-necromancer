@@ -1,4 +1,5 @@
 import { ArmorItem, ConsumableItem, Item, ItemType, WeaponItem } from '~/types'
+import { getItemLabel } from '~/utils'
 import { Terminal } from '../Terminal'
 import { Player } from './Player'
 
@@ -123,7 +124,7 @@ export class InventoryManager {
       const itemId = await Terminal.select('어떤 아이템을 사용하시겠습니까?', [
         ...consumables.map((item) => ({
           name: item.id,
-          message: `${item.label} (x${item.quantity || 1}) ${
+          message: `${getItemLabel(item)} (x${item.quantity || 1}) ${
             item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
           }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
         })),
@@ -139,7 +140,7 @@ export class InventoryManager {
       return false
     }
 
-    Terminal.log(`\n [${targetItem.label}]을(를) 사용합니다...`)
+    Terminal.log(`\n [${getItemLabel(targetItem)}]을(를) 사용합니다...`)
 
     if (targetItem.hpHeal) {
       const beforeHp = this.player.hp

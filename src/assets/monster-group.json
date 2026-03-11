@@ -69,5 +69,8 @@
     { "id": "modified_fury_hound", "encounterRate": 80 },
     { "id": "optical_surveillance_unit", "encounterRate": 80 },
     { "id": "security_guard", "encounterRate": 100 }
+  ],
+  "monster-test-group": [
+    { "id": "test_man", "encounterRate": 100 }
   ]
 }

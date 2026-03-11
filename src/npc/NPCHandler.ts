@@ -1,7 +1,7 @@
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
-import { makeItemMessage } from '~/utils'
+import { getItemLabel, makeItemMessage } from '~/utils'
 
 export interface NPCHandler {
   getChoices(player: Player, npc: NPC, context: GameContext): { name: string; message: string }[]
@@ -75,7 +75,7 @@ export async function handleBuy(
     return {
       name: item.id,
       message: makeItemMessage(item, player, { withPrice: true }),
-      label: item.label,
+      label: getItemLabel(item),
       price: finalPrice,
     }
   })
@@ -143,7 +143,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
         name: `${index}`,
         id: item.id,
         message: makeItemMessage(item, player, { withPrice: true, isSell: true }),
-        label: item.label,
+        label: getItemLabel(item),
         price: finalSellPrice,
         originalIndex: index,
       }
@@ -153,10 +153,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
     const bonusInfo = hasContribution ? ` / 보너스: +${(bonusRate * 100).toFixed(1)}%` : ''
 
-    const choiceName = await Terminal.select(
-      `[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`,
-      choices
-    )
+    const choiceName = await Terminal.select(`[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`, choices)
 
     if (choiceName === 'cancel') break
 

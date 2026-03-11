@@ -1,0 +1,66 @@
+{
+  "welcome": "Welcome to the Terminal RPG",
+  "start_game": "Press START to play",
+
+  "cancel": "🔙 CANCEL",
+  "press_enter": " [Press Enter to continue]",
+  "looking": {
+    "around_one": "Detected Entity:",
+    "around_other": "Detected Entities:"
+  },
+
+  "title": {
+    "title": "Liberated by Death",
+    "load_game": "Load Game",
+    "new_game_start": "Start New Game",
+    "config": "Config",
+    "exit": "Exit",
+    "load": "Entering the Twilight Realm...",
+    "language": "Language",
+    "save_data_already_exists": "Save data already exists. Overwrite?",
+    "start_game": "A new destiny begins...",
+
+    "intro": {
+      "dialogue_0": "A foul stench and the piercing sound of cold metal scrape against your eardrums.",
+      "dialogue_1": "The Necromancer, who once ruled the world by blurring the line between life and death,\nnow lies prostrate on the freezing floor of a decaying terminal.",
+      "dialogue_2": "The arrogance of believing you had transcended death has shattered like glass shards,\nand the majesty that once commanded armies has sunk without a trace into the silent dark.",
+      "dialogue_3": "??? : \"Still haven't opened those pathetic eyes, I see.\nDiscard the memories of that trivial world you once ruled.\"",
+      "dialogue_4": "A mocking voice echoes through the darkness.\nIt is the undeniable manifestation of 'Death' itself—the very thing the Necromancer so desperately denied.",
+      "dialogue_5": "??? : \"In this Terminal, you are nothing but a laborer, clearing rotten tracks and hauling corpses.\nIf you're lucky... you might stay breathing until the next train arrives.\"",
+      "dialogue_6": "Humiliating taunts pour down, but the Necromancer's body feels unnaturally heavy,\nleaving him without even the strength to resist.",
+      "dialogue_7": "Veins bulge atop the hand gripping the floor.\nBeyond crushed pride, only a suppressed, cold murderous intent begins to fester.",
+      "dialogue_8": "??? : \"Go. Go wallow with the filth that suits you,\nand serve the very death you loathed so much.\"",
+      "dialogue_9": "As the massive iron gate shrieks open,\na spectacle of tens of thousands of souls—waiting for eternal rest or horrific punishment—unfolds.",
+      "dialogue_10": "A place where the desperate screams of souls lined up for final judgment\nmingle with the roar of giant machinery carving away their sins.",
+      "dialogue_11": "The 'Floor of Judgment,' where order and madness coexist.\nThe chilling air of B1 greets the one who was once a master of the dead."
+    }
+  },
+
+  "paths_ahead": "Paths Ahead: ",
+  "up": "up",
+  "down": "down",
+  "left": "left",
+  "right": "right",
+
+  "loading": {
+    "init": "Focusing the scattered consciousness...",
+    "map": "Mapping the Twilight Realm...",
+    "resource": "Summoning the wails of the dead and hollow vessels...",
+    "success": "The ritual is complete."
+  },
+
+  "item_prefix": {
+    "masterwork": "Masterwork",
+    "worn": "Worn",
+    "exquisite": "Exquisite",
+    "superior": "Superior",
+    "keen": "Keen",
+    "reinforced": "Reinforced",
+    "seasoned": "Seasoned",
+    "abyssal": "Abyssal",
+    "fallen": "Fallen",
+    "forbidden": "Forbidden",
+    "primal": "Primal",
+    "mortal": "Mortal"
+  }
+}

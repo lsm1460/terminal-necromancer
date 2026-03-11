@@ -1,5 +1,5 @@
 import { Affix, ArmorItem, Drop, ItemType, WeaponItem } from '~/types'
-import { generateId } from '~/utils'
+import { generateId, getItemLabel } from '~/utils'
 import { AFFIX_LIST } from '../affixes'
 import { ItemRarity, RARITY_SETTINGS } from './consts'
 
@@ -65,8 +65,8 @@ export class ItemGenerator {
     const highThreshold = max - range * 0.15
     const lowThreshold = min + range * 0.15
 
-    if (value >= highThreshold) return '장인의 '
-    if (value <= lowThreshold) return '낡은 '
+    if (value >= highThreshold) return 'masterwork'
+    if (value <= lowThreshold) return 'worn'
     return ''
   }
 
@@ -126,39 +126,23 @@ export class ItemGenerator {
     const perfPrefix = this.getPerformancePrefix(mainValue, mainRange[0], mainRange[1])
     const adjective =
       setting.adjectives.length > 1 && setting.adjectives[0] !== ''
-        ? setting.adjectives[Math.floor(Math.random() * setting.adjectives.length)] + ' '
+        ? setting.adjectives[Math.floor(Math.random() * setting.adjectives.length)]
         : ''
 
     let affix: Affix | undefined
-    let affixBracket = ''
     if (setting.hasAffix) {
       const _affix = this.pickRandomAffix()
       affix = _affix
-      affixBracket = `[${_affix.name}] `
     }
-
-    // [라벨 조립]
-    const finalLabel = [
-      setting.color,
-      setting.symbol,
-      ' ',
-      affixBracket,
-      adjective,
-      perfPrefix,
-      baseItem.label,
-      '\x1b[0m',
-    ]
-      .join('')
-      .replace(/\s+/g, ' ')
-      .trim()
 
     return {
       ...baseItem,
       ...finalStats,
       id: generateId(baseItem.id),
       rarity: rarityKey,
-      label: finalLabel,
-      affix,
+      perfPrefix,
+      adjective,
+      affix
     } as WeaponItem | ArmorItem
   }
 }

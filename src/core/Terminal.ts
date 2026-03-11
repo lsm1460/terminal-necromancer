@@ -25,10 +25,11 @@ export class Terminal {
 
   public static async select<T extends string>(
     message: string,
-    choices: { name: string; message: string }[]
+    choices: { name: string; message: string }[],
+    defaultValue?: string
   ): Promise<T> {
     if (!this.renderer) throw new Error('Renderer not initialized')
-    return (await this.renderer.select(message, choices)) as T
+    return (await this.renderer.select(message, choices, defaultValue)) as T
   }
 
   public static async confirm(message: string): Promise<boolean> {

@@ -1,7 +1,9 @@
 import { nanoid } from 'nanoid'
 import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
+import i18n from './i18n'
 import { Item, ItemType } from './types'
+import { RARITY_SETTINGS } from './core/item/consts'
 
 export function generateId(baseId?: string, length = 8): string {
   const uniqueHash = nanoid(length)
@@ -16,6 +18,39 @@ export async function delay(amount: number = 1500) {
   await new Promise((resolve) => setTimeout(resolve, amount))
 }
 
+export function getItemLabel(item: Item) {
+  const originId = item.id.split('::')[0]
+  const label = i18n.t(`item.${originId}.label`)
+
+  const finalLabel = []
+
+  if (item.rarity) {
+    const setting = RARITY_SETTINGS[item.rarity]
+
+    finalLabel.push(setting.color)
+    finalLabel.push(setting.symbol)
+  }
+
+  if ('affix' in item && item.affix) {
+    const affixName = i18n.t(`affix.${item.affix.id}.name`)
+
+    finalLabel.push(`[${affixName}]`)
+  }
+
+  if ('adjective' in item && item.adjective) {
+    finalLabel.push(i18n.t(`item_prefix.${item.adjective}`))
+  }
+
+  if ('perfPrefix' in item && item.perfPrefix) {
+    finalLabel.push(i18n.t(`item_prefix.${item.perfPrefix}`))
+  }
+
+  finalLabel.push(label)
+  finalLabel.push('\x1b[0m')
+
+  return finalLabel.join(' ').replace(/\s+/g, ' ').trim()
+}
+
 export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean; isSell?: boolean }) {
   const typeMap: Partial<Record<ItemType, string>> = {
     weapon: '무기',
@@ -25,7 +60,7 @@ export function makeItemMessage(item: Item, player: Player, options?: { withPric
 
   const typeLabel = typeMap[item.type] || '아이템'
 
-  let message = `[${typeLabel}] ${item.label}${item.quantity ? ` (${item.quantity}개)` : ''}`
+  let message = `[${typeLabel}] ${getItemLabel(item)}${item.quantity ? ` (${item.quantity}개)` : ''}`
 
   if (options?.withPrice) {
     const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price

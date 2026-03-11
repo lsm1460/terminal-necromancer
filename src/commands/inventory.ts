@@ -1,6 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
-import { makeItemMessage } from '~/utils'
+import { getItemLabel, makeItemMessage } from '~/utils'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (player, args, context) => {
@@ -48,7 +48,8 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
     actions.push({ name: 'drop', message: '🗑️ 버리기' })
     actions.push({ name: 'back', message: '↩ 뒤로 가기' })
 
-    const action = await Terminal.select(`[${selectedItem.label}] 무엇을 하시겠습니까?`, actions)
+    const label = getItemLabel(selectedItem)
+    const action = await Terminal.select(`[${label}] 무엇을 하시겠습니까?`, actions)
 
     // 5. 액션 처리
     switch (action) {
@@ -56,7 +57,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
         printItem(selectedItem)
         break
       case 'equip':
-        Terminal.log(`\n✨ [${selectedItem.label}]을(를) 장비하였습니다.`)
+        Terminal.log(`\n✨ [${label}]을(를) 장비하였습니다.`)
         await player.equip(selectedItem)
         break
       case 'use':
@@ -76,7 +77,7 @@ export const inventoryCommand: CommandFunction = async (player, args, context) =
           } as Drop)
 
           const qtyText = selectedItem.quantity !== undefined ? ` 1개` : ''
-          Terminal.log(`📦 [${selectedItem.label}]${qtyText}을(를) 바닥에 버렸습니다.`)
+          Terminal.log(`📦 [${label}]${qtyText}을(를) 바닥에 버렸습니다.`)
         }
         break
       case 'back':

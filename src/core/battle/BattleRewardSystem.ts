@@ -1,7 +1,8 @@
 import { BattleTarget, Drop, GameContext, NPC } from '~/types'
+import { getItemLabel } from '~/utils'
+import { LootFactory } from '../LootFactory'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
-import { LootFactory } from '../LootFactory'
 import { BattleUnitManager } from './BattleUnitManager'
 import { BattleResult } from './types'
 
@@ -35,7 +36,7 @@ export class BattleRewardSystem {
     drops.forEach((d) => {
       world.addDrop({ ...d, x, y } as Drop)
       Terminal.log(
-        `📦 ${target.name}은(는) ${d.label}${d.quantity !== undefined ? ` ${d.quantity}개` : ''}을(를) 떨어뜨렸습니다.`
+        `📦 ${target.name}은(는) ${getItemLabel(d)}${d.quantity !== undefined ? ` ${d.quantity}개` : ''}을(를) 떨어뜨렸습니다.`
       )
     })
 

@@ -1,11 +1,13 @@
 import fs from 'fs'
+import { mapValues } from 'lodash'
 import path from 'path'
 import { GameAssets } from './assets'
 import { createCLI } from './cli'
-import { CLIRenderer } from './renderers/cliRenderer'
 import { Terminal } from './core/Terminal'
 import { Title } from './core/Title'
 import { GameEngine } from './gameEngine'
+import i18n from './i18n'
+import { CLIRenderer } from './renderers/cliRenderer'
 import { SaveSystem } from './systems/SaveSystem'
 
 const loadJSON = (filePath: string) => {
@@ -15,6 +17,9 @@ const loadJSON = (filePath: string) => {
 const assetsDir = path.join(__dirname, 'assets')
 const statePath = path.join(assetsDir, 'state.json')
 const initState = loadJSON(path.join(assetsDir, 'init_state.json'))
+
+const save = new SaveSystem(statePath)
+const { locale = 'ko' } = save.load() || {}
 
 const assets: GameAssets = {
   map: loadJSON(path.join(assetsDir, 'map.json')),
@@ -30,20 +35,21 @@ const assets: GameAssets = {
   broadcast: loadJSON(path.join(assetsDir, 'broadcast.json')),
 }
 
-const save = new SaveSystem(statePath)
 const renderer = new CLIRenderer()
 Terminal.setRenderer(renderer)
 
 const engine = new GameEngine(assets, renderer, save)
 
-Title.gameStart(save, initState).then(async (playData) => {
-  if (!playData) {
-    console.error('게임 데이터를 불러오지 못했습니다.')
-    return
-  }
+i18n.changeLanguage(locale).then(() => {
+  Title.gameStart(save, initState).then(async (playData) => {
+    if (!playData) {
+      console.error('게임 데이터를 불러오지 못했습니다.')
+      return
+    }
 
-  await engine.init(playData)
-  await engine.start()
+    await engine.init(playData)
+    await engine.start()
 
-  await createCLI(engine.player, engine.context)
+    await createCLI(engine.player, engine.context)
+  })
 })

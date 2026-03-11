@@ -26,9 +26,9 @@ export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
     multiplier: 1.25,
     weight: 10,
     hasAffix: false,
-    color: '\x1b[34m', // Blue
+    color: '\x1b[94m', // Blue
     symbol: '🔵',
-    adjectives: ['정교한', '우수한', '날카로운', '강화된', '숙련된'],
+    adjectives: ['exquisite', 'superior', 'keen', 'reinforced', 'seasoned'],
   },
   EPIC: {
     label: '영웅',
@@ -37,6 +37,6 @@ export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
     hasAffix: true,
     color: '\x1b[35m', // Purple
     symbol: '🟣',
-    adjectives: ['심연의', '몰락한', '금지된', '태고의', '필멸의'],
+    adjectives: ['abyssal', 'fallen', 'forbidden', 'primal', 'mortal'],
   },
 }

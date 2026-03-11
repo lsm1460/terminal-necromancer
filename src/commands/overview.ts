@@ -2,9 +2,10 @@ import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import GolemWrapper from '~/core/player/GolemWrapper'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { printStatus } from '~/statusPrinter'
 import { BattleTarget, CommandFunction, Corpse, Drop, GameContext, Item, ItemType, Monster, NPC, Tile } from '~/types'
-import { makeItemMessage } from '~/utils'
+import { getItemLabel, makeItemMessage } from '~/utils'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
@@ -31,7 +32,8 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   // 장착 장비 출력 (타입 가드 + 구조 분해 활용)
   let weaponText = '없음'
   if (equipped.weapon && equipped.weapon.type === ItemType.WEAPON) {
-    const { label, atk } = equipped.weapon
+    const { atk } = equipped.weapon
+    const label = getItemLabel(equipped.weapon)
     weaponText = `${label} (공격 +${atk})`
 
     if ('affix' in equipped.weapon && equipped.weapon.affix)
@@ -40,7 +42,8 @@ export const statusCommand: CommandFunction = (player, args, context) => {
 
   let armorText = '없음'
   if (equipped.armor && equipped.armor.type === ItemType.ARMOR) {
-    const { def, label } = equipped.armor
+    const label = getItemLabel(equipped.armor)
+    const { def } = equipped.armor
 
     armorText = `${label} (방어 +${def})`
 
@@ -159,7 +162,7 @@ export const printItem = (item: Item) => {
   }
 
   Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Terminal.log(` ${rarityMap[item.rarity || 'COMMON']} ${item.label} ${item.quantity ? `(x${item.quantity})` : ''}`)
+  Terminal.log(` ${rarityMap[item.rarity || 'COMMON']} ${getItemLabel(item)} ${item.quantity ? `(x${item.quantity})` : ''}`)
   Terminal.log(`──────────────────────────────────────────────`)
 
   const stats: string[] = []
@@ -232,7 +235,7 @@ const lookPath = async (
   if (selected !== 'back') {
     const target = paths.find((p) => p.label === selected)
     if (target) {
-      Terminal.log(target.tile?.observe!)
+      Terminal.log(i18n.t(`tile.${target.tile?.id}.observe`))
       if (!target.tile?.isClear && target.tile?.event) {
         const eventId = target.tile.event
 
@@ -299,8 +302,9 @@ export const lookAll = async (
   // 아이템 수량 합산 처리
   const itemCounts: Record<string, { label: string; qty: number; raw: any }> = {}
   items.forEach((item) => {
-    if (!itemCounts[item.label]) itemCounts[item.label] = { label: item.label, qty: 0, raw: item }
-    itemCounts[item.label].qty += item.quantity || 1
+    const label = getItemLabel(item)
+    if (!itemCounts[label]) itemCounts[label] = { label: label, qty: 0, raw: item }
+    itemCounts[label].qty += item.quantity || 1
   })
   const groupedItems = Object.values(itemCounts)
 

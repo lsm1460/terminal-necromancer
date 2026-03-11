@@ -1,0 +1,334 @@
+{
+  "TITLE_001": {
+    "dialogue": "",
+    "observe": ""
+  },
+  "B1_001": {
+    "dialogue": "This place is always filled with the dead. They are all walking silently in one direction.\nYou can move to other locations by typing up, down, right, or left.",
+    "observe": "In the distance, pale blue mist swirls, and the whispers of the dead can be heard."
+  },
+  "B1_002": {
+    "dialogue": "The broadcasting room of this terminal.",
+    "observe": "A voice constantly calling someone's name flows out along with the crackling noise."
+  },
+  "B1_003": {
+    "dialogue": "The medical room of this terminal.",
+    "observe": "A bizarre song leaks out between the pungent smell of disinfectant that stings the nose."
+  },
+  "B1_004": {
+    "dialogue": "In the hallway where ornate Gothic sculptures are mixed with bizarre mechanical noises,\nthe wailing of tens of thousands of ghosts awaiting judgment flows down the walls like black tears.\nYou can pick up items currently on the tile with the \"pick\" command.",
+    "observe": "The dead can be seen walking in one direction in the hallway."
+  },
+  "B1_005": {
+    "dialogue": "Thrust into this massive procession of tragedy, you are pushed towards the gates of judgment.\nYou can check the items you possess with the \"bag\" command.",
+    "observe": "The dead can be seen walking in one direction in the hallway."
+  },
+  "B1_006": {
+    "dialogue": "Finally, this seemingly endless procession of tragedy stops,\nand at its end lies judgment, gaping with only cold death.\nYou can equip or use items with the \"equip\" and \"use\" commands.",
+    "observe": "The cold chill left by countless souls moving in one direction can be felt."
+  },
+  "B1_007": {
+    "dialogue": "This is the terminal administrator's office. Below, an elevator going down to the lower floors can be seen.\nYou can start interacting with a target by typing \"talk\".",
+    "observe": "The overwhelming power of death leaks from beyond the door, swallowing all surrounding noise."
+  },
+  "B1_008": {
+    "dialogue": "The center of the terminal waiting room. Only traces of someone's presence are visible.",
+    "observe": "The center of the terminal waiting room is visible."
+  },
+  "B1_009": {
+    "dialogue": "A secluded spot in the terminal waiting room. Marco's convenience store is here.",
+    "observe": "A small shop in a corner of the terminal is visible."
+  },
+  "B1_010": {
+    "dialogue": "There is an elevator that goes deeper.\nYou can check various information by typing \"examine\".",
+    "observe": "The sound of steel wires being pulled taut is transmitted like a vibration from below the floor."
+  },
+  "B2_001": {
+    "dialogue": "This is the elevator connecting to the first basement floor.\nFrom here on, it is a combat zone.\nYou can attack a target by typing \"attack\".\nYou can use currently active skills by typing \"skill\".",
+    "observe": "Through the gaps in the heavy iron door, the cold air from the floor above becomes a thin breeze brushing past your feet."
+  },
+  "B2_002": {
+    "dialogue": "Squeaking sounds are heard from a corner of the dark hallway.",
+    "observe": "In the deep shadows at the end of the hallway, mysterious small shadows can be seen busily crossing paths."
+  },
+  "B2_003": {
+    "dialogue": "Rusty vending machines are lined up.",
+    "observe": "The flickering red lamps of the vending machines in the distance look like the eyes of a hungry beast in the dark."
+  },
+  "B2_004": {
+    "dialogue": "A tangled pile of scrap metal is stacked up.",
+    "observe": "Collapsed ceiling materials and scrap metal are piled up like a mountain."
+  },
+  "B2_005": {
+    "dialogue": "A massive figure passes over the tracks!",
+    "observe": "From the end of the deeply pitted tracks, an unidentifiable massive chunk of metal is felt approaching with an ominous metallic sound."
+  },
+  "B2_006": {
+    "dialogue": "A foul-smelling puddle of filth appears. It smells like something you should never drink.",
+    "observe": "Black liquid pooled in low spots of the floor flickers with bizarre waves to the rhythm of water dripping from the ceiling."
+  },
+  "B2_007": {
+    "dialogue": "Transfer tracks split into several branches.",
+    "observe": "Maze-like tracks stretch endlessly into the darkness, and mysterious screams echo from deep within."
+  },
+  "B2_008": {
+    "dialogue": "The ceiling is entirely covered with white cobwebs.",
+    "observe": "Tangled white threads between the ceiling pipes are hanging and swaying like a massive shroud."
+  },
+  "B2_009": {
+    "dialogue": "There is an altar built by ghosts to comfort themselves. If prayers are gathered, it might heal your health.",
+    "observe": "Near a secluded sewer, blue candles placed on a pile of boxes are swallowing the stale air around them, creating a silence."
+  },
+  "B2_010": {
+    "dialogue": "It feels as if all the air in the transfer path has stopped here.",
+    "observe": "The foul fishy smell and stagnant pressure emitting from the massive cavern at the end of the tunnel sharply stimulate every nerve in the body."
+  },
+  "B3_5_001": {
+    "dialogue": "A signal from an unidentifiable frequency is heard from behind the rusty iron door.",
+    "observe": "In a closed corner of the loading dock, there is a sophisticatedly hidden hatch in what looks like a normal wall."
+  },
+  "B3_5_002": {
+    "dialogue": "It's filled with modified monitors and piles of weapons. Resistance members are preparing for their next move here, away from the system's eyes. Accommodations for the resistance can be seen behind, but it's best not to approach.",
+    "observe": "The metallic sound of weapon maintenance and the urgent whispers of strategic meetings leak through the faint lamp light."
+  },
+  "B3_001": {
+    "dialogue": "The elevator connecting to the floor above.",
+    "observe": "The sharp noise of metal cables rubbing can be heard in the darkness. The silhouette of a cold mechanical device is visible."
+  },
+  "B3_002": {
+    "dialogue": "A passage smelling strongly of oil.",
+    "observe": "A zone where acrid and sticky air flows out. The floor surface is faintly shimmering with black oil."
+  },
+  "B3_003": {
+    "dialogue": "Stealthy footsteps are briefly seen between the rattling fan noise and dust.",
+    "observe": "Beyond the passage thick with dusty steam, a presence of someone holding their breath and moving is detected."
+  },
+  "B3_004": {
+    "dialogue": "Vending machines are even in a place like this. It might be welfare for the workers.",
+    "observe": "The flickering red lamps of the vending machines in the distance look like the eyes of a hungry beast in the dark."
+  },
+  "B3_005": {
+    "dialogue": "A view of rusty scrap metal piled up like a mountain. Bureau guards monitor the surroundings with sharp eyes.",
+    "observe": "In the center of the loading dock where a massive crane has stopped, the smell of fishy iron vibrates through the heavily settled air."
+  },
+  "B3_006": {
+    "dialogue": "The industrial conveyor belt is stopped. A manual control panel is visible.",
+    "observe": "A long, rusty steel track, looking like a massive snake, is seen huddling in the darkness."
+  },
+  "B3_007": {
+    "dialogue": "The area guide attached to the wall is severely damaged.",
+    "observe": "A narrow, dark crack formed by massive structures touching each other is visible."
+  },
+  "B3_008": {
+    "dialogue": "A massive engine emits irregular noise.",
+    "observe": "Unpleasant vibrations are transmitted through the floor. A sound as if a massive machine is pulsating can be heard from afar."
+  },
+  "B3_009": {
+    "dialogue": "Waiting area for a massive mechanical golem that works at the loading dock.",
+    "observe": "A steel shadow of overwhelming size blocks the view. The heavy sound of metal clashing rings in the eardrums."
+  },
+  "B3_010": {
+    "dialogue": "High-pressure steam emitting from the damaged part of the pipe flows down the walls, making everything damp.",
+    "observe": "Hot steam periodically bursts through cracks in the floor, blurring the vision of the entire passage."
+  },
+  "B3_011": {
+    "dialogue": "Tragic records of what happened at the loading dock in the past flow out from the memory of a half-broken robot.",
+    "observe": "Faint afterimages overlap around the workbench, and a low muttering circling the air can be heard."
+  },
+  "B3_012": {
+    "dialogue": "Cargo boxes are scattered in disorder.",
+    "observe": "A view of massive boxes piled up disorderly, blocking the way like a maze."
+  },
+  "B3_013": {
+    "dialogue": "A dark space in a corner of the loading dock.",
+    "observe": "The mean laughter of ratmen and the noise of weapons scratching can be heard from the deep corner where even lights don't reach."
+  },
+  "B3_014": {
+    "dialogue": "Old tents scattered on the floor emit a rotting smell, and narrow, dark gaps between cargo are intertwined like a maze.",
+    "observe": "Cargo covered with oil-stained tents is piled up without order, making it difficult to gauge what is hidden."
+  },
+  "B3_015": {
+    "dialogue": "A thick steel door is fixed half-open. Cold, artificial light flickers through the door gap.",
+    "observe": "Regular metallic vibrations from beyond the rusty iron door are transmitted through the floor to the tips of the toes."
+  },
+  "B3_016": {
+    "dialogue": "A zone where steel shelves rise high, requiring you to look up. Old cardboard boxes are packed tightly in every gap.",
+    "observe": "On the high shelves, among the dusty cargo, an alien metallic glow faintly flickers."
+  },
+  "B3_017": {
+    "dialogue": "A zone where rusty mechanical parts and old rags are scattered in disorder. A narrow metal gap is decorated like someone's dwelling.",
+    "observe": "In a corner of a broken conveyor belt, traces and scent of a messy life, as if someone stayed there, remain."
+  },
+  "B3_018": {
+    "dialogue": "Mysterious mucus is spreading around the vent, and mutants that broke through the isolation zone make hungry sounds.",
+    "observe": "Black liquid drips from the ceiling vent, forming a sticky puddle on the floor."
+  },
+  "B3_019": {
+    "dialogue": "There is an altar built by ghosts to comfort themselves. If prayers are gathered, it might heal your health.",
+    "observe": "Near a secluded sewer, blue candles placed on a pile of boxes are swallowing the stale air around them, creating a silence."
+  },
+  "B3_020": {
+    "dialogue": "Thick, high-viscosity black oil forms a layer on the floor. A strong petroleum smell that stings the nose vibrates.",
+    "observe": "The floor is covered with black oil, reflecting the lights disorderly and emitting an unpleasant luster."
+  },
+  "B3_021": {
+    "dialogue": "Iron pillars bent under heavy weight and destroyed cargo show the tragic scene as it is.",
+    "observe": "A zone where steel containers are crushed like sheets of paper. A pressure that oppresses the entire space is felt."
+  },
+  "B3_022": {
+    "dialogue": "Forklifts that stopped working long ago are abandoned in a rusty state, blocking the way, and only stale dust floats in the air.",
+    "observe": "At the end of the hallway where fluorescent lights crackle and flicker, abandoned forklifts are grotesquely left behind."
+  },
+  "B4_001": {
+    "dialogue": "Space curls up like burnt black paper.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_002": {
+    "dialogue": "The black liquid pooled on the floor swirls and pulls you in.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_003": {
+    "dialogue": "A pair of old child's shoes is floating in the air.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_004": {
+    "dialogue": "Discarded ghosts are hanging from the ceiling like spiders.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_005": {
+    "dialogue": "Space shimmers, and the form of a man appears and disappears.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_006": {
+    "dialogue": "The vision crackles and is inverted.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_007": {
+    "dialogue": "A torn child's swaddling cloth is fixed in the air as if nailed.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_008": {
+    "dialogue": "Black tears fall from the ceiling.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_009": {
+    "dialogue": "The pile of scrap metal under your feet collapses, and you fall into the endless darkness!",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_010": {
+    "dialogue": "A low lullaby sound is heard from somewhere.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_011": {
+    "dialogue": "Unidentifiable lumps of flesh are blocking the passage.",
+    "observe": "The concentration of sub-space rapidly thickens. The target is hidden very close by."
+  },
+  "B4_012": {
+    "dialogue": "Dimensional fragments are floating in the air like glass shards.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_013": {
+    "dialogue": "Space shatters like a mirror, forcibly shuffling your position.",
+    "observe": "...Only ruins are visible."
+  },
+  "B4_014": {
+    "dialogue": "A rusty silver bell bracelet is placed. The tinkling sound is heard like a hallucination.",
+    "observe": "The concentration of sub-space rapidly thickens. The target is hidden very close by."
+  },
+  "B4_015": {
+    "dialogue": "The center of the distortion.",
+    "observe": "Surroundings are blocked by sub-space barriers. The man's murderous gaze is felt."
+  },
+  "B5_001": {
+    "dialogue": "The smooth metal doors of the elevator open, revealing a luxurious marble lobby. The air is cold and smells of refined perfume.",
+    "observe": "An elevator platform with dim guide lights turned on."
+  },
+  "B5_002": {
+    "dialogue": "The red carpet on the floor perfectly absorbs the sound of footsteps. The gold decorations on the walls shine sharply in the light.",
+    "observe": "The lobby entrance with a richly patterned carpet."
+  },
+  "B5_003": {
+    "dialogue": "Huge artificial tropical plants are lined up along the hallway, obscuring the view. A cold metallic luster is briefly seen between the leaves.",
+    "observe": "A hallway corner with lush indoor plants lined up."
+  },
+  "B5_004": {
+    "dialogue": "Abstract geometric patterns shimmer on the digital canvas that fills the entire wall. The light colors everything around in a grotesque way.",
+    "observe": "A massive luminescent wall that constantly changes colors."
+  },
+  "B5_005": {
+    "dialogue": "Recessed ceiling lights flicker, creating regular shadows in the long hallway. A faint mechanical sound is heard from the vents.",
+    "observe": "A long hallway in silence."
+  },
+  "B5_006": {
+    "dialogue": "Luxurious teak tables and leather sofas are disorderly mixed. Shards of broken wine glasses sparkle on the floor.",
+    "observe": "A rest area with cluttered furniture."
+  },
+  "B5_007": {
+    "dialogue": "Deep inside the lounge, an area of private rooms with thick velvet curtains. Expensive artifacts are displayed in the cabinets.",
+    "observe": "An entrance to a secret private room hidden by curtains."
+  },
+  "B5_008": {
+    "dialogue": "A connecting passage where the ceiling becomes particularly low. Security camera lenses are embedded throughout the smooth walls.",
+    "observe": "A narrow connecting passage that gives a claustrophobic feeling."
+  },
+  "B5_009": {
+    "dialogue": "Blue fluorescent liquid circulates in the artificial fountain of the central square, making a low vibration. Mysterious fog is spread over the water surface.",
+    "observe": "A massive fountain square where blue light is emitting."
+  },
+  "B5_010": {
+    "dialogue": "Monitors of the security control room are seen through the reinforced glass. Red warning lights rotate and scan the surroundings threateningly.",
+    "observe": "A heavily guarded area with red lights flickering."
+  },
+  "B5_011": {
+    "dialogue": "The bar area of the high-end membership lounge. Unknown blue liquor bottles are placed in order on the shelves.",
+    "observe": "A dark bar counter with many bottles displayed."
+  },
+  "B5_012": {
+    "dialogue": "Silver metal finished circular pillars support the ceiling. The surrounding scenery is clearly reflected in the mirror-like marble of the floor.",
+    "observe": "A hall with metal pillars lined up."
+  },
+  "B5_013": {
+    "dialogue": "A small dining area connected to the kitchen. Silverware is scattered disorderly on the elaborately set tablecloth.",
+    "observe": "A dining area where you might hear the sound of clashing silverware."
+  },
+  "B5_014": {
+    "dialogue": "In front of the heavy gate leading to the terminal. The heavy steel door is firmly closed, and defensive covers are installed around it.",
+    "observe": "A passage blocked by a massive metal gate."
+  },
+  "B5_015": {
+    "dialogue": "The end of a hallway where lights are completely turned off. Only the small LED bulb of the security terminal flickers in the dark.",
+    "observe": "A pitch-black dead-end hallway."
+  },
+  "B5_016": {
+    "dialogue": "White cold air flows out through the gap of the automatic door of the wine cellar. The air is mixed with the sharp smell of cold disinfectant.",
+    "observe": "A warehouse entrance with cold air spread on the floor."
+  },
+  "B5_017": {
+    "dialogue": "The luxurious gold top of the information desk is scratched by a sharp object. Documents are scattered like snowflakes on the floor.",
+    "observe": "An information desk with clear traces of damage."
+  },
+  "B5_018": {
+    "dialogue": "A platform where VIP emergency escape capsules are lined up. A yellow safety line is clearly drawn on the floor.",
+    "observe": "An escape platform with mechanical devices operating."
+  },
+  "B5_019": {
+    "dialogue": "A circular room where the core control device of the 5th basement floor is located. Dozens of holographic screens float in the air, pouring out real-time data.",
+    "observe": "A control room emitting strong light from the center."
+  },
+  "B5_020": {
+    "dialogue": "A small emergency exit door. The rough metal texture harmonizes strangely with the surrounding luxurious decorations.",
+    "observe": "A steel emergency door located in a corner."
+  },
+  "B5_021": {
+    "dialogue": "A rest corner with plush sofas. Real-time changing stock market graphs are projected on the wall.",
+    "observe": "A quiet rest room with screens flickering."
+  },
+  "B5_022": {
+    "dialogue": "Small ventilation fans rotate rapidly in the corners of the ceiling finished with gold molding. A faint smell of burning lingers in the air.",
+    "observe": "A space where ceiling lights shine disorderly."
+  },
+  "B5_023": {
+    "dialogue": "The edge of a luxurious carpet is curled up. A sparkling metal object is slightly visible through the gap.",
+    "observe": "A corner of the room where the carpet is messy."
+  }
+}
