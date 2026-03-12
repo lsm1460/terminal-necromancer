@@ -24,9 +24,9 @@ export function printTileStatus(player: Player, context: GameContext) {
   }
 
   if (corpses.length > 0) {
-    const deadNames = corpses.map((_corpse) => `${_corpse.name}의 시체`).join(', ')
+    const deadNames = corpses.map((_corpse) => _corpse.name + i18n.t('corpses')).join(', ')
 
-    Terminal.log(`주변의 시체: ${deadNames}`)
+    Terminal.log(i18n.t('local_corpses') + deadNames)
   }
 
   printLootStatus(player, context)
@@ -47,13 +47,13 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
   const tile = map.getTile(x, y)
 
   const bag = world.getLootBagAt(map.currentSceneId, tile.id)
-  if (bag) Terminal.log(`\n나의 영혼 파편들을 발견했다.`)
+  if (bag) Terminal.log(`\n${i18n.t('found_soul')}`)
 
   const drops = world.getDropsAt(x, y)
   if (drops?.length) {
-    Terminal.log(`\n주변에 떨어진 아이템:`)
+    Terminal.log(`\n${i18n.t('local_drops')}`)
     drops.forEach((d) => {
-      const qtyText = !!d.quantity ? ` ${d.quantity}개` : ''
+      const qtyText = !!d.quantity ? ` x ${d.quantity}` : ''
       Terminal.log(` - ${getItemLabel(d)}${qtyText}`)
     })
   }

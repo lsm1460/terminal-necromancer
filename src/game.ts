@@ -1,5 +1,4 @@
 import fs from 'fs'
-import { mapValues } from 'lodash'
 import path from 'path'
 import { GameAssets } from './assets'
 import { createCLI } from './cli'
@@ -32,7 +31,6 @@ const assets: GameAssets = {
   npc: loadJSON(path.join(assetsDir, 'npc.json')),
   events: loadJSON(path.join(assetsDir, 'events.json')),
   npcSkills: loadJSON(path.join(assetsDir, 'npcSkills.json')),
-  broadcast: loadJSON(path.join(assetsDir, 'broadcast.json')),
 }
 
 const renderer = new CLIRenderer()

@@ -1,4 +1,11 @@
 {
+  "type": {
+    "weapon": "무기",
+    "armor": "방어구",
+    "food": "음식",
+    "consumable": "소모품",
+    "default": "아이템"
+  },
   "carrot": {
     "label": "당근",
     "description": "신선한 당근입니다. 소량의 체력을 회복할 수 있습니다."

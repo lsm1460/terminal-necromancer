@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { GameEngine } from '~/gameEngine'
 import { useInputLock } from '~/hooks/useInputLock'
 import { useGameStore } from '~/stores/useGameStore'
@@ -8,6 +9,7 @@ interface GameInputProps {
 }
 
 export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
+  const { t } = useTranslation()
   const { uiState, addLog, resolveUI } = useGameStore()
   const disabled = useInputLock()
 
@@ -59,7 +61,7 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
         className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
         autoFocus
         onKeyDown={handleCommand}
-        placeholder={disabled ? '선택지를 클릭하세요...' : '명령어를 입력하세요...'}
+        placeholder={disabled ? t('web.select_an_option') : t('input_command')}
         disabled={disabled}
       />
     </div>

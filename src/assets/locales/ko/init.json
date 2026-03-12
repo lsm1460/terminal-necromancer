@@ -3,6 +3,8 @@
   "start_game": "시작하려면 START를 누르세요",
 
   "cancel": "🔙 취소",
+
+  "input_command": "명령어를 입력하세요..(명령어 리스트: 도움말): ",
   "press_enter": " [Enter를 누르면 계속]",
   "looking": {
     "around_one": "주변에 보이는 것:",
@@ -41,6 +43,7 @@
   "down": "아래",
   "left": "왼쪽",
   "right": "오른쪽",
+  "you_cannot_pass": "You cannot pass",
 
   "loading": {
     "init": "흩어진 의식을 집중하는 중...",
@@ -62,5 +65,62 @@
     "forbidden": "금지된",
     "primal": "태고의",
     "mortal": "필멸의"
-  }
+  },
+
+  "commands": {
+    "attack": "공격",
+    "status": "상태",
+    "skill": "스킬",
+    "inventory": "인벤토리",
+    "map": "지도",
+    "pick": "줍기",
+    "look": "보기",
+    "help": "도움말"
+  },
+
+  "bag_is_empty": "가방이 비어있습니다.",
+  "found_soul": "당신의 영혼 파편들을 발견했다.",
+  "local_drops": "주변에 떨어진 아이템:",
+  "local_corpses": "주변의 시체: ",
+  "corpses": "의 시체",
+  "select_an_item": "아이템을 선택하세요.",
+
+  "inventory": {
+    "empty": "인벤토리가 텅 비어 있습니다.",
+    "select_item": "조회할 아이템을 선택하세요.",
+    "what_to_do": "[{{label}}] 무엇을 하시겠습니까?",
+    "action_look": "살펴보기",
+    "action_equip": "장착하기",
+    "action_use": "사용하기",
+    "action_drop": "버리기",
+    "action_equip_done": "[{{label}}]을(를) 장비하였습니다.",
+    "action_drop_done": "[{{label}}] ({{count}}개)을(를) 바닥에 버렸습니다."
+  },
+  
+  "stat": {
+    "atk": "공격력",
+    "def": "방어력"
+  },
+
+  "pick": {
+    "nothing_to_pick": "🕳️ 이곳에는 주울 수 있는 아이템이 없습니다.",
+    "inventory_full": "인벤토리가 가득 찼습니다! ({{current}}/{{max}})",
+    "inventory_full_tip": "아이템을 버리거나 사용하여 공간을 확보하세요.",
+    "select_target": "무엇을 획득하시겠습니까? (공간: {{space}}칸 남음)",
+    "obtained_msg": "[{{label}}] ({{count}}개) 획득!",
+    "partial_pick_warning": "인벤토리 공간이 부족하여 {{count}}개는 바닥에 남았습니다.",
+    "lootbag_choice": "내가 흘린 영혼의 조각들.. (영혼: {{exp}}, 골드: {{gold}})",
+    "lootbag_recover_msg": "흩어져 있던 영혼의 조각({{exp}} EXP)과 낡은 금화({{gold}} G)를 수습합니다.",
+    "lootbag_flavor_text": "죽음은 끝이 아니었으나, 그 고통만큼은 고스란히 손끝에 전해집니다."
+  },
+
+  "talk": {
+    "no_one_here": "이곳에는 대화할 상대가 없습니다.",
+    "not_found": "이곳에 '{{name}}'은(는) 없습니다.",
+    "select_npc": "누구와 대화하시겠습니까?",
+    "what_to_do": "무엇을 하시겠습니까?",
+    "leave": "떠나기"
+  },
+
+  "invalid_command": "유효하지 않은 명령입니다."
 }

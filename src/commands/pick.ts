@@ -1,96 +1,95 @@
+import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
-import { CommandFunction } from '~/types'
-import { makeItemMessage } from '~/utils'
+import i18n from '~/i18n'
+import { CommandFunction, Drop, GameContext, LootBag } from '~/types'
+import { getItemLabel, makeItemMessage } from '~/utils'
 
 export const pickCommand: CommandFunction = async (player, args, context) => {
-  // 1. 현재 위치의 드랍 아이템 탐색
   const { x, y } = player.pos
   const tile = context.map.getTile(x, y)
 
-  const lootBag = context.world.getLootBagAt(context.map.currentSceneId, tile.id)
   const drops = context.world.getDropsAt(player.x, player.y)
+  const lootBag = context.world.getLootBagAt(context.map.currentSceneId, tile.id)
+  const availableSpace = getAvailableSpace(player)
 
-  if (!drops.length && !lootBag) {
-    Terminal.log('\n🕳️ 이곳에는 주울 수 있는 아이템이 없습니다.')
-    return false
+  if (!hasPickableItems(drops, lootBag)) return false
+  if (!checkInventorySpace(availableSpace, player)) return false
+
+  const choices = makeDropTargetOptions(drops, player, lootBag)
+  const selectionId = await Terminal.select(i18n.t('pick.select_target', { space: availableSpace }), choices)
+  if (!selectionId || selectionId === 'cancel') return false
+
+  if (selectionId === 'lootBag' && lootBag) {
+    handleLootBagPick(player, lootBag, context)
   }
 
-  // 2. 현재 인벤토리 총 점유 수량 계산 (각 아이템의 quantity 합산)
-  const currentTotalQuantity = player.inventory.reduce((sum, item) => sum + (item.quantity || 1), 0)
-
-  // 3. 남은 공간 확인
-  const availableSpace = player.inventoryMax - currentTotalQuantity
-
-  if (availableSpace <= 0) {
-    Terminal.log(`\n🎒 인벤토리가 가득 찼습니다! (${currentTotalQuantity}/${player.inventoryMax})`)
-    Terminal.log('아이템을 버리거나 사용하여 공간을 확보하세요.')
-    return false
-  }
-
-  let drop: any | undefined
-
-  // 선택 메뉴 띄우기
-  const findDrop = (_dropId: string) => drops.find((_drop) => _drop.id === _dropId)
-
-  const choices = [
-    ...(lootBag
-      ? [
-          {
-            name: 'lootBag',
-            message: `내가 흘린 영혼의 조각들..(영혼 조각: ${lootBag.exp}, 골드: ${lootBag.gold})`,
-          },
-        ]
-      : []),
-    ...drops.map((d) => ({
-      name: d.id,
-      message: makeItemMessage(d, player),
-    })),
-    { name: 'cancel', message: '🔙 취소' },
-  ]
-
-  const dropId = await Terminal.select(`무엇을 획득하시겠습니까? (공간: ${availableSpace}칸 남음)`, choices)
-
-  if (dropId === 'cancel') return false
-  if (dropId === 'lootBag' && lootBag) {
-    Terminal.log(`\n흩어져 있던 영혼의 조각(${lootBag.exp} EXP)과 낡은 금화(${lootBag.gold} G)를 수습합니다.`)
-    Terminal.log(`"죽음은 끝이 아니었으나, 그 고통만큼은 고스란히 손끝에 전해집니다."`)
-
-    player.gainExp(lootBag.exp)
-    player.gainGold(lootBag.gold)
-    context.world.removeLootBag()
-
-    return false
-  }
-
-  drop = findDrop(dropId)
-
-  // 5. 획득 처리
+  const drop = drops.find((d) => d.id === selectionId)
   if (drop) {
-    const totalDropQty = drop.quantity || 1
-
-    // 획득 가능 수량 계산 (전체 수량과 남은 공간 중 작은 값)
-    const pickQty = Math.min(totalDropQty, availableSpace)
-    const remainQty = totalDropQty - pickQty
-
-    // 플레이어 인벤토리에 추가 (부분 수량만 전달)
-    player.addItem({
-      ...drop,
-      quantity: pickQty,
-    })
-
-    const qtyText = pickQty > 1 ? ` ${pickQty}개` : ''
-    Terminal.log(`\n✨ [${drop.label}]${qtyText} 획득!`)
-
-    // 6. 월드 맵 데이터 업데이트
-    if (remainQty > 0) {
-      // 공간 부족으로 일부만 주운 경우: 바닥에 남은 수량 갱신
-      drop.quantity = remainQty
-      Terminal.log(`⚠️ 인벤토리 공간이 부족하여 ${remainQty}개는 바닥에 남았습니다.`)
-    } else {
-      // 전부 다 주운 경우: 월드에서 제거
-      context.world.removeDropById(drop.id, player.pos)
-    }
+    handleItemPick(drop, player, availableSpace, context)
   }
 
   return false
+}
+
+function getAvailableSpace(player: Player): number {
+  const currentTotal = player.inventory.reduce((sum, item) => sum + (item.quantity || 1), 0)
+  return player.inventoryMax - currentTotal
+}
+
+function hasPickableItems(drops: Drop[], lootBag?: LootBag): boolean {
+  if (!drops.length && !lootBag) {
+    Terminal.log('\n' + i18n.t('pick.nothing_to_pick'))
+    return false
+  }
+  return true
+}
+
+function checkInventorySpace(space: number, player: Player): boolean {
+  if (space <= 0) {
+    const current = player.inventoryMax - space // 혹은 위에서 계산된 값 전달
+    Terminal.log(`\n🎒 ${i18n.t('pick.inventory_full', { current, max: player.inventoryMax })}`)
+    Terminal.log(i18n.t('pick.inventory_full_tip'))
+    return false
+  }
+  return true
+}
+
+const makeDropTargetOptions = (drops: Drop[], player: Player, lootBag?: LootBag) => [
+  ...(lootBag
+    ? [
+        {
+          name: 'lootBag',
+          message: i18n.t('pick.lootbag_choice', { exp: lootBag.exp, gold: lootBag.gold }),
+        },
+      ]
+    : []),
+  ...drops.map((d) => ({ name: d.id, message: makeItemMessage(d, player) })),
+  { name: 'cancel', message: `🔙 ${i18n.t('common.cancel')}` },
+]
+
+function handleLootBagPick(player: Player, lootBag: LootBag, context: GameContext) {
+  Terminal.log(`\n${i18n.t('pick.lootbag_recover_msg', { exp: lootBag.exp, gold: lootBag.gold })}`)
+  Terminal.log(`"${i18n.t('pick.lootbag_flavor_text')}"`)
+
+  player.gainExp(lootBag.exp)
+  player.gainGold(lootBag.gold)
+  context.world.removeLootBag()
+}
+
+function handleItemPick(drop: Drop, player: Player, availableSpace: number, context: GameContext) {
+  const totalDropQty = drop.quantity || 1
+  const pickQty = Math.min(totalDropQty, availableSpace)
+  const remainQty = totalDropQty - pickQty
+
+  player.addItem({ ...drop, quantity: pickQty })
+
+  const label = getItemLabel(drop)
+  Terminal.log(`\n✨ ${i18n.t('pick.obtained_msg', { label, count: pickQty })}`)
+
+  if (remainQty > 0) {
+    drop.quantity = remainQty
+    Terminal.log(`⚠️ ${i18n.t('pick.partial_pick_warning', { count: remainQty })}`)
+  } else {
+    context.world.removeDropById(drop.id, player.pos)
+  }
 }

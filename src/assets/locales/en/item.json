@@ -1,4 +1,11 @@
 {
+  "type": {
+    "weapon": "Weapon",
+    "armor": "Armor",
+    "food": "Food",
+    "consumable": "Consumable",
+    "default": "Item"
+  },
   "carrot": {
     "label": "Carrot",
     "description": "A fresh carrot. Restores a small amount of HP."

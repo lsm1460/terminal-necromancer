@@ -5,7 +5,7 @@
     "x": 0,
     "y": 0,
     "_maxHp": 50,
-    "hp": 47,
+    "hp": 50,
     "_maxMp": 50,
     "mp": 50,
     "atk": 10,
@@ -14,7 +14,7 @@
     "eva": 0,
     "crit": 0,
     "gold": 0,
-    "exp": 10,
+    "exp": 0,
     "level": 1,
     "karma": 0,
     "_maxMemorize": 5,
@@ -28,18 +28,9 @@
       "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
-    "inventory": [],
-    "inventoryMax": 15,
-    "skeleton": [],
-    "skeletonSubspace": [],
-    "subspaceLimit": 15,
-    "_maxSkeleton": 2,
-    "golemUpgrade": [],
-    "knightUpgrade": [],
-    "upgradeLimit": 5,
-    "equipped": {
-      "weapon": {
-        "id": "wood_stick::qm9JxgA8",
+    "inventory": [
+      {
+        "id": "wood_stick::DIvVWtF-",
         "type": "weapon",
         "attackType": "melee",
         "atkRange": [
@@ -57,21 +48,60 @@
         "price": 0,
         "sellPrice": 0,
         "quantity": 1,
-        "minRarity": "EPIC",
-        "atk": 3,
+        "maxRarity": "COMMON",
+        "atk": 2,
         "crit": 0,
         "maxSkeleton": 0,
-        "rarity": "EPIC",
+        "rarity": "COMMON",
         "perfPrefix": "",
-        "adjective": "abyssal",
-        "affix": {
-          "id": "CLEANSE",
-          "name": "해주",
-          "description": "스켈레톤 사제나 수도자가 아군의 디버프를 해제합니다."
-        },
+        "adjective": "",
         "x": 0,
         "y": 1
       },
+      {
+        "id": "rags::cWZdVZef",
+        "type": "armor",
+        "defRange": [
+          1,
+          2
+        ],
+        "evaRange": [
+          0,
+          0
+        ],
+        "price": 0,
+        "sellPrice": 0,
+        "quantity": 1,
+        "maxRarity": "COMMON",
+        "def": 1,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "masterwork",
+        "adjective": "",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "id": "nut",
+        "type": "food",
+        "hpHeal": 2,
+        "price": 5,
+        "sellPrice": 1,
+        "quantity": 1,
+        "x": 0,
+        "y": 1
+      }
+    ],
+    "inventoryMax": 15,
+    "skeleton": [],
+    "skeletonSubspace": [],
+    "subspaceLimit": 15,
+    "_maxSkeleton": 2,
+    "golemUpgrade": [],
+    "knightUpgrade": [],
+    "upgradeLimit": 5,
+    "equipped": {
+      "weapon": null,
       "armor": null
     }
   },
@@ -234,7 +264,8 @@
   },
   "drop": null,
   "completedEvents": [
-    "START_GAME"
+    "START_GAME",
+    "item-tutorial"
   ],
   "locale": "en"
 }

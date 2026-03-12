@@ -3,6 +3,8 @@
   "start_game": "Press START to play",
 
   "cancel": "🔙 CANCEL",
+
+  "input_command": "Input command... (Command List: Help): ",
   "press_enter": " [Press Enter to continue]",
   "looking": {
     "around_one": "Detected Entity:",
@@ -41,6 +43,7 @@
   "down": "down",
   "left": "left",
   "right": "right",
+  "you_cannot_pass": "You cannot pass",
 
   "loading": {
     "init": "Focusing the scattered consciousness...",
@@ -62,5 +65,62 @@
     "forbidden": "Forbidden",
     "primal": "Primal",
     "mortal": "Mortal"
-  }
+  },
+
+  "commands": {
+    "attack": "Attack",
+    "status": "Status",
+    "skill": "Skill",
+    "inventory": "Inventory",
+    "map": "Map",
+    "pick": "Pick",
+    "look": "Look",
+    "help": "Help"
+  },
+
+  "bag_is_empty": "Your bag is empty",
+  "found_soul": "You have found fragments of your soul.",
+  "local_drops": "Local drops:",
+  "local_corpses": "Local corpses: ",
+  "corpses": " Corpses",
+  "select_an_item": "Select an item",
+
+  "inventory": {
+    "empty": "Your inventory is empty.",
+    "select_item": "Select an item to inspect.",
+    "what_to_do": "[{{label}}] What would you like to do?",
+    "action_look": "Examine",
+    "action_equip": "Equip",
+    "action_use": "Use",
+    "action_drop": "Drop",
+    "action_equip_done": "Equipped [{{label}}].",
+    "action_drop_done": "Dropped [{{label}}] (x{{count}}) on the ground."
+  },
+
+  "stat": {
+    "atk": "ATK",
+    "def": "DEF"
+  },
+
+  "pick": {
+    "nothing_to_pick": "🕳️ There are no items to pick up here.",
+    "inventory_full": "Your inventory is full! ({{current}}/{{max}})",
+    "inventory_full_tip": "Discard or use items to make some space.",
+    "select_target": "What would you like to pick up? ({{space}} slots left)",
+    "obtained_msg": "Obtained [{{label}}] (x{{count}}).",
+    "partial_pick_warning": "Inventory full. {{count}} items were left on the ground.",
+    "lootbag_choice": "Fragments of my soul.. (Soul: {{exp}}, Gold: {{gold}})",
+    "lootbag_recover_msg": "You recover the scattered soul fragments ({{exp}} EXP) and old coins ({{gold}} G).",
+    "lootbag_flavor_text": "Death was not the end, but the pain of it still lingers at your fingertips."
+  },
+
+  "talk": {
+    "no_one_here": "There is no one here to speak with.",
+    "not_found": "'{{name}}' is not here.",
+    "select_npc": "Who do you wish to speak with?",
+    "what_to_do": "What will you do?",
+    "leave": "Leave"
+  },
+
+  "invalid_command": "Invalid command."
 }

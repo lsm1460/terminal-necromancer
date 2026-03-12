@@ -1,91 +1,85 @@
+import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
-import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
+import i18n from '~/i18n'
+import { CommandFunction, ConsumableItem, Drop, Item, ItemType } from '~/types'
 import { getItemLabel, makeItemMessage } from '~/utils'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (player, args, context) => {
-  const inventory = player.inventory
+  const selectedItem = await selectItemFromInventory(player)
+  if (!selectedItem) return false
+
+  return await handleItemAction(selectedItem, player, args, context)
+}
+
+async function selectItemFromInventory(player: Player): Promise<Item | null> {
+  const { inventory } = player
 
   if (inventory.length === 0) {
-    Terminal.log('\n🎒 인벤토리가 텅 비어 있습니다.')
-    return false
+    Terminal.log('\n> ' + i18n.t('inventory.empty'))
+    return null
   }
 
-  // 1. 아이템 리스트 생성
-  const itemChoices = inventory.map((_item) => ({
-    name: _item.id,
-    message: makeItemMessage(_item, player),
+  const itemChoices = inventory.map((item) => ({
+    name: item.id,
+    message: makeItemMessage(item, player),
   }))
 
-  itemChoices.push({ name: 'cancel', message: '↩ 닫기' })
+  itemChoices.push({ name: 'cancel', message: i18n.t('cancel') })
 
   try {
-    const itemId = await Terminal.select('조회할 아이템을 선택하세요', itemChoices)
+    const itemId = await Terminal.select(i18n.t('inventory.select_item'), itemChoices)
+    if (itemId === 'cancel') return null
 
-    if (itemId === 'cancel') return false
-
-    // 2. 선택한 아이템 객체 조회
-    const selectedItem = inventory.find((i) => i.id === itemId)
-    if (!selectedItem) return false
-
-    // 4. ItemType Enum에 따른 동적 액션 결정
-    const actions: { name: string; message: string }[] = [{ name: 'look', message: '🔍 살펴보기' }]
-
-    switch (selectedItem.type) {
-      case ItemType.WEAPON:
-      case ItemType.ARMOR:
-        actions.push({ name: 'equip', message: '⚔️ 장착하기' })
-        break
-      case ItemType.FOOD:
-      case ItemType.CONSUMABLE:
-        actions.push({ name: 'use', message: '🧪 사용하기' })
-        break
-      case ItemType.ITEM:
-        // 일반 아이템은 특수 액션 없음 (정보 확인용)
-        break
-    }
-
-    actions.push({ name: 'drop', message: '🗑️ 버리기' })
-    actions.push({ name: 'back', message: '↩ 뒤로 가기' })
-
-    const label = getItemLabel(selectedItem)
-    const action = await Terminal.select(`[${label}] 무엇을 하시겠습니까?`, actions)
-
-    // 5. 액션 처리
-    switch (action) {
-      case 'look':
-        printItem(selectedItem)
-        break
-      case 'equip':
-        Terminal.log(`\n✨ [${label}]을(를) 장비하였습니다.`)
-        await player.equip(selectedItem)
-        break
-      case 'use':
-        await player.useItem(selectedItem as ConsumableItem)
-        break
-      case 'drop':
-        // 플레이어 인벤토리에서 제거
-        const isDrop = player.removeItem(selectedItem.id)
-
-        if (isDrop) {
-          // 월드 맵의 현재 좌표에 Drop 아이템으로 생성
-          context.world.addDrop({
-            ...selectedItem,
-            quantity: 1,
-            x: player.x,
-            y: player.y,
-          } as Drop)
-
-          const qtyText = selectedItem.quantity !== undefined ? ` 1개` : ''
-          Terminal.log(`📦 [${label}]${qtyText}을(를) 바닥에 버렸습니다.`)
-        }
-        break
-      case 'back':
-        return await inventoryCommand(player, args, context)
-    }
+    return inventory.find((i) => i.id === itemId) || null
   } catch (error) {
-    // 인터럽트 발생 시 처리
+    return null
+  }
+}
+
+async function handleItemAction(item: Item, player: Player, args: any, context: any) {
+  const label = getItemLabel(item)
+  const action = await Terminal.select(i18n.t('inventory.what_to_do', { label }), getAvailableActions(item))
+
+  switch (action) {
+    case 'look':
+      printItem(item)
+    case 'equip':
+      await player.equip(item)
+      Terminal.log(`\n✨ ${i18n.t('inventory.action_equip_done', { label })}`)
+    case 'use':
+      await player.useItem(item as ConsumableItem)
+    case 'drop':
+      handleDropAction(item, player, context)
+    case 'back':
+      return await inventoryCommand(player, args, context)
   }
 
   return false
+}
+
+function getAvailableActions(item: Item) {
+  const actions = [{ name: 'look', message: `🔍 ${i18n.t('inventory.action_look')}` }]
+
+  if (item.type === ItemType.WEAPON || item.type === ItemType.ARMOR) {
+    actions.push({ name: 'equip', message: `⚔️ ${i18n.t('inventory.action_equip')}` })
+  } else if (item.type === ItemType.FOOD || item.type === ItemType.CONSUMABLE) {
+    actions.push({ name: 'use', message: `🧪 ${i18n.t('inventory.action_use')}` })
+  }
+
+  actions.push({ name: 'drop', message: `🗑️ ${i18n.t('inventory.action_drop')}` })
+  actions.push({ name: 'back', message: i18n.t('cancel') })
+
+  return actions
+}
+
+/**
+ * 아이템 버리기 실행
+ */
+function handleDropAction(item: Item, player: Player, context: any) {
+  if (player.removeItem(item.id)) {
+    context.world.addDrop({ ...item, quantity: 1, x: player.x, y: player.y } as Drop)
+    const label = getItemLabel(item)
+    Terminal.log(`📦 ${i18n.t('inventory.action_drop_done', { label, count: 1 })}`)
+  }
 }

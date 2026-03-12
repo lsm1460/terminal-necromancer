@@ -12,7 +12,18 @@ import koItem from './assets/locales/ko/item.json'
 // affix
 import enAffix from './assets/locales/en/affix.json'
 import koAffix from './assets/locales/ko/affix.json'
-
+// in web
+import enWeb from './assets/locales/en/web.json'
+import koWeb from './assets/locales/ko/web.json'
+// broadcast
+import enBroadcast from './assets/locales/en/broadcast.json'
+import koBroadcast from './assets/locales/ko/broadcast.json'
+// npc
+import enNpc from './assets/locales/en/npc.json'
+import koNpc from './assets/locales/ko/npc.json'
+//monster
+import enMonster from './assets/locales/en/monster.json'
+import koMonster from './assets/locales/ko/monster.json'
 
 const resources = {
   ko: {
@@ -20,7 +31,13 @@ const resources = {
       ...ko,
       tile: koTile,
       item: koItem,
-      affix: koAffix
+      affix: koAffix,
+      web: koWeb,
+      broadcast: koBroadcast,
+      npc: {
+        ...koNpc,
+        ...koMonster,
+      },
     },
   },
   en: {
@@ -28,7 +45,13 @@ const resources = {
       ...en,
       tile: enTile,
       item: enItem,
-      affix: enAffix
+      affix: enAffix,
+      web: enWeb,
+      broadcast: enBroadcast,
+      npc: {
+        ...enNpc,
+        ...enMonster,
+      },
     },
   },
 }

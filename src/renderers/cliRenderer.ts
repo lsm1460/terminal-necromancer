@@ -17,7 +17,7 @@ export class CLIRenderer implements Renderer {
   say(nameList: string[]) {
     const aliveNames = nameList.join(', ')
 
-    console.log(`${i18n.t('looking.around_one')} ${aliveNames}`)
+    console.log(`${i18n.t('looking.around', { count: nameList.length })} ${aliveNames}`)
   }
 
   clear(): void {

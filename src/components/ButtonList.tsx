@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { GameEngine } from '~/gameEngine'
 import { useInputLock } from '~/hooks/useInputLock'
-import { COMMAND_MAP } from '~/hooks/useShortcuts'
+import { getCommandMap } from '~/hooks/useShortcuts'
+import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
-const EXCLUDED_COMMANDS = ['지도']
-
-const COMMAND_LIST = Object.entries(COMMAND_MAP)
-  .filter(([_, name]) => !EXCLUDED_COMMANDS.includes(name))
-  .map(([key, name]) => ({
-    name,
-    key: `alt + ${key}`,
-    rawKey: key,
-  }))
+const EXCLUDED_COMMANDS = [i18n.t('commands.map')]
 
 export const ButtonList: React.FC<{
   engine: React.RefObject<GameEngine | null>
 }> = ({ engine }) => {
+  const { t } = useTranslation()
   const { addLog } = useGameStore()
   const disabled = useInputLock()
 
   const [isOpen, setIsOpen] = useState(false)
   const [showShortcut, setShowShortcut] = useState(false)
+
+  const commandList = useMemo(() => {
+    const commandsMap = getCommandMap()
+
+    return Object.entries(commandsMap)
+      .filter(([_, name]) => !EXCLUDED_COMMANDS.includes(name))
+      .map(([key, name]) => ({
+        name,
+        key: `alt + ${key}`,
+        rawKey: key,
+      }))
+  }, [t])
 
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
@@ -77,15 +84,20 @@ export const ButtonList: React.FC<{
           xl:hidden
         `}
       >
-        {isOpen ? '▼ 명령 메뉴 닫기' : '▲ 명령 메뉴 열기'}
+        {isOpen ? t('web.close_command_menu') : t('web.open_command_menu')}
       </button>
 
       <div
         className="w-full bg-grey-900 flex-wrap justify-center items-center gap-3 px-3 py-1 border-t border-primary xl:flex-col xl:flex! xl:border-t-0 xl:items-stretch flex-1"
         style={{ display: isOpen ? 'flex' : 'none' }}
       >
-        {COMMAND_LIST.map((cmd) => (
-          <ThemedButton key={cmd.name} onClick={() => handleCommand(cmd.name)} disabled={disabled} className='xl:border-primary xl:border xl:py-2'>
+        {commandList.map((cmd) => (
+          <ThemedButton
+            key={cmd.name}
+            onClick={() => handleCommand(cmd.name)}
+            disabled={disabled}
+            className="xl:border-primary xl:border xl:py-2"
+          >
             {cmd.name}
             {showShortcut && <span style={{ fontSize: '0.8em', marginLeft: '4px', opacity: 0.7 }}>({cmd.key})</span>}
           </ThemedButton>
