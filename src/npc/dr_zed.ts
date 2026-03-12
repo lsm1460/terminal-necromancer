@@ -1,5 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { GameContext } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -12,12 +13,12 @@ const ZedHandler: NPCHandler = {
     const alreadyDenied = context.events.isCompleted('golem_generation_denied_zed')
 
     if (isB3Completed && !player.golem && !alreadyDenied) {
-      return [{ name: 'golem', message: '💬 [!] 대화' }]
+      return [{ name: 'golem', message: i18n.t('talk.speak') + ' [!]' }]
     }
 
     return [
-      { name: 'talk', message: '💬 잡담' },
-      ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: '💬 대화' }] : []),
+      { name: 'talk', message: i18n.t('talk.small_talk') },
+      ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: i18n.t('talk.speak') }] : []),
       ...(isB3Completed
         ? player.golem
           ? [{ name: 'upgrade_golem', message: '🧬 골렘 개조' }]

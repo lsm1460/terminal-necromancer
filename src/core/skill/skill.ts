@@ -1,128 +1,103 @@
-import { SKILL_IDS, Skill, SkillId } from '~/types'
-import { Player } from '../player/Player'
-import { SkillExecutor } from './executors'
+import i18n from '~/i18n';
+import { SKILL_IDS, Skill, SkillId } from '~/types';
+import { Player } from '../player/Player';
+import { SkillExecutor } from './executors';
 
-export const SKILL_LIST: Record<SkillId, Skill> = {
-  [SKILL_IDS.RAISE_SKELETON]: {
-    id: SKILL_IDS.RAISE_SKELETON,
-    name: '스켈레톤 생성',
-    description: '시체를 소모하여 해골 병사를 소환합니다.',
-    cost: 5,
-    requiredExp: 0,
-    requiredLevel: 1,
-    unlocks: [],
-    unlockHint: '',
-    execute: (player, context) => SkillExecutor.raiseSkeleton(player, context),
-  },
-  [SKILL_IDS.RECALL_SKELETON]: {
-    id: SKILL_IDS.RECALL_SKELETON,
-    name: '스켈레톤 회수',
-    description: '해골 병사를 마나로 환원합니다.',
-    cost: 0,
-    requiredExp: 0,
-    requiredLevel: 1,
-    unlocks: [],
-    unlockHint: '',
-    execute: (player, context) => SkillExecutor.recallSkeleton(player, context),
-  },
-  [SKILL_IDS.FOCUS_FIRE]: {
-    id: SKILL_IDS.FOCUS_FIRE,
-    name: '죽음의 표식',
-    description: '미니언들이 표식을 보유한 대상을 우선적으로 공격합니다.',
-    attackType: 'ranged',
-    cost: 0,
-    requiredExp: 0,
-    requiredLevel: 1,
-    unlocks: [],
-    unlockHint: '',
-    execute: (player, context, units) => SkillExecutor.focusFire(player, context, units),
-  },
-  [SKILL_IDS.CORPSE_EXPLOSION]: {
-    id: SKILL_IDS.CORPSE_EXPLOSION,
-    name: '시체 폭발',
-    description: '시체를 폭파시켜 광역 피해를 입힙니다.',
-    attackType: 'ranged',
-    cost: 8,
-    requiredExp: 300,
-    requiredLevel: 2,
-    unlocks: ['first_boss'],
-    unlockHint: '지하 2층 정화 완료',
-    execute: (player, context, units) => SkillExecutor.corpseExplosion(player, context, units),
-  },
-  [SKILL_IDS.SOUL_HARVEST]: {
-    id: SKILL_IDS.SOUL_HARVEST,
-    name: '영혼 흡수',
-    description: '시체에서 정수를 뽑아내 마나로 전환합니다.',
-    attackType: 'ranged',
-    cost: 0,
-    requiredExp: 500,
-    requiredLevel: 2,
-    unlocks: ['first_boss'],
-    unlockHint: '지하 2층 정화 완료',
-    execute: (player, context) => SkillExecutor.soulHarvest(player, context),
-  },
+export const getPlayerSkills = (): Record<SkillId, Skill> => {
+  // 1. 각 스킬별 고유 설정 (수치 및 실행 로직)
+  const skillConfigs: Record<SkillId, Partial<Skill>> = {
+    [SKILL_IDS.RAISE_SKELETON]: {
+      cost: 5,
+      execute: (p, c) => SkillExecutor.raiseSkeleton(p, c),
+    },
+    [SKILL_IDS.RECALL_SKELETON]: {
+      cost: 0,
+      execute: (p, c) => SkillExecutor.recallSkeleton(p, c),
+    },
+    [SKILL_IDS.FOCUS_FIRE]: {
+      attackType: 'ranged',
+      cost: 0,
+      execute: (p, c, u) => SkillExecutor.focusFire(p, c, u),
+    },
+    [SKILL_IDS.CORPSE_EXPLOSION]: {
+      attackType: 'ranged',
+      cost: 8,
+      requiredExp: 300,
+      requiredLevel: 2,
+      unlocks: ['first_boss'],
+      execute: (p, c, u) => SkillExecutor.corpseExplosion(p, c, u),
+    },
+    [SKILL_IDS.SOUL_HARVEST]: {
+      attackType: 'ranged',
+      cost: 0,
+      requiredExp: 500,
+      requiredLevel: 2,
+      unlocks: ['first_boss'],
+      execute: (p, c) => SkillExecutor.soulHarvest(p, c),
+    },
+    [SKILL_IDS.SOUL_TRANSFER]: {
+      attackType: 'ranged',
+      cost: 5,
+      requiredExp: 600,
+      requiredLevel: 3,
+      unlocks: ['second_boss'],
+      execute: (p, c, u) => SkillExecutor.soulTransfer(p, c, u),
+    },
+    [SKILL_IDS.CURSE]: {
+      attackType: 'ranged',
+      cost: 10,
+      requiredExp: 1000,
+      requiredLevel: 3,
+      unlocks: ['second_boss'],
+      execute: (p, c, u) => SkillExecutor.curse(p, c, u),
+    },
+    [SKILL_IDS.BONE_SPEAR]: {
+      attackType: 'ranged',
+      cost: 12,
+      requiredExp: 1500,
+      requiredLevel: 5,
+      unlocks: ['third_boss'],
+      execute: (p, c, u) => SkillExecutor.boneSpear(p, c, u),
+    },
+    [SKILL_IDS.BONE_PRISON]: {
+      attackType: 'ranged',
+      cost: 20,
+      requiredExp: 1200,
+      requiredLevel: 5,
+      unlocks: ['third_boss'],
+      execute: (p, c, u) => SkillExecutor.bonePrison(p, c, u),
+    },
+    [SKILL_IDS.BONE_STORM]: {
+      attackType: 'ranged',
+      cost: 60,
+      requiredExp: 2000,
+      requiredLevel: 7,
+      unlocks: ['third_boss'],
+      execute: (p, c, u) => SkillExecutor.boneStorm(p, c, u),
+    },
+  };
 
-  [SKILL_IDS.SOUL_TRANSFER]: {
-    id: SKILL_IDS.SOUL_TRANSFER,
-    name: '영혼 전달',
-    description: '사령술사의 체력을 종속에게 전달하여 체력을 체웁니다.',
-    attackType: 'ranged',
-    cost: 5,
-    requiredExp: 600,
-    requiredLevel: 3,
-    unlocks: ['second_boss'],
-    unlockHint: '지하 3층 정화 완료',
-    execute: (player, context, units) => SkillExecutor.soulTransfer(player, context, units),
-  },
-  [SKILL_IDS.CURSE]: {
-    id: SKILL_IDS.CURSE,
-    name: '저주',
-    description: '대상을 약화시킵니다.',
-    attackType: 'ranged',
-    cost: 10,
-    requiredExp: 1000,
-    requiredLevel: 3,
-    unlocks: ['second_boss'],
-    unlockHint: '지하 3층 정화 완료',
-    execute: (player, context, units) => SkillExecutor.curse(player, context, units),
-  },
-  [SKILL_IDS.BONE_SPEAR]: {
-    id: SKILL_IDS.BONE_SPEAR,
-    name: '뼈 창',
-    description: '두 적을 동시에 공격합니다.',
-    attackType: 'ranged',
-    cost: 12,
-    requiredExp: 1500,
-    requiredLevel: 5,
-    unlocks: ['third_boss'],
-    unlockHint: '지하 5층 정화 완료',
-    execute: (player, context, units) => SkillExecutor.boneSpear(player, context, units),
-  },
-  [SKILL_IDS.BONE_PRISON]: {
-    id: SKILL_IDS.BONE_PRISON,
-    name: '뼈 감옥',
-    description: '대상을 선택한 뒤 뼈를 사용해 대상의 움직임을 봉쇄합니다.',
-    attackType: 'ranged',
-    cost: 20,
-    requiredExp: 1200,
-    requiredLevel: 5,
-    unlocks: ['third_boss'],
-    unlockHint: '지하 5층 정화 완료',
-    execute: (player, context, units) => SkillExecutor.bonePrison(player, context, units),
-  },
-  [SKILL_IDS.BONE_STORM]: {
-    id: SKILL_IDS.BONE_STORM,
-    name: '뼈 폭풍',
-    description: '모든 스켈레톤을 희생하고 스켈레톤 체력의 합에 비례하여 적에게 광역대미지를 입힌다',
-    attackType: 'ranged',
-    cost: 60,
-    requiredExp: 2000,
-    requiredLevel: 7,
-    unlocks: ['third_boss'],
-    unlockHint: '지하 5층 정화 완료',
-    execute: (player, context, units) => SkillExecutor.boneStorm(player, context, units),
-  },
-}
+  // 2. 공통 주입 로직 (ID와 i18n 자동 매핑)
+  return Object.keys(SKILL_IDS).reduce((acc, id) => {
+    const skillId = id as SkillId;
+    const config = skillConfigs[skillId];
+
+    acc[skillId] = {
+      id: skillId,
+      name: i18n.t(`skill.${skillId}.name`),
+      description: i18n.t(`skill.${skillId}.description`),
+      unlockHint: i18n.t(`skill.${skillId}.unlockHint`),
+      cost: config?.cost ?? 0,
+      requiredExp: config?.requiredExp ?? 0,
+      requiredLevel: config?.requiredLevel ?? 1,
+      unlocks: config?.unlocks ?? [],
+      attackType: config?.attackType,
+      execute: config?.execute || (async () => ({ isSuccess: false, gross: 0, isAggressive: false })),
+    } as Skill;
+
+    return acc;
+  }, {} as Record<SkillId, Skill>);
+};
 
 export const SkillUtils = {
   canLearn: (player: Player, skill: Skill): boolean => {

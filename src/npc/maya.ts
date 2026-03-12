@@ -1,8 +1,9 @@
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
-import { handleBuy, handleSell, handleTalk, NPCHandler } from './NPCHandler'
 import { speak } from '~/utils'
+import { handleBuy, handleSell, handleTalk, NPCHandler } from './NPCHandler'
 
 const MayaHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -12,7 +13,7 @@ const MayaHandler: NPCHandler = {
     const hasGolem = !!player.golem
 
     if (isJoined && !isAlreadyMet) {
-      return [{ name: 'join', message: '💬 대화' }]
+      return [{ name: 'join', message: i18n.t('talk.speak') }]
     }
 
     const canMakeGolem = isB3Completed && !hasGolem
@@ -20,7 +21,7 @@ const MayaHandler: NPCHandler = {
     const canModify = npc.factionContribution > 80 && context.events.isCompleted('third_boss')
 
     return [
-      { name: 'talk', message: '💬 잡담' },
+      { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'buy', message: '💰 아이템 구매' },
       { name: 'sell', message: '📦 아이템 판매' },
       ...(canMakeGolem ? [{ name: 'golem', message: '🤖 골렘 생성' }] : []),

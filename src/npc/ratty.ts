@@ -1,3 +1,4 @@
+import i18n from '~/i18n'
 import { GameContext } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -7,9 +8,9 @@ const RattyHandler: NPCHandler = {
     const alreadyTalk = context.events.isCompleted('b2_ratty')
 
     if (alreadyTalk) {
-      return [{ name: 'talk', message: '💬 잡담' }]
+      return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
     } else {
-      return [{ name: 'threat', message: '💬 잡담' }]
+      return [{ name: 'threat', message: i18n.t('talk.small_talk') }]
     }
   },
   async handle(action, player, npc, context) {

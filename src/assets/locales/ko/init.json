@@ -115,6 +115,9 @@
   },
 
   "talk": {
+    "examine": "🔍 살펴보기",
+    "small_talk": "💬 잡담",
+    "speak": "💬 대화",
     "no_one_here": "이곳에는 대화할 상대가 없습니다.",
     "not_found": "이곳에 '{{name}}'은(는) 없습니다.",
     "select_npc": "누구와 대화하시겠습니까?",

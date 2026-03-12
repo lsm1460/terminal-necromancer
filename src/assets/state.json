@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
-    "y": 0,
+    "x": 3,
+    "y": 1,
     "_maxHp": 50,
     "hp": 50,
     "_maxMp": 50,
@@ -265,7 +265,8 @@
   "drop": null,
   "completedEvents": [
     "START_GAME",
-    "item-tutorial"
+    "item-tutorial",
+    "talk_death_1"
   ],
   "locale": "en"
 }

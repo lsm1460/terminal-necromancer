@@ -24,6 +24,12 @@ import koNpc from './assets/locales/ko/npc.json'
 //monster
 import enMonster from './assets/locales/en/monster.json'
 import koMonster from './assets/locales/ko/monster.json'
+//monster
+import enSkill from './assets/locales/en/skill.json'
+import koSkill from './assets/locales/ko/skill.json'
+//death
+import enDeath from './assets/locales/en/death.json'
+import koDeath from './assets/locales/ko/death.json'
 
 const resources = {
   ko: {
@@ -37,7 +43,9 @@ const resources = {
       npc: {
         ...koNpc,
         ...koMonster,
+        death: koDeath,
       },
+      skill: koSkill,
     },
   },
   en: {
@@ -51,7 +59,9 @@ const resources = {
       npc: {
         ...enNpc,
         ...enMonster,
+        death: enDeath,
       },
+      skill: enSkill,
     },
   },
 }

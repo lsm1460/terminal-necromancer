@@ -1,6 +1,7 @@
 import { MAP_IDS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -11,11 +12,11 @@ const JaxHandler: NPCHandler = {
 
     if (isJoined) {
       return [
-        { name: 'talk', message: '💬 잡담' },
+        { name: 'talk', message: i18n.t('talk.small_talk') },
         { name: 'enter', message: '💬 본부로 이동' },
       ]
     } else {
-      return [{ name: 'join', message: '💬 잡담' }]
+      return [{ name: 'join', message: i18n.t('talk.small_talk') }]
     }
   },
   async handle(action, player, npc, context) {

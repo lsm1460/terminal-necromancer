@@ -1,4 +1,5 @@
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -9,10 +10,10 @@ const KaneHandler: NPCHandler = {
     const isAlreadyMet = context.events.isCompleted('kane_1')
 
     if (isJoined && !isAlreadyMet) {
-      return [{ name: 'join', message: '💬 대화' }]
+      return [{ name: 'join', message: i18n.t('talk.speak') }]
     }
 
-    return [{ name: 'talk', message: '💬 잡담' }]
+    return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   },
   async handle(action, player, npc, context) {
     switch (action) {

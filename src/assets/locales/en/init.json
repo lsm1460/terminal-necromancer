@@ -115,6 +115,9 @@
   },
 
   "talk": {
+    "examine": "🔍 Examine",
+    "small_talk": "💬 Small Talk",
+    "speak": "💬 Speak",
     "no_one_here": "There is no one here to speak with.",
     "not_found": "'{{name}}' is not here.",
     "select_npc": "Who do you wish to speak with?",

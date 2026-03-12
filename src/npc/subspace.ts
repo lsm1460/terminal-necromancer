@@ -1,13 +1,14 @@
 import { SKELETON_UPGRADE } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { BattleTarget, GameContext } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const SubspaceHandler: NPCHandler = {
   getChoices(player, npc, context) {
     return [
-      { name: 'talk', message: '💬 잡담' },
+      { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'increaseLimit', message: '🦴 해골 군단 확장' },
       { name: 'space', message: '🌀 아공간' },
     ]

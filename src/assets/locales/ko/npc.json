@@ -99,26 +99,6 @@
     "deathLine": "...",
     "description": "사신의 작은 안배"
   },
-  "death": {
-    "name": "사신",
-    "lines": ["영혼은 좀 모아왔나?"],
-    "scripts": {
-      "friendly": {
-        "greeting": "성실한 노예로군. 마음에 든다.",
-        "farewell": "계속 영혼을 바쳐라. 그럼 수명은 보장해주지."
-      },
-      "normal": {
-        "greeting": "어서 와라.",
-        "farewell": "도망쳐봐야 내 손바닥 안이다."
-      },
-      "hostile": {
-        "greeting": "죽고 싶은 게냐? 노역이 부족한 모양이군.",
-        "farewell": "숨을 쉴 수 있을 때 마음껏 쉬어둬라."
-      }
-    },
-    "deathLine": "TODO: 엔딩",
-    "description": "최종보스입니다"
-  },
   "first_boss": {
     "name": "기어다니는 죄악, 벨페고르",
     "lines": ["..."],

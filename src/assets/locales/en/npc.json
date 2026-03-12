@@ -99,26 +99,6 @@
     "deathLine": "...",
     "description": "A small provision from the Reaper."
   },
-  "death": {
-    "name": "The Reaper",
-    "lines": ["Have you gathered any souls?"],
-    "scripts": {
-      "friendly": {
-        "greeting": "A diligent slave. I like that.",
-        "farewell": "Keep offering souls. I shall guarantee your lifespan in return."
-      },
-      "normal": {
-        "greeting": "Welcome.",
-        "farewell": "Try to run, but you are always in the palm of my hand."
-      },
-      "hostile": {
-        "greeting": "Do you wish for death? It seems your labor has been insufficient.",
-        "farewell": "Breathe while you still can."
-      }
-    },
-    "deathLine": "TODO: Ending",
-    "description": "The Final Boss."
-  },
   "first_boss": {
     "name": "Belphegor, the Crawling Sin",
     "lines": ["..."],

@@ -1,4 +1,5 @@
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { GameContext } from '~/types'
 import { delay } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -8,9 +9,9 @@ const ApostleHandler: NPCHandler = {
     const alreadyTalk = context.events.isCompleted('b3_apostle')
 
     if (alreadyTalk) {
-      return [{ name: 'talk', message: '🔍 살펴보기' }]
+      return [{ name: 'talk', message: i18n.t('talk.examine') }]
     } else {
-      return [{ name: 'event', message: '🔍 살펴보기' }]
+      return [{ name: 'event', message: i18n.t('talk.examine') }]
     }
   },
   async handle(action, player, npc, context) {
