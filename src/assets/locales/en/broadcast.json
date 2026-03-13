@@ -56,18 +56,6 @@
       "Proceed to the Reaper's office immediately. You'll be listening to his nagging for as many pieces of the golem as you broke."
     ]
   },
-  "third_boss": {
-    "hostile": [
-      "The Chamberlain, once the pride of our terminal, has finally decided to become a 'servant' to the Necromancer and the Resistance.",
-      "Instead of elegant tea service, we'll be drinking oily bone-dust tea. I suppose the terminal's prestige ends here.",
-      "My dear Chamberlain, surely you don't believe that stench of rotting meat mixed with engine oil is actually the 'scent of freedom'?"
-    ],
-    "normal": [
-      "The Chamberlain has gone on a 'field internship' with the Necromancer. I imagine he'll return with a rather lifeless complexion.",
-      "The terminal's chief administrator deciding to become a skeleton's lackey... what a creative career move.",
-      "Anyone wishing to fill the Chamberlain's vacancy should go to the Necromancer and offer up their head. It's quite simple, really."
-    ]
-  },
   "RESISTANCE_BASE": {
     "hostile": [
       "So, the hideous union has finally been consummated. News reached us that the Necromancer and the Resistance are now rolling around in the same pit.",

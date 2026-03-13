@@ -21,7 +21,7 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
     const target = blockingMonster || blockingNPC
 
     if (target) {
-      Terminal.log(`\n🚫 ${target.name}이(가) 주시하고 있어 도망칠 수 없다.`)
+      Terminal.log(i18n.t('commands.move.cannot_escape', { name: target.name }))
       return false
     }
 
@@ -34,7 +34,7 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
       return true
     }
 
-    Terminal.log('> ' + i18n.t('you_cannot_pass'))
+    Terminal.log('> ' + i18n.t('commands.move.you_cannot_pass'))
     return false
   }
 }

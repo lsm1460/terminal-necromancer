@@ -118,7 +118,7 @@ export class WebAssetManager {
 
     const manifest = this.buildUnitManifest(Array.from(resourceIds))
 
-    Terminal.log(`\n\x1b[34m[System] '${sceneData.displayName}' 리소스 로드 중...\x1b[0m`)
+    Terminal.log(`\n\x1b[34m[System] '${i18n.t(`scene.${sceneData.id}`)}' 리소스 로드 중...\x1b[0m`)
     // 장면 로딩은 이미지만 있으므로 오디오는 빈 배열 전달
     await this.loadWithProgress(manifest, [])
     Terminal.log('\x1b[32m[System] 장면 전환 완료.\x1b[0m')

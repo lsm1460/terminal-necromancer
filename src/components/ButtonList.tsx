@@ -7,7 +7,7 @@ import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
-const EXCLUDED_COMMANDS = [i18n.t('commands.map')]
+const EXCLUDED_COMMANDS = [i18n.t('commands.map.label')]
 
 export const ButtonList: React.FC<{
   engine: React.RefObject<GameEngine | null>

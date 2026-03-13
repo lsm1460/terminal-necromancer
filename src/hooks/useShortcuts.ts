@@ -10,9 +10,9 @@ export const getCommandMap = (): Record<string, string> => ({
   k: i18n.t('commands.skill'),
   s: i18n.t('commands.status'),
   i: i18n.t('commands.inventory'),
-  m: i18n.t('commands.map'),
+  m: i18n.t('commands.map.label'),
   g: i18n.t('commands.pick'),
-  l: i18n.t('commands.look'),
+  l: i18n.t('commands.look.label'),
   h: i18n.t('commands.help'),
 })
 

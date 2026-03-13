@@ -2,7 +2,7 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
+    "x": 1,
     "y": 1,
     "_maxHp": 50,
     "hp": 50,
@@ -13,8 +13,8 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 0,
-    "exp": 0,
+    "gold": 85,
+    "exp": 55,
     "level": 1,
     "karma": 0,
     "_maxMemorize": 5,
@@ -28,37 +28,84 @@
       "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
-    "inventory": [
+    "_skeleton": [
       {
-        "id": "wood_stick::DIvVWtF-",
-        "type": "weapon",
+        "id": "skeleton::1773385695068",
+        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
         "attackType": "melee",
-        "atkRange": [
-          1,
-          3
-        ],
-        "critRange": [
-          0,
-          0
-        ],
-        "maxSkeletonRange": [
-          0,
-          2
-        ],
-        "price": 0,
-        "sellPrice": 0,
-        "quantity": 1,
-        "maxRarity": "COMMON",
-        "atk": 2,
-        "crit": 0,
-        "maxSkeleton": 0,
-        "rarity": "COMMON",
-        "perfPrefix": "",
-        "adjective": "",
-        "x": 0,
-        "y": 1
+        "maxHp": 19,
+        "hp": 4,
+        "atk": 8,
+        "def": 5,
+        "agi": 8,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Track Ratman.",
+        "originId": "track_ratman::896MEPjk",
+        "rarity": "common",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 10
       },
       {
+        "id": "skeleton::1773385718136",
+        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
+        "attackType": "melee",
+        "maxHp": 19,
+        "hp": 19,
+        "atk": 8,
+        "def": 5,
+        "agi": 8,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Track Ratman.",
+        "originId": "track_ratman::bfMfn4YM",
+        "rarity": "common",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 10
+      }
+    ],
+    "inventory": [
+      {
+        "id": "leather_armor::RRw7afvP",
+        "type": "armor",
+        "defRange": [
+          2,
+          5
+        ],
+        "evaRange": [
+          0,
+          0.02
+        ],
+        "price": 400,
+        "sellPrice": 100,
+        "quantity": 1,
+        "def": 4,
+        "eva": 0.02,
+        "rarity": "COMMON",
+        "perfPrefix": "masterwork",
+        "adjective": "",
+        "x": 1,
+        "y": 1
+      }
+    ],
+    "inventoryMax": 15,
+    "skeletonSubspace": [],
+    "subspaceLimit": 15,
+    "_maxSkeleton": 2,
+    "golemUpgrade": [],
+    "knightUpgrade": [],
+    "upgradeLimit": 5,
+    "equipped": {
+      "weapon": null,
+      "armor": {
         "id": "rags::cWZdVZef",
         "type": "armor",
         "defRange": [
@@ -80,32 +127,10 @@
         "adjective": "",
         "x": 0,
         "y": 1
-      },
-      {
-        "id": "nut",
-        "type": "food",
-        "hpHeal": 2,
-        "price": 5,
-        "sellPrice": 1,
-        "quantity": 1,
-        "x": 0,
-        "y": 1
       }
-    ],
-    "inventoryMax": 15,
-    "skeleton": [],
-    "skeletonSubspace": [],
-    "subspaceLimit": 15,
-    "_maxSkeleton": 2,
-    "golemUpgrade": [],
-    "knightUpgrade": [],
-    "upgradeLimit": 5,
-    "equipped": {
-      "weapon": null,
-      "armor": null
     }
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -152,12 +177,6 @@
       },
       "second_boss": {
         "hp": 500,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "third_boss": {
-        "hp": 10,
         "isAlive": true,
         "reborn": false,
         "relation": 0
@@ -262,7 +281,13 @@
     "factionHostility": {},
     "factionContribution": {}
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B2_Transit_Area",
+    "id": "xh3Y6oE7",
+    "tileId": "B2_008",
+    "exp": 14,
+    "gold": 6
+  },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",

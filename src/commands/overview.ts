@@ -10,64 +10,78 @@ import { getItemLabel, makeItemMessage } from '~/utils'
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
   const { atk, def, crit, eva, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
-  Terminal.log('🛡️ 상태창')
-  Terminal.log(`레벨: ${level} (영혼 조각: ${exp})`)
+
+  Terminal.log(i18n.t('commands.look.status.title'))
+  Terminal.log(i18n.t('commands.look.status.level', { level, exp }))
 
   const { required: expNeeded } = player.expToNextLevel()
   if (expNeeded !== null) {
-    Terminal.log(`다음 레벨까지 필요한 영혼 조각: ${expNeeded}`)
+    Terminal.log(i18n.t('commands.look.status.exp_next', { expNeeded }))
   } else {
-    Terminal.log('최고 레벨입니다.')
+    Terminal.log(i18n.t('commands.look.status.max_level'))
   }
 
-  Terminal.log(`HP: ${hp} / ${maxHp}`)
-  Terminal.log(`MP: ${mp} / ${maxMp}`)
-  Terminal.log(`공격력: ${atk} (+ ${atk - originAtk})`)
-  Terminal.log(`방어력: ${def} (+ ${def - originDef})`)
-  Terminal.log(`골드: ${gold}`)
+  Terminal.log(i18n.t('commands.look.status.hp', { hp, maxHp }))
+  Terminal.log(i18n.t('commands.look.status.mp', { mp, maxMp }))
+  Terminal.log(i18n.t('commands.look.status.atk', { atk, bonus: atk - originAtk }))
+  Terminal.log(i18n.t('commands.look.status.def', { def, bonus: def - originDef }))
+  Terminal.log(i18n.t('commands.look.status.gold', { gold }))
 
-  Terminal.log(`치명: ${Math.floor(crit * 100)}%`)
-  Terminal.log(`회피: ${Math.floor(eva * 100)}%`)
+  Terminal.log(i18n.t('commands.look.status.crit', { val: Math.floor(crit * 100) }))
+  Terminal.log(i18n.t('commands.look.status.eva', { val: Math.floor(eva * 100) }))
 
-  // 장착 장비 출력 (타입 가드 + 구조 분해 활용)
-  let weaponText = '없음'
+  // 무기 정보 처리
+  let weaponText = i18n.t('commands.look.status.equipment.none')
   if (equipped.weapon && equipped.weapon.type === ItemType.WEAPON) {
-    const { atk } = equipped.weapon
-    const label = getItemLabel(equipped.weapon)
-    weaponText = `${label} (공격 +${atk})`
+    weaponText = i18n.t('commands.look.status.equipment.bonus_atk', {
+      label: getItemLabel(equipped.weapon),
+      atk: equipped.weapon.atk,
+    })
 
-    if ('affix' in equipped.weapon && equipped.weapon.affix)
-      weaponText += `\n   ㄴ축복 : [${equipped.weapon.affix.name}] 효과 부여 (${equipped.weapon.affix.description})`
+    if ('affix' in equipped.weapon && equipped.weapon.affix) {
+      weaponText += i18n.t('commands.look.status.equipment.affix', {
+        name: equipped.weapon.affix.name,
+        description: equipped.weapon.affix.description,
+      })
+    }
   }
 
-  let armorText = '없음'
+  // 방어구 정보 처리
+  let armorText = i18n.t('commands.look.status.equipment.none')
   if (equipped.armor && equipped.armor.type === ItemType.ARMOR) {
-    const label = getItemLabel(equipped.armor)
-    const { def } = equipped.armor
+    armorText = i18n.t('commands.look.status.equipment.bonus_def', {
+      label: getItemLabel(equipped.armor),
+      def: equipped.armor.def,
+    })
 
-    armorText = `${label} (방어 +${def})`
-
-    if ('affix' in equipped.armor && equipped.armor.affix)
-      armorText += `\n   ㄴ축복 : [${equipped.armor.affix.name}] 효과 부여 (${equipped.armor.affix.description})`
+    if ('affix' in equipped.armor && equipped.armor.affix) {
+      armorText += i18n.t('commands.look.status.equipment.affix', {
+        name: equipped.armor.affix.name,
+        description: equipped.armor.affix.description,
+      })
+    }
   }
 
-  Terminal.log(`무기: ${weaponText}`)
-  Terminal.log(`방어구: ${armorText}`)
+  Terminal.log(i18n.t('commands.look.status.equipment.weapon', { text: weaponText }))
+  Terminal.log(i18n.t('commands.look.status.equipment.armor', { text: armorText }))
 
-  Terminal.log('\n💀 [ 소환수 군단 상태 ]')
+  // 소환수 군단 상태
+  Terminal.log(i18n.t('commands.look.status.legion.title'))
   if (player.golem) {
-    const golemStatus = player.golem.isAlive ? `[${player.golem.hp}/${player.golem.maxHp}]` : `[파괴됨]`
+    const golemStatus = player.golem.isAlive
+      ? i18n.t('commands.look.status.legion.golem_status', { hp: player.golem.hp, maxHp: player.golem.maxHp })
+      : i18n.t('commands.look.status.legion.golem_destroyed')
 
     const golemIcon = player.golem.isAlive ? '🤖' : '🛠️'
-
     Terminal.log(` └ ${golemIcon} ${player.golem.name}: ${golemStatus}`)
   }
-  Terminal.log(` └ 💀 해골 병사: ${skeleton.length} / ${maxSkeleton}`)
+
+  Terminal.log(i18n.t('commands.look.status.legion.skeleton', { count: skeleton.length, max: maxSkeleton }))
 
   if (player.minions.length === 0) {
-    Terminal.log('   (현재 소환된 미니언이 없습니다.)')
+    Terminal.log(i18n.t('commands.look.status.legion.no_minions'))
   }
-  Terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+  Terminal.log(i18n.t('commands.look.status.footer'))
 
   return false
 }
@@ -92,7 +106,11 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
 
   const isMinion = target.isMinion
   const hpBar = renderHpBar(target.hp, target.maxHp)
-  const typeTag = isMinion ? ' [🧟 MINION] ' : ' [💀 MONSTER] '
+
+  // 타입 태그 결정
+  const typeTag = isMinion
+    ? i18n.t('commands.look.entity.type_tag.minion')
+    : i18n.t('commands.look.entity.type_tag.monster')
 
   // SKILL_LIST에서 실제 스킬 객체 로드
   const skillDetails = (target.skills || []).map((id) => npcSkills.getSkill(id)).filter(Boolean)
@@ -100,12 +118,23 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   Terminal.log(`${typeTag} ${target.name}`)
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Terminal.log(` HP  : ${hpBar} ${target.hp}/${target.maxHp}`)
-  Terminal.log(` ATK : ${target.atk.toString().padEnd(3)} | DEF: ${target.def.toString().padEnd(3)}`)
 
+  // 기본 스탯 출력
+  Terminal.log(i18n.t('commands.look.entity.stats.hp', { hpBar, hp: target.hp, maxHp: target.maxHp }))
+  Terminal.log(
+    i18n.t('commands.look.entity.stats.combat', {
+      atk: target.atk.toString().padEnd(3),
+      def: target.def.toString().padEnd(3),
+    })
+  )
+
+  // 부가 스탯 출력
   if (target.eva || target.crit) {
     Terminal.log(
-      ` EVA : 회피 ${Math.floor((target.eva || 0) * 100)}% | 크리티컬 ${Math.floor((target.crit || 0) * 100)}%`
+      i18n.t('commands.look.entity.stats.sub', {
+        eva: Math.floor((target.eva || 0) * 100),
+        crit: Math.floor((target.crit || 0) * 100),
+      })
     )
   }
 
@@ -113,11 +142,17 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
     printGolem(target)
   }
 
+  // 스킬 목록 출력
   if (skillDetails.length > 0) {
     Terminal.log(`──────────────────────────────────────────────`)
-    Terminal.log(` 보유 기술:`)
+    Terminal.log(i18n.t('commands.look.entity.skills.label'))
     skillDetails.forEach((skill) => {
-      Terminal.log(` • [${skill.name}]: ${skill.description}`)
+      Terminal.log(
+        i18n.t('commands.look.entity.skills.item', {
+          name: skill.name,
+          description: skill.description,
+        })
+      )
     })
   }
 
@@ -129,7 +164,7 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
 const printGolem = (target: BattleTarget) => {
   const golem = target as GolemWrapper
   const upgrades = golem.upgrade || []
-  const limit = golem.upgradeLimit || 0 // 한계치 가져오기
+  const limit = golem.upgradeLimit || 0
   const currentCount = upgrades.length
 
   Terminal.log(`──────────────────────────────────────────────`)
@@ -137,56 +172,74 @@ const printGolem = (target: BattleTarget) => {
   const filledLength = limit > 0 ? Math.round((currentCount / limit) * barLength) : 0
   const bar = '■'.repeat(filledLength) + '□'.repeat(Math.max(0, barLength - filledLength))
 
-  Terminal.log(` 🛠️ 골렘 성장도: [${bar}] ${currentCount} / ${limit}`)
+  // 성장도 로그 출력
+  Terminal.log(
+    i18n.t('commands.look.golem.growth_label', {
+      bar,
+      current: currentCount,
+      limit,
+    })
+  )
 
   if (currentCount > 0) {
     const counts = _.countBy(upgrades)
     const machineLv = counts['machine'] || 0
     const soulLv = counts['soul'] || 0
 
-    if (machineLv > 0) {
-      Terminal.log(` • \x1b[33m[⚙️ 기계 개조]\x1b[0m Lv.${machineLv}`)
-    }
-    if (soulLv > 0) {
-      Terminal.log(` • \x1b[36m[👻 영혼 주입]\x1b[0m Lv.${soulLv}`)
-    }
+    if (machineLv > 0) Terminal.log(i18n.t('commands.look.golem.upgrades.machine', { level: machineLv }))
+    if (soulLv > 0) Terminal.log(i18n.t('commands.look.golem.upgrades.soul', { level: soulLv }))
   }
 }
 
-// 아이템 정보 출력
 export const printItem = (item: Item) => {
-  const rarityMap: Record<string, string> = {
-    EPIC: '⟪🔮 에픽⟫',
-    RARE: '⟪💎 희귀⟫',
-    COMMON: '⟪⚪ 일반⟫',
-  }
+  const rarityKey = item.rarity || 'COMMON'
+  const rarityText = i18n.t(`commands.look.item.rarity.${rarityKey}`)
 
   Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Terminal.log(` ${rarityMap[item.rarity || 'COMMON']} ${getItemLabel(item)} ${item.quantity ? `(x${item.quantity})` : ''}`)
+  Terminal.log(` ${rarityText} ${getItemLabel(item)} ${item.quantity ? `(x${item.quantity})` : ''}`)
   Terminal.log(`──────────────────────────────────────────────`)
 
   const stats: string[] = []
-  if ('atk' in item) stats.push(`공격력 +${item.atk}`, `치명타 ${item.crit * 100}%`)
-  if ('def' in item) stats.push(`방어력 +${item.def}`)
-  if ('eva' in item && item.eva) stats.push(`회피율 +${item.eva * 100}%`)
-  if ('hpHeal' in item) stats.push(`즉시 회복 HP ${item.hpHeal}`)
+  if ('atk' in item) {
+    stats.push(i18n.t('commands.look.item.stats.atk', { val: item.atk }))
+    stats.push(i18n.t('commands.look.item.stats.crit', { val: item.crit * 100 }))
+  }
+  if ('def' in item) stats.push(i18n.t('commands.look.item.stats.def', { val: item.def }))
+  if ('eva' in item && item.eva) stats.push(i18n.t('commands.look.item.stats.eva', { val: item.eva * 100 }))
+  if ('hpHeal' in item) stats.push(i18n.t('commands.look.item.stats.hpHeal', { val: item.hpHeal }))
 
-  if (stats.length > 0) Terminal.log(` 효과 : ${stats.join(' | ')}`)
+  if (stats.length > 0) Terminal.log(`${i18n.t('commands.look.item.stats.label')}${stats.join(' | ')}`)
 
-  if ('mana' in item && item.mana) Terminal.log(` 마나 증가 : +${item.mana}MP`)
-  if ('maxSkeleton' in item && item.maxSkeleton) Terminal.log(` 영령 : 최대 해골 소환수 +${item.maxSkeleton}`)
-  if ('affix' in item && item.affix) Terminal.log(` 축복 : [${item.affix.name}] 효과 부여 (${item.affix.description})`)
+  if ('mana' in item && item.mana) Terminal.log(i18n.t('commands.look.item.stats.mana', { val: item.mana }))
+  if ('maxSkeleton' in item && item.maxSkeleton)
+    Terminal.log(i18n.t('commands.look.item.stats.maxSkeleton', { val: item.maxSkeleton }))
+
+  if ('affix' in item && item.affix) {
+    Terminal.log(
+      i18n.t('commands.look.item.stats.affix', {
+        name: item.affix.name,
+        description: item.affix.description,
+      })
+    )
+  }
+
+  const originId = item.id.split('::')[0]
 
   Terminal.log(`──────────────────────────────────────────────`)
-  Terminal.log(` 📝 ${item.description}`)
-  Terminal.log(` 💰 가치: ${item.price} G (판매가 ${item.sellPrice} G)`)
+  Terminal.log(` 📝 ${i18n.t(`item.${originId}.description`)}`)
+  Terminal.log(
+    i18n.t('commands.look.item.info.price', {
+      price: item.price,
+      sellPrice: item.sellPrice,
+    })
+  )
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 }
 
 const selectTarget = async (subChoices: { name: string; message: string }[]) => {
-  subChoices.push({ name: 'back', message: '↩ 뒤로 가기' })
+  subChoices.push({ name: 'back', message: i18n.t('cancel') })
 
-  return await Terminal.select('세부 대상을 선택하세요.', subChoices)
+  return await Terminal.select(i18n.t('commands.look.select_target_prompt'), subChoices)
 }
 
 const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) => {
@@ -227,7 +280,7 @@ const lookPath = async (
 ) => {
   const subChoices = paths.map((p) => ({
     name: p.label,
-    message: p.label + '쪽',
+    message: p.label,
   }))
 
   const selected = await selectTarget(subChoices)
@@ -235,14 +288,14 @@ const lookPath = async (
   if (selected !== 'back') {
     const target = paths.find((p) => p.label === selected)
     if (target) {
-      Terminal.log(i18n.t(`tile.${target.tile?.id}.observe`))
+      Terminal.log(i18n.t(`tiles.${target.tile?.id}.observe`))
       if (!target.tile?.isClear && target.tile?.event) {
         const eventId = target.tile.event
 
         if (eventId.includes('boss')) {
-          Terminal.log(`\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.`)
+          Terminal.log(i18n.t('commands.look.path.danger_boss'))
         } else if (eventId.startsWith('monster')) {
-          Terminal.log(`\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다.`)
+          Terminal.log(i18n.t('commands.look.path.warning_monster'))
         }
       }
     }
@@ -253,8 +306,8 @@ const lookPath = async (
 
 const lookCorpse = async (corpse: Corpse[]) => {
   const subChoices = corpse.map((c) => ({
-    name: c.id, // 아이템은 label을 식별자로 사용
-    message: `${c.name}의 시체`,
+    name: c.id,
+    message: i18n.t('commands.look.corpse.menu_label', { name: c.name }),
   }))
 
   const selected = await selectTarget(subChoices)
@@ -265,25 +318,21 @@ const lookCorpse = async (corpse: Corpse[]) => {
     if (target) {
       const { name, maxHp, atk, def } = target
 
-      Terminal.log(
-        `\n차갑게 식어버린 ${name}의 사체가 있습니다.\n강령술을 통해 다시 움직이게 하기에 결함이 없는 보편적인 소체 상태입니다.`
-      )
-      Terminal.log(`========================================
-[ 대상 식별: ${name} ]
-========================================
-- 체력: ${maxHp}
-- 공격: ${atk}
-- 방어: ${def}
-----------------------------------------`)
+      // 상세 설명 로그
+      Terminal.log(i18n.t('commands.look.corpse.description', { name }))
+
+      // 능력치 정보 로그
+      Terminal.log(i18n.t('commands.look.corpse.status_header', { name }))
+      Terminal.log(i18n.t('commands.look.corpse.hp', { maxHp }))
+      Terminal.log(i18n.t('commands.look.corpse.atk', { atk }))
+      Terminal.log(i18n.t('commands.look.corpse.def', { def }))
+      Terminal.log(i18n.t('commands.look.corpse.footer'))
     }
   }
 
   return selected
 }
 
-/**
- * [2] 주변 탐색 및 선택 로직 (Controller)
- */
 export const lookAll = async (
   player: Player,
   context: GameContext,
@@ -310,10 +359,10 @@ export const lookAll = async (
 
   // 1. 방향 데이터 정의 (설계의 확장성을 위해)
   const NAV_CONFIG = [
-    { label: '위', dx: 0, dy: -1 },
-    { label: '아래', dx: 0, dy: 1 },
-    { label: '왼', dx: -1, dy: 0 },
-    { label: '오른', dx: 1, dy: 0 },
+    { label: i18n.t('up'), dx: 0, dy: -1 },
+    { label: i18n.t('down'), dx: 0, dy: 1 },
+    { label: i18n.t('left'), dx: -1, dy: 0 },
+    { label: i18n.t('right'), dx: 1, dy: 0 },
   ]
 
   // 2. 이동 가능한 타일 정보 추출 및 서사 생성
@@ -324,17 +373,17 @@ export const lookAll = async (
   })).filter(({ canMove, tile }) => canMove && tile)
 
   const categoryChoices = [
-    ...(accessiblePaths.length ? [{ name: 'PATH', message: '🔍 주변 지형 살피기' }] : []),
-    ...(aliveNPCs.length ? [{ name: 'NPC', message: '👤 주변 인물' }] : []),
-    ...(corpse.length ? [{ name: 'CORPSE', message: '💀 시체' }] : []),
-    ...(aliveMonsters.length ? [{ name: 'MONSTER', message: '💀 적대적 생명체' }] : []),
-    ...(minions.length ? [{ name: 'MINION', message: '🧟 소환된 미니언' }] : []),
-    ...(groupedItems.length ? [{ name: 'ITEM', message: '💎 드롭된 아이템' }] : []),
-    { name: 'cancel', message: '↩ 그만두기' },
+    ...(accessiblePaths.length ? [{ name: 'PATH', message: i18n.t('commands.look.category.path') }] : []),
+    ...(aliveNPCs.length ? [{ name: 'NPC', message: i18n.t('commands.look.category.npc') }] : []),
+    ...(corpse.length ? [{ name: 'CORPSE', message: i18n.t('commands.look.category.corpse') }] : []),
+    ...(aliveMonsters.length ? [{ name: 'MONSTER', message: i18n.t('commands.look.category.monster') }] : []),
+    ...(minions.length ? [{ name: 'MINION', message: i18n.t('commands.look.category.minion') }] : []),
+    ...(groupedItems.length ? [{ name: 'ITEM', message: i18n.t('commands.look.category.item') }] : []),
+    { name: 'cancel', message: i18n.t('cancel') },
   ]
 
   // 1. 카테고리 선택
-  const category = await Terminal.select('무엇을 확인하시겠습니까?', categoryChoices)
+  const category = await Terminal.select(i18n.t('commands.look.select_prompt'), categoryChoices)
 
   if (category === 'cancel') return
 

@@ -13,18 +13,50 @@ class KnightWrapper {
     public raw: BattleTarget,
     private player: Player
   ) {
-    Object.keys(raw).forEach((key) => {
-      if (Object.getOwnPropertyDescriptor(KnightWrapper.prototype, key)) return
+  }
 
-      Object.defineProperty(this, key, {
-        get: () => (this.raw as any)[key],
-        set: (v) => {
-          ;(this.raw as any)[key] = v
-        },
-        enumerable: true,
-        configurable: true,
-      })
-    })
+  // Delegations for BattleTarget compatibility
+  get id() {
+    return this.raw.id
+  }
+  get agi() {
+    return this.raw.agi
+  }
+  get exp() {
+    return this.raw.exp
+  }
+  get description() {
+    return this.raw.description
+  }
+  get dropTableId() {
+    return this.raw.dropTableId
+  }
+  get encounterRate() {
+    return this.raw.encounterRate
+  }
+  get preemptive() {
+    return this.raw.preemptive
+  }
+  get noEscape() {
+    return this.raw.noEscape
+  }
+  get noCorpse() {
+    return this.raw.noCorpse
+  }
+  get isNpc() {
+    return this.raw.isNpc
+  }
+  get isMinion() {
+    return this.raw.isMinion
+  }
+  get isKnight() {
+    return this.raw.isKnight
+  }
+  get deathLine() {
+    return this.raw.deathLine
+  }
+  get orderWeight() {
+    return this.raw.orderWeight
   }
 
   private get isLich() {

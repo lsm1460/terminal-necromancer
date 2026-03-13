@@ -40,17 +40,21 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
 async function handleItemAction(item: Item, player: Player, args: any, context: any) {
   const label = getItemLabel(item)
   const action = await Terminal.select(i18n.t('inventory.what_to_do', { label }), getAvailableActions(item))
-
+  
   switch (action) {
     case 'look':
       printItem(item)
+      break
     case 'equip':
       await player.equip(item)
       Terminal.log(`\n✨ ${i18n.t('inventory.action_equip_done', { label })}`)
+      break
     case 'use':
       await player.useItem(item as ConsumableItem)
+      break
     case 'drop':
       handleDropAction(item, player, context)
+      break
     case 'back':
       return await inventoryCommand(player, args, context)
   }

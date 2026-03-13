@@ -16,7 +16,11 @@ import { InventoryManager } from './InventoryManager'
 import { MinionManager } from './MinionManager'
 import { StatsCalculator } from './StatsCalculator'
 
-export type PlayerSaveData = Partial<Player> & { _golem?: BattleTarget; _knight?: BattleTarget }
+export type PlayerSaveData = Partial<Player> & {
+  _skeleton?: BattleTarget[]
+  _golem?: BattleTarget
+  _knight?: BattleTarget
+}
 
 export class Player {
   id = 'player'

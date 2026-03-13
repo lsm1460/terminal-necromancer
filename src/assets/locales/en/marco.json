@@ -1,0 +1,37 @@
+{
+  "name": "Marco",
+  "lines": [
+    "Life is just like machinery. If you don't grease it properly, it starts creaking and stops.",
+    "This part? Uh-huh, I didn't steal it. The owner 'temporarily gave up' on it, so I just recovered it.",
+    "If you've got enough cash, I can even get you the key to the terminal control room. Though 'enough' is decided by me."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Whoa! If it isn't our regular! Just seeing your face makes the dust in this waiting room feel like it's clearing up. What kind of rare treasure are you looking for today?",
+      "farewell": "Take care of yourself! If something happens to you, who else would I chat with in this terminal? It's not about the sales, I'm serious!"
+    },
+    "normal": {
+      "greeting": "Welcome. Seeing as you found this corner stall, you've got a pretty sharp eye, don't you? Looking is free, so take your time.",
+      "farewell": "Well, I guess that's as far as our luck goes today. Next time I'll have something that'll really catch your eye, so stop by again."
+    },
+    "hostile": {
+      "greeting": "Hey, you! Are you here to mess with my business? If you think my hook only tears apart machine parts, you're dead wrong. Now beat it!",
+      "farewell": "Pah! What a jinx... Hey! If I see you again, I won't be charging for the spot, I'll be charging for your life!"
+    }
+  },
+  "deathLine": "Dammit... I miscalculated... the margin... Someone... take care of my ledger...",
+  "description": "Runs a worn-out stall behind a bench in the corner of the waiting room. Known as 'Grease Monkey' because his hands are always stained with waste oil, he secretly deals in all sorts of stolen goods and information within the terminal.",
+
+  "buy": {
+    "greeting": "Oh, welcome! Everything here is a top-shelf item I've personally inspected and tuned up. Have a look around.",
+    "noStock": "Ah, another customer just snatched that one up. Supplies are scarce here in the terminal, you see. How about something else?",
+    "noGold": "Oof, looks like your pockets are a bit light today. My goods aren't cheap, but they're worth every bit. Come back later.",
+    "success": "An excellent choice! This will serve you well. Here you go. Safe travels."
+  },
+  "sell": {
+    "greeting": "Oho, brought something useful, have you? I've got a sharp eye for value. Let me see what you've got.",
+    "noItems": "Are you pulling my leg? You've got nothing but dust in your pockets. Come back when you've got real gear.",
+    "success": "Hmm... condition isn't bad. Alright, I'll give you a fair price for this. Here's your share. *Clink*-",
+    "exit": "Leaving already? That's a shame. I'm always here in the corner of the waiting room, so stop by whenever you need something."
+  }
+}

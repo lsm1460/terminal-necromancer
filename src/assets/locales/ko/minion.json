@@ -1,0 +1,42 @@
+{
+  "skeleton": {
+    "name": "스켈레톤 병사",
+    "description": "{{name}}의 유골로 만들어진 소환수입니다."
+  },
+  "skeleton_shield_bearer": {
+    "name": "스켈레톤 방패병"
+  },
+  "skeleton_swordsman": {
+    "name": "스켈레톤 검사"
+  },
+  "skeleton_pyromancer": {
+    "name": "스켈레톤 화염술사"
+  },
+  "skeleton_healer": {
+    "name": "스켈레톤 힐러"
+  },
+  "skeleton_great_shield_bearer": {
+    "name": "스켈레톤 대형 방패병"
+  },
+  "skeleton_archer": {
+    "name": "스켈레톤 궁수"
+  },
+  "skeleton_cryomancer": {
+    "name": "스켈레톤 빙결술사"
+  },
+  "skeleton_monk": {
+    "name": "스켈레톤 수도자"
+  },
+  "skeleton_warrior": {
+    "name": "스켈레톤 워리어"
+  },
+  "skeleton_electromancer": {
+    "name": "스켈레톤 전격술사"
+  },
+  "skeleton_priest": {
+    "name": "스켈레톤 사제"
+  },
+  "skeleton_king": {
+    "name": "스켈레톤 해골 왕"
+  }
+}

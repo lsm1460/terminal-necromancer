@@ -29,7 +29,6 @@ const assets: GameAssets = {
   item: loadJSON(path.join(assetsDir, 'item.json')),
   drop: loadJSON(path.join(assetsDir, 'drop.json')),
   npc: loadJSON(path.join(assetsDir, 'npc.json')),
-  events: loadJSON(path.join(assetsDir, 'events.json')),
   npcSkills: loadJSON(path.join(assetsDir, 'npcSkills.json')),
 }
 

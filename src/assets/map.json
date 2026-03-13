@@ -1,6 +1,6 @@
 {
   "title": {
-    "displayName": "GAME TITLE",
+    "id": "title",
     "start_pos": { "x": 0, "y": 0 },
     "tiles": [
       [
@@ -13,7 +13,7 @@
     ]
   },
   "B1_Subway_Entrance": {
-    "displayName": "지하철 입구 - B1",
+    "id": "B1_Subway_Entrance",
     "start_pos": { "x": 0, "y": 0 },
     "move_pos": { "x": 3, "y": 2 },
     "tiles": [
@@ -89,7 +89,7 @@
     ]
   },
   "B2_Transit_Area": {
-    "displayName": "B2 - 환승 구역",
+    "id": "B2_Transit_Area",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["talk_death_1"],
     "tiles": [
@@ -162,7 +162,7 @@
     ]
   },
   "B3_5_Resistance_Base": {
-    "displayName": "B3.5 - 레지스탕스 은신처",
+    "id": "B3_5_Resistance_Base",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["RESISTANCE_BASE"],
     "tiles": [
@@ -183,7 +183,7 @@
     ]
   },
   "B3_Steel_Loading_Dock": {
-    "displayName": "B3 - 강철 하역장",
+    "id": "B3_Steel_Loading_Dock",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["first_boss", "talk_death_2"],
     "tiles": [
@@ -325,7 +325,7 @@
     ]
   },
   "B4_Waste_Disposal_Area": {
-    "displayName": "B4 - 폐기된 구역",
+    "id": "B4_Waste_Disposal_Area",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["talk_death_3"],
     "tiles": [
@@ -430,7 +430,7 @@
     ]
   },
   "B5_VIP_lounge": {
-    "displayName": "B5 - VIP 라운지",
+    "id": "B5_VIP_lounge",
     "start_pos": { "x": 0, "y": 0 },
     "unlocks": ["report_caron_to_death"],
     "tiles": [

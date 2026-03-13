@@ -1,0 +1,95 @@
+{
+  "name": "Dr. Zed",
+  "lines": [
+    "I wonder... what kind of sound a soul makes when it’s separated from the body.",
+    "Anesthesia is a luxury. Pain is the most honest biological data, after all.",
+    "Combining Resistance parts with your bones... that would be fantastic."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Oh, my marvelous subject! Have you come to donate new biological data today?",
+      "farewell": "Even if you die, make sure your corpse is recovered by this department. It’s a promise, okay?"
+    },
+    "normal": {
+      "greeting": "Are you a patient? Or just raw material for dissection? Lie down over there for now.",
+      "farewell": "I don't know whether to congratulate you on leaving alive or regret missing an experimental opportunity."
+    },
+    "hostile": {
+      "greeting": "An intruder? Excellent. I happened to need fresh organs, and you walked right in.",
+      "farewell": "Run all you want, you'll end up on the infirmary floor eventually. You've already been 'classified.'"
+    }
+  },
+  "deathLine": "My body... is getting cold... This sensation... must be recorded...",
+  "description": "A madman of the terminal who wields a scalpel to satisfy destructive curiosity rather than to heal. Rumored to be former Resistance.",
+  "choices": {
+    "upgrade_golem": "🧬 Modify Golem",
+    "awake_golem": "🧬 Resurrect Golem"
+  },
+  "heal": {
+    "title": "💉 [Infirmary Log: Dr. Zed]",
+    "success": "✨ HP/MP and all minions have been perfectly restored.",
+    "logs": [
+      "\"Can't have the materials spoiling. I've stitched everything back together for now.\"",
+      "\"Don't get too happy about it being free. You'll find out what I've planted in your body soon enough.\"",
+      "\"Stinks of corpses in here. I've drenched you in disinfectant, so you won't rot for a while.\"",
+      "\"I wouldn't have minded if you left a limb or two behind next time. You got lucky.\""
+    ]
+  },
+  "gossip": {
+    "intro": [
+      "Dr. Zed: \"Wander the corners of the Terminal long enough... and you'll eventually run into those rat-like swarms.\"",
+      "Dr. Zed: \"Those who call themselves the 'Resistance.' I once shared a boat with them, long ago...\""
+    ],
+    "already_know": [
+      "Dr. Zed: \"Oh, it seems you've already met those old-fashioned fools.\"",
+      "Dr. Zed: \"The cowards who call surgery 'sacrilege' in the name of conviction or human rights.\"",
+      "Dr. Zed: \"They fear the possibility of evolution. They can't understand a... 'practical' doctor like me.\"",
+      "Dr. Zed: \"Don't get too deep with them. If they saw your body—neither dead nor alive—they'd try to 'save' you. And that would be your most horrific end.\""
+    ],
+    "first_time": [
+      "Dr. Zed: \"They're so foolish. They have the technology to save people, yet they're bound by the shackles of 'ethics' and can't even use their tools properly.\"",
+      "Dr. Zed: \"Ultimately, I took my scalpel and came here to the Terminal. At least here, I never run out of materials.\"",
+      "Dr. Zed: \"You'd better be careful. They see a Necromancer like you as an 'unnatural monster.'\""
+    ]
+  },
+  "upgrade": {
+    "machine_hate": [
+      "\nDr. Zed: \"Ugh! What are these fishy-smelling hunks of metal?! Get them out of my sight immediately!\"",
+      "Dr. Zed: \"There's no room for my essence because of this scrap metal trash!\""
+    ],
+    "status_label": "[ Slots: {{slots}} ] / Soul Fragments: {{exp}}",
+    "menu_soul": "🧬 [Mutation] Inject Soul Slot (Cost: {{cost}} Soul Fragments)",
+    "menu_remove": "🔪 [Extraction] Remove one Soul stack (Cost: {{cost}} Soul Fragments)",
+    "limit_reached": "\nDr. Zed: (Trembling with a scalpel) \"No slots? No, if I 'make' one, it exists!\"",
+    "hard_limit": "\nDr. Zed: \"No more. Any more than this and it won't be a golem, just an exploding meat balloon.\"",
+    "no_exp": "\nDr. Zed: \"You don't have enough Soul Fragments!\"",
+    "no_soul": "\nDr. Zed: \"I don't see any of my essence here.\"",
+    "no_money_remove": "\nDr. Zed: \"You want me to perform an extraction without paying? Go collect more Soul Fragments.\"",
+    "success_limit": [
+      "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "💉 [Madness Limit Break Surgery Complete]",
+      "Dr. Zed: \"Hahaha! I shoved it in and it actually fit! Now it finally feels 'alive'!\"",
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    ],
+    "success_normal": "\n💉 [Surgery Complete] Dr. Zed: \"Hehehe! Look at that! The soul is screaming and thrashing inside the steel!\"",
+    "remove_done": "\n🧪 [Extraction Complete] Dr. Zed takes the excised tissue with a satisfied smile.",
+    "exit_msg": "\nDr. Zed: \"Close the door on your way out. Dust is getting in.\""
+  },
+  "awake": {
+    "already_active": "\nZed: \"It's already active. Duplicate output is just a waste of resources.\"",
+    "dialogues": [
+      "Zed: ...So this is the core of the Golem that guarded the 3rd floor basement.",
+      "Zed: The core is completely shattered. A normal person would've thrown it in the trash...",
+      "Zed: But you're lucky. Someone of my caliber can make it pulse once again.",
+      "Zed: Now, hand that core over to me. I'll fix it up even stronger than before."
+    ],
+    "confirm": "Injecting Reaper's Mana into the core. The Golem may wake up incomplete and risk going berserk. Proceed?",
+    "denied": "\nZed: \"A wise choice. The screaming of the metal hasn't stopped yet.\"",
+    "success": [
+      "\n[⚙️ Golem Activation Success]",
+      "Zed: \"System load complete. As you can see... it's become quite a marvelous killing machine.\"",
+      "Zed: \"From now on, this scrap heap will follow your shadow and crush anything that stands in your way.\"",
+      "Zed: \"If you wish, there may be a way to further enhance it...\""
+    ]
+  }
+}

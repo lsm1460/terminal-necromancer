@@ -10,7 +10,7 @@ export function printTileStatus(player: Player, context: GameContext) {
   const { x, y } = player.pos
   const tile = map.getTile(x, y)
 
-  Terminal.log(`\n` + i18n.t(`tile.${tile.id}.dialogue`))
+  Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
 
   const npcList = (tile.npcIds || []).map((_id) => npcs.getNPC(_id)).filter((npc): npc is NPC => npc !== null)
 

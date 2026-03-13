@@ -1,3 +1,4 @@
+import i18n from '~/i18n'
 import { BattleTarget, Drop, GameContext, NPC } from '~/types'
 import { getItemLabel } from '~/utils'
 import { LootFactory } from '../LootFactory'
@@ -20,7 +21,7 @@ export class BattleRewardSystem {
     target.isAlive = false
     this.unitManager.unregisterUnit(target)
 
-    Terminal.log(`\n💀 ${target.name}이(가) 쓰러졌습니다!`)
+    Terminal.log(i18n.t('battle.reward.unit_death', { name: target.name }))
     target.deathLine && Terminal.log(target.deathLine)
     target.isNpc && (target as NPC).dead()
 
@@ -29,22 +30,34 @@ export class BattleRewardSystem {
     this.player.gainExp(target.exp || 0)
     this.player.gainGold(gold)
 
-    let logMessage = `✨ ${target.name} 처치! EXP +${target.exp || 0}`
-    if (gold > 0) logMessage += `, 골드 +${gold}`
+    let logMessage = i18n.t('battle.reward.kill_log', {
+      name: target.name,
+      exp: target.exp || 0,
+    })
+
+    if (gold > 0) {
+      logMessage += i18n.t('battle.reward.gold_gain', { gold })
+    }
     Terminal.log(logMessage)
 
     drops.forEach((d) => {
       world.addDrop({ ...d, x, y } as Drop)
+      const quantityText = d.quantity !== undefined ? ` ${d.quantity}${i18n.t('battle.reward.item_unit')}` : ''
+
       Terminal.log(
-        `📦 ${target.name}은(는) ${getItemLabel(d)}${d.quantity !== undefined ? ` ${d.quantity}개` : ''}을(를) 떨어뜨렸습니다.`
+        i18n.t('battle.reward.drop_item', {
+          name: target.name,
+          label: getItemLabel(d),
+          quantity: quantityText,
+        })
       )
     })
 
     if (!target.noCorpse) {
       world.addCorpse({ ...target, x, y })
-      Terminal.log(`🦴 그 자리에 ${target.name}의 시체가 남았습니다.`)
+      Terminal.log(i18n.t('battle.reward.corpse_left', { name: target.name }))
     } else {
-      Terminal.log(`${target.name}이/가 연기처럼 사라졌다.`)
+      Terminal.log(i18n.t('battle.reward.vanished', { name: target.name }))
     }
   }
 
@@ -52,9 +65,9 @@ export class BattleRewardSystem {
     if (result.isEscaped) return
 
     if (result.isVictory) {
-      Terminal.log(`\n🏆 전투에서 승리했습니다!`)
+      Terminal.log(i18n.t('battle.reward.victory'))
     } else {
-      Terminal.log(`\n💀 전투에서 패배했습니다...`)
+      Terminal.log(i18n.t('battle.reward.defeat'))
       this.player?.onDeath && this.player.onDeath()
     }
   }

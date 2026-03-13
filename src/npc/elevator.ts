@@ -1,13 +1,14 @@
 import { MAP_IDS, MapId } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { printTileStatus } from '~/statusPrinter'
 import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
 
 const ElevatorHandler: NPCHandler = {
   getChoices() {
-    return [{ name: 'elevate', message: '💬 층 간 이동' }]
+    return [{ name: 'elevate', message: i18n.t('npc.elevator.choices.elevate') }]
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -28,56 +29,54 @@ async function handleElevate(player: Player, context: GameContext) {
     name: string
     message: string
   }[] = Object.entries(MAP_IDS)
-    .filter(([_, value]) => value !== currentSceneId) // 현재 있는 층은 목록에서 제외
-    .filter(([_, value]) => value !== MAP_IDS.title) // 현재 있는 층은 목록에서 제외
+    .filter(([_, value]) => value !== currentSceneId)
+    .filter(([_, value]) => value !== MAP_IDS.title)
     .filter(([_, value]) => map.isUnlocked(value, completed))
     .map(([_, value]) => {
       const mapData = map.getMap(value)
 
       return {
         name: value,
-        message: `🛗 ${mapData.displayName}`,
+        message: `🛗 ${i18n.t(`scene.${mapData.id}`)}`,
       }
     })
 
   if (choices.length < 1) {
-    Terminal.log('❌ 엘리베이터 사용이 허락되지 않는 망자입니다..')
+    Terminal.log(i18n.t('npc.elevator.menu.no_access'))
     return true
   }
 
-  choices.push({ name: 'cancel', message: '🔙 그대로 머물기' })
+  choices.push({ name: 'cancel', message: i18n.t('npc.elevator.menu.cancel') })
 
-  const sceneId = await Terminal.select('어느 층으로 이동하시겠습니까?', choices)
+  const sceneId = await Terminal.select(i18n.t('npc.elevator.menu.title'), choices)
 
   if (sceneId === 'cancel') {
     return true
   }
 
-  // (또는 현재 층이 b1이 아닌 상태에서 다른 곳으로 떠나려 할 때)
   let enterMessage = ''
   if (currentSceneId !== MAP_IDS.B1_SUBWAY) {
-    enterMessage = '⚠️ 이 구역을 벗어나면 지형이 변합니다. 정말 이동하시겠습니까?'
+    enterMessage = i18n.t('npc.elevator.confirm.leave_area')
   } else {
-    enterMessage = '⚠️ 안전구역을 벗어납니다. 정말 이동하시겠습니까?'
+    enterMessage = i18n.t('npc.elevator.confirm.leave_safezone')
   }
 
   const proceed = await Terminal.confirm(enterMessage)
 
   if (!proceed) {
-    Terminal.log('❌ 이동을 취소했습니다.')
+    Terminal.log(i18n.t('npc.elevator.confirm.cancel'))
     return true
   }
 
   const targetMapData = map.getMap(sceneId)
 
   if (targetMapData) {
-    Terminal.log(`\n⚙️ 엘리베이터가 작동합니다. 웅성거리는 기계음과 함께 층이 바뀝니다...`)
+    Terminal.log(i18n.t('npc.elevator.status.working'))
 
-    // 맵 시스템의 changeScene을 호출하여 플레이어 이동 및 맵 데이터 갱신
     world.clearFloor()
     await map.changeScene(sceneId as MapId, player)
 
-    Terminal.log(`✨ [도착] ${targetMapData.displayName}에 도착했습니다.\n`)
+    Terminal.log(i18n.t('npc.elevator.status.arrival', { location: i18n.t(`scene.${targetMapData.id}`) }))
 
     const tile = map.getTile(player.x, player.y)
     tile.isSeen = true
@@ -88,7 +87,7 @@ async function handleElevate(player: Player, context: GameContext) {
     printTileStatus(player, context)
     return true
   } else {
-    console.error(`\n❌ 오류: ${sceneId} 데이터를 찾을 수 없습니다.`)
+    console.error(i18n.t('npc.elevator.menu.error', { sceneId }))
   }
 }
 

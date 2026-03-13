@@ -1,0 +1,41 @@
+{
+  "name": "Captain Kane",
+  "lines": ["Are you ready to begin the revenge?"],
+  "scripts": {
+    "friendly": {
+      "greeting": "You're here. It’s reassuring to have you with us.",
+      "farewell": "Stay safe. You are a valuable asset to us."
+    },
+    "normal": {
+      "greeting": "Make it quick. We're both busy.",
+      "farewell": "Don't die. At least until your usefulness runs out."
+    },
+    "hostile": {
+      "greeting": "Get out of my sight before my blade meet your neck.",
+      "farewell": "Better watch your back."
+    }
+  },
+  "deathLine": "Kane fell, never letting go of his sword until the very end.",
+  "description": "The leader of the Resistance.",
+
+  "join": {
+    "intro": [
+      "???: \"Your footsteps are heavy. They are the footsteps of one bound by the Reaper's chains, having forgotten the weight of their own soul.\"",
+      "Kane: \"...My name is Kane. I lead those who haven't lost their 'will' in the corners of this crumbling terminal.\""
+    ],
+    "jax_dead": [
+      "Kane: \"(Piercing you with a sharp gaze) Newbie, where did you come from? This is the sector my scout, Jax, went to investigate.\"",
+      "Kane: \"How did a minion of the Reaper like you crawl in here unscathed? ...Did you see Jax? Tell me he didn't fall to those Reaper bastards.\""
+    ],
+    "jax_alive": [
+      "Kane: \"I've heard from Jax. It seems the lad made it back alive from his scouting mission.\"",
+      "Kane: \"How is he faring? He's quick on his feet, so I don't worry much, but this sector, thick with the Reaper's mana, must have been taxing even for him.\""
+    ],
+    "proposition": [
+      "Kane: \"Under the guise of 'purification,' the Reaper is blocking the flow of reincarnation.\nHe's using souls that should have returned to the light as slaves to tend his own garden.\"",
+      "Kane: \"Even those who came here for their sins do not deserve to be subjected to eternal, unjust labor.\nThat isn't justice; it's merely the Reaper's greed.\"",
+      "Kane: \"Listen, newbie. Will you bow your head submissively and let your soul be gnawed away as the Reaper commands?\nOr will you join us and tear down this twisted system?\"",
+      "Kane: \"The choice is yours. But remember—it is far more valuable to vanish resisting as a human than to be discarded after living as the Reaper's dog.\""
+    ]
+  }
+}

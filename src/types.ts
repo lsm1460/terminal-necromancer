@@ -39,7 +39,9 @@ export type BattleTarget = {
   noCorpse?: boolean
   isNpc?: boolean
   isMinion?: boolean
-  isSkeleton?: boolean
+  isSkeleton?: boolean // only skeleton
+  originId?: string // only skeleton
+  rarity?: SkeletonRarity // only skeleton
   isGolem?: boolean
   isKnight?: boolean
   deathLine?: string
@@ -386,7 +388,7 @@ export interface UnitSprites {
 }
 
 export interface SceneData {
-  displayName: string
+  id: string
   unlocks?: string[]
   start_pos: { x: number; y: number }
   move_pos?: { x: number; y: number }

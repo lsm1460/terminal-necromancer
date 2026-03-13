@@ -1,4 +1,5 @@
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { CommandFunction, ItemType } from '~/types'
 import { getItemLabel, makeItemMessage } from '~/utils'
 
@@ -19,7 +20,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
       name: item.id,
       message: makeItemMessage(item, player),
     })),
-    { name: 'cancel', message: '취소' },
+    { name: 'cancel', message: i18n.t('cancel') },
   ]
 
   const itemId = await Terminal.select('장비할 아이템을 선택하세요:', choices)

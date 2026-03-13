@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid'
 import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
 import i18n from './i18n'
-import { Item, ItemType } from './types'
+import { BattleTarget, Item, ItemType } from './types'
 import { RARITY_SETTINGS } from './core/item/consts'
 
 export function generateId(baseId?: string, length = 8): string {

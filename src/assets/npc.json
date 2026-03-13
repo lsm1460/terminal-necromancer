@@ -121,23 +121,6 @@
     "noCorpse": true,
     "skills": ["power_smash", "call_reinforcements"]
   },
-  "third_boss": {
-    "id": "third_boss",
-    "attackType": "melee",
-    "hp": 10,
-    "maxHp": 10,
-    "atk": 12,
-    "def": 5,
-    "eva": 0.15,
-    "exp": 3000,
-    "isAlive": true,
-    "isBoss": true,
-    "reborn": false,
-    "dropTableId": "boss3_balthazar",
-    "noEscape": true,
-    "noCorpse": true,
-    "skills": ["power_smash"]
-  },
   "dr_zed": {
     "id": "dr_zed",
     "faction": "untouchable",

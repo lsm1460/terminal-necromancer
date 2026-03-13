@@ -10,7 +10,6 @@ type EventCallback = (eventId: string) => void
 export class EventSystem {
   private completedEvents: Set<string> = new Set()
   private monsterEvent: MonsterEvent
-  private eventData: Record<string, GameEvent> = {}
   private subscribers: EventCallback[] = [] // 구독자 명단
 
   /**
@@ -18,12 +17,10 @@ export class EventSystem {
    * @param monsterFactory - 몬스터 생성을 위한 팩토리
    * @param savedData - 완료된 이벤트 목록
    */
-  constructor(eventData: any, monsterFactory: MonsterFactory, savedData?: string[]) {
+  constructor(monsterFactory: MonsterFactory, savedData?: string[]) {
     if (savedData) this.completedEvents = new Set(savedData)
 
     this.monsterEvent = new MonsterEvent(monsterFactory)
-
-    this.eventData = eventData
   }
 
   async handle(tile: Tile, player: Player, context: GameContext) {
@@ -45,10 +42,6 @@ export class EventSystem {
 
   public subscribe(callback: EventCallback) {
     this.subscribers.push(callback)
-  }
-
-  public getEventInfo(eventId: string) {
-    return this.eventData[eventId]
   }
 
   /** 이벤트 완료 처리 */

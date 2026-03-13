@@ -2,6 +2,7 @@ import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { GameContext, Monster, Tile } from '~/types'
 import { delay } from '~/utils'
 
@@ -10,7 +11,7 @@ export class MonsterEvent {
 
   async handle(tile: Tile, player: Player, context: GameContext) {
     if (tile.isClear) return
-     
+      
     if (!tile.monsters) tile.monsters = []
     // 1. 현재 살아있는 몬스터 수 확인
     const aliveMonsters = tile.monsters.filter((m) => m.isAlive)
@@ -34,19 +35,25 @@ export class MonsterEvent {
 
       if (newlySpawned.length > 0) {
         tile.monsters.push(...newlySpawned)
-        newlySpawned.forEach((m) => Terminal.log(`👾 ${m.name} 등장!`))
+        newlySpawned.forEach((m) => 
+          Terminal.log(i18n.t('battle.monster_event.spawn', { name: m.name }))
+        )
       }
     }
 
     // 3. 최종 상태 보고
     const finalAlive = tile.monsters.filter((m) => m.isAlive)
     if (finalAlive.length > 0) {
-      Terminal.log(`⚠️  현재 적: ${finalAlive.map((m) => m.name).join(', ')}`)
+      Terminal.log(
+        i18n.t('battle.monster_event.current_enemies', { 
+          names: finalAlive.map((m) => m.name).join(', ') 
+        })
+      )
 
       const preemptiveEnemy = finalAlive.find((_monster) => _monster.preemptive)
 
       if (preemptiveEnemy) {
-        Terminal.log(`⚠️  적: ${preemptiveEnemy.name}의 기습!`)
+        Terminal.log(i18n.t('battle.monster_event.preemptive_attack', { name: preemptiveEnemy.name }))
 
         await delay()
 

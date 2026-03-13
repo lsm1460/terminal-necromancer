@@ -1,0 +1,42 @@
+{
+  "skeleton": {
+    "name": "Skeleton Soldier",
+    "description": "A minion raised from the remains of {{name}}."
+  },
+  "skeleton_shield_bearer": {
+    "name": "Skeleton Shield Bearer"
+  },
+  "skeleton_swordsman": {
+    "name": "Skeleton Swordsman"
+  },
+  "skeleton_pyromancer": {
+    "name": "Skeleton Pyromancer"
+  },
+  "skeleton_healer": {
+    "name": "Skeleton Healer"
+  },
+  "skeleton_great_shield_bearer": {
+    "name": "Skeleton Greatshield Bearer"
+  },
+  "skeleton_archer": {
+    "name": "Skeleton Archer"
+  },
+  "skeleton_cryomancer": {
+    "name": "Skeleton Cryomancer"
+  },
+  "skeleton_monk": {
+    "name": "Skeleton Monk"
+  },
+  "skeleton_warrior": {
+    "name": "Skeleton Warrior"
+  },
+  "skeleton_electromancer": {
+    "name": "Skeleton Electromancer"
+  },
+  "skeleton_priest": {
+    "name": "Skeleton Priest"
+  },
+  "skeleton_king": {
+    "name": "Skeleton King"
+  }
+}

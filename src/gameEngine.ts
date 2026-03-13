@@ -30,12 +30,12 @@ export class GameEngine {
   ) {}
 
   public async init(initData?: SaveData): Promise<void> {
-    const { item, drop, monsterGroup, monster, level, events, npcSkills, map, npc, state } = this.assets
+    const { item, drop, monsterGroup, monster, level, npcSkills, map, npc, state } = this.assets
 
     const dropSystem = new DropSystem(item, drop)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
     const player = new Player(level, initData?.player)
-    const eventSystem = new EventSystem(events, monsterFactory, initData?.completedEvents)
+    const eventSystem = new EventSystem(monsterFactory, initData?.completedEvents)
     const npcSkillManager = new NpcSkillManager(npcSkills, player)
     const battle = new Battle(player, monsterFactory, npcSkillManager)
     const mapManager = new MapManager(map)
