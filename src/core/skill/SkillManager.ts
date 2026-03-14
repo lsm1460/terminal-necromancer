@@ -66,7 +66,7 @@ export class SkillManager {
           atk: c.atk,
         }),
       })),
-      { name: 'cancel', message: `🔙 ${i18n.t('cancel')}` },
+      { name: 'cancel', message: i18n.t('cancel') },
     ]
 
     const corpseId = await Terminal.select(i18n.t('skill.select_corpse_to_consume'), corpseChoices)

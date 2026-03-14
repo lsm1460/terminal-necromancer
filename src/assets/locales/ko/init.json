@@ -44,7 +44,7 @@
   "down": "아래",
   "left": "왼쪽",
   "right": "오른쪽",
-  
+
   "loading": {
     "init": "흩어진 의식을 집중하는 중...",
     "map": "황혼의 땅을 화폭에 담는 중...",
@@ -74,7 +74,7 @@
     "inventory": "인벤토리",
     "pick": "줍기",
     "help": "도움말",
-    
+
     "combat": {
       "confirm_kill": "\n[!] 눈앞의 망자를 살해하시겠습니까? 한 번 휘두른 무기는 되돌릴 수 없습니다.",
       "cancel_murder": "\n당신은 살의를 거두고 무기를 내립니다.",
@@ -99,7 +99,7 @@
       "footer": "---------------------------------------"
     },
     "move": {
-      "you_cannot_pass": "You cannot pass",
+      "you_cannot_pass": "지나갈 수 없다.",
       "cannot_escape": "\n🚫 {{name}}이(가) 주시하고 있어 도망칠 수 없다."
     },
     "look": {
@@ -222,7 +222,7 @@
     "action_equip_done": "[{{label}}]을(를) 장비하였습니다.",
     "action_drop_done": "[{{label}}] ({{count}}개)을(를) 바닥에 버렸습니다."
   },
-  
+
   "stat": {
     "atk": "공격력",
     "def": "방어력"
