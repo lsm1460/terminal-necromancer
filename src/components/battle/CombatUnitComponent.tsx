@@ -133,8 +133,6 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, i
           return s.hit?.src
         case 'DIE':
           return s.die?.src
-        case 'ESCAPE':
-          return s.escape?.src
       }
     }
 
