@@ -1,0 +1,29 @@
+{
+  "name": "Loading Dock Golem",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": { "greeting": "...", "farewell": "..." },
+    "normal": { "greeting": "...", "farewell": "..." },
+    "hostile": { "greeting": "...", "farewell": "..." }
+  },
+  "deathLine": "Golem Terminated",
+  "description": "The golem of the loading dock.",
+
+  "postTalk": ["Whirr... Outsider... Identified.", "Danger... Neutralization... Commencing.", "Crush... Pulverize."],
+  "defeatTalk": [
+    "System... Forced... Shutdown.",
+    "The Golem's massive frame comes to a halt with a deafening roar.",
+    "Obtained Golem Essence."
+  ],
+
+  "battle": {
+    "armor_deflected": "\n🛡️ [Armor] The heavy plating deflects the attack!\n(A powerful 'Explosion' is needed to breach the gaps in the armor...)",
+    "core_exposed": [
+      "\n━━━━━━━━━━━━━━━ ⚠️  CORE EXPOSED ━━━━━━━━━━━━━━━",
+      "💥 KABOOM! The reinforced chest plating is completely shattered!",
+      "🔍 The foggy [Stealth] device stops due to an overload,",
+      "✨ revealing the glowing [Mechanical Core] at the boss's center!",
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    ]
+  }
+}

@@ -1,3 +1,4 @@
+import i18n from '~/i18n'
 import { GameContext } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
@@ -7,9 +8,9 @@ const JulianHandler: NPCHandler = {
     const alreadyTalk = context.events.isCompleted('b5_julian')
 
     if (alreadyTalk) {
-      return [{ name: 'talk', message: '💬 잡담' }]
+      return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
     } else {
-      return [{ name: 'event', message: '🔍 살펴보기' }]
+      return [{ name: 'event', message: i18n.t('talk.examine') }]
     }
   },
   async handle(action, player, npc, context) {

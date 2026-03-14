@@ -1,0 +1,78 @@
+{
+  "SURPRISE_ATTACK": {
+    "name": "Ambush",
+    "description": "Bone spears strike from behind the enemy formation."
+  },
+  "OVERLORD": {
+    "name": "Overlord",
+    "description": "Increases the maximum number of skeletons you can control."
+  },
+  "ELITE_SQUAD": {
+    "name": "Elite",
+    "description": "Improves the grade of summoned skeletons."
+  },
+  "DOOMSDAY": {
+    "name": "Doomsday",
+    "description": "Skeletons explode upon death, dealing damage to nearby enemies."
+  },
+  "FROSTBORNE": {
+    "name": "Frostborne",
+    "description": "The frozen touch of skeletons slows down the enemy's movement."
+  },
+  "LEGION": {
+    "name": "Legion",
+    "description": "Simultaneously resurrects all available corpses when summoning skeletons."
+  },
+  "THORNS": {
+    "name": "Thorns",
+    "description": "Golems sprout sharp spikes, reflecting damage to their attackers."
+  },
+  "ROAR": {
+    "name": "Roar",
+    "description": "Golems provoke enemies to focus their backline attacks on themselves."
+  },
+  "TABOO": {
+    "name": "Taboo",
+    "description": "Promotes Dark Knights to Liches and unlocks exclusive skills (Curse, Bone Prison)."
+  },
+  "WARHORSE": {
+    "name": "Warhorse",
+    "description": "Converts the Dark Knight's attack into an area-of-effect (AoE) attack."
+  },
+  "CORROSION": {
+    "name": "Corrosion",
+    "description": "Changes the Curse effect from reducing Attack to reducing Defense."
+  },
+  "WIDE_CURSE": {
+    "name": "Wide Curse",
+    "description": "Spreads the Curse to all enemies, though its individual potency is reduced."
+  },
+  "CHAIN_EXPLOSION": {
+    "name": "Chain Reaction",
+    "description": "Triggering Corpse Explosion causes all corpses on the field, including skeletons, to detonate in sequence."
+  },
+  "VAMPIRISM": {
+    "name": "Vampirism",
+    "description": "Restores your own HP when absorbing souls."
+  },
+  "EXALTATION": {
+    "name": "Exaltation",
+    "description": "Grants powerful buffs to minions during Soul Transfer at the cost of their HP."
+  },
+  "BLOOD": {
+    "name": "Blood Magic",
+    "description": "Converts all MP into HP and increases maximum HP by 30%."
+  },
+  "RESURRECTION": {
+    "name": "Resurrection",
+    "description": "Instantly resurrects consumed minions with 10% HP after using Bone Skills."
+  },
+  "MEMORY": {
+    "name": "Memory",
+    "description": "Increases the number of Memorize slots."
+  },
+  "CLEANSE": {
+    "name": "Cleanse",
+    "description": "Skeleton Priests or Monks will now remove debuffs from allies."
+  }
+}

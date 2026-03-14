@@ -1,13 +1,14 @@
 import { SKELETON_UPGRADE } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { BattleTarget, GameContext } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
 
 const SubspaceHandler: NPCHandler = {
   getChoices(player, npc, context) {
     return [
-      { name: 'talk', message: '💬 잡담' },
+      { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'increaseLimit', message: '🦴 해골 군단 확장' },
       { name: 'space', message: '🌀 아공간' },
     ]
@@ -168,7 +169,7 @@ async function handlePull(player: Player) {
   } else {
     // 단순 꺼내기 실행
     player.skeletonSubspace = player.skeletonSubspace.filter((s) => s.id !== pullId)
-    player.skeleton.push(targetToPull)
+    player.addSkeleton(targetToPull)
 
     renderSuccessMessage(targetToPull.name, 'pull')
   }
@@ -183,10 +184,7 @@ async function handleSwap(player: Player, targetToPull: BattleTarget) {
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
 
-  const pushId = await Terminal.select(
-    `[${targetToPull.name}] 대신 아공간으로 보낼 대상을 선택하십시오.`,
-    fieldChoices
-  )
+  const pushId = await Terminal.select(`[${targetToPull.name}] 대신 아공간으로 보낼 대상을 선택하십시오.`, fieldChoices)
 
   const targetToPush = player.skeleton.find((sk) => sk.id === pushId)
   if (!targetToPush) return
@@ -195,7 +193,7 @@ async function handleSwap(player: Player, targetToPull: BattleTarget) {
   player.skeleton = player.skeleton.filter((s) => s.id !== pushId)
   player.skeletonSubspace = player.skeletonSubspace.filter((s) => s.id !== targetToPull.id)
 
-  player.skeleton.push(targetToPull)
+  player.addSkeleton(targetToPull)
   player.skeletonSubspace.push(targetToPush)
 
   renderSuccessMessage(`${targetToPush.name} ↔ ${targetToPull.name}`, 'swap')

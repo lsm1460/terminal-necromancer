@@ -1,0 +1,47 @@
+{
+  "name": "The Reaper",
+  "lines": ["Have you gathered any souls?"],
+  "scripts": {
+    "friendly": {
+      "greeting": "A diligent slave. I like that.",
+      "farewell": "Keep offering souls. I shall guarantee your lifespan in return."
+    },
+    "normal": {
+      "greeting": "Welcome.",
+      "farewell": "Try to run, but you are always in the palm of my hand."
+    },
+    "hostile": {
+      "greeting": "Do you wish for death? It seems your labor has been insufficient.",
+      "farewell": "Breathe while you still can."
+    }
+  },
+  "deathLine": "TODO: Ending",
+  "description": "The Final Boss.",
+  "levelup": "✨ Level Up",
+  "report_charon": "💀 Report the traces of Charon",
+  "expand_legion": "🦴 Expand Skeleton Legion",
+  "unlock_skills": "🔮 Transcribe Skills",
+  "engrave_skills": "📜 Engrave Skills",
+
+  "intro": {
+    "still_working": "The Reaper: \"Still not finished with the cleanup? Return to me once you are done...\"",
+    "dialogues": [
+      "The Reaper: \"Still that arrogant look in your eyes. You seem to think the dust of the empire you once ruled still clings to you.\"",
+      "The Reaper: \"Make no mistake.\nIn this Terminal, you are but one of the many common dead, standing in line awaiting judgment.\"",
+      "The Reaper: \"If you wish to survive, start with the menial labor you so despised.\nAs it happens, something foul has taken root in the B2 Transfer Junction.\"",
+      "The Reaper: \"[Belphegor, the Crawling Sin].\nA grotesque mass of flesh born from souls who dared to flee judgment, now fused together in their insolence.\"",
+      "The Reaper: \"Those wretched things have occupied the tracks, and their screaming is delaying the transport of souls.\"",
+      "The Reaper: \"Go and excise that filth. That is, if your rusted scythe is still capable of even paring the rind of a soul.\"",
+      "The Reaper: \"Go [Down] and you will find the elevator to the sub-levels. Report back once the cleaning is complete...\""
+    ],
+    "failure_threat": "The Reaper: \"And if you fail? Do not fret. Your soul will simply become part of that meat mass, scrubbing tracks for eternity. Hahaha!\""
+  },
+
+  "level_up": {
+    "current_souls": "Current Soul Fragments: {{exp}}",
+    "confirm_offer": "If you offer {{cost}} Soul Fragments, perhaps a fraction of your former glory might return...",
+    "reject_coward": "The Reaper: \"Coward. I shall see how long that frailty of yours manages to keep you among the living.\"",
+    "success_msg": "\n✨ Congratulations! You have leveled up. (Current LV.{{level}})",
+    "fail_msg": "\n[FAILED] Light as a feather. Is this all you have to offer? ({{current}}/{{required}})"
+  }
+}

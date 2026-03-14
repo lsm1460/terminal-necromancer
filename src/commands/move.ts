@@ -1,5 +1,6 @@
 import { DIRECTIONS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { CommandFunction } from '~/types'
 
 // --- 공통 이동 함수 ---
@@ -20,7 +21,7 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
     const target = blockingMonster || blockingNPC
 
     if (target) {
-      Terminal.log(`\n🚫 ${target.name}이(가) 주시하고 있어 도망칠 수 없다.`)
+      Terminal.log(i18n.t('commands.move.cannot_escape', { name: target.name }))
       return false
     }
 
@@ -32,8 +33,8 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
       player.move(dx, dy)
       return true
     }
-    
-    Terminal.log('지나갈 수 없다.')
+
+    Terminal.log('> ' + i18n.t('commands.move.you_cannot_pass'))
     return false
   }
 }

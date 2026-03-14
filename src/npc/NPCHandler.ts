@@ -1,7 +1,8 @@
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
-import { makeItemMessage } from '~/utils'
+import { getItemLabel, makeItemMessage } from '~/utils'
 
 export interface NPCHandler {
   getChoices(player: Player, npc: NPC, context: GameContext): { name: string; message: string }[]
@@ -24,7 +25,7 @@ interface NPCWithContribution extends NPC {
   contribution?: number
 }
 
-interface ShopScripts {
+export interface ShopScripts {
   greeting?: string // 판매 메뉴 진입 시
   noItems?: string // 인벤토리가 비어있을 때
   success: string // 판매 성공 시 (개별 건)
@@ -53,7 +54,7 @@ export async function handleBuy(
   const contribution = npc.contribution ?? 0
   const discountRate = Math.min(0.3, contribution * 0.001)
 
-  const choices = goods.map((item) => {
+  const choices: { name: string; message: string; label?: string; price?: number }[] = goods.map((item) => {
     let rarityMultiplier = 1
 
     switch (item.rarity) {
@@ -75,12 +76,12 @@ export async function handleBuy(
     return {
       name: item.id,
       message: makeItemMessage(item, player, { withPrice: true }),
-      label: item.label,
+      label: getItemLabel(item),
       price: finalPrice,
     }
   })
 
-  choices.push({ name: 'cancel', message: '🔙 돌아가기', label: '취소', price: 0 })
+  choices.push({ name: 'cancel', message: i18n.t('cancel') })
 
   Terminal.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
@@ -98,13 +99,13 @@ export async function handleBuy(
     if (!selectedChoice) return
 
     // 3. 소지금 체크
-    if (player.gold < selectedChoice.price) {
+    if (player.gold < selectedChoice.price!) {
       Terminal.log(`\n[${npc.name}]: "${scripts.noGold}"`)
       continue
     }
 
     // 4. 결제 및 아이템 지급
-    player.gold -= selectedChoice.price
+    player.gold -= selectedChoice.price!
     const actualItem = goods.find((d) => d.id === itemId)
 
     if (npc.faction) {
@@ -136,32 +137,40 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
     const hasContribution = npc.factionContribution !== undefined
     const bonusRate = Math.min(0.2, contribution * 0.0005) // 최대 20% 보너스
 
-    const choices = player.inventory.map((item, index) => {
+    const choices: {
+      name: string
+      message: string
+      id?: string
+      label?: string
+      price?: number
+      originalIndex?: number
+    }[] = player.inventory.map((item, index) => {
       const finalSellPrice = Math.floor((item.sellPrice || 0) * (1 + bonusRate))
 
       return {
         name: `${index}`,
         id: item.id,
         message: makeItemMessage(item, player, { withPrice: true, isSell: true }),
-        label: item.label,
+        label: getItemLabel(item),
         price: finalSellPrice,
         originalIndex: index,
       }
     })
 
-    choices.push({ name: 'cancel', id: '', message: '🔙 돌아가기', label: '취소', price: 0, originalIndex: -1 })
+    choices.push({
+      name: 'cancel',
+      message: i18n.t('cancel'),
+    })
 
     const bonusInfo = hasContribution ? ` / 보너스: +${(bonusRate * 100).toFixed(1)}%` : ''
 
-    const choiceName = await Terminal.select(
-      `[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`,
-      choices
-    )
+    const choiceName = await Terminal.select(`[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`, choices)
 
     if (choiceName === 'cancel') break
 
     const selected = choices.find((c) => c.name === choiceName)!
-    const targetItem = player.inventory[selected.originalIndex]
+
+    const targetItem = player.inventory[selected.originalIndex!]
 
     let sellCount = 1
     if (targetItem.quantity && targetItem.quantity > 1) {
@@ -172,11 +181,11 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
       sellCount = 1
     }
 
-    const totalEarned = selected.price * sellCount
+    const totalEarned = selected.price! * sellCount
     player.gold += totalEarned
     totalEarnedInSession += totalEarned
 
-    player.removeItem(selected.id, sellCount)
+    player.removeItem(selected.id!, sellCount)
 
     if (npc.faction) {
       context.npcs.updateFactionHostility(npc.faction, -1)

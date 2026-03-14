@@ -2,13 +2,15 @@ import { Player } from './core/player/Player'
 import { GameContext, NPC } from './types'
 
 import { Terminal } from './core/Terminal'
+import i18n from './i18n'
+import { getItemLabel } from './utils'
 
 export function printTileStatus(player: Player, context: GameContext) {
   const { map, npcs, world } = context
   const { x, y } = player.pos
   const tile = map.getTile(x, y)
 
-  Terminal.log(`\n${tile.dialogue}`)
+  Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
 
   const npcList = (tile.npcIds || []).map((_id) => npcs.getNPC(_id)).filter((npc): npc is NPC => npc !== null)
 
@@ -22,9 +24,9 @@ export function printTileStatus(player: Player, context: GameContext) {
   }
 
   if (corpses.length > 0) {
-    const deadNames = corpses.map((_corpse) => `${_corpse.name}의 시체`).join(', ')
+    const deadNames = corpses.map((_corpse) => _corpse.name + i18n.t('corpses')).join(', ')
 
-    Terminal.log(`주변의 시체: ${deadNames}`)
+    Terminal.log(i18n.t('local_corpses') + deadNames)
   }
 
   printLootStatus(player, context)
@@ -32,12 +34,12 @@ export function printTileStatus(player: Player, context: GameContext) {
   // 이동 가능한 방향 계산
   const directions: string[] = []
 
-  if (map.canMove(x, y - 1)) directions.push('위')
-  if (map.canMove(x, y + 1)) directions.push('아래')
-  if (map.canMove(x - 1, y)) directions.push('왼쪽')
-  if (map.canMove(x + 1, y)) directions.push('오른쪽')
+  if (map.canMove(x, y - 1)) directions.push(i18n.t('up'))
+  if (map.canMove(x, y + 1)) directions.push(i18n.t('down'))
+  if (map.canMove(x - 1, y)) directions.push(i18n.t('left'))
+  if (map.canMove(x + 1, y)) directions.push(i18n.t('right'))
 
-  Terminal.log(`이동 가능 방향: ${directions.join(', ')}`)
+  Terminal.log(i18n.t('paths_ahead') + directions.join(', '))
 }
 
 export function printLootStatus(player: Player, { world, map }: GameContext) {
@@ -45,14 +47,14 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
   const tile = map.getTile(x, y)
 
   const bag = world.getLootBagAt(map.currentSceneId, tile.id)
-  if (bag) Terminal.log(`\n나의 영혼 파편들을 발견했다.`)
+  if (bag) Terminal.log(`\n${i18n.t('found_soul')}`)
 
   const drops = world.getDropsAt(x, y)
   if (drops?.length) {
-    Terminal.log(`\n주변에 떨어진 아이템:`)
+    Terminal.log(`\n${i18n.t('local_drops')}`)
     drops.forEach((d) => {
-      const qtyText = !!d.quantity ? ` ${d.quantity}개` : ''
-      Terminal.log(` - ${d.label}${qtyText}`)
+      const qtyText = !!d.quantity ? ` x ${d.quantity}` : ''
+      Terminal.log(` - ${getItemLabel(d)}${qtyText}`)
     })
   }
 }

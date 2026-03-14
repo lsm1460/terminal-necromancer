@@ -1,5 +1,6 @@
-import { throttle } from 'lodash'
-import { assets } from '~/assets'
+import throttle from 'lodash/throttle'
+import { assets, GameAssets } from '~/assets'
+import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { SceneData, UnitSprites } from '~/types'
 import { Terminal } from './Terminal'
@@ -46,6 +47,10 @@ export class WebAssetManager {
   }
 
   private async loadWithProgress(imageTasks: AssetSource[], audioTasks: AssetSource[]): Promise<void> {
+    const throttledUpdate = throttle((percent: number) => {
+      Terminal.update(`[Loading] ${percent}% ...`)
+    }, 100)
+
     const total = imageTasks.length + audioTasks.length
     let loaded = 0
 
@@ -53,7 +58,7 @@ export class WebAssetManager {
 
     const store = useGameStore.getState()
 
-    Terminal.log(`[Loading] 준비 중...`)
+    Terminal.log(`[Loading] ${i18n.t('loading.init')}`)
 
     store.setIsLoading(true)
 
@@ -87,10 +92,10 @@ export class WebAssetManager {
     store.setIsLoading(false)
   }
 
-  public async loadInitialAssets(): Promise<void> {
-    Terminal.log('\x1b[36m[System] 필수 리소스(사운드/플레이어) 로딩 중...\x1b[0m')
+  public async loadInitialAssets(assets: GameAssets, locale: 'ko' | 'en'): Promise<void> {
+    Terminal.log(`\x1b[36m[System] ${i18n.t('loading.resource')}\x1b[0m`)
     await this.loadWithProgress(this.commonManifest.images, this.commonManifest.audios)
-    Terminal.log('\x1b[32m[System] 필수 리소스 로드 완료.\x1b[0m\n')
+    Terminal.log(`\x1b[32m[System] ${i18n.t('loading.success')}\x1b[0m\n`)
   }
 
   public async loadSceneAssets(sceneData: SceneData): Promise<void> {
@@ -113,7 +118,7 @@ export class WebAssetManager {
 
     const manifest = this.buildUnitManifest(Array.from(resourceIds))
 
-    Terminal.log(`\n\x1b[34m[System] '${sceneData.displayName}' 리소스 로드 중...\x1b[0m`)
+    Terminal.log(`\n\x1b[34m[System] '${i18n.t(`scene.${sceneData.id}`)}' 리소스 로드 중...\x1b[0m`)
     // 장면 로딩은 이미지만 있으므로 오디오는 빈 배열 전달
     await this.loadWithProgress(manifest, [])
     Terminal.log('\x1b[32m[System] 장면 전환 완료.\x1b[0m')

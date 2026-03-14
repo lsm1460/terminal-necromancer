@@ -1,0 +1,201 @@
+{
+  "type": {
+    "weapon": "Weapon",
+    "armor": "Armor",
+    "food": "Food",
+    "consumable": "Consumable",
+    "default": "Item"
+  },
+  "carrot": {
+    "label": "Carrot",
+    "description": "A fresh carrot. Restores a small amount of HP."
+  },
+  "pizza": {
+    "label": "Pizza",
+    "description": "The kind of pizza those turtles living underground used to love."
+  },
+  "terminal_bentobox": {
+    "label": "Terminal Handmade Bento",
+    "description": "Warm rice and pickled vegetables. It gives you a boost of energy."
+  },
+  "roasted_nut_mix": {
+    "label": "Roasted Nut Pouch",
+    "description": "Savory nuts roasted directly over a small brazier."
+  },
+  "filtered_honey_tea": {
+    "label": "Purified Honey Tea",
+    "description": "Helps relieve fatigue and restore Mana (MP)."
+  },
+  "premium_vodka": {
+    "label": "Premium Vodka",
+    "description": "A strong spirit scavenged from a bar."
+  },
+  "tainted_core": {
+    "label": "Tainted Core",
+    "description": "The core of an aberration dwelling in the depths."
+  },
+  "potion_small": {
+    "label": "Small Health Potion",
+    "description": "A minor recovery potion. Restores 20 HP."
+  },
+  "mana_potion_small": {
+    "label": "Small Mana Potion",
+    "description": "A minor mana recovery potion. Restores 20 MP."
+  },
+  "potion": {
+    "label": "Health Potion",
+    "description": "Restores 50 HP."
+  },
+  "mana_potion": {
+    "label": "Mana Potion",
+    "description": "Restores 40 MP."
+  },
+  "potion_medium": {
+    "label": "Medium Health Potion",
+    "description": "A standard-issue potion for security personnel. Restores 100 HP."
+  },
+  "mana_potion_medium": {
+    "label": "Medium Mana Potion",
+    "description": "A potion that replenishes spiritual energy. Restores 80 MP."
+  },
+  "nano_medical_kit": {
+    "label": "Nano Medkit",
+    "description": "An advanced medical kit used by Security Priests. Restores 180 HP."
+  },
+  "potion_large": {
+    "label": "Large Health Potion",
+    "description": "A powerful recovery potion. Restores 250 HP."
+  },
+  "wood_stick": {
+    "label": "Wooden Stick",
+    "description": "A plain stick found rolling around on the street."
+  },
+  "rags": {
+    "label": "Rags",
+    "description": "Scraps of cloth from the deceased found on the ground."
+  },
+  "iron_sword": {
+    "label": "Iron Sword",
+    "description": "A sturdy sword forged from iron. Increases Attack and provides a slight Critical Hit chance."
+  },
+  "leather_armor": {
+    "label": "Leather Armor",
+    "description": "Armor made from lightweight leather. Slightly increases Defense and Evasion."
+  },
+  "nut": {
+    "label": "Acorn",
+    "description": "A small, nutritious acorn. Restores a very tiny amount of HP."
+  },
+  "heavy_wrench": {
+    "label": "Heavy Wrench",
+    "description": "A massive tool once used for repairing cranes. Heavier than an iron sword, but offers solid impact and critical potential."
+  },
+  "terminal_halberd": {
+    "label": "Terminal Guard's Halberd",
+    "description": "A polearm used by loading dock watchers. Its sharp blade ensures stable damage."
+  },
+  "reinforced_vest": {
+    "label": "Reinforced Workwear",
+    "description": "Clothing made of thick canvas reinforced with thin iron plates. Sturdier than leather armor with decent mobility."
+  },
+  "reaper_chain_mail": {
+    "label": "Reaper Chainmail",
+    "description": "Armor woven from black metal rings. Extremely heavy, but deflects most attacks with ease."
+  },
+  "resistance_mace": {
+    "label": "Utility Mace",
+    "description": "A track-breaking hammer modified for combat."
+  },
+  "improvised_bayonet": {
+    "label": "Improvised Gun",
+    "description": "It has a short range, but it still fires properly for now."
+  },
+  "scavenged_mantle": {
+    "label": "Resistance Mantle",
+    "description": "A mantle made of dark fabric, perfect for hiding in the shadows."
+  },
+  "rebel_iron_plate": {
+    "label": "Rebel Breastplate",
+    "description": "An iron plate ripped from a shipping container and strapped to the chest."
+  },
+  "ratman_dagger": {
+    "label": "Ratman's Rusty Dagger",
+    "description": "A rusty blade with zero maintenance. It stings more than expected, as if the wounds might fester."
+  },
+  "sharp_pipe": {
+    "label": "Sharp Pipe",
+    "description": "A drainage pipe from the loading dock, sharpened to a point. Good for light ambush attacks."
+  },
+  "sewer_leather_vest": {
+    "label": "Sewer Leather Vest",
+    "description": "A leather vest reeking of damp sewers. Unpleasant, but lightweight and easy to move in."
+  },
+  "stolen_helmet": {
+    "label": "Stolen Hard Hat",
+    "description": "A helmet scavenged by Ratmen from the guard's warehouse. Dented, but enough to protect your head."
+  },
+  "golem_core_staff": {
+    "label": "Iron Guardian's Overload Staff",
+    "description": "A massive staff extracted from the drive unit of a fallen Iron Golem. Unstable current still flows from the core, sending hums and vibrations through the wrist with every swing."
+  },
+  "security_baton": {
+    "label": "Security Baton",
+    "description": "A standard-issue baton used by bio-guards. Sturdy but crude."
+  },
+  "cold_touch_dagger": {
+    "label": "Dagger of Cold Touch",
+    "description": "A dagger imbued with the chilling aura of a Phantom Thief. Delivers a bone-chilling sensation."
+  },
+  "priest_rosary": {
+    "label": "Security Priest's Rosary",
+    "description": "A rosary with a built-in nanite controller. Emits weak holy shockwaves."
+  },
+  "standard_security_vest": {
+    "label": "Standard Security Vest",
+    "description": "The common vest worn by Terminal security personnel."
+  },
+  "hard_steel_plate": {
+    "label": "Hardened Steel Plate",
+    "description": "A fragment of an Automaton's armor. Extremely heavy, but provides absolute defense."
+  },
+  "phantom_cloth": {
+    "label": "Wraith's Cloth",
+    "description": "The hem of a phantom with no clear physical form. Possesses a mysterious power to let physical strikes slip through."
+  },
+  "stolen_jewelry": {
+    "label": "Stolen Jewelry Box",
+    "description": "Valuable jewels stolen by a master thief. Can be sold for a high price at shops."
+  },
+  "noble_seal_ring": {
+    "label": "Noble's Seal Ring",
+    "description": "A symbol of authority once worn by a corrupt noble medium."
+  },
+  "optical_lens": {
+    "label": "Optical Lens",
+    "description": "A precision lens that once served as the eye for a unit."
+  },
+  "security_kevlar_vest": {
+    "label": "Security Kevlar Vest",
+    "description": "A bulletproof vest for security officers. Lightweight and durable for easy movement."
+  },
+  "optical_carbine": {
+    "label": "Optical Carbine",
+    "description": "A precision firearm incorporating lens technology from surveillance units. Offers very stable accuracy."
+  },
+  "wraith_soul_staff": {
+    "label": "Wraith Soul Staff",
+    "description": "A staff infused with phantom ectoplasm. Emits mana and an unpleasant scream with every swing."
+  },
+  "caron_staff": {
+    "label": "Charon's Staff",
+    "description": "The staff favored by Charon. You can feel a power that warps space itself."
+  },
+  "luxury_shoes": {
+    "label": "Blood-Stained Shoes",
+    "description": "Stained with blood; no chance of reselling these for a premium price."
+  },
+  "small_pistol": {
+    "label": "Small Pistol",
+    "description": "Small in size, but seems decent enough for self-defense."
+  }
+}

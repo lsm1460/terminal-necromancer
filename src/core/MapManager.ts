@@ -4,6 +4,7 @@ import { SceneData, Tile } from '~/types'
 import { Terminal } from './Terminal'
 import { Player } from './player/Player'
 import { assetManager } from './WebAssetManager'
+import i18n from '~/i18n'
 
 export class MapManager {
   private originMapData: Record<string, SceneData>
@@ -59,7 +60,7 @@ export class MapManager {
     player.y = y
 
     Terminal.log(`\n------------------------------------------`)
-    Terminal.log(`📍 새로운 지역 진입: ${newScene.displayName}`)
+    Terminal.log(i18n.t(`enter_new_area`) + i18n.t(`scene.${newScene.id}`))
     Terminal.log(`------------------------------------------`)
   }
 

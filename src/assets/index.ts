@@ -7,9 +7,7 @@ import levelData from './level.json'
 import itemData from './item.json'
 import dropData from './drop.json'
 import npcData from './npc.json'
-import eventData from './events.json'
 import npcSkillData from './npcSkills.json'
-import broadcastData from './broadcast.json'
 
 import initState from './init_state.json'
 
@@ -22,14 +20,10 @@ export const assets = {
   item: itemData,
   drop: dropData,
   npc: npcData,
-  events: eventData,
   npcSkills: npcSkillData,
-  broadcast: broadcastData,
 }
 
-export {
-  initState
-}
+export { initState }
 
 // 타입 정의 (필요한 경우)
 export type GameAssets = typeof assets

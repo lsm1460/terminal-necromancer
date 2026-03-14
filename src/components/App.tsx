@@ -31,12 +31,16 @@ export const App = () => {
       const renderer = new ReactRenderer()
       Terminal.setRenderer(renderer)
 
-      const engine = new GameEngine(assets, renderer, saveSystemRef.current)
-      engineRef.current = engine
+      const save = saveSystemRef.current
+      const { locale = 'ko' } = save.load() || {}
 
-      const playData = await Title.gameStart(saveSystemRef.current, initState)
+      const playData = await Title.gameStart(save, initState)
       if (playData) {
-        await assetManager.loadInitialAssets()
+        await assetManager.loadInitialAssets(assets, locale)
+
+        const engine = new GameEngine(assets, renderer, save)
+        engineRef.current = engine
+
         await engine.init(playData)
         await engine.start()
 
@@ -66,9 +70,7 @@ export const App = () => {
         {isGameOn && <ButtonList engine={engineRef} />}
       </div>
 
-      <div className="[grid-area:input]">
-        <GameInput engine={engineRef} />
-      </div>
+      <div className="[grid-area:input]">{isGameOn && <GameInput engine={engineRef} />}</div>
     </div>
   )
 }

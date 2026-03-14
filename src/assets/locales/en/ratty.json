@@ -1,0 +1,34 @@
+{
+    "name": "Ratty",
+    "lines": [
+      "Hehe... What are you looking at? Think this is a show? If you're not paying the toll, get lost!",
+      "Hey, I once took on three Imperial Guards at the same time... seriously, I did!",
+      "What's wrong with rummaging through some scrap piles? Does this place have an owner or something?"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "Ooh, boss! You're here! Whose soul did you plunder today to look that good?",
+        "farewell": "Watch your step! If you happen to die on the way, I'll make sure to recover that gear of yours. Hehe!"
+      },
+      "normal": {
+        "greeting": "Hey, newbie. Where'd you find those rags you're wearing? You look pathetic.",
+        "farewell": "Go on, get out. You'll regret for the rest of your life missing the chance to hear about my heroic deeds."
+      },
+      "hostile": {
+        "greeting": "What's with that look? You gonna hit me? Do it! Hit me! What could you even do with those weak hands?",
+        "farewell": "Tch, what a pain. You're just a nobody going to lick the Reaper's floor, and yet you're so cocky."
+      }
+    },
+    "deathLine": "No... I really... used to be... back then... Ugh...",
+    "description": "A despicable ghost hiding in the scrap piles of B2. He constantly fabricates stories of past glory and mocks others, though his actual skills are abysmal.",
+
+    "threat": {
+      "dialogues": [
+        "Ratty: \"Hehe... Hey, you. Yeah, I'm talkin' to you. Word on the street is you used to command some big-shot army, eh?\"",
+        "Ratty: \"Army? You look like you'd struggle to catch a single rat scurrying under your nose.\nLook at ya, those rags suit you perfectly.\"",
+        "Ratty: \"You might've been someone in the past, but here? You're lower than the slaves you used to rule.\nSpending your days licking the Reaper's boots just to stay alive... what a pathetic sight.\"",
+        "Ratty: \"Why that look? Gonna hit me? Hehehe! Go ahead, try it! What's those weak little hands of yours gonna do?\"",
+        "Ratty: \"Or maybe you should get on your knees and beg. Who knows? I might just teach ya a secret from my golden days.\""
+      ]
+    }
+  }

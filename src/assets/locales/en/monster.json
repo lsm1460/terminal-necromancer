@@ -1,0 +1,145 @@
+{
+  "track_ratman": {
+    "name": "Track Ratman",
+    "description": "A Ratman raised on railway waste. They roam in packs, seeking to steal fragments of the deceased."
+  },
+  "snare_spider": {
+    "name": "Snare Spider",
+    "description": "Hides between ceiling pipes and exhales soul chains. Trapped prey slowly have their essence drained."
+  },
+  "cocoon_human": {
+    "name": "Cocooned Human",
+    "description": "A wraith trapped by spiders long ago. No trace of personality remains."
+  },
+  "filth_slime": {
+    "name": "Filth Slime",
+    "description": "A condensed mass of waste from the dead. Resistant to physical attacks and corrodes everything it touches."
+  },
+  "ghoul": {
+    "name": "Contaminated Ghoul",
+    "description": "A ghost once fused with Belphegor. Its self-awareness was lost long ago."
+  },
+  "derailed_ghost": {
+    "name": "Derailed Ghost",
+    "description": "A vengeful spirit whose lower body is entangled with subway wheels. It drags heavy iron, crushing everything in its path."
+  },
+  "ichor_flies": {
+    "name": "Ichor Fly Swarm",
+    "description": "A swarm of small flies that chase the scent of blood. Weak individually, but continuously drain vitality."
+  },
+  "suspicious_turtle": {
+    "name": "Suspicious Turtle",
+    "eva": 0.3,
+    "description": "A red-hooded turtle that seems to have soaked up evil energy instead of radiation in the sewers. Strangely obsessed with ninja techniques and pizza."
+  },
+  "shipyard_worker": {
+    "name": "Shipyard Worker",
+    "description": "A worker with sunken eyes due to harsh labor and poor conditions. Attempts to pull targets in with a rusty hook."
+  },
+  "shipyard_guard": {
+    "name": "Shipyard Guard",
+    "eva": 0.05,
+    "description": "A low-ranking guard belonging to the Bureau. Pushes enemies back with a standardized shield."
+  },
+  "shipyard_guard_no_gain": {
+    "name": "Shipyard Guard",
+    "eva": 0.05,
+    "description": "A low-ranking guard belonging to the Bureau. Pushes enemies back with a standardized shield."
+  },
+  "security_sensor_drone": {
+    "name": "Security Sensor Drone",
+    "eva": 0.1,
+    "description": "Floats in the air, scanning for intruders with a red laser. Locks onto targets and calls for guards."
+  },
+  "shipyard_hound": {
+    "name": "Shipyard Hound",
+    "eva": 0.1,
+    "description": "A hound implanted with sharp metal teeth. Bites the Achilles tendon to significantly reduce movement speed."
+  },
+  "ratman_scout": {
+    "name": "Ratman Scout",
+    "eva": 0.3,
+    "description": "A rat-kin hiding in the darkness. Obscures vision with smoke bombs and throws poisoned daggers."
+  },
+  "ratman_shaman": {
+    "name": "Ratman Shaman",
+    "description": "A shaman who worships discarded mana stone fragments. Interferes with magical actions using a scrap metal curse."
+  },
+  "mutated_worker": {
+    "name": "Mutated Shipyard Worker",
+    "description": "A monster bloated by pollutants. Delivers heavy slams while absorbing the target's vitality."
+  },
+  "shipyard_supervisor": {
+    "name": "Shipyard Supervisor",
+    "description": "A ruthless administrator. Increases unit aggression and summons reinforcements via emergency call."
+  },
+  "cargo_thief": {
+    "name": "Cargo Thief",
+    "eva": 0.3,
+    "description": "A looter who infiltrated the security network. Approaches while stealthed to steal belongings."
+  },
+  "oil_sludge_slime": {
+    "name": "Oil Sludge Slime",
+    "description": "A creature made of oil residue. Coats the floor in oil to hinder all movement."
+  },
+  "golem_left_arm": {
+    "name": "Golem's Crushing Left Arm",
+    "description": "A left arm equipped with a massive metal pincer. Blunt but exerts enough pressure to shatter bones once it grabs hold."
+  },
+  "golem_right_arm": {
+    "name": "Golem's Hydraulic Right Arm",
+    "description": "A hydraulic arm with a built-in flamethrower. Roasts approaching intruders with high-heat flames."
+  },
+  "golem_chest_armor": {
+    "name": "Golem's Chest Armor Plate",
+    "description": "Thick armor protecting the core power source. Only powerful explosive impacts can shake the internal structure."
+  },
+  "golem_core": {
+    "name": "Golem Core",
+    "description": "The core power source of the Golem."
+  },
+  "guardbot_sebastian": {
+    "name": "Automaton 'Sebastian'",
+    "description": "A heavy-duty guard bot personally owned by a noble."
+  },
+  "modified_fury_hound": {
+    "name": "Drugged Fury Hound",
+    "description": "A beast that has lost its reason. It pursues relentlessly, making escape impossible."
+  },
+  "clinging_concierge": {
+    "name": "Clinging Concierge",
+    "description": "Refuses to let go of guests even in death. Escape is impossible as long as this wraith is present."
+  },
+  "corrupted_noble_wraith": {
+    "name": "Corrupted Noble Wraith",
+    "description": "A spirit shrouded in powerful spiritual energy. Unleashes magic immediately upon spotting a player."
+  },
+  "masked_intruder_wraith": {
+    "name": "Masked Phantom Thief",
+    "description": "A wraith seeking treasure. Highly agile, with a high probability of striking first."
+  },
+  "security_guard": {
+    "name": "Terminal Security Guard",
+    "description": "A biological security agent patrolling the lounge. An excellent source of corpses."
+  },
+  "security_guard_no_gain": {
+    "name": "Terminal Security Guard",
+    "description": "A biological security agent patrolling the lounge. An excellent source of corpses."
+  },
+  "security_priest": {
+    "name": "Terminal Security Priest",
+    "description": "A medical agent who restores the bodies of security personnel using nanomachines. Possesses biological tissue for corpse utilization."
+  },
+  "security_priest_no_gain": {
+    "name": "Terminal Security Priest",
+    "description": "A medical agent who restores the bodies of security personnel using nanomachines. Possesses biological tissue for corpse utilization."
+  },
+  "security_sharpshooter": {
+    "name": "Terminal Security Sharpshooter",
+    "description": "A biological security agent snipes intruders from the upper lounge. Less durable than guards but possesses higher attack power."
+  },
+  "optical_surveillance_unit": {
+    "name": "Optical Surveillance Unit",
+    "description": "A real-time monitoring machine. It is the first to sound the alarm (strike first)."
+  }
+}

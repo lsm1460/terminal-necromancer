@@ -1,0 +1,234 @@
+{
+  "echo": {
+    "name": "Echo",
+    "lines": [
+      "Phew... I've confirmed the mic is on, so please stop calling me.",
+      "It's depressing to realize I'm the only sane person in this terminal every single day.",
+      "Stop wasting time listening to my broadcast and watch your step. Don't get blood on my floors."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "Well, if it isn't our 'celebrity' Necromancer. I'll broadcast from your perspective as a special favor, so why don't you cause an even bigger scene?",
+        "farewell": "Don't die on me. Thanks to you, the ratings... I mean, my boredom is actually fading a bit."
+      },
+      "normal": {
+        "greeting": "Attention. Once again, someone is making a scene and wasting the terminal's precious budget. Yes, I'm talking about you.",
+        "farewell": "Ending broadcast. If you're done, turn off the mic and disappear. I barely have enough time for a smoke break as it is."
+      },
+      "hostile": {
+        "greeting": "Look at that Resistance lackey crawling this way. Don't knock on the booth door with those filthy hands; you'll smudge the camera lens.",
+        "farewell": "I'll record your screams and use them as a lullaby later. It'll be a masterpiece."
+      }
+    },
+    "deathLine": "This tedious broadcasting... is finally over... Ha...",
+    "description": "A female announcer holed up in the terminal's broadcast room, spitting out all sorts of venomous remarks. In reality, she might be enjoying this chaos more than anyone."
+  },
+  "caron": {
+    "name": "Charon",
+    "lines": ["..."],
+    "scripts": {
+      "friendly": { "greeting": "", "farewell": "" },
+      "normal": { "greeting": "", "farewell": "" },
+      "hostile": { "greeting": "", "farewell": "" }
+    },
+    "deathLine": "Ah... Ahhh... my child... ending up like this without even reaching revenge...",
+    "description": "Emerging from a tear in twisted space-time, Charon stares at you while exuding an abyssal murderous intent."
+  },
+  "caron_alive": {
+    "name": "Charon",
+    "lines": [
+      "This is a place where the Reaper's eyes cannot reach.",
+      "I shall hide in your shadow and await the moment.",
+      "Would you like to reorganize your forces?"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "Welcome, my Lord. The dimensional gate is always open.",
+        "farewell": "I shall watch your advance from the shadows."
+      },
+      "normal": {
+        "greeting": "The Reaper's aura is close. State your business quickly.",
+        "farewell": "Please be careful."
+      },
+      "hostile": {
+        "greeting": "Are you going to turn me into a butcher once again?",
+        "farewell": "...A foolish choice."
+      }
+    },
+    "deathLine": "My revenge... has not even begun yet...",
+    "description": "A former underground administrator who betrayed the Reaper and hid in the protagonist's shadow. He is gentle yet harbors a cold desire for revenge."
+  },
+  "caron_dead": {
+    "name": "Guide of the Void",
+    "lines": ["...Sss...sssk...", "......(Hollow eyes turn toward you)......", "...Comm...and... me..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "......I shall...... comply......",
+        "farewell": "......(Melts into the shadows)......"
+      },
+      "normal": {
+        "greeting": "......Administering......",
+        "farewell": "......(Only a bizarre breathing sound is heard)......"
+      },
+      "hostile": {
+        "greeting": "......Enemy......?",
+        "farewell": "......Sss...uuu...kkk......"
+      }
+    },
+    "deathLine": "......My...... Child......",
+    "description": "A bizarre familiar crafted from the usurped essence of Charon. Its self-awareness has vanished, and it manipulates void space only in response to your mana."
+  },
+  "adrian": {
+    "name": "Adrian, the Terrified Guide",
+    "lines": [
+      "Please... a gunfight in the lobby... according to Article 4, Section 2 of the rulebook...",
+      "The space under the information desk is already full! It's too cramped for even me to hide alone!"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "Ah... are you looking for a refuge too? I'm sorry, but all emergency exits have already been sealed...",
+        "farewell": "I hope... you stay safe, at least until the smoke outside clears."
+      },
+      "normal": {
+        "greeting": "Checking in... that doesn't mean anything anymore, does it? There's a corpse behind that pillar... Ugh...",
+        "farewell": "Be careful. I heard Resistance members are coming down from the upper floors."
+      },
+      "hostile": {
+        "greeting": "Are you one of those rioters too? There's nothing left to break, so why?!",
+        "farewell": "The 'record of your visit'... will surely remain in the registers of hell!"
+      }
+    },
+    "deathLine": "Leaving work... is out of the question today... I didn't even... finish the settlement...",
+    "description": "He gives off an air of reliability, as if he could resolve even the most complicated reservation situations calmly."
+  },
+  "flint": {
+    "name": "Flint the Assault Leader",
+    "lines": [
+      "I can smell those canvases burning from here. How satisfying.",
+      "The real show begins when the hostages start pouring out screaming. Get ready.",
+      "If we cut the power to this sector, even the people at the bottom will have a bright night for once."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "You're here? Things have gotten easier thanks to you joining. I'll watch your back.",
+        "farewell": "Go on ahead. I need to stay and see this damn machine turn completely to ash."
+      },
+      "normal": {
+        "greeting": "Don't loiter around unless you want a stray bullet to put a hole in you.",
+        "farewell": "Watch out for yourself if you want to live. I don't have the luxury of lookin' after dead weight."
+      },
+      "hostile": {
+        "greeting": "Still haven't gotten lost? Not being able to finish you off during that ambush will be the regret of your life.",
+        "farewell": "You can't leave this floor even if you run. Next time, I'll drive a piece of flint into your heart."
+      }
+    },
+    "deathLine": "The flame... has not... gone out yet...",
+    "description": "The assault leader of the Resistance. Possesses a rough and explosive personality, just like his name."
+  },
+  "julian": {
+    "name": "Julian, the Cynical Bartender",
+    "lines": [
+      "What a terrible marriage. Fine whiskey and the smell of blood.",
+      "The incompetence of the security team isn't even enough to serve as a side dish.",
+      "If I'd known the back of the bar would be this unsafe, I would have resigned long ago."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "Welcome. You're the only person in this mess who seems capable of a proper conversation.",
+        "farewell": "Please be careful. If something happens to you, there will be nothing but ignorant rioters left on this floor."
+      },
+      "normal": {
+        "greeting": "Would you like to order? Ah, as you can see, I'm in a position where I have to hold a pistol instead of a shaker.",
+        "farewell": "If you're done with your business, please move along. I don't even have the luxury of clearing away the broken glass."
+      },
+      "hostile": {
+        "greeting": "Service isn't provided to rude guests. Shall I prepare a special 'poisoned drink' just for you?",
+        "farewell": "Get lost. Mingle with your own kind; it's not my taste."
+      }
+    },
+    "deathLine": "I wanted to... pour... the last glass... myself...",
+    "description": "A sophisticated bartender who was in charge of the VIP floor bar."
+  },
+  "oliver": {
+    "name": "Oliver, the Dying Waiter",
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "Are you... a comrade of theirs too? Go on... and burn that fake paradise to the ground.",
+        "farewell": "Don't worry about me... I won't die until I've seen this spectacle to the end."
+      },
+      "normal": {
+        "greeting": "It doesn't matter who it is. Tonight, this VIP floor... will be a grave for us all.",
+        "farewell": "Go and tell them. Dinner is ready... and now it's time for judgment."
+      },
+      "hostile": {
+        "greeting": "Is there still a dog left siding with those upper-class bastards? I'll use my last bit of strength to end your breath!",
+        "farewell": "Kill me... even if I die, the flames of revolution... will swallow you all!"
+      }
+    },
+    "deathLine": "Finally... clocking out... to the lobby... engulfed in flames...",
+    "description": "A waiter who spent his life being despised while working in the kitchen. Even while fatally injured, he views the Resistance's attack as divine salvation and pours out deep-seated resentment toward the upper class."
+  },
+  "kael": {
+    "name": "Kael the Cold",
+    "lines": [
+      "You can't pull the trigger if you're swayed by emotion.",
+      "Flint is right. Nothing changes unless you break it.",
+      "I'll deal with anyone who makes Vesper cry in my own way."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "So you're the one Flint was talking about. You look pretty strong.",
+        "farewell": "Watch your step. The security guards on the VIP floor are persistent."
+      },
+      "hostile": {
+        "greeting": "I'm sorry, but it's nothing personal. You're just a target to be eliminated.",
+        "farewell": "I'll aim more precisely next time."
+      }
+    },
+    "description": "A young boy from the labor camps. He considers protecting Vesper his sole mission in life."
+  },
+  "vesper": {
+    "name": "Vesper the Naive",
+    "lines": [
+      "Those jewels the ladies upstairs wear wouldn't even be worth ten bowls of rice back in our village.",
+      "Kael! Don't go too far! Don't step out of my crossbow's range!",
+      "This thing called revolution... makes me a lot hungrier than I thought."
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "Hi! Do you have anything to eat? I mean real food, not adrenaline!",
+        "farewell": "If I see you next time, give me something delicious! Consider it a reward for me letting you live!"
+      },
+      "hostile": {
+        "greeting": "Whoa, you really smell like a VIP! Want to see how much this crossbow bolt hurts?",
+        "farewell": "Bleh! You missed! Next time, I'm really gonna put a hole in you!"
+      }
+    },
+    "description": "She masks her fear of war with a playful attitude, but her hatred for the upper class is as deep as Kael's."
+  },
+  "baron_valter": {
+    "name": "Baron Valter, the Arrogant Ruler",
+    "lines": [
+      "The dust is acting up. What on earth are the cleaners doing?",
+      "There's gunpowder mixed into this wine. I'd like to ask the manager how he intends to apologize for this insolence.",
+      "The Resistance? Did you think I'd be startled by the sound of starving dogs barking?"
+    ],
+    "scripts": {
+      "friendly": {
+        "greeting": "At least a hound that understands words has arrived. Clear the path ahead of me. I'll make sure the reward is worth your while.",
+        "farewell": "Begone. The stench of your sweat is ruining my vintage aroma."
+      },
+      "normal": {
+        "greeting": "Who are you? A hired mercenary? Or an uninvited guest who lost their way?",
+        "farewell": "If your business is concluded, disappear. My patience is thinner than the wine left in this glass."
+      },
+      "hostile": {
+        "greeting": "Did you truly believe you could step into this sector and leave unscathed? The arrogance of lower lifeforms.",
+        "farewell": "Your screams don't even have any artistic value. Utterly unpleasant."
+      }
+    },
+    "deathLine": "To think that my... noble blood... would mix with the dust on the floor... I will never... forgive this...",
+    "description": "A titan of industry who owns shares in the city's power grid. He views even the Resistance's attack as a minor discourtesy interrupting his rest, and personally executes intruders with his custom gold-plated revolver."
+  }
+}

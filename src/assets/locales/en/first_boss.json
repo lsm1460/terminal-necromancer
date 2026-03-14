@@ -1,0 +1,24 @@
+{
+  "name": "Belphegor, the Crawling Sin",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": { "greeting": "...", "farewell": "..." },
+    "normal": { "greeting": "...", "farewell": "..." },
+    "hostile": { "greeting": "...", "farewell": "..." }
+  },
+  "deathLine": "You... too... won't be... different...",
+  "description": "'This' is merely 'filth that must be cleared.'",
+
+  "postTalk": [
+    "An unpleasant noise, like the screams of dozens blending into one, echoes from beyond the corridor.",
+    "Crawling out to fill the entire wall is a massive mass of flesh, its limbs tangled and fused together.",
+    "Belphegor: 'Don't... want to die... It's hot... Get me... out...'",
+    "Countless eyes fixate on you all at once, and the mass of flesh begins to writhe violently."
+  ],
+  "defeatTalk": [
+    "Belphegor: 'You.. too.. won't be.. any.. diff..erent.. You shall.. rot.. away.. with.. us..'",
+    "The massive lumps of flesh unravel helplessly, scattering across the floor as a black liquid.",
+    "In the spot where the stench has faded, you find a 'Terminal Map' lying on the ground.",
+    "You have overcome the first trial and obtained the [Map] of the terminal.\nThe Map command is now active."
+  ]
+}

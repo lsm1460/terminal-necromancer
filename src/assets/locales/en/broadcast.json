@@ -1,0 +1,119 @@
+{
+  "broadcast_echo": "Terminal Broadcasting: Echo",
+  "broadcast_player_death_hostile_1": "Attention. The Necromancer who was colluding with the Resistance and causing a disturbance has just been suppressed.",
+  "broadcast_player_death_hostile_2": "Associating with the living rebels has finally turned them into a corpse. Though I expect they will crawl back out soon enough.",
+  "broadcast_player_death_normal_1": "Attention. The Necromancer has ceased activities.",
+  "broadcast_player_death_normal_2": "They will likely regenerate soon anyway, so we can take our time with the paperwork.",
+  "player_death_soul_shattered": "💀 My souls have been shattered... (I feel my body reconstructing once again.)",
+
+  "START_GAME": {
+    "hostile": [
+      "Attention. A 'distinguished guest' has just arrived at our terminal, single-handedly plummeting the average intelligence and morality of the facility.",
+      "I can already hear the scrap-metal-stinking rats of the Resistance scurrying around the perimeter.",
+      "The mere thought of what kind of hideous hybrid a Necromancer and those machine-obsessives will concoct is giving me a headache."
+    ],
+    "normal": [
+      "New inmate transfer report. A Necromancer has joined our peaceful hell.",
+      "I have high expectations for how you will brighten this bleak terminal atmosphere with your collection of bones.",
+      "To our newcomer: I highly recommend you don't covet your senior inmates' 'souls' too much and try to play nice."
+    ]
+  },
+  "first_boss": {
+    "hostile": [
+      "Announcement. The mass of 'Belphegor' blocking the B2 transfer route has finally been dismantled into pieces.",
+      "Now that the filth occupying the tracks is gone, soul transportation will resume—but I’m already getting a headache thinking about who’s going to scrub that sticky spirit-residue off the floor.",
+      "The Reaper, Master of this terminal, is desperately seeking the Necromancer. Better run until your feet catch fire. Oh, wait, you're already a ghost—can you even see them?"
+    ],
+    "normal": [
+      "Notice. The 'congestion' at the B2 transfer route has been cleared. Yes, it seems some nameless undead finally managed to carve out those revolting souls.",
+      "The trains will move again thanks to that, though I doubt the stench of that thick malice and resentment on the tracks will fade anytime soon.",
+      "The Reaper, Master of this terminal, is desperately seeking the Necromancer. Better run until your feet catch fire. Oh, wait, you're already a ghost—can you even see them?"
+    ]
+  },
+  "talk_death_2": {
+    "hostile": [
+      "Attention. That fellow Jed from the infirmary is looking for the Necromancer. Whether it's to return that rusty scalpel or to demand a more 'useful' corpse, I couldn't say.",
+      "The disgusting pile of meat occupying the B2 transfer route has finally been 'purged.' Yes, it seems someone hacked through all that foul murderous intent.",
+      "Even the Reaper is clicking his tongue, surprised that tenacious life hasn't snapped yet. However, he has prepared an 'invitation to a deeper place' befitting such a struggle."
+    ],
+    "normal": [
+      "Notice. Jed from the infirmary is desperately looking for the Necromancer. If you're done with your labor, you might want to head over there.",
+      "The congestion on B2 has been resolved, and train operations have resumed. Though the stench of that thick resentment on the tracks won't fade for a while.",
+      "It seems the Reaper thinks quite highly of the Necromancer's skills. Rumor has it the Necromancer's seal has grown loose."
+    ]
+  },
+  "second_boss": {
+    "hostile": [
+      "Congratulations. The sturdy steel golem of B3 has been reduced to scrap metal by the Necromancer's filth and the Resistance's tools.",
+      "Now, who's going to handle the massive cargo loading? Surely those high-and-mighty mechanics babbling about revolution aren't planning to do it themselves?",
+      "The scrap disposal costs will be deducted from the bounties on you and that illegal repair shop gang, so please, keep on sinning diligently.",
+      "Ah, and the Reaper is beyond furious. He wants an explanation for the stoppage at the loading dock, so stand by for an immediate summons to his office."
+    ],
+    "normal": [
+      "The golem at the B3 loading dock has been put to sleep for 'precision maintenance.' In a thousand pieces, that is.",
+      "The glares of the staff who now have to perform manual loading for the time being are yours to handle, Mr. Necromancer.",
+      "You might have thought bones were more efficient than machinery, but clearly, you didn't realize the cleanup costs would be higher.",
+      "Proceed to the Reaper's office immediately. You'll be listening to his nagging for as many pieces of the golem as you broke."
+    ]
+  },
+  "RESISTANCE_BASE": {
+    "hostile": [
+      "So, the hideous union has finally been consummated. News reached us that the Necromancer and the Resistance are now rolling around in the same pit.",
+      "I only hope that bizarre hobby of shoving machine parts into the bones of the dead doesn't spread throughout the entire terminal.",
+      "I ask the traitors: is that place, with its stench of rotting corpses and engine grease, truly the paradise you dreamed of?"
+    ],
+    "normal": [
+      "Word is that the Resistance has been acting suspicious lately...",
+      "...I'm truly looking forward to seeing how much more of the terminal's budget you're going to waste.",
+      "To avoid frightening the citizens with those grotesque things they're building, we would appreciate it if you moved only at night."
+    ]
+  },
+  "report_caron_to_death": {
+    "hostile": [
+      "Charon, the former administrator and pollutant of the underground sector, has been 'completely incinerated.' Beware of soul-fragment scattering caused by the brutal disposal method.",
+      "Execution of the code-violator is complete. Though the process bordered on butchery, the system records only the resulting cleanliness.",
+      "The pollutant has been removed, but a 'killer intent' far more foul than his remains in the current sector. All residents are advised to avoid contact."
+    ],
+    "normal": [
+      "The signal for the criminal Charon—a defect in the management server—has been completely extinguished.",
+      "The flow of souls, previously stagnant due to the defective unit, has been normalized. This execution is classified as a 'qualified disposal.'",
+      "Situation concluded. All units cease agitation and return to your posts. The Reaper will perform the final inspection personally."
+    ]
+  },
+  "bridgeMemos": [
+    "📢 Following the previous report, here is an additional announcement...",
+    "📢 Next news item...",
+    "📢 *Static*... Urgent updated information.",
+    "📢 We have just received an additional report."
+  ],
+  "terminalMessages": [
+    "📢 \"Attention. A coolant leak has been detected in Sector 3. Workers in the vicinity must evacuate immediately.\"",
+    "📢 \"Notice: Ration allotments will be cut by 15% due to delays in today's unloading schedule.\"",
+    "📢 \"*Static*... Current oxygen levels on B3 at 88%. This is within normal parameters. Continue your labor.\"",
+    "📢 \"Warning. Unauthorized spirit energy detected. Raising security level.\"",
+    "📢 \"Announcement. The internal spy recently caught was executed immediately at the loading dock compactor.\"",
+    "📢 \"Security Protocol Compliance: Unauthorized possession of corpses is strictly prohibited.\"",
+    "📢 \"The Great Age of Steel. Flesh rots, but machines are eternal.\"",
+    "📢 \"Necromancy is a disease. Immediately report any colleagues showing abnormal symptoms to the administration.\"",
+    "📢 \"Today's slogan: Higher loads, faster processes, more perfect control.\"",
+    "📢 \"47 unclaimed corpses confirmed. Starting transfer to the disposal process.\"",
+    "📢 \"*Static*... Personal effects of workers who died today will be incinerated at noon.\"",
+    "📢 \"Unloading efficiency decreased by 4%. Cause determined to be aging of human resources.\"",
+    "📢 \"Attention. Screaming is noise pollution. Please maintain silence.\"",
+    "📢 \"Attempting to escape is a choice, but the administration reserves the right to recycle after termination.\"",
+    "📢 \"Security Team Notice: Do not take intruders alive. It's a waste of ammunition.\"",
+    "📢 \"Machines do not lie. Trust the engine more than your muscles.\"",
+    "📢 \"Necromancer detected. Reporting again after cessation of vital signs. End.\"",
+    "📢 \"The loading dock has no interest in your feelings. Move the boxes.\"",
+    "📢 \"*Static*... Please note that leaked coolant instantly freezes 70% of the human body.\"",
+    "📢 \"Attention. A small human resource (lost child) was found at Loading Dock 2. Owners, please collect before disposal.\"",
+    "📢 \"Notice: A lost child is being held. If not collected within 6 hours, they will be placed into the loading dock's automatic cleaning system.\"",
+    "📢 \"*Static*... To the parents looking for a lost child: Emotional agitation hinders work efficiency. Return to your posts immediately.\"",
+    "📢 \"Attention. A subject with immature cognitive abilities has strayed from the tracks. Please place in the nearest collection bin if found.\"",
+    "📢 \"Today's lost and found: 1 prosthetic arm, an old doll, an unidentified finger. No owners sought. Scheduled for incineration.\"",
+    "📢 \"*Static*... Crying has been detected in the loading dock. Security teams, please eliminate the noise source immediately.\"",
+    "📢 \"Notice: For asset protection, please attach an identification tag to the child's ankle. Untagged subjects will be classified as organic waste.\"",
+    "📢 \"Attention. Seeking family members is an unauthorized personal activity. Please reflect on this only after meeting your quotas.\"",
+    "📢 \"*Static*... The identification tag of lost subject 'Amy (7 years old)' was found damaged. Just letting you know.\""
+  ]
+}

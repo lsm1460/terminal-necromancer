@@ -1,20 +1,29 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { GameContext, GameEvent, NPC } from '~/types'
-import { BossLogic } from './BossLogic'
 import { Player } from '~/core/player/Player'
+import { GameContext, NPC } from '~/types'
+import { BossLogic } from './BossLogic'
+import i18n from '~/i18n'
 
 export class FirstBoss implements BossLogic {
-  createEnemies(bossNpc: NPC, eventData: GameEvent, context: GameContext): CombatUnit[] {
+  withMonsterGroup = 'monster-group-b2-boss'
+
+  get postTalk() {
+    return i18n.t('npc.first_boss.postTalk', { returnObjects: true }) as string[]
+  }
+
+  get defeatTalk() {
+    return i18n.t('npc.first_boss.defeatTalk', { returnObjects: true }) as string[]
+  }
+
+  createEnemies(bossNpc: NPC, context: GameContext): CombatUnit[] {
     const { battle, monster } = context
 
     // 1. 메인 보스 추가
     const enemies: CombatUnit[] = [battle.toCombatUnit(bossNpc, 'npc')]
 
     // 2. 동반 몬스터가 있다면 추가
-    if (eventData.withMonster) {
-      const additional = monster.makeMonsters(eventData.withMonster).map((m) => battle.toCombatUnit(m, 'monster'))
-      enemies.push(...additional)
-    }
+    const additional = monster.makeMonsters(this.withMonsterGroup).map((m) => battle.toCombatUnit(m, 'monster'))
+    enemies.push(...additional)
 
     return enemies
   }

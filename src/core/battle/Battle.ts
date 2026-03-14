@@ -1,16 +1,17 @@
+import i18n from '~/i18n'
 import { BattleTarget, GameContext } from '~/types'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { Terminal } from '../Terminal'
 import { BattleActionHandler } from './BattleActionHandler'
+import { BattleDirector } from './BattleDirector'
 import { BattleEngine, BattleManager } from './BattleEngine'
 import { BattleRewardSystem } from './BattleRewardSystem'
 import { BattleUnitManager } from './BattleUnitManager'
 import { CombatService, DamageOptions } from './CombatService'
-import { CombatUnit } from './unit/CombatUnit'
 import { BattleResult } from './types'
-import { BattleDirector } from './BattleDirector'
+import { CombatUnit } from './unit/CombatUnit'
 
 export type { DamageOptions } from './CombatService'
 
@@ -69,7 +70,7 @@ export class Battle implements BattleManager {
   async handleUnitTurn(unit: CombatUnit): Promise<boolean | void> {
     if (!this.currentContext) return
 
-    Terminal.log(`\n━━━━━━━━━ [ ${unit.name}의 차례 ] ━━━━━━━━━`)
+    Terminal.log(i18n.t('battle.turn_start', { name: unit.name }))
     this.updateEffectsDuration(unit)
 
     if (await this.actions.handleUnitDeBuff(unit)) return
@@ -117,18 +118,20 @@ export class Battle implements BattleManager {
       this.units.registerUnit(e)
     })
 
-    Terminal.log(`\n⚔️ 전투가 시작되었습니다!`)
+    Terminal.log(i18n.t('battle.battle_start'))
     Terminal.log(
-      `적: ${this.units
-        .getAliveEnemies()
-        .map((e) => e.name)
-        .join(', ')}`
+      i18n.t('battle.enemy_list', {
+        names: this.units
+          .getAliveEnemies()
+          .map((e) => e.name)
+          .join(', '),
+      })
     )
 
     const engine = new BattleEngine(this, {
       onRoundStart: async (round) => {
         this.units.refreshPlayerSide()
-        Terminal.log(`\n============== turn: ${round} ==============`)
+        Terminal.log(`\n============== Turn: ${round} ==============`)
 
         BattleDirector.setUnits({
           playerSide: this.units.getPlayerSide(),
@@ -161,9 +164,17 @@ export class Battle implements BattleManager {
       if (!unit[type]) return
       unit[type].forEach((effect) => effect.duration--)
       const expiredEffects = unit[type].filter((e) => e.duration <= 0)
+
+      const messageKey = type === 'buff' ? 'battle.effect_expired.buff' : 'battle.effect_expired.debuff'
       expiredEffects.forEach((e) => {
-        Terminal.log(`[효과 만료] ${unit.name}의 ${type === 'buff' ? '✨' : '💢'} [${e.name}] 효과가 사라졌습니다.`)
+        Terminal.log(
+          i18n.t(messageKey, {
+            unitName: unit.name,
+            effectName: e.name,
+          })
+        )
       })
+
       unit[type] = unit[type].filter((e) => e.duration > 0)
     })
   }

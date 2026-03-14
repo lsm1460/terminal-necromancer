@@ -1,7 +1,8 @@
 import { RARITY_DATA, SkeletonRarity } from '~/consts'
+import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { BattleTarget, Corpse, ExecuteSkill } from '~/types'
 import { SkillManager } from '../SkillManager'
-import { Terminal } from '~/core/Terminal'
 
 export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   const failure = {
@@ -65,7 +66,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
 
     const skeleton: BattleTarget = {
       id: `${selectedClass.id}::${Date.now()}`,
-      name: `${rarityTag} 스켈레톤 ${selectedClass.name}`,
+      name: `${rarityTag} skeleton ${selectedClass.name}`,
       attackType: selectedClass.attackType,
       maxHp: Math.floor(corpse.maxHp * m * s.hp),
       hp: Math.floor(corpse.maxHp * m * s.hp),
@@ -74,7 +75,9 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       agi: Math.floor(corpse.agi * m * s.agi),
       skills: [...selectedClass.skills],
       exp: 0,
-      description: `${corpse.name}의 유골로 만들어진 소환수입니다.`,
+      description: i18n.t('npc.skeleton.description', {name: corpse.name}), 
+      originId: corpse.id,
+      rarity: finalRarity,
       dropTableId: '',
       encounterRate: 0,
       isAlive: true,

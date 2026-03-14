@@ -1,19 +1,20 @@
 import { FULL_VISIBLE_MAP_ID_LIST, MAP_IDS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { CommandFunction } from '~/types'
 
 export const mapCommand: CommandFunction = async (player, args, context) => {
   const { events, map } = context
 
   if (!events.isCompleted('got_terminal_map')) {
-    Terminal.log('📜 지도가 없습니다.')
+    Terminal.log(i18n.t('commands.map.no_map'))
     return false
   }
 
   const sceneId = map.currentSceneId
 
   if (sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
-    Terminal.log('📜 지도가 없습니다.')
+    Terminal.log(i18n.t('commands.map.no_map'))
     return false
   }
 
@@ -22,7 +23,7 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
 
   const isFullyVisible = (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
 
-  Terminal.log(`\n--- 🗺️ ${map.currentScene.displayName} ---`)
+  Terminal.log(`\n--- 🗺️ ${i18n.t(`scene.${map.currentScene.id}`)} ---`)
 
   const mapDisplay = tiles
     .map((row, y) => {
@@ -53,7 +54,6 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
           }
 
           // 5. 일반 타일 (밝은 상자)
-          // 클리어 여부에 따라 아이콘 분리 (· 는 가독성을 위해 상자 안에 점이 있는 느낌)
           return '⬜'
         })
         .join('')
@@ -61,10 +61,12 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
     .join('\n')
 
   Terminal.log(mapDisplay)
-  Terminal.log('\n[ 지도 범례 ]')
-  Terminal.log('📍:현재위치 | ☁️ :미탐사 | ⬜:안전한 길 | ⚔️ :전투 필요')
-  Terminal.log('👹:보스     | 🛗:승강기   | 💀:죽음       | 👤:NPC')
-  Terminal.log('---------------------------------------')
+  Terminal.log(i18n.t('commands.map.legend_title'))
+  
+  const legendItems = i18n.t('commands.map.legend_items', { returnObjects: true }) as string[]
+  legendItems.forEach(item => Terminal.log(item))
+  
+  Terminal.log(i18n.t('commands.map.footer'))
 
   return false
 }

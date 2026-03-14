@@ -1,7 +1,8 @@
 import enquirer from 'enquirer'
+import i18n from '~/i18n'
 import { Player } from '../core/player/Player'
-import { GameContext, Renderer } from '../types'
 import { printStatus } from '../statusPrinter'
+import { GameContext, Renderer } from '../types'
 
 export class CLIRenderer implements Renderer {
   // --- 출력 메서드 ---
@@ -14,10 +15,9 @@ export class CLIRenderer implements Renderer {
   }
 
   say(nameList: string[]) {
-    const isSingular = nameList.length === 1
     const aliveNames = nameList.join(', ')
 
-    console.log(`주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`)
+    console.log(`${i18n.t('looking.around', { count: nameList.length })} ${aliveNames}`)
   }
 
   clear(): void {
@@ -33,12 +33,12 @@ export class CLIRenderer implements Renderer {
   /**
    * 터미널 선택 메뉴를 띄웁니다.
    */
-  async select(message: string, choices: { name: string; message: string }[]): Promise<string> {
+  async select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string> {
     const { result } = await enquirer.prompt<{ result: string }>({
       type: 'select',
       name: 'result',
       message,
-      // enquirer의 select 형식에 맞게 choices 매핑
+      initial: defaultValue,
       choices: choices.map((c) => ({ name: c.name, message: c.message })),
     })
     return result
@@ -66,7 +66,7 @@ export class CLIRenderer implements Renderer {
       name: 'continue',
       message,
       result: () => '', // 입력값은 무시
-      format: () => ' [Enter를 누르면 계속]',
+      format: () => i18n.t('press_enter'),
     })
   }
 

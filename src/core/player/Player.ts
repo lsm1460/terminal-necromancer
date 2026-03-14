@@ -16,7 +16,11 @@ import { InventoryManager } from './InventoryManager'
 import { MinionManager } from './MinionManager'
 import { StatsCalculator } from './StatsCalculator'
 
-export type PlayerSaveData = Partial<Player> & { _golem?: BattleTarget; _knight?: BattleTarget }
+export type PlayerSaveData = Partial<Player> & {
+  _skeleton?: BattleTarget[]
+  _golem?: BattleTarget
+  _knight?: BattleTarget
+}
 
 export class Player {
   id = 'player'
@@ -90,7 +94,10 @@ export class Player {
   }
 
   get raw() {
-    const { levelTable, onDeath, inventoryManager, minionManager, ...rest } = this as any
+    const { levelTable, onDeath, inventoryManager, minionManager, equipped, ...rest } = this as any
+
+    delete equipped?.weapon?.label
+    delete equipped?.armor?.label
 
     const inventoryData = this.inventoryManager.toJSON()
     const minionData = this.minionManager.toJSON()
@@ -99,6 +106,7 @@ export class Player {
       ...rest,
       ...inventoryData,
       ...minionData,
+      equipped,
     }
   }
 
@@ -202,10 +210,10 @@ export class Player {
   }
 
   get description() {
-    if (this.karma <= 0) return "망자를 기리며 질서를 수호하는 영혼의 인도자입니다."
-    if (this.karma <= 5) return "살생의 무게가 그림자에 서서히 스며들고 있습니다."
-    if (this.karma <= 10) return "부패한 마력이 양심을 잠식하며 눈빛이 탁해집니다."
-    return "이승의 법도를 초월한, 사신의 잔혹한 하수인입니다."
+    if (this.karma <= 0) return '망자를 기리며 질서를 수호하는 영혼의 인도자입니다.'
+    if (this.karma <= 5) return '살생의 무게가 그림자에 서서히 스며들고 있습니다.'
+    if (this.karma <= 10) return '부패한 마력이 양심을 잠식하며 눈빛이 탁해집니다.'
+    return '이승의 법도를 초월한, 사신의 잔혹한 하수인입니다.'
   }
 
   get affixes(): Affix[] {

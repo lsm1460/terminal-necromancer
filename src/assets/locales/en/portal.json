@@ -1,0 +1,27 @@
+{
+  "name": "Portal",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": {
+      "greeting": "Transporting to the starting location of this floor.",
+      "farewell": "Transmitting..."
+    },
+    "normal": {
+      "greeting": "Transporting to the starting location of this floor.",
+      "farewell": "Transmitting..."
+    },
+    "hostile": {
+      "greeting": "Transporting to the starting location of this floor.",
+      "farewell": "Transmitting..."
+    }
+  },
+  "deathLine": "...",
+  "description": "A small provision from the Reaper.",
+
+  "choices": {
+    "move": "💬 Move to Start Point"
+  },
+  "confirm": "Would you like to move to the starting point of this area?",
+  "success": "\n✨ The space shimmers as you are teleported to the starting point of {{location}}.",
+  "cancel": "\nTeleportation canceled."
+}

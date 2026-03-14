@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { LootBag, NPCState } from '~/types'
 
 export type SaveData = {
@@ -12,6 +13,7 @@ export type SaveData = {
   }
   drop: LootBag | null
   completedEvents: string[]
+  locale?: 'ko' | 'en'
 }
 
 export class SaveSystem {
@@ -48,6 +50,7 @@ export class SaveSystem {
   save(saveData: SaveData) {
     const rawData = {
       ...saveData,
+      locale: i18n.language,
       player: (saveData.player as any).raw || saveData.player,
     }
 

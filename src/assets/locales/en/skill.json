@@ -1,0 +1,61 @@
+{
+  "select_title": "Select Skill (Current MP: {{mp}})",
+  "not_enough_mp": "Not enough MP! (Required: {{cost}} / Current: {{current}})",
+  "no_corpses_nearby": "No corpses nearby to use.",
+  "select_corpse_to_consume": "Which corpse will you consume?",
+  "corpse_choice_format": "{{name}} Corpse (HP: {{hp}}, ATK: {{atk}})",
+  "cancel_action": "Skill activation canceled.",
+
+  "RAISE_SKELETON": {
+    "name": "Raise Skeleton",
+    "description": "Consume a corpse to summon a skeleton warrior.",
+    "unlockHint": ""
+  },
+  "RECALL_SKELETON": {
+    "name": "Recall Skeleton",
+    "description": "Revert a skeleton warrior back into mana.",
+    "unlockHint": ""
+  },
+  "FOCUS_FIRE": {
+    "name": "Mark of Death",
+    "description": "Minions prioritize attacking the marked target.",
+    "unlockHint": ""
+  },
+  "CORPSE_EXPLOSION": {
+    "name": "Corpse Explosion",
+    "description": "Detonate a corpse to deal area-of-effect damage.",
+    "unlockHint": "B2F Purified"
+  },
+  "SOUL_HARVEST": {
+    "name": "Soul Harvest",
+    "description": "Extract essence from a corpse to restore mana.",
+    "unlockHint": "B2F Purified"
+  },
+  "SOUL_TRANSFER": {
+    "name": "Soul Transfer",
+    "description": "Transfers the necromancer's health to a minion.",
+    "unlockHint": "B3F Purified"
+  },
+  "CURSE": {
+    "name": "Curse",
+    "description": "Weakens the target.",
+    "unlockHint": "B3F Purified"
+  },
+  "BONE_SPEAR": {
+    "name": "Bone Spear",
+    "description": "Strikes two enemies simultaneously.",
+    "unlockHint": "B5F Purified"
+  },
+  "BONE_PRISON": {
+    "name": "Bone Prison",
+    "description": "Restricts target movement using bone structures.",
+    "unlockHint": "B5F Purified"
+  },
+  "BONE_STORM": {
+    "name": "Bone Storm",
+    "description": "Sacrifice all skeletons to deal massive AOE damage proportional to their total HP.",
+    "unlockHint": "B5F Purified"
+  },
+
+  "stealth": "Stealth"
+}

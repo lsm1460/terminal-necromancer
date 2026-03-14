@@ -1,0 +1,39 @@
+{
+  "name": "Elevator",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": {
+      "greeting": "Please select the floor you wish to travel to.",
+      "farewell": "Doors closing. Have a safe journey."
+    },
+    "normal": {
+      "greeting": "Please select the floor you wish to travel to.",
+      "farewell": "Doors closing. Have a safe journey."
+    },
+    "hostile": {
+      "greeting": "Please select the floor you wish to travel to.",
+      "farewell": "Doors closing. Have a safe journey."
+    }
+  },
+  "deathLine": "...",
+  "description": "There are depths even deeper than this.",
+
+  "choices": {
+    "elevate": "💬 Floor Selection"
+  },
+  "menu": {
+    "title": "Which floor would you like to move to?",
+    "cancel": "🔙 Stay here",
+    "no_access": "❌ You are a deceased who is not permitted to use the elevator.",
+    "error": "❌ Error: Data for {{sceneId}} could not be found."
+  },
+  "confirm": {
+    "leave_area": "⚠️ Leaving this area will reset the terrain. Are you sure you want to move?",
+    "leave_safezone": "⚠️ You are leaving the safe zone. Are you sure you want to move?",
+    "cancel": "❌ Movement canceled."
+  },
+  "status": {
+    "working": "\n⚙️ The elevator begins to operate. The floor changes with a low mechanical hum...",
+    "arrival": "✨ [Arrival] You have arrived at {{location}}.\n"
+  }
+}

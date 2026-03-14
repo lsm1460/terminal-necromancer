@@ -1,10 +1,11 @@
 import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
-import { SKILL_LIST, SkillUtils } from '~/core/skill'
+import { getPlayerSkills, SkillUtils } from '~/core/skill'
 import { GameContext, Skill, SkillId } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
+import i18n from '~/i18n'
 
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -23,31 +24,27 @@ const DeathHandler: NPCHandler = {
     const caronReported = events.isCompleted('report_caron_to_death')
 
     if (caronFinished && !caronReported) {
-      return [{ name: 'reportCaron', message: '💀 카론의 행방에 대하여 보고' }]
+      return [{ name: 'reportCaron', message: i18n.t('npc.death.report_charon') }]
     }
 
     if (!isB2Completed) {
-      return [{ name: 'intro', message: '💬 대화' }]
+      return [{ name: 'intro', message: i18n.t('talk.speak') }]
     }
 
     if (isB2Completed && !isSecond) {
-      return [{ name: 'tutorialOver', message: '💬 대화' }]
+      return [{ name: 'tutorialOver', message: i18n.t('talk.speak') }]
     }
 
     if (isB3Completed && !isThird) {
-      return [{ name: 'defeatGolem', message: '💬 대화' }]
-    }
-
-    if (caronFinished && !caronReported) {
-      return [{ name: 'reportCaron', message: '💀 카론의 행방에 대하여 보고' }]
+      return [{ name: 'defeatGolem', message: i18n.t('talk.speak') }]
     }
 
     return [
-      { name: 'talk', message: '💬 잡담' },
-      { name: 'levelUp', message: '✨ 레벨업' },
-      ...(caronIsDead ? [{ name: 'increaseLimit', message: '🦴 해골 군단 확장' }] : []),
-      { name: 'unlock', message: '🔮 기술 전수' },
-      { name: 'memorize', message: '📜 기술 각인' },
+      { name: 'talk', message: i18n.t('talk.small_talk') },
+      { name: 'levelUp', message: i18n.t('npc.death.levelup') },
+      ...(caronIsDead ? [{ name: 'increaseLimit', message: i18n.t('npc.death.expand_legion') }] : []),
+      { name: 'unlock', message: i18n.t('npc.death.unlock_skills') },
+      { name: 'memorize', message: i18n.t('npc.death.engrave_skills') },
     ]
   },
   async handle(action, player, npc, context) {
@@ -91,23 +88,15 @@ async function handleIntro(context: GameContext) {
   const isB2Completed = context.events.isCompleted('first_boss')
 
   if (isFirst && !isB2Completed) {
-    Terminal.log(`\n사신: "아직도 청소를 끝내지 못했나? 끝내고 나면 내게 돌아오도록.."`)
+    Terminal.log(`\n${i18n.t('npc.death.intro.still_working')}`)
     return
   }
 
-  await speak([
-    '사신: "아직도 그 오만한 눈빛이라니. 네놈이 다스리던 제국의 흙먼지라도 묻어있는 줄 아는 모양이군."',
-    '사신: "착각하지 마라.\n이곳 터미널에선 너 또한 심판을 기다리며 줄을 서야 하는 흔해 빠진 망자 중 하나일 뿐이다."',
-    '사신: "살아남고 싶다면 네놈이 그토록 경멸하던 노역부터 시작해라.\n마침 지하 2층 환승로에 아주 역겨운 게 자라나서 말이지."',
-    '사신: "[기어다니는 죄악, 벨페고르].\n제 분수를 모르고 심판을 피해 도망친 영혼들이 서로 엉겨 붙어 탄생한 기괴한 고기 덩어리다."',
-    '사신: "그 비천한 것들이 환승로 선로를 점거하고 비명을 지르는 통에 영혼들의 운송이 지체되고 있어."',
-    '사신: "가서 그 오물들을 도려내라. 네놈의 그 녹슨 낫이 아직 영혼의 껍질이라도 썰 수 있다면 말이야."',
-    '사신: "[아래]로 내려가면 지하로 내려갈 수 있는 엘리베이터가 있다. 청소를 끝내면 나에게 와서 보고하도록.."',
-  ])
+  const dialogues = i18n.t('npc.death.intro.dialogues', { returnObjects: true }) as string[]
 
-  Terminal.log(
-    `\n사신: \"실패하면? 걱정 마라. 네놈의 혼령 또한 저 고기 덩어리의 일부가 되어 영원히 선로나 닦게 될 테니까. 하하하!\"`
-  )
+  await speak(dialogues)
+
+  Terminal.log(`\n${i18n.t('npc.death.intro.failure_threat')}`)
 
   events.completeEvent('talk_death_1')
 }
@@ -117,14 +106,16 @@ async function handleSkillMenu(player: Player, context: GameContext) {
   const { events } = context
   const completed = events.getCompleted()
 
-  const lockableSkills = Object.values(SKILL_LIST).filter((s) => !player.hasSkill(s.id))
+  const playerSkills = getPlayerSkills()
+
+  const lockableSkills = Object.values(playerSkills).filter((s) => !player.hasSkill(s.id))
   if (lockableSkills.length === 0) {
     Terminal.log('\n[알림] 이미 모든 기술을 터득하셨습니다.')
     return
   }
 
   const choices = lockableSkills.map((s) => {
-    const skillData = SKILL_LIST[s.id]
+    const skillData = playerSkills[s.id]
     // 해금 조건(unlocks)이 completed 배열에 있는지 확인
     const isUnlocked = !skillData.unlocks || skillData.unlocks.every((req) => completed.includes(req))
 
@@ -140,14 +131,14 @@ async function handleSkillMenu(player: Player, context: GameContext) {
   // 1. Terminal.select 메뉴 생성
   const skillId = (await Terminal.select('전수받을 기술을 선택하세요: 현재 사용 가능한 영혼 조각: ' + player.exp, [
     ...choices,
-    { name: 'back', message: '🔙 뒤로 가기' },
+    { name: 'back', message: i18n.t('cancel') },
   ])) as SkillId | 'back'
 
   if (skillId === 'back') {
     return
   }
 
-  const skill = SKILL_LIST[skillId]
+  const skill = playerSkills[skillId]
   if (SkillUtils.canLearn(player, skill)) {
     player.unlockSkill(skill)
     Terminal.log(`\n💀 [습득] '${skill.name}' 각인을 잊지말라구 끌끌..`)
@@ -159,25 +150,30 @@ async function handleSkillMenu(player: Player, context: GameContext) {
 async function handleLevelUp(player: Player) {
   const { required: nextExp, toNext: cost } = player.expToNextLevel()
 
-  Terminal.log(`현재 가지고 있는 영혼 조각: ${player.exp}`)
+  Terminal.log(i18n.t('npc.death.levelup.current_souls', { exp: player.exp }))
 
-  const proceed = await Terminal.confirm(
-    `${cost}개의 영혼 조각을 바친다면, 네 전성기의 힘을 조금이나마 되돌아올지도 모르지..`
-  )
+  const proceed = await Terminal.confirm(i18n.t('npc.death.levelup.confirm_offer', { cost }))
 
   if (!proceed) {
-    Terminal.log(`사신: "겁쟁이 녀석. 네놈의 그 나약함이 언제까지 네 목숨을 붙여줄지 지켜보마."`)
+    Terminal.log(i18n.t('npc.death.levelup.reject_coward'))
     return
   }
 
   if (player.levelUp()) {
-    Terminal.log(`\n✨ 축하합니다! 레벨이 올랐습니다. (현재 LV.${player.level})`)
+    Terminal.log(i18n.t('npc.death.levelup.success_msg', { level: player.level }))
   } else {
-    Terminal.log(`\n[실패] 가볍구나. 겨우 이 정도인가? (${player.exp}/${nextExp})`)
+    Terminal.log(
+      i18n.t('npc.death.levelup.fail_msg', {
+        current: player.exp,
+        required: nextExp,
+      })
+    )
   }
 }
 
 async function handleMemorize(player: Player) {
+  const playerSkills = getPlayerSkills()
+
   const isSoulGrown = player.maxMemorize > INIT_MAX_MEMORIZE_COUNT
 
   const welcomeMessage = isSoulGrown
@@ -191,7 +187,7 @@ async function handleMemorize(player: Player) {
 
   // 1. 선택지 구성 (ID를 명확히 찾기 위해 choices 변수 유지)
   const skillChoices = player.unlockedSkills
-    .map((skillId) => (SKILL_LIST as Partial<Record<SkillId | 'SPACE', Skill>>)[skillId])
+    .map((skillId) => (playerSkills as Partial<Record<SkillId | 'SPACE', Skill>>)[skillId])
     .filter((skill) => !!skill)
     .map((skill) => {
       return {
@@ -206,7 +202,7 @@ async function handleMemorize(player: Player) {
       `메모라이즈할 스킬을 선택하세요 (최대 ${player.maxMemorize}개)`,
       skillChoices,
       {
-        initial: player.memorize.map((skillId) => SKILL_LIST[skillId].name),
+        initial: player.memorize.map((skillId) => playerSkills[skillId].name),
         maxChoices: player.maxMemorize,
         validate(value: string[]) {
           if (value.length === 0) return '최소 한 개의 스킬은 선택해야 합니다.'
@@ -218,7 +214,7 @@ async function handleMemorize(player: Player) {
 
     // 3. 플레이어 상태 업데이트
     player.memorize = selectedSkills.map(
-      (skillName) => Object.entries(SKILL_LIST).find(([, skill]) => skill.name === skillName)![0] as SkillId
+      (skillName) => Object.entries(playerSkills).find(([, skill]) => skill.name === skillName)![0] as SkillId
     )
 
     const exitMessage = isSoulGrown
@@ -344,4 +340,5 @@ async function handleReportCaron(context: GameContext) {
   // 보고 완료 플래그 세팅
   events.completeEvent('report_caron_to_death')
 }
+
 export default DeathHandler

@@ -2,6 +2,7 @@ import { HOSTILITY_LIMIT } from '~/consts'
 import { NPC, NPCState } from '~/types'
 import { Terminal } from './Terminal'
 import { Player } from './player/Player'
+import i18n from '~/i18n'
 
 export class NPCManager {
   private baseData: Record<string, any>
@@ -14,7 +15,11 @@ export class NPCManager {
    * @param player - 플레이어 참조
    * @param savedData - 세이브 파일에서 불러온 NPC 관련 상태 데이터
    */
-  constructor(npcData: any, private player: Player, savedData?: any) {
+  constructor(
+    npcData: any,
+    private player: Player,
+    savedData?: any
+  ) {
     this.baseData = npcData
 
     const hasValidSaveData = savedData && typeof savedData === 'object' && Object.keys(savedData).length > 0
@@ -69,7 +74,23 @@ export class NPCManager {
         this.states[id].isAlive = false
 
         npc.faction && this.setFactionHostility(npc.faction, 100)
-      }
+      },
+
+      get name() {
+        return i18n.t(`npc.${this.id}.name`)
+      },
+      get deathLine() {
+        return i18n.t(`npc.${this.id}.deathLine`)
+      },
+      get description() {
+        return i18n.t(`npc.${this.id}.description`)
+      },
+      get lines() {
+        return (i18n.t(`npc.${this.id}.lines`, { returnObjects: true }) || ['...']) as string[]
+      },
+      get scripts() {
+        return i18n.t(`npc.${this.id}.scripts`, { returnObjects: true })
+      },
     }
 
     return npc
