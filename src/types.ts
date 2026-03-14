@@ -39,7 +39,9 @@ export type BattleTarget = {
   noCorpse?: boolean
   isNpc?: boolean
   isMinion?: boolean
-  isSkeleton?: boolean
+  isSkeleton?: boolean // only skeleton
+  originId?: string // only skeleton
+  rarity?: SkeletonRarity // only skeleton
   isGolem?: boolean
   isKnight?: boolean
   deathLine?: string
@@ -97,7 +99,6 @@ export enum ItemType {
 type BaseItem = {
   id: string
   type: ItemType
-  label: string
   description: string
   quantity?: number
   price: number
@@ -130,6 +131,8 @@ export type WeaponItem = BaseItem &
     crit: number
     attackType: AttackType
     minRebornRarity?: number
+    adjective?: string
+    perfPrefix?: string
   }
 
 // 방어구
@@ -139,6 +142,8 @@ export type ArmorItem = BaseItem &
     def: number
     eva?: number
     minRebornRarity?: number
+    adjective?: string
+    perfPrefix?: string
   }
 
 // 음식
@@ -188,7 +193,7 @@ export interface Renderer {
   clear(): void
   printStatus(player: Player, context: GameContext): void
   // 입력 관련 메서드 추가
-  select(message: string, choices: { name: string; message: string }[]): Promise<string>
+  select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string>
   confirm(message: string): Promise<boolean>
   prompt(message: string): Promise<void> // 기존의 alert 역할을 prompt로 명칭 변경
   multiselect(
@@ -383,7 +388,7 @@ export interface UnitSprites {
 }
 
 export interface SceneData {
-  displayName: string
+  id: string
   unlocks?: string[]
   start_pos: { x: number; y: number }
   move_pos?: { x: number; y: number }

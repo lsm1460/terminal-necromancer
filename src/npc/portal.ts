@@ -3,10 +3,11 @@ import { Player } from '~/core/player/Player'
 import { printStatus } from '~/statusPrinter'
 import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
+import i18n from '~/i18n'
 
 const PortalHandler: NPCHandler = {
   getChoices() {
-    return [{ name: 'portal', message: '💬 시작 점으로 이동' }]
+    return [{ name: 'portal', message: i18n.t('npc.portal.choices.move') }]
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -21,7 +22,7 @@ const PortalHandler: NPCHandler = {
 async function handlePortal(player: Player, context: GameContext) {
   const { map, events, broadcast } = context
 
-  const confirm = await Terminal.confirm('이 구역의 시작 지점으로 이동하시겠습니까?')
+  const confirm = await Terminal.confirm(i18n.t('npc.portal.confirm'))
 
   if (confirm) {
     const currentScene = map.currentScene
@@ -29,7 +30,7 @@ async function handlePortal(player: Player, context: GameContext) {
     player.x = currentScene.start_pos.x
     player.y = currentScene.start_pos.y
 
-    Terminal.log(`\n✨ 공간이 일렁이며 ${currentScene.displayName}의 시작 지점으로 이동했습니다.`)
+    Terminal.log(i18n.t('npc.portal.success', { location: i18n.t(`scene.${currentScene.id}`) }))
 
     const tile = map.getTile(player.x, player.y)
 
@@ -38,7 +39,7 @@ async function handlePortal(player: Player, context: GameContext) {
 
     printStatus(player, context)
   } else {
-    Terminal.log('\n이동을 취소했습니다.')
+    Terminal.log(i18n.t('npc.portal.cancel'))
   }
 
   return true

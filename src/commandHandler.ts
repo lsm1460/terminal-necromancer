@@ -2,6 +2,7 @@ import * as Commands from './commands'
 import { COMMAND_GROUPS, CommandKey } from './consts'
 import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
+import i18n from './i18n'
 import { printStatus } from './statusPrinter'
 import { GameContext } from './types'
 
@@ -70,7 +71,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
   const cmd = mapInput(rawCmdName)
 
   if (!cmd || !COMMANDS[cmd]) {
-    Terminal.log(`\n유효하지 않은 명령입니다.`)
+    Terminal.log(`\n` + i18n.t('invalid_command'))
     return false
   }
 
@@ -87,8 +88,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
       printStatus(player, context)
       await events.handle(currentTile, player, context)
     }
-  } catch (e) {
-  }
+  } catch (e) {}
 
   // 자동 세이브
   context.save.save({

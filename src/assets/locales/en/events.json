@@ -1,0 +1,15 @@
+{
+  "heal_once": {
+    "discovery": "\n\u001b[93m[ Amidst the iron and dust, you find a miracle: a corner blooming with green moss and tiny flowers. ]\u001b[0m",
+    "flavor": "\u001b[90m(It is a warm space, seemingly hidden by intent, where the Reaper's chilling aura cannot reach.)\u001b[0m",
+    "confirm": "🌿 Will you rest in this place filled with the warmth of life? (This respite is granted only once.)",
+    "decline": " > You decide to save this precious warmth for later.",
+    "process": "\n\u001b[32m[ The small flowers at your feet glow, soothing your wounds and exhaustion... ]\u001b[0m",
+    "success": "\n✨ The blessing of life spreads through your body, and all your conditions are perfectly restored!",
+    "cleanup": "\u001b[90m(The exhausted flowers vanish into transparency, and the cold air of the terminal returns.)\u001b[0m\n"
+  },
+  "caron": {
+    "whisper_alive": "\nCaron: \"(From beyond the shadows) My lord, I am here. Do you require preparations?\"",
+    "whisper_dead": "\n[Void Guide]: \"...Mas...ter... Com...mand... me...\" (An eerie chill clings to your ankles.)"
+  }
+}

@@ -11,19 +11,54 @@ class GolemWrapper {
     public upgrade: ('machine' | 'soul')[],
     private player: Player
   ) {
-    Object.keys(raw).forEach((key) => {
-      if (Object.getOwnPropertyDescriptor(GolemWrapper.prototype, key)) return
-      Object.defineProperty(this, key, {
-        get: () => (this.raw as any)[key],
-        set: (v) => {
-          ;(this.raw as any)[key] = v
-        },
-        enumerable: true,
-        configurable: true,
-      })
-    })
-
     this.upgradeLimit = player.upgradeLimit
+  }
+
+  // Delegations for BattleTarget compatibility
+  get id() {
+    return this.raw.id
+  }
+  get attackType() {
+    return this.raw.attackType
+  }
+  get agi() {
+    return this.raw.agi
+  }
+  get exp() {
+    return this.raw.exp
+  }
+  get description() {
+    return this.raw.description
+  }
+  get dropTableId() {
+    return this.raw.dropTableId
+  }
+  get encounterRate() {
+    return this.raw.encounterRate
+  }
+  get preemptive() {
+    return this.raw.preemptive
+  }
+  get noEscape() {
+    return this.raw.noEscape
+  }
+  get noCorpse() {
+    return this.raw.noCorpse
+  }
+  get isNpc() {
+    return this.raw.isNpc
+  }
+  get isMinion() {
+    return this.raw.isMinion
+  }
+  get isGolem() {
+    return this.raw.isGolem
+  }
+  get deathLine() {
+    return this.raw.deathLine
+  }
+  get orderWeight() {
+    return this.raw.orderWeight
   }
 
   private get machineCount() {
@@ -76,8 +111,15 @@ class GolemWrapper {
   }
 
   get skills(): string[] {
-    // 임의 수치 조정 없이 스킬만 변경
-    return this.hasThorns ? ['thorns'] : this.raw.skills!
+    // 기본 스킬 셋 결정
+    let skillList = this.hasThorns ? ['thorns'] : [...(this.raw.skills || [])]
+
+    // 업그레이드 횟수가 제한을 초과한 경우 self_destruct 추가
+    if (this.upgrade.length > this.upgradeLimit) {
+      skillList.push('self_destruct')
+    }
+
+    return skillList
   }
 
   // hp 참조는 유지 (전투 중 실시간 반영을 위해 필요)

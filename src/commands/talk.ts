@@ -1,90 +1,100 @@
 import { NPCManager } from '~/core/NpcManager'
+import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import npcHandlers from '~/npc'
-import { CommandFunction } from '~/types'
+import { CommandFunction, GameContext, NPC } from '~/types'
 
 export const talkCommand: CommandFunction = async (player, args, context) => {
-  const tile = context.map.getTile(player.pos.x, player.pos.y)
-  const npcIds = tile?.npcIds || []
-
-  const availableNpcs = npcIds
-    .map((id) => context.npcs.getNPC(id))
-    .filter((npc) => !!npc)
-    .filter((npc) => npc.isAlive)
+  const availableNpcs = getAvailableNpcs(player, context)
 
   if (availableNpcs.length < 1) {
-    Terminal.log(`\n[알림] 이곳에는 대화할 상대가 없습니다.`)
+    Terminal.log(`\n[${i18n.t('common.info')}] ${i18n.t('talk.no_one_here')}`)
     return false
   }
 
-  let selectedNpcId: string | undefined
+  const targetNpc = await selectTargetNpc(availableNpcs, args)
+  if (!targetNpc) return false
 
-  // 1. 인자(args)가 있는 경우: 이름으로 직접 찾기
+  printNpcHeader(targetNpc)
+
+  await startTalkSession(targetNpc, player, context)
+
+  return false
+}
+
+function getAvailableNpcs(player: Player, context: GameContext): NPC[] {
+  const tile = context.map.getTile(player.pos.x, player.pos.y)
+  const npcIds = tile?.npcIds || []
+  return npcIds.map((id) => context.npcs.getNPC(id)).filter((npc): npc is NPC => !!npc && npc.isAlive)
+}
+
+async function selectTargetNpc(npcs: NPC[], args: string[]): Promise<NPC | null> {
   if (args.length > 0) {
     const targetName = args[0]
-    selectedNpcId = npcIds.find((id) => context.npcs.getNPC(id)?.name === targetName)
-
-    if (!selectedNpcId) {
-      Terminal.log(`\n[알림] 이곳에 '${targetName}'은(는) 없습니다.`)
-      return false
+    const found = npcs.find((npc) => npc.name === targetName)
+    if (!found) {
+      Terminal.log(`\n[${i18n.t('common.info')}] ${i18n.t('talk.not_found', { name: targetName })}`)
+      return null
     }
-  }
-  // 2. 인자가 없는 경우: Terminal 선택창 띄우기
-  else {
-    const npcId = await Terminal.select('누구와 대화하시겠습니까?', [
-      ...availableNpcs.map((npc) => ({
-        name: npc.id,
-        message: `👤 ${npc.name}`,
-      })),
-      { name: 'cancel', message: '🔙 돌아가기' },
-    ])
-
-    if (npcId === 'cancel') return false
-    selectedNpcId = npcId
+    return found
   }
 
-  const npc = context.npcs.getNPC(selectedNpcId)!
-  const handler = npcHandlers[npc.id]
+  const choices = [
+    ...npcs.map((npc) => ({ name: npc.id, message: `👤 ${npc.name}` })),
+    { name: 'cancel', message: i18n.t('cancel') },
+  ]
 
-  if (!handler) {
-    Terminal.log(`\n[${npc.name}]: "..."`)
-    return false
-  }
+  const selectedId = await Terminal.select(i18n.t('talk.select_npc'), choices)
+  if (selectedId === 'cancel') return null
 
-  const dialect = NPCManager.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
+  return npcs.find((n) => n.id === selectedId) || null
+}
 
-  // 2. 대화 인터페이스 출력
+function printNpcHeader(npc: NPC) {
+  const dialect = getDialect(npc)
+  const greeting = npc.scripts?.[dialect]?.greeting || '...'
+
   Terminal.log(`\n──────────────────────────────────────────────────`)
   Terminal.log(`  👤 [${npc.name}] - ${npc.description}`)
-  Terminal.log(`  💬 "${npc.scripts?.[dialect]?.greeting || '...'}"`)
+  Terminal.log(`  💬 "${greeting}"`)
   Terminal.log(`──────────────────────────────────────────────────`)
 
-  npc.relation = npc.relation + 1
+  npc.relation += 1 // 대화 시 호감도 소폭 상승
+}
+
+async function startTalkSession(npc: NPC, player: Player, context: GameContext) {
+  const handler = npcHandlers[npc.id]
+  if (!handler) {
+    Terminal.log(`\n[${npc.name}]: "..."`)
+    return
+  }
+
+  const dialect = getDialect(npc)
 
   try {
-    const printFarewell = () => Terminal.log(`\n[${npc.name}]: "${npc.scripts?.[dialect]?.farewell || '...'}"`)
-
-    // 유저가 'exit'를 선택할 때까지 무한 반복
     while (true) {
-      const menuChoices = [...handler.getChoices(player, npc, context), { name: 'exit', message: '🏃 떠나기' }]
-      const action = await Terminal.select('무엇을 하시겠습니까?', menuChoices)
+      const menuChoices = [
+        ...handler.getChoices(player, npc, context),
+        { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` },
+      ]
 
-      // 1. 종료 조건 체크
+      const action = await Terminal.select(i18n.t('talk.what_to_do'), menuChoices)
+
       if (action === 'exit') {
-        printFarewell()
-        break // 루프 탈출 -> 대화 종료
+        const farewell = npc.scripts?.[dialect]?.farewell || '...'
+        Terminal.log(`\n[${npc.name}]: "${farewell}"`)
+        break
       }
 
       const isEscape = await handler.handle(action, player, npc, context)
-
-      if (isEscape) {
-        break // 루프 탈출 -> 대화 종료
-      }
+      if (isEscape) break
     }
   } catch (e) {
-  } finally {
-    process.stdin.resume()
+    // 세션 오류 처리
   }
+}
 
-  return false
+function getDialect(npc: NPC) {
+  return NPCManager.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
 }

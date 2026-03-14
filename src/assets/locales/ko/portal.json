@@ -1,0 +1,27 @@
+{
+    "name": "포탈",
+    "lines": ["..."],
+    "scripts": {
+      "friendly": {
+        "greeting": "이 층의 시작 위치로 이동합니다.",
+        "farewell": "전송됩니다.."
+      },
+      "normal": {
+        "greeting": "이 층의 시작 위치로 이동합니다.",
+        "farewell": "전송됩니다.."
+      },
+      "hostile": {
+        "greeting": "이 층의 시작 위치로 이동합니다.",
+        "farewell": "전송됩니다.."
+      }
+    },
+    "deathLine": "...",
+    "description": "사신의 작은 안배",
+
+    "choices": {
+      "move": "💬 시작 점으로 이동"
+    },
+    "confirm": "이 구역의 시작 지점으로 이동하시겠습니까?",
+    "success": "\n✨ 공간이 일렁이며 {{location}}의 시작 지점으로 이동했습니다.",
+    "cancel": "\n이동을 취소했습니다."
+  }

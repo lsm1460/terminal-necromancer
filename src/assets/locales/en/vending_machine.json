@@ -1,0 +1,27 @@
+{
+  "name": "Potion Vending Machine",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": {
+      "greeting": "Please select your desired beverage.",
+      "farewell": "Thank you for using our service."
+    },
+    "normal": {
+      "greeting": "Please select your desired beverage.",
+      "farewell": "Thank you for using our service."
+    },
+    "hostile": {
+      "greeting": "Please select your desired beverage.",
+      "farewell": "Thank you for using our service."
+    }
+  },
+  "deathLine": "...",
+  "description": "Even in a place like this, there are vending machines.",
+
+  "buy": {
+    "greeting": "Whirr... System online. Please enter the product number you wish to purchase.",
+    "noStock": "Error: Out of stock for the selected item. Waiting for resupply...",
+    "noGold": "Insufficient balance. Please check the coin slot and top up your assets.",
+    "success": "Payment authorized. Please retrieve your item from the dispenser. *Clunk*-"
+  }
+}

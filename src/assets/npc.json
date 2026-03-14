@@ -1,7 +1,6 @@
 {
   "kane_leader": {
     "id": "kane_leader",
-    "name": "대장 케인",
     "faction": "resistance",
     "attackType": "ranged",
     "hp": 150,
@@ -13,30 +12,12 @@
     "isAlive": true,
     "reborn": false,
     "noEscape": true,
-    "lines": ["복수를 시작할 준비가 되었나?"],
-    "scripts": {
-      "friendly": {
-        "greeting": "왔나. 네가 있어 든든하군.",
-        "farewell": "몸조심해라. 넌 우리에게 소중한 자산이다."
-      },
-      "normal": {
-        "greeting": "용건만 말해. 서로 갈 길이 바쁘니.",
-        "farewell": "죽지 마라. 이용 가치가 있을 때까진."
-      },
-      "hostile": {
-        "greeting": "꺼져라. 내 검이 네 목을 치기 전에.",
-        "farewell": "등 뒤를 조심하는 게 좋을 거다."
-      }
-    },
-    "deathLine": "케인이 끝까지 검을 놓지 않은 채 쓰러졌습니다.",
-    "description": "이 레지스탕스의 대장",
     "dropTableId": "resistance",
     "minRebornRarity": "epic",
     "skills": ["rapid_fire", "aim_arrow", "vitals_strike"]
   },
   "maya_tech": {
     "id": "maya_tech",
-    "name": "기술자 마야",
     "faction": "resistance",
     "attackType": "ranged",
     "hp": 30,
@@ -47,28 +28,10 @@
     "exp": 50,
     "isAlive": true,
     "reborn": false,
-    "lines": ["뭐라도 좀 가져왔어?"],
-    "scripts": {
-      "friendly": {
-        "greeting": "어, 왔어? 너 주려고 좋은 부품 좀 빼놨지.",
-        "farewell": "나중에 많이 주워와! 특별히 잘 봐줄게."
-      },
-      "normal": {
-        "greeting": "필요한 게 있으면 꺼내봐. 공짜는 없어.",
-        "farewell": "장비 탓 하지 말고."
-      },
-      "hostile": {
-        "greeting": "내 물건에 손대지 마. 손목을 날려버릴 테니까.",
-        "farewell": "다시는 오지 마. 재수 없으니까."
-      }
-    },
-    "deathLine": "마야가 공구를 떨어뜨리며 숨을 거둡니다.",
-    "description": "물건을 구입하여 무기로 탈바꿈 시키는 장인",
     "dropTableId": "resistance"
   },
   "jax_seeker": {
     "id": "jax_seeker",
-    "name": "수색꾼 잭스",
     "attackType": "ranged",
     "hp": 50,
     "maxHp": 50,
@@ -78,30 +41,12 @@
     "exp": 120,
     "isAlive": true,
     "reborn": false,
-    "lines": ["바깥은 지옥이야. 준비는 됐어?"],
-    "scripts": {
-      "friendly": {
-        "greeting": "여어, 살아있었네? 이번엔 꽤 쓸만한 루트를 알아냈어.",
-        "farewell": "죽지 마. 너까지 죽으면 술 상대가 없으니까."
-      },
-      "normal": {
-        "greeting": "뭐야. 거치적 거리지 말고 비켜.",
-        "farewell": "운이 좋길 빌지. 그게 유일한 무기일 때가 많으니까."
-      },
-      "hostile": {
-        "greeting": "쥐새끼 같은 놈...",
-        "farewell": "내 눈앞에서 사라져. 다음엔 대화 대신 칼날이 나갈 테니."
-      }
-    },
-    "deathLine": "잭스가 움켜쥐고 있던 지도를 놓치며 쓰러집니다.",
-    "description": "어딘가 어색해보이는 수색의 전문가",
     "dropTableId": "resistance",
     "minRebornRarity": "elite",
     "skills": ["stealth", "item_steal", "enemy_curse", "smoke_bomb"]
   },
   "elevator": {
     "id": "elevator",
-    "name": "엘리베이터",
     "faction": "untouchable",
     "attackType": "melee",
     "hp": 8000,
@@ -112,28 +57,10 @@
     "exp": 5,
     "isAlive": true,
     "reborn": false,
-    "lines": ["..."],
-    "scripts": {
-      "friendly": {
-        "greeting": "이동 하실 층계를 선택해주십시오.",
-        "farewell": "문이 닫힙니다. 안녕히 가십시오."
-      },
-      "normal": {
-        "greeting": "이동 하실 층계를 선택해주십시오.",
-        "farewell": "문이 닫힙니다. 안녕히 가십시오."
-      },
-      "hostile": {
-        "greeting": "이동 하실 층계를 선택해주십시오.",
-        "farewell": "문이 닫힙니다. 안녕히 가십시오."
-      }
-    },
-    "deathLine": "...",
-    "description": "이보다 더 지하가 있습니다",
     "dropTableId": ""
   },
   "portal": {
     "id": "portal",
-    "name": "포탈",
     "faction": "untouchable",
     "attackType": "melee",
     "hp": 8000,
@@ -144,28 +71,10 @@
     "exp": 5,
     "isAlive": true,
     "reborn": false,
-    "lines": ["..."],
-    "scripts": {
-      "friendly": {
-        "greeting": "이 층의 시작 위치로 이동합니다.",
-        "farewell": "전송됩니다.."
-      },
-      "normal": {
-        "greeting": "이 층의 시작 위치로 이동합니다.",
-        "farewell": "전송됩니다.."
-      },
-      "hostile": {
-        "greeting": "이 층의 시작 위치로 이동합니다.",
-        "farewell": "전송됩니다.."
-      }
-    },
-    "deathLine": "...",
-    "description": "사신의 작은 안배",
     "dropTableId": ""
   },
   "death": {
     "id": "death",
-    "name": "사신",
     "attackType": "melee",
     "hp": 3000,
     "maxHp": 3000,
@@ -175,29 +84,11 @@
     "exp": 5000,
     "isAlive": true,
     "reborn": false,
-    "lines": ["영혼은 좀 모아왔나?"],
-    "scripts": {
-      "friendly": {
-        "greeting": "성실한 노예로군. 마음에 든다.",
-        "farewell": "계속 영혼을 바쳐라. 그럼 수명은 보장해주지."
-      },
-      "normal": {
-        "greeting": "어서 와라.",
-        "farewell": "도망쳐봐야 내 손바닥 안이다."
-      },
-      "hostile": {
-        "greeting": "죽고 싶은 게냐? 노역이 부족한 모양이군.",
-        "farewell": "숨을 쉴 수 있을 때 마음껏 쉬어둬라."
-      }
-    },
-    "deathLine": "TODO: 엔딩",
-    "description": "최종보스입니다",
     "dropTableId": "",
     "noEscape": true
   },
   "first_boss": {
     "id": "first_boss",
-    "name": "기어다니는 죄악, 벨페고르",
     "attackType": "melee",
     "hp": 80,
     "maxHp": 80,
@@ -208,23 +99,6 @@
     "isAlive": true,
     "isBoss": true,
     "reborn": false,
-    "lines": ["..."],
-    "scripts": {
-      "friendly": {
-        "greeting": "...",
-        "farewell": "..."
-      },
-      "normal": {
-        "greeting": "...",
-        "farewell": "..."
-      },
-      "hostile": {
-        "greeting": "...",
-        "farewell": "..."
-      }
-    },
-    "deathLine": "너.. 또한.. ..르지..않을..",
-    "description": "'이것'은 단지 '치워야 할 오물'입니다.",
     "dropTableId": "boss1",
     "noEscape": true,
     "minRebornRarity": "elite",
@@ -232,7 +106,6 @@
   },
   "second_boss": {
     "id": "second_boss",
-    "name": "하역장의 골렘",
     "attackType": "ranged",
     "hp": 500,
     "maxHp": 500,
@@ -243,66 +116,13 @@
     "isAlive": true,
     "isBoss": true,
     "reborn": false,
-    "lines": ["..."],
-    "scripts": {
-      "friendly": {
-        "greeting": "...",
-        "farewell": "..."
-      },
-      "normal": {
-        "greeting": "...",
-        "farewell": "..."
-      },
-      "hostile": {
-        "greeting": "...",
-        "farewell": "..."
-      }
-    },
-    "deathLine": "보스 2 골렘 사망",
-    "description": "보스 2 골렘 입니다",
     "dropTableId": "",
     "noEscape": true,
     "noCorpse": true,
     "skills": ["power_smash", "call_reinforcements"]
   },
-  "third_boss": {
-    "id": "third_boss",
-    "name": "시종장 발타자르",
-    "attackType": "melee",
-    "hp": 10,
-    "maxHp": 10,
-    "atk": 12,
-    "def": 5,
-    "eva": 0.15,
-    "exp": 3000,
-    "isAlive": true,
-    "isBoss": true,
-    "reborn": false,
-    "lines": ["그림자가 드리우는군요...", "오랜 기다림이었습니다."],
-    "scripts": {
-      "friendly": {
-        "greeting": "주인님, 다시 당신의 그림자로 서게 되어 영광입니다. 이제 누구를 베면 되겠습니까?",
-        "farewell": "명령을 기다리며 어둠 속에 머물겠습니다."
-      },
-      "normal": {
-        "greeting": "다시 숨을 쉬는 기분이군요. 이 부패한 신성함보다 당신의 마력이 훨씬 달콤합니다.",
-        "farewell": "부디 무사하시길. 당신의 안위가 곧 저의 존재 이유입니다."
-      },
-      "hostile": {
-        "greeting": "...명령하신다면, 제 영혼조차 다시 찢어 바치겠습니다.",
-        "farewell": "당신의 의지가 곧 저의 길입니다."
-      }
-    },
-    "deathLine": "(발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)",
-    "description": "성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.",
-    "dropTableId": "boss3_balthazar",
-    "noEscape": true,
-    "noCorpse": true,
-    "skills": ["power_smash"]
-  },
   "dr_zed": {
     "id": "dr_zed",
-    "name": "닥터 제드",
     "faction": "untouchable",
     "attackType": "ranged",
     "hp": 1500,
@@ -313,32 +133,10 @@
     "exp": 300,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "그 영혼... 육체와 분리될 때 어떤 소리를 내는지 궁금하군요.",
-      "마취는 사치입니다. 고통이야말로 가장 정직한 생체 데이터거든요.",
-      "레지스탕스의 부품들과 당신의 뼈를 합치면... 환상적이겠어."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "오, 나의 경이로운 피험자! 오늘도 새로운 신체 데이터를 기부하러 오셨나요?",
-        "farewell": "죽더라도 시신은 꼭 이쪽으로 수습되게 설정해 두세요. 약속입니다?"
-      },
-      "normal": {
-        "greeting": "환자인가요? 아니면 단순한 해부용 재료인가요? 일단 거기 누워보시죠.",
-        "farewell": "살아서 나가는 걸 축하해야 할지, 실험 기회를 놓쳐서 아쉬워해야 할지 모르겠군."
-      },
-      "hostile": {
-        "greeting": "침입자인가요? 훌륭하군, 마침 신선한 장기가 필요했는데 제 발로 걸어오다니.",
-        "farewell": "도망쳐봐야 결국 의무실 바닥일 겁니다. 당신은 이미 '분류'가 끝났거든요."
-      }
-    },
-    "deathLine": "내 몸이... 차가워지는군... 이 감각도... 기록해야 하는데...",
-    "description": "치료보다는 파괴적인 호기심을 채우기 위해 메스를 잡는 터미널의 광인입니다. 예전 레지스탕스였다는  소문이 있습니다.",
     "dropTableId": ""
   },
   "echo": {
     "id": "echo",
-    "name": "에코",
     "faction": "untouchable",
     "attackType": "ranged",
     "hp": 999,
@@ -349,32 +147,10 @@
     "exp": 1000,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "후... 마이크 켜진 거 확인했으니까 제발 그만 좀 불러요.",
-      "터미널에 제정신인 인간이 나밖에 없다는 사실이 매일 절망적이네요.",
-      "내 방송 들을 시간에 앞이나 잘 살피시죠. 바닥에 피 묻히지 말고."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "어머, 우리 '유명 인사' 사령술사님 아니세요? 특별히 당신 쪽 입장에서 방송해 줄 테니 사고 좀 더 크게 쳐봐요.",
-        "farewell": "죽지 말고 버텨봐요. 당신 덕분에 시청률... 아니, 내 지루함이 좀 가시니까."
-      },
-      "normal": {
-        "greeting": "알립니다. 오늘도 누군가 터미널의 소중한 예산을 낭비하며 소란을 피우고 있네요. 네, 당신 말이에요.",
-        "farewell": "방송 종료. 볼일 없으면 마이크 끄고 사라져 줄래요? 담배 피울 시간도 부족하니까."
-      },
-      "hostile": {
-        "greeting": "저기 레지스탕스의 끄나풀이 기어오는군요. 카메라 렌즈 오염되니까 그 더러운 손으로 방송실 문 두드리지 마세요.",
-        "farewell": "당신의 비명 소리는 녹음해 뒀다가 나중에 자장가로 써야겠네요. 아주 걸작일 거예요."
-      }
-    },
-    "deathLine": "이 지긋지긋한 방송도... 이제 끝이네... 하아...",
-    "description": "터미널 방송실에 틀어박혀 온갖 독설을 내뱉는 여성 아나운서입니다. 사실은 이 난장판을 누구보다 즐기고 있을지도 모릅니다.",
     "dropTableId": ""
   },
   "ratty": {
     "id": "ratty",
-    "name": "래티",
     "faction": "scavenger",
     "attackType": "melee",
     "hp": 30,
@@ -385,32 +161,10 @@
     "exp": 0,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "히히... 뭘 봐? 구경났냐? 통행료 안 낼 거면 저리 꺼져!",
-      "야, 내가 왕년에 황실 근위대 셋을 동시에... 아, 진짜라니까!",
-      "거 고철더미 좀 뒤지는 게 뭐 어때서? 여기 주인이 따로 있어?"
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "오오, 형님! 오셨습니까? 오늘은 또 어떤 영혼을 털어오셨길래 그렇게 안색이 좋으셔!",
-        "farewell": "조심히 가쇼! 혹시 가다가 죽으면 그 장비는 내가 잘 수습해둘게. 히히!"
-      },
-      "normal": {
-        "greeting": "어이, 신입. 어디서 그런 넝마 같은 걸 주워 입고 다니냐? 꼴이 참 볼만해.",
-        "farewell": "가라 가. 내 무용담 들을 기회를 놓치다니, 평생 후회할 거다."
-      },
-      "hostile": {
-        "greeting": "뭐야, 그 눈빛은? 한 대 치게? 쳐봐! 쳐보라고! 네 그 힘 빠진 손으로 뭘 하겠냐?",
-        "farewell": "쳇, 재수 없긴. 사신 놈 앞바닥이나 핥으러 가는 주제에 기세는 좋네."
-      }
-    },
-    "deathLine": "아니... 내가... 왕년에는 진짜... 으윽...",
-    "description": "지하 2층 고철더미에 숨어 지내는 비열한 망령입니다. 끊임없이 과거의 영광을 날조하며 타인을 조롱하지만, 정작 실력은 형편없습니다.",
     "dropTableId": "b2_ratty"
   },
   "vending_machine": {
     "id": "vending_machine",
-    "name": "포션 자판기",
     "faction": "untouchable",
     "attackType": "melee",
     "hp": 8000,
@@ -421,28 +175,10 @@
     "exp": 5,
     "isAlive": true,
     "reborn": false,
-    "lines": ["..."],
-    "scripts": {
-      "friendly": {
-        "greeting": "원하시는 음료를 선택해주세요.",
-        "farewell": "이용해 주셔서 감사합니다."
-      },
-      "normal": {
-        "greeting": "원하시는 음료를 선택해주세요.",
-        "farewell": "이용해 주셔서 감사합니다."
-      },
-      "hostile": {
-        "greeting": "원하시는 음료를 선택해주세요.",
-        "farewell": "이용해 주셔서 감사합니다."
-      }
-    },
-    "deathLine": "...",
-    "description": "이런 곳에도 자판기는 있습니다.",
     "dropTableId": ""
   },
   "marco": {
     "id": "marco",
-    "name": "마르코",
     "faction": "untouchable",
     "attackType": "melee",
     "hp": 450,
@@ -453,32 +189,10 @@
     "exp": 120,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "인생은 기계랑 똑같아. 적당히 기름칠 안 해주면 바로 삐걱거리다 멈추는 법이지.",
-      "이 부품? 어허, 훔친 게 아니라 주인이 '잠시 포기'한 걸 내가 수습한 거야.",
-      "돈만 충분하다면 터미널 통제실 열쇠도 구해줄 수 있어. 물론 그 '충분함'의 기준은 내 마음이지만."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "오우! 우리 단골 손님 오셨나! 자네 얼굴만 봐도 대합실 먼지가 싹 가시는 기분이라니까. 오늘은 또 어떤 귀한 보물을 찾으시나?",
-        "farewell": "몸조심해서 가게나! 자네가 잘못되기라도 하면 이 터미널에서 나랑 수다 떨 사람이 누가 있겠어? 매출 때문이 아니라, 진심이라고!"
-      },
-      "normal": {
-        "greeting": "어서 오게. 이 구석진 노점까지 찾아온 걸 보니, 자네도 꽤나 안목이 있는 모양이구먼? 훑어보는 건 공짜니 편하게 보라고.",
-        "farewell": "뭐, 오늘은 인연이 여기까지인가 보지. 다음엔 자네 눈이 번쩍 뜨일 만한 '물건'을 좀 더 구해 놓을 테니 또 들러줘."
-      },
-      "hostile": {
-        "greeting": "아니, 이 양반아! 남의 장사 방해하러 왔나? 내 갈고리가 기계 부품만 뜯는 줄 알면 큰 오산이야. 당장 꺼지지 못해!",
-        "farewell": "퉤! 재수 옴 붙었네... 야! 다음에 내 눈앞에 띄면 그땐 자릿세가 아니라 목숨값으로 청구할 줄 알아!"
-      }
-    },
-    "deathLine": "젠장... 마진 계산을... 잘못했군... 내 장부... 누가 좀 챙겨줘...",
-    "description": "대합실 구석 벤치 뒤에서 낡은 노점을 운영합니다. 항상 손에 폐유가 묻어있어 '기름손'이라 불리며, 터미널 내부의 온갖 장물과 정보를 은밀하게 유통합니다.",
     "dropTableId": ""
   },
   "apostle": {
     "id": "apostle",
-    "name": "아포스톨-03",
     "faction": "untouchable",
     "attackType": "melee",
     "hp": 8000,
@@ -489,28 +203,10 @@
     "exp": 5,
     "isAlive": true,
     "reborn": false,
-    "lines": ["...침묵이 이어집니다.."],
-    "scripts": {
-      "friendly": {
-        "greeting": "",
-        "farewell": ""
-      },
-      "normal": {
-        "greeting": "",
-        "farewell": ""
-      },
-      "hostile": {
-        "greeting": "",
-        "farewell": ""
-      }
-    },
-    "deathLine": "...",
-    "description": "",
     "dropTableId": ""
   },
   "caron": {
     "id": "caron",
-    "name": "카론",
     "faction": "untouchable",
     "attackType": "ranged",
     "hp": 500,
@@ -522,30 +218,12 @@
     "isAlive": true,
     "reborn": false,
     "noEscape": true,
-    "lines": ["..."],
     "minRebornRarity": "elite",
-    "scripts": {
-      "friendly": {
-        "greeting": "",
-        "farewell": ""
-      },
-      "normal": {
-        "greeting": "",
-        "farewell": ""
-      },
-      "hostile": {
-        "greeting": "",
-        "farewell": ""
-      }
-    },
-    "deathLine": "아... 아아... 나의 아이여... 결국 복수에 닿지 못한 채...",
-    "description": "비틀린 시공간의 틈새를 찢고 나타난 카론이, 심연의 살기를 뿜으며 당신을 응시합니다.",
     "dropTableId": "b4_caron",
     "skills": ["distortion_shroud", "soul_anchor", "dimensional_collapse"]
   },
   "caron_alive": {
     "id": "caron_alive",
-    "name": "카론",
     "faction": "untouchable",
     "attackType": "ranged",
     "hp": 1200,
@@ -556,33 +234,11 @@
     "exp": 1500,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "사신의 눈이 미치지 않는 곳입니다.",
-      "당신의 그림자 속에 숨어 때를 기다리겠습니다.",
-      "군세를 정비하시겠습니까?"
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "어서 오십시오, 군주여. 차원의 문은 언제나 열려 있습니다.",
-        "farewell": "그림자 속에서 당신의 진군을 지켜보겠습니다."
-      },
-      "normal": {
-        "greeting": "사신의 기운이 가깝습니다. 용건은 간단히 하시지요.",
-        "farewell": "부디 몸조심하십시오."
-      },
-      "hostile": {
-        "greeting": "저를 다시 도살자로 만드실 셈입니까?",
-        "farewell": "...어리석은 선택이군요."
-      }
-    },
-    "deathLine": "나의 복수는... 아직 시작조차 하지 못했는데...",
-    "description": "사신을 배신하고 주인공의 그림자에 숨어든 전직 지하 관리자입니다. 온화하지만 서늘한 복수심을 품고 있습니다.",
     "dropTableId": "item-caron-core",
     "skills": []
   },
   "caron_dead": {
     "id": "caron_dead",
-    "name": "아공간의 인도자",
     "faction": "untouchable",
     "attackType": "ranged",
     "hp": 1200,
@@ -593,29 +249,11 @@
     "exp": 1500,
     "isAlive": true,
     "reborn": false,
-    "lines": ["...스...스으윽...", "......(공허한 눈이 당신을 향합니다)......", "...명...령...을..."],
-    "scripts": {
-      "friendly": {
-        "greeting": "......받...들...겠...습...니...다......",
-        "farewell": "......(그림자 속으로 녹아듭니다)......"
-      },
-      "normal": {
-        "greeting": "......관...리...",
-        "farewell": "......(기괴한 숨소리만 들립니다)......"
-      },
-      "hostile": {
-        "greeting": "......적.....?",
-        "farewell": "......스...으...윽......"
-      }
-    },
-    "deathLine": "......아......이......여......",
-    "description": "찬탈당한 카론의 정수로 빚어낸 기괴한 사역마입니다. 자아는 소멸되었으며, 오직 주인인 당신의 마력에 반응하여 아공간을 조작합니다.",
     "dropTableId": "item-void-dust",
     "skills": []
   },
   "adrian": {
     "id": "adrian",
-    "name": "겁에 질린 안내 직원, 에이드리언",
     "attackType": "melee",
     "hp": 20,
     "maxHp": 20,
@@ -625,33 +263,12 @@
     "exp": 60,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "제발... 로비에서 총격전이라니... 규정집 제4조 2항에...",
-      "안내 데스크 아래는 이미 꽉 찼단 말입니다! 저 혼자 숨기도 좁아요!"
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "아... 당신도 피난처를 찾으시나요? 죄송하지만 모든 비상구는 이미 폐쇄되었습니다...",
-        "farewell": "부디... 바깥의 연기가 가라앉을 때까지만이라도 무사하시길."
-      },
-      "normal": {
-        "greeting": "체크인... 그런 건 이제 의미 없겠죠? 저 기둥 뒤에 시체가... 으윽...",
-        "farewell": "조심하세요. 위층에서 레지스탕스들이 내려오고 있다고 들었습니다."
-      },
-      "hostile": {
-        "greeting": "당신들도 그 폭도들 중 하나입니까? 더 이상 부술 것도 없는데 대체 왜!",
-        "farewell": "당신들의 '방문 기록'은... 반드시 지옥의 명부에 남을 겁니다!"
-      }
-    },
-    "deathLine": "오늘... 퇴근은... 글렀네요... 정산도... 못했는데...",
-    "description": "어떤 복잡한 예약 상황도 차분하게 해결할 것 같은 신뢰감을 줍니다.",
     "dropTableId": "b5_adrian",
     "minRebornRarity": "elite",
     "skills": []
   },
   "flint": {
     "id": "flint",
-    "name": "돌격대장 플린트",
     "faction": "resistance",
     "attackType": "ranged",
     "hp": 80,
@@ -662,34 +279,12 @@
     "exp": 120,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "저 캔버스가 타들어 가는 냄새가 여기까지 나는군. 아주 고소해.",
-      "인질들이 비명을 지르며 쏟아져 나올 때가 진짜 시작이다. 준비해둬.",
-      "이 구역의 전력을 차단하면, 저 밑바닥 사람들도 오늘만큼은 밝은 밤을 보내겠지."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "왔나? 네가 합류한 덕분에 일이 수월해졌어. 등 뒤는 내가 맡지.",
-        "farewell": "먼저 가라. 난 이 빌어먹을 장치가 완전히 잿더미가 되는 걸 보고 가야겠어."
-      },
-      "normal": {
-        "greeting": "어슬렁거리지 마. 눈먼 총알에 구멍 나기 싫으면 말이야.",
-        "farewell": "살고 싶으면 알아서 몸 사려. 난 짐덩어리를 챙길 여유 따윈 없으니까."
-      },
-      "hostile": {
-        "greeting": "아직도 안 꺼졌나? 아까 그 기습으로 끝내지 못한 게 네 놈 일생의 한이 될 거다.",
-        "farewell": "도망쳐봐야 이 층을 나갈 순 없어. 다음엔 네 놈 심장에 부싯돌을 박아주지."
-      }
-    },
-    "deathLine": "불꽃은... 아직... 꺼지지 않았다...",
-    "description": "레지스탕스의 돌격대장. 부싯돌(Flint)이라는 이름처럼 거칠고 폭발적인 성격",
     "dropTableId": "resistance",
     "minRebornRarity": "elite",
     "skills": ["rapid_fire", "vitals_strike"]
   },
   "julian": {
     "id": "julian",
-    "name": "냉소적인 바텐더, 줄리안",
     "attackType": "ranged",
     "hp": 25,
     "maxHp": 25,
@@ -699,32 +294,10 @@
     "exp": 60,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "최악의 마리아주군요. 고급 위스키와 피 냄새라니.",
-      "보안팀 놈들의 무능함은 안주로 내놓기에도 부족할 지경입니다.",
-      "바 테이블 뒤가 이렇게 안전하지 않을 줄 알았으면 진작 사표를 냈어야 했는데."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "어서 오십시오. 이 난장판 속에서 유일하게 대화가 통할 분이 오셨군요.",
-        "farewell": "부디 몸 조심하십시오. 당신마저 잘못되면 이 층엔 무식한 폭도들뿐일 테니까요."
-      },
-      "normal": {
-        "greeting": "주문하시겠습니까? 아, 보시다시피 셰이커 대신 권총을 잡아야 할 판이라서요.",
-        "farewell": "용건이 끝나셨으면 이동하시죠. 깨진 유리 조각을 치울 여유조차 없으니까요."
-      },
-      "hostile": {
-        "greeting": "무례한 손님에겐 서비스가 나가지 않는 법이죠. 당신을 위한 특별한 '독주'를 준비해 드릴까요?",
-        "farewell": "사라지세요. 당신 같은 부류와 섞이는 건 제 취향이 아닙니다."
-      }
-    },
-    "deathLine": "마지막... 잔은... 제가 직접... 내리고 싶었는데...",
-    "description": "VIP 층의 바를 담당하던 세련된 바텐더입니다.",
     "dropTableId": "b5_julian"
   },
   "oliver": {
     "id": "oliver",
-    "name": "죽어가는 웨이터, 올리버",
     "attackType": "melee",
     "hp": 2,
     "maxHp": 32,
@@ -734,29 +307,11 @@
     "exp": 60,
     "isAlive": true,
     "reborn": false,
-    "lines": ["..."],
-    "scripts": {
-      "friendly": {
-        "greeting": "당신도... 그분들의 동료인가요? 어서 가서... 저 가짜 낙원을 불태워주세요.",
-        "farewell": "걱정 마십시오... 이 장관을 끝까지 지켜보기 전엔 죽지 않을 테니."
-      },
-      "normal": {
-        "greeting": "누구든 상관없어. 오늘 밤 이 VIP 층은... 우리 모두의 무덤이 될 테니까.",
-        "farewell": "가서 전하십시오. 식사는 준비됐고... 이제 심판을 받을 시간이라고."
-      },
-      "hostile": {
-        "greeting": "아직도 상층부 놈들의 편을 드는 개가 남아있었나? 내 마지막 남은 힘으로라도 네 숨통을 끊어주마!",
-        "farewell": "죽여라... 내가 죽어도 혁명의 불길은... 네 놈들을 모조리 삼킬 테니!"
-      }
-    },
-    "deathLine": "드디어... 퇴근이군... 불바다가 된... 로비로...",
-    "description": "주방에서 평생을 멸시받으며 일해온 웨이터입니다. 치명상을 입은 상태에서도 레지스탕스의 습격을 신의 구원처럼 여기며, 상류층을 향한 깊은 원한을 쏟아냅니다.",
     "minRebornRarity": "epic",
     "dropTableId": ""
   },
   "kael": {
     "id": "kael",
-    "name": "냉정한 카엘",
     "attackType": "melee",
     "hp": 28,
     "maxHp": 28,
@@ -766,29 +321,12 @@
     "exp": 100,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "감정에 휘둘리면 방아쇠를 당길 수 없어.",
-      "플린트 형님은 옳아. 부수지 않으면 아무것도 변하지 않으니까.",
-      "베스퍼를 울리는 놈은 내 방식대로 처리한다."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "형님이 말한 사람이 당신이었군. 꽤 강해 보여.",
-        "farewell": "앞길 조심해. VIP 층의 보안 요원들은 끈질기니까."
-      },
-      "hostile": {
-        "greeting": "미안하지만 개인적인 원한은 없어. 그저 네가 제거 대상일 뿐이지.",
-        "farewell": "다음엔 더 정밀하게 조준해주마."
-      }
-    },
-    "description": "수용소 출신의 어린 소년. 베스퍼를 지키는 것을 자신의 유일한 사명으로 여깁니다.",
     "skills": ["power_shot", "smoke_bomb", "poison_dagger"],
     "minRebornRarity": "elite",
     "dropTableId": "resistance"
   },
   "vesper": {
     "id": "vesper",
-    "name": "어리숙한 베스퍼",
     "attackType": "ranged",
     "hp": 20,
     "maxHp": 20,
@@ -798,29 +336,12 @@
     "exp": 90,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "저 위층 아줌마들이 쓰던 보석, 우리 마을에선 밥 열 그릇 값도 안 될 텐데.",
-      "카엘! 너무 멀리 가지 마! 내 석궁 사거리 밖으로 나가지 말라고!",
-      "혁명이라는 거, 생각보다 배가 많이 고픈 일이네."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "안녕! 혹시 먹을 거 있어? 아드레날린 말고 진짜 음식 말이야!",
-        "farewell": "다음에 보면 맛있는 거 하나만 줘! 내가 살려준 셈 치고!"
-      },
-      "hostile": {
-        "greeting": "우와, 진짜 VIP 냄새가 나네! 이 석궁 화살이 얼마나 아픈지 시험해볼래?",
-        "farewell": "메롱! 못 맞췄지? 다음에 보면 진짜 구멍 내줄 거야!"
-      }
-    },
-    "description": "전쟁의 공포를 장난스러운 태도로 가리고 있지만, 상류층에 대한 증오는 카엘 못지않게 깊습니다.",
     "skills": ["aim_arrow", "piercing_arrow", "rapid_fire"],
     "minRebornRarity": "epic",
     "dropTableId": "resistance"
   },
   "baron_valter": {
     "id": "baron_valter",
-    "name": "오만한 지배자, 발터",
     "attackType": "melee",
     "hp": 480,
     "maxHp": 480,
@@ -830,27 +351,6 @@
     "exp": 1500,
     "isAlive": true,
     "reborn": false,
-    "lines": [
-      "먼지들이 날뛰는군. 청소부들은 대체 뭘 하고 있는 거지?",
-      "이 와인에 화약 가루가 섞였어. 지배인에게 이 무례함을 어떻게 사과할지 묻고 싶군.",
-      "레지스탕스? 굶주린 개들이 짖는 소리에 내가 놀랄 거라 생각했나?"
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "그나마 말귀를 알아듣는 사냥개가 왔군. 내 앞길을 치워라. 보상은 섭섭지 않게 주지.",
-        "farewell": "물러가라. 네 놈의 땀 냄새가 내 빈티지 향을 망치고 있으니까."
-      },
-      "normal": {
-        "greeting": "누구냐? 고용된 용병인가? 아니면 길을 잃은 불청객인가?",
-        "farewell": "용건이 끝났으면 사라져라. 내 인내심은 이 잔에 남은 와인보다 적으니."
-      },
-      "hostile": {
-        "greeting": "감히 이 구역에 발을 들이고도 무사할 거라 믿었나? 하등 생물의 오만함이란.",
-        "farewell": "네 놈의 비명은 예술적 가치조차 없군. 불쾌하기 짝이 없어."
-      }
-    },
-    "deathLine": "나의... 이 고귀한 피가... 바닥의 먼지와 섞이다니... 절대... 용서 못 한다...",
-    "description": "도시 전력망의 지분을 소유한 거대 자본가입니다. 레지스탕스의 습격조차 자신의 휴식을 방해하는 사소한 결례로 여기며, 금박을 입힌 특제 리볼버로 침입자를 직접 처단합니다.",
     "dropTableId": "b5_baron",
     "minRebornRarity": "epic",
     "skills": ["vitals_strike", "whirlwind", "greater_heal"]

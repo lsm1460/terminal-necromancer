@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import BossEvent from '~/systems/events/BossEvent'
 import { GameContext, NPC, Tile } from '~/types'
 import { speak } from '~/utils'
@@ -13,7 +14,7 @@ let secondAnswer: boolean | null = null
 const CaronHandler: NPCHandler = {
   getChoices(player, npc, context) {
     return [
-      { name: 'talk', message: '💬 대화' },
+      { name: 'talk', message: i18n.t('talk.speak') },
       { name: 'battle', message: '💀 청소 (전투)' },
     ]
   },

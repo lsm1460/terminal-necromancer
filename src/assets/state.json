@@ -5,16 +5,16 @@
     "x": 1,
     "y": 1,
     "_maxHp": 50,
-    "hp": 27,
+    "hp": 50,
     "_maxMp": 50,
-    "mp": 40,
+    "mp": 50,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 26,
-    "exp": 20,
+    "gold": 85,
+    "exp": 55,
     "level": 1,
     "karma": 0,
     "_maxMemorize": 5,
@@ -23,47 +23,58 @@
       "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
-    "equipped": {
-      "weapon": {
-        "id": "iron_sword_Zcig-Aae",
-        "label": "\u001b[35m🟣 [기억] 필멸의 철검\u001b[0m",
-        "type": "weapon",
+    "unlockedSkills": [
+      "RAISE_SKELETON",
+      "RECALL_SKELETON",
+      "FOCUS_FIRE"
+    ],
+    "_skeleton": [
+      {
+        "id": "skeleton::1773385695068",
+        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
         "attackType": "melee",
-        "atkRange": [
-          2,
-          4
-        ],
-        "critRange": [
-          0,
-          0.05
-        ],
-        "price": 500,
-        "sellPrice": 120,
-        "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다.",
-        "quantity": 1,
-        "atk": 4,
-        "crit": 0.05,
-        "rarity": "EPIC",
-        "affix": {
-          "id": "MEMORY",
-          "name": "기억",
-          "description": "메모라이즈 슬롯 수가 증가합니다.",
-          "valueRange": [
-            1,
-            2
-          ],
-          "metadata": {
-            "needsConfirmOnUnequip": true,
-            "unEquipCaution": "장비 해제 시 각인된 마법 일부가 사라집니다."
-          },
-          "value": 1
-        },
-        "x": 0,
-        "y": 1
+        "maxHp": 19,
+        "hp": 4,
+        "atk": 8,
+        "def": 5,
+        "agi": 8,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Track Ratman.",
+        "originId": "track_ratman::896MEPjk",
+        "rarity": "common",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 10
       },
-      "armor": {
-        "id": "leather_armor_bdSZRArr",
-        "label": "\u001b[37m⚪ 가죽 갑옷\u001b[0m",
+      {
+        "id": "skeleton::1773385718136",
+        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
+        "attackType": "melee",
+        "maxHp": 19,
+        "hp": 19,
+        "atk": 8,
+        "def": 5,
+        "agi": 8,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Track Ratman.",
+        "originId": "track_ratman::bfMfn4YM",
+        "rarity": "common",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 10
+      }
+    ],
+    "inventory": [
+      {
+        "id": "leather_armor::RRw7afvP",
         "type": "armor",
         "defRange": [
           2,
@@ -75,105 +86,49 @@
         ],
         "price": 400,
         "sellPrice": 100,
-        "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다.",
         "quantity": 1,
         "def": 4,
         "eva": 0.02,
         "rarity": "COMMON",
-        "x": 0,
-        "y": 1
-      }
-    },
-    "unlockedSkills": [
-      "RAISE_SKELETON",
-      "RECALL_SKELETON",
-      "FOCUS_FIRE"
-    ],
-    "inventory": [
-      {
-        "id": "pizza",
-        "label": "피자",
-        "type": "food",
-        "hpHeal": 5,
-        "price": 15,
-        "sellPrice": 3,
-        "description": "지하에 살던 거북이들이 좋아했던 피자",
-        "quantity": 2,
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "mana_potion_small",
-        "label": "작은 마나 포션",
-        "type": "consumable",
-        "mpHeal": 20,
-        "price": 45,
-        "sellPrice": 6,
-        "description": "작은 마나 회복 포션으로, mp 20을 보충할 수 있습니다.",
-        "quantity": 1,
-        "x": 0,
-        "y": 1
-      },
-      {
-        "id": "potion_small",
-        "label": "작은 체력 포션",
-        "type": "consumable",
-        "hpHeal": 20,
-        "price": 20,
-        "sellPrice": 5,
-        "description": "작은 체력 회복 포션으로, hp 20을 보충할 수 있습니다.",
-        "quantity": 1,
+        "perfPrefix": "masterwork",
+        "adjective": "",
         "x": 1,
         "y": 1
       }
     ],
     "inventoryMax": 15,
-    "skeleton": [
-      {
-        "id": "skeleton_1773103173336",
-        "name": "\u001b[32m[RARE]\u001b[0m 스켈레톤 방패병",
-        "attackType": "melee",
-        "maxHp": 43,
-        "hp": 20,
-        "atk": 8,
-        "def": 9,
-        "agi": 6,
-        "skills": [],
-        "exp": 0,
-        "description": "선로 랫맨의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
-      },
-      {
-        "id": "skeleton_1773103204521",
-        "name": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사",
-        "attackType": "melee",
-        "maxHp": 19,
-        "hp": 19,
-        "atk": 8,
-        "def": 5,
-        "agi": 8,
-        "skills": [],
-        "exp": 0,
-        "description": "선로 랫맨의 유골로 만들어진 소환수입니다.",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 10
-      }
-    ],
     "skeletonSubspace": [],
     "subspaceLimit": 15,
     "_maxSkeleton": 2,
     "golemUpgrade": [],
     "knightUpgrade": [],
-    "upgradeLimit": 5
+    "upgradeLimit": 5,
+    "equipped": {
+      "weapon": null,
+      "armor": {
+        "id": "rags::cWZdVZef",
+        "type": "armor",
+        "defRange": [
+          1,
+          2
+        ],
+        "evaRange": [
+          0,
+          0
+        ],
+        "price": 0,
+        "sellPrice": 0,
+        "quantity": 1,
+        "maxRarity": "COMMON",
+        "def": 1,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "masterwork",
+        "adjective": "",
+        "x": 0,
+        "y": 1
+      }
+    }
   },
   "sceneId": "B2_Transit_Area",
   "npcs": {
@@ -222,12 +177,6 @@
       },
       "second_boss": {
         "hp": 500,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
-      "third_boss": {
-        "hp": 10,
         "isAlive": true,
         "reborn": false,
         "relation": 0
@@ -285,6 +234,48 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "adrian": {
+        "hp": 20,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "flint": {
+        "hp": 80,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "julian": {
+        "hp": 25,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "oliver": {
+        "hp": 2,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "kael": {
+        "hp": 28,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "vesper": {
+        "hp": 20,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "baron_valter": {
+        "hp": 480,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
       }
     },
     "factionHostility": {},
@@ -292,15 +283,15 @@
   },
   "drop": {
     "scendId": "B2_Transit_Area",
-    "id": "ucPWV-5u",
-    "tileId": "11",
-    "exp": 0,
-    "gold": 1
+    "id": "xh3Y6oE7",
+    "tileId": "B2_008",
+    "exp": 14,
+    "gold": 6
   },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "talk_death_1",
-    "b2_ratty"
-  ]
+    "talk_death_1"
+  ],
+  "locale": "en"
 }

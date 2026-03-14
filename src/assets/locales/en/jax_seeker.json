@@ -1,0 +1,49 @@
+{
+    "name": "Jax the Seeker",
+    "lines": ["It's hell out there. Are you ready?"],
+    "scripts": {
+      "friendly": {
+        "greeting": "Hey, you're still alive? I've scouted out a pretty decent route this time.",
+        "farewell": "Don't die. If you're gone, I won't have anyone to drink with."
+      },
+      "normal": {
+        "greeting": "What is it? Move, you're in the way.",
+        "farewell": "Good luck. Sometimes that's the only weapon you've got."
+      },
+      "hostile": {
+        "greeting": "You little rat...",
+        "farewell": "Disappear from my sight. Next time, my blade will do the talking."
+      }
+    },
+    "deathLine": "Jax collapses, losing his grip on the map he was holding.",
+    "description": "An expert scout who seems somewhat out of place.",
+
+    "choices": {
+        "enter": "💬 Move to HQ"
+      },
+      "join": {
+        "dialogues": [
+          "A man in grease-stained rags emerges from the shadows, fiddling with a worn dagger.",
+          "Jax: \"Hey, ain't seen your face 'round here. Not even a rat passes through without my say-so.\"",
+          "Jax: \"Lookin' all scrawny... You're lookin' like subway rat fodder to me. Heh.\"",
+          "Jax: \"But lucky for you, I'm 'roundin' up some heads lately. I could take ya to the HQ, how 'bout it?\"",
+          "(You observe Jax's protruding collarbones and sturdy-looking skeletal frame.)",
+          "Necromancer (Monologue): 'A pathetic appearance, but the bone structure is superb. If I kill and raise him, he’d make a fine assault soldier...'"
+        ],
+        "select_title": "How will you respond to Jax's fishy proposal?",
+        "options": {
+          "join": "💬 Cooperate with the Resistance",
+          "kill": "💀 Harvest the bones (Start Battle)",
+          "leave": "💬 Ignore and leave"
+        },
+        "result_join": "\nJax: \"Heh, so ya wanna live after all? Wise move. I'll put in a good word at HQ. Follow me!\"",
+        "confirm_move": "Will you follow Jax to the Resistance HQ immediately?",
+        "stay_msg": "\nJax: \"What, ya still got business left?\"",
+        "result_kill_jax": "\nJax: \"What? What's with that look? How dare you... to the great Jax!\"",
+        "result_kill_player": "Necromancer: \"Don't worry. In death, you shall become far more useful than you are now.\"",
+        "result_leave": "\nJax: \"Hmph, look at ya running away in fear! Don't let me see your face again!\""
+      },
+      "enter": {
+        "log": "\nJax: \"Alright, quit dawdlin' and stay close. The path here is a bit tricky.\""
+      }
+  }

@@ -1,17 +1,18 @@
+import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
 import { delay } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
-import { Player } from '~/core/player/Player'
 
 const FlintHandler: NPCHandler = {
   getChoices(player, npc, context) {
     const alreadyTalk = context.events.isCompleted('b5_flint')
 
     if (alreadyTalk) {
-      return [{ name: 'talk', message: '💬 잡담' }]
+      return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
     } else {
-      return [{ name: 'event', message: '🔍 살펴보기' }]
+      return [{ name: 'event', message: i18n.t('talk.examine') }]
     }
   },
   async handle(action, player, npc, context) {

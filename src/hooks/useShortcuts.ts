@@ -2,19 +2,22 @@ import { useCallback, useEffect } from 'react'
 import { GameEngine } from '~/gameEngine'
 import { useGameStore } from '~/stores/useGameStore'
 import { useInputLock } from './useInputLock'
+import i18n from '~/i18n'
+import { useTranslation } from 'react-i18next'
 
-export const COMMAND_MAP: Record<string, string> = {
-  a: '공격',
-  k: '스킬',
-  s: '상태',
-  i: '인벤토리',
-  m: '지도',
-  g: '줍기',
-  l: '보기',
-  h: '도움말',
-}
+export const getCommandMap = (): Record<string, string> => ({
+  a: i18n.t('commands.attack'),
+  k: i18n.t('commands.skill'),
+  s: i18n.t('commands.status'),
+  i: i18n.t('commands.inventory'),
+  m: i18n.t('commands.map.label'),
+  g: i18n.t('commands.pick'),
+  l: i18n.t('commands.look.label'),
+  h: i18n.t('commands.help'),
+})
 
 export const useShortcuts = (engine: React.RefObject<GameEngine | null>) => {
+  const { t } = useTranslation()
   const disabled = useInputLock()
   const { addLog } = useGameStore()
 
@@ -39,19 +42,22 @@ export const useShortcuts = (engine: React.RefObject<GameEngine | null>) => {
       const key = e.key
 
       if (isModifier) {
-        if (key in COMMAND_MAP) {
+        const commandsMap = getCommandMap()
+
+        if (key in commandsMap) {
           e.preventDefault()
-          await submitCommand(COMMAND_MAP[key])
+
+          await submitCommand(commandsMap[key])
         }
         return
       }
 
       if (!disabled) {
         const arrowMap: Record<string, string> = {
-          ArrowUp: '위',
-          ArrowDown: '아래',
-          ArrowLeft: '왼쪽',
-          ArrowRight: '오른쪽',
+          ArrowUp: t('up'),
+          ArrowDown: t('down'),
+          ArrowLeft: t('left'),
+          ArrowRight: t('right'),
         }
 
         if (key in arrowMap) {

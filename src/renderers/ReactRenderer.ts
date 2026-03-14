@@ -44,7 +44,8 @@ export class ReactRenderer implements Renderer {
     printStatus(player, context)
   }
 
-  async select(message: string, choices: { name: string; message: string }[]): Promise<string> {
+  async select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string> {
+    // TODO: defaultValue 연결하기
     return new Promise((resolve) => {
       this.store.setUI({
         type: 'SELECT',

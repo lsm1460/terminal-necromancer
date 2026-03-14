@@ -4,18 +4,19 @@ import { Terminal } from '../Terminal'
 import GolemWrapper from './GolemWrapper'
 import KnightWrapper from './KnightWrapper'
 import { Player, PlayerSaveData } from './Player'
+import SkeletonWrapper from './SkeletonWrapper'
 
 export class MinionManager {
   skeletonSubspace: BattleTarget[] = []
   subspaceLimit = 15
-  public skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
+  private _skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
   _maxSkeleton: number = 2 // 최대 소환 가능 수
 
   upgradeLimit = 5
   golemUpgrade: ('machine' | 'soul')[] = []
-  public _golem: BattleTarget | undefined = undefined
+  private _golem: BattleTarget | undefined = undefined
   knightUpgrade: (ItemRarity | 'soul')[] = []
-  public _knight: BattleTarget | undefined = undefined
+  private _knight: BattleTarget | undefined = undefined
 
   constructor(
     private player: Player,
@@ -24,7 +25,7 @@ export class MinionManager {
     if (saved) {
       if (saved.skeletonSubspace) this.skeletonSubspace = saved.skeletonSubspace
       if (saved.subspaceLimit) this.subspaceLimit = saved.subspaceLimit
-      if (saved.skeleton) this.skeleton = saved.skeleton
+      if (saved._skeleton) this._skeleton = saved._skeleton
       if (saved._maxSkeleton) this._maxSkeleton = saved._maxSkeleton
       if (saved.golemUpgrade) this.golemUpgrade = saved.golemUpgrade
       if (saved._golem) this._golem = saved._golem
@@ -44,6 +45,14 @@ export class MinionManager {
     return maxSkeleton + _val
   }
 
+  get skeleton() {
+    return this._skeleton.map((sk) => new SkeletonWrapper(sk, this.player))
+  }
+
+  set skeleton(_minions) {
+    this._skeleton = _minions
+  }
+
   get golem() {
     if (!this._golem) {
       return
@@ -61,27 +70,7 @@ export class MinionManager {
   }
 
   get minions(): BattleTarget[] {
-    const _skeletons = this.skeleton
-      .sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
-      .map((skeleton) => {
-        // 1. 기존에 들어있을 수 있는 어픽스 관련 스킬들을 한 번에 제거
-        const affixSkillIds = ['death_destruct', 'frostborne']
-        let currentSkills = (skeleton.skills || []).filter((id) => !affixSkillIds.includes(id))
-
-        if (this.player.hasAffix('DOOMSDAY')) {
-          currentSkills.push('death_destruct')
-        }
-
-        if (this.player.hasAffix('FROSTBORNE')) {
-          currentSkills.push('frostborne')
-        }
-
-        skeleton.skills = currentSkills
-
-        return skeleton
-      })
-
-    return [this.golem, ..._skeletons, this.knight].filter((_minion): _minion is BattleTarget => !!_minion)
+    return [this.golem!, ...this.skeleton, this.knight!].filter((_minion) => !!_minion)
   }
 
   public updateSkeletonLimit() {
@@ -100,7 +89,7 @@ export class MinionManager {
 
   addSkeleton(minion: BattleTarget) {
     if (this.skeleton.length < this.maxSkeleton) {
-      this.skeleton.push(minion)
+      this._skeleton.push(minion)
       return true
     }
 
@@ -208,7 +197,7 @@ export class MinionManager {
 
   public toJSON() {
     return {
-      skeleton: this.skeleton,
+      _skeleton: this._skeleton,
       skeletonSubspace: this.skeletonSubspace,
       subspaceLimit: this.subspaceLimit,
       _maxSkeleton: this._maxSkeleton,

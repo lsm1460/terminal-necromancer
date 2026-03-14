@@ -1,0 +1,59 @@
+{
+    "select_title": "스킬 선택 (현재 MP: {{mp}})",
+    "not_enough_mp": "마력이 부족합니다! (필요: {{cost}} / 현재: {{current}})",
+    "no_corpses_nearby": "주변에 활용할 시체가 없습니다.",
+    "select_corpse_to_consume": "어떤 시체를 소모하시겠습니까?",
+    "corpse_choice_format": "{{name}}의 시체 (HP: {{hp}}, ATK: {{atk}})",
+    "cancel_action": "스킬 사용을 취소했습니다.",
+
+    "RAISE_SKELETON": {
+      "name": "스켈레톤 생성",
+      "description": "시체를 소모하여 해골 병사를 소환합니다.",
+      "unlockHint": ""
+    },
+    "RECALL_SKELETON": {
+      "name": "스켈레톤 회수",
+      "description": "해골 병사를 마나로 환원합니다.",
+      "unlockHint": ""
+    },
+    "FOCUS_FIRE": {
+      "name": "죽음의 표식",
+      "description": "미니언들이 표식을 보유한 대상을 우선적으로 공격합니다.",
+      "unlockHint": ""
+    },
+    "CORPSE_EXPLOSION": {
+      "name": "시체 폭발",
+      "description": "시체를 폭파시켜 광역 피해를 입힙니다.",
+      "unlockHint": "지하 2층 정화 완료"
+    },
+    "SOUL_HARVEST": {
+      "name": "영혼 흡수",
+      "description": "시체에서 정수를 뽑아내 마나로 전환합니다.",
+      "unlockHint": "지하 2층 정화 완료"
+    },
+    "SOUL_TRANSFER": {
+      "name": "영혼 전달",
+      "description": "사령술사의 체력을 종속에게 전달하여 체력을 채웁니다.",
+      "unlockHint": "지하 3층 정화 완료"
+    },
+    "CURSE": {
+      "name": "저주",
+      "description": "대상을 약화시킵니다.",
+      "unlockHint": "지하 3층 정화 완료"
+    },
+    "BONE_SPEAR": {
+      "name": "뼈 창",
+      "description": "두 적을 동시에 공격합니다.",
+      "unlockHint": "지하 5층 정화 완료"
+    },
+    "BONE_PRISON": {
+      "name": "뼈 감옥",
+      "description": "대상을 선택한 뒤 뼈를 사용해 대상의 움직임을 봉쇄합니다.",
+      "unlockHint": "지하 5층 정화 완료"
+    },
+    "BONE_STORM": {
+      "name": "뼈 폭풍",
+      "description": "모든 스켈레톤을 희생하고 체력 합에 비례하여 광역 대미지를 입힙니다.",
+      "unlockHint": "지하 5층 정화 완료"
+    }
+  }

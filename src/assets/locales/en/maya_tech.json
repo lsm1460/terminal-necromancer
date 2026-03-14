@@ -1,0 +1,96 @@
+{
+  "name": "Maya the Technician",
+  "lines": ["Did you bring anything useful?"],
+  "scripts": {
+    "friendly": {
+      "greeting": "Oh, you're back? I saved some good parts just for you.",
+      "farewell": "Bring back plenty of scraps! I'll give you a special deal."
+    },
+    "normal": {
+      "greeting": "If you need something, show me what you've got. Nothing's free.",
+      "farewell": "Don't go blaming your gear."
+    },
+    "hostile": {
+      "greeting": "Don't touch my stuff unless you want to lose a hand.",
+      "farewell": "Don't come back. You're bad for business."
+    }
+  },
+  "deathLine": "Maya draws her last breath, dropping her tools.",
+  "description": "A master craftswoman who transforms scraps into deadly weapons.",
+
+  "choices": {
+    "golem": "🤖 Create Golem",
+    "upgrade": "🤖 Upgrade Golem",
+    "modify": "⚔️ Change Dark Knight Gear"
+  },
+  "buy": {
+    "greeting": "Take a look if you need anything. You know nothing's free, right?",
+    "noStock": "I'm all out of stock. Check back later.",
+    "noGold": "Your balance is too low. Go pick up some more scrap from the docks.",
+    "success": "Check the goods. They'll serve you well."
+  },
+  "sell": {
+    "greeting": "Let's see what you scavenged. I don't take useless junk.",
+    "noItems": "Your pockets are empty. Nothing left to sell?",
+    "success": "Condition isn't bad. Here, the promised payment.",
+    "exit": "Stay alive. If you die, our deals are over."
+  },
+  "join": {
+    "intro": [
+      "???: \"Ah! Watch out! A screw just rolled over there! It's a disaster if you step on it!\"",
+      "Maya: \"Hehe, hi! I'm Maya. I'm the genius engineer who's the only one in this gloomy terminal who can talk to machines!\""
+    ],
+    "jax_alive": "Maya: \"Oh, do you know Uncle Jax? I always keep his boot boosters in top shape, so don't worry!\"",
+    "jax_dead": "Maya: \"...Huh? No news on Uncle Jax? It's been a while since he went to scout the docks... Who's gonna get me precision parts if he's gone? I'm really worried.\"",
+    "has_golem": [
+      "Maya: \"Whoa! That golem... Wait, what's with this unpleasant mana flow? No way... did that 'Zed' guy touch this?\"",
+      "Maya: \"(Pouting) Hmph, typical. Shoving soul fragments in by force and making the machine scream... I guess he threw away his pride as an engineer to play the Reaper's dog.\"",
+      "Maya: \"Hey, if that golem starts acting weird later, bring it to me right away! I'll wipe out that nasty mana and show you some real 'mechanical' power!\""
+    ],
+    "can_make_golem": [
+      "Maya: \"You know, those parts dumped at the docks look pretty useful! How about I help you build a proper golem?\"",
+      "Maya: \"Not some monster made by grinding souls like Zed does, but a real Resistance weapon we build together! Exciting, right?\""
+    ],
+    "cannot_make_golem": [
+      "Maya: \"The Reaper bastards using those dock golems for soul surveillance... that's all that man Zed's work.\nHe used to resist with Commander Kane, but now he's obsessed with soul fragment research and switched sides.\"",
+      "Maya: \"So if you run into those things later, smash 'em without mercy!\nThat's the coolest way to resist the terminal.\"",
+      "Maya: \"Then bring me the broken core, and I'll have it reborn as a 'true golem'—worlds apart from Zed's methods.\nIt's a promise!\""
+    ],
+    "outro": "Maya: \"Hehe, well, I'll get back to oiling things up. Talk to me if you need anything!\""
+  },
+  "awake": {
+    "dialogues": [
+      "Maya: What's this tattered lump? ...Is this the B3 Golem Core?",
+      "Maya: Ha, you really trashed it. Others might sell it to a junk dealer, but consider yourself lucky.",
+      "Maya: Only I could even try to stitch these fragments back together.",
+      "Maya: Here, hand it over. I'll make it much more useful than the original."
+    ],
+    "confirm": "Injecting Reaper's mana into the core. There is a risk of the golem awakening incompletely and going berserk. Proceed?",
+    "cancel": "\nMaya: \"Scared? Well, it's wise to quit if you don't want to die. Bring it back if you change your mind.\"",
+    "success": [
+      "\n[⚙️ Golem Activation Successful]",
+      "Maya: \"Alright, the Reaper's mana has settled in nicely. Wake up, you hunk of junk!\"",
+      "Maya: \"(With mechanical clicking sounds) See? Perfect, isn't it? Now this guy only listens to your commands.\"",
+      "Maya: \"Be careful it doesn't go berserk and stomp on you too. I'm not responsible!\""
+    ]
+  },
+  "upgrade": {
+    "soul_hate": [
+      "\nMaya: \"Ugh... what is this sticky, nasty black mist? It's that four-eyes guy's work, isn't it?!\"",
+      "Maya: \"Putting this filth inside a machine... Ugh, I'm charging extra for the cleaning and labor! You brought enough gold, right?\""
+    ],
+    "menu_title": "[ Current Slots: {{slots}} ] / My Gold: {{gold}}G",
+    "choices": {
+      "machine": "⚙️ [Machine Upgrade] Install high-performance parts (Cost: {{cost}} GOLD)",
+      "remove": "🔧 [Remove Parts] Remove one Machine stack (Cost: {{cost}} GOLD)"
+    },
+    "full": "\nMaya: \"Sorry, but there's no more room! If I force it in, the frame will warp! That's a disgrace to any engineer!\"",
+    "no_gold": "\nMaya: \"Hey, you're short on cash! Even the Resistance can't get parts for free. Go earn some more!\"",
+    "no_parts": "\nMaya: \"I haven't installed any parts, so what am I supposed to take off? You're a strange one!\"",
+    "success_log": "\n🛠️ [Process Complete] Maya tightens the final bolt with her wrench!",
+    "success_msg": "Maya: \"Look at that! The shine of that sleek, hard steel! This is the true power of technology, even without souls mixed in!\"",
+    "remove_log": "\n🔧 [Removal Complete] Maya packs the neatly removed parts with a look of regret.",
+    "remove_msg": "Maya: \"Tsk, I don't know why you're throwing away such good parts... I'm selling these as used!\"",
+    "exit_msg": "\nMaya: \"See ya later! Don't forget to keep things oiled!\""
+  }
+}

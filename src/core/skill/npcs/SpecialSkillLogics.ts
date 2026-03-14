@@ -2,6 +2,7 @@ import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import { ItemType, NpcSkill } from '~/types'
+import { getItemLabel } from '~/utils'
 
 export const SpecialSkillLogics: Record<
   string,
@@ -74,7 +75,7 @@ export const SpecialSkillLogics: Record<
         if (actualItem) {
           player.removeItem(actualItem.id, 1)
           Terminal.log(
-            ` \x1b[31m[!] 분실!\x1b[0m ${attacker.name}(이)가 배낭에서 \x1b[90m'${targetItem.label}'\x1b[0m을(를) 훔쳐 달아납니다!`
+            ` \x1b[31m[!] 분실!\x1b[0m ${attacker.name}(이)가 배낭에서 \x1b[90m'${getItemLabel(targetItem)}'\x1b[0m을(를) 훔쳐 달아납니다!`
           )
         }
       } else {

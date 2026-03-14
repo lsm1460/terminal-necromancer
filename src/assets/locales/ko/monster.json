@@ -1,0 +1,145 @@
+{
+  "track_ratman": {
+    "name": "선로 랫맨",
+    "description": "선로의 폐기물을 먹고 자란 랫맨. 무리 지어 다니며 망자의 파편을 훔치려 합니다."
+  },
+  "snare_spider": {
+    "name": "올가미 거미",
+    "description": "천장의 배관 사이에 숨어 영혼의 사슬을 내뿜습니다. 걸려든 먹잇감은 서서히 진액을 빨립니다."
+  },
+  "cocoon_human": {
+    "name": "고치 인간",
+    "description": "거미에게 언제 잡힌 것인지 알 수 없는 망령. 이미 인격이 느껴지지 않습니다."
+  },
+  "filth_slime": {
+    "name": "오물 슬라임",
+    "description": "망자들의 오물이 응축된 덩어리. 물리 타격이 잘 통하지 않으며 닿는 모든 것을 부식시킵니다."
+  },
+  "ghoul": {
+    "name": "오염된 망자",
+    "description": "벨페고르와 융합되어 있던 망자. 자의식은 잃어버린지 오래입니다"
+  },
+  "derailed_ghost": {
+    "name": "탈선된 유령",
+    "description": "하반신이 지하철 바퀴와 엉겨 붙은 원혼. 무거운 쇳덩이를 끌며 직선상의 모든 것을 뭉개버립니다."
+  },
+  "ichor_flies": {
+    "name": "흡혈 파리떼",
+    "description": "피 냄새를 쫓는 작은 파리들의 무리. 개별은 약하나 지속적으로 생명력을 빨아먹습니다."
+  },
+  "suspicious_turtle": {
+    "name": "수상한 거북이",
+    "eva": 0.3,
+    "description": "하수구에서 방사능 대신 사악한 기운을 쐰 듯한 붉은 두건의 거북이. 이상하게 닌자 기술과 피자에 집착합니다."
+  },
+  "shipyard_worker": {
+    "name": "하역 인부",
+    "description": "고된 노동과 열악한 환경 탓에 눈이 움푹 들어간 인부입니다. 녹슨 갈고리로 대상을 끌어당기려 합니다."
+  },
+  "shipyard_guard": {
+    "name": "하역장 경비병",
+    "eva": 0.05,
+    "description": "관리국 소속의 하급 경비병입니다. 규격화된 방패로 적을 밀쳐냅니다."
+  },
+  "shipyard_guard_no_gain": {
+    "name": "하역장 경비병",
+    "eva": 0.05,
+    "description": "관리국 소속의 하급 경비병입니다. 규격화된 방패로 적을 밀쳐냅니다."
+  },
+  "security_sensor_drone": {
+    "name": "보안 센서 드론",
+    "eva": 0.1,
+    "description": "공중에 부유하며 붉은 레이저로 침입자를 스캔합니다. 타겟을 고정하고 경비병을 호출합니다."
+  },
+  "shipyard_hound": {
+    "name": "하역장 사냥개",
+    "eva": 0.1,
+    "description": "날카로운 금속 이빨을 이식받은 사냥개입니다. 아킬레스건을 물어 이동 속도를 크게 떨어뜨립니다."
+  },
+  "ratman_scout": {
+    "name": "랫맨 정찰병",
+    "eva": 0.3,
+    "description": "어둠 속에 몸을 숨긴 쥐 수인입니다. 연막탄으로 시야를 가리고 독 단검을 투척합니다."
+  },
+  "ratman_shaman": {
+    "name": "랫맨 주술사",
+    "description": "버려진 마력석 파편을 숭배하는 주술사입니다. 고철의 저주로 적의 마법 행위를 방해합니다."
+  },
+  "mutated_worker": {
+    "name": "변이된 하역 인부",
+    "description": "오염물질로 비대해진 괴물입니다. 육중한 내려치기와 함께 대상의 생명력을 흡수합니다."
+  },
+  "shipyard_supervisor": {
+    "name": "하역장 감독관",
+    "description": "냉혹한 관리자입니다. 비상 소집으로 병력을 증원하고 아군의 공격성을 강제로 끌어올립니다."
+  },
+  "cargo_thief": {
+    "name": "화물 도둑",
+    "eva": 0.3,
+    "description": "보안망을 뚫고 잠입한 약탈자입니다. 은신 상태로 접근해 소지품을 훔치려 합니다."
+  },
+  "oil_sludge_slime": {
+    "name": "오일 슬러지 슬라임",
+    "description": "기름 찌꺼기 생명체입니다. 바닥을 오일로 코팅하여 모든 이동을 방해합니다."
+  },
+  "golem_left_arm": {
+    "name": "골렘의 파쇄용 왼팔",
+    "description": "거대한 금속 집게가 달린 왼팔입니다. 둔탁하지만 한 번 잡히면 뼈도 못 추릴 압력을 가합니다."
+  },
+  "golem_right_arm": {
+    "name": "골렘의 유압식 오른팔",
+    "description": "화염 분사 장치가 내장된 유압식 팔입니다. 접근하는 침입자를 고열의 불꽃으로 구워버립니다."
+  },
+  "golem_chest_armor": {
+    "name": "골렘의 가슴 장갑판",
+    "description": "핵심 동력을 보호하는 두꺼운 장갑입니다. 오직 강력한 폭발 충격만이 내부 구조를 뒤흔들 수 있습니다."
+  },
+  "golem_core": {
+    "name": "골렘의 핵",
+    "description": "골렘의 핵심 동력원."
+  },
+  "guardbot_sebastian": {
+    "name": "오토마톤 '세바스찬'",
+    "description": "귀족의 개인용 중장갑 가드봇입니다."
+  },
+  "modified_fury_hound": {
+    "name": "약물 투여된 광견",
+    "description": "이성을 잃고 달려드는 짐승입니다. 집요하게 추격하여 도망칠 수 없습니다."
+  },
+  "clinging_concierge": {
+    "name": "늘러붙은 컨시어지",
+    "description": "죽어서도 손님을 놓아주지 않습니다. 이 망령이 있는 한 도망은 불가능합니다."
+  },
+  "corrupted_noble_wraith": {
+    "name": "타락한 귀족의 영매",
+    "description": "강력한 영기에 휩싸인 망령입니다. 플레이어를 발견하면 즉시 마법을 쏟아냅니다."
+  },
+  "masked_intruder_wraith": {
+    "name": "가면 쓴 괴도 망령",
+    "description": "보물을 노리는 망령입니다. 매우 기민하여 먼저 공격해올 확률이 높습니다."
+  },
+  "security_guard": {
+    "name": "터미널 보안 가드",
+    "description": "라운지를 순찰하는 생체 보안 요원입니다. 훌륭한 시체 공급원입니다."
+  },
+  "security_guard_no_gain": {
+    "name": "터미널 보안 가드",
+    "description": "라운지를 순찰하는 생체 보안 요원입니다. 훌륭한 시체 공급원입니다."
+  },
+  "security_priest": {
+    "name": "터미널 보안 사제",
+    "description": "보안 요원들의 신체를 나노 머신으로 수복하는 의료 요원입니다. 생체 조직이 있어 시체를 활용할 수 있습니다."
+  },
+  "security_priest_no_gain": {
+    "name": "터미널 보안 사제",
+    "description": "보안 요원들의 신체를 나노 머신으로 수복하는 의료 요원입니다. 생체 조직이 있어 시체를 활용할 수 있습니다."
+  },
+  "security_sharpshooter": {
+    "name": "터미널 보안 사수",
+    "description": "라운지 상층부에서 침입자를 저격하는 생체 보안 요원입니다. 가드보다 맷집은 약하지만 공격력이 높습니다."
+  },
+  "optical_surveillance_unit": {
+    "name": "광학 감시 유닛",
+    "description": "실시간 감시 기계입니다. 가장 먼저 경보(선공)를 울립니다."
+  }
+}

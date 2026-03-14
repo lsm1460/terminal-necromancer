@@ -1,0 +1,43 @@
+{
+  "name": "Apostle-03",
+  "lines": ["...Silence continues..."],
+  "scripts": {
+    "friendly": { "greeting": "", "farewell": "" },
+    "normal": { "greeting": "", "farewell": "" },
+    "hostile": { "greeting": "", "farewell": "" }
+  },
+  "deathLine": "...",
+  "description": "",
+
+  "event": {
+    "intro_log": "\n[ A bizarre noise continues... ]",
+    "script": [
+      {
+        "text": "[Bzzz-] Ah... Ah... Workers of the Docks!\nPraise the mercy of the great 'Reaper'... [Error] ...now!",
+        "delay": 1200
+      },
+      {
+        "text": "Look! With bare hands, the Reaper... \n[Static-] ...built this terminal with blood and scrap metal.",
+        "delay": 1500
+      },
+      { "text": "Truly... a holy massacre... no, construction!", "delay": 1000 },
+      {
+        "text": "This brilliant orbit connecting life and death... [Noise intensifies]\n ...was laid as if sliding smoothly over countless corpses. Isn't it beautiful?",
+        "delay": 1800
+      },
+      {
+        "text": "Sweat does not betray. Your sweat will become... \n[Static-] ...the Reaper's coolant,",
+        "delay": 1200
+      },
+      {
+        "text": "And your bones will become the pillars of the terminal! \nYou should feel... [Beep] ...honored!",
+        "delay": 1400
+      },
+      {
+        "text": "[System Warning: Output Threshold Exceeded] Work! \nThe empire beyond death is being built... [Static-] ...right upon your graves!",
+        "delay": 1800
+      },
+      { "text": "Praise... Praise... Prai... [System Rebooting...]", "delay": 2000 }
+    ]
+  }
+}

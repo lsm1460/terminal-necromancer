@@ -1,10 +1,12 @@
 import { Terminal } from '~/core/Terminal'
+import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { AttackType, BattleTarget, UnitSprites } from '~/types'
 import { Battle, Buff, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
+import { BattleLogFormatter } from './BattleLogFormatter'
 import { EFFECT_MESSAGES } from './consts'
-import { assetManager } from '~/core/WebAssetManager'
 
 type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
 
@@ -94,7 +96,12 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       else this.deBuff = newArray
 
       if (newArray.length < initialLength) {
-        Terminal.log(`\n✨ [상태 변화] ${this.name}에게서 [${effect.name}] 효과가 사라졌습니다.`)
+        Terminal.log(
+          i18n.t('battle.unit.status_change.effect_removed', {
+            name: this.name,
+            effectName: effect.name,
+          })
+        )
       }
     }
   }
@@ -180,46 +187,8 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   private logDamage(attacker: CombatUnit, result: any, options: DamageOptions = {}) {
-    const { isEscape, damage, isCritical } = result
-
-    // --- 라벨 빌더 ---
-    const labels: string[] = []
-
-    // 주요 상태 라벨 (색상별 구분)
-    if (options.isPassive) labels.push('\x1b[36m[패시브]\x1b[0m') // 청록
-    if (options.isSureHit) labels.push('\x1b[33m[필중]\x1b[0m') // 노랑
-    if (options.isSureCrit) labels.push('\x1b[31m[확정 치명]\x1b[0m') // 빨강
-    if (options.isIgnoreDef) labels.push('\x1b[35m[방어 관통]\x1b[0m') // 자색
-    if (options.isFixed) labels.push('\x1b[32m[고정 피해]\x1b[0m') // 녹색
-
-    const labelPrefix = labels.length > 0 ? `${labels.join(' ')} ` : ''
-    const hpStatus = `\x1b[90m(${this.name}의 남은 HP: ${this.ref.hp})\x1b[0m`
-
-    // 1. 회피했을 경우
-    if (isEscape) {
-      Terminal.log(
-        `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! 💨 \x1b[37m${this.name}\x1b[0m이(가) 회피했습니다. ${hpStatus}`
-      )
-      return
-    }
-
-    if (damage <= 0) {
-      Terminal.log(
-        `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! 🛡️ 하지만 \x1b[37m${this.name}\x1b[0m에게 피해를 주지 못했습니다. ${hpStatus}`
-      )
-      return
-    }
-
-    let damageMsg = ''
-    if (isCritical) {
-      damageMsg = `\x1b[1m\x1b[31m⚡ CRITICAL! ${damage}\x1b[0m`
-    } else {
-      damageMsg = `\x1b[31m${damage}\x1b[0m`
-    }
-
-    Terminal.log(
-      `${labelPrefix}\x1b[37m${attacker.name}\x1b[0m의 공격! \x1b[37m${this.name}\x1b[0m에게 ${damageMsg}의 피해! ${hpStatus}`
-    )
+    const message = BattleLogFormatter.formatDamageLog(attacker.name, this.name, this.ref.hp, result, options)
+    Terminal.log(message)
   }
 
   get finalStats() {
@@ -240,8 +209,12 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     if (canReveal) {
       this.buff = this.buff.filter((b) => b.type !== 'stealth' || b.isLocked)
 
-      Terminal.log(` \x1b[90m[!] ${this.name}의 은신이 해제되어 정체가 드러났습니다!\x1b[0m`)
-      this.applyDeBuff({ name: '드러난 자', duration: 2, type: 'expose' })
+      Terminal.log(i18n.t('battle.unit.status_change.stealth_broken', { name: this.name }))
+      this.applyDeBuff({
+        name: i18n.t('battle.unit.status_change.expose_name'),
+        duration: 2,
+        type: 'expose',
+      })
     }
   }
 
@@ -251,7 +224,12 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     const randomIndex = Math.floor(Math.random() * this.deBuff.length)
     const removed = this.deBuff.splice(randomIndex, 1)[0]
 
-    Terminal.log(` \x1b[32m[!] ${this.name}(은)는 기운을 차려 '${removed.name}' 효과에서 벗어났습니다!\x1b[0m`)
+    Terminal.log(
+      i18n.t('battle.unit.status_change.recovered', {
+        name: this.name,
+        effectName: removed.name,
+      })
+    )
   }
 
   public removeBuff(name: string, force = false): void {
@@ -268,6 +246,11 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     const randomIndex = Math.floor(Math.random() * this.buff.length)
     const removed = this.buff.splice(randomIndex, 1)[0]
 
-    Terminal.log(` \x1b[31m[!] ${this.name}에게 걸려있던 '${removed.name}' 효과가 강제로 해제되었습니다!\x1b[0m`)
+    Terminal.log(
+      i18n.t('battle.unit.status_change.forced_removed', {
+        name: this.name,
+        effectName: removed.name,
+      })
+    )
   }
 }

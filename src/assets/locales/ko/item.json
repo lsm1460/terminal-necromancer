@@ -1,0 +1,202 @@
+{
+  "type": {
+    "weapon": "무기",
+    "armor": "방어구",
+    "food": "음식",
+    "consumable": "소모품",
+    "default": "아이템"
+  },
+  "carrot": {
+    "label": "당근",
+    "description": "신선한 당근입니다. 소량의 체력을 회복할 수 있습니다."
+  },
+  "pizza": {
+    "label": "피자",
+    "description": "지하에 살던 거북이들이 좋아했던 피자"
+  },
+  "terminal_bentobox": {
+    "label": "터미널 수제 도시락",
+    "description": "따끈한 밥과 절임 채소가 들어있어 기운이 납니다."
+  },
+  "roasted_nut_mix": {
+    "label": "갓 볶은 견과류 주머니",
+    "description": "작은 화로로 직접 볶아낸 고소한 견과류입니다."
+  },
+  "filtered_honey_tea": {
+    "label": "정화된 꿀차",
+    "description": "피로를 풀고 마력을 회복하는 데 도움을 줍니다."
+  },
+  "premium_vodka": {
+    "label": "프리미엄 보드카",
+    "description": "바에서 가져온 독한 술입니다."
+  },
+  "tainted_core": {
+    "label": "오염된 핵",
+    "description": "지하에 살고있는 이형의 핵"
+  },
+  "potion_small": {
+    "label": "작은 체력 포션",
+    "description": "작은 체력 회복 포션으로, hp 20을 보충할 수 있습니다."
+  },
+  "mana_potion_small": {
+    "label": "작은 마나 포션",
+    "description": "작은 마나 회복 포션으로, mp 20을 보충할 수 있습니다."
+  },
+  "potion": {
+    "label": "체력 포션",
+    "description": "hp 50을 보충할 수 있습니다."
+  },
+  "mana_potion": {
+    "label": "마나 포션",
+    "description": "mp 40을 보충할 수 있습니다."
+  },
+  "potion_medium": {
+    "label": "중급 체력 포션",
+    "description": "보안 요원들이 상비하는 포션입니다. HP를 100 회복합니다."
+  },
+  "mana_potion_medium": {
+    "label": "중급 마나 포션",
+    "description": "영적인 기운을 보충해주는 포션입니다. MP를 80 회복합니다."
+  },
+  "nano_medical_kit": {
+    "label": "나노 메디킷",
+    "description": "보안 사제들의 첨단 의료 키트입니다. HP를 180 회복합니다."
+  },
+  "potion_large": {
+    "label": "큰 체력 포션",
+    "description": "강력한 체력 회복 포션으로, hp 250을 보충할 수 있습니다."
+  },
+  "wood_stick": {
+    "label": "나무 막대",
+    "description": "길바닥을 굴러다니는 나무 막대"
+  },
+  "rags": {
+    "label": "누더기",
+    "description": "길바닥을 굴러다니는 망자의 천"
+  },
+  "iron_sword": {
+    "label": "철검",
+    "description": "튼튼한 철로 만든 검입니다. 공격력을 증가시키며 약간의 치명타 확률을 제공합니다."
+  },
+  "leather_armor": {
+    "label": "가죽 갑옷",
+    "description": "가벼운 가죽으로 만든 갑옷입니다. 방어력과 회피율을 소폭 올려줍니다."
+  },
+  "nut": {
+    "label": "도토리",
+    "description": "작고 영양가 있는 도토리로, 아주 소량의 체력을 회복합니다."
+  },
+  "heavy_wrench": {
+    "label": "대형 렌치",
+    "description": "기중기를 수리할 때 쓰던 묵직한 공구입니다. 철검보다 무겁지만 타격감과 치명타 확률이 확실합니다."
+  },
+  "terminal_halberd": {
+    "label": "터미널 경비병의 창",
+    "description": "하역장 감시자들이 사용하던 창입니다. 날카로운 날이 세워져 있어 안정적인 공격력을 보장합니다."
+  },
+  "reinforced_vest": {
+    "label": "강화 작업복",
+    "description": "두꺼운 캔버스 천과 얇은 철판을 덧댄 옷입니다. 가죽 갑옷보다 단단하며 활동성도 나쁘지 않습니다."
+  },
+  "reaper_chain_mail": {
+    "label": "사슬 갑옷",
+    "description": "검은 금속 고리를 엮어 만든 갑옷입니다. 매우 무겁지만 웬만한 공격은 가볍게 튕겨냅니다."
+  },
+  "resistance_mace": {
+    "label": "다용도 망치",
+    "description": "선로 파쇄용 망치를 전투용으로 개조했습니다."
+  },
+  "improvised_bayonet": {
+    "label": "급조된 총",
+    "description": "사정거리는 짧지만 아직까지는 정상 격발됩니다."
+  },
+  "scavenged_mantle": {
+    "label": "저항군의 망토",
+    "description": "그림자 속에 숨기 좋도록 어두운 천을 덧댄 망토입니다."
+  },
+  "rebel_iron_plate": {
+    "label": "반란군의 흉갑",
+    "description": "하역장 컨테이너의 철판을 떼어내 가슴에 덧댔습니다."
+  },
+  "ratman_dagger": {
+    "label": "랫맨의 녹슨 단검",
+    "description": "관리가 전혀 안 된 녹슨 칼입니다. 가끔 상처 부위에 덧나기라도 하는지 생각보다 아프게 박힙니다."
+  },
+  "sharp_pipe": {
+    "label": "날카로운 파이프",
+    "description": "하역장 배수관을 뜯어 끝을 뾰족하게 갈았습니다. 가볍게 휘둘러 기습하기에 좋습니다."
+  },
+  "sewer_leather_vest": {
+    "label": "하수도 가죽 조끼",
+    "description": "축축한 하수도 냄새가 밴 가죽 조끼입니다. 찝찝하지만 가벼워서 몸을 놀리기엔 편합니다."
+  },
+  "stolen_helmet": {
+    "label": "훔친 안전모",
+    "description": "경비병의 창고에서 랫맨들이 슬쩍한 투구입니다. 찌그러져 있지만 머리를 보호하기엔 충분합니다."
+  },
+  "golem_core_staff": {
+    "label": "강철 수호자의 과부하 지팡이",
+    "description": "쓰러진 강철 골렘의 가동부에서 적출한 육중한 지팡이입니다. 중심부의 코어에서는 여전히 불안정한 전류가 흐르며, 휘두를 때마다 웅웅거리는 진동이 손목을 타고 전해집니다.",
+    "mp": 50
+  },
+  "security_baton": {
+    "label": "보안 진압봉",
+    "description": "생체 가드들이 사용하던 표준 진압봉입니다. 튼튼하지만 투박합니다."
+  },
+  "cold_touch_dagger": {
+    "label": "냉기의 단검",
+    "description": "괴도 망령의 서늘한 기운이 서린 단검입니다. 살을 에는 듯한 감각을 선사합니다."
+  },
+  "priest_rosary": {
+    "label": "보안 사제의 묵주",
+    "description": "나노 머신 제어기가 내장된 묵주입니다. 미약한 신성 충격파를 발사합니다."
+  },
+  "standard_security_vest": {
+    "label": "표준 보안 조끼",
+    "description": "터미널 보안 요원들이 공통적으로 착용하는 조끼입니다."
+  },
+  "hard_steel_plate": {
+    "label": "강화 강철판",
+    "description": "오토마톤의 장갑 일부입니다. 매우 무겁지만 방어력 하나는 확실합니다."
+  },
+  "phantom_cloth": {
+    "label": "유령의 천",
+    "description": "실체가 불분명한 망령의 옷자락입니다. 물리적인 타격을 흘려보내는 기묘한 힘이 있습니다."
+  },
+  "stolen_jewelry": {
+    "label": "훔친 보석함",
+    "description": "괴도가 훔친 귀중한 보석들입니다. 상점에 비싸게 팔 수 있습니다."
+  },
+  "noble_seal_ring": {
+    "label": "귀족의 인장 반지",
+    "description": "타락한 귀족 영매가 끼고 있던 권위의 상징입니다."
+  },
+  "optical_lens": {
+    "label": "광학 렌즈",
+    "description": "유닛의 눈 역할을 하던 정밀 렌즈입니다."
+  },
+  "security_kevlar_vest": {
+    "label": "보안 케블라 조끼",
+    "description": "보안 요원용 방탄 조끼입니다. 가볍고 튼튼하여 움직임이 편합니다."
+  },
+  "optical_carbine": {
+    "label": "광학 카빈",
+    "description": "감시 유닛의 렌즈 기술이 적용된 정밀 총기입니다. 명중률이 매우 안정적입니다."
+  },
+  "wraith_soul_staff": {
+    "label": "원혼의 지팡이",
+    "description": "망령의 엑토플라즘이 깃든 지팡이입니다. 휘두를 때마다 기분 나쁜 비명이 들리며 마력을 방출합니다."
+  },
+  "caron_staff": {
+    "label": "카론의 지팡이",
+    "description": "카론이 애용하던 지팡이입니다. 공간을 다루는 힘이 느껴집니다."
+  },
+  "luxury_shoes": {
+    "label": "피 묻은 구두",
+    "description": "피가 묻어 비싼 값 주고 되팔기는 글렀습니다."
+  },
+  "small_pistol": {
+    "label": "작은 권총",
+    "description": "작은 크기이지만 호신용으로는 나쁘지 않아보입니다."
+  }
+}

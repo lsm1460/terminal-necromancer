@@ -11,7 +11,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "outDir": "./dist",
-    "types": ["node"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": ["node", "vite/client"],
     "baseUrl": ".", 
     "paths": {
       "~/*": ["src/*"]
