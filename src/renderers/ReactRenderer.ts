@@ -1,4 +1,5 @@
 import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
 import { printStatus } from '~/statusPrinter'
 import { useGameStore } from '~/stores/useGameStore'
 import { GameContext, Renderer } from '~/types'
@@ -27,10 +28,9 @@ export class ReactRenderer implements Renderer {
   }
 
   say(nameList: string[]) {
-    const isSingular = nameList.length === 1
     const aliveNames = nameList.map((name) => `<button style="color: white; cursor: pointer;" data-command="대화" data-arg="${name}">${name}</button>`).join(', ')
 
-    const message = `주변에 보이는 것${isSingular ? '' : '들'}: ${aliveNames}`
+    const message = `${i18n.t('looking.around', { count: nameList.length })} ${aliveNames}`
 
     this.store.addLog(message)
   }

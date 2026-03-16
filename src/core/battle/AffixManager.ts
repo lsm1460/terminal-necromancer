@@ -9,9 +9,7 @@ export class AffixManager {
     player: Player,
     attacker: CombatUnit,
     targets: CombatUnit<BattleTarget>[]
-  ): CombatUnit {
-    let target = targets[0]
-
+  ): CombatUnit[] {
     const isEnemyAttack = ['npc', 'monster'].includes(attacker.type)
 
     if (isEnemyAttack && player.hasAffix('ROAR')) {
@@ -22,10 +20,10 @@ export class AffixManager {
         Terminal.log(
           `\n[📢 포효]: 골렘이 증기를 내뿜고 굉음을 내지릅니다!! ${attacker.name}의 시선이 골렘에게 고정됩니다.`
         )
-        return golem
+        return [golem]
       }
     }
 
-    return target
+    return targets
   }
 }

@@ -58,17 +58,10 @@ export async function handleBuy(
     let rarityMultiplier = 1
 
     switch (item.rarity) {
-      case 'COMMON':
-        rarityMultiplier = 1.0
-        break
-      case 'RARE':
-        rarityMultiplier = 1.5
-        break
-      case 'EPIC':
-        rarityMultiplier = 2.5
-        break
-      default:
-        rarityMultiplier = 1.0
+      case 'COMMON': rarityMultiplier = 1.0; break
+      case 'RARE': rarityMultiplier = 1.5; break
+      case 'EPIC': rarityMultiplier = 2.5; break
+      default: rarityMultiplier = 1.0
     }
 
     const finalPrice = Math.floor(item.price * rarityMultiplier * (1 - discountRate))
@@ -86,9 +79,16 @@ export async function handleBuy(
   Terminal.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
   while (true) {
-    const infoHeader = `[소지금: ${player.gold}G${npc.contribution !== undefined ? ` / 기여도: ${contribution}` : ''}]`
+    const contributionText = npc.contribution !== undefined 
+      ? i18n.t('npc.buy.contribution_label', { value: contribution }) 
+      : ''
+    
+    const infoHeader = i18n.t('npc.buy.info_header', { 
+      gold: player.gold, 
+      contribution: contributionText 
+    })
 
-    const itemId = await Terminal.select(`${infoHeader} 구매할 물건 선택`, choices)
+    const itemId = await Terminal.select(`${infoHeader} ${i18n.t('npc.buy.select_item')}`, choices)
 
     if (itemId === 'cancel') {
       if (scripts.exit) Terminal.log(`\n[${npc.name}]: "${scripts.exit}"`)
@@ -115,7 +115,8 @@ export async function handleBuy(
 
     if (actualItem) {
       player.addItem(actualItem)
-      const successMsg = scripts.success || `${selectedChoice.label}을(를) 구매했습니다.`
+      const successMsg = scripts.success || i18n.t('npc.buy.success_default', { label: selectedChoice.label })
+      
       Terminal.log(`\n✨ [${npc.name}]: "${successMsg}" (-${selectedChoice.price}G)`)
     }
   }
@@ -127,7 +128,6 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
   Terminal.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
   while (true) {
-    // 2. 인벤토리 상태 확인
     if (player.inventory.length === 0) {
       Terminal.log(`\n[${npc.name}]: "${scripts.noItems}"`)
       break
@@ -135,16 +135,9 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
 
     const contribution = npc.factionContribution ?? 0
     const hasContribution = npc.factionContribution !== undefined
-    const bonusRate = Math.min(0.2, contribution * 0.0005) // 최대 20% 보너스
+    const bonusRate = Math.min(0.2, contribution * 0.0005)
 
-    const choices: {
-      name: string
-      message: string
-      id?: string
-      label?: string
-      price?: number
-      originalIndex?: number
-    }[] = player.inventory.map((item, index) => {
+    const choices = player.inventory.map((item, index) => {
       const finalSellPrice = Math.floor((item.sellPrice || 0) * (1 + bonusRate))
 
       return {
@@ -157,27 +150,25 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
       }
     })
 
-    choices.push({
-      name: 'cancel',
-      message: i18n.t('cancel'),
-    })
+    choices.push({ name: 'cancel', message: i18n.t('cancel') } as any)
 
-    const bonusInfo = hasContribution ? ` / 보너스: +${(bonusRate * 100).toFixed(1)}%` : ''
+    // 보너스 정보 다국어 처리
+    const bonusInfo = hasContribution 
+      ? i18n.t('npc.sell.bonus_label', { value: (bonusRate * 100).toFixed(1) }) 
+      : ''
 
-    const choiceName = await Terminal.select(`[소지금: ${player.gold}G${bonusInfo}] 판매할 물건 선택`, choices)
+    const infoHeader = i18n.t('npc.sell.info_header', { gold: player.gold, bonus: bonusInfo })
+    const choiceName = await Terminal.select(`${infoHeader} ${i18n.t('npc.sell.select_item')}`, choices)
 
     if (choiceName === 'cancel') break
 
     const selected = choices.find((c) => c.name === choiceName)!
-
     const targetItem = player.inventory[selected.originalIndex!]
 
     let sellCount = 1
     if (targetItem.quantity && targetItem.quantity > 1) {
       // TODO: Terminal에 numeral/text prompt 추가 필요. 일단 1로 고정
-      Terminal.log(
-        `\n[알림] 현재 판매 수량 선택 기능은 지원되지 않습니다. 1개만 판매합니다. (${targetItem.quantity}개 보유)`
-      )
+      Terminal.log(i18n.t('npc.sell.quantity_notice', { total: targetItem.quantity }))
       sellCount = 1
     }
 
@@ -195,11 +186,11 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
     Terminal.log(`\n💰 [${npc.name}]: "${scripts.success}" (+${totalEarned}G)`)
   }
 
-  // 6. 거래 종료 보고
+  // 거래 종료 보고 (영수증)
   if (totalEarnedInSession > 0) {
     Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-    Terminal.log(` 🧾 영수증: 이번 거래로 총 ${totalEarnedInSession}G를 벌었습니다.`)
-    Terminal.log(` 💰 현재 소지금: ${player.gold}G`)
+    Terminal.log(i18n.t('npc.sell.receipt.total', { earned: totalEarnedInSession }))
+    Terminal.log(i18n.t('npc.sell.receipt.current_gold', { gold: player.gold }))
     Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
   }
 

@@ -8,8 +8,8 @@
   "input_command": "명령어를 입력하세요..(명령어 리스트: 도움말): ",
   "press_enter": " [Enter를 누르면 계속]",
   "looking": {
-    "around_one": "주변에 보이는 것:",
-    "around_other": "주변에 보이는 것들:"
+    "around_one": "주변에 보이는 것: ",
+    "around_other": "주변에 보이는 것들: "
   },
 
   "title": {

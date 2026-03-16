@@ -196,7 +196,7 @@ export class BattleActionHandler {
     } else {
       let target: CombatUnit
       if (['monster', 'npc'].includes(attacker.type)) {
-        target = AffixManager.handleBeforeAttack(this.player, attacker, visibleTargets)
+        target = AffixManager.handleBeforeAttack(this.player, attacker, visibleTargets)[0]
       } else {
         target = [...visibleTargets].sort((a, b) => {
           const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0

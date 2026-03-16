@@ -1,6 +1,7 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { GameContext, Tile } from '~/types'
 import { delay } from '~/utils'
 
@@ -21,7 +22,7 @@ export class NpcEvent {
     if (preemptiveEnemies.length > 0) {
       tile.isClear = false
 
-      Terminal.log(`⚠️  npc: ${preemptiveEnemies[0].name}의 기습!`)
+      Terminal.log(i18n.t('events.npc.preemptive_attack', { name: preemptiveEnemies[0].name }));
 
       await delay()
 

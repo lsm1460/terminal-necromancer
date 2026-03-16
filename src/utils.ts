@@ -1,9 +1,9 @@
 import { nanoid } from 'nanoid'
 import { Terminal } from './core/Terminal'
+import { RARITY_SETTINGS } from './core/item/consts'
 import { Player } from './core/player/Player'
 import i18n from './i18n'
-import { BattleTarget, Item, ItemType } from './types'
-import { RARITY_SETTINGS } from './core/item/consts'
+import { Item, ItemType } from './types'
 
 export function generateId(baseId?: string, length = 8): string {
   const uniqueHash = nanoid(length)
@@ -29,6 +29,7 @@ export function getItemLabel(item: Item) {
 
     finalLabel.push(setting.color)
     finalLabel.push(setting.symbol)
+    //TODO: rarity label?
   }
 
   if ('affix' in item && item.affix) {

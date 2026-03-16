@@ -8,8 +8,8 @@
   "input_command": "Input command... (Command List: Help): ",
   "press_enter": " [Press Enter to continue]",
   "looking": {
-    "around_one": "Detected Entity:",
-    "around_other": "Detected Entities:"
+    "around_one": "Detected Entity: ",
+    "around_other": "Detected Entities: "
   },
 
   "title": {

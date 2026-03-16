@@ -1,0 +1,29 @@
+{
+  "name": "Oliver, the Dying Waiter",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": {
+      "greeting": "Are you... a comrade of theirs too? Go on... and burn that fake paradise to the ground.",
+      "farewell": "Don't worry about me... I won't die until I've seen this spectacle to the end."
+    },
+    "normal": {
+      "greeting": "It doesn't matter who it is. Tonight, this VIP floor... will be a grave for us all.",
+      "farewell": "Go and tell them. Dinner is ready... and now it's time for judgment."
+    },
+    "hostile": {
+      "greeting": "Is there still a dog left siding with those upper-class bastards? I'll use my last bit of strength to end your breath!",
+      "farewell": "Kill me... even if I die, the flames of revolution... will swallow you all!"
+    }
+  },
+  "deathLine": "Finally... clocking out... to the lobby... engulfed in flames...",
+  "description": "A waiter who spent his life being despised while working in the kitchen\nEven while fatally injured, he views the Resistance's attack as divine salvation and pours out deep-seated resentment toward the upper class.",
+  "last_words": [
+    "Oliver: (Leaning against the kitchen counter with a deep wound in his abdomen, gasping for air.)",
+    "Oliver: Ugh... They've finally arrived. The sparks that will burn this glamorous hell to the ground...",
+    "Oliver: Every night, as I polished these foul-smelling silverwares, I prayed. I prayed for these arrogant walls to crumble!",
+    "Oliver: Those people upstairs... they laughed while drinking our sweat like wine.\nEvery time that laughter reached the kitchen, it felt like my heart was being scorched.",
+    "Oliver: The Resistance... they will show that there is light even for rats like us.\nThis blood... is merely an offering for them.",
+    "Oliver: I don't care if I die. Soon, those high-and-mighty VIPs will be crawling on the same floor as us!",
+    "Oliver: (A bloody smirk forming on his pale lips) Go now, witness it... the magnificent sight of their world turning to ash..."
+  ]
+}

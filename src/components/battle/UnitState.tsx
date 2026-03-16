@@ -18,9 +18,7 @@ export const UnitState: React.FC<{
     <div
       className={`
     absolute w-2xs backdrop-blur-md border border-primary pointer-events-none z-50 bg-black/80
-    /* 위치: 유닛의 아래쪽으로 배치 */
     top-full mt-3 
-    /* 꼬리 공통 설정: 말풍선 위쪽 중앙 근처 */
     after:content-[''] after:absolute after:-top-[7px] after:w-3 after:h-3 after:bg-grey-800 after:border-l after:border-t after:border-primary after:rotate-45
     ${
       isEnemy

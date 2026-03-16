@@ -1,0 +1,43 @@
+{
+  "choices": {
+    "increase_limit": "🦴 Expand Skeleton Army",
+    "space": "🌀 Subspace"
+  },
+  "increase_limit": {
+    "status": "Current Soul Shards: {{current}} / Required: {{cost}}",
+    "success_title": "\n[💀 Army Expansion Complete]",
+    "result": "Max Skeletons: {{prev}} ➔ {{next}}",
+    "caron_is_mine": {
+      "max": "Caron: \"You have already reached the physical limits of this realm. The dimension itself cannot withstand a larger force.\"",
+      "cost_info": "Caron: \"To broaden the Monarch's vessel, more Soul Essence is required.\"",
+      "not_enough": "Caron: \"You lack sufficient essence. Go forth and reap more soul shards.\"",
+      "confirm": "Caron: \"Will you unbind the shackles of souls and reclaim your past glory?\"",
+      "cancel": "Caron: \"A wise and prudent choice.\"",
+      "success": "Caron: \"I can feel it. Your shadow has grown deeper. More of the deceased shall follow you.\""
+    },
+    "caron_is_dead": {
+      "max": "[Void Guide]: \"...Lim...it... No... more...\"",
+      "cost_info": "[Void Guide]: \"...Of...fer... souls...\"",
+      "not_enough": "[Void Guide]: \"...Lack...ing... More... souls...\"",
+      "confirm": "[Void Guide]: \"...Re...lease... need...ed...\"",
+      "cancel": "[Void Guide]: \"...Halt...\"",
+      "success": "[Void Guide]: \"...Ves...sel... expand...ed... Ar...my... grows...\""
+    }
+  },
+  "manage": {
+    "intro_mine": "\nCaron: \"(Whispering from the shadows) I shall open the dimensional rift. Leave your forces in my care.\"",
+    "intro_dead": "\n[ The rift of the usurped subspace twists, emitting an unnatural chill. ]",
+    "no_unit": "\n(There are no skeletons in the subspace or on the field to manage.)",
+    "select_title": "[ Subspace Occupancy: {{current}}/{{max}} ]",
+    "push": "📥 Deposit (Field -> Subspace)",
+    "pull": "📤 Withdraw / Swap (Subspace -> Field)",
+    "cancel": "🔙 Cancel",
+    "push_select": "Which summon will you send to the subspace?",
+    "pull_select": "Select a summon to release from the subspace.",
+    "swap_warn": "\n⚠️ Field capacity is full. You must swap with another unit.",
+    "swap_select": "Select a unit to send to the subspace instead of [{{name}}].",
+    "msg_push": "\n✨ [Seal] {{name}} has vanished into the dimensional rift.",
+    "msg_pull": "\n💀 [Release] {{name}} rises from the ground.",
+    "msg_swap": "\n🔄 [Swap] The positions of {{name}} have been interchanged within the spatial distortion."
+  }
+}

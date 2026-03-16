@@ -1,5 +1,7 @@
 import _ from 'lodash'
+import { AffixManager } from '~/core/battle/AffixManager'
 import { Battle } from '~/core/battle/Battle'
+import { BattleDirector } from '~/core/battle/BattleDirector'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
@@ -7,7 +9,6 @@ import { BattleTarget, GameContext, NpcSkill } from '~/types'
 import { PASSIVE_EFFECTS } from '../passiveHandlers'
 import { SkillEffectHandlers } from './SkillEffectHandlers'
 import { SpecialSkillLogics } from './SpecialSkillLogics'
-import { BattleDirector } from '~/core/battle/BattleDirector'
 
 type SkillExecutor<T = void> = (
   skillId: string,
@@ -82,20 +83,7 @@ export class NpcSkillManager {
         break
     }
 
-    if (this.player.hasAffix('ROAR') && ['npc', 'monster'].includes(attacker.type)) {
-      const golem = enemies.find((enemy) => enemy.ref.isGolem && enemy.ref.isAlive)
-
-      if (golem) {
-        // 🔊 상황에 맞는 로그 출력
-        Terminal.log(
-          `\n[📢 포효]: 골렘의 엔진이 과부하되며 굉음을 내지릅니다! ${attacker.name}의 시선이 골렘에게 고정됩니다.`
-        )
-
-        return [golem]
-      }
-    }
-
-    return targets
+    return AffixManager.handleBeforeAttack(this.player, attacker, targets as any)
   }
 
   execute: SkillExecutor = async (...params) => {
