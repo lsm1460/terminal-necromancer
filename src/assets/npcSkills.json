@@ -8,7 +8,7 @@
     "power": 0.8,
     "targetType": "ENEMY_SINGLE",
     "buff": {
-      "name": "화상",
+      "id": "burn",
       "type": "dot",
       "duration": 2,
       "atk": 2
@@ -23,7 +23,7 @@
     "power": 0.8,
     "targetType": "ENEMY_SINGLE",
     "buff": {
-      "name": "동결",
+      "id": "freeze",
       "type": "deBuff",
       "duration": 2,
       "agi": 2,
@@ -39,7 +39,7 @@
     "power": 0.8,
     "targetType": "ENEMY_SINGLE",
     "buff": {
-      "name": "마비",
+      "id": "paralysis",
       "type": "bind",
       "duration": 2
     }
@@ -53,7 +53,7 @@
     "power": 0.3,
     "targetType": "ENEMY_ALL",
     "buff": {
-      "name": "화상",
+      "id": "burn",
       "type": "dot",
       "duration": 2,
       "atk": 2
@@ -77,7 +77,7 @@
     "targetType": "RANDOM",
     "type": "deBuff",
     "buff": {
-      "name": "구속",
+      "id": "bind",
       "type": "bind",
       "duration": 2
     }
@@ -203,7 +203,7 @@
     "description": "뼈로 이루어진 감옥은 대상의 행동을 제약합니다.",
     "type": "deBuff",
     "buff": {
-      "name": "뼈 감옥",
+      "id": "bone_prison",
       "type": "bind",
       "duration": 2
     }
@@ -217,7 +217,7 @@
     "description": "가장 부상이 심한 적군을 노화시킵니다. 민첩이 떨어집니다.",
     "type": "deBuff",
     "buff": {
-      "name": "노화",
+      "id": "aging",
       "type": "deBuff",
       "duration": 2,
       "agi": 2
@@ -261,7 +261,7 @@
     "targetType": "RANDOM",
     "description": "발목을 정확히 조준하여 물어뜯습니다. 날카로운 이빨이 인대를 파고들어 이동 속도와 회피율을 급격히 떨어뜨립니다.",
     "buff": {
-      "name": "부상",
+      "id": "injury",
       "type": "deBuff",
       "duration": 2,
       "agi": 2,
@@ -309,7 +309,7 @@
     "targetType": "SELF",
     "type": "buff",
     "buff": {
-      "name": "은신",
+      "id": "stealth",
       "type": "stealth",
       "crit": 1,
       "duration": 3
@@ -332,7 +332,7 @@
     "targetType": "ENEMY_ALL",
     "type": "deBuff",
     "buff": {
-      "name": "저주",
+      "id": "curse",
       "type": "deBuff",
       "def": 5,
       "duration": 3
@@ -347,7 +347,7 @@
     "targetType": "ENEMY_ALL",
     "type": "deBuff",
     "buff": {
-      "name": "연막",
+      "id": "smoke",
       "type": "deBuff",
       "eva": 0.3,
       "duration": 3
@@ -362,7 +362,7 @@
     "targetType": "RANDOM",
     "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다.",
     "buff": {
-      "name": "중독",
+      "id": "poison",
       "type": "dot",
       "duration": 15,
       "atk": 2
@@ -386,7 +386,7 @@
     "targetType": "ENEMY_ALL",
     "description": "무기를 크게 휘둘러 주변 모든 적을 공격하고 3턴간 출혈 상태로 만듭니다.",
     "buff": {
-      "name": "출혈",
+      "id": "bleed",
       "type": "dot",
       "duration": 3,
       "atk": 5
@@ -408,7 +408,7 @@
     "targetType": "ENEMY_ALL",
     "type": "passive",
     "buff": {
-      "name": "저주",
+      "id": "curse",
       "type": "deBuff",
       "def": 3,
       "duration": 3
@@ -430,7 +430,7 @@
     "targetType": "ENEMY_ALL",
     "type": "passive",
     "buff": {
-      "name": "심연의 한기",
+      "id": "freeze",
       "type": "deBuff",
       "duration": 3,
       "agi": 5
@@ -444,7 +444,7 @@
     "targetType": "SELF",
     "type": "buff",
     "buff": {
-      "name": "은신",
+      "id": "stealth",
       "type": "stealth",
       "crit": 1,
       "duration": 3
@@ -459,7 +459,7 @@
     "targetType": "RANDOM",
     "type": "deBuff",
     "buff": {
-      "name": "구속",
+      "id": "bind",
       "type": "bind",
       "duration": 2
     }

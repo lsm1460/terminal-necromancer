@@ -1,14 +1,12 @@
 ## 0. 남은 작업 정리
 
-다국어작업 필요 파일 (24개..)
+다국어작업 필요 파일 (23개..)
 
 src\npc\death.ts
 
 src\core\skill\executors\* x10
 
 src\core\player\KnightWrapper.ts
-
-src\core\battle\unit\consts.ts
 
 src\core\affixes\index.ts
 

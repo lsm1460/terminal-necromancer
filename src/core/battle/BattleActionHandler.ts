@@ -135,7 +135,12 @@ export class BattleActionHandler {
 
   private handleGuardAction(playerUnit: CombatUnit<Player>) {
     Terminal.log(i18n.t('battle.action.guard', { name: playerUnit.name }))
-    playerUnit.applyBuff({ name: i18n.t(`battle.action.menu.defense`), type: 'buff', def: 10, duration: 2 })
+    playerUnit.applyBuff({
+      id: 'defense',
+      type: 'buff',
+      def: 10,
+      duration: 2,
+    })
   }
 
   private async handlePlayerSkillAction(

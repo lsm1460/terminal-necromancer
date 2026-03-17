@@ -3,10 +3,11 @@ import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { AttackType, BattleTarget, UnitSprites } from '~/types'
-import { Battle, Buff, DamageOptions } from '../Battle'
+import { Battle, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
+import { Buff, BuffOptions } from '../Buff'
 import { BattleLogFormatter } from './BattleLogFormatter'
-import { EFFECT_MESSAGES } from './consts'
+import { getBuffMessage } from './consts'
 
 type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
 
@@ -68,26 +69,27 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.attackType = unit.computed?.attackType || unit.attackType || 'melee'
   }
 
-  private processEffect(effect: Buff, action: 'apply' | 'remove', force = false): void {
+  private processEffect(effectOrOptions: BuffOptions, action: 'apply' | 'remove', force = false): void {
+    const effect = new Buff(effectOrOptions)
     const isBuff = ['buff', 'stealth'].includes(effect.type)
     const targetArray = isBuff ? this.buff : this.deBuff
 
     if (action === 'apply') {
-      const existing = targetArray.find((e) => e.name === effect.name)
+      const existing = targetArray.find((e) => e.id === effect.id)
       if (existing) {
         existing.duration = Math.max(existing.duration, effect.duration)
       } else {
         targetArray.push(effect)
       }
 
-      const getMsg = EFFECT_MESSAGES[effect.name]
+      const getMsg = getBuffMessage(effect.id)
       if (getMsg) {
         Terminal.log(getMsg(this.name, this.ref.hp, this.ref.maxHp))
       }
     } else {
       const initialLength = targetArray.length
       const newArray = targetArray.filter((b) => {
-        if (b.name !== effect.name) return true
+        if (b.id !== effect.id) return true
         if (b.isLocked && !force) return true
         return false
       })
@@ -106,15 +108,15 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     }
   }
 
-  applyEffect(newEffect: Buff) {
+  applyEffect(newEffect: BuffOptions) {
     this.processEffect(newEffect, 'apply')
   }
 
-  applyBuff(b: Buff) {
+  applyBuff(b: BuffOptions) {
     this.applyEffect(b)
   }
 
-  public applyDeBuff(d: Buff) {
+  public applyDeBuff(d: BuffOptions) {
     this.applyEffect(d)
   }
 
@@ -211,7 +213,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
       Terminal.log(i18n.t('battle.unit.status_change.stealth_broken', { name: this.name }))
       this.applyDeBuff({
-        name: i18n.t('battle.unit.status_change.expose_name'),
+        id: 'expose',
         duration: 2,
         type: 'expose',
       })
@@ -232,12 +234,12 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     )
   }
 
-  public removeBuff(name: string, force = false): void {
-    this.processEffect({ name, type: 'buff' } as Buff, 'remove', force)
+  public removeBuff(id: BuffOptions['id'], force = false): void {
+    this.processEffect({ id, type: 'buff' } as BuffOptions, 'remove', force)
   }
 
-  public removeDeBuff(name: string, force = false): void {
-    this.processEffect({ name, type: 'deBuff' } as Buff, 'remove', force)
+  public removeDeBuff(id: BuffOptions['id'], force = false): void {
+    this.processEffect({ id, type: 'deBuff' } as BuffOptions, 'remove', force)
   }
 
   public removeRandomBuff(): void {

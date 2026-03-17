@@ -85,5 +85,200 @@
     }
   },
 
-  "target_not_found": "하지만 대상을 찾을 수 없었다.."
+  "target_not_found": "하지만 대상을 찾을 수 없었다..",
+
+  "message": {
+    "buff": {
+      "overdrive": "\n[🔥 강화] {{name}}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! ({{name}} HP {{hp}} / {{maxHp}})"
+    },
+    "debuff": {
+      "paralysis": "\n [!] {{name}}은/는 마비되어 움직일 수 없습니다!",
+      "bind": "\n [!] {{name}}은/는 구속되어 움직일 수 없습니다!",
+      "bleed": "\n [!] {{name}}은/는 깊은 상처를 입고 피를 흘리기 시작합니다!",
+      "burn": "\n [!] {{name}}의 피부가 화염에 그을립니다.",
+      "poison": "\n [!] {{name}}은/는 치명적인 독소에 노출되어 안색이 창백해집니다.",
+      "freeze": "\n [!] {{name}}은/는 추위에 노출되어 피부가 얼어붙어갑니다.",
+      "curse": "\n [!] {{name}}(은)는 분노를 참지 못해 방어 태세가 흐트러집니다!",
+      "smoke": "\n [!] 자욱한 연기가 {{name}}의 시야를 완전히 가려버립니다!",
+      "bone_prison": "\n [!] 거친 뼈 창살이 {{name}}의 사지를 옥죄며 솟아오릅니다!",
+      "aging": "\n[⏳] {{name}}의 피부가 급격히 메마르며 숨이 가빠집니다! 모든 반응이 눈에 띄게 둔해집니다.",
+      "injury": "\n[⏳] {{name}}의 발목에 부상을 입습니다! 움직임이 눈에 띄게 둔해집니다."
+    }
+  },
+
+  "npc": {
+    "fire_bolt": {
+      "name": "불꽃 화살",
+      "description": "대상에게 불꽃을 날려 화상을 입힙니다."
+    },
+    "ice_bolt": {
+      "name": "얼음 화살",
+      "description": "대상에게 얼음을 날려 행동을 둔화시킵니다."
+    },
+    "lightning_bolt": {
+      "name": "전격 화살",
+      "description": "대상에게 전격을 날려 마비시킵니다."
+    },
+    "fire_breath": {
+      "name": "화염 숨결",
+      "description": "강력한 불을 사방에 내뿜습니다."
+    },
+    "quick_slash": {
+      "name": "기습적인 일격",
+      "description": "상대의 빈틈을 노려 예리한 무기나 날카로운 신체 부위로 빠르게 베어 가릅니다."
+    },
+    "sticky_web": {
+      "name": "강제 구속",
+      "description": "끈적한 점액이나 보이지 않는 마력의 끈을 투척하여 대상의 행동을 제약합니다."
+    },
+    "self_destruct": {
+      "name": "불안정한 자폭",
+      "description": "내부의 에너지를 한꺼번에 폭주시킨 뒤 신체를 비산시켜 주위에 치명적인 타격을 입힙니다."
+    },
+    "health_drain": {
+      "name": "생명력 강탈",
+      "description": "대상에게 달라붙어 그들의 생명 에너지를 직접 빨아들여 자신의 양분으로 삼습니다."
+    },
+    "power_smash": {
+      "name": "강력한 내리치기",
+      "description": "무거운 무기로 적을 내리칩니다."
+    },
+    "power_shot": {
+      "name": "강력한 사격",
+      "description": "적의 급소를 노려 강력한 투사체를 발사합니다."
+    },
+    "aim_arrow": {
+      "name": "저격 사격",
+      "description": "가장 뒤에 있는 적을 저격합니다."
+    },
+    "piercing_arrow": {
+      "name": "관통 사격",
+      "description": "전열을 관통해 그 뒤에 있는 적까지 노립니다."
+    },
+    "rapid_fire": {
+      "name": "난사",
+      "description": "전장에 무차별적인 사격을 가해 모든 적에게 피해를 입힙니다."
+    },
+    "minor_heal": {
+      "name": "하급 치유",
+      "description": "가장 부상이 심한 아군이 체력을 약간 회복시킵니다."
+    },
+    "heal": {
+      "name": "치유",
+      "description": "가장 부상이 심한 아군을 회복시킵니다."
+    },
+    "greater_heal": {
+      "name": "상급 치유",
+      "description": "가장 부상이 심한 아군의 체력을 대폭 회복시킵니다."
+    },
+    "volley_fire": {
+      "name": "일제 사격",
+      "description": "모든 적에게 화살 비를 퍼붓습니다."
+    },
+    "holy_radiance": {
+      "name": "성스러운 합창",
+      "description": "모든 아군의 상처를 어루만집니다."
+    },
+    "bone_prison": {
+      "name": "뼈 감옥",
+      "description": "뼈로 이루어진 감옥은 대상의 행동을 제약합니다."
+    },
+    "aging_curse": {
+      "name": "노화",
+      "description": "가장 부상이 심한 적군을 노화시킵니다. 민첩이 떨어집니다."
+    },
+    "abyssal_gallop": {
+      "name": "심연의 질주",
+      "description": "군마가 지나간 자리에 심연의 불꽃이 솟구쳐 모든 적에게 고정 피해를 입힙니다."
+    },
+    "dread_charge": {
+      "name": "죽음의 돌격",
+      "description": "군마와 혼연일체가 되어 적진을 관통합니다. 모든 적에게 강력한 물리 피해를 입힙니다."
+    },
+    "divide_soul": {
+      "name": "자가 분열",
+      "description": "몸에 붙어있는 망령들이 떨어져나갑니다."
+    },
+    "achilles_bite": {
+      "name": "발목 물기",
+      "description": "발목을 정확히 조준하여 물어뜯습니다. 날카로운 이빨이 인대를 파고들어 이동 속도와 회피율을 급격히 떨어뜨립니다."
+    },
+    "call_reinforcements": {
+      "name": "가드 호출",
+      "description": "높은 주파수의 경보음을 울립니다. 하역장 곳곳에 대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다."
+    },
+    "call_reinforcements2": {
+      "name": "가드 호출",
+      "description": "높은 주파수의 경보음을 울립니다.대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다."
+    },
+    "call_reinforcements3": {
+      "name": "가드 호출",
+      "description": "높은 주파수의 경보음을 울립니다.대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다."
+    },
+    "stealth": {
+      "name": "은신",
+      "description": "주변의 화물 더미와 그림자 속으로 몸을 숨깁니다. 시야에서 완전히 사라진 적은 다시 나타나 공격하기 전까지 타겟팅할 수 없습니다."
+    },
+    "item_steal": {
+      "name": "절도",
+      "description": "약탈자의 빠른 손놀림이 당신의 배낭을 스칩니다. 소지하고 있던 소모품이나 골드 중 일부가 순식간에 사라집니다."
+    },
+    "enemy_curse": {
+      "name": "조롱",
+      "description": "적군 모두에게 조롱을 퍼부어, 방어력을 떨어뜨립니다."
+    },
+    "smoke_bomb": {
+      "name": "연막",
+      "description": "발밑에서 자욱한 회색 연기가 터져 나옵니다. 전장의 시야가 차단되어 공격의 명중률이 바닥으로 떨어지고 혼란이 가중됩니다."
+    },
+    "poison_dagger": {
+      "name": "독 찌르기",
+      "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다."
+    },
+    "vitals_strike": {
+      "name": "급소 타격",
+      "description": "가장 취약한 적의 빈틈을 파고들어 치명적인 근접 공격을 가합니다."
+    },
+    "whirlwind": {
+      "name": "소용돌이",
+      "description": "무기를 크게 휘둘러 주변 모든 적을 공격하고 3턴간 출혈 상태로 만듭니다."
+    },
+    "thorns": {
+      "name": "가시",
+      "description": "적에게 공격을 받는다면 되갚아줍니다."
+    },
+    "death_aura": {
+      "name": "죽음의 오라",
+      "description": "반경 내의 모든 생명체를 시들게 합니다.  매 턴마다 적의 방어력을 깎는 디버프를 부여하고 체력을 감소시킵니다."
+    },
+    "death_destruct": {
+      "name": "종말",
+      "description": "이 유닛이 사망 시, 폭발하여 이 유닛 체력의 60%의 데미지를 상대방 유닛에게 줍니다.",
+      "type": "passive"
+    },
+    "frostborne": {
+      "name": "서리",
+      "description": "공격 시 상대방 유닛의 행동을 둔화시킵니다."
+    },
+    "distortion_shroud": {
+      "name": "공간 왜곡: 흩어지는 잔상",
+      "description": "아공간의 틈새로 몸을 숨깁니다."
+    },
+    "soul_anchor": {
+      "name": "저승의 닻: 영혼 고립",
+      "description": "적 중 하나의 발밑에 아공간의 구멍을 뚫어 영혼을 붙잡습니다."
+    },
+    "dimensional_collapse": {
+      "name": "차원 붕괴: 닫히는 경계",
+      "description": "전장 전체의 공간을 압축하여 파괴합니다."
+    },
+    "spectral_wail": {
+      "name": "원혼의 통곡",
+      "description": "귀족의 원한이 담긴 비명을 질러 모든 적의 정신을 붕괴시킵니다."
+    },
+    "spout_out": {
+      "name": "분출",
+      "description": "죄악의 구덩이에서 끓어오르는 오물이 목표를 휩쓸어버립니다."
+    }
+  }
 }

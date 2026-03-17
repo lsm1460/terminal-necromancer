@@ -1,6 +1,6 @@
 {
   "unit_death": "\n💀 {{name}} has fallen!",
-  
+
   "monster_event": {
     "spawn": "👾 {{name}} appeared!",
     "current_enemies": "⚠️  Current Enemies: {{names}}",
@@ -77,5 +77,25 @@
     "vanished": "{{name}} vanished like smoke.",
     "victory": "\n🏆 Victory!",
     "defeat": "\n💀 You have been defeated..."
+  },
+
+  "buff": {
+    "burn": "Burn",
+    "freeze": "Freeze",
+    "paralysis": "Paralysis",
+    "bind": "Bind",
+    "bleed": "Bleed",
+    "expose": "Expose",
+    "bone_prison": "Bone Prison",
+    "overdrive": "Overdrive",
+    "aging": "Aging",
+    "injury": "Injury",
+    "curse": "Curse",
+    "corrosion": "Corrosion",
+    "smoke": "Smoke",
+    "poison": "Poison",
+    "defense": "Defense",
+    "stealth": "Stealth",
+    "focus": "Marker"
   }
 }

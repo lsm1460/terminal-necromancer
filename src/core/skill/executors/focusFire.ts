@@ -35,7 +35,7 @@ export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } 
     Terminal.log(`[!] 모든 수하의 안광이 붉게 타오릅니다.\n`)
 
     target.applyDeBuff({
-      name: curseName,
+      id: 'focus',
       type: 'focus',
       duration: duration + 1,
     })

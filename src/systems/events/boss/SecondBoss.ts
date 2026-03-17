@@ -23,7 +23,7 @@ export class SecondBoss implements BossLogic {
     const core = monster.makeMonster('golem_core')
     const coreUnit = battle.toCombatUnit(core!, 'monster')
     coreUnit.applyBuff({
-      name: i18n.t('skill.stealth'),
+      id: 'stealth',
       type: 'stealth',
       duration: Infinity,
       isLocked: true,
@@ -48,7 +48,7 @@ export class SecondBoss implements BossLogic {
     })
 
     amorUnit.onDeathHooks.push(async () => {
-      coreUnit.removeBuff(i18n.t('skill.stealth'), true)
+      coreUnit.removeBuff('stealth', true)
 
       const coreExposedLogs = i18n.t('npc.second_boss.battle.core_exposed', { returnObjects: true }) as string[]
       coreExposedLogs.forEach((_log) => Terminal.log(_log))

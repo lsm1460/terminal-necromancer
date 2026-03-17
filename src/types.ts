@@ -1,5 +1,6 @@
 import { SkeletonRarity } from './consts'
-import { Battle, Buff, CalcDamageOptions } from './core/battle/Battle'
+import { Battle, CalcDamageOptions } from './core/battle/Battle'
+import { BuffOptions } from './core/battle/Buff'
 import { CombatUnit } from './core/battle/unit/CombatUnit'
 import { Broadcast } from './core/Broadcast'
 import { ItemRarity } from './core/item/consts'
@@ -335,7 +336,7 @@ export type NpcSkill = {
   power: number
   targetType: SkillTargetType
   type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
-  buff?: Buff
+  buff?: BuffOptions
   options?: CalcDamageOptions & {
     spawnMonsterId?: string
   }

@@ -85,5 +85,200 @@
     }
   },
 
-  "target_not_found": "But no target could be found.."
+  "target_not_found": "But no target could be found..",
+
+  "message": {
+    "buff": {
+      "overdrive": "\n[🔥 Overdrive] {{name}}'s soul is forced into a frenzy, pushing its power to the limit! ({{name}} HP {{hp}} / {{maxHp}})"
+    },
+    "debuff": {
+      "paralysis": "\n [!] {{name}} is paralyzed and cannot move!",
+      "bind": "\n [!] {{name}} is bound and cannot move!",
+      "bleed": "\n [!] {{name}} has sustained a deep wound and begins to bleed!",
+      "burn": "\n [!] {{name}}'s skin is scorched by the flames.",
+      "poison": "\n [!] {{name}} is exposed to a lethal toxin, turning pale.",
+      "freeze": "\n [!] {{name}} is exposed to the cold, and their skin begins to freeze.",
+      "curse": "\n [!] {{name}}'s guard is shattered by uncontrollable rage!",
+      "smoke": "\n [!] Thick smoke completely veils {{name}}'s vision!",
+      "bone_prison": "\n [!] Jagged bone bars rise, constricting {{name}}'s limbs!",
+      "aging": "\n[⏳] {{name}}'s skin withers rapidly as they gasp for air! All reactions are visibly slowed.",
+      "injury": "\n[⏳] {{name}}'s ankle is injured! Movement is visibly slowed."
+    }
+  },
+
+  "npc": {
+    "fire_bolt": {
+      "name": "Fire Bolt",
+      "description": "Shoots a flame at the target, inflicting a burn."
+    },
+    "ice_bolt": {
+      "name": "Ice Bolt",
+      "description": "Shoots ice at the target, slowing their actions."
+    },
+    "lightning_bolt": {
+      "name": "Lightning Bolt",
+      "description": "Shoots lightning at the target, paralyzing them."
+    },
+    "fire_breath": {
+      "name": "Fire Breath",
+      "description": "Exhales a powerful blast of fire in all directions."
+    },
+    "quick_slash": {
+      "name": "Surprise Strike",
+      "description": "Quickly slashes the enemy's weak point with a keen weapon or sharp claws."
+    },
+    "sticky_web": {
+      "name": "Force Restraint",
+      "description": "Throws sticky mucus or invisible magical threads to restrict the target's movement."
+    },
+    "self_destruct": {
+      "name": "Unstable Self-Destruction",
+      "description": "Causes internal energy to go berserk and scatters the body to deal fatal damage to nearby enemies."
+    },
+    "health_drain": {
+      "name": "Life Drain",
+      "description": "Clings to the target and directly absorbs their life energy for sustenance."
+    },
+    "power_smash": {
+      "name": "Power Smash",
+      "description": "Smashes the enemy with a heavy weapon."
+    },
+    "power_shot": {
+      "name": "Power Shot",
+      "description": "Fires a powerful projectile targeting the enemy's vitals."
+    },
+    "aim_arrow": {
+      "name": "Snipe",
+      "description": "Snipes the enemy in the backline."
+    },
+    "piercing_arrow": {
+      "name": "Piercing Shot",
+      "description": "Pierces through the frontline to hit the enemies behind."
+    },
+    "rapid_fire": {
+      "name": "Barrage",
+      "description": "Unleashes indiscriminate fire on the battlefield, damaging all enemies."
+    },
+    "minor_heal": {
+      "name": "Lesser Heal",
+      "description": "Slightly restores HP to the most wounded ally."
+    },
+    "heal": {
+      "name": "Heal",
+      "description": "Restores HP to the most wounded ally."
+    },
+    "greater_heal": {
+      "name": "Greater Heal",
+      "description": "Greatly restores HP to the most wounded ally."
+    },
+    "volley_fire": {
+      "name": "Volley Fire",
+      "description": "Rains down a shower of arrows on all enemies."
+    },
+    "holy_radiance": {
+      "name": "Holy Chorus",
+      "description": "Soothes the wounds of all allies."
+    },
+    "bone_prison": {
+      "name": "Bone Prison",
+      "description": "A prison made of bone restricts the target's actions."
+    },
+    "aging_curse": {
+      "name": "Enfeeble",
+      "description": "Curses the most wounded enemy with aging, reducing their Agility."
+    },
+    "abyssal_gallop": {
+      "name": "Abyssal Gallop",
+      "description": "Abyssal flames erupt in the warhorse's wake, dealing fixed damage to all enemies."
+    },
+    "dread_charge": {
+      "name": "Death Charge",
+      "description": "Becomes one with the warhorse to pierce the enemy lines, dealing heavy physical damage to all enemies."
+    },
+    "divide_soul": {
+      "name": "Self-Division",
+      "description": "Spirits clinging to the body break away."
+    },
+    "achilles_bite": {
+      "name": "Achilles Bite",
+      "description": "Precisely targets and bites the ankle, significantly reducing Move Speed and Evasion as teeth tear into ligaments."
+    },
+    "call_reinforcements": {
+      "name": "Call Guard",
+      "description": "Sounds a high-frequency alarm, drawing nearby security forces to this area."
+    },
+    "call_reinforcements2": {
+      "name": "Call Guard",
+      "description": "Sounds a high-frequency alarm, drawing nearby security forces to this area."
+    },
+    "call_reinforcements3": {
+      "name": "Call Guard",
+      "description": "Sounds a high-frequency alarm, drawing nearby security forces to this area."
+    },
+    "stealth": {
+      "name": "Stealth",
+      "description": "Hides within shadows and cargo piles; cannot be targeted until appearing to attack again."
+    },
+    "item_steal": {
+      "name": "Pickpocket",
+      "description": "The plunderer's quick hands brush your bag, snatching consumables or gold."
+    },
+    "enemy_curse": {
+      "name": "Taunt",
+      "description": "Hurls insults at all enemies to reduce their Defense."
+    },
+    "smoke_bomb": {
+      "name": "Smoke Screen",
+      "description": "Explodes thick grey smoke at the feet, blocking vision and causing Accuracy to plummet."
+    },
+    "poison_dagger": {
+      "name": "Poison Stab",
+      "description": "Throws a dagger coated in purple venom that drains the target's life every turn."
+    },
+    "vitals_strike": {
+      "name": "Vitals Strike",
+      "description": "Infiltrates the most vulnerable enemy's opening to deal a critical melee blow."
+    },
+    "whirlwind": {
+      "name": "Whirlwind",
+      "description": "Swings the weapon in a wide arc to attack all nearby enemies and inflicts Bleed for 3 turns."
+    },
+    "thorns": {
+      "name": "Thorns",
+      "description": "Returns a portion of the damage taken back to the attacker."
+    },
+    "death_aura": {
+      "name": "Death Aura",
+      "description": "Withers all life within range, reducing Defense and HP of enemies each turn."
+    },
+    "death_destruct": {
+      "name": "Doomsday",
+      "description": "Upon death, explodes to deal 60% of this unit's HP as damage to all enemies.",
+      "type": "passive"
+    },
+    "frostborne": {
+      "name": "Frostborne",
+      "description": "Slows the enemy unit's actions upon attacking."
+    },
+    "distortion_shroud": {
+      "name": "Spatial Distortion: Fading Afterimage",
+      "description": "Hides within the crevices of sub-space."
+    },
+    "soul_anchor": {
+      "name": "Nether Anchor: Soul Isolation",
+      "description": "Tears a hole into sub-space beneath an enemy to seize their soul."
+    },
+    "dimensional_collapse": {
+      "name": "Dimensional Collapse: Closing Boundary",
+      "description": "Compresses and destroys the space of the entire battlefield."
+    },
+    "spectral_wail": {
+      "name": "Spectral Wail",
+      "description": "Unleashes a scream filled with noble resentment, shattering the minds of all enemies."
+    },
+    "spout_out": {
+      "name": "Eruption",
+      "description": "Boiling filth from the pit of sin sweeps over the target."
+    }
+  }
 }

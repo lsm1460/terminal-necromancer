@@ -50,7 +50,7 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
 
     // [출혈] 디버프 추가 (지속 피해)
     enemy.applyDeBuff({
-      name: '출혈',
+      id: 'bleed',
       type: 'dot', // Damage over Time
       duration: 3 + 1, // 3턴 지속
       atk: sacrificeCount * 5, // 시전자 공격력 비례 지속 피해 예시

@@ -77,5 +77,25 @@
     "vanished": "{{name}}이/가 연기처럼 사라졌다.",
     "victory": "\n🏆 전투에서 승리했습니다!",
     "defeat": "\n💀 전투에서 패배했습니다..."
+  },
+
+  "buff": {
+    "burn": "화상",
+    "freeze": "동결",
+    "paralysis": "마비",
+    "bind": "구속",
+    "bleed": "출혈",
+    "expose": "노출",
+    "bone_prison": "뼈 감옥",
+    "overdrive": "광폭화",
+    "aging": "노화",
+    "injury": "부상",
+    "curse": "저주",
+    "corrosion": "부식",
+    "smoke": "연막",
+    "poison": "중독",
+    "defense": "방어",
+    "stealth": "은신",
+    "focus": "표식"
   }
 }

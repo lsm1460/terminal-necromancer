@@ -41,7 +41,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
   const duration = 3
 
   target.applyDeBuff({
-    name: '뼈 감옥',
+    id: 'bone_prison',
     type: 'bind',
     duration: duration + 1,
   })

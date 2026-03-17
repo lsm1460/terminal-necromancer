@@ -30,7 +30,7 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     const defReduction = isCorrosion ? Math.max(Math.floor(target.stats.def * 0.5), 1) : 0
 
     target.applyDeBuff({
-      name: curseName,
+      id: isCorrosion ? 'corrosion' : 'curse',
       type: 'deBuff',
       ...(isCorrosion ? { def: defReduction } : { atk: atkReduction }),
       duration: duration + 1,

@@ -34,7 +34,17 @@ export class NpcSkillManager {
   }
 
   getSkill(skillId: string) {
-    return _.cloneDeep(this.skillData[skillId])
+    return {
+      ..._.cloneDeep(this.skillData[skillId]),
+
+      get name() {
+        return i18n.t(`skill.npc.${skillId}.name`)
+      },
+
+      get description() {
+        return i18n.t(`skill.npc.${skillId}.description`)
+      },
+    }
   }
 
   findTargets: SkillExecutor<CombatUnit[]> = (skillId, attacker, ally, enemies) => {
@@ -102,7 +112,7 @@ export class NpcSkillManager {
     }
 
     BattleDirector.playAttack(attacker.id, skillId)
-    
+
     // 1. 특수 로직(ID 기반)이 있는지 먼저 확인
     if (SpecialSkillLogics[skillId]) {
       await SpecialSkillLogics[skillId](attacker, targets, skill)

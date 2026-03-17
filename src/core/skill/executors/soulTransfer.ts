@@ -46,7 +46,7 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
     targetMinion.ref.hp = Math.max(1, targetMinion.ref.hp - drainAmount)
 
     targetMinion.applyBuff({
-      name: '광폭화',
+      id: 'overdrive',
       type: 'buff',
       atk: 15,
       duration: 3 + 1, // 행동 시작 시 차감 고려
