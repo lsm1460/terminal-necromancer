@@ -57,5 +57,33 @@
     "unlockHint": "B5F Purified"
   },
 
-  "stealth": "Stealth"
+  "stealth": "Stealth",
+
+  "passive": {
+    "death_aura": "[!] {{attacker}}'s Death Aura begins to constrict the souls of the enemies...",
+    "thorns": "\n[🦷 Thorns]: {{defender}}'s thorns tear into {{attacker}}'s flesh!",
+    "death_destruct": "\n[🔥 Doomsday]: {{unit}}'s corpse explodes, consuming everything around it!"
+  },
+
+  "special": {
+    "self_destruct": "💀 {{attacker}} has expended all their strength and perished!",
+    "health_drain": "💉 {{attacker}} absorbed the enemy's life force, recovering {{amount}} HP!",
+    "item_steal": {
+      "no_target": " > {{target}} has nothing to steal.",
+      "gold": "[!] Pickpocket! {{attacker}} stole {{amount}}G and fled!",
+      "item": "[!] Lost Item! {{attacker}} snatched '{{item}}' from your bag and fled!",
+      "fail": " > {{attacker}} searched your pockets, but found absolutely nothing."
+    }
+  },
+
+  "effect": {
+    "heal": "💚 {{target}}'s HP has been restored by {{amount}}.",
+    "summon": {
+      "fail": "\n{{attacker}} failed to use {{skillName}}..",
+      "divide": "🧬 {{reinforcement}} has split from {{attacker}}!",
+      "call": "👾 {{reinforcement}} appeared at {{attacker}}'s call!"
+    }
+  },
+
+  "target_not_found": "But no target could be found.."
 }

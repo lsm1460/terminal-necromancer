@@ -26,6 +26,9 @@ import vending_machine from './vending_machine.json'
 import web from './web.json'
 import julian from './julian.json'
 import kael from './kael.json'
+import adrian from './adrian.json'
+import battle from './battle.json'
+import commands from './commands.json'
 
 const en = {
   ...init,
@@ -58,9 +61,12 @@ const en = {
     oliver,
     julian,
     kael,
+    adrian,
   },
   skill,
   events,
+  battle,
+  commands
 }
 
 export default en

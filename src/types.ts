@@ -42,7 +42,8 @@ export type BattleTarget = {
   isSkeleton?: boolean // only skeleton
   originId?: string // only skeleton
   rarity?: SkeletonRarity // only skeleton
-  isGolem?: boolean
+  isGolem?: boolean // only golem
+  madeBy?: string // only golem
   isKnight?: boolean
   deathLine?: string
   minRebornRarity?: SkeletonRarity
@@ -363,8 +364,6 @@ export type AffixId =
 
 export interface Affix {
   id: AffixId // 고유 식별자
-  name: string // 이름 (예: "군주", "군단")
-  description: string // 툴팁용 설명
   valueRange?: [number, number]
   value?: number
   metadata?: {

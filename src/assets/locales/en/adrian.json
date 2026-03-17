@@ -1,0 +1,33 @@
+{
+  "name": "Adrian, the Terrified Guide",
+  "lines": [
+    "Lobby's under fire! To hell with the manual! Just run!",
+    "Desk is full! No room! Move! Find somewhere else to hide!"
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Ah... are you looking for a refuge too? I'm sorry, but all emergency exits have already been sealed...",
+      "farewell": "I hope... you stay safe, at least until the smoke outside clears."
+    },
+    "normal": {
+      "greeting": "Checking in... that doesn't mean anything anymore, does it? There's a corpse behind that pillar... Ugh...",
+      "farewell": "Be careful. I heard Resistance members are coming down from the upper floors."
+    },
+    "hostile": {
+      "greeting": "Are you one of those rioters too? There's nothing left to break, so why?!",
+      "farewell": "The 'record of your visit'... will surely remain in the registers of hell!"
+    }
+  },
+  "deathLine": "Leaving work... is out of the question today... I didn't even... finish the settlement...",
+  "description": "He gives off an air of reliability, as if he could resolve even the most complicated reservation situations calmly.",
+  "lobby_panic": [
+    "(Trembling breaths are heard from beneath the desk...)",
+    "Adrian: No... stay back! Please... no entry without a reservation!",
+    "Adrian: The VIP Lounge is... *hic*, currently closed due to an explosion! I told you we're closed!",
+    "Adrian: Did you hear that? The Resistance... they've actually made it to the end of the hall.",
+    "Adrian: My shoes... they're limited edition, and the blood won't come off. This is a disaster, an absolute disaster...",
+    "Adrian: Where is security?! Useless, all of them—oh, wait. They were all gunned down earlier, weren't they?",
+    "Adrian: Is anyone there? Please... get me out of here. No, actually, just ignore me and pass by!",
+    "Adrian: Help me... I haven't even finished this month's settlement yet... *sob*..."
+  ]
+}

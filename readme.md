@@ -1,31 +1,13 @@
 ## 0. 남은 작업 정리
 
-다국어작업 필요 파일 (34개..)
+다국어작업 필요 파일 (24개..)
 
 src\npc\death.ts
-src\npc\adrian.ts
-
-src\core\WebAssetManager.ts
-src\core\NpcManager.ts
-
-src\core\skill\passiveHandlers.ts
-src\core\skill\npcs\SpecialSkillLogics.ts
-src\core\skill\npcs\SkillEffectHandlers.ts
-src\core\skill\npcs\NpcSkillManger.ts
 
 src\core\skill\executors\* x10
 
-src\core\player\Player.ts
-src\core\player\MinionManager.ts
 src\core\player\KnightWrapper.ts
-src\core\player\InventoryManager.ts
-src\core\player\GolemWrapper.ts
 
-src\core\item\consts.ts
-
-src\core\battle\TargetSelector.ts
-src\core\battle\BattleUnitManager.ts
-src\core\battle\AffixManager.ts
 src\core\battle\unit\consts.ts
 
 src\core\affixes\index.ts

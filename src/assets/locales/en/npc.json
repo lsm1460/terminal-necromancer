@@ -67,29 +67,6 @@
     "deathLine": "......My...... Child......",
     "description": "A bizarre familiar crafted from the usurped essence of Charon. Its self-awareness has vanished, and it manipulates void space only in response to your mana."
   },
-  "adrian": {
-    "name": "Adrian, the Terrified Guide",
-    "lines": [
-      "Please... a gunfight in the lobby... according to Article 4, Section 2 of the rulebook...",
-      "The space under the information desk is already full! It's too cramped for even me to hide alone!"
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "Ah... are you looking for a refuge too? I'm sorry, but all emergency exits have already been sealed...",
-        "farewell": "I hope... you stay safe, at least until the smoke outside clears."
-      },
-      "normal": {
-        "greeting": "Checking in... that doesn't mean anything anymore, does it? There's a corpse behind that pillar... Ugh...",
-        "farewell": "Be careful. I heard Resistance members are coming down from the upper floors."
-      },
-      "hostile": {
-        "greeting": "Are you one of those rioters too? There's nothing left to break, so why?!",
-        "farewell": "The 'record of your visit'... will surely remain in the registers of hell!"
-      }
-    },
-    "deathLine": "Leaving work... is out of the question today... I didn't even... finish the settlement...",
-    "description": "He gives off an air of reliability, as if he could resolve even the most complicated reservation situations calmly."
-  },
   "vesper": {
     "name": "Vesper the Naive",
     "lines": [
@@ -150,5 +127,13 @@
       "total": " 🧾 Receipt: You earned a total of {{earned}}G from this session.",
       "current_gold": " 💰 Current Gold: {{gold}}G"
     }
+  },
+
+  "faction": {
+    "hostility_warning": "\n⚠️ [WARNING] Relations with {{faction}} have worsened. (Status: {{current}}/{{limit}})",
+    "hostility_limit_reached": [
+      "\n🚫 [PERMANENT HOSTILITY] You have crossed the point of no return with {{faction}}.",
+      "🛡️ Members of this faction will now attack you on sight!"
+    ]
   }
 }

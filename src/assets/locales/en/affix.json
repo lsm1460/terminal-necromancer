@@ -29,7 +29,8 @@
   },
   "ROAR": {
     "name": "Roar",
-    "description": "Golems provoke enemies to focus their backline attacks on themselves."
+    "description": "Golems provoke enemies to focus their backline attacks on themselves.",
+    "activation": "\n[📢 Roar]: The Golem spews steam and lets out a deafening roar!! {{attacker}}'s gaze is now fixed on the Golem."
   },
   "TABOO": {
     "name": "Taboo",

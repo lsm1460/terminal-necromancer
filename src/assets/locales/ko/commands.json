@@ -1,0 +1,136 @@
+{
+  "attack": "공격",
+  "status": "상태",
+  "skill": "스킬",
+  "inventory": "인벤토리",
+  "pick": "줍기",
+  "help": "도움말",
+
+  "combat": {
+    "confirm_kill": "\n[!] 눈앞의 망자를 살해하시겠습니까? 한 번 휘두른 무기는 되돌릴 수 없습니다.",
+    "cancel_murder": "\n당신은 살의를 거두고 무기를 내립니다.",
+    "no_targets": "\n[알림] 공격할 대상이 없습니다."
+  },
+  "drop": {
+    "no_items": "버릴 아이템이 없습니다.",
+    "not_found": "{{name}} 아이템이 해당 위치에 없습니다.",
+    "select_prompt": "어떤 아이템을 버리시겠습니까?",
+    "quantity_label": "({{count}}개)",
+    "success": "📦 [{{name}}]{{qtyText}}을(를) 바닥에 버렸습니다.",
+    "unit": " 1개"
+  },
+  "map": {
+    "label": "지도",
+    "no_map": "📜 지도가 없습니다.",
+    "legend_title": "\n[ 지도 범례 ]",
+    "legend_items": [
+      "📍:현재위치 | ☁️ :미탐사 | ⬜:안전한 길 | ⚔️ :전투 필요",
+      "👹:보스     | 🛗:승강기   | 💀:죽음       | 👤:NPC"
+    ],
+    "footer": "---------------------------------------"
+  },
+  "move": {
+    "you_cannot_pass": "지나갈 수 없다.",
+    "cannot_escape": "\n🚫 {{name}}이(가) 주시하고 있어 도망칠 수 없다."
+  },
+  "look": {
+    "label": "살펴보기",
+    "select_prompt": "무엇을 확인하시겠습니까?",
+    "select_target_prompt": "세부 대상을 선택하세요.",
+    "category": {
+      "path": "🔍 주변 지형 살피기",
+      "npc": "👤 주변 인물",
+      "corpse": "💀 시체",
+      "monster": "💀 적대적 생명체",
+      "minion": "🧟 소환된 미니언",
+      "item": "💎 드롭된 아이템"
+    },
+    "corpse": {
+      "menu_label": "{{name}}의 시체",
+      "description": "\n차갑게 식어버린 {{name}}의 사체가 있습니다.\n강령술을 통해 다시 움직이게 하기에 결함이 없는 보편적인 소체 상태입니다.",
+      "status_header": "========================================\n[ 대상 식별: {{name}} ]\n========================================",
+      "hp": "- 체력: {{maxHp}}",
+      "atk": "- 공격: {{atk}}",
+      "def": "- 방어: {{def}}",
+      "footer": "----------------------------------------"
+    },
+    "path": {
+      "danger_boss": "\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.",
+      "warning_monster": "\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다."
+    },
+    "item": {
+      "rarity": {
+        "EPIC": "⟪🔮 에픽⟫",
+        "RARE": "⟪💎 희귀⟫",
+        "COMMON": "⟪⚪ 일반⟫"
+      },
+      "stats": {
+        "label": " 효과 : ",
+        "atk": "공격력 +{{val}}",
+        "crit": "치명타 {{val}}%",
+        "def": "방어력 +{{val}}",
+        "eva": "회피율 +{{val}}%",
+        "hpHeal": "즉시 회복 HP {{val}}",
+        "mana": " 마나 증가 : +{{val}}MP",
+        "maxSkeleton": " 영령 : 최대 해골 소환수 +{{val}}",
+        "affix": " 축복 : [{{name}}] 효과 부여 ({{description}})"
+      },
+      "info": {
+        "price": " 💰 가치: {{price}} G (판매가 {{sellPrice}} G)"
+      }
+    },
+    "golem": {
+      "growth_label": " 🛠️ 골렘 성장도: [{{bar}}] {{current}} / {{limit}}",
+      "upgrades": {
+        "machine": " • \u001b[33m[⚙️ 기계 개조]\u001b[0m Lv.{{level}}",
+        "soul": " • \u001b[36m[👻 영혼 주입]\u001b[0m Lv.{{level}}"
+      }
+    },
+
+    "entity": {
+      "type_tag": {
+        "minion": " [🧟 MINION] ",
+        "monster": " [💀 MONSTER] "
+      },
+      "stats": {
+        "hp": " HP  : {{hpBar}} {{hp}}/{{maxHp}}",
+        "combat": " ATK : {{atk}} | DEF: {{def}}",
+        "sub": " EVA : 회피 {{eva}}% | 크리티컬 {{crit}}%"
+      },
+      "skills": {
+        "label": " 보유 기술:",
+        "item": " • [{{name}}]: {{description}}"
+      }
+    },
+
+    "status": {
+      "title": "🛡️ 상태창",
+      "level": "레벨: {{level}} (영혼 조각: {{exp}})",
+      "exp_next": "다음 레벨까지 필요한 영혼 조각: {{expNeeded}}",
+      "max_level": "최고 레벨입니다.",
+      "hp": "HP: {{hp}} / {{maxHp}}",
+      "mp": "MP: {{mp}} / {{maxMp}}",
+      "atk": "공격력: {{atk}} (+ {{bonus}})",
+      "def": "방어력: {{def}} (+ {{bonus}})",
+      "gold": "골드: {{gold}}",
+      "crit": "치명: {{val}}%",
+      "eva": "회피: {{val}}%",
+      "equipment": {
+        "weapon": "무기: {{text}}",
+        "armor": "방어구: {{text}}",
+        "none": "없음",
+        "bonus_atk": "{{label}} (공격 +{{atk}})",
+        "bonus_def": "{{label}} (방어 +{{def}})",
+        "affix": "\n   ㄴ축복 : [{{name}}] 효과 부여 ({{description}})"
+      },
+      "legion": {
+        "title": "\n💀 [ 소환수 군단 상태 ]",
+        "golem_status": "[{{hp}}/{{maxHp}}]",
+        "golem_destroyed": "[파괴됨]",
+        "skeleton": " └ 💀 해골 병사: {{count}} / {{max}}",
+        "no_minions": "   (현재 소환된 미니언이 없습니다.)"
+      },
+      "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    }
+  }
+}

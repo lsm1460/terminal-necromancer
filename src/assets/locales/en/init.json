@@ -49,158 +49,10 @@
     "init": "Focusing the scattered consciousness...",
     "map": "Mapping the Twilight Realm...",
     "resource": "Summoning the wails of the dead and hollow vessels...",
-    "success": "The ritual is complete."
-  },
-
-  "item_prefix": {
-    "masterwork": "Masterwork",
-    "worn": "Worn",
-    "exquisite": "Exquisite",
-    "superior": "Superior",
-    "keen": "Keen",
-    "reinforced": "Reinforced",
-    "seasoned": "Seasoned",
-    "abyssal": "Abyssal",
-    "fallen": "Fallen",
-    "forbidden": "Forbidden",
-    "primal": "Primal",
-    "mortal": "Mortal"
-  },
-
-  "commands": {
-    "attack": "Attack",
-    "status": "Status",
-    "skill": "Skill",
-    "inventory": "Inventory",
-    "pick": "Pick",
-    "help": "Help",
-
-    "combat": {
-      "confirm_kill": "\n[!] Do you wish to murder the deceased before you? Once a weapon is swung, there is no turning back.",
-      "cancel_murder": "\nYou withdraw your bloodlust and lower your weapon.",
-      "no_targets": "\n[Notice] There are no targets to attack."
-    },
-    "drop": {
-      "no_items": "You have no items to drop.",
-      "not_found": "The item '{{name}}' is not in your inventory.",
-      "select_prompt": "Which item would you like to drop?",
-      "quantity_label": " (x{{count}})",
-      "success": "📦 Dropped [{{name}}]{{qtyText}} on the ground.",
-      "unit": " x1"
-    },
-    "map": {
-      "label": "Map",
-      "no_map": "📜 Map unavailable.",
-      "legend_title": "\n[ Map Legend ]",
-      "legend_items": [
-        "📍:Current  | ☁️ :Unexplored | ⬜:Safe Path | ⚔️ :Combat",
-        "👹:Boss     | 🛗:Elevator    | 💀:Death     | 👤:NPC"
-      ],
-      "footer": "---------------------------------------"
-    },
-    "move": {
-      "you_cannot_pass": "You cannot pass",
-      "cannot_escape": "\n🚫 You cannot escape while {{name}} is watching you."
-    },
-    "look": {
-      "label": "Look",
-      "select_prompt": "What would you like to examine?",
-      "select_target_prompt": "Select a specific target to examine.",
-      "category": {
-        "path": "🔍 Inspect Surroundings",
-        "npc": "👤 Nearby People",
-        "corpse": "💀 Corpses",
-        "monster": "💀 Hostile Entities",
-        "minion": "🧟 Summoned Minions",
-        "item": "💎 Dropped Items"
-      },
-      "corpse": {
-        "menu_label": "Corpse of {{name}}",
-        "description": "\nThe cold, lifeless remains of {{name}} lie here.\nIt is in an ideal condition to be reanimated as a vessel through necromancy.",
-        "status_header": "========================================\n[ Identification: {{name}} ]\n========================================",
-        "hp": "- HP: {{maxHp}}",
-        "atk": "- ATK: {{atk}}",
-        "def": "- DEF: {{def}}",
-        "footer": "----------------------------------------"
-      },
-      "path": {
-        "danger_boss": "\n[❗DANGER] An overwhelming presence is felt ahead. Ensure your path of retreat.",
-        "warning_monster": "\n[⚠️ WARNING] Hostile intent from a living entity is sensed ahead."
-      },
-      "item": {
-        "rarity": {
-          "EPIC": "⟪🔮 EPIC⟫",
-          "RARE": "⟪💎 RARE⟫",
-          "COMMON": "⟪⚪ COMMON⟫"
-        },
-        "stats": {
-          "label": " Effect : ",
-          "atk": "ATK +{{val}}",
-          "crit": "CRIT {{val}}%",
-          "def": "DEF +{{val}}",
-          "eva": "EVA +{{val}}%",
-          "hpHeal": "Instant HP Heal {{val}}",
-          "mana": " Mana Increase : +{{val}}MP",
-          "maxSkeleton": " Spirits : Max Skeletons +{{val}}",
-          "affix": " Blessing : Grants [{{name}}] ({{description}})"
-        },
-        "info": {
-          "price": " 💰 Worth: {{price}} G (Selling Price {{sellPrice}} G)"
-        }
-      },
-      "golem": {
-        "growth_label": " 🛠️ Golem Growth: [{{bar}}] {{current}} / {{limit}}",
-        "upgrades": {
-          "machine": " • \u001b[33m[⚙️ Mechanical Mod]\u001b[0m Lv.{{level}}",
-          "soul": " • \u001b[36m[👻 Soul Infusion]\u001b[0m Lv.{{level}}"
-        }
-      },
-
-      "entity": {
-        "type_tag": {
-          "minion": " [🧟 MINION] ",
-          "monster": " [💀 MONSTER] "
-        },
-        "stats": {
-          "hp": " HP  : {{hpBar}} {{hp}}/{{maxHp}}",
-          "combat": " ATK : {{atk}} | DEF: {{def}}",
-          "sub": " EVA : Evasion {{eva}}% | Critical {{crit}}%"
-        },
-        "skills": {
-          "label": " Skills:",
-          "item": " • [{{name}}]: {{description}}"
-        }
-      },
-
-      "status": {
-        "title": "🛡️ Status",
-        "level": "Level: {{level}} (Soul Shards: {{exp}})",
-        "exp_next": "Soul Shards needed for next level: {{expNeeded}}",
-        "max_level": "You have reached the maximum level.",
-        "hp": "HP: {{hp}} / {{maxHp}}",
-        "mp": "MP: {{mp}} / {{maxMp}}",
-        "atk": "ATK: {{atk}} (+ {{bonus}})",
-        "def": "DEF: {{def}} (+ {{bonus}})",
-        "gold": "Gold: {{gold}}",
-        "crit": "CRIT: {{val}}%",
-        "eva": "EVA: {{val}}%",
-        "equipment": {
-          "weapon": "Weapon: {{text}}",
-          "armor": "Armor: {{text}}",
-          "none": "None",
-          "bonus_atk": "{{label}} (ATK +{{atk}})",
-          "bonus_def": "{{label}} (DEF +{{def}})",
-          "affix": "\n   └ Blessing: Grants [{{name}}] ({{description}})"
-        },
-        "legion": {
-          "title": "\n💀 [ Undead Legion Status ]",
-          "golem_status": "[{{hp}}/{{maxHp}}]",
-          "golem_destroyed": "[Destroyed]",
-          "skeleton": " └ 💀 Skeletons: {{count}} / {{max}}",
-          "no_minions": "   (No minions currently summoned.)"
-        },
-        "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      }
+    "success": "The ritual is complete.",
+    "scene": {
+      "start": "The shriek of rusted steel cuts through the floors, reaching the gates of '{{name}}'...",
+      "complete": "The vibration stops. The air beyond the gates has changed."
     }
   },
 
@@ -220,7 +72,25 @@
     "action_use": "Use",
     "action_drop": "Drop",
     "action_equip_done": "Equipped [{{label}}].",
-    "action_drop_done": "Dropped [{{label}}] (x{{count}}) on the ground."
+    "action_drop_done": "Dropped [{{label}}] (x{{count}}) on the ground.",
+
+    "use": {
+      "no_consumables": "\n🎒 No consumable items available.",
+      "select_prompt": "Which item would you like to use?",
+      "not_found": "That item does not exist..",
+      "using": "\n Using [{{name}}]...",
+      "hp_recovered": "❤️ HP restored by {{amount}}. (Current: {{current}}/{{max}})",
+      "mp_recovered": "🧪 MP restored by {{amount}}. (Current: {{current}}/{{max}})"
+    },
+
+    "remove": {
+      "not_found": "❌ That item is not in your inventory."
+    },
+
+    "equip": {
+      "invalid_type": "⚠️ This item type cannot be equipped.",
+      "unequip_caution": "⚠️ The [{{name}}] affix will be removed. Do you wish to proceed?"
+    }
   },
 
   "stat": {
@@ -254,83 +124,12 @@
 
   "invalid_command": "Invalid command.",
 
-  "battle": {
-    "monster_event": {
-      "spawn": "👾 {{name}} appeared!",
-      "current_enemies": "⚠️  Current Enemies: {{names}}",
-      "preemptive_attack": "⚠️  Surprise attack by {{name}}!"
-    },
-    "turn_start": "\n━━━━━━━━━ [ {{name}}'s Turn ] ━━━━━━━━━",
-    "battle_start": "\n⚔️ Battle Started!",
-    "enemy_list": "Enemies: {{names}}",
-    "effect_expired": {
-      "buff": "[Effect Expired] {{unitName}}'s ✨ [{{effectName}}] has worn off.",
-      "debuff": "[Effect Expired] {{unitName}}'s 💢 [{{effectName}}] has worn off."
-    },
-
-    "action": {
-      "dot_damage": " └ 🩸 [{{effectName}}] Damage: -{{damage}} ({{duration}} turn(s) left)",
-      "dot_death": " └ 💀 {{unitName}} has succumbed to {{effectName}}.",
-      "bind_status": "\n⛓️  {{unitName}} is bound by {{effectName}} and cannot move! ({{duration}} turn(s) left)",
-      "select_action": "Choose your action:",
-      "menu": {
-        "status": "Status",
-        "attack": "Attack",
-        "defense": "Guard",
-        "skill": "Skill",
-        "item": "Item",
-        "escape": "Run"
-      },
-      "status_board": {
-        "title": "\n━━━━━━━━━━━━━━━━━━━━ Battlefield ━━━━━━━━━━━━━━━━━━━━",
-        "ally_side": " [🛡️ Allies]",
-        "enemy_side": " [⚔️ Enemies]",
-        "lead": "🚩 [LEAD]",
-        "condition": "\n         └─ Status: {{status}}",
-        "divider": "──────────────────────────────────────────────────",
-        "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-      },
-      "target_prompt": "Who will you attack?",
-      "guard": "🛡️ {{name}} takes a defensive stance! Damage taken is reduced until the next turn.",
-      "escape_blocked": "\n🚫 Cannot escape! {{name}} is blocking the way!",
-      "escape_success": "\n🏃 Escaped from battle!",
-      "no_target": " > {{name}} looks around in confusion, finding no target to attack...",
-      "idle": "{{name}} is just standing still."
-    },
-
-    "unit": {
-      "labels": {
-        "passive": "\u001b[36m[PASSIVE]\u001b[0m",
-        "sure_hit": "\u001b[33m[SURE HIT]\u001b[0m",
-        "sure_crit": "\u001b[31m[GUARANTEED CRIT]\u001b[0m",
-        "ignore_def": "\u001b[35m[PIERCE]\u001b[0m",
-        "fixed": "\u001b[32m[FIXED]\u001b[0m"
-      },
-      "log": {
-        "hp_status": "\u001b[90m({{name}}'s Remaining HP: {{hp}})\u001b[0m",
-        "evaded": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! 💨 \u001b[37m{{defender}}\u001b[0m evaded the attack. {{hpStatus}}",
-        "no_damage": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! 🛡️ But it dealt no damage to \u001b[37m{{defender}}\u001b[0m. {{hpStatus}}",
-        "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! Dealing {{damageMsg}} damage to \u001b[37m{{defender}}\u001b[0m! {{hpStatus}}"
-      },
-      "status_change": {
-        "effect_removed": "\n✨ [Status Change] [{{effectName}}] has worn off from {{name}}.",
-        "stealth_broken": " \u001b[90m[!] {{name}}'s stealth has been broken, revealing their presence!\u001b[0m",
-        "expose_name": "Exposed",
-        "recovered": " \u001b[32m[!] {{name}} has recovered and is no longer affected by '{{effectName}}'!\u001b[0m",
-        "forced_removed": " \u001b[31m[!] The '{{effectName}}' effect on {{name}} has been forcibly dispelled!\u001b[0m"
-      }
-    },
-
-    "reward": {
-      "unit_death": "\n💀 {{name}} has fallen!",
-      "kill_log": "✨ {{name}} Slain! EXP +{{exp}}",
-      "gold_gain": ", Gold +{{gold}}",
-      "drop_item": "📦 {{name}} dropped {{label}}{{quantity}}.",
-      "item_unit": " unit(s)",
-      "corpse_left": "🦴 The corpse of {{name}} remains on the ground.",
-      "vanished": "{{name}} vanished like smoke.",
-      "victory": "\n🏆 Victory!",
-      "defeat": "\n💀 You have been defeated..."
+  "player": {
+    "description": {
+      "karma_0": "A guide of souls who honors the dead and upholds the natural order.",
+      "karma_5": "The weight of slaughter is slowly seeping into your shadow.",
+      "karma_10": "Corrupt magic consumes your conscience, and your gaze grows clouded.",
+      "karma_max": "A cruel minion of the Reaper, transcending the laws of the living."
     }
   }
 }

@@ -49,158 +49,10 @@
     "init": "흩어진 의식을 집중하는 중...",
     "map": "황혼의 땅을 화폭에 담는 중...",
     "resource": "망자의 곡소리와 빈 육신을 소환하는 중...",
-    "success": "모든 의식이 완료되었습니다."
-  },
-
-  "item_prefix": {
-    "masterwork": "장인의",
-    "worn": "낡은",
-    "exquisite": "정교한",
-    "superior": "우수한",
-    "keen": "날카로운",
-    "reinforced": "강화된",
-    "seasoned": "숙련된",
-    "abyssal": "심연의",
-    "fallen": "몰락한",
-    "forbidden": "금지된",
-    "primal": "태고의",
-    "mortal": "필멸의"
-  },
-
-  "commands": {
-    "attack": "공격",
-    "status": "상태",
-    "skill": "스킬",
-    "inventory": "인벤토리",
-    "pick": "줍기",
-    "help": "도움말",
-
-    "combat": {
-      "confirm_kill": "\n[!] 눈앞의 망자를 살해하시겠습니까? 한 번 휘두른 무기는 되돌릴 수 없습니다.",
-      "cancel_murder": "\n당신은 살의를 거두고 무기를 내립니다.",
-      "no_targets": "\n[알림] 공격할 대상이 없습니다."
-    },
-    "drop": {
-      "no_items": "버릴 아이템이 없습니다.",
-      "not_found": "{{name}} 아이템이 해당 위치에 없습니다.",
-      "select_prompt": "어떤 아이템을 버리시겠습니까?",
-      "quantity_label": "({{count}}개)",
-      "success": "📦 [{{name}}]{{qtyText}}을(를) 바닥에 버렸습니다.",
-      "unit": " 1개"
-    },
-    "map": {
-      "label": "지도",
-      "no_map": "📜 지도가 없습니다.",
-      "legend_title": "\n[ 지도 범례 ]",
-      "legend_items": [
-        "📍:현재위치 | ☁️ :미탐사 | ⬜:안전한 길 | ⚔️ :전투 필요",
-        "👹:보스     | 🛗:승강기   | 💀:죽음       | 👤:NPC"
-      ],
-      "footer": "---------------------------------------"
-    },
-    "move": {
-      "you_cannot_pass": "지나갈 수 없다.",
-      "cannot_escape": "\n🚫 {{name}}이(가) 주시하고 있어 도망칠 수 없다."
-    },
-    "look": {
-      "label": "살펴보기",
-      "select_prompt": "무엇을 확인하시겠습니까?",
-      "select_target_prompt": "세부 대상을 선택하세요.",
-      "category": {
-        "path": "🔍 주변 지형 살피기",
-        "npc": "👤 주변 인물",
-        "corpse": "💀 시체",
-        "monster": "💀 적대적 생명체",
-        "minion": "🧟 소환된 미니언",
-        "item": "💎 드롭된 아이템"
-      },
-      "corpse": {
-        "menu_label": "{{name}}의 시체",
-        "description": "\n차갑게 식어버린 {{name}}의 사체가 있습니다.\n강령술을 통해 다시 움직이게 하기에 결함이 없는 보편적인 소체 상태입니다.",
-        "status_header": "========================================\n[ 대상 식별: {{name}} ]\n========================================",
-        "hp": "- 체력: {{maxHp}}",
-        "atk": "- 공격: {{atk}}",
-        "def": "- 방어: {{def}}",
-        "footer": "----------------------------------------"
-      },
-      "path": {
-        "danger_boss": "\n[❗위험] 전방에 압도적인 존재감이 느껴집니다. 퇴로를 확인하십시오.",
-        "warning_monster": "\n[⚠️ 주의] 전방에 적대적인 생명체의 살기가 느껴집니다."
-      },
-      "item": {
-        "rarity": {
-          "EPIC": "⟪🔮 에픽⟫",
-          "RARE": "⟪💎 희귀⟫",
-          "COMMON": "⟪⚪ 일반⟫"
-        },
-        "stats": {
-          "label": " 효과 : ",
-          "atk": "공격력 +{{val}}",
-          "crit": "치명타 {{val}}%",
-          "def": "방어력 +{{val}}",
-          "eva": "회피율 +{{val}}%",
-          "hpHeal": "즉시 회복 HP {{val}}",
-          "mana": " 마나 증가 : +{{val}}MP",
-          "maxSkeleton": " 영령 : 최대 해골 소환수 +{{val}}",
-          "affix": " 축복 : [{{name}}] 효과 부여 ({{description}})"
-        },
-        "info": {
-          "price": " 💰 가치: {{price}} G (판매가 {{sellPrice}} G)"
-        }
-      },
-      "golem": {
-        "growth_label": " 🛠️ 골렘 성장도: [{{bar}}] {{current}} / {{limit}}",
-        "upgrades": {
-          "machine": " • \u001b[33m[⚙️ 기계 개조]\u001b[0m Lv.{{level}}",
-          "soul": " • \u001b[36m[👻 영혼 주입]\u001b[0m Lv.{{level}}"
-        }
-      },
-
-      "entity": {
-        "type_tag": {
-          "minion": " [🧟 MINION] ",
-          "monster": " [💀 MONSTER] "
-        },
-        "stats": {
-          "hp": " HP  : {{hpBar}} {{hp}}/{{maxHp}}",
-          "combat": " ATK : {{atk}} | DEF: {{def}}",
-          "sub": " EVA : 회피 {{eva}}% | 크리티컬 {{crit}}%"
-        },
-        "skills": {
-          "label": " 보유 기술:",
-          "item": " • [{{name}}]: {{description}}"
-        }
-      },
-
-      "status": {
-        "title": "🛡️ 상태창",
-        "level": "레벨: {{level}} (영혼 조각: {{exp}})",
-        "exp_next": "다음 레벨까지 필요한 영혼 조각: {{expNeeded}}",
-        "max_level": "최고 레벨입니다.",
-        "hp": "HP: {{hp}} / {{maxHp}}",
-        "mp": "MP: {{mp}} / {{maxMp}}",
-        "atk": "공격력: {{atk}} (+ {{bonus}})",
-        "def": "방어력: {{def}} (+ {{bonus}})",
-        "gold": "골드: {{gold}}",
-        "crit": "치명: {{val}}%",
-        "eva": "회피: {{val}}%",
-        "equipment": {
-          "weapon": "무기: {{text}}",
-          "armor": "방어구: {{text}}",
-          "none": "없음",
-          "bonus_atk": "{{label}} (공격 +{{atk}})",
-          "bonus_def": "{{label}} (방어 +{{def}})",
-          "affix": "\n   ㄴ축복 : [{{name}}] 효과 부여 ({{description}})"
-        },
-        "legion": {
-          "title": "\n💀 [ 소환수 군단 상태 ]",
-          "golem_status": "[{{hp}}/{{maxHp}}]",
-          "golem_destroyed": "[파괴됨]",
-          "skeleton": " └ 💀 해골 병사: {{count}} / {{max}}",
-          "no_minions": "   (현재 소환된 미니언이 없습니다.)"
-        },
-        "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-      }
+    "success": "모든 의식이 완료되었습니다.",
+    "scene": {
+      "start": "녹슨 강철의 비명이 층계 사이를 가로질러 '{{name}}'의 입구에 닿습니다...",
+      "complete": "진동이 멈췄습니다. 문 너머의 공기가 바뀌었습니다."
     }
   },
 
@@ -220,7 +72,25 @@
     "action_use": "사용하기",
     "action_drop": "버리기",
     "action_equip_done": "[{{label}}]을(를) 장비하였습니다.",
-    "action_drop_done": "[{{label}}] ({{count}}개)을(를) 바닥에 버렸습니다."
+    "action_drop_done": "[{{label}}] ({{count}}개)을(를) 바닥에 버렸습니다.",
+
+    "use": {
+      "no_consumables": "\n🎒 사용할 수 있는 소비 아이템이 없습니다.",
+      "select_prompt": "어떤 아이템을 사용하시겠습니까?",
+      "not_found": "해당 아이템이 존재하지 않습니다..",
+      "using": "\n [{{name}}]을(를) 사용합니다...",
+      "hp_recovered": "❤️ 체력이 {{amount}} 회복되었습니다. (현재: {{current}}/{{max}})",
+      "mp_recovered": "🧪 마나가 {{amount}} 회복되었습니다. (현재: {{current}}/{{max}})"
+    },
+
+    "remove": {
+      "not_found": "❌ 인벤토리에 해당 아이템이 없습니다."
+    },
+
+    "equip": {
+      "invalid_type": "⚠️ 장착할 수 없는 아이템 타입입니다.",
+      "unequip_caution": "⚠️ [{{name}}] 어픽스가 해제됩니다. 진행하시겠습니까?"
+    }
   },
 
   "stat": {
@@ -256,83 +126,12 @@
 
   "invalid_command": "유효하지 않은 명령입니다.",
 
-  "battle": {
-    "monster_event": {
-      "spawn": "👾 {{name}} 등장!",
-      "current_enemies": "⚠️  현재 적: {{names}}",
-      "preemptive_attack": "⚠️  적: {{name}}의 기습!"
-    },
-    "turn_start": "\n━━━━━━━━━ [ {{name}}의 차례 ] ━━━━━━━━━",
-    "battle_start": "\n⚔️ 전투가 시작되었습니다!",
-    "enemy_list": "적: {{names}}",
-    "effect_expired": {
-      "buff": "[효과 만료] {{unitName}}의 ✨ [{{effectName}}] 효과가 사라졌습니다.",
-      "debuff": "[효과 만료] {{unitName}}의 💢 [{{effectName}}] 효과가 사라졌습니다."
-    },
-
-    "action": {
-      "dot_damage": " └ 🩸 [{{effectName}}] 피해: -{{damage}} (남은 지속: {{duration}}턴)",
-      "dot_death": " └ 💀 {{unitName}}이(가) {{effectName}}으로 사망했습니다.",
-      "bind_status": "\n⛓️  {{unitName}}은(는) {{effectName}}(으)로 인해 움직일 수 없습니다! (남은 기간: {{duration}}턴)",
-      "select_action": "당신의 행동을 선택하세요:",
-      "menu": {
-        "status": "상태",
-        "attack": "공격",
-        "defense": "방어",
-        "skill": "스킬",
-        "item": "아이템",
-        "escape": "도망"
-      },
-      "status_board": {
-        "title": "\n━━━━━━━━━━━━━━━━━━━━ 전장 상황 ━━━━━━━━━━━━━━━━━━━━",
-        "ally_side": " [🛡️ 아군 진영]",
-        "enemy_side": " [⚔️ 적군 진영]",
-        "lead": "🚩 [선두]",
-        "condition": "\n         └─ 상태: {{status}}",
-        "divider": "──────────────────────────────────────────────────",
-        "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-      },
-      "target_prompt": "누구를 공격하시겠습니까?",
-      "guard": "🛡️ {{name}}(이)가 방어 자세를 취합니다! 다음 턴까지 피해를 덜 입습니다.",
-      "escape_blocked": "\n🚫 도망칠 수 없습니다! {{name}}(이)가 길을 가로막고 있습니다!",
-      "escape_success": "\n🏃 전투에서 도망쳤습니다!",
-      "no_target": " > {{name}}(이)가 공격할 대상을 찾지 못해 두리번거립니다...",
-      "idle": "{{name}}은 가만히 서있을 뿐이다."
-    },
-
-    "unit": {
-      "labels": {
-        "passive": "\u001b[36m[패시브]\u001b[0m",
-        "sure_hit": "\u001b[33m[필중]\u001b[0m",
-        "sure_crit": "\u001b[31m[확정 치명]\u001b[0m",
-        "ignore_def": "\u001b[35m[방어 관통]\u001b[0m",
-        "fixed": "\u001b[32m[고정 피해]\u001b[0m"
-      },
-      "log": {
-        "hp_status": "\u001b[90m({{name}}의 남은 HP: {{hp}})\u001b[0m",
-        "evaded": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! 💨 \u001b[37m{{defender}}\u001b[0m이(가) 회피했습니다. {{hpStatus}}",
-        "no_damage": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! 🛡️ 하지만 \u001b[37m{{defender}}\u001b[0m에게 피해를 주지 못했습니다. {{hpStatus}}",
-        "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! \u001b[37m{{defender}}\u001b[0m에게 {{damageMsg}}의 피해! {{hpStatus}}"
-      },
-      "status_change": {
-        "effect_removed": "\n✨ [상태 변화] {{name}}에게서 [{{effectName}}] 효과가 사라졌습니다.",
-        "stealth_broken": " \u001b[90m[!] {{name}}의 은신이 해제되어 정체가 드러났습니다!\u001b[0m",
-        "expose_name": "드러난 자",
-        "recovered": " \u001b[32m[!] {{name}}(은)는 기운을 차려 '{{effectName}}' 효과에서 벗어났습니다!\u001b[0m",
-        "forced_removed": " \u001b[31m[!] {{name}}에게 걸려있던 '{{effectName}}' 효과가 강제로 해제되었습니다!\u001b[0m"
-      }
-    },
-
-    "reward": {
-      "unit_death": "\n💀 {{name}}이(가) 쓰러졌습니다!",
-      "kill_log": "✨ {{name}} 처치! EXP +{{exp}}",
-      "gold_gain": ", 골드 +{{gold}}",
-      "drop_item": "📦 {{name}}은(는) {{label}}{{quantity}}을(를) 떨어뜨렸습니다.",
-      "item_unit": "개",
-      "corpse_left": "🦴 그 자리에 {{name}}의 시체가 남았습니다.",
-      "vanished": "{{name}}이/가 연기처럼 사라졌다.",
-      "victory": "\n🏆 전투에서 승리했습니다!",
-      "defeat": "\n💀 전투에서 패배했습니다..."
+  "player": {
+    "description": {
+      "karma_0": "망자를 기리며 질서를 수호하는 영혼의 인도자입니다.",
+      "karma_5": "살생의 무게가 그림자에 서서히 스며들고 있습니다.",
+      "karma_10": "부패한 마력이 양심을 잠식하며 눈빛이 탁해집니다.",
+      "karma_max": "이승의 법도를 초월한, 사신의 잔혹한 하수인입니다."
     }
   }
 }

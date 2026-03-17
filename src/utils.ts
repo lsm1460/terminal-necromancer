@@ -29,7 +29,7 @@ export function getItemLabel(item: Item) {
 
     finalLabel.push(setting.color)
     finalLabel.push(setting.symbol)
-    //TODO: rarity label?
+    finalLabel.push(i18n.t(`item.rarity.${setting.rarity}`))
   }
 
   if ('affix' in item && item.affix) {
@@ -39,11 +39,11 @@ export function getItemLabel(item: Item) {
   }
 
   if ('adjective' in item && item.adjective) {
-    finalLabel.push(i18n.t(`item_prefix.${item.adjective}`))
+    finalLabel.push(i18n.t(`item.prefix.${item.adjective}`))
   }
 
   if ('perfPrefix' in item && item.perfPrefix) {
-    finalLabel.push(i18n.t(`item_prefix.${item.perfPrefix}`))
+    finalLabel.push(i18n.t(`item.prefix.${item.perfPrefix}`))
   }
 
   finalLabel.push(label)
@@ -53,29 +53,29 @@ export function getItemLabel(item: Item) {
 }
 
 export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean; isSell?: boolean }) {
-  const typeLabel = i18n.t(`item.type.${item.type}`, { defaultValue: i18n.t('item.type.default') });
+  const typeLabel = i18n.t(`item.type.${item.type}`, { defaultValue: i18n.t('item.type.default') })
 
-  let message = `[${typeLabel}] ${getItemLabel(item)}${item.quantity ? ` (x ${item.quantity})` : ''}`;
+  let message = `[${typeLabel}] ${getItemLabel(item)}${item.quantity ? ` (x ${item.quantity})` : ''}`
 
   if (options?.withPrice) {
-    const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price;
-    message += ` (${displayPrice}gold)`;
+    const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price
+    message += ` (${displayPrice}gold)`
   }
 
   if (item.type === ItemType.WEAPON || item.type === ItemType.ARMOR) {
-    const isWeapon = item.type === ItemType.WEAPON;
-    const currentVal = isWeapon ? (player.equipped.weapon?.atk || 0) : (player.equipped.armor?.def || 0);
-    const itemVal = isWeapon ? (item.atk || 0) : (item.def || 0);
-    
-    const diff = itemVal - currentVal;
-    const sign = diff > 0 ? '▲' : diff < 0 ? '▼' : '-';
-    const statName = isWeapon ? i18n.t('stat.atk') : i18n.t('stat.def');
+    const isWeapon = item.type === ItemType.WEAPON
+    const currentVal = isWeapon ? player.equipped.weapon?.atk || 0 : player.equipped.armor?.def || 0
+    const itemVal = isWeapon ? item.atk || 0 : item.def || 0
+
+    const diff = itemVal - currentVal
+    const sign = diff > 0 ? '▲' : diff < 0 ? '▼' : '-'
+    const statName = isWeapon ? i18n.t('stat.atk') : i18n.t('stat.def')
 
     // [ATK: 0 → 10 (▲10)] 형태
-    message += ` [${statName}: ${currentVal} → ${itemVal} (${sign}${Math.abs(diff)})]`;
+    message += ` [${statName}: ${currentVal} → ${itemVal} (${sign}${Math.abs(diff)})]`
   }
 
-  return message;
+  return message
 }
 
 export async function speak(messages: string[]) {

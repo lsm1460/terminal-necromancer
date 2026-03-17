@@ -1,4 +1,25 @@
 {
+  "rarity": {
+    "COMMON": "Common",
+    "RARE": "Rare",
+    "EPIC": "Epic"
+  },
+
+  "prefix": {
+    "masterwork": "Masterwork",
+    "worn": "Worn",
+    "exquisite": "Exquisite",
+    "superior": "Superior",
+    "keen": "Keen",
+    "reinforced": "Reinforced",
+    "seasoned": "Seasoned",
+    "abyssal": "Abyssal",
+    "fallen": "Fallen",
+    "forbidden": "Forbidden",
+    "primal": "Primal",
+    "mortal": "Mortal"
+  },
+
   "type": {
     "weapon": "Weapon",
     "armor": "Armor",

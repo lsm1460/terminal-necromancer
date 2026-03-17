@@ -5,6 +5,7 @@ import { BattleDirector } from '~/core/battle/BattleDirector'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { BattleTarget, GameContext, NpcSkill } from '~/types'
 import { PASSIVE_EFFECTS } from '../passiveHandlers'
 import { SkillEffectHandlers } from './SkillEffectHandlers'
@@ -96,7 +97,7 @@ export class NpcSkillManager {
 
     let targets = this.findTargets(...params)
     if (targets.length === 0) {
-      Terminal.log(`하지만 대상을 찾을 수 없었다..`)
+      Terminal.log(i18n.t('skill.target_not_found'))
       return
     }
 
