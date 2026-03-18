@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { UIState } from '~/renderers/ReactRenderer'
 import { AnsiHtml } from './Ansi'
 import { ThemedButton } from './common/ThemedButton'
@@ -9,6 +10,8 @@ interface DecisionBoxProps {
 }
 
 export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
+  const { t } = useTranslation()
+
   const [focusedIndex, setFocusedIndex] = useState(0)
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
 
@@ -55,7 +58,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
                 onFocus={() => setFocusedIndex(i)}
                 onClick={() => resolveUI(c.name, c.message)}
               >
-                <AnsiHtml message={c.message}/>
+                <AnsiHtml message={c.message} />
               </ThemedButton>
             </div>
           ))}
@@ -68,9 +71,9 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
                   buttonRefs.current[0] = el
                 }}
                 onFocus={() => setFocusedIndex(0)}
-                onClick={() => resolveUI(true, '예')}
+                onClick={() => resolveUI(true, t('yes'))}
               >
-                [예]
+                [{t('yes')}]
               </ThemedButton>
             </div>
             <div>
@@ -79,9 +82,9 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
                   buttonRefs.current[1] = el
                 }}
                 onFocus={() => setFocusedIndex(1)}
-                onClick={() => resolveUI(false, '아니오')}
+                onClick={() => resolveUI(false, t('no'))}
               >
-                [아니오]
+                [{t('no')}]
               </ThemedButton>
             </div>
           </>
@@ -95,7 +98,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
             onFocus={() => setFocusedIndex(0)}
             onClick={() => resolveUI(undefined, uiState.message)}
           >
-            {'> '}[계속하려면 클릭 또는 Enter]
+            {'> '}[{t('web.continue')}]
           </ThemedButton>
         )}
       </div>

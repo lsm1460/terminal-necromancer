@@ -5,7 +5,8 @@
   },
   "OVERLORD": {
     "name": "Overlord",
-    "description": "Increases the maximum number of skeletons you can control."
+    "description": "Increases the maximum number of skeletons you can control.",
+    "unEquipCaution": "Unequipping this will return some of your summoned skeletons to the spirit realm."
   },
   "ELITE_SQUAD": {
     "name": "Elite",
@@ -70,7 +71,8 @@
   },
   "MEMORY": {
     "name": "Memory",
-    "description": "Increases the number of Memorize slots."
+    "description": "Increases the number of Memorize slots.",
+    "unEquipCaution": "Unequipping this will cause some of the inscribed enchantments to dissipate."
   },
   "CLEANSE": {
     "name": "Cleanse",

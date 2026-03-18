@@ -1,19 +1,20 @@
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { ExecuteSkill } from '~/types'
 
 export const recallSkeleton: ExecuteSkill = async (player, context) => {
   const skeletons = player.ref.skeleton
 
-  const corpseId = await Terminal.select('어떤 개체를 마나로 환원하시겠습니까?', [
+  const corpseId = await Terminal.select(i18n.t('skill.RECALL_SKELETON.select_prompt'), [
     ...skeletons.map((s) => ({
       name: s.id,
       message: `${s.name} (${s.hp}/${s.maxHp})`,
     })),
-    { name: 'cancel', message: '🔙 취소하기' },
+    { name: 'cancel', message: i18n.t('cancel') },
   ])
 
   if (corpseId === 'cancel') {
-    Terminal.log('\n💬 스킬 사용을 취소했습니다.')
+    Terminal.log('\n💬 ' + i18n.t('skill.cancel_action'))
     return {
       isSuccess: false,
       isAggressive: false,
@@ -21,10 +22,11 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
     }
   }
 
-  const selectedCorpse = skeletons.find((target) => target.id === corpseId)
+  // 2. 대상 탐색
+  const selectedSkeleton = skeletons.find((target) => target.id === corpseId)
 
-  if (!selectedCorpse) {
-    Terminal.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+  if (!selectedSkeleton) {
+    Terminal.log(i18n.t('skill.not_found'))
     return {
       isSuccess: false,
       isAggressive: false,
@@ -32,18 +34,16 @@ export const recallSkeleton: ExecuteSkill = async (player, context) => {
     }
   }
 
-  const skeleton = player.ref.skeleton.find((sk) => sk.id === selectedCorpse.id)
-  if (skeleton) {
-    skeleton.hp = 0
-    skeleton.isAlive = false
-  }
+  // 3. 상태 업데이트 및 자원 회수
+  selectedSkeleton.hp = 0
+  selectedSkeleton.isAlive = false
 
-  player.ref.removeMinion(selectedCorpse.id)
-
+  player.ref.removeMinion(selectedSkeleton.id)
   player.ref.mp = Math.min(player.ref.mp + 5, player.ref.maxMp)
 
-  Terminal.log(`[역소환 성공] ${selectedCorpse.name || '스켈레톤'} 이(가) 영혼으로 환원되었습니다.`)
-  Terminal.log(`[자원 회수] 마나 +5 회복 | 현재 마나: ${player.ref.mp}`)
+  // 4. 결과 출력
+  Terminal.log(i18n.t('skill.RECALL_SKELETON.success', { name: selectedSkeleton.name || 'Skeleton' }))
+  Terminal.log(i18n.t('skill.RECALL_SKELETON.resource_gain', { mp: player.ref.mp }))
 
   return {
     isSuccess: true,

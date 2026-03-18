@@ -99,7 +99,7 @@ export class MinionManager {
   }
 
   removeMinion(minionId: string) {
-    this.skeleton = this.skeleton.filter((_minion) => _minion.id !== minionId)
+    this._skeleton = this._skeleton.filter((_minion) => _minion.id !== minionId)
 
     if (this._golem && this._golem.id === minionId) {
       this._golem = {

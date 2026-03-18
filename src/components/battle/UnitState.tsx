@@ -1,12 +1,14 @@
-import React, { useMemo } from 'react'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { AnsiHtml } from '../Ansi'
 import { getHpColor } from '~/utils'
+import { AnsiHtml } from '../Ansi'
 
 export const UnitState: React.FC<{
   unit: CombatUnit
   isEnemy: boolean
 }> = ({ unit, isEnemy }) => {
+  const { t } = useTranslation()
   const hpPercentage = Math.max(0, (unit.ref.hp / unit.ref.maxHp) * 100)
 
   const hasBuff = unit.buff.length > 0 || unit.deBuff.length > 0
@@ -47,19 +49,19 @@ export const UnitState: React.FC<{
 
         <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 border-t border-slate-700/30 pt-1.5 font-mono text-[10px]">
           <div className="flex justify-between border-b border-slate-800 pb-0.5">
-            <span className="text-slate-500 uppercase">공격력</span>
+            <span className="text-slate-500 uppercase">{t('stat.atk')}</span>
             <span className="text-orange-400 font-bold">{unit.ref.atk}</span>
           </div>
           <div className="flex justify-between border-b border-slate-800 pb-0.5">
-            <span className="text-slate-500 uppercase">방어력</span>
+            <span className="text-slate-500 uppercase">{t('stat.def')}</span>
             <span className="text-blue-400 font-bold">{unit.ref.def}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-500 uppercase">회피</span>
+            <span className="text-slate-500 uppercase">{t('stat.eva')}</span>
             <span className="text-emerald-400">{evaRate}%</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-500 uppercase">치명</span>
+            <span className="text-slate-500 uppercase">{t('stat.crit')}</span>
             <span className="text-red-400">{critRate}%</span>
           </div>
         </div>
@@ -75,12 +77,18 @@ export const UnitState: React.FC<{
         <div className="border-t border-primary/30 p-1.5 bg-black/40 flex flex-wrap gap-1">
           {unit.buff.map((b, i) => (
             <span key={`buff-${i}`} className="text-xs text-green-400 font-mono">
-              [{b.name}:{b.duration}턴 남음]
+              {t('battle.status.remaining_turns', {
+                name: b.name,
+                duration: b.duration,
+              })}
             </span>
           ))}
           {unit.deBuff.map((d, i) => (
             <span key={`debuff-${i}`} className="text-xs text-red-500 font-mono italic">
-              [{d.name}:{d.duration}턴 남음]
+              {t('battle.status.remaining_turns', {
+                name: d.name,
+                duration: d.duration,
+              })}
             </span>
           ))}
         </div>

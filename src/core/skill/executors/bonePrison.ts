@@ -1,5 +1,6 @@
 import { TargetSelector } from '~/core/battle/TargetSelector'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -11,29 +12,29 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
   if (aliveEnemies.length === 0) {
-    Terminal.log('\n[실패] 감옥을 생성할 대상이 없습니다.')
+    Terminal.log(i18n.t('skill.BONE_PRISON.no_targets'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   // 1. 대상 선택
   const { choices } = new TargetSelector(aliveEnemies)
     .excludeStealth()
-    .excludeIf((u) => u.deBuff.some((d) => d.name === '뼈 감옥'), '(이미 갇힘)')
+    .excludeIf((u) => u.deBuff.some((d) => d.id === 'bone_prison'), i18n.t('skill.BONE_PRISON.already_trapped'))
     .build()
 
-  const targetId = await Terminal.select('뼈 감옥으로 가둘 대상을 선택하세요', [
+  const targetId = await Terminal.select(i18n.t('skill.BONE_PRISON.select_prompt'), [
     ...choices,
-    { name: 'cancel', message: '🔙 취소하기' },
+    { name: 'cancel', message: i18n.t('cancel') },
   ])
 
   if (targetId === 'cancel') {
-    Terminal.log('\n💬 스킬 사용을 취소했습니다.')
+    Terminal.log(i18n.t('skill.BONE_PRISON.cancel_msg'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   const target = aliveEnemies.find((e) => e.id === targetId)
   if (!target) {
-    Terminal.log('\n[실패] 대상이 없습니다.')
+    Terminal.log(i18n.t('skill.BONE_PRISON.no_target_found'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -46,7 +47,7 @@ export const bonePrison: ExecuteSkill = async (player, context, { enemies = [] }
     duration: duration + 1,
   })
 
-  Terminal.log(` └ [속박] ${target.name}이(가) ${duration}턴 동안 속박되었습니다.`)
+  Terminal.log(i18n.t('skill.BONE_PRISON.success_log', { target: target.name, duration }))
 
   return {
     isSuccess: true,

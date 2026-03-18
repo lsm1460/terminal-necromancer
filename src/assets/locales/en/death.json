@@ -43,5 +43,66 @@
     "reject_coward": "The Reaper: \"Coward. I shall see how long that frailty of yours manages to keep you among the living.\"",
     "success_msg": "\n✨ Congratulations! You have leveled up. (Current LV.{{level}})",
     "fail_msg": "\n[FAILED] Light as a feather. Is this all you have to offer? ({{current}}/{{required}})"
+  },
+
+  "skill_transfer": {
+    "all_learned": "\n[Notice] You have already mastered all available techniques.",
+    "locked": "??? (Unlock Req: {{hint}}) 🔒",
+    "default_hint": "Achieve specific conditions",
+    "select_prompt": "Select a skill to inherit (Available Soul Shards: {{exp}})",
+    "success": "\n💀 [Acquired] Heh... Do not forget the '{{name}}' etched into your soul..",
+    "fail": "\n[Failed] You do not meet the requirements."
+  },
+
+  "memorize": {
+    "welcome_grown": "Reaper: \"Oho... The vessel of your soul has grown. You can now withstand more techniques.\"",
+    "welcome_default": "Reaper: \"Choose the techniques to be etched upon your soul...\"",
+    "limit_info": "(Current Memorize Limit: {{max}})",
+    "select_prompt": "Select skills to memorize (Max {{max}})",
+    "skill_format": "{{name}} | Cost: {{cost}} | {{description}}",
+    "validate_min": "You must select at least one skill.",
+    "validate_max": "You can only select up to {{max}} skills.",
+    "exit_grown": "Reaper: \"May that bloated knowledge not lead you to ruin...\"",
+    "exit_default": "Reaper: \"I hope your choice was a wise one...\"",
+    "system_complete": "[ System: {{count}} skills have been memorized. ]",
+    "cancel": "\nReaper: \"Hesitation leads only to death...\" (Selection cancelled.)"
+  },
+
+  "tutorial_over": [
+    "Reaper: \"Oho... So you've cleared that stench-ridden pile of filth? I'm surprised your limbs are still attached.\"",
+    "Reaper: \"(With a sickening sneer) I could hear the death throes of those crawling sins all the way here.\nSurely you weren't expecting praise, were you?\"",
+    "Reaper: \"But... I will admit. Your desperate struggling is somewhat useful.\"",
+    "Reaper: \"This time, go and clear the filth from the B3 Loading Dock.\"",
+    "Reaper: \"Perform well, and I might just unseal more of your pathetic abilities.\"",
+    "Reaper: \"The more soul essence you offer, the more of those forgotten [Skills] I shall grant you.\""
+  ],
+
+  "defeat_golem": [
+    "Reaper: \"Oho... I sent you to clean, yet you've gone and turned the docking bay's Golem into a pile of scrap metal.\"",
+    "Reaper: \"(Scanning you with cold eyes) Your brutish habits haven't changed a bit. \nDo you have any idea how much essence it costs to restore that Golem?\"",
+    "Reaper: \"Tch... fine. There's no use blaming broken scrap. \nRight now, there is 'filth with a far worse stench' that needs clearing.\"",
+    "Reaper: \"There was a rat who dared to deceive my eyes, trying to smuggle his own flesh and blood into sub-space. \nThat child was personally eradicated by my hand, yet it seems the father still hasn't let go of his lingering attachments.\"",
+    "Reaper: \"Go down to B4 immediately. \nFind [Charon], the former low-level official who fled and is hiding deep within that derelict zone.\"",
+    "Reaper: \"Go and sever his breath. Bring his soul shards before me. \nFor a filthy traitor, the only fitting end is to return to complete 'nothingness'.\"",
+    "Reaper: \"Remember. If you complicate things this time... \nI will carve the very despair he felt directly into your shadow. Now, begone.\""
+  ],
+
+  "report_caron": {
+    "deceived": [
+      "Reaper: \"So you've found the fugitive at last. Good work tracking down that rat hiding in the crevices of sub-space.\"",
+      "Reaper: \"(Hovering the deceptive shard in the air, scanning it) ...Hmm.\"",
+      "Reaper: \"The color of this soul... it seems faint. Is it because it was a fragment forcibly torn away without the will of the host?\"",
+      "Reaper: \"(Staring as if piercing through your very eyes) Or is it because some remnant of betrayal still lingers, plotting against its master?\"",
+      "Reaper: \"...No matter. What's important is that the essence of the soul has been recovered here.\""
+    ],
+    "loyal": [
+      "Reaper: \"You've returned. I see that a final period has at last been marked over Charon's name in the ledger.\"",
+      "Reaper: \"(Pointing at the cold, lifeless shard) This is the end for an official who defied providence, blinded by the grief of losing a child.\"",
+      "Reaper: \"You have wiped away the stain of 'personal emotion' quite thoroughly.\"",
+      "Reaper: \"As promised, I shall use this essence you've brought as the key to unbind your soul's shackles.\"",
+      "Reaper: \"(As the tip of the scythe brushes your chest, the suppressed energy of a sovereign surges.)\"",
+      "Reaper: \"That vast legion you once commanded while ruling the continent... I shall grant you back a portion of that power.\"",
+      "Reaper: \"Continue to retrieve the soul shards of those who break the laws. With each shard gathered, I shall restore the sovereign's authority you once lost, one by one.\""
+    ]
   }
 }

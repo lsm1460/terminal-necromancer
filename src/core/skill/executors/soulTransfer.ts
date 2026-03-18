@@ -1,4 +1,5 @@
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { BattleTarget, ExecuteSkill } from '~/types'
 
 /**
@@ -12,18 +13,22 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
 
   // 1. 소환수 존재 여부 체크
   if (minions.length === 0) {
-    Terminal.log('\n[실패] 상호작용할 미니언이 없습니다.')
+    Terminal.log(i18n.t('skill.SOUL_TRANSFER.no_minions'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   // 2. 대상 미니언 선택
-  const minionId = await Terminal.select('어느 미니언과 영혼을 공명하시겠습니까?', [
+  const minionId = await Terminal.select(i18n.t('skill.SOUL_TRANSFER.select_prompt'), [
     ...minions.map((m) => ({
       name: m.id,
-      message: `${m.name} (HP: ${m.ref.hp}/${m.ref.maxHp})`,
+      message: i18n.t('skill.SOUL_TRANSFER.choice_format', {
+        name: m.name,
+        hp: m.ref.hp,
+        maxHp: m.ref.maxHp,
+      }),
       value: m.id,
     })),
-    { name: 'cancel', message: '🔙 취소하기', value: 'cancel' },
+    { name: 'cancel', message: i18n.t('cancel') },
   ])
 
   // 3. 취소 처리
@@ -66,7 +71,7 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
 
     // 이미 체력이 가득 찬 경우 처리
     if (actualNeed <= 0) {
-      Terminal.log(`\n🌿 ${targetMinion.name}의 영혼이 이미 충만하여 더 이상 생명력을 나눌 필요가 없습니다.`)
+      Terminal.log(i18n.t('skill.SOUL_TRANSFER.already_full', { name: targetMinion.name }))
       return {
         isSuccess: true, // 기술 시전은 성공한 것으로 간주 (혹은 필요에 따라 false)
         isAggressive: false,
@@ -89,11 +94,21 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
       targetMinion.ref.hp += finalTransferAmount
 
       Terminal.log(
-        `\n✨ [치유] ${player.name}의 영혼으로 ${targetMinion.name}의 상처를 메꿉니다. (${targetMinion.name} HP ${targetMinion.ref.hp} / ${targetMinion.ref.maxHp})`
+        i18n.t('skill.SOUL_TRANSFER.success_log', {
+          player: player.name,
+          target: targetMinion.name,
+          hp: targetMinion.ref.hp,
+          maxHp: targetMinion.ref.maxHp,
+        })
       )
-      Terminal.log(` └ 🩸 사령술사 HP -${finalTransferAmount} ➡️ ${targetMinion.name} HP +${finalTransferAmount}`)
+      Terminal.log(
+        i18n.t('skill.SOUL_TRANSFER.transfer_detail', {
+          amount: finalTransferAmount,
+          target: targetMinion.name,
+        })
+      )
     } else {
-      Terminal.log(`\n⚠️ ${player.name}의 체력이 너무 낮아 더 이상 생명력을 나누어줄 수 없습니다!`)
+      Terminal.log(i18n.t('skill.SOUL_TRANSFER.low_health', { name: player.name }))
 
       return {
         isSuccess: false,

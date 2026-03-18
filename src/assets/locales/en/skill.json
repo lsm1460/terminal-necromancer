@@ -5,56 +5,130 @@
   "select_corpse_to_consume": "Which corpse will you consume?",
   "corpse_choice_format": "{{name}} Corpse (HP: {{hp}}, ATK: {{atk}})",
   "cancel_action": "Skill activation canceled.",
+  "not_found": "\n[Failed] There are no usable corpses nearby.",
 
   "RAISE_SKELETON": {
     "name": "Raise Skeleton",
     "description": "Consume a corpse to summon a skeleton warrior.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "no_corpse": "🌑 No corpses nearby respond to your call. Only silence lingers.",
+    "limit_reached": "⚠️ The vessel for governing souls is full. You cannot command any more legionnaires.",
+    "legion_activation": "💀 The Seal of the Legion flares crimson, and every bone in the earth trembles at once!",
+    "legion_success": "⚔️ Grand Summoning Complete: The shivering bone army has risen in response to the hellish call.",
+
+    "reborn_start": "\n[Necromancy] {{name}}'s bones knit together as it rises!",
+    "reborn_success": "💀 Reborn as a {{rarity}} grade Skeleton {{class}}!",
+    "notice_limit": "\n[Notice] You can no longer command any more skeleton soldiers."
   },
   "RECALL_SKELETON": {
     "name": "Recall Skeleton",
     "description": "Revert a skeleton warrior back into mana.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "select_prompt": "Which unit would you like to convert back into Mana?",
+    "success": "[Recall Success] {{name}} has been returned to spirit form.",
+    "resource_gain": "[Resource Recovered] +5 Mana restored | Current Mana: {{mp}}"
   },
   "FOCUS_FIRE": {
     "name": "Mark of Death",
     "description": "Minions prioritize attacking the marked target.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "no_target": "\n[Failed] No target available.",
+    "select_prompt": "Select a target",
+    "already_marked": " (Already {{curse}})",
+    "back": "↩ Back",
+    "activation": "\n[!] {{player}} sends a chilling gesture of death toward {{target}}!",
+    "minion_reaction": "[!] The eyes of all minions flare with a crimson light.\n"
   },
   "CORPSE_EXPLOSION": {
     "name": "Corpse Explosion",
     "description": "Detonate a corpse to deal area-of-effect damage.",
-    "unlockHint": "B2F Purified"
+    "unlockHint": "B2F Purified",
+
+    "select_prompt": "Which corpse shall be consumed?",
+    "activation": "\n💥 {{player}} detonates the corpse! (Base Power: {{damage}})",
+    "no_enemies": " No enemies were caught in the blast."
   },
   "SOUL_HARVEST": {
     "name": "Soul Harvest",
     "description": "Extract essence from a corpse to restore mana.",
-    "unlockHint": "B2F Purified"
+    "unlockHint": "B2F Purified",
+
+    "success": "Extracted the soul from {{name}}, restoring {{amount}} Mana.",
+    "full_mana": "Mana is already full."
   },
   "SOUL_TRANSFER": {
     "name": "Soul Transfer",
     "description": "Transfers the necromancer's health to a minion.",
-    "unlockHint": "B3F Purified"
+    "unlockHint": "B3F Purified",
+
+    "no_minions": "\n[Failed] No minions to interact with.",
+    "select_prompt": "Which minion would you like to resonate souls with?",
+    "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
+    "already_full": "\n🌿 {{name}}'s soul is already full; no need to share life force.",
+    "low_health": "\n⚠️ {{name}}'s health is too low to share life force anymore!",
+    "success_log": "\n✨ [Heal] Using {{player}}'s soul to mend {{target}}'s wounds. ({{target}} HP {{hp}} / {{maxHp}})",
+    "transfer_detail": " └ 🩸 Necromancer HP -{{amount}} ➡️ {{target}} HP +{{amount}}"
   },
   "CURSE": {
     "name": "Curse",
     "description": "Weakens the target.",
-    "unlockHint": "B3F Purified"
+    "unlockHint": "B3F Purified",
+
+    "corrosion_name": "Corrosion",
+    "wide_prefix": "Wide ",
+    "no_target": "\n[Failed] No targets for {{display}}.",
+    "select_prompt": "Select a target for {{display}}",
+    "already_status": " (Already {{status}})",
+    "back": "↩ Back",
+    "wide_activation": "\n💀 {{player}}'s {{display}} spreads across the battlefield!",
+    "single_activation": "\n💀 {{player}} casts {{display}} upon {{target}}!",
+    "effect_detail": " └ [Enfeeble] {{target}}: {{stat}} -{{value}} ({{duration}} turns)",
+    "stat_atk": "ATK",
+    "stat_def": "DEF"
   },
   "BONE_SPEAR": {
     "name": "Bone Spear",
     "description": "Strikes two enemies simultaneously.",
-    "unlockHint": "B5F Purified"
+    "unlockHint": "Securing Sub-space",
+
+    "no_skeletons": "\n[Failed] No skeletons to sacrifice.",
+    "no_enemies": "\n[Failed] No targets to pierce.",
+    "select_prompt": "Which skeleton will you turn into a Bone Spear?",
+    "choice_format": "{{name}} (Current HP: {{hp}})",
+    "cancel_msg": "\n💬 Skill use canceled.",
+    "activation": "\n💀 {{player}} destroys {{target}} to craft a massive Bone Spear!",
+    "log": {
+      "surprise_primary": " └ 🧤 Surprise! The Bone Spear pierces the back of {{name}} from the shadows!",
+      "surprise_secondary": " └ ⚡ Chain Surprise! Even {{name}} is caught in the spear's path!",
+      "normal_primary": " └ 🚀 The Bone Spear crashes head-on into {{name}} in the front line!",
+      "normal_secondary": " └ ⚡ The spear pierces deeply through to {{name}} behind!"
+    }
   },
   "BONE_PRISON": {
     "name": "Bone Prison",
     "description": "Restricts target movement using bone structures.",
-    "unlockHint": "B5F Purified"
+    "unlockHint": "B5F Purified",
+
+    "no_targets": "\n[Failed] No targets to create a prison for.",
+    "already_trapped": "(Already trapped)",
+    "select_prompt": "Select a target to imprison in the Bone Prison",
+    "cancel_msg": "\n💬 Skill use canceled.",
+    "no_target_found": "\n[Failed] Target not found.",
+    "success_log": " └ [Bind] {{target}} has been bound for {{duration}} turns."
   },
   "BONE_STORM": {
     "name": "Bone Storm",
     "description": "Sacrifice all skeletons to deal massive AOE damage proportional to their total HP.",
-    "unlockHint": "B5F Purified"
+    "unlockHint": "B5F Purified",
+
+    "no_skeletons": "\n[Failed] No skeletons to sacrifice.",
+    "no_enemies": "\n[Failed] No targets to attack.",
+    "activation": "\n🌪️  {{player}} destroys all skeletons to unleash a Bone Storm!",
+    "sacrifice_detail": " └ 🔥 A total of {{count}} skeletons shatter, their fragments swirling.",
+    "hit_log": " └ 🩸 Sharp bone fragments tear through {{name}}!"
   },
 
   "stealth": "Stealth",

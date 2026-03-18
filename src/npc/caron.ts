@@ -161,6 +161,7 @@ async function finalEncounter(player: Player, npc: NPC, context: GameContext) {
     await speak(i18n.t('npc.caron.encounters.final.accept', { returnObjects: true }) as string[])
 
     events.completeEvent('caron_is_mine')
+    events.completeEvent('defeat_caron')
     npc.dead(0)
 
     const tile = map.getTile(player.pos.x, player.pos.y)
@@ -188,6 +189,7 @@ async function handleBattle(player: Player, npc: NPC, context: GameContext, isMa
     await speak(i18n.t('npc.caron.encounters.battle.win_script', { returnObjects: true }) as string[])
 
     events.completeEvent('caron_is_dead')
+    events.completeEvent('defeat_caron')
 
     const tile = map.getTile(player.pos.x, player.pos.y)
     BossEvent.spawnPortal(tile)

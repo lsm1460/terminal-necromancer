@@ -1,5 +1,6 @@
 import { TargetSelector } from '~/core/battle/TargetSelector'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -15,17 +16,16 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
   const isCorrosion = player.ref.hasAffix('CORROSION')
   const isWide = player.ref.hasAffix('WIDE_CURSE')
 
-  const curseName = isCorrosion ? '부식' : '저주'
-  const displayName = isWide ? `광역 ${curseName}` : curseName
+  const curseName = isCorrosion ? i18n.t('skill.CURSE.corrosion_name') : i18n.t('skill.CURSE.name')
+  const displayName = isWide ? `${i18n.t('skill.CURSE.wide_prefix')}${curseName}` : curseName
 
   if (aliveEnemies.length === 0) {
-    Terminal.log(`\n[실패] ${displayName}의 대상이 없습니다.`)
+    Terminal.log(i18n.t('skill.CURSE.no_target', { display: displayName }))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   // 실제 디버프 적용 함수
   const applyCurse = (target: any) => {
-    // 부식일 때는 방어력만, 아닐 때는 공격력만 계산
     const atkReduction = !isCorrosion ? Math.max(Math.floor(target.stats.atk * 0.5), 1) : 0
     const defReduction = isCorrosion ? Math.max(Math.floor(target.stats.def * 0.5), 1) : 0
 
@@ -36,30 +36,35 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
       duration: duration + 1,
     })
 
-    // 로그 출력 분기
-    const effectDetail = isCorrosion ? `방어력 -${defReduction}` : `공격력 -${atkReduction}`
-
-    Terminal.log(` └ [약화] ${target.name}: ${effectDetail} (${duration}턴)`)
+    // 로그 출력
+    Terminal.log(
+      i18n.t('skill.CURSE.effect_detail', {
+        target: target.name,
+        stat: isCorrosion ? i18n.t('skill.CURSE.stat_def') : i18n.t('skill.CURSE.stat_atk'),
+        value: isCorrosion ? defReduction : atkReduction,
+        duration: duration,
+      })
+    )
   }
 
   try {
-    // --- 1. 광역 효과 처리 ---
     if (isWide) {
-      Terminal.log(`\n💀 ${player.name}의 ${displayName}가 전장에 퍼져나갑니다!`)
+      Terminal.log(i18n.t('skill.CURSE.wide_activation', { player: player.name, display: displayName }))
       aliveEnemies.forEach((enemy) => applyCurse(enemy))
-
       return { isSuccess: true, isAggressive: true, gross: 120 }
     }
 
-    // --- 2. 단일 타겟 선택 ---
     const { choices } = new TargetSelector(aliveEnemies)
       .excludeStealth()
-      .labelIf((e) => e.deBuff.some((d) => d.name === curseName), ` (이미 ${curseName} 상태)`)
+      .labelIf(
+        (e) => e.deBuff.some((d) => d.id === (isCorrosion ? 'corrosion' : 'curse')),
+        i18n.t('skill.CURSE.already_status', { status: curseName })
+      )
       .build()
 
-    const targetId = await Terminal.select(`${displayName}의 대상을 선택하세요`, [
+    const targetId = await Terminal.select(i18n.t('skill.CURSE.select_prompt', { display: displayName }), [
       ...choices,
-      { name: 'cancel', message: '↩ 뒤로 가기' },
+      { name: 'cancel', message: i18n.t('cancel') },
     ])
 
     if (targetId === 'cancel') return { isSuccess: false, isAggressive: false, gross: 0 }
@@ -67,14 +72,16 @@ export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}
     const target = aliveEnemies.find((e) => e.id === targetId)
     if (!target) return { isSuccess: false, isAggressive: false, gross: 0 }
 
-    Terminal.log(`\n💀 ${player.name}이(가) ${target.name}에게 ${curseName}를 내립니다!`)
+    Terminal.log(
+      i18n.t('skill.CURSE.single_activation', {
+        player: player.name,
+        target: target.name,
+        display: curseName,
+      })
+    )
     applyCurse(target)
 
-    return {
-      isSuccess: true,
-      isAggressive: true,
-      gross: 90,
-    }
+    return { isSuccess: true, isAggressive: true, gross: 90 }
   } catch (error) {
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }

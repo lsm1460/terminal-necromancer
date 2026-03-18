@@ -1,4 +1,5 @@
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { ExecuteSkill } from '~/types'
 import { SkillManager } from '../SkillManager'
 
@@ -9,16 +10,13 @@ export const soulHarvest: ExecuteSkill = async (player, context) => {
   const { world } = context
   const { x, y } = player.ref.pos
 
+  // 1. 대상 시체 선택
   const targetId = await SkillManager.selectCorpse(player.ref, context)
-
-  // 1. 현재 위치의 시체 목록 가져오기
   const corpses = world.getCorpsesAt(x, y)
-
-  // 2. 특정 시체 지정 또는 첫 번째 시체 선택
   const selectedCorpse = corpses.find((c) => c.id === targetId)
 
   if (!selectedCorpse) {
-    Terminal.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+    Terminal.log(i18n.t('skill.not_found'))
     return {
       isSuccess: false,
       isAggressive: false,
@@ -26,25 +24,26 @@ export const soulHarvest: ExecuteSkill = async (player, context) => {
     }
   }
 
-  // 2. 수치 결정
+  // 2. 수치 결정 및 자원 회복 처리
   const restoreAmount = 20 // 기본 마나 회복량
-
-  // 3. 자원 회복 처리
   const previousMp = player.ref.mp
   player.ref.mp = Math.min(player.ref.maxMp, player.ref.mp + restoreAmount)
   const actualRestored = player.ref.mp - previousMp
 
-  // 4. 결과 연출 로그
+  // 3. 결과 연출 로그
   if (actualRestored > 0) {
-    Terminal.log(`${selectedCorpse.name}에게서 영혼을 추출하여 마나를 ${actualRestored} 회복했습니다.`)
+    Terminal.log(
+      i18n.t('skill.SOUL_HARVEST.success', {
+        name: selectedCorpse.name,
+        amount: actualRestored,
+      })
+    )
   } else {
-    Terminal.log('마나가 이미 가득 차 있습니다.')
+    Terminal.log(i18n.t('skill.SOUL_HARVEST.full_mana'))
   }
 
+  // 4. 사용한 시체 제거
   world.removeCorpse(selectedCorpse.id)
-
-  // (선택) 회복 스킬이라도 적에게 아주 미미한 데미지나 경직을 줄 수 있습니다.
-  // target.takeDamage(5);
 
   return {
     isSuccess: true,

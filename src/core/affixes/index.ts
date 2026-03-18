@@ -1,3 +1,4 @@
+import i18n from '~/i18n'
 import { Affix } from '~/types'
 
 export const getAffixList = (): Record<string, Affix> => {
@@ -11,7 +12,7 @@ export const getAffixList = (): Record<string, Affix> => {
       valueRange: [1, 4], // 생성 시 1~4 랜덤 부여,
       metadata: {
         needsConfirmOnUnequip: true,
-        unEquipCaution: '장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다.',
+        unEquipCaution: i18n.t('affix.OVERLORD.unEquipCaution'),
       },
     },
     ELITE_SQUAD: {
@@ -63,10 +64,19 @@ export const getAffixList = (): Record<string, Affix> => {
     MEMORY: {
       id: 'MEMORY',
       valueRange: [1, 2], // 생성 시 1~2 랜덤 부여
-      metadata: { needsConfirmOnUnequip: true, unEquipCaution: '장비 해제 시 각인된 마법 일부가 사라집니다.' },
+      metadata: {
+        needsConfirmOnUnequip: true,
+        unEquipCaution: i18n.t('affix.OVERLORD.unEquipCaution'),
+      },
     },
     CLEANSE: {
       id: 'CLEANSE',
     },
   }
+}
+
+export const getAffixCaution = (id: string) => {
+  const list = getAffixList()
+
+  return list[id].metadata?.unEquipCaution
 }

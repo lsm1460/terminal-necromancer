@@ -132,5 +132,23 @@
       },
       "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     }
+  },
+
+  "system": {
+    "exit": {
+      "saving": "\n💾 게임 데이터를 저장하는 중...",
+      "save_complete": "✅ 저장 완료!",
+      "farewell": "👋 게임을 종료합니다. 안녕히 가세요, 네크로맨서님."
+    },
+    "help": {
+      "title": "사용 가능한 명령어:",
+      "list_item": "- {{command}}: {{aliases}}"
+    }
+  },
+
+  "equip": {
+    "no_equippables": "장비할 아이템이 없습니다.",
+    "select_prompt": "장비할 아이템을 선택하세요:",
+    "success": "\n✨ [{{name}}]을(를) 장비하였습니다."
   }
 }

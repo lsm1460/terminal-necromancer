@@ -1,6 +1,7 @@
 import i18n from '~/i18n'
 import { ArmorItem, ConsumableItem, Item, ItemType, WeaponItem } from '~/types'
 import { getItemLabel } from '~/utils'
+import { getAffixCaution } from '../affixes'
 import { Terminal } from '../Terminal'
 import { Player } from './Player'
 
@@ -42,7 +43,7 @@ export class InventoryManager {
       const cautionAffixName = i18n.t(`affix.${caution.id}.name`)
 
       const warningMsg =
-        caution.metadata?.unEquipCaution || i18n.t('inventory.equip.unequip_caution', { name: cautionAffixName })
+        getAffixCaution(caution.id) || i18n.t('inventory.equip.unequip_caution', { name: cautionAffixName })
 
       const proceed = await Terminal.confirm(warningMsg)
       if (!proceed) {

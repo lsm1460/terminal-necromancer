@@ -5,7 +5,8 @@
   },
   "OVERLORD": {
     "name": "군주",
-    "description": "스켈레톤 보유 수가 증가합니다."
+    "description": "스켈레톤 보유 수가 증가합니다.",
+    "unEquipCaution": "장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다."
   },
   "ELITE_SQUAD": {
     "name": "정예",
@@ -70,7 +71,8 @@
   },
   "MEMORY": {
     "name": "기억",
-    "description": "메모라이즈 슬롯 수가 증가합니다."
+    "description": "메모라이즈 슬롯 수가 증가합니다.",
+    "unEquipCaution": "장비 해제 시 각인된 마법 일부가 사라집니다."
   },
   "CLEANSE": {
     "name": "해주",

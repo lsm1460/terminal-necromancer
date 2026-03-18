@@ -1,21 +1,8 @@
 ## 0. 남은 작업 정리
 
-다국어작업 필요 파일 (23개..)
-
-src\npc\death.ts
-
-src\core\skill\executors\* x10
+다국어작업 필요 파일
 
 src\core\player\KnightWrapper.ts
-
-src\core\affixes\index.ts
-
-src\components\DecisionBox.tsx
-src\components\battle\BattleStage.tsx
-src\components\battle\UnitState.tsx
-
-src\commands\system.ts
-src\commands\equip.ts
 
 - epic: affix 추가 중
 

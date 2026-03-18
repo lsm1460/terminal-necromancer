@@ -1,4 +1,5 @@
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -12,12 +13,12 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
 
   // 1. 발사체(스켈레톤) 확인
   if (skeletons.length === 0) {
-    Terminal.log('\n[실패] 희생시킬 스켈레톤이 하나도 없습니다.')
+    Terminal.log(i18n.t('skill.BONE_STORM.no_skeletons'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
   if (aliveEnemies.length === 0) {
-    Terminal.log('\n[실패] 공격할 대상이 없습니다.')
+    Terminal.log(i18n.t('skill.BONE_STORM.no_enemies'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -26,12 +27,11 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
   const totalRawDamage = Math.floor(totalSkeletonHp * 0.3)
   const sacrificeCount = skeletons.length
 
-  Terminal.log(`\n🌪️  ${player.name}이 모든 스켈레톤을 파괴하여 뼈의 폭풍을 일으킵니다!`)
-  Terminal.log(` └ 🔥 총 ${sacrificeCount}구의 스켈레톤이 산산조각나며 파편이 휘몰아칩니다.`)
+  Terminal.log(i18n.t('skill.BONE_STORM.activation', { player: player.name }))
+  Terminal.log(i18n.t('skill.BONE_STORM.sacrifice_detail', { count: sacrificeCount }))
 
   // 3. 모든 스켈레톤 희생 처리
-  // 배열을 순회하며 모두 파괴
-  ;[...skeletons].forEach((sk) => {
+  skeletons.forEach((sk) => {
     sk.hp = 0
     sk.isAlive = false
     player.ref.removeMinion(sk.id)
@@ -39,7 +39,7 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
 
   // 4. 모든 적에게 데미지 및 [출혈] 부여
   for (const enemy of aliveEnemies) {
-    Terminal.log(` └ 🩸 날카로운 뼈 파편이 ${enemy.name}을 찢어발깁니다!`)
+    Terminal.log(i18n.t('skill.BONE_STORM.hit_log', { name: enemy.name }))
 
     // 데미지 적용 (고정 데미지가 아니므로 적 방어력에 감쇄됨)
     await enemy.executeHit(player, {
@@ -48,23 +48,17 @@ export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } 
       attackType: 'ranged'
     })
 
-    // [출혈] 디버프 추가 (지속 피해)
     enemy.applyDeBuff({
       id: 'bleed',
-      type: 'dot', // Damage over Time
-      duration: 3 + 1, // 3턴 지속
-      atk: sacrificeCount * 5, // 시전자 공격력 비례 지속 피해 예시
+      type: 'dot',
+      duration: 3 + 1,
+      atk: sacrificeCount * 5,
     })
   }
 
   return {
     isSuccess: true,
     isAggressive: true,
-    /**
-     * gross (역겨움 수치): 95
-     * 소환수 전체를 한꺼번에 부수고 피칠갑을 만드는 기술이므로
-     * 시체 폭발을 뛰어넘는 최고의 불쾌감을 줍니다.
-     */
     gross: 95,
   }
 }

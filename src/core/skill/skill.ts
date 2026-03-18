@@ -56,7 +56,7 @@ export const getPlayerSkills = (): Record<SkillId, Skill> => {
       cost: 12,
       requiredExp: 1500,
       requiredLevel: 5,
-      unlocks: ['third_boss'],
+      unlocks: ['defeat_caron'],
       execute: (p, c, u) => SkillExecutor.boneSpear(p, c, u),
     },
     [SKILL_IDS.BONE_PRISON]: {

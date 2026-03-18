@@ -39,7 +39,7 @@
     "select_target_prompt": "Select a specific target to examine.",
     "category": {
       "path": "🔍 Inspect Surroundings",
-      "npc": "👤 Nearby People",
+      "npc": "👤 Nearby",
       "corpse": "💀 Corpses",
       "monster": "💀 Hostile Entities",
       "minion": "🧟 Summoned Minions",
@@ -132,5 +132,23 @@
       },
       "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     }
+  },
+
+  "system": {
+    "exit": {
+      "saving": "\n💾 Saving game data...",
+      "save_complete": "✅ Save complete!",
+      "farewell": "👋 Exiting the game. Farewell, Necromancer."
+    },
+    "help": {
+      "title": "Available Commands:",
+      "list_item": "- {{command}}: {{aliases}}"
+    }
+  },
+
+  "equip": {
+    "no_equippables": "No equippable items found.",
+    "select_prompt": "Select an item to equip:",
+    "success": "\n✨ Equipped [{{name}}]."
   }
 }

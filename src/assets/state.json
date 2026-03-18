@@ -2,21 +2,21 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
-    "y": 2,
+    "x": 3,
+    "y": 1,
     "_maxHp": 50,
-    "hp": 14,
+    "hp": 50,
     "_maxMp": 50,
-    "mp": 35,
+    "mp": 50,
     "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 33,
-    "exp": 20,
+    "gold": 729,
+    "exp": 1037,
     "level": 1,
-    "karma": 0,
+    "karma": 1,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
@@ -27,6 +27,52 @@
       "RAISE_SKELETON",
       "RECALL_SKELETON",
       "FOCUS_FIRE"
+    ],
+    "_skeleton": [
+      {
+        "id": "skeleton_shield_bearer::1773733991799",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
+        "attackType": "melee",
+        "maxHp": 43,
+        "hp": 43,
+        "atk": 8,
+        "def": 9,
+        "agi": 6,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Track Ratman.",
+        "originId": "track_ratman::Y7b9Y8Tt",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 4
+      },
+      {
+        "id": "skeleton_archer::1773733996443",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
+        "attackType": "ranged",
+        "maxHp": 25,
+        "hp": 25,
+        "atk": 14,
+        "def": 5,
+        "agi": 16,
+        "skills": [
+          "aim_arrow"
+        ],
+        "exp": 0,
+        "description": "A minion raised from the remains of Track Ratman.",
+        "originId": "track_ratman::m8HFdVdf",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 25
+      }
     ],
     "inventory": [
       {
@@ -93,55 +139,42 @@
         "quantity": 1,
         "x": 0,
         "y": 2
+      },
+      {
+        "id": "potion_small",
+        "type": "consumable",
+        "hpHeal": 20,
+        "price": 20,
+        "sellPrice": 5,
+        "quantity": 1,
+        "x": 2,
+        "y": 1
+      },
+      {
+        "id": "iron_sword::QwaMYG5g",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          2,
+          4
+        ],
+        "critRange": [
+          0,
+          0.05
+        ],
+        "price": 500,
+        "sellPrice": 120,
+        "quantity": 1,
+        "atk": 3,
+        "crit": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": "",
+        "x": 2,
+        "y": 2
       }
     ],
     "inventoryMax": 15,
-    "_skeleton": [
-      {
-        "id": "skeleton_shield_bearer::1773733991799",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
-        "attackType": "melee",
-        "maxHp": 43,
-        "hp": 43,
-        "atk": 8,
-        "def": 9,
-        "agi": 6,
-        "skills": [],
-        "exp": 0,
-        "description": "A minion raised from the remains of Track Ratman.",
-        "originId": "track_ratman::Y7b9Y8Tt",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
-      },
-      {
-        "id": "skeleton_archer::1773733996443",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
-        "attackType": "ranged",
-        "maxHp": 25,
-        "hp": 25,
-        "atk": 14,
-        "def": 5,
-        "agi": 16,
-        "skills": [
-          "aim_arrow"
-        ],
-        "exp": 0,
-        "description": "A minion raised from the remains of Track Ratman.",
-        "originId": "track_ratman::m8HFdVdf",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 25
-      }
-    ],
     "skeletonSubspace": [],
     "subspaceLimit": 15,
     "_maxSkeleton": 2,
@@ -202,7 +235,7 @@
       }
     }
   },
-  "sceneId": "B2_Transit_Area",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -243,7 +276,7 @@
       },
       "first_boss": {
         "hp": 80,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -357,7 +390,11 @@
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "talk_death_1"
+    "talk_death_1",
+    "b2_ratty",
+    "first_boss",
+    "got_terminal_map",
+    "talk_death_2"
   ],
   "locale": "en"
 }

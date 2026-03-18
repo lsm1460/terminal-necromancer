@@ -5,56 +5,128 @@
   "select_corpse_to_consume": "어떤 시체를 소모하시겠습니까?",
   "corpse_choice_format": "{{name}}의 시체 (HP: {{hp}}, ATK: {{atk}})",
   "cancel_action": "스킬 사용을 취소했습니다.",
+  "not_found": "\n[실패] 주위에 이용할 수 있는 시체가 없습니다.",
 
   "RAISE_SKELETON": {
     "name": "스켈레톤 생성",
     "description": "시체를 소모하여 해골 병사를 소환합니다.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "no_corpse": "🌑 주위에 부름에 응답할 시체가 존재하지 않습니다. 정적만이 감돕니다.",
+    "limit_reached": "⚠️ 지배할 수 있는 영혼의 그릇이 가득 찼습니다. 더 이상 군단을 부릴 수 없습니다.",
+    "legion_activation": "💀 군단의 인장이 붉게 타오르며, 대지의 모든 유골이 동시에 진동합니다!",
+    "legion_success": "⚔️ 대강령 완료: 전율하는 뼈의 군세가 지옥의 부름에 응답해 일어섰습니다.",
+
+    "reborn_start": "\n[강령술] {{name}}의 뼈가 맞춰지며 일어섭니다!",
+    "reborn_success": "💀 {{rarity}} 등급의 스켈레톤 {{class}}으로 부활했습니다!",
+    "notice_limit": "\n[알림] 더 이상 해골병사를 부릴 수 없습니다."
   },
   "RECALL_SKELETON": {
     "name": "스켈레톤 회수",
     "description": "해골 병사를 마나로 환원합니다.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "select_prompt": "어떤 개체를 마나로 환원하시겠습니까?",
+    "success": "[역소환 성공] {{name}} 이(가) 영혼으로 환원되었습니다.",
+    "resource_gain": "[자원 회수] 마나 +5 회복 | 현재 마나: {{mp}}"
   },
   "FOCUS_FIRE": {
     "name": "죽음의 표식",
     "description": "미니언들이 표식을 보유한 대상을 우선적으로 공격합니다.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "no_target": "\n[실패] 대상이 없습니다.",
+    "select_prompt": "대상을 선택하세요",
+    "already_marked": " (이미 {{curse}} 상태)",
+    "activation": "\n[!] {{player}}이(가) {{target}}에게 서늘한 죽음의 손짓을 보냅니다!",
+    "minion_reaction": "[!] 모든 수하의 안광이 붉게 타오릅니다.\n"
   },
   "CORPSE_EXPLOSION": {
     "name": "시체 폭발",
     "description": "시체를 폭파시켜 광역 피해를 입힙니다.",
-    "unlockHint": "지하 2층 정화 완료"
+    "unlockHint": "지하 2층 정화 완료",
+
+    "select_prompt": "어떤 시체를 소모하시겠습니까?",
+    "activation": "\n💥 {{player}}이(가) 시체를 터뜨렸습니다! (기초 위력: {{damage}})",
+    "no_enemies": " 주변에 휘말린 적이 없습니다."
   },
   "SOUL_HARVEST": {
     "name": "영혼 흡수",
     "description": "시체에서 정수를 뽑아내 마나로 전환합니다.",
-    "unlockHint": "지하 2층 정화 완료"
+    "unlockHint": "지하 2층 정화 완료",
+
+    "success": "{{name}}에게서 영혼을 추출하여 마나를 {{amount}} 회복했습니다.",
+    "full_mana": "마나가 이미 가득 차 있습니다."
   },
   "SOUL_TRANSFER": {
     "name": "영혼 전달",
     "description": "사령술사의 체력을 종속에게 전달하여 체력을 채웁니다.",
-    "unlockHint": "지하 3층 정화 완료"
+    "unlockHint": "지하 3층 정화 완료",
+
+    "no_minions": "\n[실패] 상호작용할 미니언이 없습니다.",
+    "select_prompt": "어느 미니언과 영혼을 공명하시겠습니까?",
+    "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
+    "already_full": "\n🌿 {{name}}의 영혼이 이미 충만하여 더 이상 생명력을 나눌 필요가 없습니다.",
+    "low_health": "\n⚠️ {{name}}의 체력이 너무 낮아 더 이상 생명력을 나누어줄 수 없습니다!",
+    "success_log": "\n✨ [치유] {{player}}의 영혼으로 {{target}}의 상처를 메꿉니다. ({{target}} HP {{hp}} / {{maxHp}})",
+    "transfer_detail": " └ 🩸 사령술사 HP -{{amount}} ➡️ {{target}} HP +{{amount}}"
   },
   "CURSE": {
     "name": "저주",
     "description": "대상을 약화시킵니다.",
-    "unlockHint": "지하 3층 정화 완료"
+    "unlockHint": "지하 3층 정화 완료",
+
+    "corrosion_name": "부식",
+    "wide_prefix": "광역 ",
+    "no_target": "\n[실패] {{display}}의 대상이 없습니다.",
+    "select_prompt": "{{display}}의 대상을 선택하세요",
+    "already_status": " (이미 {{status}} 상태)",
+    "wide_activation": "\n💀 {{player}}의 {{display}}가 전장에 퍼져나갑니다!",
+    "single_activation": "\n💀 {{player}}이(가) {{target}}에게 {{display}}를 내립니다!",
+    "effect_detail": " └ [약화] {{target}}: {{stat}} -{{value}} ({{duration}}턴)",
+    "stat_atk": "공격력",
+    "stat_def": "방어력"
   },
   "BONE_SPEAR": {
     "name": "뼈 창",
     "description": "두 적을 동시에 공격합니다.",
-    "unlockHint": "지하 5층 정화 완료"
+    "unlockHint": "아공간의 확보",
+
+    "no_skeletons": "\n[실패] 희생시킬 스켈레톤이 없습니다.",
+    "no_enemies": "\n[실패] 관통할 대상이 없습니다.",
+    "select_prompt": "어느 스켈레톤을 뼈 창으로 만드시겠습니까?",
+    "choice_format": "{{name}} (현재 HP: {{hp}})",
+    "cancel_msg": "\n💬 스킬 사용을 취소했습니다.",
+    "activation": "\n💀 {{player}}이(가) {{target}}을(를) 파괴하여 거대한 뼈 창을 빚어냅니다!",
+    "log": {
+      "surprise_primary": " └ 🧤 기습! 뼈 창이 그림자 속에서 가장 뒤의 {{name}}의 등을 꿰뚫습니다!",
+      "surprise_secondary": " └ ⚡ 연쇄 기습! 당황한 {{name}}까지 창날에 휘말립니다!",
+      "normal_primary": " └ 🚀 뼈 창이 전열의 {{name}}에게 정면으로 격돌합니다!",
+      "normal_secondary": " └ ⚡ 창이 뒤에 있던 {{name}}까지 깊숙이 관통합니다!"
+    }
   },
   "BONE_PRISON": {
     "name": "뼈 감옥",
     "description": "대상을 선택한 뒤 뼈를 사용해 대상의 움직임을 봉쇄합니다.",
-    "unlockHint": "지하 5층 정화 완료"
+    "unlockHint": "지하 5층 정화 완료",
+
+    "no_targets": "\n[실패] 감옥을 생성할 대상이 없습니다.",
+    "already_trapped": "(이미 갇힘)",
+    "select_prompt": "뼈 감옥으로 가둘 대상을 선택하세요",
+    "cancel_msg": "\n💬 스킬 사용을 취소했습니다.",
+    "no_target_found": "\n[실패] 대상이 없습니다.",
+    "success_log": " └ [속박] {{target}}이(가) {{duration}}턴 동안 속박되었습니다."
   },
   "BONE_STORM": {
     "name": "뼈 폭풍",
     "description": "모든 스켈레톤을 희생하고 체력 합에 비례하여 광역 대미지를 입힙니다.",
-    "unlockHint": "지하 5층 정화 완료"
+    "unlockHint": "지하 5층 정화 완료",
+
+    "no_skeletons": "\n[실패] 희생시킬 스켈레톤이 하나도 없습니다.",
+    "no_enemies": "\n[실패] 공격할 대상이 없습니다.",
+    "activation": "\n🌪️  {{player}}이 모든 스켈레톤을 파괴하여 뼈의 폭풍을 일으킵니다!",
+    "sacrifice_detail": " └ 🔥 총 {{count}}구의 스켈레톤이 산산조각나며 파편이 휘몰아칩니다.",
+    "hit_log": " └ 🩸 날카로운 뼈 파편이 {{name}}을 찢어발깁니다!"
   },
 
   "stealth": "은신",

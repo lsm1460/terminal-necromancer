@@ -29,7 +29,7 @@ export const b4Handlers: Record<string, EventHandler> = {
   },
   'event-b4-reset': (tile, player, context) => {
     const { map, events, npcs } = context
-    const isCaronEventFinished = events.isCompleted('caron_is_mine') || events.isCompleted('caron_is_dead')
+    const isCaronEventFinished = events.isCompleted('defeat_caron')
 
     if (isCaronEventFinished) {
       const tiles = map.currentScene.tiles
