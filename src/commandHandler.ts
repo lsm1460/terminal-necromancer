@@ -67,6 +67,11 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
   const trimmed = rawCmd.trim()
   if (!trimmed) return false
 
+  // 치트키 처리
+  if (Commands.handleCheat(trimmed, context)) {
+    return true
+  }
+
   const { cmd: rawCmdName, args } = parseCommand(trimmed)
   const cmd = mapInput(rawCmdName)
 

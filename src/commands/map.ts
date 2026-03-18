@@ -5,23 +5,25 @@ import { CommandFunction } from '~/types'
 
 export const mapCommand: CommandFunction = async (player, args, context) => {
   const { events, map } = context
-
-  if (!events.isCompleted('got_terminal_map')) {
-    Terminal.log(i18n.t('commands.map.no_map'))
-    return false
-  }
-
+  const isCheat = context.cheats.isFullMap
   const sceneId = map.currentSceneId
 
-  if (sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
-    Terminal.log(i18n.t('commands.map.no_map'))
-    return false
+  if (!isCheat) {
+    if (!events.isCompleted('got_terminal_map')) {
+      Terminal.log(i18n.t('commands.map.no_map'))
+      return false
+    }
+
+    if (sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
+      Terminal.log(i18n.t('commands.map.no_map'))
+      return false
+    }
   }
 
   const tiles = map.currentScene.tiles
   if (!tiles) return false
 
-  const isFullyVisible = (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
+  const isFullyVisible = context.cheats.isFullMap || (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
 
   Terminal.log(`\n--- 🗺️ ${i18n.t(`scene.${map.currentScene.id}`)} ---`)
 

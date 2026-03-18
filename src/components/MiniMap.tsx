@@ -52,19 +52,20 @@ export const MiniMap: React.FC<{
       const player = _engine.player
       setPlayerPos({ ...player.pos })
 
-      const { map, events } = _engine.context
+      const { map, events, cheats } = _engine.context
+      const isCheat = cheats.isFullMap
 
-      if (events.isCompleted('got_terminal_map')) {
+      if (isCheat || events.isCompleted('got_terminal_map')) {
         isSetMapActive(true)
       }
 
       const sceneId = map.currentSceneId
 
-      if (sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
+      if (!isCheat && sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
         return
       }
 
-      const _isFullyVisible = (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
+      const _isFullyVisible = isCheat || (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
 
       setIsFullyVisible(_isFullyVisible)
 

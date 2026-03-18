@@ -216,6 +216,9 @@ export interface GameContext {
   broadcast: Broadcast
   monster: MonsterFactory
 
+  cheats: {
+    isFullMap?: boolean
+  }
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
@@ -380,11 +383,11 @@ export type BroadcastScript = {
 }
 
 export interface UnitSprites {
-  idle: HTMLImageElement[];
-  attack: HTMLImageElement | null;
-  hit: HTMLImageElement | null;
-  die: HTMLImageElement | null;
-  escape: HTMLImageElement | null;
+  idle: HTMLImageElement[]
+  attack: HTMLImageElement | null
+  hit: HTMLImageElement | null
+  die: HTMLImageElement | null
+  escape: HTMLImageElement | null
 }
 
 export interface SceneData {
