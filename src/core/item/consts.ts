@@ -2,7 +2,7 @@ export type ItemRarity = 'COMMON' | 'RARE' | 'EPIC'
 export type ItemType = 'weapon' | 'armor'
 
 export interface RaritySetting {
-  label: string
+  rarity: ItemRarity
   multiplier: number
   weight: number
   hasAffix: boolean
@@ -13,7 +13,7 @@ export interface RaritySetting {
 
 export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
   COMMON: {
-    label: '일반',
+    rarity: 'COMMON',
     multiplier: 1.0,
     weight: 86,
     hasAffix: false,
@@ -22,7 +22,7 @@ export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
     adjectives: [''],
   },
   RARE: {
-    label: '희귀',
+    rarity: 'RARE',
     multiplier: 1.25,
     weight: 10,
     hasAffix: false,
@@ -31,7 +31,7 @@ export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
     adjectives: ['exquisite', 'superior', 'keen', 'reinforced', 'seasoned'],
   },
   EPIC: {
-    label: '영웅',
+    rarity: 'EPIC',
     multiplier: 1.6,
     weight: 4,
     hasAffix: true,

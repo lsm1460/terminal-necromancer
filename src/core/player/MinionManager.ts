@@ -99,7 +99,7 @@ export class MinionManager {
   }
 
   removeMinion(minionId: string) {
-    this.skeleton = this.skeleton.filter((_minion) => _minion.id !== minionId)
+    this._skeleton = this._skeleton.filter((_minion) => _minion.id !== minionId)
 
     if (this._golem && this._golem.id === minionId) {
       this._golem = {
@@ -126,14 +126,11 @@ export class MinionManager {
         hp: 80,
         atk: 30,
         def: 20,
-        description:
-          '하역장에서 수거한 핵으로 제드가 부활시킨 거대 병기입니다.\n사신의 마력이 깃들어 금속 틈새로 검은 안개가 뿜어져 나옵니다.',
       },
       maya: {
         hp: 90,
         atk: 20,
         def: 40,
-        description: '하역장에서 수거한 핵으로 마야가 부활시킨 거대 병기입니다.',
       },
     }
 
@@ -141,7 +138,7 @@ export class MinionManager {
 
     this._golem = {
       id: 'golem',
-      name: '하역장의 기계 골렘',
+      name: '',
       attackType: 'melee',
       baseMaxHp: config.hp,
       maxHp: config.hp,
@@ -152,15 +149,16 @@ export class MinionManager {
       def: config.def,
       agi: 3,
       exp: 0,
-      description: config.description,
+      description: '',
       dropTableId: '',
       encounterRate: 0,
       isAlive: true,
       skills: ['power_smash'],
       isMinion: true,
       isGolem: true,
-      deathLine: '(알 수 없는 기계음)',
+      deathLine: '',
       orderWeight: -15,
+      madeBy: type
     }
   }
 
@@ -171,7 +169,7 @@ export class MinionManager {
 
     this._knight = {
       id: 'knight',
-      name: '기사 발타자르',
+      name: '',
       attackType: 'melee',
       hp: 10,
       baseMaxHp: 10,
@@ -187,14 +185,14 @@ export class MinionManager {
       isAlive: true,
       isMinion: true,
       isKnight: true,
-      deathLine: '발타자르: "아직은... 쉴 수 없는데... (발타자르의 안광이 흐릿해지며 갑옷이 무너져 내립니다.)"',
+      deathLine: '',
       description:
-        '성역의 시종장이라는 굴레를 벗어던지고 다시 당신의 기사가 된 자. 이전보다 더욱 짙은 죽음의 기운을 뿜어냅니다.',
+        '',
       dropTableId: '',
       skills: ['power_smash'],
     }
 
-    Terminal.log('[영혼이 귀속된 발타자르]를 획득했다.')
+    // Terminal.log('[영혼이 귀속된 발타자르]를 획득했다.')
   }
 
   public toJSON() {

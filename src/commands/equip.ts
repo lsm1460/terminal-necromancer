@@ -9,11 +9,9 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const equipAbles = inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type))
 
   if (equipAbles.length < 1) {
-    Terminal.log('장비할 아이템이 없습니다.')
+    Terminal.log(i18n.t('commands.equip.no_equippables'))
     return false
   }
-
-  const findItem = (_itemId: string) => equipAbles.find((i) => i.id === _itemId)
 
   const choices = [
     ...equipAbles.map((item) => ({
@@ -23,18 +21,16 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
     { name: 'cancel', message: i18n.t('cancel') },
   ]
 
-  const itemId = await Terminal.select('장비할 아이템을 선택하세요:', choices)
+  const itemId = await Terminal.select(i18n.t('commands.equip.select_prompt'), choices)
 
-  // 3. 선택 결과 처리
   if (itemId === 'cancel') {
     return false
   }
 
-  // 4. 아이템 탐색 및 장착 로직 실행
-  const targetItem = findItem(itemId)
+  const targetItem = equipAbles.find((i) => i.id === itemId)
 
   if (targetItem) {
-    Terminal.log(`\n✨ [${getItemLabel(targetItem)}]을(를) 장비하였습니다.`)
+    Terminal.log(i18n.t('commands.equip.success', { name: getItemLabel(targetItem) }))
     await player.equip(targetItem)
   }
 

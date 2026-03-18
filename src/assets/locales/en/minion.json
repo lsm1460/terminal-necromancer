@@ -38,5 +38,24 @@
   },
   "skeleton_king": {
     "name": "Skeleton King"
+  },
+
+  "golem": {
+    "name": {
+      "default": "Loading Bay Sentry",
+      "soul_3_machine_3": "Iron Demon of the Abyss",
+      "soul_3": "Wraithful Slayer",
+      "machine_3": "Iron Fortress",
+      "soul_machine_mixed": "Modified Mana Golem",
+      "soul_only": "Bio-infused Golem",
+      "machine_only": "Enhanced Sentry"
+    },
+    "prefix": {
+      "thorns": "Thorn-clad {{name}}"
+    },
+    "description": {
+      "zed": "A massive weapon revived by Zed using a core salvaged from the loading bay.\nReaper's mana flows through it, causing black mist to seep from the metal seams.",
+      "maya": "A massive weapon revived by Maya using a core salvaged from the loading bay."
+    }
   }
 }

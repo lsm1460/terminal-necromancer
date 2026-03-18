@@ -1,4 +1,25 @@
 {
+  "rarity": {
+    "COMMON": "일반",
+    "RARE": "희귀",
+    "EPIC": "영어"
+  },
+
+  "prefix": {
+    "masterwork": "장인의",
+    "worn": "낡은",
+    "exquisite": "정교한",
+    "superior": "우수한",
+    "keen": "날카로운",
+    "reinforced": "강화된",
+    "seasoned": "숙련된",
+    "abyssal": "심연의",
+    "fallen": "몰락한",
+    "forbidden": "금지된",
+    "primal": "태고의",
+    "mortal": "필멸의"
+  },
+
   "type": {
     "weapon": "무기",
     "armor": "방어구",

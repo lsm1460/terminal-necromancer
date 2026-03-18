@@ -1,0 +1,49 @@
+{
+  "name": "Flint the Assault Leader",
+  "lines": [
+    "I can smell those canvases burning from here. How satisfying.",
+    "The real show begins when the hostages start pouring out screaming. Get ready.",
+    "If we cut the power to this sector, even the people at the bottom will have a bright night for once."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "You're here? Things have gotten easier thanks to you joining. I'll watch your back.",
+      "farewell": "Go on ahead. I need to stay and see this damn machine turn completely to ash."
+    },
+    "normal": {
+      "greeting": "Don't loiter around unless you want a stray bullet to put a hole in you.",
+      "farewell": "Watch out for yourself if you want to live. I don't have the luxury of lookin' after dead weight."
+    },
+    "hostile": {
+      "greeting": "Still haven't gotten lost? Not being able to finish you off during that ambush will be the regret of your life.",
+      "farewell": "You can't leave this floor even if you run. Next time, I'll drive a piece of flint into your heart."
+    }
+  },
+  "deathLine": "The flame... has not... gone out yet...",
+  "description": "The assault leader of the Resistance. Possesses a rough and explosive personality, just like his name.",
+
+  "encounter": {
+    "initial_script": [
+          { "text": "Abstract geometric patterns shimmer on the digital canvases covering the entire wall.", "delay": 1500 },
+          { "text": "The light dyes everything around it in eerie colors.", "delay": 1800 },
+          { "name": "Flint", "text": "(His face distorts under the violet radiance emitting from the canvas.)", "delay": 1200 },
+          { "name": "Flint", "text": "Disgusting. People are dying in the dark down below for lack of a single light bulb...", "delay": 2000 },
+          { "name": "Flint", "text": "And here they are, sucking up half the city's electricity just for this so-called 'art'?", "delay": 1800 },
+          { "name": "Flint", "text": "(The spit on the floor glistens strangely under the fluorescent light.)", "delay": 1400 },
+          { "name": "Flint", "text": "Only when I tear down these walls will these bastards finally see how filthy their hands really are.", "delay": 2000 },
+          { "name": "Flint", "text": "...Who's there? Stop peeping like a rat and crawl out.", "delay": 1500 }
+        ],
+    "select_action": "Select your action:",
+    "choice_ask": "What the hell is going on here?",
+    "choice_surprise": "(Surprise Attack: Strike Flint while his guard is down.)",
+    "surprise_attack_msg": "[You] (Instead of answering, you draw your weapon and lunges at Flint's opening!)",
+    "surprise_attack_reply": "Flint: \"Ha! The rat bares its teeth. Your corpse won't even be worth putting on the bargaining table. Die!\"",
+    "ask_reply_1": "Flint: \"We're going to capture all the 'VIPs' on this floor alive.\nWe need them on a leash if we want a chance to negotiate with that Reaper bastard.\"",
+    "ask_reply_2": "Flint: \"Now, choose. Will you join us in this 'hostage hunt,' or will you vanish into history along with those pieces of trash?\"",
+    "select_final": "How will you respond to Flint's offer?",
+    "choice_join": "A bargaining chip needs to be solid. I'll help. (Join)",
+    "choice_refuse": "I won't tolerate taking innocent people as hostages. (Refuse)",
+    "result_join": "Flint: \"Heh, I knew you were a sharp one. Here, take this as a down payment. It's a 'Large Potion' looted from a VIP locker.\"",
+    "result_refuse": "Flint: \"Innocent people? Ha! None of those high-living bastards on these upper floors have clean hands. Your stupid morality will be the death of you.\""
+  }
+}

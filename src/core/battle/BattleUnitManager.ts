@@ -5,6 +5,7 @@ import { BattleTarget } from '~/types'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { Terminal } from '../Terminal'
 import { Battle } from './Battle'
+import i18n from '~/i18n'
 
 export class BattleUnitManager {
   private unitCache = new Map<any, CombatUnit>()
@@ -38,7 +39,7 @@ export class BattleUnitManager {
               m.hp = 0
               m.isAlive = false
               this.player.removeMinion(m.id)
-              Terminal.log(`\n💀 ${m.name}이(가) 쓰러졌습니다!`)
+              Terminal.log(i18n.t('battle.unit_death', { name: m.name }))
             }
           }
         }

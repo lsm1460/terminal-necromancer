@@ -1,59 +1,356 @@
 {
-    "select_title": "스킬 선택 (현재 MP: {{mp}})",
-    "not_enough_mp": "마력이 부족합니다! (필요: {{cost}} / 현재: {{current}})",
-    "no_corpses_nearby": "주변에 활용할 시체가 없습니다.",
-    "select_corpse_to_consume": "어떤 시체를 소모하시겠습니까?",
-    "corpse_choice_format": "{{name}}의 시체 (HP: {{hp}}, ATK: {{atk}})",
-    "cancel_action": "스킬 사용을 취소했습니다.",
+  "select_title": "스킬 선택 (현재 MP: {{mp}})",
+  "not_enough_mp": "마력이 부족합니다! (필요: {{cost}} / 현재: {{current}})",
+  "no_corpses_nearby": "주변에 활용할 시체가 없습니다.",
+  "select_corpse_to_consume": "어떤 시체를 소모하시겠습니까?",
+  "corpse_choice_format": "{{name}}의 시체 (HP: {{hp}}, ATK: {{atk}})",
+  "cancel_action": "스킬 사용을 취소했습니다.",
+  "not_found": "\n[실패] 주위에 이용할 수 있는 시체가 없습니다.",
 
-    "RAISE_SKELETON": {
-      "name": "스켈레톤 생성",
-      "description": "시체를 소모하여 해골 병사를 소환합니다.",
-      "unlockHint": ""
+  "RAISE_SKELETON": {
+    "name": "스켈레톤 생성",
+    "description": "시체를 소모하여 해골 병사를 소환합니다.",
+    "unlockHint": "",
+
+    "no_corpse": "🌑 주위에 부름에 응답할 시체가 존재하지 않습니다. 정적만이 감돕니다.",
+    "limit_reached": "⚠️ 지배할 수 있는 영혼의 그릇이 가득 찼습니다. 더 이상 군단을 부릴 수 없습니다.",
+    "legion_activation": "💀 군단의 인장이 붉게 타오르며, 대지의 모든 유골이 동시에 진동합니다!",
+    "legion_success": "⚔️ 대강령 완료: 전율하는 뼈의 군세가 지옥의 부름에 응답해 일어섰습니다.",
+
+    "reborn_start": "\n[강령술] {{name}}의 뼈가 맞춰지며 일어섭니다!",
+    "reborn_success": "💀 {{rarity}} 등급의 스켈레톤 {{class}}으로 부활했습니다!",
+    "notice_limit": "\n[알림] 더 이상 해골병사를 부릴 수 없습니다."
+  },
+  "RECALL_SKELETON": {
+    "name": "스켈레톤 회수",
+    "description": "해골 병사를 마나로 환원합니다.",
+    "unlockHint": "",
+
+    "select_prompt": "어떤 개체를 마나로 환원하시겠습니까?",
+    "success": "[역소환 성공] {{name}} 이(가) 영혼으로 환원되었습니다.",
+    "resource_gain": "[자원 회수] 마나 +5 회복 | 현재 마나: {{mp}}"
+  },
+  "FOCUS_FIRE": {
+    "name": "죽음의 표식",
+    "description": "미니언들이 표식을 보유한 대상을 우선적으로 공격합니다.",
+    "unlockHint": "",
+
+    "no_target": "\n[실패] 대상이 없습니다.",
+    "select_prompt": "대상을 선택하세요",
+    "already_marked": " (이미 {{curse}} 상태)",
+    "activation": "\n[!] {{player}}이(가) {{target}}에게 서늘한 죽음의 손짓을 보냅니다!",
+    "minion_reaction": "[!] 모든 수하의 안광이 붉게 타오릅니다.\n"
+  },
+  "CORPSE_EXPLOSION": {
+    "name": "시체 폭발",
+    "description": "시체를 폭파시켜 광역 피해를 입힙니다.",
+    "unlockHint": "지하 2층 정화 완료",
+
+    "select_prompt": "어떤 시체를 소모하시겠습니까?",
+    "activation": "\n💥 {{player}}이(가) 시체를 터뜨렸습니다! (기초 위력: {{damage}})",
+    "no_enemies": " 주변에 휘말린 적이 없습니다."
+  },
+  "SOUL_HARVEST": {
+    "name": "영혼 흡수",
+    "description": "시체에서 정수를 뽑아내 마나로 전환합니다.",
+    "unlockHint": "지하 2층 정화 완료",
+
+    "success": "{{name}}에게서 영혼을 추출하여 마나를 {{amount}} 회복했습니다.",
+    "full_mana": "마나가 이미 가득 차 있습니다."
+  },
+  "SOUL_TRANSFER": {
+    "name": "영혼 전달",
+    "description": "사령술사의 체력을 종속에게 전달하여 체력을 채웁니다.",
+    "unlockHint": "지하 3층 정화 완료",
+
+    "no_minions": "\n[실패] 상호작용할 미니언이 없습니다.",
+    "select_prompt": "어느 미니언과 영혼을 공명하시겠습니까?",
+    "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
+    "already_full": "\n🌿 {{name}}의 영혼이 이미 충만하여 더 이상 생명력을 나눌 필요가 없습니다.",
+    "low_health": "\n⚠️ {{name}}의 체력이 너무 낮아 더 이상 생명력을 나누어줄 수 없습니다!",
+    "success_log": "\n✨ [치유] {{player}}의 영혼으로 {{target}}의 상처를 메꿉니다. ({{target}} HP {{hp}} / {{maxHp}})",
+    "transfer_detail": " └ 🩸 사령술사 HP -{{amount}} ➡️ {{target}} HP +{{amount}}"
+  },
+  "CURSE": {
+    "name": "저주",
+    "description": "대상을 약화시킵니다.",
+    "unlockHint": "지하 3층 정화 완료",
+
+    "corrosion_name": "부식",
+    "wide_prefix": "광역 ",
+    "no_target": "\n[실패] {{display}}의 대상이 없습니다.",
+    "select_prompt": "{{display}}의 대상을 선택하세요",
+    "already_status": " (이미 {{status}} 상태)",
+    "wide_activation": "\n💀 {{player}}의 {{display}}가 전장에 퍼져나갑니다!",
+    "single_activation": "\n💀 {{player}}이(가) {{target}}에게 {{display}}를 내립니다!",
+    "effect_detail": " └ [약화] {{target}}: {{stat}} -{{value}} ({{duration}}턴)",
+    "stat_atk": "공격력",
+    "stat_def": "방어력"
+  },
+  "BONE_SPEAR": {
+    "name": "뼈 창",
+    "description": "두 적을 동시에 공격합니다.",
+    "unlockHint": "아공간의 확보",
+
+    "no_skeletons": "\n[실패] 희생시킬 스켈레톤이 없습니다.",
+    "no_enemies": "\n[실패] 관통할 대상이 없습니다.",
+    "select_prompt": "어느 스켈레톤을 뼈 창으로 만드시겠습니까?",
+    "choice_format": "{{name}} (현재 HP: {{hp}})",
+    "cancel_msg": "\n💬 스킬 사용을 취소했습니다.",
+    "activation": "\n💀 {{player}}이(가) {{target}}을(를) 파괴하여 거대한 뼈 창을 빚어냅니다!",
+    "log": {
+      "surprise_primary": " └ 🧤 기습! 뼈 창이 그림자 속에서 가장 뒤의 {{name}}의 등을 꿰뚫습니다!",
+      "surprise_secondary": " └ ⚡ 연쇄 기습! 당황한 {{name}}까지 창날에 휘말립니다!",
+      "normal_primary": " └ 🚀 뼈 창이 전열의 {{name}}에게 정면으로 격돌합니다!",
+      "normal_secondary": " └ ⚡ 창이 뒤에 있던 {{name}}까지 깊숙이 관통합니다!"
+    }
+  },
+  "BONE_PRISON": {
+    "name": "뼈 감옥",
+    "description": "대상을 선택한 뒤 뼈를 사용해 대상의 움직임을 봉쇄합니다.",
+    "unlockHint": "지하 5층 정화 완료",
+
+    "no_targets": "\n[실패] 감옥을 생성할 대상이 없습니다.",
+    "already_trapped": "(이미 갇힘)",
+    "select_prompt": "뼈 감옥으로 가둘 대상을 선택하세요",
+    "cancel_msg": "\n💬 스킬 사용을 취소했습니다.",
+    "no_target_found": "\n[실패] 대상이 없습니다.",
+    "success_log": " └ [속박] {{target}}이(가) {{duration}}턴 동안 속박되었습니다."
+  },
+  "BONE_STORM": {
+    "name": "뼈 폭풍",
+    "description": "모든 스켈레톤을 희생하고 체력 합에 비례하여 광역 대미지를 입힙니다.",
+    "unlockHint": "지하 5층 정화 완료",
+
+    "no_skeletons": "\n[실패] 희생시킬 스켈레톤이 하나도 없습니다.",
+    "no_enemies": "\n[실패] 공격할 대상이 없습니다.",
+    "activation": "\n🌪️  {{player}}이 모든 스켈레톤을 파괴하여 뼈의 폭풍을 일으킵니다!",
+    "sacrifice_detail": " └ 🔥 총 {{count}}구의 스켈레톤이 산산조각나며 파편이 휘몰아칩니다.",
+    "hit_log": " └ 🩸 날카로운 뼈 파편이 {{name}}을 찢어발깁니다!"
+  },
+
+  "stealth": "은신",
+
+  "passive": {
+    "death_aura": "[!] {{attacker}}의 죽음의 오라가 적들의 영혼을 옥죄기 시작합니다...",
+    "thorns": "\n[🦷 가시]: {{defender}}의 가시가 {{attacker}}의 살점을 찢습니다!",
+    "death_destruct": "\n[🔥 종말]: {{unit}}의 시체가 폭발하며 주변을 삼킵니다!"
+  },
+
+  "special": {
+    "self_destruct": "💀 {{attacker}}(은)는 모든 힘을 쏟아내고 소멸했습니다!",
+    "health_drain": "💉 {{attacker}}(이)가 적의 생명력을 흡수하여 HP를 {{amount}}만큼 회복했습니다!",
+    "item_steal": {
+      "no_target": " > {{target}}(은)는 훔칠 물건이 없습니다.",
+      "gold": "[!] 소매치기! {{attacker}}(이)가 {{amount}}G를 훔쳐 달아납니다!",
+      "item": "[!] 분실! {{attacker}}(이)가 배낭에서 '{{item}}'을(를) 훔쳐 달아납니다!",
+      "fail": " > {{attacker}}(이)가 당신의 주머니를 뒤졌지만, 땡전 한 푼 나오지 않습니다."
+    }
+  },
+
+  "effect": {
+    "heal": "💚 {{target}}의 HP가 {{amount}}만큼 회복되었습니다.",
+    "summon": {
+      "fail": "\n{{attacker}}은/는 {{skillName}}을/를 실패했다..",
+      "divide": "🧬 {{attacker}}에게서 {{reinforcement}}(이)가 분리되었습니다!",
+      "call": "👾 {{attacker}}의 부름에 {{reinforcement}}(이)가 나타났습니다!"
+    }
+  },
+
+  "target_not_found": "하지만 대상을 찾을 수 없었다..",
+
+  "message": {
+    "buff": {
+      "overdrive": "\n[🔥 강화] {{name}}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! ({{name}} HP {{hp}} / {{maxHp}})"
     },
-    "RECALL_SKELETON": {
-      "name": "스켈레톤 회수",
-      "description": "해골 병사를 마나로 환원합니다.",
-      "unlockHint": ""
+    "debuff": {
+      "paralysis": "\n [!] {{name}}은/는 마비되어 움직일 수 없습니다!",
+      "bind": "\n [!] {{name}}은/는 구속되어 움직일 수 없습니다!",
+      "bleed": "\n [!] {{name}}은/는 깊은 상처를 입고 피를 흘리기 시작합니다!",
+      "burn": "\n [!] {{name}}의 피부가 화염에 그을립니다.",
+      "poison": "\n [!] {{name}}은/는 치명적인 독소에 노출되어 안색이 창백해집니다.",
+      "freeze": "\n [!] {{name}}은/는 추위에 노출되어 피부가 얼어붙어갑니다.",
+      "curse": "\n [!] {{name}}(은)는 분노를 참지 못해 방어 태세가 흐트러집니다!",
+      "smoke": "\n [!] 자욱한 연기가 {{name}}의 시야를 완전히 가려버립니다!",
+      "bone_prison": "\n [!] 거친 뼈 창살이 {{name}}의 사지를 옥죄며 솟아오릅니다!",
+      "aging": "\n[⏳] {{name}}의 피부가 급격히 메마르며 숨이 가빠집니다! 모든 반응이 눈에 띄게 둔해집니다.",
+      "injury": "\n[⏳] {{name}}의 발목에 부상을 입습니다! 움직임이 눈에 띄게 둔해집니다."
+    }
+  },
+
+  "npc": {
+    "fire_bolt": {
+      "name": "불꽃 화살",
+      "description": "대상에게 불꽃을 날려 화상을 입힙니다."
     },
-    "FOCUS_FIRE": {
-      "name": "죽음의 표식",
-      "description": "미니언들이 표식을 보유한 대상을 우선적으로 공격합니다.",
-      "unlockHint": ""
+    "ice_bolt": {
+      "name": "얼음 화살",
+      "description": "대상에게 얼음을 날려 행동을 둔화시킵니다."
     },
-    "CORPSE_EXPLOSION": {
-      "name": "시체 폭발",
-      "description": "시체를 폭파시켜 광역 피해를 입힙니다.",
-      "unlockHint": "지하 2층 정화 완료"
+    "lightning_bolt": {
+      "name": "전격 화살",
+      "description": "대상에게 전격을 날려 마비시킵니다."
     },
-    "SOUL_HARVEST": {
-      "name": "영혼 흡수",
-      "description": "시체에서 정수를 뽑아내 마나로 전환합니다.",
-      "unlockHint": "지하 2층 정화 완료"
+    "fire_breath": {
+      "name": "화염 숨결",
+      "description": "강력한 불을 사방에 내뿜습니다."
     },
-    "SOUL_TRANSFER": {
-      "name": "영혼 전달",
-      "description": "사령술사의 체력을 종속에게 전달하여 체력을 채웁니다.",
-      "unlockHint": "지하 3층 정화 완료"
+    "quick_slash": {
+      "name": "기습적인 일격",
+      "description": "상대의 빈틈을 노려 예리한 무기나 날카로운 신체 부위로 빠르게 베어 가릅니다."
     },
-    "CURSE": {
-      "name": "저주",
-      "description": "대상을 약화시킵니다.",
-      "unlockHint": "지하 3층 정화 완료"
+    "sticky_web": {
+      "name": "강제 구속",
+      "description": "끈적한 점액이나 보이지 않는 마력의 끈을 투척하여 대상의 행동을 제약합니다."
     },
-    "BONE_SPEAR": {
-      "name": "뼈 창",
-      "description": "두 적을 동시에 공격합니다.",
-      "unlockHint": "지하 5층 정화 완료"
+    "self_destruct": {
+      "name": "불안정한 자폭",
+      "description": "내부의 에너지를 한꺼번에 폭주시킨 뒤 신체를 비산시켜 주위에 치명적인 타격을 입힙니다."
     },
-    "BONE_PRISON": {
+    "health_drain": {
+      "name": "생명력 강탈",
+      "description": "대상에게 달라붙어 그들의 생명 에너지를 직접 빨아들여 자신의 양분으로 삼습니다."
+    },
+    "power_smash": {
+      "name": "강력한 내리치기",
+      "description": "무거운 무기로 적을 내리칩니다."
+    },
+    "power_shot": {
+      "name": "강력한 사격",
+      "description": "적의 급소를 노려 강력한 투사체를 발사합니다."
+    },
+    "aim_arrow": {
+      "name": "저격 사격",
+      "description": "가장 뒤에 있는 적을 저격합니다."
+    },
+    "piercing_arrow": {
+      "name": "관통 사격",
+      "description": "전열을 관통해 그 뒤에 있는 적까지 노립니다."
+    },
+    "rapid_fire": {
+      "name": "난사",
+      "description": "전장에 무차별적인 사격을 가해 모든 적에게 피해를 입힙니다."
+    },
+    "minor_heal": {
+      "name": "하급 치유",
+      "description": "가장 부상이 심한 아군이 체력을 약간 회복시킵니다."
+    },
+    "heal": {
+      "name": "치유",
+      "description": "가장 부상이 심한 아군을 회복시킵니다."
+    },
+    "greater_heal": {
+      "name": "상급 치유",
+      "description": "가장 부상이 심한 아군의 체력을 대폭 회복시킵니다."
+    },
+    "volley_fire": {
+      "name": "일제 사격",
+      "description": "모든 적에게 화살 비를 퍼붓습니다."
+    },
+    "holy_radiance": {
+      "name": "성스러운 합창",
+      "description": "모든 아군의 상처를 어루만집니다."
+    },
+    "bone_prison": {
       "name": "뼈 감옥",
-      "description": "대상을 선택한 뒤 뼈를 사용해 대상의 움직임을 봉쇄합니다.",
-      "unlockHint": "지하 5층 정화 완료"
+      "description": "뼈로 이루어진 감옥은 대상의 행동을 제약합니다."
     },
-    "BONE_STORM": {
-      "name": "뼈 폭풍",
-      "description": "모든 스켈레톤을 희생하고 체력 합에 비례하여 광역 대미지를 입힙니다.",
-      "unlockHint": "지하 5층 정화 완료"
+    "aging_curse": {
+      "name": "노화",
+      "description": "가장 부상이 심한 적군을 노화시킵니다. 민첩이 떨어집니다."
+    },
+    "abyssal_gallop": {
+      "name": "심연의 질주",
+      "description": "군마가 지나간 자리에 심연의 불꽃이 솟구쳐 모든 적에게 고정 피해를 입힙니다."
+    },
+    "dread_charge": {
+      "name": "죽음의 돌격",
+      "description": "군마와 혼연일체가 되어 적진을 관통합니다. 모든 적에게 강력한 물리 피해를 입힙니다."
+    },
+    "divide_soul": {
+      "name": "자가 분열",
+      "description": "몸에 붙어있는 망령들이 떨어져나갑니다."
+    },
+    "achilles_bite": {
+      "name": "발목 물기",
+      "description": "발목을 정확히 조준하여 물어뜯습니다. 날카로운 이빨이 인대를 파고들어 이동 속도와 회피율을 급격히 떨어뜨립니다."
+    },
+    "call_reinforcements": {
+      "name": "가드 호출",
+      "description": "높은 주파수의 경보음을 울립니다. 하역장 곳곳에 대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다."
+    },
+    "call_reinforcements2": {
+      "name": "가드 호출",
+      "description": "높은 주파수의 경보음을 울립니다.대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다."
+    },
+    "call_reinforcements3": {
+      "name": "가드 호출",
+      "description": "높은 주파수의 경보음을 울립니다.대기 중이던 경비 병력들이 소음을 듣고 이 구역으로 몰려듭니다."
+    },
+    "stealth": {
+      "name": "은신",
+      "description": "주변의 화물 더미와 그림자 속으로 몸을 숨깁니다. 시야에서 완전히 사라진 적은 다시 나타나 공격하기 전까지 타겟팅할 수 없습니다."
+    },
+    "item_steal": {
+      "name": "절도",
+      "description": "약탈자의 빠른 손놀림이 당신의 배낭을 스칩니다. 소지하고 있던 소모품이나 골드 중 일부가 순식간에 사라집니다."
+    },
+    "enemy_curse": {
+      "name": "조롱",
+      "description": "적군 모두에게 조롱을 퍼부어, 방어력을 떨어뜨립니다."
+    },
+    "smoke_bomb": {
+      "name": "연막",
+      "description": "발밑에서 자욱한 회색 연기가 터져 나옵니다. 전장의 시야가 차단되어 공격의 명중률이 바닥으로 떨어지고 혼란이 가중됩니다."
+    },
+    "poison_dagger": {
+      "name": "독 찌르기",
+      "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다."
+    },
+    "vitals_strike": {
+      "name": "급소 타격",
+      "description": "가장 취약한 적의 빈틈을 파고들어 치명적인 근접 공격을 가합니다."
+    },
+    "whirlwind": {
+      "name": "소용돌이",
+      "description": "무기를 크게 휘둘러 주변 모든 적을 공격하고 3턴간 출혈 상태로 만듭니다."
+    },
+    "thorns": {
+      "name": "가시",
+      "description": "적에게 공격을 받는다면 되갚아줍니다."
+    },
+    "death_aura": {
+      "name": "죽음의 오라",
+      "description": "반경 내의 모든 생명체를 시들게 합니다.  매 턴마다 적의 방어력을 깎는 디버프를 부여하고 체력을 감소시킵니다."
+    },
+    "death_destruct": {
+      "name": "종말",
+      "description": "이 유닛이 사망 시, 폭발하여 이 유닛 체력의 60%의 데미지를 상대방 유닛에게 줍니다.",
+      "type": "passive"
+    },
+    "frostborne": {
+      "name": "서리",
+      "description": "공격 시 상대방 유닛의 행동을 둔화시킵니다."
+    },
+    "distortion_shroud": {
+      "name": "공간 왜곡: 흩어지는 잔상",
+      "description": "아공간의 틈새로 몸을 숨깁니다."
+    },
+    "soul_anchor": {
+      "name": "저승의 닻: 영혼 고립",
+      "description": "적 중 하나의 발밑에 아공간의 구멍을 뚫어 영혼을 붙잡습니다."
+    },
+    "dimensional_collapse": {
+      "name": "차원 붕괴: 닫히는 경계",
+      "description": "전장 전체의 공간을 압축하여 파괴합니다."
+    },
+    "spectral_wail": {
+      "name": "원혼의 통곡",
+      "description": "귀족의 원한이 담긴 비명을 질러 모든 적의 정신을 붕괴시킵니다."
+    },
+    "spout_out": {
+      "name": "분출",
+      "description": "죄악의 구덩이에서 끓어오르는 오물이 목표를 휩쓸어버립니다."
     }
   }
+}

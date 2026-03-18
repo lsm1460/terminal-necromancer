@@ -1,10 +1,11 @@
 import { COMMAND_GROUPS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { CommandFunction } from '~/types'
 
 // --- Exit ---
 export const exitCommand: CommandFunction = (player, args, context) => {
-  Terminal.log('\n💾 게임 데이터를 저장하는 중...')
+  Terminal.log(i18n.t('commands.system.exit.saving'))
 
   // 1. 현재 상태 저장
   context.save.save({
@@ -15,17 +16,22 @@ export const exitCommand: CommandFunction = (player, args, context) => {
     completedEvents: context.events.getSaveData(),
   })
 
-  Terminal.log('✅ 저장 완료!')
-  Terminal.log('👋 게임을 종료합니다. 안녕히 가세요, 네크로맨서님.')
+  Terminal.log(i18n.t('commands.system.exit.save_complete'))
+  Terminal.log(i18n.t('commands.system.exit.farewell'))
 
   return 'exit'
 }
 
 export const helpCommand: CommandFunction = (player, args, context) => {
-  Terminal.log('사용 가능한 명령어:')
+  Terminal.log(i18n.t('commands.system.help.title'))
 
   for (const [command, aliases] of Object.entries(COMMAND_GROUPS)) {
-    Terminal.log(`- ${command}: ${aliases.join(', ')}`)
+    Terminal.log(
+      i18n.t('commands.system.help.list_item', {
+        command,
+        aliases: aliases.join(', '),
+      })
+    )
   }
 
   return false
@@ -33,6 +39,5 @@ export const helpCommand: CommandFunction = (player, args, context) => {
 
 export const clearCommand: CommandFunction = () => {
   console.clear()
-
   return false
 }

@@ -1,5 +1,6 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { GameContext, NpcSkill } from '~/types'
 
 export const SkillEffectHandlers: Record<
@@ -7,9 +8,15 @@ export const SkillEffectHandlers: Record<
   (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit, context: GameContext) => void
 > = {
   heal: (target, skill) => {
-    const healAmount = Math.floor(target.ref.maxHp * skill.power);
+    const healAmount = Math.floor(target.ref.maxHp * skill.power)
     target.ref.hp = Math.min(target.ref.maxHp, target.ref.hp + healAmount)
-    Terminal.log(`💚 ${target.name}의 HP가 ${healAmount}만큼 회복되었습니다.`)
+
+    Terminal.log(
+      i18n.t('skill.effect.heal', {
+        target: target.name,
+        amount: healAmount,
+      })
+    )
   },
   buff: (target, skill) => {
     if (skill.buff) target.applyBuff(skill.buff)
@@ -26,28 +33,50 @@ export const SkillEffectHandlers: Record<
       attackType: skill.attackType,
     })
 
-    if (!result.isDead && skill.buff) await SkillEffectHandlers.deBuff(...params)
+    if (!result.isDead && skill.buff) {
+      await SkillEffectHandlers.deBuff(...params)
+    }
   },
+
   summon: (target, skill, attacker, context) => {
     const { battle } = context
 
     if (!skill.options?.spawnMonsterId) {
-      Terminal.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
+      Terminal.log(
+        i18n.t('skill.effect.summon.fail', {
+          attacker: attacker.name,
+          skillName: skill.name,
+        })
+      )
       return
     }
 
     const reinforcement = battle._spawnMonster(skill.options.spawnMonsterId, context)
 
     if (!reinforcement) {
-      Terminal.log(`\n${attacker.name}은/는 ${skill.name}을/를 실패했다..`)
+      Terminal.log(
+        i18n.t('skill.effect.summon.fail', {
+          attacker: attacker.name,
+          skillName: skill.name,
+        })
+      )
       return
     }
 
-    // 3. 상황에 맞는 연출 문구 (스킬 ID나 이름으로 판별)
     if (skill.id.includes('divide')) {
-      Terminal.log(`🧬 ${attacker.name}에게서 ${reinforcement.name}(이)가 분리되었습니다!`)
+      Terminal.log(
+        i18n.t('skill.effect.summon.divide', {
+          attacker: attacker.name,
+          reinforcement: reinforcement.name,
+        })
+      )
     } else {
-      Terminal.log(`👾 ${attacker.name}의 부름에 ${reinforcement.name}(이)가 나타났습니다!`)
+      Terminal.log(
+        i18n.t('skill.effect.summon.call', {
+          attacker: attacker.name,
+          reinforcement: reinforcement.name,
+        })
+      )
     }
   },
 }

@@ -11,5 +11,78 @@
   "caron": {
     "whisper_alive": "\nCaron: \"(From beyond the shadows) My lord, I am here. Do you require preparations?\"",
     "whisper_dead": "\n[Void Guide]: \"...Mas...ter... Com...mand... me...\" (An eerie chill clings to your ankles.)"
+  },
+
+  "b3": {
+    "abandoned_corpse": {
+      "discovery": "🔍 \u001b[1mWhile searching the area, you discover something on the cold floor...\u001b[0m",
+      "found_msg": "   It is the corpse of a [\u001b[31m{{name}}\u001b[0m]. It seems to have been dead for a long time.",
+      "flavors": [
+        "There are traces of a brutal attack by someone.",
+        "The corpse is covered in an unidentified, alien slime.",
+        "The pockets have already been picked, and only the fishy smell of blood remains.",
+        "The body is unnaturally twisted, suggesting it died in absolute terror."
+      ]
+    },
+    "voice_recorder": {
+      "found": "\n\u001b[90m[ You found an official recording device dropped by the rusty tracks ]\u001b[0m",
+      "confirm": "📽️ Play the voice log \"For Terminal Management Office Submission\"?",
+      "playing": "\n\u001b[90m[ Playing voice log stored in the management system... ]\u001b[0m",
+      "script": [
+        "...Static. Loading Dock Unit 402, reporting today's work status.",
+        "More Soulstones were unloaded today than scheduled due to an increase in cargo trains to Purgatory.",
+        "Workers are suffering from severe wear and tear, reducing efficiency, but quotas were met per management guidelines.",
+        "Requesting a more efficient rotation for future relief personnel. End of report.",
+        "...(Static, long mechanical noise continues)...",
+        "...Has anything ever actually changed just because we requested it?",
+        "He probably forgot we're even part of the machinery here.",
+        "...By the way, have you heard any news about the Resistance?",
+        "...Static."
+      ],
+      "ended": "\n\u001b[90m[ Recording ended. ]\u001b[0m"
+    },
+    "map_scan": {
+      "confirm": "📍 You found a peeling terminal loading sign. Examine it?",
+      "revealed": "\n\u001b[90m[ After brushing off the dust, a complex rail map of the loading dock is revealed ]\u001b[0m",
+      "boss_location": "\u001b[33m🔍 At 'Loading Station 1', a sign says [Large Auto-Crane in Operation - Approach with Caution].\u001b[0m",
+      "boss_flavor": "\u001b[90m   (Someone has scribbled \"Golem gone rogue\" crookedly over it.)\u001b[0m",
+      "success": "\u001b[32m✅ Confirmed information for {{count}} undamaged sectors.\u001b[0m",
+      "fail_flavor": "\u001b[90m(The rest of the rail information is too rusted to read.)\u001b[0m\n"
+    },
+    "conveyor": {
+      "prompt_1": "⚙️ Board the conveyor heading to Platform 2?",
+      "prompt_2": "⚙️ Activate the conveyor heading to Platform 1?",
+      "move_1": "The belt screams as it carries you toward Platform 2...",
+      "move_2": "Reverse gears engage, racing you back to Platform 1!",
+      "arrival": "\u001b[32m✨ Whoosh—! Safely arrived at the destination. [{{x}}, {{y}}]\u001b[0m\n",
+      "error": "\n\u001b[31m⚠️  Static... Could not find the connected loading path ({{target}}).\u001b[0m\n"
+    }
+  },
+
+  "b4": {
+    "warp": {
+      "message": "The space shatters like a mirror, casting you into an unfamiliar place."
+    },
+    "reset": {
+      "observe_default": "...Nothing but ruins can be seen."
+    }
+  },
+
+  "boss": {
+    "encounter": {
+      "blocking": "   [ {{name}} ] stands in your way.",
+      "default_talk": ["...So, you've come here to find your grave."],
+      "start_battle": "\n⚔️  The battle begins..."
+    },
+    "victory": {
+      "log": "\n🏆 You have defeated the formidable foe, {{name}}!"
+    },
+    "portal": {
+      "spawn": "\n✨ [Notice] A [Portal] leading back to the starting point shimmers in the middle of the silent room."
+    }
+  },
+
+  "npc": {
+    "preemptive_attack": "⚠️  NPC: Preemptive attack by {{name}}!"
   }
 }

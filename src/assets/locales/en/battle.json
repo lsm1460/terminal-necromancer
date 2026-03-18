@@ -1,0 +1,101 @@
+{
+  "unit_death": "\n💀 {{name}} has fallen!",
+
+  "monster_event": {
+    "spawn": "👾 {{name}} appeared!",
+    "current_enemies": "⚠️  Current Enemies: {{names}}",
+    "preemptive_attack": "⚠️  Surprise attack by {{name}}!"
+  },
+  "turn_start": "\n━━━━━━━━━ [ {{name}}'s Turn ] ━━━━━━━━━",
+  "battle_start": "\n⚔️ Battle Started!",
+  "enemy_list": "Enemies: {{names}}",
+  "effect_expired": {
+    "buff": "[Effect Expired] {{unitName}}'s ✨ [{{effectName}}] has worn off.",
+    "debuff": "[Effect Expired] {{unitName}}'s 💢 [{{effectName}}] has worn off."
+  },
+
+  "action": {
+    "dot_damage": " └ 🩸 [{{effectName}}] Damage: -{{damage}} ({{duration}} turn(s) left)",
+    "dot_death": " └ 💀 {{unitName}} has succumbed to {{effectName}}.",
+    "bind_status": "\n⛓️  {{unitName}} is bound by {{effectName}} and cannot move! ({{duration}} turn(s) left)",
+    "select_action": "Choose your action:",
+    "menu": {
+      "status": "Status",
+      "attack": "Attack",
+      "defense": "Guard",
+      "skill": "Skill",
+      "item": "Item",
+      "escape": "Run"
+    },
+    "status_board": {
+      "title": "\n━━━━━━━━━━━━━━━━━━━━ Battlefield ━━━━━━━━━━━━━━━━━━━━",
+      "ally_side": " [🛡️ Allies]",
+      "enemy_side": " [⚔️ Enemies]",
+      "lead": "🚩 [LEAD]",
+      "condition": "\n         └─ Status: {{status}}",
+      "divider": "──────────────────────────────────────────────────",
+      "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    },
+    "target_prompt": "Who will you attack?",
+    "guard": "🛡️ {{name}} takes a defensive stance! Damage taken is reduced until the next turn.",
+    "escape_blocked": "\n🚫 Cannot escape! {{name}} is blocking the way!",
+    "escape_success": "\n🏃 Escaped from battle!",
+    "no_target": " > {{name}} looks around in confusion, finding no target to attack...",
+    "idle": "{{name}} is just standing still."
+  },
+
+  "unit": {
+    "labels": {
+      "passive": "\u001b[36m[PASSIVE]\u001b[0m",
+      "sure_hit": "\u001b[33m[SURE HIT]\u001b[0m",
+      "sure_crit": "\u001b[31m[GUARANTEED CRIT]\u001b[0m",
+      "ignore_def": "\u001b[35m[PIERCE]\u001b[0m",
+      "fixed": "\u001b[32m[FIXED]\u001b[0m"
+    },
+    "log": {
+      "hp_status": "\u001b[90m({{name}}'s Remaining HP: {{hp}})\u001b[0m",
+      "evaded": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! 💨 \u001b[37m{{defender}}\u001b[0m evaded the attack. {{hpStatus}}",
+      "no_damage": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! 🛡️ But it dealt no damage to \u001b[37m{{defender}}\u001b[0m. {{hpStatus}}",
+      "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! Dealing {{damageMsg}} damage to \u001b[37m{{defender}}\u001b[0m! {{hpStatus}}"
+    },
+    "status_change": {
+      "effect_removed": "\n✨ [Status Change] [{{effectName}}] has worn off from {{name}}.",
+      "stealth_broken": " \u001b[90m[!] {{name}}'s stealth has been broken, revealing their presence!\u001b[0m",
+      "expose_name": "Exposed",
+      "recovered": " \u001b[32m[!] {{name}} has recovered and is no longer affected by '{{effectName}}'!\u001b[0m",
+      "forced_removed": " \u001b[31m[!] The '{{effectName}}' effect on {{name}} has been forcibly dispelled!\u001b[0m"
+    }
+  },
+
+  "reward": {
+    "unit_death": "\n💀 {{name}} has fallen!",
+    "kill_log": "✨ {{name}} Slain! EXP +{{exp}}",
+    "gold_gain": ", Gold +{{gold}}",
+    "drop_item": "📦 {{name}} dropped {{label}}{{quantity}}.",
+    "item_unit": " unit(s)",
+    "corpse_left": "🦴 The corpse of {{name}} remains on the ground.",
+    "vanished": "{{name}} vanished like smoke.",
+    "victory": "\n🏆 Victory!",
+    "defeat": "\n💀 You have been defeated..."
+  },
+
+  "buff": {
+    "burn": "Burn",
+    "freeze": "Freeze",
+    "paralysis": "Paralysis",
+    "bind": "Bind",
+    "bleed": "Bleed",
+    "expose": "Expose",
+    "bone_prison": "Bone Prison",
+    "overdrive": "Overdrive",
+    "aging": "Aging",
+    "injury": "Injury",
+    "curse": "Curse",
+    "corrosion": "Corrosion",
+    "smoke": "Smoke",
+    "poison": "Poison",
+    "defense": "Defense",
+    "stealth": "Stealth",
+    "focus": "Marker"
+  }
+}

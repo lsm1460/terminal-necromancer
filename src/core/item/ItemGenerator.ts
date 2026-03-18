@@ -1,6 +1,6 @@
 import { Affix, ArmorItem, Drop, ItemType, WeaponItem } from '~/types'
 import { generateId, getItemLabel } from '~/utils'
-import { AFFIX_LIST } from '../affixes'
+import { getAffixList } from '../affixes'
 import { ItemRarity, RARITY_SETTINGS } from './consts'
 
 export class ItemGenerator {
@@ -40,23 +40,23 @@ export class ItemGenerator {
 
   /** 2. 수치 확정 함수 (범위형 스탯 처리) */
   private finalizeStat(range: [number, number], isInteger: boolean = false): number {
-  const [min, max] = range
+    const [min, max] = range
 
-  if (isInteger) {
-    // 정수 범위에서 랜덤 추출 (min, max가 소수여도 정수로 내림/반올림 처리)
-    const minInt = Math.ceil(min)
-    const maxInt = Math.floor(max)
-    return Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
+    if (isInteger) {
+      // 정수 범위에서 랜덤 추출 (min, max가 소수여도 정수로 내림/반올림 처리)
+      const minInt = Math.ceil(min)
+      const maxInt = Math.floor(max)
+      return Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
+    }
+
+    // 기존 소수점 로직 (0.02 ~ 0.08 등의 정밀도 유지)
+    const precision = 100
+    const minInt = Math.round(min * precision)
+    const maxInt = Math.round(max * precision)
+
+    const randomInt = Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
+    return randomInt / precision
   }
-
-  // 기존 소수점 로직 (0.02 ~ 0.08 등의 정밀도 유지)
-  const precision = 100
-  const minInt = Math.round(min * precision)
-  const maxInt = Math.round(max * precision)
-
-  const randomInt = Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt
-  return randomInt / precision
-}
 
   /** 3. 성능 접두사 판단 (상/하위 15%) */
   private getPerformancePrefix(value: number, min: number, max: number): string {
@@ -72,9 +72,10 @@ export class ItemGenerator {
 
   /** 4. 어픽스 랜덤 선택 (에픽 전용) */
   private pickRandomAffix(): Affix {
-    const keys = Object.keys(AFFIX_LIST)
+    const affixList = getAffixList()
+    const keys = Object.keys(affixList)
     const randomKey = keys[Math.floor(Math.random() * keys.length)]
-    const affixData = AFFIX_LIST[randomKey]
+    const affixData = affixList[randomKey]
 
     let finalValue = undefined
     if (affixData.valueRange) {
@@ -142,7 +143,7 @@ export class ItemGenerator {
       rarity: rarityKey,
       perfPrefix,
       adjective,
-      affix
+      affix,
     } as WeaponItem | ArmorItem
   }
 }

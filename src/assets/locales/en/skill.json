@@ -5,57 +5,354 @@
   "select_corpse_to_consume": "Which corpse will you consume?",
   "corpse_choice_format": "{{name}} Corpse (HP: {{hp}}, ATK: {{atk}})",
   "cancel_action": "Skill activation canceled.",
+  "not_found": "\n[Failed] There are no usable corpses nearby.",
 
   "RAISE_SKELETON": {
     "name": "Raise Skeleton",
     "description": "Consume a corpse to summon a skeleton warrior.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "no_corpse": "🌑 No corpses nearby respond to your call. Only silence lingers.",
+    "limit_reached": "⚠️ The vessel for governing souls is full. You cannot command any more legionnaires.",
+    "legion_activation": "💀 The Seal of the Legion flares crimson, and every bone in the earth trembles at once!",
+    "legion_success": "⚔️ Grand Summoning Complete: The shivering bone army has risen in response to the hellish call.",
+
+    "reborn_start": "\n[Necromancy] {{name}}'s bones knit together as it rises!",
+    "reborn_success": "💀 Reborn as a {{rarity}} grade Skeleton {{class}}!",
+    "notice_limit": "\n[Notice] You can no longer command any more skeleton soldiers."
   },
   "RECALL_SKELETON": {
     "name": "Recall Skeleton",
     "description": "Revert a skeleton warrior back into mana.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "select_prompt": "Which unit would you like to convert back into Mana?",
+    "success": "[Recall Success] {{name}} has been returned to spirit form.",
+    "resource_gain": "[Resource Recovered] +5 Mana restored | Current Mana: {{mp}}"
   },
   "FOCUS_FIRE": {
     "name": "Mark of Death",
     "description": "Minions prioritize attacking the marked target.",
-    "unlockHint": ""
+    "unlockHint": "",
+
+    "no_target": "\n[Failed] No target available.",
+    "select_prompt": "Select a target",
+    "already_marked": " (Already {{curse}})",
+    "back": "↩ Back",
+    "activation": "\n[!] {{player}} sends a chilling gesture of death toward {{target}}!",
+    "minion_reaction": "[!] The eyes of all minions flare with a crimson light.\n"
   },
   "CORPSE_EXPLOSION": {
     "name": "Corpse Explosion",
     "description": "Detonate a corpse to deal area-of-effect damage.",
-    "unlockHint": "B2F Purified"
+    "unlockHint": "B2F Purified",
+
+    "select_prompt": "Which corpse shall be consumed?",
+    "activation": "\n💥 {{player}} detonates the corpse! (Base Power: {{damage}})",
+    "no_enemies": " No enemies were caught in the blast."
   },
   "SOUL_HARVEST": {
     "name": "Soul Harvest",
     "description": "Extract essence from a corpse to restore mana.",
-    "unlockHint": "B2F Purified"
+    "unlockHint": "B2F Purified",
+
+    "success": "Extracted the soul from {{name}}, restoring {{amount}} Mana.",
+    "full_mana": "Mana is already full."
   },
   "SOUL_TRANSFER": {
     "name": "Soul Transfer",
     "description": "Transfers the necromancer's health to a minion.",
-    "unlockHint": "B3F Purified"
+    "unlockHint": "B3F Purified",
+
+    "no_minions": "\n[Failed] No minions to interact with.",
+    "select_prompt": "Which minion would you like to resonate souls with?",
+    "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
+    "already_full": "\n🌿 {{name}}'s soul is already full; no need to share life force.",
+    "low_health": "\n⚠️ {{name}}'s health is too low to share life force anymore!",
+    "success_log": "\n✨ [Heal] Using {{player}}'s soul to mend {{target}}'s wounds. ({{target}} HP {{hp}} / {{maxHp}})",
+    "transfer_detail": " └ 🩸 Necromancer HP -{{amount}} ➡️ {{target}} HP +{{amount}}"
   },
   "CURSE": {
     "name": "Curse",
     "description": "Weakens the target.",
-    "unlockHint": "B3F Purified"
+    "unlockHint": "B3F Purified",
+
+    "corrosion_name": "Corrosion",
+    "wide_prefix": "Wide ",
+    "no_target": "\n[Failed] No targets for {{display}}.",
+    "select_prompt": "Select a target for {{display}}",
+    "already_status": " (Already {{status}})",
+    "back": "↩ Back",
+    "wide_activation": "\n💀 {{player}}'s {{display}} spreads across the battlefield!",
+    "single_activation": "\n💀 {{player}} casts {{display}} upon {{target}}!",
+    "effect_detail": " └ [Enfeeble] {{target}}: {{stat}} -{{value}} ({{duration}} turns)",
+    "stat_atk": "ATK",
+    "stat_def": "DEF"
   },
   "BONE_SPEAR": {
     "name": "Bone Spear",
     "description": "Strikes two enemies simultaneously.",
-    "unlockHint": "B5F Purified"
+    "unlockHint": "Securing Sub-space",
+
+    "no_skeletons": "\n[Failed] No skeletons to sacrifice.",
+    "no_enemies": "\n[Failed] No targets to pierce.",
+    "select_prompt": "Which skeleton will you turn into a Bone Spear?",
+    "choice_format": "{{name}} (Current HP: {{hp}})",
+    "cancel_msg": "\n💬 Skill use canceled.",
+    "activation": "\n💀 {{player}} destroys {{target}} to craft a massive Bone Spear!",
+    "log": {
+      "surprise_primary": " └ 🧤 Surprise! The Bone Spear pierces the back of {{name}} from the shadows!",
+      "surprise_secondary": " └ ⚡ Chain Surprise! Even {{name}} is caught in the spear's path!",
+      "normal_primary": " └ 🚀 The Bone Spear crashes head-on into {{name}} in the front line!",
+      "normal_secondary": " └ ⚡ The spear pierces deeply through to {{name}} behind!"
+    }
   },
   "BONE_PRISON": {
     "name": "Bone Prison",
     "description": "Restricts target movement using bone structures.",
-    "unlockHint": "B5F Purified"
+    "unlockHint": "B5F Purified",
+
+    "no_targets": "\n[Failed] No targets to create a prison for.",
+    "already_trapped": "(Already trapped)",
+    "select_prompt": "Select a target to imprison in the Bone Prison",
+    "cancel_msg": "\n💬 Skill use canceled.",
+    "no_target_found": "\n[Failed] Target not found.",
+    "success_log": " └ [Bind] {{target}} has been bound for {{duration}} turns."
   },
   "BONE_STORM": {
     "name": "Bone Storm",
     "description": "Sacrifice all skeletons to deal massive AOE damage proportional to their total HP.",
-    "unlockHint": "B5F Purified"
+    "unlockHint": "B5F Purified",
+
+    "no_skeletons": "\n[Failed] No skeletons to sacrifice.",
+    "no_enemies": "\n[Failed] No targets to attack.",
+    "activation": "\n🌪️  {{player}} destroys all skeletons to unleash a Bone Storm!",
+    "sacrifice_detail": " └ 🔥 A total of {{count}} skeletons shatter, their fragments swirling.",
+    "hit_log": " └ 🩸 Sharp bone fragments tear through {{name}}!"
   },
 
-  "stealth": "Stealth"
+  "stealth": "Stealth",
+
+  "passive": {
+    "death_aura": "[!] {{attacker}}'s Death Aura begins to constrict the souls of the enemies...",
+    "thorns": "\n[🦷 Thorns]: {{defender}}'s thorns tear into {{attacker}}'s flesh!",
+    "death_destruct": "\n[🔥 Doomsday]: {{unit}}'s corpse explodes, consuming everything around it!"
+  },
+
+  "special": {
+    "self_destruct": "💀 {{attacker}} has expended all their strength and perished!",
+    "health_drain": "💉 {{attacker}} absorbed the enemy's life force, recovering {{amount}} HP!",
+    "item_steal": {
+      "no_target": " > {{target}} has nothing to steal.",
+      "gold": "[!] Pickpocket! {{attacker}} stole {{amount}}G and fled!",
+      "item": "[!] Lost Item! {{attacker}} snatched '{{item}}' from your bag and fled!",
+      "fail": " > {{attacker}} searched your pockets, but found absolutely nothing."
+    }
+  },
+
+  "effect": {
+    "heal": "💚 {{target}}'s HP has been restored by {{amount}}.",
+    "summon": {
+      "fail": "\n{{attacker}} failed to use {{skillName}}..",
+      "divide": "🧬 {{reinforcement}} has split from {{attacker}}!",
+      "call": "👾 {{reinforcement}} appeared at {{attacker}}'s call!"
+    }
+  },
+
+  "target_not_found": "But no target could be found..",
+
+  "message": {
+    "buff": {
+      "overdrive": "\n[🔥 Overdrive] {{name}}'s soul is forced into a frenzy, pushing its power to the limit! ({{name}} HP {{hp}} / {{maxHp}})"
+    },
+    "debuff": {
+      "paralysis": "\n [!] {{name}} is paralyzed and cannot move!",
+      "bind": "\n [!] {{name}} is bound and cannot move!",
+      "bleed": "\n [!] {{name}} has sustained a deep wound and begins to bleed!",
+      "burn": "\n [!] {{name}}'s skin is scorched by the flames.",
+      "poison": "\n [!] {{name}} is exposed to a lethal toxin, turning pale.",
+      "freeze": "\n [!] {{name}} is exposed to the cold, and their skin begins to freeze.",
+      "curse": "\n [!] {{name}}'s guard is shattered by uncontrollable rage!",
+      "smoke": "\n [!] Thick smoke completely veils {{name}}'s vision!",
+      "bone_prison": "\n [!] Jagged bone bars rise, constricting {{name}}'s limbs!",
+      "aging": "\n[⏳] {{name}}'s skin withers rapidly as they gasp for air! All reactions are visibly slowed.",
+      "injury": "\n[⏳] {{name}}'s ankle is injured! Movement is visibly slowed."
+    }
+  },
+
+  "npc": {
+    "fire_bolt": {
+      "name": "Fire Bolt",
+      "description": "Shoots a flame at the target, inflicting a burn."
+    },
+    "ice_bolt": {
+      "name": "Ice Bolt",
+      "description": "Shoots ice at the target, slowing their actions."
+    },
+    "lightning_bolt": {
+      "name": "Lightning Bolt",
+      "description": "Shoots lightning at the target, paralyzing them."
+    },
+    "fire_breath": {
+      "name": "Fire Breath",
+      "description": "Exhales a powerful blast of fire in all directions."
+    },
+    "quick_slash": {
+      "name": "Surprise Strike",
+      "description": "Quickly slashes the enemy's weak point with a keen weapon or sharp claws."
+    },
+    "sticky_web": {
+      "name": "Force Restraint",
+      "description": "Throws sticky mucus or invisible magical threads to restrict the target's movement."
+    },
+    "self_destruct": {
+      "name": "Unstable Self-Destruction",
+      "description": "Causes internal energy to go berserk and scatters the body to deal fatal damage to nearby enemies."
+    },
+    "health_drain": {
+      "name": "Life Drain",
+      "description": "Clings to the target and directly absorbs their life energy for sustenance."
+    },
+    "power_smash": {
+      "name": "Power Smash",
+      "description": "Smashes the enemy with a heavy weapon."
+    },
+    "power_shot": {
+      "name": "Power Shot",
+      "description": "Fires a powerful projectile targeting the enemy's vitals."
+    },
+    "aim_arrow": {
+      "name": "Snipe",
+      "description": "Snipes the enemy in the backline."
+    },
+    "piercing_arrow": {
+      "name": "Piercing Shot",
+      "description": "Pierces through the frontline to hit the enemies behind."
+    },
+    "rapid_fire": {
+      "name": "Barrage",
+      "description": "Unleashes indiscriminate fire on the battlefield, damaging all enemies."
+    },
+    "minor_heal": {
+      "name": "Lesser Heal",
+      "description": "Slightly restores HP to the most wounded ally."
+    },
+    "heal": {
+      "name": "Heal",
+      "description": "Restores HP to the most wounded ally."
+    },
+    "greater_heal": {
+      "name": "Greater Heal",
+      "description": "Greatly restores HP to the most wounded ally."
+    },
+    "volley_fire": {
+      "name": "Volley Fire",
+      "description": "Rains down a shower of arrows on all enemies."
+    },
+    "holy_radiance": {
+      "name": "Holy Chorus",
+      "description": "Soothes the wounds of all allies."
+    },
+    "bone_prison": {
+      "name": "Bone Prison",
+      "description": "A prison made of bone restricts the target's actions."
+    },
+    "aging_curse": {
+      "name": "Enfeeble",
+      "description": "Curses the most wounded enemy with aging, reducing their Agility."
+    },
+    "abyssal_gallop": {
+      "name": "Abyssal Gallop",
+      "description": "Abyssal flames erupt in the warhorse's wake, dealing fixed damage to all enemies."
+    },
+    "dread_charge": {
+      "name": "Death Charge",
+      "description": "Becomes one with the warhorse to pierce the enemy lines, dealing heavy physical damage to all enemies."
+    },
+    "divide_soul": {
+      "name": "Self-Division",
+      "description": "Spirits clinging to the body break away."
+    },
+    "achilles_bite": {
+      "name": "Achilles Bite",
+      "description": "Precisely targets and bites the ankle, significantly reducing Move Speed and Evasion as teeth tear into ligaments."
+    },
+    "call_reinforcements": {
+      "name": "Call Guard",
+      "description": "Sounds a high-frequency alarm, drawing nearby security forces to this area."
+    },
+    "call_reinforcements2": {
+      "name": "Call Guard",
+      "description": "Sounds a high-frequency alarm, drawing nearby security forces to this area."
+    },
+    "call_reinforcements3": {
+      "name": "Call Guard",
+      "description": "Sounds a high-frequency alarm, drawing nearby security forces to this area."
+    },
+    "stealth": {
+      "name": "Stealth",
+      "description": "Hides within shadows and cargo piles; cannot be targeted until appearing to attack again."
+    },
+    "item_steal": {
+      "name": "Pickpocket",
+      "description": "The plunderer's quick hands brush your bag, snatching consumables or gold."
+    },
+    "enemy_curse": {
+      "name": "Taunt",
+      "description": "Hurls insults at all enemies to reduce their Defense."
+    },
+    "smoke_bomb": {
+      "name": "Smoke Screen",
+      "description": "Explodes thick grey smoke at the feet, blocking vision and causing Accuracy to plummet."
+    },
+    "poison_dagger": {
+      "name": "Poison Stab",
+      "description": "Throws a dagger coated in purple venom that drains the target's life every turn."
+    },
+    "vitals_strike": {
+      "name": "Vitals Strike",
+      "description": "Infiltrates the most vulnerable enemy's opening to deal a critical melee blow."
+    },
+    "whirlwind": {
+      "name": "Whirlwind",
+      "description": "Swings the weapon in a wide arc to attack all nearby enemies and inflicts Bleed for 3 turns."
+    },
+    "thorns": {
+      "name": "Thorns",
+      "description": "Returns a portion of the damage taken back to the attacker."
+    },
+    "death_aura": {
+      "name": "Death Aura",
+      "description": "Withers all life within range, reducing Defense and HP of enemies each turn."
+    },
+    "death_destruct": {
+      "name": "Doomsday",
+      "description": "Upon death, explodes to deal 60% of this unit's HP as damage to all enemies.",
+      "type": "passive"
+    },
+    "frostborne": {
+      "name": "Frostborne",
+      "description": "Slows the enemy unit's actions upon attacking."
+    },
+    "distortion_shroud": {
+      "name": "Spatial Distortion: Fading Afterimage",
+      "description": "Hides within the crevices of sub-space."
+    },
+    "soul_anchor": {
+      "name": "Nether Anchor: Soul Isolation",
+      "description": "Tears a hole into sub-space beneath an enemy to seize their soul."
+    },
+    "dimensional_collapse": {
+      "name": "Dimensional Collapse: Closing Boundary",
+      "description": "Compresses and destroys the space of the entire battlefield."
+    },
+    "spectral_wail": {
+      "name": "Spectral Wail",
+      "description": "Unleashes a scream filled with noble resentment, shattering the minds of all enemies."
+    },
+    "spout_out": {
+      "name": "Eruption",
+      "description": "Boiling filth from the pit of sin sweeps over the target."
+    }
+  }
 }

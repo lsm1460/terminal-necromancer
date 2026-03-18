@@ -1,0 +1,82 @@
+{
+  "name": "Charon",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": { "greeting": "", "farewell": "" },
+    "normal": { "greeting": "", "farewell": "" },
+    "hostile": { "greeting": "", "farewell": "" }
+  },
+  "deathLine": "Ah... Ahhh... my child... ending up like this without even reaching revenge...",
+  "description": "Emerging from a tear in twisted space-time, Charon stares at you while exuding an abyssal murderous intent.",
+  "relocate": {
+    "default_observe": "...Nothing but ruins can be seen.",
+    "proximity_hint": "The density of the subspace thickens rapidly. The target is hidden very close by."
+  },
+  "encounters": {
+    "first": {
+      "dialogue": [
+        "Caron: \"So, you have come to tear apart even this silence.\"",
+        "Caron: \"I know. I was the first to violate the Reaper's laws,\nand He merely reclaimed the child's soul according to the established providence.\"",
+        "Caron: \"To me, who was a parent before a guardian, that fairness felt more chilling and cruel than anything else.\""
+      ],
+      "confirm": "Caron: \"Are you also satisfied with a life of slavery, repeating mechanical purges under the Reaper's law?\"",
+      "reply_loyal": "Caron: \"How loyal. But you will soon realize that such loyalty sometimes becomes the most heartless blade.\"",
+      "reply_ambitious": "Caron: \"That look in your eyes... I see the thirst that one who remembers the weight of a crown should rightly feel.\"",
+      "log_disappear": "\nCaron vanishes into the fog."
+    },
+
+    "second": {
+      "dialogue": [
+        "Caron: \"...But tell me. Are rules more important than a soul?\"",
+        "Caron: \"The Reaper treated my child as 'error data' and erased them.\nMy centuries of devotion meant nothing to Him.\"",
+        "Caron: \"I loathe it. That cold order that permits no grief,\nand that dry touch that turned my child into a handful of smoke!\""
+      ],
+      "confirm": "Caron: \"Executioner, if the Reaper's principles were to destroy what is precious to you,\nwould you also point your blade at Him?\"",
+      "reply": "Caron: \"I see. The weight of your existence... I believe I understand it completely now.\"",
+      "log_ripple": "\nCaron's energy ripples violently before disappearing."
+    },
+
+    "final": {
+      "bad_end": [
+        "Caron: \"(In a cold, sunken voice) This is as far as you run.\nYou have given nothing but the answers of a loyal hound to all my questions.\"",
+        "Caron: \"No ambition, no rage, no sorrow... A mechanical executioner without even a soul.\"",
+        "Caron: \"There is no more conversation to be had, no more offers to be made to one like you.\nPerish here along with your hollow loyalty!\""
+      ],
+      "specific_lines": {
+        "ambitious_rebel": "Caron: \"O ambitious one, who seeks to usurp the Reaper and become the new law yourself.\nYour vengeance is enough to quench my thirst.\"",
+        "loyal_but_ambitious": "Caron: \"O monarch, who possesses ambition but is bound by order.\nYou shall eventually become the Reaper's most dangerous sword.\"",
+        "obedient_traitor": "Caron: \"O executioner, who obeys on the outside but harbors the flames of rebellion within.\nI hope that deceptive silence becomes the poison that topples the Reaper.\""
+      },
+      "last_offer": [
+        "Caron: \"(Kneeling with nobility) This is as far as you run.\nI am prepared to take final responsibility for my violation.\"",
+        "Caron: \"One last offer. I will offer the shell of my soul to the Reaper,\nwhile my essence becomes your shadow, leaving an 'unofficial flaw' in His perfect system.\""
+      ],
+      "confirm_offer": "Caron: \"Will you deceive the Reaper with me and watch for an opportunity to take His head?\"",
+      "accept": [
+        "Caron: \"A wise choice. Breaking the rules is only hard the first time; the second is easy.\"",
+        "Caron: \"But the Reaper is keen. If you do not take a trace of my soul,\nHe will immediately suspect you and seek to excise you.\"",
+        "Caron: \"(Tearing a faintly glowing shard from deep within his chest) ...Ugh, take this.\"",
+        "Caron: \"This fragment, at least, is genuine. Present this to the Reaper to make Him believe I have been completely annihilated.\"",
+        "Caron: \"I will be hiding in the dimensional rift in the [Safe Zone in front of the Underground Elevator].\"",
+        "Caron: \"Come there if you need to manage your forces.\nFrom this day forth, I shall be your shadow and the most secret crack that will bring down the Reaper.\"",
+        "Obtained [Caron's Soul Fragment (For Deception)]."
+      ],
+      "refuse": "Caron: \"(Smiling bitterly) So you choose the path of the hound after all.\nO flawless executioner... Then I ask you to hold me accountable for my final violation.\""
+    },
+    
+    "battle": {
+      "manual_start": "Caron: \"How rude. Drawing your sword before my story is even finished... Truly a butcher sent by the Reaper.\"",
+      "start_log": "\nCombat with Caron begins!",
+      "win_script": [
+        "Caron: \"(Reaching out a trembling hand toward you as he falls, but you trample it and place your hand on his chest.)\"",
+        "Caron: \"What... are you planning to tear even the essence of a dying soul? You are... a monster worse than the Reaper...!\"",
+        "You seize Caron's screaming soul and pull it by force.",
+        "With a bizarre grinding sound, Caron's soul shatters and condenses into a pitch-black sphere in your hand.",
+        "The extracted essence is molded into a grotesque shape at your command and vanishes into the mist.",
+        "The remnants of Caron, having lost their self, will now stay in the dimensional rift near the elevator and wait for you.",
+        "You can now imprison or release summons in the subspace through the familiar in the safe zone.",
+        "A purified [Refined Soul Shard], having lost its master, falls to the floor."
+      ]
+    }
+  }
+}

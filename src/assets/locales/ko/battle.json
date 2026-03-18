@@ -1,0 +1,101 @@
+{
+  "unit_death": "\n💀 {{name}}이(가) 쓰러졌습니다!",
+
+  "monster_event": {
+    "spawn": "👾 {{name}} 등장!",
+    "current_enemies": "⚠️  현재 적: {{names}}",
+    "preemptive_attack": "⚠️  적: {{name}}의 기습!"
+  },
+  "turn_start": "\n━━━━━━━━━ [ {{name}}의 차례 ] ━━━━━━━━━",
+  "battle_start": "\n⚔️ 전투가 시작되었습니다!",
+  "enemy_list": "적: {{names}}",
+  "effect_expired": {
+    "buff": "[효과 만료] {{unitName}}의 ✨ [{{effectName}}] 효과가 사라졌습니다.",
+    "debuff": "[효과 만료] {{unitName}}의 💢 [{{effectName}}] 효과가 사라졌습니다."
+  },
+
+  "action": {
+    "dot_damage": " └ 🩸 [{{effectName}}] 피해: -{{damage}} (남은 지속: {{duration}}턴)",
+    "dot_death": " └ 💀 {{unitName}}이(가) {{effectName}}으로 사망했습니다.",
+    "bind_status": "\n⛓️  {{unitName}}은(는) {{effectName}}(으)로 인해 움직일 수 없습니다! (남은 기간: {{duration}}턴)",
+    "select_action": "당신의 행동을 선택하세요:",
+    "menu": {
+      "status": "상태",
+      "attack": "공격",
+      "defense": "방어",
+      "skill": "스킬",
+      "item": "아이템",
+      "escape": "도망"
+    },
+    "status_board": {
+      "title": "\n━━━━━━━━━━━━━━━━━━━━ 전장 상황 ━━━━━━━━━━━━━━━━━━━━",
+      "ally_side": " [🛡️ 아군 진영]",
+      "enemy_side": " [⚔️ 적군 진영]",
+      "lead": "🚩 [선두]",
+      "condition": "\n         └─ 상태: {{status}}",
+      "divider": "──────────────────────────────────────────────────",
+      "footer": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    },
+    "target_prompt": "누구를 공격하시겠습니까?",
+    "guard": "🛡️ {{name}}(이)가 방어 자세를 취합니다! 다음 턴까지 피해를 덜 입습니다.",
+    "escape_blocked": "\n🚫 도망칠 수 없습니다! {{name}}(이)가 길을 가로막고 있습니다!",
+    "escape_success": "\n🏃 전투에서 도망쳤습니다!",
+    "no_target": " > {{name}}(이)가 공격할 대상을 찾지 못해 두리번거립니다...",
+    "idle": "{{name}}은 가만히 서있을 뿐이다."
+  },
+
+  "unit": {
+    "labels": {
+      "passive": "\u001b[36m[패시브]\u001b[0m",
+      "sure_hit": "\u001b[33m[필중]\u001b[0m",
+      "sure_crit": "\u001b[31m[확정 치명]\u001b[0m",
+      "ignore_def": "\u001b[35m[방어 관통]\u001b[0m",
+      "fixed": "\u001b[32m[고정 피해]\u001b[0m"
+    },
+    "log": {
+      "hp_status": "\u001b[90m({{name}}의 남은 HP: {{hp}})\u001b[0m",
+      "evaded": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! 💨 \u001b[37m{{defender}}\u001b[0m이(가) 회피했습니다. {{hpStatus}}",
+      "no_damage": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! 🛡️ 하지만 \u001b[37m{{defender}}\u001b[0m에게 피해를 주지 못했습니다. {{hpStatus}}",
+      "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! \u001b[37m{{defender}}\u001b[0m에게 {{damageMsg}}의 피해! {{hpStatus}}"
+    },
+    "status_change": {
+      "effect_removed": "\n✨ [상태 변화] {{name}}에게서 [{{effectName}}] 효과가 사라졌습니다.",
+      "stealth_broken": " \u001b[90m[!] {{name}}의 은신이 해제되어 정체가 드러났습니다!\u001b[0m",
+      "expose_name": "드러난 자",
+      "recovered": " \u001b[32m[!] {{name}}(은)는 기운을 차려 '{{effectName}}' 효과에서 벗어났습니다!\u001b[0m",
+      "forced_removed": " \u001b[31m[!] {{name}}에게 걸려있던 '{{effectName}}' 효과가 강제로 해제되었습니다!\u001b[0m"
+    }
+  },
+
+  "reward": {
+    "unit_death": "\n💀 {{name}}이(가) 쓰러졌습니다!",
+    "kill_log": "✨ {{name}} 처치! EXP +{{exp}}",
+    "gold_gain": ", 골드 +{{gold}}",
+    "drop_item": "📦 {{name}}은(는) {{label}}{{quantity}}을(를) 떨어뜨렸습니다.",
+    "item_unit": "개",
+    "corpse_left": "🦴 그 자리에 {{name}}의 시체가 남았습니다.",
+    "vanished": "{{name}}이/가 연기처럼 사라졌다.",
+    "victory": "\n🏆 전투에서 승리했습니다!",
+    "defeat": "\n💀 전투에서 패배했습니다..."
+  },
+
+  "buff": {
+    "burn": "화상",
+    "freeze": "동결",
+    "paralysis": "마비",
+    "bind": "구속",
+    "bleed": "출혈",
+    "expose": "노출",
+    "bone_prison": "뼈 감옥",
+    "overdrive": "광폭화",
+    "aging": "노화",
+    "injury": "부상",
+    "curse": "저주",
+    "corrosion": "부식",
+    "smoke": "연막",
+    "poison": "중독",
+    "defense": "방어",
+    "stealth": "은신",
+    "focus": "표식"
+  }
+}

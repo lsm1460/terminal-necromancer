@@ -1,5 +1,6 @@
-import _ from 'lodash'
+import { sample, without } from 'lodash'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { relocateCaron } from '~/npc/caron'
 import { Tile } from '~/types'
 import { EventHandler } from '.'
@@ -7,46 +8,43 @@ import { EventHandler } from '.'
 export const b4Handlers: Record<string, EventHandler> = {
   'event-b4-warp': (tile, player, context) => {
     const { map } = context
-    const tiles: Tile[][] = map.currentScene.tiles
-    const targetEvent = 'event-b4-warp'
+    const tiles: (Tile | null)[][] = map.currentScene.tiles
 
-    const safeTargets = _.chain(tiles)
-      .flatMap(
-        (row, y) => row.map((t, x) => ({ ...(t || {}), x, y })) // 각 타일에 좌표 정보 주입
-      )
-      .filter((t) => t && t.event !== targetEvent && !t.npcIds?.includes('caron'))
-      .value()
+    const safeTargets = tiles.flatMap((row, y) =>
+      row
+        .map((t, x) => (t ? { ...t, x, y } : null))
+        .filter(
+          (t): t is Tile & { x: number; y: number } =>
+            !!t && t.event !== 'event-b4-warp' && !t.npcIds?.includes('caron')
+        )
+    )
 
-    if (safeTargets.length > 0) {
-      const target = _.sample(safeTargets)
+    const target = sample(safeTargets)
+    if (target) {
+      player.x = target.x
+      player.y = target.y
 
-      if (target) {
-        player.x = target.x
-        player.y = target.y
-
-        Terminal.log('공간이 거울처럼 조각나며 당신을 낯선 곳으로 내던집니다.')
-      }
+      Terminal.log(i18n.t('events.b4.warp.message'))
     }
   },
   'event-b4-reset': (tile, player, context) => {
     const { map, events, npcs } = context
-    const isCaronEventFinished = events.isCompleted('caron_is_mine') || events.isCompleted('caron_is_dead')
+    const isCaronEventFinished = events.isCompleted('defeat_caron')
 
     if (isCaronEventFinished) {
       const tiles = map.currentScene.tiles
+      const defaultObserve = i18n.t('events.b4.reset.observe_default')
 
-      // 맵 전체를 돌며 observe 메시지를 기본값으로 초기화
       tiles.forEach((row) => {
         row?.forEach((t) => {
           if (t) {
-            t.npcIds = _.without(t.npcIds, 'caron')
-            t.observe = '...폐허뿐이 보이지 않습니다.'
+            t.npcIds = without(t.npcIds, 'caron')
+            t.observe = defaultObserve
           }
         })
       })
     } else {
       const caron = npcs.getNPC('caron')
-
       relocateCaron(player, caron!, context)
     }
   },

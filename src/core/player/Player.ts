@@ -1,4 +1,5 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
+import i18n from '~/i18n'
 import {
   Affix,
   AffixId,
@@ -210,10 +211,16 @@ export class Player {
   }
 
   get description() {
-    if (this.karma <= 0) return '망자를 기리며 질서를 수호하는 영혼의 인도자입니다.'
-    if (this.karma <= 5) return '살생의 무게가 그림자에 서서히 스며들고 있습니다.'
-    if (this.karma <= 10) return '부패한 마력이 양심을 잠식하며 눈빛이 탁해집니다.'
-    return '이승의 법도를 초월한, 사신의 잔혹한 하수인입니다.'
+    if (this.karma <= 0) {
+      return i18n.t('player.description.karma_0')
+    }
+    if (this.karma <= 5) {
+      return i18n.t('player.description.karma_5')
+    }
+    if (this.karma <= 10) {
+      return i18n.t('player.description.karma_10')
+    }
+    return i18n.t('player.description.karma_max')
   }
 
   get affixes(): Affix[] {
@@ -356,6 +363,18 @@ export class Player {
 
   unlockKnight() {
     return this.minionManager.unlockKnight()
+  }
+
+  public recoverHp(amount: number): number {
+    const beforeHp = this.hp
+    this.hp = Math.min(this.maxHp, this.hp + amount)
+    return this.hp - beforeHp // 실제 회복량 반환
+  }
+
+  public recoverMp(amount: number): number {
+    const beforeMp = this.mp
+    this.mp = Math.min(this.maxMp, this.mp + amount)
+    return this.mp - beforeMp
   }
 
   restoreAll() {

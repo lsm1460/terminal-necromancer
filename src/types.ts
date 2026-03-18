@@ -1,5 +1,6 @@
 import { SkeletonRarity } from './consts'
-import { Battle, Buff, CalcDamageOptions } from './core/battle/Battle'
+import { Battle, CalcDamageOptions } from './core/battle/Battle'
+import { BuffOptions } from './core/battle/Buff'
 import { CombatUnit } from './core/battle/unit/CombatUnit'
 import { Broadcast } from './core/Broadcast'
 import { ItemRarity } from './core/item/consts'
@@ -42,7 +43,8 @@ export type BattleTarget = {
   isSkeleton?: boolean // only skeleton
   originId?: string // only skeleton
   rarity?: SkeletonRarity // only skeleton
-  isGolem?: boolean
+  isGolem?: boolean // only golem
+  madeBy?: string // only golem
   isKnight?: boolean
   deathLine?: string
   minRebornRarity?: SkeletonRarity
@@ -334,7 +336,7 @@ export type NpcSkill = {
   power: number
   targetType: SkillTargetType
   type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
-  buff?: Buff
+  buff?: BuffOptions
   options?: CalcDamageOptions & {
     spawnMonsterId?: string
   }
@@ -363,8 +365,6 @@ export type AffixId =
 
 export interface Affix {
   id: AffixId // 고유 식별자
-  name: string // 이름 (예: "군주", "군단")
-  description: string // 툴팁용 설명
   valueRange?: [number, number]
   value?: number
   metadata?: {

@@ -6,10 +6,12 @@ import { WebBattleRenderer } from '~/renderers/BattleRenderer'
 import { useBattleStore } from '~/stores/useBattleStore'
 import { useGameStore } from '~/stores/useGameStore'
 import { CombatUnitComponent } from './CombatUnitComponent'
+import { useTranslation } from 'react-i18next'
 
 export const BattleStage: React.FC<{
   engine: React.RefObject<GameEngine | null>
 }> = ({ engine }) => {
+  const { t } = useTranslation()
   const logs = useGameStore((state) => state.logs)
   const { inBattle, playerSide: originPlayerSide, enemiesSide } = useBattleStore()
 
@@ -76,7 +78,7 @@ export const BattleStage: React.FC<{
           </div>
         </div>
         <div className="px-4 pb-4">
-          <p className="text-right">사용 가능한 시체 수: {corpsesCount}</p>
+          <p className="text-right">{t('web.corpses_count', { count: corpsesCount })}</p>
         </div>
       </div>
     </div>

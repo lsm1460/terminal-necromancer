@@ -1,7 +1,8 @@
 import _ from 'lodash'
+import { Terminal } from '~/core/Terminal'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
-import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { GameContext, Tile } from '~/types'
 import { speak } from '~/utils'
 import { BossFactory } from './boss/BossFactory'
@@ -25,9 +26,11 @@ class BossEvent {
     const bossLogic = BossFactory.getLogic(bossId)
 
     this.printEncounterHeader(bossNpc.name)
-    await speak(bossLogic?.postTalk || ['...네놈이 죽을 자리를 찾아왔구나.'])
+    
+    const encounterTalk = bossLogic?.postTalk || i18n.t('events.boss.encounter.default_talk', { returnObjects: true }) as string[]
+    await speak(encounterTalk)
 
-    Terminal.log(`\n⚔️  전투가 시작됩니다!`)
+    Terminal.log(i18n.t('events.boss.encounter.start_battle'))
 
     let enemies: CombatUnit[] = []
     if (bossLogic) {
@@ -45,7 +48,7 @@ class BossEvent {
       bossNpc.isAlive = false
 
       events.completeEvent(bossId)
-      Terminal.log(`\n🏆 위협적인 적, ${bossNpc.name}를 처치했습니다!`)
+      Terminal.log(i18n.t('events.boss.victory.log', { name: bossNpc.name }))
 
       this.spawnPortal(tile)
 
@@ -65,7 +68,7 @@ class BossEvent {
    */
   private static printEncounterHeader(name: string) {
     Terminal.log(`\n━━━━━━━━━━━━━━━ BOSS ENCOUNTER ━━━━━━━━━━━━━━━`)
-    Terminal.log(`   [ ${name} ] 이(가) 앞을 가로막습니다.`)
+    Terminal.log(i18n.t('events.boss.encounter.blocking', { name }))
     Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
   }
 
@@ -74,7 +77,7 @@ class BossEvent {
    */
   static spawnPortal(tile: Tile) {
     tile.npcIds = _.uniq([...(tile.npcIds || []), 'portal'])
-    Terminal.log('\n✨ [알림] 정적이 흐르는 방 한가운데에 시작 지점으로 연결되는 [차원문]이 일렁입니다.')
+    Terminal.log(i18n.t('events.boss.portal.spawn'))
   }
 }
 

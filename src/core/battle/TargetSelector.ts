@@ -1,3 +1,4 @@
+import i18n from '~/i18n'
 import { CombatUnit } from './unit/CombatUnit'
 
 export class TargetSelector {
@@ -18,7 +19,7 @@ export class TargetSelector {
     this.choices.forEach((c) => {
       if (c.unit.isStealth) {
         c.disabled = true
-        c.message += ' \x1b[90m(은신)\x1b[0m'
+        c.message += ` \x1b[90m(${i18n.t('skill.stealth')})\x1b[0m`
       }
     })
     return this // 체이닝을 위해 자신을 반환
@@ -36,19 +37,19 @@ export class TargetSelector {
   }
 
   labelIf(predicate: (u: CombatUnit) => boolean, label: string) {
-    this.choices.forEach(c => {
+    this.choices.forEach((c) => {
       if (predicate(c.unit)) {
         // 이미 라벨이 붙어있을 수 있으니 뒤에 추가
-        c.message += ` \x1b[36m${label}\x1b[0m`; // 상태는 청록색(Cyan) 등으로 강조
+        c.message += ` \x1b[36m${label}\x1b[0m` // 상태는 청록색(Cyan) 등으로 강조
       }
-    });
-    return this;
+    })
+    return this
   }
 
   build() {
     return {
-      units: this.choices.map(({unit}) => unit),
-      choices: this.choices.map(({ unit, ...rest }) => rest)
+      units: this.choices.map(({ unit }) => unit),
+      choices: this.choices.map(({ unit, ...rest }) => rest),
     }
   }
 }

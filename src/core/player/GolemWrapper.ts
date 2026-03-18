@@ -1,5 +1,6 @@
 import { BattleTarget } from '~/types'
 import { Player } from './Player'
+import i18n from '~/i18n'
 
 interface GolemWrapper extends BattleTarget {}
 
@@ -28,7 +29,7 @@ class GolemWrapper {
     return this.raw.exp
   }
   get description() {
-    return this.raw.description
+    return i18n.t(`minion.golem.description.${this.raw.madeBy}`)
   }
   get dropTableId() {
     return this.raw.dropTableId
@@ -89,25 +90,29 @@ class GolemWrapper {
   get name(): string {
     const m = this.machineCount
     const s = this.soulCount
-    let baseName = this.raw.name
+    let key = 'default'
 
-    // 1. 강화 상태에 따른 기본 명칭 결정
     if (s >= 3 && m >= 3) {
-      baseName = '심연의 강철 마신'
+      key = 'soul_3_machine_3'
     } else if (s >= 3) {
-      baseName = '원념의 학살자'
+      key = 'soul_3'
     } else if (m >= 3) {
-      baseName = '강철 요새'
+      key = 'machine_3'
     } else if (s > 0 && m > 0) {
-      baseName = '개조된 마력 골렘'
+      key = 'soul_machine_mixed'
     } else if (s > 0) {
-      baseName = '생체 주입형 골렘'
+      key = 'soul_only'
     } else if (m > 0) {
-      baseName = '강화형 기계 골렘'
+      key = 'machine_only'
     }
 
-    // 2. THORNS 어픽스가 있다면 '가시 돋친' 프리픽스 부여
-    return this.hasThorns ? `가시 돋친 ${baseName}` : baseName
+    const baseName = i18n.t(`golem.name.${key}`)
+
+    if (this.hasThorns) {
+      return i18n.t('golem.prefix.thorns', { name: baseName })
+    }
+
+    return baseName
   }
 
   get skills(): string[] {

@@ -1,0 +1,44 @@
+{
+  "name": "Kael the Cold",
+  "lines": [
+    "You can't pull the trigger if you're swayed by emotion.",
+    "Flint is right. Nothing changes unless you break it.",
+    "I'll deal with anyone who makes Vesper cry in my own way."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "So you're the one Flint was talking about. You look pretty strong.",
+      "farewell": "Watch your step. The security guards on the VIP floor are persistent."
+    },
+    "hostile": {
+      "greeting": "I'm sorry, but it's nothing personal. You're just a target to be eliminated.",
+      "farewell": "I'll aim more precisely next time."
+    }
+  },
+  "description": "A young boy from the labor camps. He considers protecting Vesper his sole mission in life.",
+
+  "encounter": {
+    "dialogue": [
+      "Vesper: Look at this, Kael. This room feels bigger than our entire camp.",
+      "Kael: Don't lose focus, Vesper. It's not safe here yet. Flint told us not to let a single rat slip away.",
+      "Vesper: Fine, I get it. But... why did the people here want so much more when they already had all this?",
+      "Kael: (Touching a fragile, ornate cabinet) ...Who knows. But it’s fair now. Soon, this place will be ashes, just like our home.",
+      "Vesper: (Spots you and aims a small crossbow) Halt! Who goes there? Are you one of those VIP bastards?"
+    ],
+    "select_title": "How will you respond?",
+    "choice_friend": "\"I am an ally.\"",
+    "choice_intimidate": "\"Step aside, brats. Unless you want to get hurt.\"",
+    "result_friend_success": [
+      "Kael: So you're the 'useful fellow' Flint mentioned. Sorry for the hostility. Vesper, lower your weapon.",
+      "Vesper: Hmph. If it weren't for Flint, you'd be full of holes by now! Consider yourself lucky."
+    ],
+    "result_friend_fail": [
+      "Kael: Don't lie. Flint never mentioned someone like you. We'll eliminate any suspicious rats here.",
+      "Vesper: Caught you! Goodbye, Mr. Liar!"
+    ],
+    "result_intimidate": [
+      "Kael: We'll show you what happens to those who treat us like kids. Vesper, take position!",
+      "Vesper: Already locked on! Get ready to be ventilated!"
+    ]
+  }
+}

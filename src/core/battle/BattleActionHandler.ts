@@ -135,7 +135,12 @@ export class BattleActionHandler {
 
   private handleGuardAction(playerUnit: CombatUnit<Player>) {
     Terminal.log(i18n.t('battle.action.guard', { name: playerUnit.name }))
-    playerUnit.applyBuff({ name: i18n.t(`battle.action.menu.defense`), type: 'buff', def: 10, duration: 2 })
+    playerUnit.applyBuff({
+      id: 'defense',
+      type: 'buff',
+      def: 10,
+      duration: 2,
+    })
   }
 
   private async handlePlayerSkillAction(
@@ -196,7 +201,7 @@ export class BattleActionHandler {
     } else {
       let target: CombatUnit
       if (['monster', 'npc'].includes(attacker.type)) {
-        target = AffixManager.handleBeforeAttack(this.player, attacker, visibleTargets)
+        target = AffixManager.handleBeforeAttack(this.player, attacker, visibleTargets)[0]
       } else {
         target = [...visibleTargets].sort((a, b) => {
           const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0

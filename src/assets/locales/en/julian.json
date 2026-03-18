@@ -1,0 +1,32 @@
+{
+  "name": "Julian, the Cynical Bartender",
+  "lines": [
+    "What a terrible marriage. Fine whiskey and the smell of blood.",
+    "The incompetence of the security team isn't even enough to serve as a side dish.",
+    "If I'd known the back of the bar would be this unsafe, I would have resigned long ago."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Welcome. You're the only person in this mess who seems capable of a proper conversation.",
+      "farewell": "Please be careful. If something happens to you, there will be nothing but ignorant rioters left on this floor."
+    },
+    "normal": {
+      "greeting": "Would you like to order? Ah, as you can see, I'm in a position where I have to hold a pistol instead of a shaker.",
+      "farewell": "If you're done with your business, please move along. I don't even have the luxury of clearing away the broken glass."
+    },
+    "hostile": {
+      "greeting": "Service isn't provided to rude guests. Shall I prepare a special 'poisoned drink' just for you?",
+      "farewell": "Get lost. Mingle with your own kind; it's not my taste."
+    }
+  },
+  "deathLine": "I wanted to... pour... the last glass... myself...",
+  "description": "A sophisticated bartender who was in charge of the VIP floor bar.",
+
+  "encounter": [
+    "Julian: I knew it would come to this. I should have seen it coming the moment those idiots upstairs ignored the warnings!",
+    "Julian: (Irritably pushing away shards of broken crystal) These expensive liquors are mixing with the scent of blood. What a terrible mariage.",
+    "Julian: The Resistance? Even a bartender like me knew they were coming just by listening to the street-level rumors. How did the security team not know?!",
+    "Julian: Get out of here, quickly. Soon, the dazzling lights of this VIP room will turn into the flames of hell.",
+    "Julian: Dammit, where is my premium shaker? In this mess... nothing is orderly anymore!"
+  ]
+}

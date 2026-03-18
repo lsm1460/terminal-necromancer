@@ -1,5 +1,6 @@
 import { TargetSelector } from '~/core/battle/TargetSelector'
 import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
 import { ExecuteSkill } from '~/types'
 
 /**
@@ -9,11 +10,10 @@ import { ExecuteSkill } from '~/types'
 export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
   const duration = 3
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
-
-  const curseName = '죽음의 표식'
+  const curseName = i18n.t('skill.FOCUS_FIRE.name')
 
   if (aliveEnemies.length === 0) {
-    Terminal.log(`\n[실패] 대상이 없습니다.`)
+    Terminal.log(i18n.t('skill.FOCUS_FIRE.no_target'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
@@ -21,21 +21,33 @@ export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } 
     // --- 2. 단일 타겟 선택 ---
     const { choices } = new TargetSelector(aliveEnemies)
       .excludeStealth()
-      .labelIf((e) => e.deBuff.some((d) => d.name === curseName), ` (이미 ${curseName} 상태)`)
+      .labelIf(
+        (e) => e.deBuff.some((d) => d.id === 'focus'), // ID 기반 체크 권장
+        i18n.t('skill.FOCUS_FIRE.already_marked', { curse: curseName })
+      )
       .build()
 
-    const targetId = await Terminal.select(`대상을 선택하세요`, [...choices, { name: 'cancel', message: '↩ 뒤로 가기' }])
+    const targetId = await Terminal.select(i18n.t('skill.FOCUS_FIRE.select_prompt'), [
+      ...choices,
+      { name: 'cancel', message: i18n.t('cancel') },
+    ])
 
     if (targetId === 'cancel') return { isSuccess: false, isAggressive: false, gross: 0 }
 
     const target = aliveEnemies.find((e) => e.id === targetId)
     if (!target) return { isSuccess: false, isAggressive: false, gross: 0 }
 
-    Terminal.log(`\n[!] ${player.name}이(가) ${target.name}에게 서늘한 죽음의 손짓을 보냅니다!`)
-    Terminal.log(`[!] 모든 수하의 안광이 붉게 타오릅니다.\n`)
+    // 연출 로그 출력
+    Terminal.log(
+      i18n.t('skill.FOCUS_FIRE.activation', {
+        player: player.name,
+        target: target.name,
+      })
+    )
+    Terminal.log(i18n.t('skill.FOCUS_FIRE.minion_reaction'))
 
     target.applyDeBuff({
-      name: curseName,
+      id: 'focus',
       type: 'focus',
       duration: duration + 1,
     })

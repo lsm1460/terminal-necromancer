@@ -15,19 +15,6 @@ import { CombatUnit } from './unit/CombatUnit'
 
 export type { DamageOptions } from './CombatService'
 
-export type Buff = {
-  name: string
-  duration: number
-  type: 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus' | 'stealth' | 'expose'
-  atk?: number
-  agi?: number
-  def?: number
-  eva?: number
-  hp?: number
-  crit?: number
-  isLocked?: boolean
-}
-
 export type CalcDamageOptions = DamageOptions
 export type CalcDamageResult = ReturnType<typeof CombatService.calcDamage>
 

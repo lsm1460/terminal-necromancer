@@ -75,7 +75,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       agi: Math.floor(corpse.agi * m * s.agi),
       skills: [...selectedClass.skills],
       exp: 0,
-      description: i18n.t('npc.skeleton.description', {name: corpse.name}), 
+      description: i18n.t('npc.skeleton.description', { name: corpse.name }),
       originId: corpse.id,
       rarity: finalRarity,
       dropTableId: '',
@@ -89,16 +89,22 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     // 4. 플레이어에게 추가 및 세계에서 시체 제거
     if (player.ref.addSkeleton(skeleton)) {
       world.removeCorpse(corpse.id)
-
       npcs.reborn(corpse.id)
 
-      Terminal.log(`\n[강령술] ${corpse.name}의 뼈가 맞춰지며 일어섭니다!`)
-      Terminal.log(`💀 ${rarityTag} 등급의 스켈레톤 ${selectedClass.name}으로 부활했습니다!`)
+      Terminal.log(i18n.t('skill.RAISE_SKELETON.reborn_start', { name: corpse.name }))
+      Terminal.log(
+        i18n.t('skill.RAISE_SKELETON.reborn_success', {
+          rarity: rarityTag,
+          class: selectedClass.name,
+        })
+      )
 
       return true
     }
 
-    !isMultiple && Terminal.log('\n[알림] 더 이상 해골병사를 부릴 수 없습니다.')
+    if (!isMultiple) {
+      Terminal.log(i18n.t('skill.RAISE_SKELETON.notice_limit'))
+    }
 
     return false
   }
@@ -106,35 +112,31 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   const corpses = world.getCorpsesAt(x, y)
 
   if (corpses.length === 0) {
-    Terminal.log('🌑 주위에 부름에 응답할 시체가 존재하지 않습니다. 정적만이 감돕니다.')
-
+    Terminal.log(i18n.t('skill.RAISE_SKELETON.no_corpse'))
     return { ...failure }
   }
 
   if (player.ref.skeleton.length >= player.ref.maxSkeleton) {
-    // 2. 이미 최대 소환 수에 도달했을 때
-    Terminal.log('⚠️ 지배할 수 있는 영혼의 그릇이 가득 찼습니다. 더 이상 군단을 부릴 수 없습니다.')
-
+    Terminal.log(i18n.t('skill.RAISE_SKELETON.limit_reached'))
     return { ...failure }
   }
 
   let isSuccess = false
 
   if (player.ref.hasAffix('LEGION')) {
-    Terminal.log('💀 군단의 인장이 붉게 타오르며, 대지의 모든 유골이 동시에 진동합니다!')
+    Terminal.log(i18n.t('skill.RAISE_SKELETON.legion_activation'))
 
     isSuccess = corpses.map((_corpse) => makeSkeleton(_corpse, true)).some(Boolean)
 
-    isSuccess && Terminal.log('⚔️ 대강령 완료: 전율하는 뼈의 군세가 지옥의 부름에 응답해 일어섰습니다.')
+    if (isSuccess) {
+      Terminal.log(i18n.t('skill.RAISE_SKELETON.legion_success'))
+    }
   } else {
-    // 1. 현재 위치의 시체 목록 가져오기
     const targetId = await SkillManager.selectCorpse(player.ref, context)
-
-    // 2. 특정 시체 지정
     const selectedCorpse = corpses.find((c) => c.id === targetId)
 
     if (!selectedCorpse) {
-      Terminal.log('\n[실패] 주위에 이용할 수 있는 시체가 없습니다.')
+      Terminal.log(i18n.t('skill.not_found'))
       return { ...failure }
     }
 

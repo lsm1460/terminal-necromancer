@@ -39,9 +39,14 @@ export const statusCommand: CommandFunction = (player, args, context) => {
     })
 
     if ('affix' in equipped.weapon && equipped.weapon.affix) {
+      const { name, description } = i18n.t(`affix.${equipped.weapon.affix.id}`, { returnObjects: true }) as {
+        name: string
+        description: string
+      }
+
       weaponText += i18n.t('commands.look.status.equipment.affix', {
-        name: equipped.weapon.affix.name,
-        description: equipped.weapon.affix.description,
+        name,
+        description,
       })
     }
   }
@@ -55,9 +60,14 @@ export const statusCommand: CommandFunction = (player, args, context) => {
     })
 
     if ('affix' in equipped.armor && equipped.armor.affix) {
+      const { name, description } = i18n.t(`affix.${equipped.armor.affix.id}`, { returnObjects: true }) as {
+        name: string
+        description: string
+      }
+
       armorText += i18n.t('commands.look.status.equipment.affix', {
-        name: equipped.armor.affix.name,
-        description: equipped.armor.affix.description,
+        name,
+        description,
       })
     }
   }
@@ -215,10 +225,15 @@ export const printItem = (item: Item) => {
     Terminal.log(i18n.t('commands.look.item.stats.maxSkeleton', { val: item.maxSkeleton }))
 
   if ('affix' in item && item.affix) {
+    const { name, description } = i18n.t(`affix.${item.affix.id}`, { returnObjects: true }) as {
+        name: string
+        description: string
+      }
+
     Terminal.log(
       i18n.t('commands.look.item.stats.affix', {
-        name: item.affix.name,
-        description: item.affix.description,
+        name,
+        description,
       })
     )
   }
