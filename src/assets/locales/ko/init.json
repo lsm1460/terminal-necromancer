@@ -2,6 +2,8 @@
   "welcome": "터미널 RPG에 오신 것을 환영합니다",
   "start_game": "시작하려면 START를 누르세요",
 
+  "yes": "네",
+  "no": "아니오",
   "cancel": "🔙 취소",
 
   "enter_new_area": "📍 새로운 지역 진입: ",

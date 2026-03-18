@@ -9,12 +9,16 @@
     "dev:cli": "ts-node -r tsconfig-paths/register src/game.ts",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.1",
+    "@tauri-apps/cli": "^2.10.1",
     "@types/lodash": "^4.17.21",
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
