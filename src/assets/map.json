@@ -514,7 +514,7 @@
           "id": "B5_010",
           "x": 2,
           "y": 2,
-          "event": "event-map-scan-once",
+          "event": "none",
           "npcIds": []
         },
         null,

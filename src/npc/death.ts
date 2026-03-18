@@ -174,7 +174,9 @@ async function handleMemorize(player: Player) {
   const isSoulGrown = player.maxMemorize > INIT_MAX_MEMORIZE_COUNT
 
   // 1. 환영 메시지 및 헤더
-  const welcomeMessage = isSoulGrown ? i18n.t('npc.death.memorize.welcome_grown') : i18n.t('npc.death.memorize.welcome_default')
+  const welcomeMessage = isSoulGrown
+    ? i18n.t('npc.death.memorize.welcome_grown')
+    : i18n.t('npc.death.memorize.welcome_default')
 
   const divider = '──────────────────────────────────────────────────'
   Terminal.log(`\n${divider}`)
@@ -217,7 +219,9 @@ async function handleMemorize(player: Player) {
       (skillName) => Object.entries(playerSkills).find(([, skill]) => skill.name === skillName)![0] as SkillId
     )
 
-    const exitMessage = isSoulGrown ? i18n.t('npc.death.memorize.exit_grown') : i18n.t('npc.death.memorize.exit_default')
+    const exitMessage = isSoulGrown
+      ? i18n.t('npc.death.memorize.exit_grown')
+      : i18n.t('npc.death.memorize.exit_default')
 
     Terminal.log(`\n${divider}`)
     Terminal.log(exitMessage)
@@ -266,6 +270,8 @@ async function handleReportCaron(context: GameContext) {
     const messages = i18n.t(messageKey, { returnObjects: true }) as string[]
     await speak(messages)
   }
+
+  await speak(i18n.t('npc.death.order_go_to_b5.deceived', { returnObjects: true }) as string[])
 
   events.completeEvent('report_caron_to_death')
 }

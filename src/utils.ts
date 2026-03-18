@@ -29,7 +29,6 @@ export function getItemLabel(item: Item) {
 
     finalLabel.push(setting.color)
     finalLabel.push(setting.symbol)
-    finalLabel.push(i18n.t(`item.rarity.${setting.rarity}`))
   }
 
   if ('affix' in item && item.affix) {

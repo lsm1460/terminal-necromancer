@@ -16,6 +16,7 @@
     }
   },
   "description": "A young boy from the labor camps. He considers protecting Vesper his sole mission in life.",
+  "deathLine": "Vesper... I'm sorry... I don't think... I can protect you this time...",
 
   "encounter": {
     "dialogue": [

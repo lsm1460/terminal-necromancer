@@ -15,7 +15,7 @@ const CaronHandler: NPCHandler = {
   getChoices(player, npc, context) {
     return [
       { name: 'talk', message: i18n.t('talk.speak') },
-      { name: 'battle', message: '💀 청소 (전투)' },
+      { name: 'battle', message: i18n.t('npc.caron.battle') },
     ]
   },
 

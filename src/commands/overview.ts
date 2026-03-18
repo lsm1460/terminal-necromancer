@@ -212,10 +212,11 @@ export const printItem = (item: Item) => {
   const stats: string[] = []
   if ('atk' in item) {
     stats.push(i18n.t('commands.look.item.stats.atk', { val: item.atk }))
-    stats.push(i18n.t('commands.look.item.stats.crit', { val: item.crit * 100 }))
+    stats.push(i18n.t('commands.look.item.stats.crit', { val: (item.crit * 100).toFixed(2) }))
   }
   if ('def' in item) stats.push(i18n.t('commands.look.item.stats.def', { val: item.def }))
-  if ('eva' in item && item.eva) stats.push(i18n.t('commands.look.item.stats.eva', { val: item.eva * 100 }))
+  if ('eva' in item && item.eva)
+    stats.push(i18n.t('commands.look.item.stats.eva', { val: (item.eva * 100).toFixed(2) }))
   if ('hpHeal' in item) stats.push(i18n.t('commands.look.item.stats.hpHeal', { val: item.hpHeal }))
 
   if (stats.length > 0) Terminal.log(`${i18n.t('commands.look.item.stats.label')}${stats.join(' | ')}`)
@@ -226,9 +227,9 @@ export const printItem = (item: Item) => {
 
   if ('affix' in item && item.affix) {
     const { name, description } = i18n.t(`affix.${item.affix.id}`, { returnObjects: true }) as {
-        name: string
-        description: string
-      }
+      name: string
+      description: string
+    }
 
     Terminal.log(
       i18n.t('commands.look.item.stats.affix', {

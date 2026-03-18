@@ -8,6 +8,7 @@
   },
   "deathLine": "Ah... Ahhh... my child... ending up like this without even reaching revenge...",
   "description": "Emerging from a tear in twisted space-time, Charon stares at you while exuding an abyssal murderous intent.",
+  "battle": "💀 Clean up (Battle)",
   "relocate": {
     "default_observe": "...Nothing but ruins can be seen.",
     "proximity_hint": "The density of the subspace thickens rapidly. The target is hidden very close by."

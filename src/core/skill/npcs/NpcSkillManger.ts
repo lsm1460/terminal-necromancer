@@ -102,7 +102,12 @@ export class NpcSkillManager {
     const skill = this.getSkill(skillId)
     if (!skill) return
 
-    Terminal.log(`\n✨ ${attacker.name}의 [${skill.name}]!`)
+    Terminal.log(
+      i18n.t('skill.execution', {
+        attacker: attacker.name,
+        skill: skill.name,
+      })
+    )
     Terminal.log(`💬 ${skill.description}`)
 
     let targets = this.findTargets(...params)

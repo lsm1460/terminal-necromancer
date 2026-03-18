@@ -1,4 +1,5 @@
 {
+  "execution": "\n✨ {{attacker}} casts [{{skill}}]!",
   "select_title": "Select Skill (Current MP: {{mp}})",
   "not_enough_mp": "Not enough MP! (Required: {{cost}} / Current: {{current}})",
   "no_corpses_nearby": "No corpses nearby to use.",
@@ -6,6 +7,7 @@
   "corpse_choice_format": "{{name}} Corpse (HP: {{hp}}, ATK: {{atk}})",
   "cancel_action": "Skill activation canceled.",
   "not_found": "\n[Failed] There are no usable corpses nearby.",
+  "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
 
   "RAISE_SKELETON": {
     "name": "Raise Skeleton",
@@ -18,7 +20,7 @@
     "legion_success": "⚔️ Grand Summoning Complete: The shivering bone army has risen in response to the hellish call.",
 
     "reborn_start": "\n[Necromancy] {{name}}'s bones knit together as it rises!",
-    "reborn_success": "💀 Reborn as a {{rarity}} grade Skeleton {{class}}!",
+    "reborn_success": "💀 Reborn as a {{rarity}} grade {{class}}!",
     "notice_limit": "\n[Notice] You can no longer command any more skeleton soldiers."
   },
   "RECALL_SKELETON": {
@@ -66,7 +68,6 @@
 
     "no_minions": "\n[Failed] No minions to interact with.",
     "select_prompt": "Which minion would you like to resonate souls with?",
-    "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
     "already_full": "\n🌿 {{name}}'s soul is already full; no need to share life force.",
     "low_health": "\n⚠️ {{name}}'s health is too low to share life force anymore!",
     "success_log": "\n✨ [Heal] Using {{player}}'s soul to mend {{target}}'s wounds. ({{target}} HP {{hp}} / {{maxHp}})",
@@ -97,7 +98,6 @@
     "no_skeletons": "\n[Failed] No skeletons to sacrifice.",
     "no_enemies": "\n[Failed] No targets to pierce.",
     "select_prompt": "Which skeleton will you turn into a Bone Spear?",
-    "choice_format": "{{name}} (Current HP: {{hp}})",
     "cancel_msg": "\n💬 Skill use canceled.",
     "activation": "\n💀 {{player}} destroys {{target}} to craft a massive Bone Spear!",
     "log": {

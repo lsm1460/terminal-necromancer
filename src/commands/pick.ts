@@ -64,7 +64,7 @@ const makeDropTargetOptions = (drops: Drop[], player: Player, lootBag?: LootBag)
       ]
     : []),
   ...drops.map((d) => ({ name: d.id, message: makeItemMessage(d, player) })),
-  { name: 'cancel', message: `🔙 ${i18n.t('common.cancel')}` },
+  { name: 'cancel', message: i18n.t('cancel') },
 ]
 
 function handleLootBagPick(player: Player, lootBag: LootBag, context: GameContext) {

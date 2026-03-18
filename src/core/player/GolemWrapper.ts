@@ -29,7 +29,7 @@ class GolemWrapper {
     return this.raw.exp
   }
   get description() {
-    return i18n.t(`minion.golem.description.${this.raw.madeBy}`)
+    return i18n.t(`npc.golem.description.${this.raw.madeBy}`)
   }
   get dropTableId() {
     return this.raw.dropTableId
@@ -106,10 +106,10 @@ class GolemWrapper {
       key = 'machine_only'
     }
 
-    const baseName = i18n.t(`golem.name.${key}`)
+    const baseName = i18n.t(`npc.golem.name.${key}`)
 
     if (this.hasThorns) {
-      return i18n.t('golem.prefix.thorns', { name: baseName })
+      return i18n.t('npc.golem.prefix.thorns', { name: baseName })
     }
 
     return baseName

@@ -33,13 +33,17 @@ export class CLIRenderer implements Renderer {
   /**
    * 터미널 선택 메뉴를 띄웁니다.
    */
-  async select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string> {
+  async select(
+    message: string,
+    choices: { name: string; message: string; disabled?: boolean }[],
+    defaultValue?: string
+  ): Promise<string> {
     const { result } = await enquirer.prompt<{ result: string }>({
       type: 'select',
       name: 'result',
       message,
       initial: defaultValue,
-      choices: choices.map((c) => ({ name: c.name, message: c.message })),
+      choices,
     })
     return result
   }

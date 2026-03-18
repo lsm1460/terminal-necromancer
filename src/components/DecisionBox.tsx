@@ -16,8 +16,15 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
 
   useEffect(() => {
-    setFocusedIndex(0)
-    setTimeout(() => buttonRefs.current[0]?.focus(), 10)
+    const firstEnabledIndex = buttonRefs.current.findIndex((button) => button && !button.disabled)
+
+    if (firstEnabledIndex !== -1) {
+      setFocusedIndex(firstEnabledIndex)
+
+      setTimeout(() => {
+        buttonRefs.current[firstEnabledIndex]?.focus()
+      }, 10)
+    }
   }, [uiState.type, uiState.message])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -57,6 +64,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
                 }}
                 onFocus={() => setFocusedIndex(i)}
                 onClick={() => resolveUI(c.name, c.message)}
+                disabled={c.disabled}
               >
                 <AnsiHtml message={c.message} />
               </ThemedButton>

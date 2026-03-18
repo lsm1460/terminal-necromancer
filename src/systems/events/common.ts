@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
-import { delay } from '~/utils'
 import i18n from '~/i18n'
+import { Tile } from '~/types'
+import { delay } from '~/utils'
 import { EventHandler } from '.'
 import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
@@ -59,5 +60,50 @@ export const commonHandlers: Record<string, EventHandler> = {
     } else {
       Terminal.log(i18n.t('events.caron.whisper_dead'))
     }
+  },
+
+  'event-map-scan-once': async (tile, player, context) => {
+    if (tile.isClear) return
+
+    const { map } = context
+    const proceed = await Terminal.confirm(i18n.t('events.map_scan.confirm'))
+
+    if (!proceed) return
+
+    Terminal.log(i18n.t('events.map_scan.revealed'))
+    await delay(1000)
+
+    const allTiles: Tile[] = []
+    let bossTile: Tile
+
+    map.currentScene.tiles.forEach((row) => {
+      row.forEach((t) => {
+        if (t) {
+          allTiles.push(t)
+          if (t.event === 'boss') bossTile = t
+        }
+      })
+    })
+
+    if (bossTile!) {
+      bossTile.isSeen = true
+      Terminal.log(i18n.t('events.map_scan.boss_location'))
+      Terminal.log(i18n.t('events.map_scan.boss_flavor'))
+      await delay(800)
+    }
+
+    const scanCount = Math.floor(Math.random() * 3) + 3
+    const unseenTiles = allTiles.filter((t) => !t.isSeen)
+    const revealedTiles = unseenTiles.sort(() => 0.5 - Math.random()).slice(0, scanCount)
+
+    revealedTiles.forEach((t) => {
+      t.isSeen = true
+    })
+
+    Terminal.log(`\x1b[90m...\x1b[0m`)
+    Terminal.log(i18n.t('events.map_scan.success', { count: revealedTiles.length }))
+    Terminal.log(i18n.t('events.map_scan.fail_flavor'))
+
+    tile.isClear = true
   },
 }

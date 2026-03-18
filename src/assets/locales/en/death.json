@@ -104,5 +104,14 @@
       "Reaper: \"That vast legion you once commanded while ruling the continent... I shall grant you back a portion of that power.\"",
       "Reaper: \"Continue to retrieve the soul shards of those who break the laws. With each shard gathered, I shall restore the sovereign's authority you once lost, one by one.\""
     ]
-  }
+  },
+
+  "order_go_to_b5": [
+    "Reaper: \"A new task. This time, some rather noisy rats have infested the place.\"",
+    "Reaper: \"Those 'Resistance' fools actually managed to breach the perimeter and crawl into the B5 VIP Lounge.\"",
+    "Reaper: \"It seems they’ve seized the area and taken our precious 'VIP Guests' hostage, hoping to force a negotiation with me...\"",
+    "Reaper: \"(With a mocking sneer) How pathetic. To think they could actually propose a deal through a hostage situation within my domain... their stupidity is beyond salvation.\"",
+    "Reaper: \"Go down this instant and clear the filth from the VIP Lounge. Make sure the screams of the guests no longer reach my ears.\"",
+    "Reaper: \"Tear the souls of those traitors to shreds as an example to all who dare to mock my laws. Now, begone.\""
+  ]
 }

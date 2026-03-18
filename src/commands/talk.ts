@@ -9,7 +9,7 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
   const availableNpcs = getAvailableNpcs(player, context)
 
   if (availableNpcs.length < 1) {
-    Terminal.log(`\n[${i18n.t('common.info')}] ${i18n.t('talk.no_one_here')}`)
+    Terminal.log(`\n${i18n.t('talk.no_one_here')}`)
     return false
   }
 
@@ -34,7 +34,7 @@ async function selectTargetNpc(npcs: NPC[], args: string[]): Promise<NPC | null>
     const targetName = args[0]
     const found = npcs.find((npc) => npc.name === targetName)
     if (!found) {
-      Terminal.log(`\n[${i18n.t('common.info')}] ${i18n.t('talk.not_found', { name: targetName })}`)
+      Terminal.log(`\n${i18n.t('talk.not_found', { name: targetName })}`)
       return null
     }
     return found

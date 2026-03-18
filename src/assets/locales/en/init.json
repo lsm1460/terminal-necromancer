@@ -115,6 +115,8 @@
   },
 
   "talk": {
+    "buy": "💰 Buy Item",
+    "sell": "📦 Sell Item",
     "examine": "🔍 Examine",
     "small_talk": "💬 Small Talk",
     "speak": "💬 Speak",

@@ -68,8 +68,8 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       id: `${selectedClass.id}::${Date.now()}`,
       name: `${rarityTag} skeleton ${selectedClass.name}`,
       attackType: selectedClass.attackType,
-      maxHp: Math.floor(corpse.maxHp * m * s.hp),
-      hp: Math.floor(corpse.maxHp * m * s.hp),
+      maxHp: Math.floor(corpse.maxHp * 0.8 * m * s.hp),
+      hp: Math.floor(corpse.maxHp * 0.8 * m * s.hp),
       atk: Math.max(Math.floor(corpse.atk * m * s.atk), 8),
       def: Math.max(Math.floor(corpse.def * m * s.def), 5),
       agi: Math.floor(corpse.agi * m * s.agi),
@@ -91,11 +91,12 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       world.removeCorpse(corpse.id)
       npcs.reborn(corpse.id)
 
+      
       Terminal.log(i18n.t('skill.RAISE_SKELETON.reborn_start', { name: corpse.name }))
       Terminal.log(
         i18n.t('skill.RAISE_SKELETON.reborn_success', {
           rarity: rarityTag,
-          class: selectedClass.name,
+          class: i18n.t(`npc.${selectedClass.id}.name`),
         })
       )
 

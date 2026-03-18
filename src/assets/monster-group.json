@@ -20,7 +20,7 @@
   ],
   "monster-group-b3-sludge": [
     { "id": "oil_sludge_slime", "encounterRate": 30 },
-    { "id": "ratman_scavenger", "encounterRate": 30 },
+    { "id": "ratman_scout", "encounterRate": 30 },
     { "id": "ratman_shaman", "encounterRate": 20 },
     { "id": "mutated_worker", "encounterRate": 20 }
   ],

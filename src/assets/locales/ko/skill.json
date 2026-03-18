@@ -1,4 +1,5 @@
 {
+  "execution": "\n✨ {{attacker}}의 [{{skill}}]!",
   "select_title": "스킬 선택 (현재 MP: {{mp}})",
   "not_enough_mp": "마력이 부족합니다! (필요: {{cost}} / 현재: {{current}})",
   "no_corpses_nearby": "주변에 활용할 시체가 없습니다.",
@@ -6,6 +7,7 @@
   "corpse_choice_format": "{{name}}의 시체 (HP: {{hp}}, ATK: {{atk}})",
   "cancel_action": "스킬 사용을 취소했습니다.",
   "not_found": "\n[실패] 주위에 이용할 수 있는 시체가 없습니다.",
+  "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
 
   "RAISE_SKELETON": {
     "name": "스켈레톤 생성",
@@ -18,7 +20,7 @@
     "legion_success": "⚔️ 대강령 완료: 전율하는 뼈의 군세가 지옥의 부름에 응답해 일어섰습니다.",
 
     "reborn_start": "\n[강령술] {{name}}의 뼈가 맞춰지며 일어섭니다!",
-    "reborn_success": "💀 {{rarity}} 등급의 스켈레톤 {{class}}으로 부활했습니다!",
+    "reborn_success": "💀 {{rarity}} 등급의 {{class}}으로 부활했습니다!",
     "notice_limit": "\n[알림] 더 이상 해골병사를 부릴 수 없습니다."
   },
   "RECALL_SKELETON": {
@@ -65,7 +67,6 @@
 
     "no_minions": "\n[실패] 상호작용할 미니언이 없습니다.",
     "select_prompt": "어느 미니언과 영혼을 공명하시겠습니까?",
-    "choice_format": "{{name}} (HP: {{hp}}/{{maxHp}})",
     "already_full": "\n🌿 {{name}}의 영혼이 이미 충만하여 더 이상 생명력을 나눌 필요가 없습니다.",
     "low_health": "\n⚠️ {{name}}의 체력이 너무 낮아 더 이상 생명력을 나누어줄 수 없습니다!",
     "success_log": "\n✨ [치유] {{player}}의 영혼으로 {{target}}의 상처를 메꿉니다. ({{target}} HP {{hp}} / {{maxHp}})",
@@ -95,7 +96,6 @@
     "no_skeletons": "\n[실패] 희생시킬 스켈레톤이 없습니다.",
     "no_enemies": "\n[실패] 관통할 대상이 없습니다.",
     "select_prompt": "어느 스켈레톤을 뼈 창으로 만드시겠습니까?",
-    "choice_format": "{{name}} (현재 HP: {{hp}})",
     "cancel_msg": "\n💬 스킬 사용을 취소했습니다.",
     "activation": "\n💀 {{player}}이(가) {{target}}을(를) 파괴하여 거대한 뼈 창을 빚어냅니다!",
     "log": {

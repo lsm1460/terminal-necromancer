@@ -32,7 +32,7 @@ export const COMMAND_GROUPS: Record<CommandKey, string[]> = {
   [COMMAND_KEYS.PICK]: ['pick', 'p', 'grep', 'g', '줍기', '획득', '집기', '들기'],
   [COMMAND_KEYS.DROP]: ['drop', 'dr', '버리기'],
   [COMMAND_KEYS.HELP]: ['help', '도움말', '/?', '도움', '명령', '명령어'],
-  [COMMAND_KEYS.INVENTORY]: ['inventory', 'inven', 'i', '인벤토리', '가방', '아이템', '소지품'],
+  [COMMAND_KEYS.INVENTORY]: ['inventory', 'inven', 'i', 'bag', '인벤토리', '가방', '아이템', '소지품'],
   [COMMAND_KEYS.EQUIP]: ['equip', '장비', 'eq'],
   [COMMAND_KEYS.USE]: ['use', '사용', '먹기'],
   [COMMAND_KEYS.STATUS]: ['status', '스탯', '상태', 'stat', '정보', '정보창'],

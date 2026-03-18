@@ -6,7 +6,7 @@ import { GameContext, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
 
 export class SecondBoss implements BossLogic {
-  withMonsterGroup = 'monster-group-b2-boss'
+  withMonsterGroup = 'monster-group-b3-boss'
 
   get postTalk() {
     return i18n.t('npc.second_boss.postTalk', { returnObjects: true }) as string[]

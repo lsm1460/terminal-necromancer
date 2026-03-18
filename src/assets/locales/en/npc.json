@@ -84,7 +84,8 @@
         "farewell": "Bleh! You missed! Next time, I'm really gonna put a hole in you!"
       }
     },
-    "description": "She masks her fear of war with a playful attitude, but her hatred for the upper class is as deep as Kael's."
+    "description": "She masks her fear of war with a playful attitude, but her hatred for the upper class is as deep as Kael's.",
+    "deathLine": "Ah... I'm so hungry... Is revolution... always this cold...?"
   },
   "baron_valter": {
     "name": "Baron Valter, the Arrogant Ruler",

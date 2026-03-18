@@ -21,7 +21,7 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
   const minionId = await Terminal.select(i18n.t('skill.SOUL_TRANSFER.select_prompt'), [
     ...minions.map((m) => ({
       name: m.id,
-      message: i18n.t('skill.SOUL_TRANSFER.choice_format', {
+      message: i18n.t('skill.choice_format', {
         name: m.name,
         hp: m.ref.hp,
         maxHp: m.ref.maxHp,

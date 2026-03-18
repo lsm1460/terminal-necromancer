@@ -25,7 +25,7 @@ export class Terminal {
 
   public static async select<T extends string>(
     message: string,
-    choices: { name: string; message: string }[],
+    choices: { name: string; message: string; disabled?: boolean }[],
     defaultValue?: string
   ): Promise<T> {
     if (!this.renderer) throw new Error('Renderer not initialized')

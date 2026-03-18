@@ -16,8 +16,14 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   const skeletons = player.ref.skeleton
 
   const targets = [
-    ...corpses.map((corpse) => ({ id: corpse.id, name: corpse.name, type: 'corpse' as const, maxHp: corpse.maxHp })),
-    ...skeletons.map((sk) => ({ id: sk.id, name: sk.name, type: 'skeleton' as const, maxHp: sk.maxHp })),
+    ...corpses.map((corpse) => ({
+      id: corpse.id,
+      name: corpse.name,
+      type: 'corpse' as const,
+      hp: 0,
+      maxHp: corpse.maxHp,
+    })),
+    ...skeletons.map((sk) => ({ id: sk.id, name: sk.name, type: 'skeleton' as const, hp: sk.hp, maxHp: sk.maxHp })),
   ]
 
   if (targets.length === 0) {
@@ -29,7 +35,11 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   const corpseId = await Terminal.select(i18n.t('skill.CORPSE_EXPLOSION.select_prompt'), [
     ...targets.map((s) => ({
       name: s.id,
-      message: s.name,
+      message: i18n.t('skill.choice_format', {
+        name: s.name,
+        hp: s.hp,
+        maxHp: s.maxHp,
+      }),
     })),
     { name: 'cancel', message: i18n.t('cancel') },
   ])

@@ -1,14 +1,21 @@
+import adrian from './adrian.json'
 import affix from './affix.json'
 import apostle from './apostle.json'
+import battle from './battle.json'
 import broadcast from './broadcast.json'
+import caron from './caron.json'
+import commands from './commands.json'
 import death from './death.json'
 import dr_zed from './dr_zed.json'
 import elevator from './elevator.json'
 import events from './events.json'
 import first_boss from './first_boss.json'
+import flint from './flint.json'
 import init from './init.json'
 import item from './item.json'
 import jax_seeker from './jax_seeker.json'
+import julian from './julian.json'
+import kael from './kael.json'
 import kane_leader from './kane_leader.json'
 import map from './map.json'
 import marco from './marco.json'
@@ -24,11 +31,6 @@ import skill from './skill.json'
 import subspace from './subspace.json'
 import vending_machine from './vending_machine.json'
 import web from './web.json'
-import julian from './julian.json'
-import kael from './kael.json'
-import adrian from './adrian.json'
-import battle from './battle.json'
-import commands from './commands.json'
 
 const en = {
   ...init,
@@ -55,6 +57,7 @@ const en = {
     second_boss,
     apostle,
 
+    caron,
     subspace,
 
     //b5
@@ -62,6 +65,7 @@ const en = {
     julian,
     kael,
     adrian,
+    flint,
   },
   skill,
   events,

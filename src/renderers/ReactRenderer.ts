@@ -7,7 +7,7 @@ import { GameContext, Renderer } from '~/types'
 export interface UIState {
   type: 'SELECT' | 'MULTISELECT' | 'CONFIRM' | 'PROMPT' | 'NONE'
   message: string
-  choices?: { name: string; message: string }[]
+  choices?: { name: string; message: string; disabled?: boolean }[]
   options?: { initial?: string[]; maxChoices?: number }
   resolve: (value: any) => void
 }

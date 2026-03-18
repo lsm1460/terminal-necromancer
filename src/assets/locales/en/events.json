@@ -13,6 +13,15 @@
     "whisper_dead": "\n[Void Guide]: \"...Mas...ter... Com...mand... me...\" (An eerie chill clings to your ankles.)"
   },
 
+  "map_scan": {
+    "confirm": "📍 You've found a worn-out area map. Would you like to inspect it?",
+    "revealed": "\n\u001b[90m[ Wiping away the dust... The layout of the current sector is revealed ]\u001b[0m",
+    "boss_location": "\u001b[33m🔍 A warning sign says [DANGER: HOSTILE ENTITY - DO NOT ENTER] at a specific point.\u001b[0m",
+    "boss_flavor": "\u001b[90m   (Someone has frantically scribbled \"STAY AWAY\" over it.)\u001b[0m",
+    "success": "\u001b[32m✅ Successfully identified {{count}} readable sector coordinates.\u001b[0m",
+    "fail_flavor": "\u001b[90m(The remaining information is too defaced to read.)\u001b[0m\n"
+  },
+
   "b3": {
     "abandoned_corpse": {
       "discovery": "🔍 \u001b[1mWhile searching the area, you discover something on the cold floor...\u001b[0m",
@@ -40,14 +49,6 @@
         "...Static."
       ],
       "ended": "\n\u001b[90m[ Recording ended. ]\u001b[0m"
-    },
-    "map_scan": {
-      "confirm": "📍 You found a peeling terminal loading sign. Examine it?",
-      "revealed": "\n\u001b[90m[ After brushing off the dust, a complex rail map of the loading dock is revealed ]\u001b[0m",
-      "boss_location": "\u001b[33m🔍 At 'Loading Station 1', a sign says [Large Auto-Crane in Operation - Approach with Caution].\u001b[0m",
-      "boss_flavor": "\u001b[90m   (Someone has scribbled \"Golem gone rogue\" crookedly over it.)\u001b[0m",
-      "success": "\u001b[32m✅ Confirmed information for {{count}} undamaged sectors.\u001b[0m",
-      "fail_flavor": "\u001b[90m(The rest of the rail information is too rusted to read.)\u001b[0m\n"
     },
     "conveyor": {
       "prompt_1": "⚙️ Board the conveyor heading to Platform 2?",
