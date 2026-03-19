@@ -3,6 +3,7 @@ import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
+import { printTileStatus } from '~/statusPrinter'
 
 const OliverHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -40,6 +41,8 @@ async function handleEvent(npc: NPC, player: Player, context: GameContext) {
     ...npc,
     ...player.pos,
   })
+
+  printTileStatus(player, context)
 }
 
 export default OliverHandler

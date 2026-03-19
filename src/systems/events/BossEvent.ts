@@ -34,7 +34,7 @@ class BossEvent {
 
     let enemies: CombatUnit[] = []
     if (bossLogic) {
-      enemies = bossLogic.createEnemies(bossNpc, context)
+      enemies = await bossLogic.createEnemies(bossNpc, context, player)
     } else {
       enemies = [battle.toCombatUnit(bossNpc, 'npc')]
     }

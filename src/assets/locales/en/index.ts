@@ -31,6 +31,7 @@ import skill from './skill.json'
 import subspace from './subspace.json'
 import vending_machine from './vending_machine.json'
 import web from './web.json'
+import baron_valter from './baron_valter.json'
 
 const en = {
   ...init,
@@ -66,11 +67,12 @@ const en = {
     kael,
     adrian,
     flint,
+    baron_valter,
   },
   skill,
   events,
   battle,
-  commands
+  commands,
 }
 
 export default en

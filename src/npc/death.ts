@@ -1,11 +1,11 @@
-import { INIT_MAX_MEMORIZE_COUNT, SKELETON_UPGRADE } from '~/consts'
+import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import { getPlayerSkills, SkillUtils } from '~/core/skill'
+import i18n from '~/i18n'
 import { GameContext, Skill, SkillId } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
-import i18n from '~/i18n'
 
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
@@ -14,9 +14,11 @@ const DeathHandler: NPCHandler = {
     const isFirst = events.isCompleted('talk_death_1')
     const isSecond = events.isCompleted('talk_death_2')
     const isThird = events.isCompleted('talk_death_3')
+    const isFourth = events.isCompleted('talk_death_4')
 
     const isB2Completed = events.isCompleted('first_boss')
     const isB3Completed = events.isCompleted('second_boss')
+    const isB5Completed = events.isCompleted('third_boss')
 
     const caronFinished = events.isCompleted('defeat_caron')
     const caronReported = events.isCompleted('report_caron_to_death')
@@ -35,6 +37,10 @@ const DeathHandler: NPCHandler = {
 
     if (isB3Completed && !isThird) {
       return [{ name: 'defeatGolem', message: i18n.t('talk.speak') }]
+    }
+
+    if (isB5Completed && !isFourth) {
+      return [{ name: 'cleanupVipLounge', message: i18n.t('talk.speak') }]
     }
 
     return [
@@ -69,6 +75,9 @@ const DeathHandler: NPCHandler = {
         break
       case 'memorize':
         await handleMemorize(player)
+        break
+      case 'cleanupVipLounge':
+        await handleAfterCleanup(context)
         break
       default:
         break
@@ -274,6 +283,22 @@ async function handleReportCaron(context: GameContext) {
   await speak(i18n.t('npc.death.order_go_to_b5.deceived', { returnObjects: true }) as string[])
 
   events.completeEvent('report_caron_to_death')
+}
+
+async function handleAfterCleanup(context: GameContext) {
+  const { events } = context
+
+  const isVipLost = events.isCompleted('third_boss_resistance') || events.isCompleted('third_boss_kill_all')
+
+  if (!isVipLost) {
+    await speak(i18n.t('npc.death.report_vips_saved', { returnObjects: true }) as string[])
+    events.completeEvent('vips_saved')
+  } else {
+    await speak(i18n.t('npc.death.report_vips_lost', { returnObjects: true }) as string[])
+    events.completeEvent('vips_lost')
+  }
+
+  events.completeEvent('talk_death_4')
 }
 
 export default DeathHandler

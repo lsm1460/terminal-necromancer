@@ -161,7 +161,8 @@
 
   "message": {
     "buff": {
-      "overdrive": "\n[🔥 강화] {{name}}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! ({{name}} HP {{hp}} / {{maxHp}})"
+      "overdrive": "\n[🔥 강화] {{name}}의 영혼을 강제로 폭주시켜 위력을 끌어올립니다! ({{name}} HP {{hp}} / {{maxHp}})",
+      "grace": "\n[✨ 가호] 찬란한 빛의 세례가 {{name}}의 무기에 깃들어 파괴적인 위력을 발휘합니다!"
     },
     "debuff": {
       "paralysis": "\n [!] {{name}}은/는 마비되어 움직일 수 없습니다!",
@@ -351,6 +352,18 @@
     "spout_out": {
       "name": "분출",
       "description": "죄악의 구덩이에서 끓어오르는 오물이 목표를 휩쓸어버립니다."
+    },
+    "cmd_aegis": {
+      "name": "명령:가호",
+      "description": "모든 아군을 축복하는 언령을 보냅니다."
+    },
+    "cmd_grace": {
+      "name": "명령:회복",
+      "description": "모든 아군을 회복시키는 언령을 보냅니다."
+    },
+    "cmd_purity": {
+      "name": "명령:정화",
+      "description": "모든 적군을 정화시키는 언령을 보냅니다."
     }
   }
 }

@@ -90,7 +90,7 @@ async function handleEvent(flint: NPC, player: Player, context: GameContext) {
     }
   }
 
-  context.events.completeEvent('b5_flint_meeting_complete')
+  context.events.completeEvent('b5_flint')
 }
 
 export default FlintHandler

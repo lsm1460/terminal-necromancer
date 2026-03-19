@@ -163,7 +163,8 @@
 
   "message": {
     "buff": {
-      "overdrive": "\n[🔥 Overdrive] {{name}}'s soul is forced into a frenzy, pushing its power to the limit! ({{name}} HP {{hp}} / {{maxHp}})"
+      "overdrive": "\n[🔥 Overdrive] {{name}}'s soul is forced into a frenzy, pushing its power to the limit! ({{name}} HP {{hp}} / {{maxHp}})",
+      "grace": "\n[✨ Blessing] A radiant surge of celestial power empowers {{name}}'s weapon with devastating force!"
     },
     "debuff": {
       "paralysis": "\n [!] {{name}} is paralyzed and cannot move!",
@@ -353,6 +354,18 @@
     "spout_out": {
       "name": "Eruption",
       "description": "Boiling filth from the pit of sin sweeps over the target."
+    },
+    "cmd_aegis": {
+      "name": "Command: Aegis",
+      "description": "Sends forth a word of power that blesses all allies."
+    },
+    "cmd_grace": {
+      "name": "Command: Grace",
+      "description": "Sends forth a word of power that restores all allies."
+    },
+    "cmd_purity": {
+      "name": "Command: Purity",
+      "description": "Sends forth a word of power that purifies all enemies."
     }
   }
 }

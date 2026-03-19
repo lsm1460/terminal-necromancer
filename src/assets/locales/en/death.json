@@ -113,5 +113,17 @@
     "Reaper: \"(With a mocking sneer) How pathetic. To think they could actually propose a deal through a hostage situation within my domain... their stupidity is beyond salvation.\"",
     "Reaper: \"Go down this instant and clear the filth from the VIP Lounge. Make sure the screams of the guests no longer reach my ears.\"",
     "Reaper: \"Tear the souls of those traitors to shreds as an example to all who dare to mock my laws. Now, begone.\""
+  ],
+
+  "report_vips_saved": [
+    "Reaper: \"Ah, you've returned. Those vulgar noises from below have finally ceased.\"",
+    "Reaper: \"The screams of those rebels' souls being torn apart echoed quite pleasantly up here.\"",
+    "Reaper: \"Now that the vermin have been purged, the hum of the VIP shuttle's engines will sound sweet once more. Well done.\""
+  ],
+  "report_vips_lost": [
+    "Reaper: \"...What? All the VIPs have been 'disposed of'?\"",
+    "Reaper: \"(Glaring with eyes that seem to pierce through your very soul) Are you saying you were too late, or...\"",
+    "Reaper: \"(After a brief silence, laughing coldly) Well, no matter. If they were destined to die, they simply met their Reaper a bit sooner than expected.\"",
+    "Reaper: \"But mark my words. In my domain, repeated 'coincidences' are never a good omen. I'll let it slide, just this once.\""
   ]
 }

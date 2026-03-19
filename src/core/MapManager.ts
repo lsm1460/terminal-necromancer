@@ -48,7 +48,7 @@ export class MapManager {
     this.currentSceneId = targetSceneId
     const newScene = this.getMap(targetSceneId)
     await assetManager.loadSceneAssets(newScene)
-    const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE, MAP_IDS.B4_Waste_Disposal_Area]
+    const fixedArea: string[] = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE, MAP_IDS.B4_Waste_Disposal_Area, MAP_IDS.B5_VIP_lounge]
 
     if (!fixedArea.includes(targetSceneId)) {
       this.shuffleTiles(targetSceneId)

@@ -104,7 +104,7 @@ async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) 
   }
 
   player.unlockGolem('maya')
-  npc.updateContribution(40)
+  npc.updateContribution(20)
 
   const successMsgs = i18n.t('npc.maya_tech.awake.success', { returnObjects: true }) as string[]
   successMsgs.forEach((msg) => Terminal.log(msg))

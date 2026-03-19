@@ -19,6 +19,7 @@ import { StatsCalculator } from './StatsCalculator'
 
 export type PlayerSaveData = Partial<Player> & {
   _skeleton?: BattleTarget[]
+  _mercenary?: BattleTarget[]
   _golem?: BattleTarget
   _knight?: BattleTarget
 }
@@ -343,6 +344,14 @@ export class Player {
 
   addSkeleton(minion: BattleTarget) {
     return this.minionManager.addSkeleton(minion)
+  }
+
+  addMercenary(mercenary: BattleTarget) {
+    return this.minionManager.addMercenary(mercenary)
+  }
+
+  removeMercenaries() {
+    return this.minionManager.removeMercenaries()
   }
 
   removeMinion(minionId: string) {

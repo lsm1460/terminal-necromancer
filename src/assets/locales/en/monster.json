@@ -141,5 +141,21 @@
   "optical_surveillance_unit": {
     "name": "Optical Surveillance Unit",
     "description": "A real-time monitoring machine. It is the first to sound the alarm (strike first)."
+  },
+  "arka": {
+    "name": "Arka, Lesser God of Justice",
+    "description": "A low-ranking celestial administrator governing order and preservation. He values the safety of the elite and standardized justice over mortal lives."
+  },
+  "nivalis": {
+    "name": "Nivalis, High Elemental",
+    "description": "A ruthless ice spirit who executes Arka's will. Absolute zero frost flows around him, freezing any unauthorized movement in his presence."
+  },
+  "resistance_member": {
+    "name": "Resistance Member",
+    "description": "Those who took up arms to end the tragic bargain with the Reaper."
+  },
+  "resistance_priest": {
+    "name": "Resistance Priest",
+    "description": "One who offers prayers on the battlefield to soothe the souls of the forsaken."
   }
 }

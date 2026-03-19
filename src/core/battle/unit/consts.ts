@@ -2,7 +2,7 @@ import i18n from '~/i18n'
 import { BuffOptions } from '../Buff'
 
 export const getBuffMessage = (id: BuffOptions['id']) => {
-  const isBuff = ['overdrive'].includes(id)
+  const isBuff = ['overdrive', 'grace'].includes(id)
   const path = isBuff ? 'skill.message.buff' : 'skill.message.debuff'
   const fullPath = `${path}.${id}`
 

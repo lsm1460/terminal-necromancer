@@ -17,7 +17,7 @@ export const SpecialSkillLogics: Record<
     for (const target of targets) {
       await target.executeHit(attacker, {
         attackType: 'explode',
-        rawDamage: Math.floor(attacker.ref.hp * skill.power),
+        rawDamage: Math.floor(attacker.ref.maxHp * skill.power),
       })
     }
     Terminal.log(i18n.t('skill.special.self_destruct', { attacker: attacker.name }))

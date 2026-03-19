@@ -318,8 +318,8 @@
       "observe": "An information desk with clear traces of damage."
     },
     "B5_018": {
-      "dialogue": "A platform where VIP emergency escape capsules are lined up. A yellow safety line is clearly drawn on the floor.",
-      "observe": "An escape platform with mechanical devices operating."
+      "dialogue": "Small ventilation fans rotate rapidly in the corners of the ceiling finished with gold molding. A faint smell of burning lingers in the air.",
+      "observe": "A space where ceiling lights shine disorderly."
     },
     "B5_019": {
       "dialogue": "A circular room where the core control device of the 5th basement floor is located. Dozens of holographic screens float in the air, pouring out real-time data.",
@@ -334,8 +334,8 @@
       "observe": "A quiet rest room with screens flickering."
     },
     "B5_022": {
-      "dialogue": "Small ventilation fans rotate rapidly in the corners of the ceiling finished with gold molding. A faint smell of burning lingers in the air.",
-      "observe": "A space where ceiling lights shine disorderly."
+      "dialogue": "A platform where VIP emergency escape capsules are lined up. A yellow safety line is clearly drawn on the floor.",
+      "observe": "An escape platform with mechanical devices operating."
     },
     "B5_023": {
       "dialogue": "The edge of a luxurious carpet is curled up. A sparkling metal object is slightly visible through the gap.",

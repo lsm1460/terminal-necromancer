@@ -16,7 +16,7 @@ export class SecondBoss implements BossLogic {
     return i18n.t('npc.second_boss.defeatTalk', { returnObjects: true }) as string[]
   }
 
-  createEnemies(bossNpc: NPC, context: GameContext): CombatUnit[] {
+  async createEnemies(bossNpc: NPC, context: GameContext) {
     const { battle, monster } = context
 
     // 1. 메인 보스 추가

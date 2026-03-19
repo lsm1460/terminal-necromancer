@@ -54,7 +54,7 @@ export class NPCManager {
     if (!base || !state) return null
     if (state.reborn) return null
 
-    const npc = {
+    const npc: NPC = {
       id,
       ...base,
       ...state,

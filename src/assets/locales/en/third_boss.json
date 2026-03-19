@@ -1,0 +1,55 @@
+{
+  "name": "The Factions",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": { "greeting": "...", "farewell": "..." },
+    "normal": { "greeting": "...", "farewell": "..." },
+    "hostile": { "greeting": "...", "farewell": "..." }
+  },
+  "deathLine": "...",
+  "description": "...",
+
+  "postTalk": [
+    "Amidst the silent rows of polished VIP emergency pods, a heavy tension hangs over the stark yellow safety lines etched into the platform floor.",
+    "The arrogance of the elite seeking escape clashes violently with the desperation of the Resistance, who must seize them as hostages to bargain with the Reaper."
+  ],
+  "defeatTalk": [],
+
+  "encounter": {
+    "vip_scorn": [
+      "Arka: \"Ignorant mortals, how dare you stand in our way?\"",
+      "Arka: \"You are not even worthy of my shadow.\""
+    ],
+    "res_demand_kane": [
+      "Kane: \"We seek no more blood. But for a bargain with the Reaper, you as a 'tool' are a necessary sacrifice.\"",
+      "Kane: \"Come quietly as hostages if you wish to live. We have no other choice.\""
+    ],
+    "res_demand_ren": [
+      "Ren: \"Captain Kane is gone, but our goal remains. We must offer them to the Reaper to bring our comrades back.\"",
+      "Ren: \"Drop your weapons. If you resist, we cannot guarantee the hostage's safety.\""
+    ]
+  },
+  "help_call_vip": "Arka: \"Wanderer! These savages seek to take us hostage. Strike them down!\"",
+  "help_call_res": "{{name}}: \"You must be aware of his tyranny. Cooperate with the Resistance.\"",
+  "select_side": "Which side will you take?",
+  "options": {
+    "resistance": "Cooperate with the Resistance",
+    "vip": "Help the VIP Guard",
+    "kill_all": "Kill them all"
+  },
+
+  "victory": {
+    "resistance": [
+      "The golden shuttle lies crushed, and Arka's divine power has been shattered.",
+      "The Resistance disappears into the shadows with their hostages. You have played your part in offering a tragic sacrifice for the bargain with the Reaper."
+    ],
+    "vip": [
+      "The bodies of the rebels pile up over the yellow safety lines. Arka wipes away the blood with a cold gaze.",
+      "Order is preserved, and the VIP has escaped safely. In your hand lies the cold reward tossed to you by the elite."
+    ],
+    "kill_all": [
+      "No breath remains on the platform. Only the blare of the emergency alarm fills the silence.",
+      "Neither order nor liberation remains. You have simply erased every life that stood in your path. Only the Reaper will be satisfied with this grim outcome."
+    ]
+  }
+}

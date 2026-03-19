@@ -50,7 +50,7 @@
     "attackType": "ranged",
     "description": "강력한 불을 사방에 내뿜습니다.",
     "chance": 0.3,
-    "power": 0.3,
+    "power": 0.6,
     "targetType": "ENEMY_ALL",
     "buff": {
       "id": "burn",
@@ -65,7 +65,7 @@
     "attackType": "melee",
     "description": "상대의 빈틈을 노려 예리한 무기나 날카로운 신체 부위로 빠르게 베어 가릅니다.",
     "chance": 0.4,
-    "power": 1.2,
+    "power": 1.6,
     "targetType": "ENEMY_SINGLE"
   },
   "sticky_web": {
@@ -88,7 +88,7 @@
     "attackType": "ranged",
     "description": "내부의 에너지를 한꺼번에 폭주시킨 뒤 신체를 비산시켜 주위에 치명적인 타격을 입힙니다.",
     "chance": 0.2,
-    "power": 1,
+    "power": 0.6,
     "targetType": "ENEMY_ALL"
   },
   "health_drain": {
@@ -115,7 +115,7 @@
     "attackType": "ranged",
     "description": "적의 급소를 노려 강력한 투사체를 발사합니다.",
     "chance": 0.3,
-    "power": 1.4,
+    "power": 2.5,
     "targetType": "ENEMY_SINGLE"
   },
   "aim_arrow": {
@@ -123,8 +123,8 @@
     "name": "저격 사격",
     "attackType": "ranged",
     "description": "가장 뒤에 있는 적을 저격합니다.",
-    "chance": 1,
-    "power": 1.2,
+    "chance": 0.2,
+    "power": 3,
     "targetType": "ENEMY_BACK"
   },
   "piercing_arrow": {
@@ -133,7 +133,7 @@
     "attackType": "ranged",
     "description": "전열을 관통해 그 뒤에 있는 적까지 노립니다.",
     "chance": 1,
-    "power": 1,
+    "power": 1.5,
     "targetType": "ENEMY_DOUBLE"
   },
   "rapid_fire": {
@@ -141,8 +141,8 @@
     "name": "난사",
     "attackType": "ranged",
     "description": "전장에 무차별적인 사격을 가해 모든 적에게 피해를 입힙니다.",
-    "chance": 0.2,
-    "power": 0.6,
+    "chance": 0.3,
+    "power": 1.6,
     "targetType": "ENEMY_ALL"
   },
   "minor_heal": {
@@ -181,7 +181,7 @@
     "attackType": "ranged",
     "description": "모든 적에게 화살 비를 퍼붓습니다.",
     "chance": 0.2,
-    "power": 0.8,
+    "power": 1.2,
     "targetType": "ENEMY_ALL"
   },
   "holy_radiance": {
@@ -190,7 +190,7 @@
     "attackType": "ranged",
     "description": "모든 아군의 상처를 어루만집니다.",
     "chance": 0.15,
-    "power": 25,
+    "power": 0.3,
     "targetType": "ALLY_ALL",
     "type": "heal"
   },
@@ -257,7 +257,7 @@
     "name": "발목 물기",
     "attackType": "melee",
     "chance": 0.4,
-    "power": 1.2,
+    "power": 1.6,
     "targetType": "RANDOM",
     "description": "발목을 정확히 조준하여 물어뜯습니다. 날카로운 이빨이 인대를 파고들어 이동 속도와 회피율을 급격히 떨어뜨립니다.",
     "buff": {
@@ -328,7 +328,7 @@
     "id": "enemy_curse",
     "name": "조롱",
     "description": "적군 모두에게 조롱을 퍼부어, 방어력을 떨어뜨립니다.",
-    "chance": 0.15,
+    "chance": 0.3,
     "targetType": "ENEMY_ALL",
     "type": "deBuff",
     "buff": {
@@ -358,7 +358,7 @@
     "name": "독 찌르기",
     "attackType": "melee",
     "chance": 0.4,
-    "power": 1.1,
+    "power": 1.5,
     "targetType": "RANDOM",
     "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다.",
     "buff": {
@@ -374,7 +374,7 @@
     "attackType": "melee",
     "description": "가장 취약한 적의 빈틈을 파고들어 치명적인 근접 공격을 가합니다.",
     "chance": 0.25,
-    "power": 1.6,
+    "power": 2.4,
     "targetType": "ENEMY_LOWEST_HP"
   },
   "whirlwind": {
@@ -470,7 +470,7 @@
     "attackType": "ranged",
     "description": "전장 전체의 공간을 압축하여 파괴합니다.",
     "chance": 0.3,
-    "power": 0.7,
+    "power": 1.3,
     "targetType": "ENEMY_ALL"
   },
   "spectral_wail": {
@@ -479,7 +479,7 @@
     "attackType": "ranged",
     "description": "귀족의 원한이 담긴 비명을 질러 모든 적의 정신을 붕괴시킵니다.",
     "chance": 0.6,
-    "power": 0.4,
+    "power": 3,
     "targetType": "ENEMY_ALL"
   },
   "spout_out": {
@@ -490,5 +490,38 @@
     "chance": 0.3,
     "power": 3,
     "targetType": "PLAYER"
+  },
+  "cmd_aegis": {
+    "id": "cmd_aegis",
+    "name": "명령:가호",
+    "description": "모든 아군을 축복하는 언령을 보냅니다.",
+    "chance": 0.2,
+    "targetType": "ALLY_ALL",
+    "type": "buff",
+    "buff": {
+      "id": "grace",
+      "type": "buff",
+      "atk": 15,
+      "duration": 3
+    }
+  },
+  "cmd_grace": {
+    "id": "cmd_grace",
+    "name": "명령:회복",
+    "attackType": "ranged",
+    "description": "모든 아군을 회복시키는 언령을 보냅니다.",
+    "chance": 0.3,
+    "power": 0.3,
+    "targetType": "ALLY_ALL",
+    "type": "heal"
+  },
+  "cmd_purity": {
+    "id": "cmd_purity",
+    "name": "명령:정화",
+    "attackType": "ranged",
+    "description": "모든 적군을 정화시키는 언령을 보냅니다.",
+    "chance": 0.3,
+    "power": 1.6,
+    "targetType": "ENEMY_ALL"
   }
 }

@@ -37,5 +37,36 @@
       "Kane: \"Listen, newbie. Will you bow your head submissively and let your soul be gnawed away as the Reaper commands?\nOr will you join us and tear down this twisted system?\"",
       "Kane: \"The choice is yours. But remember—it is far more valuable to vanish resisting as a human than to be discarded after living as the Reaper's dog.\""
     ]
+  },
+
+  "choice": {
+    "donation": "📦Donate"
+  },
+
+  "contribute_prompt": "How much will you offer? Your decision becomes tomorrow's hope for someone.",
+  "no_gold_flavor": "Kane: \"Your pockets are light. I'll take the thought, at least.\"",
+  "status_lines": {
+    "stranger": "Kane: \"I don't fully trust you yet. I just hope you're not another one of the Reaper's hounds.\"",
+    "member": "Kane: \"You're starting to smell like one of our own now. Your devotion won't be forgotten.\"",
+    "pillar": "Kane: \"You are already a pillar of our revolution. Without you, we might have collapsed long ago.\""
+  },
+  "reaction": {
+    "small": [
+      "Kane: \"A small token. It should be enough for a hungry child's meal.\"",
+      "Kane: \"Every little bit helps. I won't let it go to waste.\""
+    ],
+    "medium": [
+      "Kane: \"A substantial amount. This is enough to sharpen the rusted blades of my men.\"",
+      "Kane: \"I respect your resolve. You will be remembered in the name of the Resistance.\""
+    ],
+    "large": [
+      "Kane: \"(His eyes deepen) This much...? I can feel your sincerity. The flames of revolution will burn even brighter.\"",
+      "Kane: \"Impressive. It's as if your will to refuse being the Reaper's lapdog is forged into these coins.\""
+    ]
+  },
+
+  "donation": {
+    "option": "💰 Donate {{percent}}% ({{amount}} Gold)",
+    "result": "\n[Result] Contribution increased by {{gain}}! (Current Gold: {{gold}} Gold)"
   }
 }

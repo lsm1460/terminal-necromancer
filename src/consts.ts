@@ -51,7 +51,7 @@ export const DIRECTIONS: Record<Direction, Vector> = {
   right: { dx: 1, dy: 0 },
 }
 
-export const HOSTILITY_LIMIT = 100
+export const HOSTILITY_LIMIT = 50
 
 export const MAP_IDS = {
   title: 'title',
@@ -146,7 +146,7 @@ export const RARITY_DATA: Record<SkeletonRarity, { bonus: number; weight: number
         name: '대형 방패병',
         orderWeight: 5,
         statMod: { atk: 0.8, def: 2.8, hp: 2.5, agi: 0.7 },
-        skills: ['shield_Bash'],
+        skills: ['shield_bash'],
         weight: 4,
         attackType: 'melee',
       },

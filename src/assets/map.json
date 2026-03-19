@@ -507,8 +507,8 @@
           "id": "B5_009",
           "x": 1,
           "y": 2,
-          "event": "none",
-          "npcIds": ["heal-once"]
+          "event": "heal-once",
+          "npcIds": []
         },
         {
           "id": "B5_010",
@@ -614,9 +614,8 @@
           "id": "B5_022",
           "x": 3,
           "y": 5,
-          "event": "monster-b5-lounge-patrol",
-          "spawn_limit": 4,
-          "npcIds": []
+          "event": "boss",
+          "npcIds": ["third_boss"]
         },
         {
           "id": "B5_023",

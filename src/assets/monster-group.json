@@ -70,7 +70,20 @@
     { "id": "optical_surveillance_unit", "encounterRate": 80 },
     { "id": "security_guard", "encounterRate": 100 }
   ],
-  "monster-test-group": [
-    { "id": "test_man", "encounterRate": 100 }
+  "monster-test-group": [{ "id": "test_man", "encounterRate": 100 }],
+  "monster-b5-vip": [
+    { "id": "arka", "encounterRate": 100 },
+    { "id": "nivalis", "encounterRate": 100 },
+    { "id": "optical_surveillance_unit", "encounterRate": 100 },
+    { "id": "security_guard_no_gain", "encounterRate": 100 },
+    { "id": "security_guard_no_gain", "encounterRate": 100 },
+    { "id": "security_priest_no_gain", "encounterRate": 100 }
+  ],
+  "monster-b5-resistance": [
+    { "id": "resistance_priest", "encounterRate": 100 },
+    { "id": "resistance_member", "encounterRate": 100 },
+    { "id": "resistance_priest", "encounterRate": 100 },
+    { "id": "resistance_member", "encounterRate": 100 },
+    { "id": "resistance_member", "encounterRate": 100 }
   ]
 }

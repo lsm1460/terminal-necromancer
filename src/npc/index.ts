@@ -19,6 +19,7 @@ import ratty from './ratty'
 import subspace from './subspace'
 import vending_machine from './vending_machine'
 import vesper from './vesper'
+import baron_valter from './baron_valter'
 
 const npcHandlers: Record<string, NPCHandler> = {
   portal,

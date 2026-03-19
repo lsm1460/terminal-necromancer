@@ -9,8 +9,12 @@ import SkeletonWrapper from './SkeletonWrapper'
 export class MinionManager {
   skeletonSubspace: BattleTarget[] = []
   subspaceLimit = 15
+
   private _skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
   _maxSkeleton: number = 2 // 최대 소환 가능 수
+
+  private _mercenary: BattleTarget[] = []
+  maxMercenary = 3
 
   upgradeLimit = 5
   golemUpgrade: ('machine' | 'soul')[] = []
@@ -26,6 +30,7 @@ export class MinionManager {
       if (saved.skeletonSubspace) this.skeletonSubspace = saved.skeletonSubspace
       if (saved.subspaceLimit) this.subspaceLimit = saved.subspaceLimit
       if (saved._skeleton) this._skeleton = saved._skeleton
+      if (saved._mercenary) this._mercenary = saved._mercenary || []
       if (saved._maxSkeleton) this._maxSkeleton = saved._maxSkeleton
       if (saved.golemUpgrade) this.golemUpgrade = saved.golemUpgrade
       if (saved._golem) this._golem = saved._golem
@@ -72,7 +77,7 @@ export class MinionManager {
   get minions(): BattleTarget[] {
     const _skeletons = this.skeleton.sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
 
-    return [this.golem!, ..._skeletons, this.knight!].filter((_minion) => !!_minion)
+    return [this.golem!, ..._skeletons, this.knight!, ...this._mercenary].filter((_minion) => !!_minion)
   }
 
   public updateSkeletonLimit() {
@@ -96,6 +101,19 @@ export class MinionManager {
     }
 
     return false
+  }
+
+  addMercenary(mercenary: BattleTarget) {
+    if (this._mercenary.length < this.maxMercenary) {
+      this._mercenary.push(mercenary)
+      return true
+    }
+
+    return false
+  }
+
+  removeMercenaries() {
+    this._mercenary = []
   }
 
   removeMinion(minionId: string) {
@@ -158,7 +176,7 @@ export class MinionManager {
       isGolem: true,
       deathLine: '',
       orderWeight: -15,
-      madeBy: type
+      madeBy: type,
     }
   }
 
@@ -186,8 +204,7 @@ export class MinionManager {
       isMinion: true,
       isKnight: true,
       deathLine: '',
-      description:
-        '',
+      description: '',
       dropTableId: '',
       skills: ['power_smash'],
     }
@@ -198,6 +215,7 @@ export class MinionManager {
   public toJSON() {
     return {
       _skeleton: this._skeleton,
+      _mercenary: this._mercenary,
       skeletonSubspace: this.skeletonSubspace,
       subspaceLimit: this.subspaceLimit,
       _maxSkeleton: this._maxSkeleton,

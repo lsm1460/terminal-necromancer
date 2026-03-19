@@ -3,20 +3,20 @@
     "id": "player",
     "name": "player",
     "x": 0,
-    "y": 1,
-    "_maxHp": 138,
-    "hp": 108,
-    "_maxMp": 138,
-    "mp": 170,
-    "atk": 11,
+    "y": 0,
+    "_maxHp": 182,
+    "hp": 182,
+    "_maxMp": 100,
+    "mp": 150,
+    "atk": 12,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 5916,
-    "exp": 3591,
-    "level": 4,
-    "karma": 3,
+    "gold": 3132,
+    "exp": 3311,
+    "level": 5,
+    "karma": 13,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
@@ -31,70 +31,91 @@
       "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
       "SOUL_HARVEST",
-      "CURSE"
+      "CURSE",
+      "SOUL_TRANSFER",
+      "BONE_SPEAR"
     ],
     "_skeleton": [
       {
-        "id": "skeleton_warrior::1773811200322",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
+        "id": "skeleton_shield_bearer::1773880648152",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
         "attackType": "melee",
-        "maxHp": 93,
-        "hp": 93,
-        "atk": 33,
-        "def": 21,
-        "agi": 22,
-        "skills": [
-          "whirlwind"
-        ],
+        "maxHp": 134,
+        "hp": 71,
+        "atk": 11,
+        "def": 36,
+        "agi": 10,
+        "skills": [],
         "exp": 0,
-        "description": "A minion raised from the remains of Shipyard Guard.",
-        "originId": "shipyard_guard::OJNbBa3e",
-        "rarity": "epic",
+        "description": "A minion raised from the remains of Clinging Concierge.",
+        "originId": "clinging_concierge::hyRLn8qD",
+        "rarity": "rare",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 7
+        "orderWeight": 4
       },
       {
-        "id": "skeleton_archer::1773811631569",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
+        "id": "skeleton_shield_bearer::1773880833015",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
+        "attackType": "melee",
+        "maxHp": 144,
+        "hp": 144,
+        "atk": 15,
+        "def": 30,
+        "agi": 13,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Terminal Security Guard.",
+        "originId": "security_guard::6LHHV_MH",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 4
+      },
+      {
+        "id": "skeleton_monk::1773884313019",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 수도자",
         "attackType": "ranged",
         "maxHp": 84,
         "hp": 84,
-        "atk": 40,
-        "def": 14,
-        "agi": 16,
+        "atk": 18,
+        "def": 12,
+        "agi": 24,
         "skills": [
-          "aim_arrow"
+          "heal"
         ],
         "exp": 0,
-        "description": "A minion raised from the remains of Mutated Shipyard Worker.",
-        "originId": "mutated_worker::1NpPcd8M",
+        "description": "A minion raised from the remains of Terminal Security Guard.",
+        "originId": "security_guard::lGUAdWml",
         "rarity": "elite",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 25
+        "orderWeight": 35
       },
       {
-        "id": "skeleton_pyromancer::1773814033643",
+        "id": "skeleton_pyromancer::1773884321143",
         "name": "\u001b[32m[RARE]\u001b[0m skeleton 화염술사",
         "attackType": "ranged",
-        "maxHp": 66,
-        "hp": 66,
-        "atk": 12,
-        "def": 7,
-        "agi": 18,
+        "maxHp": 72,
+        "hp": 72,
+        "atk": 15,
+        "def": 10,
+        "agi": 21,
         "skills": [
           "fire_bolt"
         ],
         "exp": 0,
-        "description": "터미널 보안 가드의 유골로 만들어진 소환수입니다.",
-        "originId": "security_guard::PcD70O96",
+        "description": "A minion raised from the remains of Terminal Security Guard.",
+        "originId": "security_guard::fKebbgzE",
         "rarity": "rare",
         "dropTableId": "",
         "encounterRate": 0,
@@ -102,6 +123,48 @@
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 30
+      },
+      {
+        "id": "skeleton_shield_bearer::1773884822436",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
+        "attackType": "melee",
+        "maxHp": 134,
+        "hp": 134,
+        "atk": 11,
+        "def": 36,
+        "agi": 10,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Clinging Concierge.",
+        "originId": "clinging_concierge::GjbMxHM_",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 4
+      },
+      {
+        "id": "skeleton::1773884826315",
+        "name": "\u001b[37m[COMMON]\u001b[0m skeleton 병사",
+        "attackType": "melee",
+        "maxHp": 61,
+        "hp": 61,
+        "atk": 17,
+        "def": 13,
+        "agi": 13,
+        "skills": [],
+        "exp": 0,
+        "description": "A minion raised from the remains of Clinging Concierge.",
+        "originId": "clinging_concierge::hkrF12bH",
+        "rarity": "common",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 10
       }
     ],
     "_golem": {
@@ -130,6 +193,7 @@
       "orderWeight": -15,
       "madeBy": "maya"
     },
+    "_mercenary": [],
     "inventory": [
       {
         "id": "mana_potion",
@@ -180,17 +244,51 @@
         "hpHeal": 100,
         "price": 300,
         "sellPrice": 30,
-        "quantity": 1,
+        "quantity": 3,
         "x": 3,
         "y": 3
+      },
+      {
+        "id": "nano_medical_kit",
+        "type": "consumable",
+        "hpHeal": 180,
+        "price": 600,
+        "sellPrice": 60,
+        "quantity": 2
+      },
+      {
+        "id": "hard_steel_plate::5k-nncna",
+        "type": "armor",
+        "defRange": [
+          18,
+          22
+        ],
+        "evaRange": [
+          -0.05,
+          0
+        ],
+        "price": 1900,
+        "sellPrice": 450,
+        "quantity": 1,
+        "def": 32,
+        "eva": -0.05,
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "mortal",
+        "affix": {
+          "id": "LEGION"
+        },
+        "x": 4,
+        "y": 0
       }
     ],
     "inventoryMax": 15,
     "skeletonSubspace": [],
     "subspaceLimit": 15,
-    "_maxSkeleton": 3,
+    "_maxSkeleton": 4,
     "golemUpgrade": [
-      "soul"
+      "soul",
+      "machine"
     ],
     "knightUpgrade": [],
     "upgradeLimit": 5,
@@ -226,28 +324,30 @@
         "y": 3
       },
       "armor": {
-        "id": "hard_steel_plate::5k-nncna",
+        "id": "phantom_cloth::_Eyk3JWq",
         "type": "armor",
         "defRange": [
-          18,
-          22
+          8,
+          12
         ],
         "evaRange": [
-          -0.05,
-          0
+          0.15,
+          0.25
         ],
-        "price": 1900,
-        "sellPrice": 450,
+        "maxSkeletonRange": [
+          1,
+          2
+        ],
+        "price": 1750,
+        "sellPrice": 400,
         "quantity": 1,
-        "def": 32,
-        "eva": -0.05,
-        "rarity": "EPIC",
+        "def": 9,
+        "eva": 0.19,
+        "maxSkeleton": 2,
+        "rarity": "COMMON",
         "perfPrefix": "",
-        "adjective": "mortal",
-        "affix": {
-          "id": "LEGION"
-        },
-        "x": 4,
+        "adjective": "",
+        "x": 1,
         "y": 0
       }
     }
@@ -377,8 +477,8 @@
       },
       "oliver": {
         "hp": 2,
-        "isAlive": true,
-        "reborn": false,
+        "isAlive": false,
+        "reborn": true,
         "relation": 0
       },
       "kael": {
@@ -398,6 +498,12 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "third_boss": {
+        "hp": 650,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
       }
     },
     "factionHostility": {
@@ -407,7 +513,7 @@
     },
     "factionContribution": {
       "untouchable": 10,
-      "resistance": 295
+      "resistance": 357
     }
   },
   "drop": null,
@@ -429,7 +535,11 @@
     "defeat_caron",
     "report_caron_to_death",
     "b5_adrian",
-    "b5_child_resistance_encounter"
+    "b5_child_resistance_encounter",
+    "b5_julian",
+    "b5_oliver",
+    "b5_flint_meeting_complete",
+    "b5_flint"
   ],
-  "locale": "ko"
+  "locale": "en"
 }
