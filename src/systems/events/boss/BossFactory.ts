@@ -1,11 +1,13 @@
 import { BossLogic } from './BossLogic'
 import { FirstBoss } from './FirstBoss'
 import { SecondBoss } from './SecondBoss'
+import { ThirdBoss } from './ThirdBoss'
 
 export class BossFactory {
   private static registry: Record<string, BossLogic> = {
     first_boss: new FirstBoss(),
     second_boss: new SecondBoss(), // 나중에 추가 가능
+    third_boss: new ThirdBoss(), // 나중에 추가 가능
   }
 
   static getLogic(bossId: string): BossLogic | undefined {

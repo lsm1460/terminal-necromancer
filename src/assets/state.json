@@ -2,28 +2,28 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
-    "y": 0,
-    "_maxHp": 182,
-    "hp": 182,
+    "x": 3,
+    "y": 5,
+    "_maxHp": 231,
+    "hp": 231,
     "_maxMp": 100,
-    "mp": 150,
-    "atk": 12,
+    "mp": 137,
+    "atk": 13,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 3132,
-    "exp": 3311,
-    "level": 5,
+    "gold": 3858,
+    "exp": 4021,
+    "level": 6,
     "karma": 13,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
-      "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
-      "CURSE"
+      "SOUL_TRANSFER",
+      "BONE_SPEAR"
     ],
     "unlockedSkills": [
       "RAISE_SKELETON",
@@ -36,48 +36,6 @@
       "BONE_SPEAR"
     ],
     "_skeleton": [
-      {
-        "id": "skeleton_shield_bearer::1773880648152",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
-        "attackType": "melee",
-        "maxHp": 134,
-        "hp": 71,
-        "atk": 11,
-        "def": 36,
-        "agi": 10,
-        "skills": [],
-        "exp": 0,
-        "description": "A minion raised from the remains of Clinging Concierge.",
-        "originId": "clinging_concierge::hyRLn8qD",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
-      },
-      {
-        "id": "skeleton_shield_bearer::1773880833015",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
-        "attackType": "melee",
-        "maxHp": 144,
-        "hp": 144,
-        "atk": 15,
-        "def": 30,
-        "agi": 13,
-        "skills": [],
-        "exp": 0,
-        "description": "A minion raised from the remains of Terminal Security Guard.",
-        "originId": "security_guard::6LHHV_MH",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
-      },
       {
         "id": "skeleton_monk::1773884313019",
         "name": "\u001b[34m[ELITE]\u001b[0m skeleton 수도자",
@@ -102,29 +60,6 @@
         "orderWeight": 35
       },
       {
-        "id": "skeleton_pyromancer::1773884321143",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 화염술사",
-        "attackType": "ranged",
-        "maxHp": 72,
-        "hp": 72,
-        "atk": 15,
-        "def": 10,
-        "agi": 21,
-        "skills": [
-          "fire_bolt"
-        ],
-        "exp": 0,
-        "description": "A minion raised from the remains of Terminal Security Guard.",
-        "originId": "security_guard::fKebbgzE",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
         "id": "skeleton_shield_bearer::1773884822436",
         "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
         "attackType": "melee",
@@ -146,18 +81,110 @@
         "orderWeight": 4
       },
       {
-        "id": "skeleton::1773884826315",
+        "id": "skeleton_pyromancer::1773908355558",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 화염술사",
+        "attackType": "ranged",
+        "maxHp": 72,
+        "hp": 72,
+        "atk": 15,
+        "def": 10,
+        "agi": 21,
+        "skills": [
+          "fire_bolt"
+        ],
+        "exp": 0,
+        "description": "터미널 보안 가드의 유골로 만들어진 소환수입니다.",
+        "originId": "security_guard::zekNbSzA",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 30
+      },
+      {
+        "id": "skeleton_healer::1773908997593",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 힐러",
+        "attackType": "ranged",
+        "maxHp": 62,
+        "hp": 62,
+        "atk": 15,
+        "def": 5,
+        "agi": 42,
+        "skills": [
+          "minor_heal"
+        ],
+        "exp": 0,
+        "description": "약물 투여된 광견의 유골로 만들어진 소환수입니다.",
+        "originId": "modified_fury_hound::vSYy0aFK",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 30
+      },
+      {
+        "id": "skeleton_archer::1773909029863",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
+        "attackType": "ranged",
+        "maxHp": 72,
+        "hp": 72,
+        "atk": 47,
+        "def": 11,
+        "agi": 46,
+        "skills": [
+          "aim_arrow"
+        ],
+        "exp": 0,
+        "description": "터미널 보안 사수의 유골로 만들어진 소환수입니다.",
+        "originId": "security_sharpshooter::KDdfxw8s",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 25
+      },
+      {
+        "id": "skeleton_healer::1773909061837",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 힐러",
+        "attackType": "ranged",
+        "maxHp": 52,
+        "hp": 52,
+        "atk": 8,
+        "def": 8,
+        "agi": 26,
+        "skills": [
+          "minor_heal"
+        ],
+        "exp": 0,
+        "description": "터미널 보안 사제의 유골로 만들어진 소환수입니다.",
+        "originId": "security_priest_no_gain::umx_vnEp",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 30
+      },
+      {
+        "id": "skeleton::1773909164086",
         "name": "\u001b[37m[COMMON]\u001b[0m skeleton 병사",
         "attackType": "melee",
-        "maxHp": 61,
-        "hp": 61,
-        "atk": 17,
-        "def": 13,
-        "agi": 13,
+        "maxHp": 66,
+        "hp": 66,
+        "atk": 24,
+        "def": 11,
+        "agi": 17,
         "skills": [],
         "exp": 0,
-        "description": "A minion raised from the remains of Clinging Concierge.",
-        "originId": "clinging_concierge::hkrF12bH",
+        "description": "터미널 보안 가드의 유골로 만들어진 소환수입니다.",
+        "originId": "security_guard_no_gain::r0Ez8Q6Q",
         "rarity": "common",
         "dropTableId": "",
         "encounterRate": 0,
@@ -173,7 +200,7 @@
       "attackType": "melee",
       "baseMaxHp": 90,
       "maxHp": 90,
-      "hp": 82,
+      "hp": 120,
       "baseAtk": 20,
       "atk": 20,
       "baseDef": 40,
@@ -183,7 +210,7 @@
       "description": "",
       "dropTableId": "",
       "encounterRate": 0,
-      "isAlive": true,
+      "isAlive": false,
       "skills": [
         "power_smash"
       ],
@@ -209,7 +236,7 @@
         "mpHeal": 80,
         "price": 450,
         "sellPrice": 45,
-        "quantity": 1,
+        "quantity": 2,
         "x": 2,
         "y": 0
       },
@@ -244,7 +271,7 @@
         "hpHeal": 100,
         "price": 300,
         "sellPrice": 30,
-        "quantity": 3,
+        "quantity": 5,
         "x": 3,
         "y": 3
       },
@@ -352,7 +379,7 @@
       }
     }
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B5_VIP_lounge",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -504,6 +531,12 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
+      },
+      "ren": {
+        "hp": 200,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
       }
     },
     "factionHostility": {
@@ -541,5 +574,5 @@
     "b5_flint_meeting_complete",
     "b5_flint"
   ],
-  "locale": "en"
+  "locale": "ko"
 }

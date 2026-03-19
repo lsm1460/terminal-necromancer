@@ -1,6 +1,7 @@
 import adrian from './adrian.json'
 import affix from './affix.json'
 import apostle from './apostle.json'
+import baron_valter from './baron_valter.json'
 import battle from './battle.json'
 import broadcast from './broadcast.json'
 import caron from './caron.json'
@@ -29,9 +30,9 @@ import ratty from './ratty.json'
 import second_boss from './second_boss.json'
 import skill from './skill.json'
 import subspace from './subspace.json'
+import third_boss from './third_boss.json'
 import vending_machine from './vending_machine.json'
 import web from './web.json'
-import baron_valter from './baron_valter.json'
 
 const ko = {
   ...init,
@@ -68,6 +69,7 @@ const ko = {
     adrian,
     flint,
     baron_valter,
+    third_boss,
   },
   skill,
   events,

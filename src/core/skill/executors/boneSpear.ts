@@ -27,7 +27,7 @@ export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } 
   const skeletonId = await Terminal.select(i18n.t('skill.BONE_SPEAR.select_prompt'), [
     ...skeletons.map((sk) => ({
       name: sk.id,
-      message: i18n.t('skill.choice_format', { name: sk.name, hp: sk.hp }),
+      message: i18n.t('skill.choice_format', { name: sk.name, hp: sk.hp, maxHp: sk.maxHp }),
     })),
     { name: 'cancel', message: i18n.t('cancel') },
   ])
