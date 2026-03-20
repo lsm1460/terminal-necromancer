@@ -1,8 +1,9 @@
 import i18n from '~/i18n'
-import { NpcSkill } from '~/types'
+import { BattleTarget, NpcSkill, PhasesShift } from '~/types'
 import { Battle, DamageOptions } from '../battle/Battle'
 import { CombatUnit } from '../battle/unit/CombatUnit'
 import { Terminal } from '../Terminal'
+import { getOriginId } from '~/utils'
 
 type PassiveEffect = (
   attacker: CombatUnit,
@@ -97,4 +98,39 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       }
     },
   },
+
+  second_phases: {
+    onBeforeAttack: async (attacker, defender, skill, battle) => {
+      handlePhases(attacker, skill as PhasesShift)
+    },
+  },
+
+  third_phases: {
+    onBeforeAttack: async (attacker, defender, skill, battle) => {
+      handlePhases(attacker, skill as PhasesShift)
+    },
+  },
+}
+
+function handlePhases(attacker: CombatUnit, phases: PhasesShift) {
+  const isActive = attacker.ref.hp / attacker.ref.maxHp < phases.chance
+
+  if (!isActive && attacker.phases <= phases.step) return
+  console.log('DEBUG::', attacker.phases, phases)
+  const msg = i18n.t(`skill.passive.phases_${phases.step}`, { attacker: attacker.name })
+  Terminal.log(RED(msg))
+
+  attacker.ref.hp = attacker.ref.maxHp
+
+  attacker.phases = phases.step
+
+  const ref = attacker.ref as BattleTarget
+  const originSkills = (ref.skills || []).filter((skillId) => skillId !== phases.id)
+  ref.skills = [...originSkills, ...phases.skills]
+  console.log('DEBUG::', ref.skills)
+
+  const secondPhasesMessageKey = `npc.${getOriginId(attacker.id)}.phases_${phases.step}`
+
+  const hasMsg = i18n.exists(secondPhasesMessageKey)
+  hasMsg && Terminal.log(RED(i18n.t(secondPhasesMessageKey)))
 }

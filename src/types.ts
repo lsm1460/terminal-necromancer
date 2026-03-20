@@ -345,6 +345,12 @@ export type NpcSkill = {
   }
 }
 
+export type PhasesShift = {
+  skills: string[]
+  chance: number
+  step: number
+} & NpcSkill
+
 export type AffixId =
   | 'SURPRISE_ATTACK'
   | 'OVERLORD'

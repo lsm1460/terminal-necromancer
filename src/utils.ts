@@ -18,8 +18,14 @@ export async function delay(amount: number = 1500) {
   await new Promise((resolve) => setTimeout(resolve, amount))
 }
 
+export function getOriginId(id: string) {
+  const parts = id.split('::')
+
+  return parts.length > 1 ? parts[0] : id
+}
+
 export function getItemLabel(item: Item) {
-  const originId = item.id.split('::')[0]
+  const originId = getOriginId(item.id)
   const label = i18n.t(`item.${originId}.label`)
 
   const finalLabel = []

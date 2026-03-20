@@ -136,7 +136,8 @@
   "passive": {
     "death_aura": "[!] {{attacker}}'s Death Aura begins to constrict the souls of the enemies...",
     "thorns": "\n[🦷 Thorns]: {{defender}}'s thorns tear into {{attacker}}'s flesh!",
-    "death_destruct": "\n[🔥 Doomsday]: {{unit}}'s corpse explodes, consuming everything around it!"
+    "death_destruct": "\n[🔥 Doomsday]: {{unit}}'s corpse explodes, consuming everything around it!",
+    "phases_2": "\n[!] {{attacker}}의 본모습이 노출됩니다."
   },
 
   "special": {

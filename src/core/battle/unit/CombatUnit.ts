@@ -3,11 +3,11 @@ import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { AttackType, BattleTarget, UnitSprites } from '~/types'
+import { getOriginId } from '~/utils'
 import { Battle, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
 import { Buff, BuffOptions } from '../Buff'
 import { BattleLogFormatter } from './BattleLogFormatter'
-import { getBuffMessage } from './consts'
 
 type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
 
@@ -19,6 +19,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public buff: Buff[] = []
   public deBuff: Buff[] = []
   public orderWeight: number
+  public phases = 1
 
   // 어픽스 매니저가 주입할 훅 리스트
   public onBeforeAttackHooks: UnitDamageProcessHook[] = []
@@ -27,6 +28,8 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public onAfterHitHooks: UnitDamageProcessHook[] = []
   public onDeath?: () => void | Promise<void>
   public onDeathHooks: ((attacker: CombatUnit, options?: DamageOptions) => Promise<void>)[] = []
+
+  private buffType = ['buff', 'stealth']
 
   constructor(
     public ref: T,
@@ -48,7 +51,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   public get sprites(): UnitSprites | void {
-    const originId = this.id.split('::')[0]
+    const originId = getOriginId(this.id)
     return assetManager.getSprites(originId)
   }
 
@@ -69,9 +72,26 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.attackType = unit.computed?.attackType || unit.attackType || 'melee'
   }
 
+  private getBuffMessage(buff: Buff) {
+    const isBuff = this.buffType.includes(buff.type)
+    const path = isBuff ? 'skill.message.buff' : 'skill.message.debuff'
+    const fullPath = `${path}.${buff.id}`
+
+    if (!i18n.exists(fullPath)) {
+      return
+    }
+
+    return (name: string, hp?: number, maxHp?: number) =>
+      i18n.t(fullPath, {
+        name,
+        hp: hp?.toString(),
+        maxHp: maxHp?.toString(),
+      })
+  }
+
   private processEffect(effectOrOptions: BuffOptions, action: 'apply' | 'remove', force = false): void {
     const effect = new Buff(effectOrOptions)
-    const isBuff = ['buff', 'stealth'].includes(effect.type)
+    const isBuff = this.buffType.includes(effect.type)
     const targetArray = isBuff ? this.buff : this.deBuff
 
     if (action === 'apply') {
@@ -82,7 +102,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
         targetArray.push(effect)
       }
 
-      const getMsg = getBuffMessage(effect.id)
+      const getMsg = this.getBuffMessage(effect)
       if (getMsg) {
         Terminal.log(getMsg(this.name, this.ref.hp, this.ref.maxHp))
       }

@@ -43,7 +43,7 @@
         {
           "id": "B1_004",
           "theme": "tiled_floor",
-          "event": "event-01"
+          "event": "monster-test-group"
         },
         {
           "id": "B1_005",

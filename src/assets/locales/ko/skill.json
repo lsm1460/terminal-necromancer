@@ -132,9 +132,10 @@
   "stealth": "은신",
 
   "passive": {
-    "death_aura": "[!] {{attacker}}의 죽음의 오라가 적들의 영혼을 옥죄기 시작합니다...",
+    "death_aura": "\n[!] {{attacker}}의 죽음의 오라가 적들의 영혼을 옥죄기 시작합니다...",
     "thorns": "\n[🦷 가시]: {{defender}}의 가시가 {{attacker}}의 살점을 찢습니다!",
-    "death_destruct": "\n[🔥 종말]: {{unit}}의 시체가 폭발하며 주변을 삼킵니다!"
+    "death_destruct": "\n[🔥 종말]: {{unit}}의 시체가 폭발하며 주변을 삼킵니다!",
+    "phases_2": "\n[!] {{attacker}}의 본모습이 노출됩니다."
   },
 
   "special": {

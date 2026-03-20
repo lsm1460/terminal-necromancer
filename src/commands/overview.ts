@@ -5,7 +5,7 @@ import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { printStatus } from '~/statusPrinter'
 import { BattleTarget, CommandFunction, Corpse, Drop, GameContext, Item, ItemType, Monster, NPC, Tile } from '~/types'
-import { getItemLabel, makeItemMessage } from '~/utils'
+import { getItemLabel, getOriginId, makeItemMessage } from '~/utils'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
@@ -239,7 +239,7 @@ export const printItem = (item: Item) => {
     )
   }
 
-  const originId = item.id.split('::')[0]
+  const originId = getOriginId(item.id)
 
   Terminal.log(`──────────────────────────────────────────────`)
   Terminal.log(` 📝 ${i18n.t(`item.${originId}.description`)}`)

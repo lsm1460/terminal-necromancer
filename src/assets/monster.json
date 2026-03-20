@@ -2,13 +2,13 @@
   "test_man": {
     "id": "test_man",
     "attackType": "melee",
-    "hp": 3000,
-    "maxHp": 3000,
+    "hp": 500,
+    "maxHp": 500,
     "atk": 1,
     "def": 3,
     "agi": 8,
     "exp": 5,
-    "skills": ["quick_slash", "stealth"],
+    "skills": ["second_phases", "third_phases"],
     "dropTableId": "test_drop",
     "orderWeight": 20,
     "preemptive": true

@@ -523,5 +523,23 @@
     "chance": 0.3,
     "power": 1.6,
     "targetType": "ENEMY_ALL"
+  },
+  "second_phases": {
+    "id": "second_phases",
+    "name": "테스트맨의 2 페이즈",
+    "description": "테스트맨의 진정한 모습",
+    "chance": 0.5,
+    "step": 2,
+    "type": "passive",
+    "skills": ["cmd_purity"]
+  },
+  "third_phases": {
+    "id": "third_phases",
+    "name": "테스트맨의 3 페이즈",
+    "description": "테스트맨의 진정한 모습",
+    "chance": 0.5,
+    "step": 3,
+    "type": "passive",
+    "skills": ["cmd_grace"]
   }
 }

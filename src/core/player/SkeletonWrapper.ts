@@ -1,7 +1,8 @@
-import { BattleTarget } from '~/types'
-import { Player } from './Player'
-import i18n from '~/i18n'
 import { SkeletonRarity } from '~/consts'
+import i18n from '~/i18n'
+import { BattleTarget } from '~/types'
+import { getOriginId } from '~/utils'
+import { Player } from './Player'
 
 interface SkeletonWrapper extends BattleTarget {}
 
@@ -16,7 +17,7 @@ class SkeletonWrapper {
     return this.raw.id
   }
   get name() {
-    const originId = this.id.split('::')[0]
+    const originId = getOriginId(this.id)
 
     const rarityColors: Record<SkeletonRarity, string> = {
       common: '\x1b[37m', // 하얀색
@@ -58,7 +59,7 @@ class SkeletonWrapper {
     return this.raw.exp
   }
   get description() {
-    const originId = this.raw.originId ? this.raw.originId.split('::')[0] : ''
+    const originId = this.raw.originId ? getOriginId(this.raw.originId) : ''
 
     const originCorpseName = i18n.t(`npc.${originId}.name`)
 
