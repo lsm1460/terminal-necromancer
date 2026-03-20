@@ -115,8 +115,8 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
 function handlePhases(attacker: CombatUnit, phases: PhasesShift) {
   const isActive = attacker.ref.hp / attacker.ref.maxHp < phases.chance
 
-  if (!isActive && attacker.phases <= phases.step) return
-  console.log('DEBUG::', attacker.phases, phases)
+  if (!isActive || attacker.phases >= phases.step) return
+  
   const msg = i18n.t(`skill.passive.phases_${phases.step}`, { attacker: attacker.name })
   Terminal.log(RED(msg))
 
@@ -127,7 +127,6 @@ function handlePhases(attacker: CombatUnit, phases: PhasesShift) {
   const ref = attacker.ref as BattleTarget
   const originSkills = (ref.skills || []).filter((skillId) => skillId !== phases.id)
   ref.skills = [...originSkills, ...phases.skills]
-  console.log('DEBUG::', ref.skills)
 
   const secondPhasesMessageKey = `npc.${getOriginId(attacker.id)}.phases_${phases.step}`
 
