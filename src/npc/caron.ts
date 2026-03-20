@@ -19,6 +19,10 @@ const CaronHandler: NPCHandler = {
     ]
   },
 
+  hasQuest(player, npc, context) {
+    return true
+  },
+
   async handle(action, player, npc, context) {
     switch (action) {
       case 'talk':

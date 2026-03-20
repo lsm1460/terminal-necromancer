@@ -4,6 +4,7 @@ import { GameContext, NPC } from './types'
 import { Terminal } from './core/Terminal'
 import i18n from './i18n'
 import { getItemLabel } from './utils'
+import { QuestManager } from './core/QuestManager'
 
 export function printTileStatus(player: Player, context: GameContext) {
   const { map, npcs, world } = context
@@ -18,7 +19,11 @@ export function printTileStatus(player: Player, context: GameContext) {
   const corpses = world.getCorpsesAt(x, y)
 
   if (alive.length > 0) {
-    const aliveNames = alive.map((_npc) => _npc.name)
+    const aliveNames = alive.map((_npc) => {
+      const hasQuest = QuestManager.hasQuest(player, _npc, context)
+
+      return hasQuest ? `\x1b[32m[!]\x1b[0m ${_npc.name}` : _npc.name
+    })
 
     Terminal.say(aliveNames)
   }

@@ -7,25 +7,23 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const ZedHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const isB2Completed = context.events.isCompleted('talk_death_2')
+    const quest = getActiveQuest(player, context)
     const isB3Completed = context.events.isCompleted('second_boss')
-    const alreadyHeard = context.events.isCompleted('HEARD_RESISTANCE')
-    const alreadyDenied = context.events.isCompleted('golem_generation_denied_zed')
 
-    if (isB3Completed && !player.golem && !alreadyDenied) {
-      return [{ name: 'golem', message: i18n.t('talk.speak') + ' [!]' }]
+    if (quest) {
+      return [quest]
     }
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
-      ...(isB2Completed && !alreadyHeard ? [{ name: 'resistance', message: i18n.t('talk.speak') }] : []),
-      ...(isB3Completed
-        ? player.golem
-          ? [{ name: 'upgrade_golem', message: i18n.t('npc.dr_zed.choices.upgrade_golem') }]
-          : [{ name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }]
+      ...(isB3Completed && player.golem
+        ? [{ name: 'upgrade_golem', message: i18n.t('npc.dr_zed.choices.upgrade_golem') }]
         : []),
       { name: 'heal', message: i18n.t('talk.heal') },
     ]
+  },
+  hasQuest(player, npc, context) {
+    return getActiveQuest(player, context) !== null
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -190,6 +188,26 @@ async function handleAwakeGolem(player: Player, context: GameContext) {
 
   const successLogs = i18n.t('npc.dr_zed.awake.success', { returnObjects: true }) as string[]
   successLogs.forEach((log) => Terminal.log(log))
+}
+
+function getActiveQuest(player: Player, context: GameContext) {
+  const { events } = context
+  const isB2Completed = events.isCompleted('talk_death_2')
+  const isB3Completed = events.isCompleted('second_boss')
+  const alreadyHeard = events.isCompleted('HEARD_RESISTANCE')
+  const alreadyDenied = events.isCompleted('golem_generation_denied_zed')
+
+  // 1순위: 골렘 각성 (B3 클리어 후, 골렘이 없고, 거절한 적도 없을 때)
+  if (isB3Completed && !player.golem && !alreadyDenied) {
+    return { name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }
+  }
+
+  // 2순위: 레지스탕스 정보 (B2 클리어 후, 아직 듣지 않았을 때)
+  if (isB2Completed && !alreadyHeard) {
+    return { name: 'resistance', message: i18n.t('talk.speak') }
+  }
+
+  return null
 }
 
 export default ZedHandler

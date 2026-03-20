@@ -5,13 +5,16 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const AdrianHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const alreadyTalk = context.events.isCompleted('b5_adrian')
+    const quest = getActiveQuest(context)
 
-    if (alreadyTalk) {
-      return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
-    } else {
-      return [{ name: 'event', message: i18n.t('talk.examine') }]
+    if (quest) {
+      return [quest]
     }
+
+    return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
+  },
+  hasQuest(player, npc, context) {
+    return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -35,6 +38,18 @@ async function handleEvent(context: GameContext) {
   await speak(dialogues)
 
   events.completeEvent('b5_adrian')
+}
+
+function getActiveQuest(context: GameContext) {
+  const { events } = context
+
+  const alreadyTalk = events.isCompleted('b5_adrian')
+
+  if (!alreadyTalk) {
+    return { name: 'event', message: i18n.t('talk.examine') }
+  }
+
+  return null
 }
 
 export default AdrianHandler

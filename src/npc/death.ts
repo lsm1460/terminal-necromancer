@@ -9,38 +9,10 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const DeathHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const { events } = context
+    const quest = getActiveQuest(context)
 
-    const isFirst = events.isCompleted('talk_death_1')
-    const isSecond = events.isCompleted('talk_death_2')
-    const isThird = events.isCompleted('talk_death_3')
-    const isFourth = events.isCompleted('talk_death_4')
-
-    const isB2Completed = events.isCompleted('first_boss')
-    const isB3Completed = events.isCompleted('second_boss')
-    const isB5Completed = events.isCompleted('third_boss')
-
-    const caronFinished = events.isCompleted('defeat_caron')
-    const caronReported = events.isCompleted('report_caron_to_death')
-
-    if (caronFinished && !caronReported) {
-      return [{ name: 'reportCaron', message: i18n.t('npc.death.report_charon') }]
-    }
-
-    if (!isB2Completed) {
-      return [{ name: 'intro', message: i18n.t('talk.speak') }]
-    }
-
-    if (isB2Completed && !isSecond) {
-      return [{ name: 'tutorialOver', message: i18n.t('talk.speak') }]
-    }
-
-    if (isB3Completed && !isThird) {
-      return [{ name: 'defeatGolem', message: i18n.t('talk.speak') }]
-    }
-
-    if (isB5Completed && !isFourth) {
-      return [{ name: 'cleanupVipLounge', message: i18n.t('talk.speak') }]
+    if (quest) {
+      return [quest]
     }
 
     return [
@@ -49,6 +21,9 @@ const DeathHandler: NPCHandler = {
       { name: 'unlock', message: i18n.t('npc.death.unlock_skills') },
       { name: 'memorize', message: i18n.t('npc.death.engrave_skills') },
     ]
+  },
+  hasQuest(player, npc, context) {
+    return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -299,6 +274,43 @@ async function handleAfterCleanup(context: GameContext) {
   }
 
   events.completeEvent('talk_death_4')
+}
+
+function getActiveQuest(context: GameContext) {
+  const { events } = context
+
+  const isSecond = events.isCompleted('talk_death_2')
+  const isThird = events.isCompleted('talk_death_3')
+  const isFourth = events.isCompleted('talk_death_4')
+
+  const isB2Completed = events.isCompleted('first_boss')
+  const isB3Completed = events.isCompleted('second_boss')
+  const isB5Completed = events.isCompleted('third_boss')
+
+  const caronFinished = events.isCompleted('defeat_caron')
+  const caronReported = events.isCompleted('report_caron_to_death')
+
+  if (caronFinished && !caronReported) {
+    return { name: 'reportCaron', message: i18n.t('npc.death.report_charon') }
+  }
+
+  if (!isB2Completed) {
+    return { name: 'intro', message: i18n.t('talk.speak') }
+  }
+
+  if (isB2Completed && !isSecond) {
+    return { name: 'tutorialOver', message: i18n.t('talk.speak') }
+  }
+
+  if (isB3Completed && !isThird) {
+    return { name: 'defeatGolem', message: i18n.t('talk.speak') }
+  }
+
+  if (isB5Completed && !isFourth) {
+    return { name: 'cleanupVipLounge', message: i18n.t('talk.speak') }
+  }
+
+  return null
 }
 
 export default DeathHandler

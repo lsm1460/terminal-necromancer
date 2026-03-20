@@ -7,13 +7,18 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const FlintHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const alreadyTalk = context.events.isCompleted('b5_flint')
+    const quest = getActiveQuest(context)
 
-    if (alreadyTalk) {
-      return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
-    } else {
-      return [{ name: 'event', message: i18n.t('talk.examine') }]
+    if (quest) {
+      return [quest]
     }
+
+    return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
+  },
+
+  hasQuest(player, npc, context) {
+    // getActiveQuest의 존재 여부에 따라 NPC 머리 위의 [!] 여부가 결정됩니다.
+    return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -91,6 +96,17 @@ async function handleEvent(flint: NPC, player: Player, context: GameContext) {
   }
 
   context.events.completeEvent('b5_flint')
+}
+
+function getActiveQuest(context: GameContext) {
+  const { events } = context
+  const alreadyTalk = events.isCompleted('b5_flint')
+
+  if (!alreadyTalk) {
+    return { name: 'event', message: i18n.t('talk.examine') }
+  }
+
+  return null
 }
 
 export default FlintHandler

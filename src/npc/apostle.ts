@@ -6,13 +6,16 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const ApostleHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const alreadyTalk = context.events.isCompleted('b3_apostle')
+    const quest = getActiveQuest(context)
 
-    if (alreadyTalk) {
-      return [{ name: 'talk', message: i18n.t('talk.examine') }]
-    } else {
-      return [{ name: 'event', message: i18n.t('talk.examine') }]
+    if (quest) {
+      return [quest]
     }
+
+    return [{ name: 'talk', message: i18n.t('talk.examine') }]
+  },
+  hasQuest(player, npc, context) {
+    return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -40,6 +43,18 @@ async function handleThreat(context: GameContext) {
   }
 
   context.events.completeEvent('b3_apostle')
+}
+
+function getActiveQuest(context: GameContext) {
+  const { events } = context
+
+  const alreadyTalk = events.isCompleted('b3_apostle')
+
+  if (!alreadyTalk) {
+    return { name: 'event', message: i18n.t('talk.examine') }
+  }
+
+  return null
 }
 
 export default ApostleHandler

@@ -7,6 +7,7 @@ import { getItemLabel, makeItemMessage } from '~/utils'
 export interface NPCHandler {
   getChoices(player: Player, npc: NPC, context: GameContext): { name: string; message: string }[]
   handle(action: string, player: Player, npc: NPC, context: GameContext): Promise<boolean | void>
+  hasQuest?(player: Player, npc: NPC, context: GameContext): boolean
 }
 
 export async function handleTalk(npc: NPC) {

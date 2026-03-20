@@ -2,388 +2,58 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
+    "x": 3,
     "y": 1,
-    "_maxHp": 231,
-    "hp": 230,
-    "_maxMp": 100,
-    "mp": 137,
-    "atk": 13,
+    "_maxHp": 50,
+    "hp": 50,
+    "_maxMp": 50,
+    "mp": 50,
+    "atk": 10,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 3858,
-    "exp": 4026,
-    "level": 6,
-    "karma": 13,
+    "gold": 0,
+    "exp": 0,
+    "level": 1,
+    "karma": 0,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
-      "CORPSE_EXPLOSION",
-      "SOUL_TRANSFER",
-      "BONE_SPEAR"
+      "FOCUS_FIRE"
     ],
     "unlockedSkills": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
-      "FOCUS_FIRE",
-      "CORPSE_EXPLOSION",
-      "SOUL_HARVEST",
-      "CURSE",
-      "SOUL_TRANSFER",
-      "BONE_SPEAR"
+      "FOCUS_FIRE"
     ],
-    "_skeleton": [
-      {
-        "id": "skeleton_monk::1773884313019",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 수도자",
-        "attackType": "ranged",
-        "maxHp": 84,
-        "hp": 82,
-        "atk": 18,
-        "def": 12,
-        "agi": 24,
-        "skills": [
-          "heal"
-        ],
-        "exp": 0,
-        "description": "A minion raised from the remains of Terminal Security Guard.",
-        "originId": "security_guard::lGUAdWml",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 35
-      },
-      {
-        "id": "skeleton_shield_bearer::1773884822436",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
-        "attackType": "melee",
-        "maxHp": 134,
-        "hp": 133,
-        "atk": 11,
-        "def": 36,
-        "agi": 10,
-        "skills": [],
-        "exp": 0,
-        "description": "A minion raised from the remains of Clinging Concierge.",
-        "originId": "clinging_concierge::GjbMxHM_",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
-      },
-      {
-        "id": "skeleton_pyromancer::1773908355558",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 화염술사",
-        "attackType": "ranged",
-        "maxHp": 72,
-        "hp": 72,
-        "atk": 15,
-        "def": 10,
-        "agi": 21,
-        "skills": [
-          "fire_bolt"
-        ],
-        "exp": 0,
-        "description": "터미널 보안 가드의 유골로 만들어진 소환수입니다.",
-        "originId": "security_guard::zekNbSzA",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
-        "id": "skeleton_healer::1773908997593",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 힐러",
-        "attackType": "ranged",
-        "maxHp": 62,
-        "hp": 61,
-        "atk": 15,
-        "def": 5,
-        "agi": 42,
-        "skills": [
-          "minor_heal"
-        ],
-        "exp": 0,
-        "description": "약물 투여된 광견의 유골로 만들어진 소환수입니다.",
-        "originId": "modified_fury_hound::vSYy0aFK",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
-        "id": "skeleton_archer::1773909029863",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
-        "attackType": "ranged",
-        "maxHp": 72,
-        "hp": 70,
-        "atk": 47,
-        "def": 11,
-        "agi": 46,
-        "skills": [
-          "aim_arrow"
-        ],
-        "exp": 0,
-        "description": "터미널 보안 사수의 유골로 만들어진 소환수입니다.",
-        "originId": "security_sharpshooter::KDdfxw8s",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 25
-      },
-      {
-        "id": "skeleton_healer::1773909061837",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 힐러",
-        "attackType": "ranged",
-        "maxHp": 52,
-        "hp": 51,
-        "atk": 8,
-        "def": 8,
-        "agi": 26,
-        "skills": [
-          "minor_heal"
-        ],
-        "exp": 0,
-        "description": "터미널 보안 사제의 유골로 만들어진 소환수입니다.",
-        "originId": "security_priest_no_gain::umx_vnEp",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
-        "id": "skeleton::1773909164086",
-        "name": "\u001b[37m[COMMON]\u001b[0m skeleton 병사",
-        "attackType": "melee",
-        "maxHp": 66,
-        "hp": 65,
-        "atk": 24,
-        "def": 11,
-        "agi": 17,
-        "skills": [],
-        "exp": 0,
-        "description": "터미널 보안 가드의 유골로 만들어진 소환수입니다.",
-        "originId": "security_guard_no_gain::r0Ez8Q6Q",
-        "rarity": "common",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 10
-      }
-    ],
-    "_golem": {
-      "id": "golem",
-      "name": "",
-      "attackType": "melee",
-      "baseMaxHp": 90,
-      "maxHp": 90,
-      "hp": 120,
-      "baseAtk": 20,
-      "atk": 20,
-      "baseDef": 40,
-      "def": 40,
-      "agi": 3,
-      "exp": 0,
-      "description": "",
-      "dropTableId": "",
-      "encounterRate": 0,
-      "isAlive": false,
-      "skills": [
-        "power_smash"
-      ],
-      "isMinion": true,
-      "isGolem": true,
-      "deathLine": "",
-      "orderWeight": -15,
-      "madeBy": "maya"
-    },
+    "_skeleton": [],
     "_mercenary": [],
-    "inventory": [
-      {
-        "id": "mana_potion",
-        "type": "consumable",
-        "mpHeal": 40,
-        "price": 130,
-        "sellPrice": 18,
-        "quantity": 1
-      },
-      {
-        "id": "mana_potion_medium",
-        "type": "consumable",
-        "mpHeal": 80,
-        "price": 450,
-        "sellPrice": 45,
-        "quantity": 2,
-        "x": 2,
-        "y": 0
-      },
-      {
-        "id": "security_kevlar_vest::s0jjZAex",
-        "type": "armor",
-        "defRange": [
-          15,
-          19
-        ],
-        "evaRange": [
-          0.05,
-          0.08
-        ],
-        "price": 1450,
-        "sellPrice": 310,
-        "quantity": 1,
-        "def": 29,
-        "eva": 0.05,
-        "rarity": "EPIC",
-        "perfPrefix": "",
-        "adjective": "abyssal",
-        "affix": {
-          "id": "SURPRISE_ATTACK"
-        },
-        "x": 1,
-        "y": 1
-      },
-      {
-        "id": "potion_medium",
-        "type": "consumable",
-        "hpHeal": 100,
-        "price": 300,
-        "sellPrice": 30,
-        "quantity": 5,
-        "x": 3,
-        "y": 3
-      },
-      {
-        "id": "nano_medical_kit",
-        "type": "consumable",
-        "hpHeal": 180,
-        "price": 600,
-        "sellPrice": 60,
-        "quantity": 2
-      },
-      {
-        "id": "hard_steel_plate::5k-nncna",
-        "type": "armor",
-        "defRange": [
-          18,
-          22
-        ],
-        "evaRange": [
-          -0.05,
-          0
-        ],
-        "price": 1900,
-        "sellPrice": 450,
-        "quantity": 1,
-        "def": 32,
-        "eva": -0.05,
-        "rarity": "EPIC",
-        "perfPrefix": "",
-        "adjective": "mortal",
-        "affix": {
-          "id": "LEGION"
-        },
-        "x": 4,
-        "y": 0
-      }
-    ],
+    "inventory": [],
     "inventoryMax": 15,
     "skeletonSubspace": [],
     "subspaceLimit": 15,
-    "_maxSkeleton": 4,
-    "golemUpgrade": [
-      "soul",
-      "machine"
-    ],
+    "_maxSkeleton": 2,
+    "golemUpgrade": [],
     "knightUpgrade": [],
     "upgradeLimit": 5,
     "equipped": {
-      "weapon": {
-        "id": "golem_core_staff::K6Vr8t1S",
-        "type": "weapon",
-        "attackType": "ranged",
-        "atkRange": [
-          9,
-          12
-        ],
-        "critRange": [
-          0.12,
-          0.18
-        ],
-        "maxSkeletonRange": [
-          1,
-          2
-        ],
-        "price": 4200,
-        "sellPrice": 1150,
-        "mp": 50,
-        "quantity": 1,
-        "minRarity": "RARE",
-        "atk": 12,
-        "crit": 0.17,
-        "maxSkeleton": 2,
-        "rarity": "RARE",
-        "perfPrefix": "",
-        "adjective": "keen",
-        "x": 2,
-        "y": 3
-      },
-      "armor": {
-        "id": "phantom_cloth::_Eyk3JWq",
-        "type": "armor",
-        "defRange": [
-          8,
-          12
-        ],
-        "evaRange": [
-          0.15,
-          0.25
-        ],
-        "maxSkeletonRange": [
-          1,
-          2
-        ],
-        "price": 1750,
-        "sellPrice": 400,
-        "quantity": 1,
-        "def": 9,
-        "eva": 0.19,
-        "maxSkeleton": 2,
-        "rarity": "COMMON",
-        "perfPrefix": "",
-        "adjective": "",
-        "x": 1,
-        "y": 0
-      }
+      "weapon": null,
+      "armor": null
     }
   },
   "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
-        "hp": 150,
+        "hp": 220,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "ren": {
+        "hp": 200,
         "isAlive": true,
         "reborn": false,
         "relation": 0
@@ -395,7 +65,7 @@
         "relation": 0
       },
       "jax_seeker": {
-        "hp": 50,
+        "hp": 120,
         "isAlive": true,
         "reborn": false,
         "relation": 0
@@ -420,13 +90,13 @@
       },
       "first_boss": {
         "hp": 80,
-        "isAlive": false,
-        "reborn": true,
+        "isAlive": true,
+        "reborn": false,
         "relation": 0
       },
       "second_boss": {
         "hp": 500,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -468,7 +138,7 @@
       },
       "caron": {
         "hp": 500,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -491,7 +161,7 @@
         "relation": 0
       },
       "flint": {
-        "hp": 80,
+        "hp": 240,
         "isAlive": true,
         "reborn": false,
         "relation": 0
@@ -504,19 +174,19 @@
       },
       "oliver": {
         "hp": 2,
-        "isAlive": false,
-        "reborn": true,
+        "isAlive": true,
+        "reborn": false,
         "relation": 0
       },
       "kael": {
-        "hp": 28,
-        "isAlive": false,
+        "hp": 110,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
       "vesper": {
-        "hp": 20,
-        "isAlive": false,
+        "hp": 95,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -531,48 +201,15 @@
         "isAlive": true,
         "reborn": false,
         "relation": 0
-      },
-      "ren": {
-        "hp": 200,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
       }
     },
-    "factionHostility": {
-      "untouchable": 100,
-      "resistance": -26,
-      "undefined": 40
-    },
-    "factionContribution": {
-      "untouchable": 10,
-      "resistance": 357
-    }
+    "factionHostility": {},
+    "factionContribution": {}
   },
   "drop": null,
   "completedEvents": [
     "START_GAME",
-    "item-tutorial",
-    "talk_death_1",
-    "first_boss",
-    "got_terminal_map",
-    "talk_death_2",
-    "b3_apostle",
-    "RESISTANCE_BASE",
-    "maya_1",
-    "second_boss",
-    "golem_generation_denied_zed",
-    "talk_death_3",
-    "kane_1",
-    "caron_is_mine",
-    "defeat_caron",
-    "report_caron_to_death",
-    "b5_adrian",
-    "b5_child_resistance_encounter",
-    "b5_julian",
-    "b5_oliver",
-    "b5_flint_meeting_complete",
-    "b5_flint"
+    "item-tutorial"
   ],
   "locale": "ko"
 }

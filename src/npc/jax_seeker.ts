@@ -8,16 +8,22 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const JaxHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const isJoined = context.events.isCompleted('RESISTANCE_BASE')
+    const quest = getActiveQuest(context)
 
-    if (isJoined) {
-      return [
-        { name: 'talk', message: i18n.t('talk.small_talk') },
-        { name: 'enter', message: i18n.t('npc.jax_seeker.choices.enter') },
-      ]
-    } else {
-      return [{ name: 'join', message: i18n.t('talk.small_talk') }]
+    // 가입 전이라면 가입(퀘스트) 선택지만 반환
+    if (quest) {
+      return [quest]
     }
+
+    // 가입 후라면 일반 대화와 입장 선택지 반환
+    return [
+      { name: 'talk', message: i18n.t('talk.small_talk') },
+      { name: 'enter', message: i18n.t('npc.jax_seeker.choices.enter') },
+    ]
+  },
+
+  hasQuest(player, npc, context) {
+    return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -92,6 +98,16 @@ async function handleEnter(player: Player, context: GameContext) {
   const { map } = context
   Terminal.log(i18n.t('npc.jax_seeker.enter.log'))
   await map.changeScene(MAP_IDS.B3_5_RESISTANCE_BASE, player)
+}
+
+function getActiveQuest(context: GameContext) {
+  const isJoined = context.events.isCompleted('RESISTANCE_BASE')
+
+  if (!isJoined) {
+    return { name: 'join', message: i18n.t('talk.small_talk') }
+  }
+
+  return null
 }
 
 export default JaxHandler
