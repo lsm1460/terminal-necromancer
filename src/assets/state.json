@@ -13,7 +13,7 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 0,
+    "gold": 5,
     "exp": 0,
     "level": 1,
     "karma": 0,
@@ -206,10 +206,18 @@
     "factionHostility": {},
     "factionContribution": {}
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B2_Transit_Area",
+    "id": "Zz4d_3B1",
+    "tileId": "B2_002",
+    "exp": 5,
+    "gold": 5
+  },
   "completedEvents": [
     "START_GAME",
-    "item-tutorial"
+    "item-tutorial",
+    "talk_death_1",
+    "first_boss"
   ],
   "locale": "ko"
 }

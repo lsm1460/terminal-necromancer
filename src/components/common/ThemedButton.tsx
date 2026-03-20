@@ -6,6 +6,7 @@ export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttrib
       <button
         ref={ref}
         className={`
+          pointer-events-auto
           bg-transparent border border-transparent 
           text-primary font-inherit text-base 
           px-2.5 py-1 transition-colors
@@ -22,6 +23,11 @@ export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttrib
           ${className} 
         `}
         {...props}
+        onClick={(e) => {
+          e.stopPropagation()
+
+          props?.onClick?.(e)
+        }}
       >
         {children}
       </button>

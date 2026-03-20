@@ -6,5 +6,6 @@
   "continue": "계속하려면 클릭 또는 Enter",
 
   "corpses_count": "사용 가능한 시체 수: {{count}}",
-  "remaining_turns": "[{{name}}: {{duration}}턴 남음]"
+  "remaining_turns": "[{{name}}: {{duration}}턴 남음]",
+  "confirm_selection": "확인"
 }

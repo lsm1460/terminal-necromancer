@@ -10,6 +10,9 @@ const ElevatorHandler: NPCHandler = {
   getChoices() {
     return [{ name: 'elevate', message: i18n.t('npc.elevator.choices.elevate') }]
   },
+  hasQuest() {
+    return false
+  },
   async handle(action, player, npc, context) {
     switch (action) {
       case 'elevate':

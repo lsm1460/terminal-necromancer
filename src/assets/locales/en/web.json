@@ -6,5 +6,6 @@
   "continue": "Click or press Enter to continue",
 
   "corpses_count": "Available Corpses: {{count}}",
-  "remaining_turns": "[{{name}}: {{duration}} turns left]"
+  "remaining_turns": "[{{name}}: {{duration}} turns left]",
+  "confirm_selection": "CONFIRM"
 }

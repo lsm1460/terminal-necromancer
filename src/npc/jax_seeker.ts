@@ -22,7 +22,7 @@ const JaxHandler: NPCHandler = {
     ]
   },
 
-  hasQuest(player, npc, context) {
+  hasQuest(player, context) {
     return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {

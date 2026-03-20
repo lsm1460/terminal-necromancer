@@ -14,7 +14,7 @@ const ApostleHandler: NPCHandler = {
 
     return [{ name: 'talk', message: i18n.t('talk.examine') }]
   },
-  hasQuest(player, npc, context) {
+  hasQuest(player, context) {
     return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {

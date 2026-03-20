@@ -1,15 +1,7 @@
-import {
-  FlaskConical,
-  Ghost,
-  MapPin,
-  Navigation,
-  Pill,
-  Skull,
-  Swords,
-  User
-} from 'lucide-react'
+import { FlaskConical, Ghost, MapPin, Navigation, Pill, Skull, Swords, User, MessageSquareMore } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { FULL_VISIBLE_MAP_ID_LIST, MAP_IDS } from '~/consts'
+import { QuestManager } from '~/core/QuestManager'
 import { GameEngine } from '~/gameEngine'
 import { useGameStore } from '~/stores/useGameStore'
 import { Tile } from '~/types'
@@ -21,7 +13,7 @@ export const MiniMap: React.FC<{
 
   const [playerPos, setPlayerPos] = useState({ x: 0, y: 0 })
   const [isMapActive, isSetMapActive] = useState(false)
-  const [map, setMap] = useState<Tile[][] | null>(null)
+  const [map, setMap] = useState<(Tile & { hasQuest: boolean })[][] | null>(null)
   const [isFullyVisible, setIsFullyVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [isXl, setIsXl] = useState(window.innerWidth >= 1280)
@@ -62,15 +54,29 @@ export const MiniMap: React.FC<{
       const sceneId = map.currentSceneId
 
       if (!isCheat && sceneId === MAP_IDS.B4_Waste_Disposal_Area) {
+        setMap(null)
         return
       }
 
       const _isFullyVisible = isCheat || (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
 
       setIsFullyVisible(_isFullyVisible)
+      console.log('DEBUG::', map.currentSceneId)
+      const tiles = map.currentScene.tiles.map((row) =>
+        row.map((tile) =>
+          tile
+            ? {
+                ...tile,
+                hasQuest: (tile.npcIds || []).some((id) => {
+                  const flag = QuestManager.hasQuest(player, id, _engine.context)
 
-      const tiles = map.currentScene.tiles
-      setMap([...tiles])
+                  return flag
+                }),
+              }
+            : tile
+        )
+      )
+      setMap(tiles)
     }
   }, [logs, engine])
 
@@ -81,7 +87,7 @@ export const MiniMap: React.FC<{
   }
 
   // 타일 렌더링 로직
-  const renderTileContent = (tile: Tile, x: number, y: number) => {
+  const renderTileContent = (tile: Tile & { hasQuest: boolean }, x: number, y: number) => {
     if (!tile) return <div className="w-full h-full bg-primary/20" />
 
     const isPlayer = playerPos.x === x && playerPos.y === y
@@ -96,8 +102,11 @@ export const MiniMap: React.FC<{
     if (tile.event === 'boss') return <Skull className="w-4 h-4 text-primary" />
 
     if (tile.npcIds && tile.npcIds.length > 0) {
+      if (tile.hasQuest) return <MessageSquareMore className="w-4 h-4 text-primary" />
+
       if (tile.npcIds.includes('elevator')) return <Navigation className="w-4 h-4 text-primary rotate-180" />
       if (tile.npcIds.includes('death')) return <Skull className="w-4 h-4 text-primary" />
+
       return <User className="w-4 h-4 text-primary" />
     }
 
@@ -123,12 +132,12 @@ export const MiniMap: React.FC<{
       style={{
         width: `${currentSize}px`,
         height: `${currentSize}px`,
-        opacity: isExpanded? 1 : 0.3
+        opacity: isExpanded ? 1 : 0.3,
       }}
     >
       {!map ? (
         <div className="w-full h-full flex items-center justify-center bg-zinc-900/50 relative overflow-hidden">
-          <span className="font-bold tracking-widest uppercase animate-glitch">No Signal</span>
+          <span className="font-bold tracking-widest uppercase animate-glitch text-xs xl:text-sm">No Signal</span>
         </div>
       ) : (
         <div

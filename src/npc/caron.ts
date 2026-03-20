@@ -19,7 +19,7 @@ const CaronHandler: NPCHandler = {
     ]
   },
 
-  hasQuest(player, npc, context) {
+  hasQuest(player, context) {
     return true
   },
 

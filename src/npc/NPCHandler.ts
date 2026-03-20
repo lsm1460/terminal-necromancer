@@ -7,7 +7,7 @@ import { getItemLabel, makeItemMessage } from '~/utils'
 export interface NPCHandler {
   getChoices(player: Player, npc: NPC, context: GameContext): { name: string; message: string }[]
   handle(action: string, player: Player, npc: NPC, context: GameContext): Promise<boolean | void>
-  hasQuest?(player: Player, npc: NPC, context: GameContext): boolean
+  hasQuest?(player: Player, context: GameContext): boolean
 }
 
 export async function handleTalk(npc: NPC) {
@@ -59,10 +59,17 @@ export async function handleBuy(
     let rarityMultiplier = 1
 
     switch (item.rarity) {
-      case 'COMMON': rarityMultiplier = 1.0; break
-      case 'RARE': rarityMultiplier = 1.5; break
-      case 'EPIC': rarityMultiplier = 2.5; break
-      default: rarityMultiplier = 1.0
+      case 'COMMON':
+        rarityMultiplier = 1.0
+        break
+      case 'RARE':
+        rarityMultiplier = 1.5
+        break
+      case 'EPIC':
+        rarityMultiplier = 2.5
+        break
+      default:
+        rarityMultiplier = 1.0
     }
 
     const finalPrice = Math.floor(item.price * rarityMultiplier * (1 - discountRate))
@@ -80,13 +87,12 @@ export async function handleBuy(
   Terminal.log(`\n[${npc.name}]: "${scripts.greeting}"`)
 
   while (true) {
-    const contributionText = npc.contribution !== undefined 
-      ? i18n.t('npc.buy.contribution_label', { value: contribution }) 
-      : ''
-    
-    const infoHeader = i18n.t('npc.buy.info_header', { 
-      gold: player.gold, 
-      contribution: contributionText 
+    const contributionText =
+      npc.contribution !== undefined ? i18n.t('npc.buy.contribution_label', { value: contribution }) : ''
+
+    const infoHeader = i18n.t('npc.buy.info_header', {
+      gold: player.gold,
+      contribution: contributionText,
     })
 
     const itemId = await Terminal.select(`${infoHeader} ${i18n.t('npc.buy.select_item')}`, choices)
@@ -117,7 +123,7 @@ export async function handleBuy(
     if (actualItem) {
       player.addItem(actualItem)
       const successMsg = scripts.success || i18n.t('npc.buy.success_default', { label: selectedChoice.label })
-      
+
       Terminal.log(`\n✨ [${npc.name}]: "${successMsg}" (-${selectedChoice.price}G)`)
     }
   }
@@ -154,9 +160,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
     choices.push({ name: 'cancel', message: i18n.t('cancel') } as any)
 
     // 보너스 정보 다국어 처리
-    const bonusInfo = hasContribution 
-      ? i18n.t('npc.sell.bonus_label', { value: (bonusRate * 100).toFixed(1) }) 
-      : ''
+    const bonusInfo = hasContribution ? i18n.t('npc.sell.bonus_label', { value: (bonusRate * 100).toFixed(1) }) : ''
 
     const infoHeader = i18n.t('npc.sell.info_header', { gold: player.gold, bonus: bonusInfo })
     const choiceName = await Terminal.select(`${infoHeader} ${i18n.t('npc.sell.select_item')}`, choices)

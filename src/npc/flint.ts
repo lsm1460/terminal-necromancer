@@ -16,7 +16,7 @@ const FlintHandler: NPCHandler = {
     return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   },
 
-  hasQuest(player, npc, context) {
+  hasQuest(player, context) {
     // getActiveQuest의 존재 여부에 따라 NPC 머리 위의 [!] 여부가 결정됩니다.
     return getActiveQuest(context) !== null
   },

@@ -34,7 +34,7 @@
     "cannot_escape": "\n🚫 {{name}}이(가) 주시하고 있어 도망칠 수 없다."
   },
   "look": {
-    "label": "살펴보기",
+    "label": "보기",
     "select_prompt": "무엇을 확인하시겠습니까?",
     "select_target_prompt": "세부 대상을 선택하세요.",
     "category": {

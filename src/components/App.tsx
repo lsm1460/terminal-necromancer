@@ -17,6 +17,7 @@ import { GameInput } from './GameInput'
 import { LogWindow } from './LogWindow'
 import { MiniMap } from './MiniMap'
 import { StatusBar } from './StatusBar'
+import { useSwipeShortcuts } from '~/hooks/useSwipeShortcuts'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
@@ -25,6 +26,7 @@ export const App = () => {
   const [isGameOn, setIsGameOn] = useState(false)
 
   useShortcuts(engineRef)
+  useSwipeShortcuts(engineRef)
 
   useEffect(() => {
     const initGame = async () => {

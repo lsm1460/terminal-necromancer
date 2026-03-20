@@ -54,11 +54,11 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
   }
 
   return (
-    <div className="flex items-center p-4 border-t border-primary">
+    <div className="flex items-center p-2 xl:p-4 border-t border-primary">
       <span className="mr-2.5 text-primary">{'>'}</span>
       <input
         ref={inputRef}
-        className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
+        className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-xs xl:text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
         autoFocus
         onKeyDown={handleCommand}
         placeholder={disabled ? t('web.select_an_option') : t('input_command')}

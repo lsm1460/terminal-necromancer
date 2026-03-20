@@ -17,14 +17,14 @@ export const StatusBar: React.FC<{
     return {
       level: player.level,
       hp: player.hp,
-      maxHp: player.hp,
+      maxHp: player.maxHp,
       gold: player.gold,
       location: map?.currentSceneId,
     }
   }, [engine, logs])
 
   return (
-    <div className="p-2.5 border-primary border-b flex gap-5 font-bold">
+    <div className="p-2.5 border-primary border-b flex gap-5 font-bold text-xs">
       {status ? (
         <>
           <span>LV. {status.level}</span> |

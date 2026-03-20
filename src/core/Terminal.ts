@@ -11,8 +11,8 @@ export class Terminal {
     this.renderer ? this.renderer.print(message) : console.log(message)
   }
 
-  public static say(nameList: string[]): void {
-    this.renderer ? this.renderer.say(nameList) : console.log(`${nameList.join(', ')}`)
+  public static say(list: { name: string; hasQuest: boolean }[]): void {
+    this.renderer ? this.renderer.say(list) : console.log(`${list.join(', ')}`)
   }
 
   public static update(message: string) {

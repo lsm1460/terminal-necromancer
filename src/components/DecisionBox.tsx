@@ -13,7 +13,16 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
   const { t } = useTranslation()
 
   const [focusedIndex, setFocusedIndex] = useState(0)
+  const [selectedValues, setSelectedValues] = useState<string[]>([])
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  useEffect(() => {
+    if (uiState.type === 'MULTISELECT' && uiState.options?.initial) {
+      setSelectedValues(Array.isArray(uiState.options.initial) ? uiState.options.initial : [])
+    } else {
+      setSelectedValues([])
+    }
+  }, [uiState])
 
   useEffect(() => {
     const firstEnabledIndex = buttonRefs.current.findIndex((button) => button && !button.disabled)
@@ -27,23 +36,61 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
     }
   }, [uiState.type, uiState.message])
 
+  useEffect(() => {
+    if (uiState.type === 'PROMPT') {
+      const handleScreenClick = () => {
+        console.log('dmld???')
+        resolveUI(undefined, uiState.message)
+      }
+
+      window.addEventListener('click', handleScreenClick)
+
+      return () => {
+        window.removeEventListener('click', handleScreenClick)
+      }
+    }
+  }, [uiState])
+
+  const handleToggleSelect = (name: string) => {
+    const max = uiState.options?.maxChoices
+
+    setSelectedValues((prev) => {
+      if (prev.includes(name)) {
+        return prev.filter((v) => v !== name)
+      }
+
+      if (max && prev.length >= max) {
+        return prev
+      }
+
+      return [...prev, name]
+    })
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    const total = buttonRefs.current.filter(Boolean).length
+    const activeButtons = buttonRefs.current.filter(Boolean)
+    const total = activeButtons.length
+
     if (total <= 1) return
 
     let nextIndex = focusedIndex
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault()
-      nextIndex = (focusedIndex + 1) % total
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault()
-      nextIndex = (focusedIndex - 1 + total) % total
-    } else {
-      return
-    }
+    const direction =
+      e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0
 
-    setFocusedIndex(nextIndex)
-    buttonRefs.current[nextIndex]?.focus()
+    if (direction === 0) return // 방향키가 아니면 종료
+    e.preventDefault()
+
+    let attempts = 0
+    while (attempts < total) {
+      nextIndex = (nextIndex + direction + total) % total
+      attempts++
+
+      if (activeButtons[nextIndex] && !activeButtons[nextIndex]?.disabled) {
+        setFocusedIndex(nextIndex)
+        activeButtons[nextIndex]?.focus()
+        break
+      }
+    }
   }
 
   if (uiState.type === 'NONE') return null
@@ -54,7 +101,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
       onKeyDown={handleKeyDown}
     >
       <div className="mb-2.5 text-[#ffff00] font-bold">▶ {uiState.message}</div>
-      <div className="flex flex-col gap-2 flex-wrap">
+      <div className="flex flex-col gap-1 xl:gap-2 flex-wrap [&_button]:text-[10px] xl:[&_button]:text-sm">
         {uiState.type === 'SELECT' &&
           uiState.choices?.map((c, i) => (
             <div key={c.name}>
@@ -70,6 +117,41 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
               </ThemedButton>
             </div>
           ))}
+
+        {uiState.type === 'MULTISELECT' && (
+          <>
+            {uiState.choices?.map((c, i) => {
+              const isSelected = selectedValues.includes(c.name)
+              return (
+                <div key={c.name}>
+                  <ThemedButton
+                    ref={(el) => {
+                      buttonRefs.current[i] = el
+                    }}
+                    onFocus={() => setFocusedIndex(i)}
+                    onClick={() => handleToggleSelect(c.name)}
+                    disabled={c.disabled}
+                    className={isSelected ? 'border-solid border-yellow-400 text-yellow-400' : ''}
+                  >
+                    <AnsiHtml message={c.message} />
+                  </ThemedButton>
+                </div>
+              )
+            })}
+            {/* 최종 결정 버튼 (마지막 인덱스 부여) */}
+            <div className="mt-2 pt-2 border-t border-gray-800">
+              <ThemedButton
+                ref={(el) => {
+                  buttonRefs.current[uiState.choices?.length || 0] = el
+                }}
+                onFocus={() => setFocusedIndex(uiState.choices?.length || 0)}
+                onClick={() => resolveUI(selectedValues, t('web.confirm'))}
+              >
+                ▶ [{t('web.confirm_selection')}]
+              </ThemedButton>
+            </div>
+          </>
+        )}
 
         {uiState.type === 'CONFIRM' && (
           <>

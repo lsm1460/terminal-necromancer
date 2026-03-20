@@ -27,10 +27,15 @@ export class ReactRenderer implements Renderer {
     this.store.updateLastLog(message)
   }
 
-  say(nameList: string[]) {
-    const aliveNames = nameList.map((name) => `<button style="color: white; cursor: pointer;" data-command="대화" data-arg="${name}">${name}</button>`).join(', ')
+  say(list: { name: string; hasQuest: boolean }[]) {
+    const aliveNames = list
+      .map(
+        ({ hasQuest, name }) =>
+          `<button tabindex="-1" style="color: white; cursor: pointer;" data-command="대화" data-arg="${name}">${hasQuest ? '<span style="color: #ff8181">[!] </span>' : ''}${name}</button>`
+      )
+      .join(', ')
 
-    const message = `${i18n.t('looking.around', { count: nameList.length })} ${aliveNames}`
+    const message = `${i18n.t('looking.around', { count: aliveNames.length })} ${aliveNames}`
 
     this.store.addLog(message)
   }

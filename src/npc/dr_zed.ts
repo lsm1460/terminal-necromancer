@@ -22,7 +22,7 @@ const ZedHandler: NPCHandler = {
       { name: 'heal', message: i18n.t('talk.heal') },
     ]
   },
-  hasQuest(player, npc, context) {
+  hasQuest(player, context) {
     return getActiveQuest(player, context) !== null
   },
   async handle(action, player, npc, context) {

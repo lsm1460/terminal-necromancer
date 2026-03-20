@@ -53,17 +53,17 @@ export const BattleStage: React.FC<{
   }
 
   return (
-    <div className="absolute inset-x-0 top-10 z-50 flex justify-center p-2">
+    <div className="absolute inset-x-0 top-5 z-50 flex justify-center p-2 xl:top-10">
       <div className="w-[95%] max-w-4xl border border-primary bg-black/50 backdrop-blur-[1.5px] font-mono text-primary shadow-[0_0_20px_rgba(6,182,212,0.2)]">
         <div className="flex justify-between items-center border-b border-primary px-2 py-1 bg-cyan-950/50 text-[10px] tracking-tighter">
           <span>:: BATTLE_ENGAGEMENT ::</span>
           <span className="animate-pulse">SYSTEM_READY</span>
         </div>
 
-        <div className="relative h-60 flex justify-between items-center px-4">
+        <div className="relative flex justify-between items-center px-4 py-5">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(rgba(0,255,255,0.1)_1px,transparent_1px)] bg-[size:100%_4px]"></div>
 
-          <div className="relative flex -space-x-8">
+          <div className="relative flex -space-x-6">
             {playerSide.map((unit, i) => (
               <CombatUnitComponent unit={unit} key={unit.id} zIndex={playerSide.length - i} />
             ))}
@@ -71,14 +71,14 @@ export const BattleStage: React.FC<{
 
           <div className="text-primary text-xs font-black italic opacity-50 select-none">- VS -</div>
 
-          <div className="relative flex -space-x-8">
+          <div className="relative flex -space-x-6">
             {enemiesSide.map((unit, i) => (
               <CombatUnitComponent unit={unit} key={unit.id} isEnemy zIndex={i + 10} />
             ))}
           </div>
         </div>
         <div className="px-4 pb-4">
-          <p className="text-right">{t('web.corpses_count', { count: corpsesCount })}</p>
+          <p className="text-right text-xs">{t('web.corpses_count', { count: corpsesCount })}</p>
         </div>
       </div>
     </div>

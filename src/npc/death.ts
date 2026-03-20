@@ -22,7 +22,7 @@ const DeathHandler: NPCHandler = {
       { name: 'memorize', message: i18n.t('npc.death.engrave_skills') },
     ]
   },
-  hasQuest(player, npc, context) {
+  hasQuest(player, context) {
     return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {
@@ -255,7 +255,7 @@ async function handleReportCaron(context: GameContext) {
     await speak(messages)
   }
 
-  await speak(i18n.t('npc.death.order_go_to_b5.deceived', { returnObjects: true }) as string[])
+  await speak(i18n.t('npc.death.report_caron.order_go_to_b5', { returnObjects: true }) as string[])
 
   events.completeEvent('report_caron_to_death')
 }

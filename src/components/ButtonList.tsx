@@ -65,7 +65,7 @@ export const ButtonList: React.FC<{
   const handleCommand = async (cmd: string) => {
     if (disabled) return
 
-    await engine.current?.processCommand(cmd, {
+    await engine.current?.processCommand(cmd.toLowerCase(), {
       onBeforeExecute() {
         addLog(`\n> ${cmd}`)
       },
@@ -78,7 +78,7 @@ export const ButtonList: React.FC<{
         tabIndex={-1}
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          absolute px-4 pt-2 pb-1 text-xs border-t border-l border-r border-primary
+          absolute px-2 xl:px-4 pt-1 xl:pt-2 pb-1 text-[10px] xl:text-xs border-t border-l border-r border-primary
           rounded-t-lg bg-grey-900
           z-[1] left-3 top-0.5 -translate-y-full
           xl:hidden
@@ -96,7 +96,8 @@ export const ButtonList: React.FC<{
             key={cmd.name}
             onClick={() => handleCommand(cmd.name)}
             disabled={disabled}
-            className="xl:border-primary xl:border xl:py-2"
+            className="xl:border-primary text-xs xl:border xl:py-2 xl:text-sm"
+            tabIndex={-1}
           >
             {cmd.name}
             {showShortcut && <span style={{ fontSize: '0.8em', marginLeft: '4px', opacity: 0.7 }}>({cmd.key})</span>}
