@@ -35,11 +35,16 @@ export class ThirdBoss implements BossLogic {
       Terminal.log(i18n.t('npc.third_boss.help_call_res', { name: leader.name }))
     }
 
-    const _res = await Terminal.select(i18n.t('npc.third_boss.select_side'), [
-      { name: 'resistance', message: i18n.t('npc.third_boss.options.resistance') },
+    const options = [
       { name: 'vip', message: i18n.t('npc.third_boss.options.vip') },
       { name: 'kill_all', message: i18n.t('npc.third_boss.options.kill_all') },
-    ])
+    ]
+
+    if (!leader.isHostile) {
+      options.unshift({ name: 'resistance', message: i18n.t('npc.third_boss.options.resistance') })
+    }
+
+    const _res = await Terminal.select(i18n.t('npc.third_boss.select_side'), options)
 
     this.selectedSide = _res
 
