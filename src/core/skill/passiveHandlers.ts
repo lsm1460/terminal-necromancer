@@ -50,7 +50,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
     onAfterHit: async (attacker, defender, skill, battle, options) => {
       if (options?.attackType !== 'melee') return
 
-      const thornDamage = Math.max(1, Math.floor(defender.stats.atk * 0.05))
+      const thornDamage = Math.max(1, Math.floor(defender.stats.atk * 0.3))
 
       // 가시는 일반 로그로 출력
       Terminal.log(
@@ -116,7 +116,7 @@ function handlePhases(attacker: CombatUnit, phases: PhasesShift) {
   const isActive = attacker.ref.hp / attacker.ref.maxHp < phases.chance
 
   if (!isActive || attacker.phases >= phases.step) return
-  
+
   const msg = i18n.t(`skill.passive.phases_${phases.step}`, { attacker: attacker.name })
   Terminal.log(RED(msg))
 

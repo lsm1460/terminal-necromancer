@@ -9,13 +9,11 @@ export const UnitVisual: React.FC<{
   controls: any
   isEnemy: boolean
   displayImage?: string
-  children?: React.ReactNode
-}> = ({ unit, controls, isEnemy, displayImage, children }) => {
+}> = ({ unit, controls, isEnemy, displayImage }) => {
   const hpPercentage = Math.max(0, (unit.ref.hp / unit.ref.maxHp) * 100)
 
   return (
     <motion.div animate={controls} className="flex flex-col items-center relative">
-      {children}
       <div className="w-10 h-14 xl:w-20 xl:h-28 border border-dashed border-cyan-700 flex items-center justify-center bg-black/80 group-hover:bg-grey-900 group-hover:border-cyan-400 group-focus:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
         <img
           src={displayImage}

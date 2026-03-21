@@ -100,7 +100,9 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
       className="mt-5 p-4 border border-dashed border-primary bg-[#0a0a0a] animate-in fade-in duration-300"
       onKeyDown={handleKeyDown}
     >
-      <div className="mb-2.5 text-[#ffff00] font-bold">▶ {uiState.message}</div>
+      <div className="mb-2.5 text-[#ffff00] font-bold">
+        <AnsiHtml message={'▶ ' + uiState.message} />
+      </div>
       <div className="flex flex-col gap-1 xl:gap-2 flex-wrap [&_button]:text-[10px] xl:[&_button]:text-sm">
         {uiState.type === 'SELECT' &&
           uiState.choices?.map((c, i) => (

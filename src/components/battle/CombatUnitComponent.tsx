@@ -160,10 +160,9 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, i
   return (
     <div
       ref={wrapperRef}
-      className="group relative flex flex-col items-center outline-none cursor-pointer transition-transform duration-200"
+      className="group flex flex-col items-center outline-none cursor-pointer"
       style={{
         zIndex: isFocus ? 100 : zIndex,
-        transform: isFocus ? 'scale(1.1)' : 'scale(1)',
       }}
       onClick={() => setIsFocus(true)}
     >
@@ -173,9 +172,17 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, i
         ))}
       </div>
 
-      <UnitVisual unit={unit} controls={controls} isEnemy={isEnemy} displayImage={displayImage}>
-        {isFocus && <UnitState unit={unit} isEnemy={isEnemy} />}
-      </UnitVisual>
+      <div
+        className=" transition-transform duration-200"
+        style={{
+          transform: isFocus ? 'scale(1.1)' : 'scale(1)',
+        }}
+      >
+        <UnitVisual unit={unit} controls={controls} isEnemy={isEnemy} displayImage={displayImage} />
+
+        {isFocus && <div className="absolute left-1/2 w-px h-20 bg-primary -bottom-1 translate-y-full" />}
+      </div>
+      {isFocus && <UnitState unit={unit} isEnemy={isEnemy} />}
     </div>
   )
 }

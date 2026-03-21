@@ -58,7 +58,7 @@ export class GameEngine {
       battle,
       broadcast: broadcastSystem,
       monster: monsterFactory,
-      cheats: {}
+      cheats: {},
     } as GameContext
 
     player.onDeath = () => {
@@ -92,6 +92,7 @@ export class GameEngine {
       player.x = 0
       player.y = 0
       player.hp = 1
+      player.removeMercenaries()
 
       this.renderer.printStatus(player, this.context)
     }

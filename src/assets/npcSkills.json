@@ -479,7 +479,7 @@
     "attackType": "ranged",
     "description": "귀족의 원한이 담긴 비명을 질러 모든 적의 정신을 붕괴시킵니다.",
     "chance": 0.6,
-    "power": 3,
+    "power": 2,
     "targetType": "ENEMY_ALL"
   },
   "spout_out": {

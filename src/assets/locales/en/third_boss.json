@@ -37,6 +37,11 @@
     "vip": "Help the VIP Guard",
     "kill_all": "Kill them all"
   },
+  "results": {
+    "resistance": "A wise choice, Wanderer. Now, let us conclude this deal with the Reaper together.",
+    "vip": "It seems there are tiers even among the lowly. A discerning eye, indeed.",
+    "kill_all": "You're insane... Do you intend to make enemies of us all?"
+  },
 
   "victory": {
     "resistance": [

@@ -63,7 +63,7 @@ export const BattleStage: React.FC<{
         <div className="relative flex justify-between items-center px-4 py-5">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(rgba(0,255,255,0.1)_1px,transparent_1px)] bg-[size:100%_4px]"></div>
 
-          <div className="relative flex -space-x-6">
+          <div className="flex -space-x-6">
             {playerSide.map((unit, i) => (
               <CombatUnitComponent unit={unit} key={unit.id} zIndex={playerSide.length - i} />
             ))}
@@ -71,7 +71,7 @@ export const BattleStage: React.FC<{
 
           <div className="text-primary text-xs font-black italic opacity-50 select-none">- VS -</div>
 
-          <div className="relative flex -space-x-6">
+          <div className="flex -space-x-6">
             {enemiesSide.map((unit, i) => (
               <CombatUnitComponent unit={unit} key={unit.id} isEnemy zIndex={i + 10} />
             ))}

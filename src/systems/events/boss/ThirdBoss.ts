@@ -43,6 +43,8 @@ export class ThirdBoss implements BossLogic {
 
     this.selectedSide = _res
 
+    await speak([i18n.t('npc.third_boss.results.resistance')])
+
     if (_res === 'resistance') {
       player.addMercenary(leader)
       // enemy is VIP
