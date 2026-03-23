@@ -57,5 +57,15 @@
       "zed": "A massive weapon revived by Zed using a core salvaged from the loading bay.\nReaper's mana flows through it, causing black mist to seep from the metal seams.",
       "maya": "A massive weapon revived by Maya using a core salvaged from the loading bay."
     }
+  },
+
+  "knight": {
+    "name": {
+      "lich_mounted": "Wraith Lord",
+      "lich_unmounted": "Corrupted Lich",
+      "knight_mounted": "Abyssal Knight",
+      "knight_unmounted": "Wraith Swordsman"
+    },
+    "description": "A powerful soul from {{origin}}, reforged through the dark arts of necromancy."
   }
 }

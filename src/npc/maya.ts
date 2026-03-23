@@ -7,16 +7,12 @@ import { handleBuy, handleSell, handleTalk, NPCHandler, ShopScripts } from './NP
 
 const MayaHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const isJoined = context.events.isCompleted('RESISTANCE_BASE')
-    const isAlreadyMet = context.events.isCompleted('maya_1')
-    const isB3Completed = context.events.isCompleted('second_boss')
-    const hasGolem = !!player.golem
+    const quest = getActiveQuest(player, context)
 
-    if (isJoined && !isAlreadyMet) {
-      return [{ name: 'join', message: i18n.t('talk.speak') }]
+    if (quest) {
+      return [quest]
     }
 
-    const canMakeGolem = isB3Completed && !hasGolem
     const canUpgrade = npc.factionContribution > 40 && context.events.isCompleted('second_boss') && !!player.golem
     const canModify = npc.factionContribution > 80 && context.events.isCompleted('third_boss')
 
@@ -24,10 +20,12 @@ const MayaHandler: NPCHandler = {
       { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'buy', message: i18n.t('talk.buy') },
       { name: 'sell', message: i18n.t('talk.sell') },
-      ...(canMakeGolem ? [{ name: 'golem', message: i18n.t('npc.maya_tech.choices.golem') }] : []),
       ...(canUpgrade ? [{ name: 'upgrade_golem', message: i18n.t('npc.maya_tech.choices.upgrade') }] : []),
       ...(canModify ? [{ name: 'modify_knight', message: i18n.t('npc.maya_tech.choices.modify') }] : []),
     ]
+  },
+  hasQuest(player, context) {
+    return getActiveQuest(player, context) !== null
   },
   async handle(action, player, npc, context) {
     const buyScripts = i18n.t('npc.maya_tech.buy', { returnObjects: true }) as ShopScripts
@@ -177,6 +175,25 @@ async function handleUpgradeGolem(player: Player) {
   } else if (action === 'exit') {
     Terminal.log(i18n.t('npc.maya_tech.upgrade.exit_msg'))
   }
+}
+
+function getActiveQuest(player: Player, context: GameContext) {
+  const isJoined = context.events.isCompleted('RESISTANCE_BASE')
+  const isAlreadyMet = context.events.isCompleted('maya_1')
+  const isB3Completed = context.events.isCompleted('second_boss')
+  const hasGolem = !!player.golem
+
+  // 1순위: 첫 대면 (레지스탕스 가입 후 아직 대화하지 않음)
+  if (isJoined && !isAlreadyMet) {
+    return { name: 'join', message: i18n.t('talk.speak') }
+  }
+
+  // 2순위: 골렘 제작 (B3 클리어 후 골렘이 없음)
+  if (isB3Completed && !hasGolem) {
+    return { name: 'golem', message: i18n.t('npc.maya_tech.choices.golem') }
+  }
+
+  return null
 }
 
 export default MayaHandler

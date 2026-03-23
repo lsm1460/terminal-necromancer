@@ -31,8 +31,11 @@ class SkeletonWrapper {
     const rarity = this.raw.rarity || 'common'
     const color = rarityColors[rarity]
     const rarityTag = `${color}[${rarity.toUpperCase()}]${resetColor} `
-
+    
     return rarityTag + i18n.t(`npc.${originId}.name`)
+  }
+  get rarity() {
+    return this.raw.rarity
   }
   get attackType() {
     return this.raw.attackType

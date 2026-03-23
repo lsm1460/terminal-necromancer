@@ -180,25 +180,22 @@ export class MinionManager {
     }
   }
 
-  unlockKnight() {
-    if (this._knight) {
-      return
-    }
+  unlockKnight(skeleton: SkeletonWrapper) {
 
     this._knight = {
       id: 'knight',
       name: '',
       attackType: 'melee',
-      hp: 10,
-      baseMaxHp: 10,
-      maxHp: 10,
-      baseAtk: 12,
-      atk: 12,
-      baseDef: 12,
-      def: 5,
-      eva: 0.15,
+      hp: skeleton.maxHp,
+      baseMaxHp: skeleton.maxHp,
+      maxHp: skeleton.maxHp,
+      baseAtk: skeleton.atk,
+      atk: skeleton.atk,
+      baseDef: skeleton.def,
+      def: skeleton.def,
+      eva: skeleton.eva,
       exp: 0,
-      agi: 5,
+      agi: skeleton.agi,
       encounterRate: 0,
       isAlive: true,
       isMinion: true,
@@ -206,10 +203,9 @@ export class MinionManager {
       deathLine: '',
       description: '',
       dropTableId: '',
+      originId: skeleton.originId,
       skills: ['power_smash'],
     }
-
-    // Terminal.log('[영혼이 귀속된 발타자르]를 획득했다.')
   }
 
   public toJSON() {

@@ -1,5 +1,7 @@
 import { AttackType, BattleTarget } from '~/types'
 import { Player } from './Player'
+import i18n from '~/i18n'
+import { getOriginId } from '~/utils'
 
 /**
  * 1. 인터페이스 병합 (Declaration Merging)
@@ -12,8 +14,7 @@ class KnightWrapper {
   constructor(
     public raw: BattleTarget,
     private player: Player
-  ) {
-  }
+  ) {}
 
   // Delegations for BattleTarget compatibility
   get id() {
@@ -26,7 +27,9 @@ class KnightWrapper {
     return this.raw.exp
   }
   get description() {
-    return this.raw.description
+    const origin = i18n.t(`npc.${getOriginId(this.raw.originId || '')}.name`)
+
+    return i18n.t('npc.knight.description', { origin })
   }
   get dropTableId() {
     return this.raw.dropTableId
@@ -67,11 +70,15 @@ class KnightWrapper {
   }
 
   get name() {
+    let key = ''
+
     if (this.isLich) {
-      return this.hasHorse ? '망령의 군주 발타자르' : '타락한 리치 발타자르'
+      key = this.hasHorse ? 'lich_mounted' : 'lich_unmounted'
+    } else {
+      key = this.hasHorse ? 'knight_mounted' : 'knight_unmounted'
     }
 
-    return this.hasHorse ? '심연의 기사 발타자르' : this.raw.name
+    return i18n.t(`npc.knight.name.${key}`)
   }
 
   get atk() {

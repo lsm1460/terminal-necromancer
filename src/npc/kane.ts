@@ -7,17 +7,19 @@ import { handleTalk, NPCHandler } from './NPCHandler'
 
 const KaneHandler: NPCHandler = {
   getChoices(player, npc, context) {
-    const isJoined = context.events.isCompleted('RESISTANCE_BASE')
-    const isAlreadyMet = context.events.isCompleted('kane_1')
+    const quest = getActiveQuest(context)
 
-    if (isJoined && !isAlreadyMet) {
-      return [{ name: 'join', message: i18n.t('talk.speak') }]
+    if (quest) {
+      return [quest]
     }
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'donation', message: i18n.t('npc.kane_leader.choice.donation') },
     ]
+  },
+  hasQuest(player, context) {
+    return getActiveQuest(context) !== null
   },
   async handle(action, player, npc, context) {
     switch (action) {
@@ -29,6 +31,9 @@ const KaneHandler: NPCHandler = {
         break
       case 'donation':
         handleDonation(player, npc)
+        break
+      case 'B5Operation':
+        handleBriefB5Operation(npc, context)
         break
       default:
         break
@@ -84,9 +89,9 @@ async function handleDonation(player: Player, npc: NPC) {
       return {
         name: amount.toString(),
         message: i18n.t('npc.kane_leader.donation.option', {
-        percent,
-        amount: amount.toLocaleString()
-      }),
+          percent,
+          amount: amount.toLocaleString(),
+        }),
       }
     })
     .filter(Boolean) as { name: string; message: string }[]
@@ -118,6 +123,45 @@ async function handleDonation(player: Player, npc: NPC) {
       gold: player.gold.toLocaleString(), // 숫자에 천 단위 콤마 추가
     })
   )
+}
+
+async function handleBriefB5Operation(npc: NPC, context: GameContext) {
+  const { events } = context
+
+  const intro = i18n.t('npc.kane_leader.b5_operation.intro', { returnObjects: true }) as string[]
+  const plan = i18n.t('npc.kane_leader.b5_operation.plan', { returnObjects: true }) as string[]
+  const desperate = i18n.t('npc.kane_leader.b5_operation.desperate', { returnObjects: true }) as string[]
+
+  await speak([...intro, ...plan, ...desperate])
+
+  npc.updateContribution(20)
+
+  events.completeEvent('kane_2')
+}
+
+function getActiveQuest(context: GameContext) {
+  const { events, npcs } = context
+
+  const isJoined = events.isCompleted('RESISTANCE_BASE')
+  const isFirst = events.isCompleted('kane_1')
+
+  const npc = npcs.getNPC('kane_leader')
+  const caronFinished = events.isCompleted('defeat_caron')
+  const isB5Completed = events.isCompleted('third_boss')
+  const isSecond = events.isCompleted('kane_2')
+
+  if (isJoined && !isFirst) {
+    return { name: 'join', message: i18n.t('talk.speak') }
+  }
+
+  const isFriendly = (npc?.factionHostility ?? 0) <= 0
+  const canBriefB5Operation = caronFinished && !isB5Completed && !isSecond && isFriendly
+
+  if (canBriefB5Operation) {
+    return { name: 'B5Operation', message: i18n.t('npc.kane_leader.choice.B5Operation') }
+  }
+
+  return null
 }
 
 export default KaneHandler

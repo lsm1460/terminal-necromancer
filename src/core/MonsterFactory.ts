@@ -53,7 +53,7 @@ export class MonsterFactory {
     }
 
     const base = _.cloneDeep(this.monster[monsterId])
-
+    
     return {
       ...base,
       isAlive: true,

@@ -15,6 +15,7 @@ import {
 } from '~/types'
 import { InventoryManager } from './InventoryManager'
 import { MinionManager } from './MinionManager'
+import SkeletonWrapper from './SkeletonWrapper'
 import { StatsCalculator } from './StatsCalculator'
 
 export type PlayerSaveData = Partial<Player> & {
@@ -370,8 +371,8 @@ export class Player {
     return this.minionManager.unlockGolem(type)
   }
 
-  unlockKnight() {
-    return this.minionManager.unlockKnight()
+  unlockKnight(skeleton: SkeletonWrapper) {
+    return this.minionManager.unlockKnight(skeleton)
   }
 
   public recoverHp(amount: number): number {

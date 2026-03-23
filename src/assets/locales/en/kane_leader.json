@@ -39,8 +39,24 @@
     ]
   },
 
+  "b5_operation": {
+    "intro": [
+      "Kane: \"You’ve arrived. I’ve heard much of your recent exploits within this terminal. Your overwhelming strength is far too formidable to be bound under the Reaper's command.\"",
+      "Kane: \"I’ll get straight to the point. We are currently preparing a grand operation that carries the very fate of our Resistance. And for this to succeed, we absolutely need a powerful ally like you.\""
+    ],
+    "plan": [
+      "Kane: \"Our target is the VIP Lounge on the 5th basement floor. It’s where the high spirits and lesser gods, those who bask in the Reaper's protection, gather to idle away their time.\"",
+      "Kane: \"We intend to secure them as hostages. We must have figures of that magnitude in our hands to finally sit at the negotiation table with the Reaper on equal terms.\""
+    ],
+    "desperate": [
+      "Kane: \"To be honest, I am well aware that this operation is beyond our strength alone. Without your cooperation, it will be difficult for my comrades to avoid a reckless sacrifice.\"",
+      "Kane: \"However, if you stand with us, we will have a definitive chance to tear down this twisted system. Please... will you lend your strength to the Resistance's final gamble?\""
+    ]
+  },
+
   "choice": {
-    "donation": "📦Donate"
+    "donation": "📦Donate",
+    "B5Operation": "🗺️New Operation"
   },
 
   "contribute_prompt": "How much will you offer? Your decision becomes tomorrow's hope for someone.",

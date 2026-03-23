@@ -31,7 +31,7 @@ export class ThirdBoss implements BossLogic {
 
     Terminal.log(i18n.t('npc.third_boss.help_call_vip'))
 
-    if (!leader.isHostile) {
+    if (leader.factionHostility > 0) {
       Terminal.log(i18n.t('npc.third_boss.help_call_res', { name: leader.name }))
     }
 
@@ -48,7 +48,7 @@ export class ThirdBoss implements BossLogic {
 
     this.selectedSide = _res
 
-    await speak([i18n.t('npc.third_boss.results.resistance')])
+    await speak([i18n.t(`npc.third_boss.results.${_res}`)])
 
     if (_res === 'resistance') {
       player.addMercenary(leader)
@@ -85,7 +85,6 @@ export class ThirdBoss implements BossLogic {
 
   async onVictory(player: Player, context: GameContext) {
     const { npcs, events } = context
-    const boss = npcs.getNPC('third_boss')
 
     player.removeMercenaries()
 
@@ -93,9 +92,32 @@ export class ThirdBoss implements BossLogic {
 
     await speak(victoryLines)
 
+    const kane = npcs.getNPC('kane_leader')
+
+    const isKaneAlive = kane?.isAlive
+
+    if (this.selectedSide === 'resistance') {
+      const leaderKey = isKaneAlive ? 'kane' : 'ren'
+      const victoryLines = i18n.t(`npc.third_boss.after_victory.resistance.${leaderKey}`, {
+        returnObjects: true,
+      }) as string[]
+
+      await speak(victoryLines)
+    }
+
     events.completeEvent(`third_boss`)
     events.completeEvent(`third_boss_${this.selectedSide}`)
 
+    const boss = npcs.getNPC('third_boss')
+    const kael = npcs.getNPC('kael')
+    const vesper = npcs.getNPC('vesper')
+    const flint = npcs.getNPC('flint')
+
     boss && boss.dead(0)
+
+    // 역활이 끝난 레지스탕스 영구 퇴장
+    kael && kael.dead(0)
+    vesper && vesper.dead(0)
+    flint && flint.dead(0)
   }
 }

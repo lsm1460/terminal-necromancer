@@ -1,3 +1,4 @@
+import { Terminal } from '~/core/Terminal'
 import { EventHandler } from '.'
 import { printLootStatus } from '~/statusPrinter'
 
@@ -15,5 +16,7 @@ export const b1Handlers: Record<string, EventHandler> = {
     drops.forEach((d) => context.world.addDrop({ ...d, x, y }))
     context.events.completeEvent('item-tutorial')
     printLootStatus(player, context)
+
+    // Terminal.log('')
   },
 }

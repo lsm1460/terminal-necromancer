@@ -55,7 +55,7 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
   const tile = map.getTile(x, y)
 
   const bag = world.getLootBagAt(map.currentSceneId, tile.id)
-  if (bag) Terminal.log(`\n${i18n.t('found_soul')}`)
+  if (bag) Terminal.log(`\n \x1b[31m[!]\x1b[0m ${i18n.t('found_soul')}`)
 
   const drops = world.getDropsAt(x, y)
   if (drops?.length) {

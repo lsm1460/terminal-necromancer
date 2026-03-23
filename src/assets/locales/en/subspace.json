@@ -1,7 +1,10 @@
 {
   "choices": {
     "increase_limit": "🦴 Expand Skeleton Army",
-    "space": "🌀 Subspace"
+    "space": "🌀 Subspace",
+    "mix": "♻️ Skeleton Fusion",
+    "tutorial_knight": "📖 Dark Knight Initiate",
+    "promotion": "🛡️ Dark Knight Promotion"
   },
   "increase_limit": {
     "status": "Current Soul Shards: {{current}} / Required: {{cost}}",
@@ -22,6 +25,70 @@
       "confirm": "[Void Guide]: \"...Re...lease... need...ed...\"",
       "cancel": "[Void Guide]: \"...Halt...\"",
       "success": "[Void Guide]: \"...Ves...sel... expand...ed... Ar...my... grows...\""
+    }
+  },
+  "mix": {
+    "select_title": "Select two skeletons of the same class to mix",
+    "tutorial": {
+      "caron_is_mine": [
+        "Caron: \"My Lord, I shall teach you how to weave together the fallen of the same origin.\"",
+        "Caron: \"By merging two vessels of the same kind, you can ascend them into a higher being.\"",
+        "Caron: \"Keep in mind that the power will coalesce around the vessel with the greater vitality.\"",
+        "Caron: \"However, the original vessels used in the fusion will perish, so choose with caution.\""
+      ],
+      "caron_is_dead": [
+        "[Void Guide]: \"...Two... into... one...\"",
+        "[Void Guide]: \"...Greater... vitality... at... the... core...\"",
+        "[Void Guide]: \"...Stronger... shadow... born...\"",
+        "[Void Guide]: \"...Original... vessels... fade... away...\""
+      ]
+    },
+    "caron_is_mine": {
+      "no_materials": "Caron: \"I see no subordinates of the same kind suitable for mixing. Quality requires a foundation.\"",
+      "not_enough_selection": "Caron: \"Two vessels are required. One alone cannot spark a new life.\"",
+      "mismatch": "Caron: \"Undead of different origins cannot be entwined. Please select those of the same kind.\"",
+      "confirm": "Caron: \"Shall we weave these two souls together to create a more powerful existence?\" ({{hp}}/{{maxHp}})",
+      "success": "Caron: \"Excellent. The essence of death has condensed, forging a much sharper blade.\"",
+      "cancel": "Caron: \"Sometimes, stability is preferred over a hasty experiment.\""
+    },
+    "caron_is_dead": {
+      "no_materials": "[Void Guide]: \"...No... materials... Bring... same... kind...\"",
+      "not_enough_selection": "[Void Guide]: \"...Lacking... Two... to... become... one...\"",
+      "mismatch": "[Void Guide]: \"...Mix... rejected... Only... same... kind...\"",
+      "confirm": "[Void Guide]: \"...Soul... binding... beginning...\"",
+      "success": "[Void Guide]: \"...Grown... stronger... A... new... shadow...\"",
+      "cancel": "[Void Guide]: \"...Halted...\""
+    },
+    "system": {
+      "result": "\n[🦴 Fusion Complete]\nScattered remains have intertwined, reforged into {{name}}."
+    }
+  },
+  "promotion": {
+    "select_title": "Select a skeleton to promote to Knight (HP 200 or more)",
+    "tutorial": {
+      "caron_is_mine": [
+        "Caron: \"Oho... My Lord, look at this. The density of mana etched into these bones is extraordinary.\"",
+        "Caron: \"You have 'discovered' an elite with such resilient vitality (HP) that even death could not break.\"",
+        "Caron: \"A vessel of this caliber is more than worthy of being appointed as your 'Knight'.\""
+      ],
+      "caron_is_dead": [
+        "[Void Guide]: \"...Discovered... One... with... strong... bones...\"",
+        "[Void Guide]: \"...Vitality... that... even... death... could... not... devour...\"",
+        "[Void Guide]: \"...Knight... worthy... enough...\""
+      ]
+    },
+    "caron_is_mine": {
+      "confirm": "Would you like to appoint {{name}} as a Knight? If there is an existing Knight, their title will be stripped.",
+      "cancel": "Caron: \"A keen eye for talent is also a virtue of a monarch.\"",
+      "success": "Caron: \"Congratulations on the birth of a new Knight. Your shadow has grown even more solid.\""
+    },
+    "caron_is_dead": {
+      "confirm": "...{{name}}... Knight... appointment... Old... knight... will... be... discarded... Do... you... agree...",
+      "cancel": "[Void Guide]: \"...Halted...\"",
+      "success": "[Void Guide]: \"...New... blade... born... Congratulations...\""
+    },
+    "system": {
+      "result": "\n[⚔️ Knight Promotion Complete]\nNew Knight of the Legion: {{name}}"
     }
   },
   "manage": {

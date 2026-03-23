@@ -16,6 +16,7 @@ const ZedHandler: NPCHandler = {
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
+      ...(isB3Completed && !player.golem ? [{ name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }] : []),
       ...(isB3Completed && player.golem
         ? [{ name: 'upgrade_golem', message: i18n.t('npc.dr_zed.choices.upgrade_golem') }]
         : []),

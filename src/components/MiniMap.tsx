@@ -61,7 +61,7 @@ export const MiniMap: React.FC<{
       const _isFullyVisible = isCheat || (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
 
       setIsFullyVisible(_isFullyVisible)
-      console.log('DEBUG::', map.currentSceneId)
+      
       const tiles = map.currentScene.tiles.map((row) =>
         row.map((tile) =>
           tile

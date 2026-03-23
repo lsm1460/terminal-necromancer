@@ -174,7 +174,7 @@
       "burn": "\n [!] {{name}}'s skin is scorched by the flames.",
       "poison": "\n [!] {{name}} is exposed to a lethal toxin, turning pale.",
       "freeze": "\n [!] {{name}} is exposed to the cold, and their skin begins to freeze.",
-      "curse": "\n [!] {{name}}'s guard is shattered by uncontrollable rage!",
+      "curse": "\n [!] {{name}}'s strikes grow weak as they lose all composure to blind rage!",
       "smoke": "\n [!] Thick smoke completely veils {{name}}'s vision!",
       "bone_prison": "\n [!] Jagged bone bars rise, constricting {{name}}'s limbs!",
       "aging": "\n[⏳] {{name}}'s skin withers rapidly as they gasp for air! All reactions are visibly slowed.",
