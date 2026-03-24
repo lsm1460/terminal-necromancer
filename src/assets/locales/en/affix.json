@@ -51,7 +51,7 @@
   },
   "CHAIN_EXPLOSION": {
     "name": "Chain Reaction",
-    "description": "Triggering Corpse Explosion causes all corpses on the field, including skeletons, to detonate in sequence."
+    "description": "Triggering Corpse Explosion causes all corpses on the field, to detonate in sequence."
   },
   "VAMPIRISM": {
     "name": "Vampirism",
