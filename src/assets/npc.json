@@ -395,5 +395,19 @@
     "noEscape": true,
     "noCorpse": true,
     "skills": []
+  },
+  "_knight": {
+    "id": "_knight",
+    "attackType": "melee",
+    "hp": 650,
+    "maxHp": 650,
+    "atk": 42,
+    "def": 27,
+    "eva": 0.03,
+    "exp": 1500,
+    "isAlive": true,
+    "reborn": false,
+    "dropTableId": "",
+    "skills": []
   }
 }

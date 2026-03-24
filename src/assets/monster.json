@@ -493,8 +493,8 @@
   "arka": {
     "id": "arka",
     "attackType": "ranged",
-    "hp": 300,
-    "maxHp": 1100,
+    "hp": 200,
+    "maxHp": 300,
     "atk": 36,
     "def": 19,
     "agi": 38,

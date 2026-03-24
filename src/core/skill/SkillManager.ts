@@ -14,17 +14,20 @@ export class SkillManager {
     context,
     units
   ) => {
+    const isConsumeBlood = player.ref.hasAffix('BLOOD')
+    const costType = isConsumeBlood ? 'HP' : 'MP'
+
+    const currentResource = isConsumeBlood ? player.ref.hp : player.ref.mp
+
     const failResult = { isSuccess: false, isAggressive: false, gross: 0 } as const
 
-    // 1. 가능 스킬 필터링
     const playerSkills = getPlayerSkills()
     const availableSkills = Object.values(playerSkills).filter((skill) => player.ref.memorize.includes(skill.id))
 
-    // 2. 스킬 선택 UI
-    const skillId = await Terminal.select(i18n.t('skill.select_title', { mp: player.ref.mp }), [
+    const skillId = await Terminal.select(i18n.t('skill.select_title', { type: costType, current: currentResource }), [
       ...availableSkills.map((s) => ({
         name: s.id,
-        message: `${s.name} (MP: ${s.cost}) - ${s.description}`,
+        message: `${s.name} (${costType}: ${s.cost}) - ${s.description}`,
       })),
       { name: 'cancel', message: i18n.t('cancel') },
     ])
@@ -33,17 +36,25 @@ export class SkillManager {
 
     const targetSkill = playerSkills[skillId as SkillId]
 
-    // 3. 자원 체크
-    if (player.ref.mp < targetSkill.cost) {
-      Terminal.log(`\n🚫 ${i18n.t('skill.not_enough_mp', { cost: targetSkill.cost, current: player.ref.mp })}`)
+    if (currentResource < targetSkill.cost) {
+      Terminal.log(
+        `\n🚫 ${i18n.t('skill.not_enough', {
+          type: costType,
+          cost: targetSkill.cost,
+          current: currentResource,
+        })}`
+      )
       return failResult
     }
 
     const result = await targetSkill.execute(player, context, units)
 
-    // 4. 실행 및 마력 소모
     if (result.isSuccess) {
-      player.ref.mp -= targetSkill.cost
+      if (isConsumeBlood) {
+        player.ref.hp -= targetSkill.cost
+      } else {
+        player.ref.mp -= targetSkill.cost
+      }
     }
 
     return { ...result, skillId }

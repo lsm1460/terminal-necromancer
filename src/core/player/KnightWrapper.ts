@@ -2,6 +2,7 @@ import { AttackType, BattleTarget } from '~/types'
 import { Player } from './Player'
 import i18n from '~/i18n'
 import { getOriginId } from '~/utils'
+import { ItemRarity } from '../item/consts'
 
 /**
  * 1. 인터페이스 병합 (Declaration Merging)
@@ -13,6 +14,7 @@ interface KnightWrapper extends BattleTarget {}
 class KnightWrapper {
   constructor(
     public raw: BattleTarget,
+    private upgrade: ItemRarity[],
     private player: Player
   ) {}
 

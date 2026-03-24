@@ -1,7 +1,7 @@
 {
   "execution": "\n✨ {{attacker}} casts [{{skill}}]!",
-  "select_title": "Select Skill (Current MP: {{mp}})",
-  "not_enough_mp": "Not enough MP! (Required: {{cost}} / Current: {{current}})",
+  "select_title": "Select Skill (Current {{type}}: {{cost}})",
+  "not_enough": "Not enough {{type}}! (Required: {{cost}} / Current: {{current}})",
   "no_corpses_nearby": "No corpses nearby to use.",
   "select_corpse_to_consume": "Which corpse will you consume?",
   "corpse_choice_format": "{{name}} Corpse (HP: {{hp}}, ATK: {{atk}})",
@@ -58,8 +58,8 @@
     "description": "Extract essence from a corpse to restore mana.",
     "unlockHint": "B2F Purified",
 
-    "success": "Extracted the soul from {{name}}, restoring {{amount}} Mana.",
-    "full_mana": "Mana is already full."
+    "success": "Extracted the soul from {{name}}, restoring {{amount}} {{type}}.",
+    "full": "{{type}} is already full."
   },
   "SOUL_TRANSFER": {
     "name": "Soul Transfer",
@@ -100,6 +100,7 @@
     "select_prompt": "Which skeleton will you turn into a Bone Spear?",
     "cancel_msg": "\n💬 Skill use canceled.",
     "activation": "\n💀 {{player}} destroys {{target}} to craft a massive Bone Spear!",
+    "resurrection_active": "✨ [Resurrection] The shattered {{target}} is pulled back by dark sorcery and reforms!",
     "log": {
       "surprise_primary": " └ 🧤 Surprise! The Bone Spear pierces the back of {{name}} from the shadows!",
       "surprise_secondary": " └ ⚡ Chain Surprise! Even {{name}} is caught in the spear's path!",
@@ -148,7 +149,8 @@
       "gold": "[!] Pickpocket! {{attacker}} stole {{amount}}G and fled!",
       "item": "[!] Lost Item! {{attacker}} snatched '{{item}}' from your bag and fled!",
       "fail": " > {{attacker}} searched your pockets, but found absolutely nothing."
-    }
+    },
+    "purify_essence": "🧼 {{attacker}} cleansed all allies' souls! One random debuff removed."
   },
 
   "effect": {

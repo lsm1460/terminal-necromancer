@@ -1,6 +1,16 @@
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { ExecuteSkill } from '~/types'
+import { BattleTarget, ExecuteSkill, GameContext } from '~/types'
+
+interface ExplosionTarget {
+  id: string
+  name: string
+  type: 'corpse' | 'skeleton'
+  hp: number
+  maxHp: number
+}
 
 /**
  * 시체 폭발 (Corpse Explosion)
@@ -8,31 +18,89 @@ import { ExecuteSkill } from '~/types'
  * : 공격자의 스탯이 아닌 '시체의 최대 생명력'에 기반한 데미지를 전달합니다.
  */
 export const corpseExplosion: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
-  const { world } = context
-  const { x, y } = player.ref.pos
-
-  // 1. 가용 자원(시체 & 스켈레톤) 통합
-  const corpses = world.getCorpsesAt(x, y)
-  const skeletons = player.ref.skeleton
-
-  const targets = [
-    ...corpses.map((corpse) => ({
-      id: corpse.id,
-      name: corpse.name,
-      type: 'corpse' as const,
-      hp: 0,
-      maxHp: corpse.maxHp,
-    })),
-    ...skeletons.map((sk) => ({ id: sk.id, name: sk.name, type: 'skeleton' as const, hp: sk.hp, maxHp: sk.maxHp })),
-  ]
+  const isChaining = player.ref.hasAffix('CHAIN_EXPLOSION')
+  const targets = collectExplosionTargets(player, context, isChaining)
 
   if (targets.length === 0) {
     Terminal.log(i18n.t('skill.not_found'))
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
-  // 2. 소모할 대상 선택
-  const corpseId = await Terminal.select(i18n.t('skill.CORPSE_EXPLOSION.select_prompt'), [
+  let isAggressive = false
+  let totalGross = 0
+
+  if (isChaining) {
+    // 모든 시체/스켈레톤 연쇄 폭발
+    for (const target of targets) {
+      const result = await executeSingleExplosion(player, context, target, enemies)
+      if (result.isAggressive) isAggressive = true
+      totalGross += 70
+    }
+  } else {
+    // 단일 대상 선택 폭발
+    const selectedId = await selectTarget(targets)
+    if (selectedId === 'cancel') {
+      Terminal.log('\n💬 ' + i18n.t('skill.cancel_action'))
+      return { isSuccess: false, isAggressive: false, gross: 0 }
+    }
+
+    const target = targets.find((t) => t.id === selectedId)
+    if (target) {
+      const result = await executeSingleExplosion(player, context, target, enemies)
+      isAggressive = result.isAggressive
+      totalGross = 70
+    }
+  }
+
+  return {
+    isSuccess: true,
+    isAggressive,
+    gross: totalGross,
+  }
+}
+
+/**
+ * 폭발 가능한 자원(시체 & 스켈레톤) 수집
+ * : isChaining이 true라면 시체(corpses)만 수집합니다.
+ */
+function collectExplosionTargets(
+  player: CombatUnit<Player>,
+  context: GameContext,
+  isChaining: boolean
+): ExplosionTarget[] {
+  const { world } = context
+  const { x, y } = player.ref.pos
+  const corpses = world.getCorpsesAt(x, y)
+
+  const targets: ExplosionTarget[] = corpses.map((corpse) => ({
+    id: corpse.id,
+    name: corpse.name,
+    type: 'corpse' as const,
+    hp: 0,
+    maxHp: corpse.maxHp,
+  }))
+
+  if (!isChaining) {
+    const skeletons = player.ref.skeleton
+    targets.push(
+      ...skeletons.map((sk: BattleTarget) => ({
+        id: sk.id,
+        name: sk.name,
+        type: 'skeleton' as const,
+        hp: sk.hp,
+        maxHp: sk.maxHp,
+      }))
+    )
+  }
+
+  return targets
+}
+
+/**
+ * 폭발 대상 선택 UI
+ */
+async function selectTarget(targets: ExplosionTarget[]): Promise<string> {
+  return await Terminal.select(i18n.t('skill.CORPSE_EXPLOSION.select_prompt'), [
     ...targets.map((s) => ({
       name: s.id,
       message: i18n.t('skill.choice_format', {
@@ -43,20 +111,20 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
     })),
     { name: 'cancel', message: i18n.t('cancel') },
   ])
+}
 
-  if (corpseId === 'cancel') {
-    Terminal.log('\n💬 ' + i18n.t('skill.cancel_action'))
-    return { isSuccess: false, isAggressive: false, gross: 0 }
-  }
+/**
+ * 단일 대상 폭발 실행
+ */
+async function executeSingleExplosion(
+  player: CombatUnit<Player>,
+  context: GameContext,
+  target: ExplosionTarget,
+  enemies: CombatUnit[]
+): Promise<{ isAggressive: boolean }> {
+  const { world } = context
+  const rawExplosionDamage = Math.floor(target.maxHp * 0.6)
 
-  const selectedCorpse = targets.find((target) => target.id === corpseId)
-  if (!selectedCorpse) {
-    Terminal.log(i18n.t('skill.not_found'))
-    return { isSuccess: false, isAggressive: false, gross: 0 }
-  }
-
-  // 3. 데미지 계산 및 폭발 연출
-  const rawExplosionDamage = Math.floor(selectedCorpse.maxHp * 0.6)
   Terminal.log(
     i18n.t('skill.CORPSE_EXPLOSION.activation', {
       player: player.name,
@@ -64,7 +132,6 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
     })
   )
 
-  // 4. 주변 적들에게 데미지 적용
   let isAggressive = true
   if (enemies.length === 0) {
     Terminal.log(i18n.t('skill.CORPSE_EXPLOSION.no_enemies'))
@@ -82,21 +149,17 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
     }
   }
 
-  // 5. 사용한 자원 제거
-  if (selectedCorpse.type === 'corpse') {
-    world.removeCorpse(selectedCorpse.id)
+  // 자원 소모 처리
+  if (target.type === 'corpse') {
+    world.removeCorpse(target.id)
   } else {
-    const skeleton = player.ref.skeleton.find((sk) => sk.id === selectedCorpse.id)
+    const skeleton = player.ref.skeleton.find((sk) => sk.id === target.id)
     if (skeleton) {
       skeleton.hp = 0
       skeleton.isAlive = false
     }
-    player.ref.removeMinion(selectedCorpse.id)
+    player.ref.removeMinion(target.id)
   }
 
-  return {
-    isSuccess: true,
-    isAggressive,
-    gross: 70,
-  }
+  return { isAggressive }
 }

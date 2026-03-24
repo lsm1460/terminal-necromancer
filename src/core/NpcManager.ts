@@ -88,9 +88,6 @@ export class NPCManager {
       get lines() {
         return (i18n.t(`npc.${this.id}.lines`, { returnObjects: true }) || ['...']) as string[]
       },
-      get scripts() {
-        return i18n.t(`npc.${this.id}.scripts`, { returnObjects: true })
-      },
     }
 
     return npc
@@ -170,10 +167,16 @@ export class NPCManager {
     return false
   }
 
-  static getDialectType(hostility: number) {
-    if (hostility <= -20) return 'friendly'
-    if (hostility >= 40) return 'hostile'
-    return 'normal'
+  static getNpcScripts(npc: NPC, greetings: 'greeting' | 'farewell') {
+    const hostility = npc.faction === 'resistance' ? npc.factionHostility : (npc.relation || 0) * -1
+
+    let dialect: 'friendly' | 'hostile' | 'normal' = 'normal'
+    if (hostility <= -20) dialect = 'friendly'
+    else if (hostility >= 40) dialect = 'hostile'
+
+    const key = `npc.${npc.id}.scripts.${dialect}.${greetings}`
+
+    return i18n.exists(key) ? i18n.t(key) : '...'
   }
 
   /**

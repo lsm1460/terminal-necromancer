@@ -90,4 +90,11 @@ export const SpecialSkillLogics: Record<
       }
     }
   },
+
+  purify_essence: async (attacker, targets, skill) => {
+    Terminal.log(i18n.t('skill.special.purify_essence', { attacker: attacker.name }))
+
+    for (const target of targets) target.removeRandomDeBuff()
+  },
+
 }

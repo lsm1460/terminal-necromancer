@@ -19,7 +19,7 @@ export class MinionManager {
   upgradeLimit = 5
   golemUpgrade: ('machine' | 'soul')[] = []
   private _golem: BattleTarget | undefined = undefined
-  knightUpgrade: (ItemRarity | 'soul')[] = []
+  knightUpgrade: ItemRarity[] = []
   private _knight: BattleTarget | undefined = undefined
 
   constructor(
@@ -71,7 +71,7 @@ export class MinionManager {
       return
     }
 
-    return new KnightWrapper(this._knight, this.player)
+    return new KnightWrapper(this._knight, this.knightUpgrade, this.player)
   }
 
   get minions(): BattleTarget[] {
@@ -181,9 +181,10 @@ export class MinionManager {
   }
 
   unlockKnight(skeleton: SkeletonWrapper) {
+    this.knightUpgrade = []
 
     this._knight = {
-      id: 'knight',
+      id: '_knight',
       name: '',
       attackType: 'melee',
       hp: skeleton.maxHp,

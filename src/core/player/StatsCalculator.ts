@@ -1,39 +1,41 @@
-import { ArmorItem, WeaponItem } from '~/types'
+import { Player } from './Player'
 
-export interface StatsProvider {
-  _maxHp: number
-  _maxMp: number
-  atk: number
-  def: number
-  agi: number
-  eva: number
-  crit: number
-  equipped: {
-    weapon: WeaponItem | null
-    armor: ArmorItem | null
-  }
+type StatOptions = {
+  ignoreBloodAffix?: boolean
 }
 
 export class StatsCalculator {
-  static getMaxHp(player: StatsProvider): number {
+  static getMaxHp(player: Player): number {
     let maxHp = player._maxHp
 
-    if (player.equipped.weapon) maxHp += player.equipped.weapon?.hp || 0
-    if (player.equipped.armor) maxHp += player.equipped.armor?.hp || 0
+    maxHp += player.equipped.weapon?.hp || 0
+    maxHp += player.equipped.armor?.hp || 0
+
+    if (player.hasAffix('BLOOD')) {
+      const potentialMp = StatsCalculator.getMaxMp(player, { ignoreBloodAffix: true })
+
+      maxHp = Math.floor((maxHp + potentialMp) * 1.3)
+    }
 
     return maxHp
   }
 
-  static getMaxMp(player: StatsProvider): number {
+  static getMaxMp(player: Player, options: StatOptions = {}): number {
+    const { ignoreBloodAffix = false } = options
+
+    if (!ignoreBloodAffix && player.hasAffix('BLOOD')) {
+      return 0
+    }
+
     let maxMp = player._maxMp
 
-    if (player.equipped.weapon) maxMp += player.equipped.weapon?.mp || 0
-    if (player.equipped.armor) maxMp += player.equipped.armor?.mp || 0
+    maxMp += player.equipped.weapon?.mp || 0
+    maxMp += player.equipped.armor?.mp || 0
 
     return maxMp
   }
 
-  static getComputed(player: StatsProvider) {
+  static getComputed(player: Player) {
     let atk = player.atk
     let crit = player.crit
     let def = player.def
@@ -45,7 +47,7 @@ export class StatsCalculator {
       attackType = player.equipped.weapon.attackType || 'melee'
       crit += player.equipped.weapon.crit
     }
-    
+
     if (player.equipped.armor) {
       def += player.equipped.armor.def
       eva += player.equipped.armor?.eva || 0

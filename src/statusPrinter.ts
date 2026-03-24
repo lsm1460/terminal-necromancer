@@ -1,10 +1,11 @@
 import { Player } from './core/player/Player'
 import { GameContext, NPC } from './types'
 
+import { union } from 'lodash'
+import { QuestManager } from './core/QuestManager'
 import { Terminal } from './core/Terminal'
 import i18n from './i18n'
 import { getItemLabel } from './utils'
-import { QuestManager } from './core/QuestManager'
 
 export function printTileStatus(player: Player, context: GameContext) {
   const { map, npcs, world } = context
@@ -13,7 +14,9 @@ export function printTileStatus(player: Player, context: GameContext) {
 
   Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
 
-  const npcList = (tile.npcIds || []).map((_id) => npcs.getNPC(_id)).filter((npc): npc is NPC => npc !== null)
+  const npcList = union(tile.npcIds || [], player.knight ? ['_knight'] : [])
+    .map((_id) => (_id === '_knight' ? player.knight : npcs.getNPC(_id)))
+    .filter((npc): npc is NPC => npc !== null)
 
   const alive = npcList.filter((npc) => npc.isAlive)
   const corpses = world.getCorpsesAt(x, y)

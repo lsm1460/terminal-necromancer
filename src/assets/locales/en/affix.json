@@ -71,11 +71,11 @@
   },
   "MEMORY": {
     "name": "Memory",
-    "description": "Increases the number of Memorize slots.",
+    "description": "Increases Memorize slots by 2.",
     "unEquipCaution": "Unequipping this will cause some of the inscribed enchantments to dissipate."
   },
   "CLEANSE": {
     "name": "Cleanse",
-    "description": "Skeleton Priests or Monks will now remove debuffs from allies."
+    "description": "Skeleton Priests and Monks gain a skill to cleanse one random debuff from all allies."
   }
 }

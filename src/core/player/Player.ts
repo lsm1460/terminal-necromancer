@@ -132,8 +132,12 @@ export class Player {
     return this.minionManager.maxSkeleton
   }
 
-  get maxMemorize() {
-    return this._maxMemorize
+  get maxMemorize(): number {
+    let totalSlots = this._maxMemorize
+
+    if (this.hasAffix('MEMORY')) totalSlots += 2
+
+    return totalSlots
   }
 
   get golem() {

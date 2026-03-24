@@ -1,7 +1,7 @@
 {
   "execution": "\n✨ {{attacker}}의 [{{skill}}]!",
-  "select_title": "스킬 선택 (현재 MP: {{mp}})",
-  "not_enough_mp": "마력이 부족합니다! (필요: {{cost}} / 현재: {{current}})",
+  "select_title": "스킬 선택 (현재 {{type}}: {{cost}})",
+  "not_enough": "{{type}} 부족합니다! (필요: {{cost}} / 현재: {{current}})",
   "no_corpses_nearby": "주변에 활용할 시체가 없습니다.",
   "select_corpse_to_consume": "어떤 시체를 소모하시겠습니까?",
   "corpse_choice_format": "{{name}}의 시체 (HP: {{hp}}, ATK: {{atk}})",
@@ -57,8 +57,8 @@
     "description": "시체에서 정수를 뽑아내 마나로 전환합니다.",
     "unlockHint": "지하 2층 정화 완료",
 
-    "success": "{{name}}에게서 영혼을 추출하여 마나를 {{amount}} 회복했습니다.",
-    "full_mana": "마나가 이미 가득 차 있습니다."
+    "success": "{{name}}에게서 영혼을 추출하여 {{type}}를 {{amount}} 회복했습니다.",
+    "full": "{{type}}가 이미 가득 차 있습니다."
   },
   "SOUL_TRANSFER": {
     "name": "영혼 전달",
@@ -98,6 +98,7 @@
     "select_prompt": "어느 스켈레톤을 뼈 창으로 만드시겠습니까?",
     "cancel_msg": "\n💬 스킬 사용을 취소했습니다.",
     "activation": "\n💀 {{player}}이(가) {{target}}을(를) 파괴하여 거대한 뼈 창을 빚어냅니다!",
+    "resurrection_active": "✨ [부활] 산산조각 났던 {{target}}이 어둠의 마력에 이끌려 다시 결합합니다!",
     "log": {
       "surprise_primary": " └ 🧤 기습! 뼈 창이 그림자 속에서 가장 뒤의 {{name}}의 등을 꿰뚫습니다!",
       "surprise_secondary": " └ ⚡ 연쇄 기습! 당황한 {{name}}까지 창날에 휘말립니다!",
@@ -146,7 +147,8 @@
       "gold": "[!] 소매치기! {{attacker}}(이)가 {{amount}}G를 훔쳐 달아납니다!",
       "item": "[!] 분실! {{attacker}}(이)가 배낭에서 '{{item}}'을(를) 훔쳐 달아납니다!",
       "fail": " > {{attacker}}(이)가 당신의 주머니를 뒤졌지만, 땡전 한 푼 나오지 않습니다."
-    }
+    },
+    "purify_essence": "🧼 {{attacker}}(이)가 아군의 영혼을 정화하여 무작위 디버프 1개를 제거했습니다!"
   },
 
   "effect": {

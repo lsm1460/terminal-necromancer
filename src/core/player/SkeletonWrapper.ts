@@ -31,7 +31,7 @@ class SkeletonWrapper {
     const rarity = this.raw.rarity || 'common'
     const color = rarityColors[rarity]
     const rarityTag = `${color}[${rarity.toUpperCase()}]${resetColor} `
-    
+
     return rarityTag + i18n.t(`npc.${originId}.name`)
   }
   get rarity() {
@@ -108,6 +108,10 @@ class SkeletonWrapper {
     return this.raw.orderWeight
   }
 
+  get class() {
+    return this.raw.id.split('skeleton_')[1]
+  }
+
   get skills(): string[] {
     // 1. 기존에 들어있을 수 있는 어픽스 관련 스킬들을 한 번에 제거
     const affixSkillIds = ['death_destruct', 'frostborne']
@@ -119,6 +123,10 @@ class SkeletonWrapper {
 
     if (this.player.hasAffix('FROSTBORNE')) {
       currentSkills.push('frostborne')
+    }
+
+    if (this.player.hasAffix('CLEANSE') && ['monk', 'priest'].includes(this.class)) {
+      currentSkills.push('purify_essence')
     }
 
     return currentSkills

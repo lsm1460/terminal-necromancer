@@ -2,20 +2,20 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
-    "y": 1,
-    "_maxHp": 231,
-    "hp": 231,
+    "x": 0,
+    "y": 0,
+    "_maxHp": 284,
+    "hp": 284,
     "_maxMp": 50,
     "mp": 50,
-    "atk": 13,
-    "def": 5,
+    "atk": 14,
+    "def": 6,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 2421,
-    "exp": 3435,
-    "level": 6,
+    "gold": 2438,
+    "exp": 1045,
+    "level": 7,
     "karma": 5,
     "_maxMemorize": 5,
     "memorize": [
@@ -155,7 +155,7 @@
       "madeBy": "zed"
     },
     "_knight": {
-      "id": "knight",
+      "id": "_knight",
       "name": "",
       "attackType": "melee",
       "hp": 560,
@@ -495,6 +495,12 @@
       "third_boss": {
         "hp": 650,
         "isAlive": false,
+        "reborn": false,
+        "relation": 0
+      },
+      "_knight": {
+        "hp": 650,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       }

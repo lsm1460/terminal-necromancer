@@ -541,5 +541,13 @@
     "step": 3,
     "type": "passive",
     "skills": ["cmd_grace"]
+  },
+  "purify_essence": {
+    "id": "purify_essence",
+    "name": "정화",
+    "attackType": "ranged",
+    "description": "모든 아군의 디버프를 제거합니다.",
+    "chance": 0.3,
+    "targetType": "ALLY_ALL"
   }
 }

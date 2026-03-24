@@ -1,3 +1,4 @@
+import _knight from './_knight.json'
 import adrian from './adrian.json'
 import affix from './affix.json'
 import apostle from './apostle.json'
@@ -8,6 +9,7 @@ import caron from './caron.json'
 import commands from './commands.json'
 import death from './death.json'
 import dr_zed from './dr_zed.json'
+import echo from './echo.json'
 import elevator from './elevator.json'
 import events from './events.json'
 import first_boss from './first_boss.json'
@@ -45,6 +47,7 @@ const en = {
     ...npc,
     ...monster,
     ...minion,
+    echo,
     death,
     dr_zed,
     jax_seeker,
@@ -58,6 +61,7 @@ const en = {
     first_boss,
     second_boss,
     apostle,
+    _knight,
 
     caron,
     subspace,

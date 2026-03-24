@@ -84,7 +84,7 @@ async function handleElevate(player: Player, context: GameContext) {
     const tile = map.getTile(player.x, player.y)
     tile.isSeen = true
 
-    events.handle(tile, player, context)
+    await events.handle(tile, player, context)
     broadcast.play()
 
     printTileStatus(player, context)

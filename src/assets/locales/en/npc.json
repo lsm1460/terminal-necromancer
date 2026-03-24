@@ -1,28 +1,4 @@
 {
-  "echo": {
-    "name": "Echo",
-    "lines": [
-      "Phew... I've confirmed the mic is on, so please stop calling me.",
-      "It's depressing to realize I'm the only sane person in this terminal every single day.",
-      "Stop wasting time listening to my broadcast and watch your step. Don't get blood on my floors."
-    ],
-    "scripts": {
-      "friendly": {
-        "greeting": "Well, if it isn't our 'celebrity' Necromancer. I'll broadcast from your perspective as a special favor, so why don't you cause an even bigger scene?",
-        "farewell": "Don't die on me. Thanks to you, the ratings... I mean, my boredom is actually fading a bit."
-      },
-      "normal": {
-        "greeting": "Attention. Once again, someone is making a scene and wasting the terminal's precious budget. Yes, I'm talking about you.",
-        "farewell": "Ending broadcast. If you're done, turn off the mic and disappear. I barely have enough time for a smoke break as it is."
-      },
-      "hostile": {
-        "greeting": "Look at that Resistance lackey crawling this way. Don't knock on the booth door with those filthy hands; you'll smudge the camera lens.",
-        "farewell": "I'll record your screams and use them as a lullaby later. It'll be a masterpiece."
-      }
-    },
-    "deathLine": "This tedious broadcasting... is finally over... Ha...",
-    "description": "A female announcer holed up in the terminal's broadcast room, spitting out all sorts of venomous remarks. In reality, she might be enjoying this chaos more than anyone."
-  },
   "caron_alive": {
     "name": "Charon",
     "lines": [

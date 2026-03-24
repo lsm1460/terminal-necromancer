@@ -3,7 +3,7 @@ import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import npcHandlers from '~/npc'
-import { CommandFunction, GameContext, NPC } from '~/types'
+import { BattleTarget, CommandFunction, GameContext, NPC } from '~/types'
 
 export const talkCommand: CommandFunction = async (player, args, context) => {
   const availableNpcs = getAvailableNpcs(player, context)
@@ -13,8 +13,10 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
     return false
   }
 
-  const targetNpc = await selectTargetNpc(availableNpcs, args)
+  let targetNpc = await selectTargetNpc(availableNpcs, args)
   if (!targetNpc) return false
+
+  if (player.knight && targetNpc.id === '_knight') targetNpc = player.knight as BattleTarget as NPC
 
   printNpcHeader(targetNpc)
 
@@ -25,7 +27,10 @@ export const talkCommand: CommandFunction = async (player, args, context) => {
 
 function getAvailableNpcs(player: Player, context: GameContext): NPC[] {
   const tile = context.map.getTile(player.pos.x, player.pos.y)
-  const npcIds = tile?.npcIds || []
+  const npcIds = [...(tile?.npcIds || [])]
+
+  if (player.knight) npcIds.push('_knight')
+
   return npcIds.map((id) => context.npcs.getNPC(id)).filter((npc): npc is NPC => !!npc && npc.isAlive)
 }
 
@@ -52,25 +57,22 @@ async function selectTargetNpc(npcs: NPC[], args: string[]): Promise<NPC | null>
 }
 
 function printNpcHeader(npc: NPC) {
-  const dialect = getDialect(npc)
-  const greeting = npc.scripts?.[dialect]?.greeting || '...'
+  const greeting = NPCManager.getNpcScripts(npc, 'greeting')
 
   Terminal.log(`\n──────────────────────────────────────────────────`)
   Terminal.log(`  👤 [${npc.name}] - ${npc.description}`)
   Terminal.log(`  💬 "${greeting}"`)
   Terminal.log(`──────────────────────────────────────────────────`)
-
-  npc.relation += 1 // 대화 시 호감도 소폭 상승
 }
 
 async function startTalkSession(npc: NPC, player: Player, context: GameContext) {
+  npc.relation += 1 // 대화 시 호감도 소폭 상승
+
   const handler = npcHandlers[npc.id]
   if (!handler) {
     Terminal.log(`\n[${npc.name}]: "..."`)
     return
   }
-
-  const dialect = getDialect(npc)
 
   try {
     while (true) {
@@ -82,7 +84,7 @@ async function startTalkSession(npc: NPC, player: Player, context: GameContext) 
       const action = await Terminal.select(i18n.t('talk.what_to_do'), menuChoices)
 
       if (action === 'exit') {
-        const farewell = npc.scripts?.[dialect]?.farewell || '...'
+        const farewell = NPCManager.getNpcScripts(npc, 'farewell')
         Terminal.log(`\n[${npc.name}]: "${farewell}"`)
         break
       }
@@ -93,8 +95,4 @@ async function startTalkSession(npc: NPC, player: Player, context: GameContext) 
   } catch (e) {
     // 세션 오류 처리
   }
-}
-
-function getDialect(npc: NPC) {
-  return NPCManager.getDialectType(npc.faction === 'resistance' ? npc.factionHostility : npc.relation * -1)
 }

@@ -34,7 +34,7 @@ async function handlePortal(player: Player, context: GameContext) {
 
     const tile = map.getTile(player.x, player.y)
 
-    events.handle(tile, player, context)
+    await events.handle(tile, player, context)
     broadcast.play()
 
     printStatus(player, context)

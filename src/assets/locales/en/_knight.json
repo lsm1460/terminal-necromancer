@@ -1,0 +1,24 @@
+{
+  "name": "Death Knight",
+  "lines": [
+    "I shall become your blade and reap every soul that dares block your path, my Lord.",
+    "Rest for the dead is permitted only after total victory is seized.",
+    "Give the word. My edge is already whetted and thirsting for battle."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "My Lord, it brings me peace to see your shadow growing even darker.",
+      "farewell": "I shall await your summons from within the shadows at any moment."
+    },
+    "normal": {
+      "greeting": "The scent of blood lingers in the air. My Lord, what are your directives?",
+      "farewell": "May fortune favor your path. I shall hold the rear in your name."
+    },
+    "hostile": {
+      "greeting": "Do you seek to test my oath? My blade trembles with restraint.",
+      "farewell": "Do not force me to draw steel against the one I once called Master."
+    }
+  },
+  "deathLine": "Does my oath... end... in this place...",
+  "description": "A noble wraith knight who cast aside his mortal honor and flesh to rise again solely for his oath to the Lord. He is taciturn, but his loyalty remains more unyielding than any fortress."
+}
