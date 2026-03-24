@@ -127,6 +127,7 @@
         "title": "\n💀 [ Undead Legion Status ]",
         "golem_status": "[{{hp}}/{{maxHp}}]",
         "golem_destroyed": "[Destroyed]",
+        "knight_dead": "[Dead]",
         "skeleton": " └ 💀 Skeletons: {{count}} / {{max}}",
         "no_minions": "   (No minions currently summoned.)"
       },

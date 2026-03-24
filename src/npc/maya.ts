@@ -13,6 +13,7 @@ const MayaHandler: NPCHandler = {
       return [quest]
     }
 
+    const hasGolem = !!player.golem
     const canUpgrade = npc.factionContribution > 40 && context.events.isCompleted('second_boss') && !!player.golem
     const canModify = npc.factionContribution > 80 && context.events.isCompleted('third_boss')
 
@@ -20,6 +21,7 @@ const MayaHandler: NPCHandler = {
       { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'buy', message: i18n.t('talk.buy') },
       { name: 'sell', message: i18n.t('talk.sell') },
+      ...(!hasGolem ? [{ name: 'golem', message: i18n.t('npc.maya_tech.choices.golem') }] : []),
       ...(canUpgrade ? [{ name: 'upgrade_golem', message: i18n.t('npc.maya_tech.choices.upgrade') }] : []),
       ...(canModify ? [{ name: 'modify_knight', message: i18n.t('npc.maya_tech.choices.modify') }] : []),
     ]

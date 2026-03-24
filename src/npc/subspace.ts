@@ -140,7 +140,7 @@ async function handlePush(player: Player) {
   if (!target) return
 
   player.skeleton = player.skeleton.filter((s) => s.id !== targetId)
-  player.skeletonSubspace.push(target)
+  player.skeletonSubspace.push(target.raw)
   renderSuccessMessage(target.name, 'push')
 }
 
@@ -345,9 +345,10 @@ async function handleMix(player: Player, context: GameContext) {
   }
 
   const isSuccess = Math.random() < successChance
-  selected.forEach((sk) => player.removeMinion(sk.id))
 
   if (isSuccess) {
+    selected.forEach((sk) => player.removeMinion(sk.id))
+
     const minIdx = SKELETON_RARITIES.indexOf(currentRarity) + 1
     const skeleton = SkeletonFactory.createFromCorpse(target, minIdx)
     player.addSkeleton(skeleton)
@@ -357,6 +358,7 @@ async function handleMix(player: Player, context: GameContext) {
     )
     Terminal.log(getMsg('success'))
   } else {
+    player.removeMinion(selected[1].id)
     Terminal.log(getMsg('fail'))
   }
 }

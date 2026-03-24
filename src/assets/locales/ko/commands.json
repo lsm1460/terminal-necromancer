@@ -125,8 +125,9 @@
       },
       "legion": {
         "title": "\n💀 [ 소환수 군단 상태 ]",
-        "golem_status": "[{{hp}}/{{maxHp}}]",
+        "status": "[{{hp}}/{{maxHp}}]",
         "golem_destroyed": "[파괴됨]",
+        "knight_dead": "[사망]",
         "skeleton": " └ 💀 해골 병사: {{count}} / {{max}}",
         "no_minions": "   (현재 소환된 미니언이 없습니다.)"
       },

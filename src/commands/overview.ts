@@ -79,11 +79,20 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   Terminal.log(i18n.t('commands.look.status.legion.title'))
   if (player.golem) {
     const golemStatus = player.golem.isAlive
-      ? i18n.t('commands.look.status.legion.golem_status', { hp: player.golem.hp, maxHp: player.golem.maxHp })
+      ? i18n.t('commands.look.status.legion.status', { hp: player.golem.hp, maxHp: player.golem.maxHp })
       : i18n.t('commands.look.status.legion.golem_destroyed')
 
     const golemIcon = player.golem.isAlive ? '🤖' : '🛠️'
     Terminal.log(` └ ${golemIcon} ${player.golem.name}: ${golemStatus}`)
+  }
+
+  if (player.knight) {
+    const knightStatus = player.knight.isAlive
+      ? i18n.t('commands.look.status.legion.status', { hp: player.knight.hp, maxHp: player.knight.maxHp })
+      : i18n.t('commands.look.status.legion.knight_dead')
+
+    const knightIcon = player.knight.isAlive ? '⚔️' : '💀'
+    Terminal.log(` └ ${knightIcon} ${player.knight.name}: ${knightStatus}`)
   }
 
   Terminal.log(i18n.t('commands.look.status.legion.skeleton', { count: skeleton.length, max: maxSkeleton }))

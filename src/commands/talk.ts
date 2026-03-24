@@ -1,19 +1,14 @@
 import { NPCManager } from '~/core/NpcManager'
 import { Player } from '~/core/player/Player'
+import { QuestManager } from '~/core/QuestManager'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import npcHandlers from '~/npc'
 import { BattleTarget, CommandFunction, GameContext, NPC } from '~/types'
 
-export const talkCommand: CommandFunction = async (player, args, context) => {
-  const availableNpcs = getAvailableNpcs(player, context)
-
-  if (availableNpcs.length < 1) {
-    Terminal.log(`\n${i18n.t('talk.no_one_here')}`)
-    return false
-  }
-
-  let targetNpc = await selectTargetNpc(availableNpcs, args)
+export const talkCommand: CommandFunction = async (...params) => {
+  const [player, args, context] = params
+  let targetNpc = await selectTargetNpc(...params)
   if (!targetNpc) return false
 
   if (player.knight && targetNpc.id === '_knight') targetNpc = player.knight as BattleTarget as NPC
@@ -29,12 +24,20 @@ function getAvailableNpcs(player: Player, context: GameContext): NPC[] {
   const tile = context.map.getTile(player.pos.x, player.pos.y)
   const npcIds = [...(tile?.npcIds || [])]
 
-  if (player.knight) npcIds.push('_knight')
+  const list = npcIds.map((id) => context.npcs.getNPC(id)).filter((npc): npc is NPC => !!npc && npc.isAlive)
+  if (player.knight) list.push(player.knight as BattleTarget as NPC)
 
-  return npcIds.map((id) => context.npcs.getNPC(id)).filter((npc): npc is NPC => !!npc && npc.isAlive)
+  return list
 }
 
-async function selectTargetNpc(npcs: NPC[], args: string[]): Promise<NPC | null> {
+async function selectTargetNpc(player: Player, args: string[], context: GameContext): Promise<NPC | null> {
+  const npcs = getAvailableNpcs(player, context)
+
+  if (npcs.length < 1) {
+    Terminal.log(`\n${i18n.t('talk.no_one_here')}`)
+    return null
+  }
+
   if (args.length > 0) {
     const targetName = args[0]
     const found = npcs.find((npc) => npc.name === targetName)
@@ -46,7 +49,11 @@ async function selectTargetNpc(npcs: NPC[], args: string[]): Promise<NPC | null>
   }
 
   const choices = [
-    ...npcs.map((npc) => ({ name: npc.id, message: `👤 ${npc.name}` })),
+    ...npcs.map((npc) => {
+      const hasQuest = QuestManager.hasQuest(player, npc.id, context)
+
+      return { name: npc.id, message: `👤${hasQuest? ' \x1b[32m[!]\x1b[0m' : ''} ${npc.name}` }
+    }),
     { name: 'cancel', message: i18n.t('cancel') },
   ]
 

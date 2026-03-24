@@ -4,19 +4,19 @@
     "name": "player",
     "x": 0,
     "y": 0,
-    "_maxHp": 284,
-    "hp": 284,
+    "_maxHp": 100,
+    "hp": 100,
     "_maxMp": 50,
-    "mp": 50,
-    "atk": 14,
-    "def": 6,
+    "mp": 85,
+    "atk": 10,
+    "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 2438,
-    "exp": 1045,
-    "level": 7,
-    "karma": 5,
+    "gold": 764,
+    "exp": 240,
+    "level": 3,
+    "karma": 1,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
@@ -30,101 +30,77 @@
       "RECALL_SKELETON",
       "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
-      "SOUL_HARVEST",
       "CURSE"
     ],
     "_skeleton": [
       {
-        "id": "skeleton_priest::1774253647338",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 사제",
+        "id": "skeleton_great_shield_bearer::1774339894755",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 대형 방패병",
+        "attackType": "melee",
+        "maxHp": 83,
+        "hp": 83,
+        "atk": 8,
+        "def": 23,
+        "agi": 11,
+        "skills": [
+          "shield_bash"
+        ],
+        "exp": 0,
+        "description": "하역 인부의 유골로 만들어진 소환수입니다.",
+        "originId": "shipyard_worker::zZtJY-0N",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 5
+      },
+      {
+        "id": "skeleton_healer::1774340734681",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 힐러",
         "attackType": "ranged",
-        "maxHp": 220,
-        "hp": 220,
-        "atk": 12,
-        "def": 201,
-        "agi": 34,
+        "maxHp": 38,
+        "hp": 38,
+        "atk": 8,
+        "def": 10,
+        "agi": 10,
         "skills": [
-          "holy_radiance"
+          "minor_heal"
         ],
         "exp": 0,
-        "description": "\u001b[34m[ELITE]\u001b[0m 스켈레톤 궁수의 유골로 만들어진 소환수입니다.",
-        "originId": "skeleton_archer::1774253014929",
-        "rarity": "epic",
+        "description": "변이된 하역 인부의 유골로 만들어진 소환수입니다.",
+        "originId": "mutated_worker::akQZ1Zqt",
+        "rarity": "rare",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 45
+        "orderWeight": 30
       },
       {
-        "id": "skeleton_king::1774253668265",
-        "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
+        "id": "skeleton_swordsman::1774340852378",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 검사",
         "attackType": "melee",
-        "maxHp": 369,
-        "hp": 369,
-        "atk": 44,
-        "def": 93,
-        "agi": 57,
-        "skills": [
-          "death_aura"
-        ],
-        "exp": 0,
-        "description": "\u001b[34m[ELITE]\u001b[0m 스켈레톤 대형 방패병의 유골로 만들어진 소환수입니다.",
-        "originId": "skeleton_great_shield_bearer::1774253619842",
-        "rarity": "legendary",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 55
-      },
-      {
-        "id": "skeleton_king::1774254963213",
-        "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
-        "attackType": "melee",
-        "maxHp": 691,
-        "hp": 691,
-        "atk": 376,
-        "def": 171,
+        "maxHp": 56,
+        "hp": 56,
+        "atk": 17,
+        "def": 15,
         "agi": 21,
         "skills": [
-          "death_aura"
+          "power_smash"
         ],
         "exp": 0,
-        "description": "\u001b[35m[EPIC]\u001b[0m 스켈레톤 워리어의 유골로 만들어진 소환수입니다.",
-        "originId": "skeleton_warrior::1774254683603",
-        "rarity": "legendary",
+        "description": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사의 유골로 만들어진 소환수입니다.",
+        "originId": "skeleton::1774340775657",
+        "rarity": "rare",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 55
-      },
-      {
-        "id": "skeleton_priest::1774255025210",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 사제",
-        "attackType": "ranged",
-        "maxHp": 1320,
-        "hp": 1320,
-        "atk": 32,
-        "def": 25,
-        "agi": 62,
-        "skills": [
-          "holy_radiance"
-        ],
-        "exp": 0,
-        "description": "하급 정의의 신 '아르카'의 유골로 만들어진 소환수입니다.",
-        "originId": "arka::0FdcB4dP",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 45
+        "orderWeight": 15
       }
     ],
     "_mercenary": [],
@@ -132,13 +108,13 @@
       "id": "golem",
       "name": "",
       "attackType": "melee",
-      "baseMaxHp": 80,
-      "maxHp": 80,
-      "hp": 90,
-      "baseAtk": 30,
-      "atk": 30,
-      "baseDef": 20,
-      "def": 20,
+      "baseMaxHp": 90,
+      "maxHp": 90,
+      "hp": 100,
+      "baseAtk": 20,
+      "atk": 20,
+      "baseDef": 40,
+      "def": 40,
       "agi": 3,
       "exp": 0,
       "description": "",
@@ -152,19 +128,19 @@
       "isGolem": true,
       "deathLine": "",
       "orderWeight": -15,
-      "madeBy": "zed"
+      "madeBy": "maya"
     },
     "_knight": {
       "id": "_knight",
       "name": "",
       "attackType": "melee",
-      "hp": 560,
-      "baseMaxHp": 560,
-      "maxHp": 560,
-      "baseAtk": 54,
-      "atk": 54,
-      "baseDef": 35,
-      "def": 35,
+      "hp": 224,
+      "baseMaxHp": 224,
+      "maxHp": 224,
+      "baseAtk": 8,
+      "atk": 8,
+      "baseDef": 31,
+      "def": 31,
       "exp": 0,
       "agi": null,
       "encounterRate": 0,
@@ -174,19 +150,19 @@
       "deathLine": "",
       "description": "",
       "dropTableId": "",
-      "originId": "caron",
+      "originId": "first_boss",
       "skills": [
         "power_smash"
       ]
     },
     "inventory": [
       {
-        "id": "mana_potion",
+        "id": "mana_potion_small",
         "type": "consumable",
-        "mpHeal": 40,
-        "price": 130,
-        "sellPrice": 18,
-        "quantity": 3,
+        "mpHeal": 20,
+        "price": 45,
+        "sellPrice": 6,
+        "quantity": 1,
         "x": 1,
         "y": 0
       },
@@ -197,8 +173,8 @@
         "price": 20,
         "sellPrice": 5,
         "quantity": 1,
-        "x": 4,
-        "y": 1
+        "x": 2,
+        "y": 2
       },
       {
         "id": "potion",
@@ -207,48 +183,58 @@
         "price": 100,
         "sellPrice": 15,
         "quantity": 7,
-        "x": 3,
+        "x": 0,
         "y": 2
       },
       {
-        "id": "phantom_cloth::R0yTQDUl",
-        "type": "armor",
-        "defRange": [
-          8,
-          12
-        ],
-        "evaRange": [
-          0.15,
-          0.25
-        ],
-        "maxSkeletonRange": [
-          1,
-          2
-        ],
-        "price": 1750,
-        "sellPrice": 400,
-        "quantity": 1,
-        "def": 9,
-        "eva": 0.17,
-        "maxSkeleton": 2,
-        "rarity": "COMMON",
-        "perfPrefix": "",
-        "adjective": "",
-        "x": 4,
-        "y": 0
-      },
-      {
-        "id": "mana_potion_medium",
+        "id": "mana_potion",
         "type": "consumable",
-        "mpHeal": 80,
-        "price": 450,
-        "sellPrice": 45,
+        "mpHeal": 40,
+        "price": 130,
+        "sellPrice": 18,
         "quantity": 1,
         "x": 0,
-        "y": 1
+        "y": 2
       },
       {
-        "id": "golem_core_staff::Ul7kwP59",
+        "id": "sharp_pipe::hfYq2xHt",
+        "type": "weapon",
+        "attackType": "melee",
+        "atkRange": [
+          3,
+          5
+        ],
+        "critRange": [
+          0.03,
+          0.07
+        ],
+        "price": 750,
+        "sellPrice": 150,
+        "quantity": 1,
+        "minRarity": "EPIC",
+        "atk": 4,
+        "crit": 0.07,
+        "rarity": "EPIC",
+        "perfPrefix": "worn",
+        "adjective": "fallen",
+        "affix": {
+          "id": "SURPRISE_ATTACK"
+        },
+        "x": 2,
+        "y": 3
+      }
+    ],
+    "inventoryMax": 15,
+    "subspaceLimit": 15,
+    "_maxSkeleton": 3,
+    "golemUpgrade": [
+      "soul"
+    ],
+    "knightUpgrade": [],
+    "upgradeLimit": 5,
+    "equipped": {
+      "weapon": {
+        "id": "golem_core_staff::tIorBk0Z",
         "type": "weapon",
         "attackType": "ranged",
         "atkRange": [
@@ -268,74 +254,36 @@
         "mp": 50,
         "quantity": 1,
         "minRarity": "RARE",
-        "atk": 11,
-        "crit": 0.15,
-        "maxSkeleton": 2,
+        "atk": 13,
+        "crit": 0.16,
+        "maxSkeleton": 1,
         "rarity": "RARE",
-        "perfPrefix": "worn",
-        "adjective": "keen",
-        "x": 3,
-        "y": 2
-      }
-    ],
-    "inventoryMax": 15,
-    "skeletonSubspace": [],
-    "subspaceLimit": 15,
-    "_maxSkeleton": 4,
-    "golemUpgrade": [
-      "soul"
-    ],
-    "knightUpgrade": [],
-    "upgradeLimit": 5,
-    "equipped": {
-      "weapon": {
-        "id": "security_baton::l8AdWr2h",
-        "type": "weapon",
-        "attackType": "melee",
-        "atkRange": [
-          18,
-          22
-        ],
-        "critRange": [
-          0.05,
-          0.1
-        ],
-        "price": 1400,
-        "sellPrice": 320,
-        "quantity": 1,
-        "atk": 32,
-        "crit": 0.07,
-        "rarity": "EPIC",
         "perfPrefix": "",
-        "adjective": "mortal",
-        "affix": {
-          "id": "TABOO"
-        },
-        "x": 0,
-        "y": 1
+        "adjective": "superior",
+        "x": 2,
+        "y": 3
       },
       "armor": {
-        "id": "rebel_iron_plate::F9ZRSoKi",
+        "id": "stolen_helmet::9hSxkP-C",
         "type": "armor",
         "defRange": [
-          20,
-          24
+          4,
+          7
         ],
         "evaRange": [
           0,
-          0.02
+          0.01
         ],
-        "price": 2300,
-        "sellPrice": 600,
+        "price": 850,
+        "sellPrice": 200,
         "quantity": 1,
-        "minRarity": "RARE",
-        "def": 28,
-        "eva": 0.01,
-        "rarity": "RARE",
-        "perfPrefix": "",
-        "adjective": "seasoned",
-        "x": 3,
-        "y": 2
+        "def": 4,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "worn",
+        "adjective": "",
+        "x": 2,
+        "y": 1
       }
     }
   },
@@ -344,14 +292,14 @@
     "states": {
       "kane_leader": {
         "hp": 220,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
       "ren": {
         "hp": 200,
-        "isAlive": false,
-        "reborn": true,
+        "isAlive": true,
+        "reborn": false,
         "relation": 0
       },
       "maya_tech": {
@@ -435,7 +383,7 @@
       "caron": {
         "hp": 500,
         "isAlive": false,
-        "reborn": true,
+        "reborn": false,
         "relation": 0
       },
       "caron_alive": {
@@ -458,7 +406,7 @@
       },
       "flint": {
         "hp": 240,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -476,13 +424,13 @@
       },
       "kael": {
         "hp": 110,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
       "vesper": {
         "hp": 95,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -494,7 +442,7 @@
       },
       "third_boss": {
         "hp": 650,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -507,19 +455,19 @@
     },
     "factionHostility": {
       "untouchable": 100,
-      "resistance": 100
+      "resistance": -1
     },
     "factionContribution": {
-      "untouchable": 150,
-      "resistance": -20
+      "untouchable": 40,
+      "resistance": 52
     }
   },
   "drop": {
     "scendId": "B5_VIP_lounge",
-    "id": "nGfaoxYD",
-    "tileId": "B5_022",
-    "exp": 2718,
-    "gold": 1925
+    "id": "KeBvXK0u",
+    "tileId": "B5_020",
+    "exp": 245,
+    "gold": 580
   },
   "completedEvents": [
     "START_GAME",
@@ -529,19 +477,17 @@
     "got_terminal_map",
     "talk_death_2",
     "HEARD_RESISTANCE",
+    "b3_apostle",
+    "RESISTANCE_BASE",
     "second_boss",
-    "golem_generation_denied_zed",
+    "maya_1",
+    "kane_1",
     "talk_death_3",
-    "caron_is_dead",
+    "caron_is_mine",
     "defeat_caron",
-    "report_caron_to_death",
     "tutorial_knight",
     "tutorial_mix",
-    "b5_flint",
-    "third_boss",
-    "third_boss_kill_all",
-    "vips_lost",
-    "talk_death_4"
+    "report_caron_to_death"
   ],
   "locale": "ko"
 }
