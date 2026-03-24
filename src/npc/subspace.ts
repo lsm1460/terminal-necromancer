@@ -316,23 +316,49 @@ async function handleMix(player: Player, context: GameContext) {
   }
 
   const target = selected[0]
+  const currentRarity = target.rarity || 'common'
+  const successChanceMap: Record<string, number> = {
+    common: 0.8,
+    rare: 0.5,
+    elite: 0.3,
+    epic: 0.1,
+  }
 
-  const proceed = await Terminal.confirm(getMsg('confirm', { hp: target.hp, maxHp: target.maxHp }))
+  const successChance = successChanceMap[currentRarity] || 0
+
+  if (successChance === 0) {
+    Terminal.log(getMsg('max_rarity'))
+    return
+  }
+
+  const proceed = await Terminal.confirm(
+    getMsg('confirm', {
+      hp: target.hp,
+      maxHp: target.maxHp,
+      chance: Math.floor(successChance * 100),
+    })
+  )
 
   if (!proceed) {
     Terminal.log(getMsg('cancel'))
     return
   }
 
-  const minIdx = SKELETON_RARITIES.indexOf(target.rarity!) + 1 || 1
-  
-  const skeleton = SkeletonFactory.createFromCorpse(target, minIdx)
-
+  const isSuccess = Math.random() < successChance
   selected.forEach((sk) => player.removeMinion(sk.id))
-  player.addSkeleton(skeleton)
 
-  Terminal.log(i18n.t(`npc.subspace.mix.system.result`, { name: i18n.t(`npc.${getOriginId(skeleton.id || '')}.name`) }))
-  Terminal.log(getMsg('success'))
+  if (isSuccess) {
+    const minIdx = SKELETON_RARITIES.indexOf(currentRarity) + 1
+    const skeleton = SkeletonFactory.createFromCorpse(target, minIdx)
+    player.addSkeleton(skeleton)
+
+    Terminal.log(
+      i18n.t(`npc.subspace.mix.system.result`, { name: i18n.t(`npc.${getOriginId(skeleton.id || '')}.name`) })
+    )
+    Terminal.log(getMsg('success'))
+  } else {
+    Terminal.log(getMsg('fail'))
+  }
 }
 
 function getActiveQuest(player: Player, context: GameContext) {

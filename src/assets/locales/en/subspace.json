@@ -44,20 +44,24 @@
       ]
     },
     "caron_is_mine": {
-      "no_materials": "Caron: \"I see no subordinates of the same kind suitable for mixing. Quality requires a foundation.\"",
-      "not_enough_selection": "Caron: \"Two vessels are required. One alone cannot spark a new life.\"",
-      "mismatch": "Caron: \"Undead of different origins cannot be entwined. Please select those of the same kind.\"",
-      "confirm": "Caron: \"Shall we weave these two souls together to create a more powerful existence?\" ({{hp}}/{{maxHp}})",
-      "success": "Caron: \"Excellent. The essence of death has condensed, forging a much sharper blade.\"",
-      "cancel": "Caron: \"Sometimes, stability is preferred over a hasty experiment.\""
+      "no_materials": "Caron: \"I see no subordinates of the same kind to fuse. To enhance the legion's quality, a foundation is required.\"",
+      "not_enough_selection": "Caron: \"Two vessels are required. A single soul cannot weave a new life.\"",
+      "mismatch": "Caron: \"The dead of different origins cannot be mingled. Choose those of the same kind.\"",
+      "success": "Caron: \"Exquisite. The essence of death has condensed, forging an even sharper blade.\"",
+      "confirm": "Caron: \"Shall you offer a new sacrifice to the soul of {{hp}}/{{maxHp}} to transcend into a greater existence?\" (Success Rate: {{chance}}%)\n\n※ Upon failure, the offered sacrifice (material) will be eternally destroyed.",
+      "fail": "Caron: \"Ah... The balance of souls has faltered. The primary vessel barely remains intact, but the sacrificed minion has crumbled into ash.\"",
+      "max_rarity": "Caron: \"This restless soul has already reached its zenith. Further fusion is meaningless.\"",
+      "cancel": "Caron: \"At times, stability is wiser than a hasty experiment.\""
     },
     "caron_is_dead": {
       "no_materials": "[Void Guide]: \"...No... materials... Bring... same... kind...\"",
-      "not_enough_selection": "[Void Guide]: \"...Lacking... Two... to... become... one...\"",
-      "mismatch": "[Void Guide]: \"...Mix... rejected... Only... same... kind...\"",
-      "confirm": "[Void Guide]: \"...Soul... binding... beginning...\"",
-      "success": "[Void Guide]: \"...Grown... stronger... A... new... shadow...\"",
-      "cancel": "[Void Guide]: \"...Halted...\""
+      "not_enough_selection": "[Void Guide]: \"...Lacking... Two... into... one...\"",
+      "mismatch": "[Void Guide]: \"...Rejected... Chaos... Bring... same... kind...\"",
+      "success": "[Void Guide]: \"...Stronger... New... shadow...\"",
+      "confirm": "[Void Guide]: \"...Soul... binding... start... ({{hp}}/{{maxHp}}) (Success: {{chance}}%)\n\n...Sacrifice... vanishes... Refuse...?\"",
+      "fail": "[Void Guide]: \"...Failure... Subject... remains...\"",
+      "max_rarity": "[Void Guide]: \"...No... more... The... limit...\"",
+      "cancel": "[Void Guide]: \"...Cease...\""
     },
     "system": {
       "result": "\n[🦴 Fusion Complete]\nScattered remains have intertwined, reforged into {{name}}."
