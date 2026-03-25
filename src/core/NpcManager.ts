@@ -69,11 +69,12 @@ export class NPCManager {
       updateContribution: (_amount: number) => {
         this.updateFactionContribution(base.faction, _amount)
       },
-      dead: (_karma = 1) => {
-        this.player.karma += _karma
+      dead: (params) => {
+        const { karma = 1, hostile = 100 } = params || {}
+        this.player.karma += karma
         this.states[id].isAlive = false
 
-        npc.faction && this.setFactionHostility(npc.faction, 100)
+        npc.faction && this.setFactionHostility(npc.faction, hostile)
       },
 
       get name() {

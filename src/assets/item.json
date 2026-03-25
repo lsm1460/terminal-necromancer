@@ -384,5 +384,24 @@
     "critRange": [0.12, 0.18],
     "price": 1950,
     "sellPrice": 180
+  },
+  "arka_wand": {
+    "id": "arka_wand",
+    "type": "weapon",
+    "attackType": "ranged",
+    "atkRange": [18, 24],
+    "critRange": [0.2, 0.6],
+    "minRebornRarity": 2,
+    "price": 8000,
+    "sellPrice": 500
+  },
+  "nivalis_blade": {
+    "id": "nivalis_blade",
+    "type": "weapon",
+    "attackType": "melee",
+    "atkRange": [32, 48],
+    "critRange": [0.2, 0.6],
+    "price": 4000,
+    "sellPrice": 300
   }
 }

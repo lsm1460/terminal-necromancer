@@ -2,6 +2,7 @@ import { SKELETON_UPGRADE } from '~/consts'
 import { SKELETON_RARITIES, SkeletonFactory } from '~/core/SkeletonFactory'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
+import SkeletonWrapper from '~/core/player/SkeletonWrapper'
 import i18n from '~/i18n'
 import { BattleTarget, GameContext } from '~/types'
 import { getOriginId, speak } from '~/utils'
@@ -133,13 +134,16 @@ async function handlePush(player: Player) {
     name: sk.id,
     message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
+  skeletonChoices.push({ name: 'cancel', message: i18n.t('cancel') })
 
   const targetId = await Terminal.select(i18n.t('npc.subspace.manage.push_select'), skeletonChoices)
+
+  if (targetId === 'cancel') return
 
   const target = player.skeleton.find((sk) => sk.id === targetId)
   if (!target) return
 
-  player.skeleton = player.skeleton.filter((s) => s.id !== targetId)
+  player.removeMinion(targetId)
   player.skeletonSubspace.push(target.raw)
   renderSuccessMessage(target.name, 'push')
 }
@@ -147,25 +151,29 @@ async function handlePush(player: Player) {
 async function handlePull(player: Player) {
   const subspaceChoices = player.skeletonSubspace.map((sk) => ({
     name: sk.id,
-    message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})`,
+    message: `${SkeletonWrapper.getSkeletonName(sk)} (HP: ${sk.hp}/${sk.maxHp})`,
   }))
+  subspaceChoices.push({ name: 'cancel', message: i18n.t('cancel') })
 
   const pullId = await Terminal.select(i18n.t('npc.subspace.manage.pull_select'), subspaceChoices)
+
+  if (pullId === 'cancel') return
 
   const targetToPull = player.skeletonSubspace.find((sk) => sk.id === pullId)
   if (!targetToPull) return
 
-  if (player.skeleton.length >= player.subspaceLimit) {
+  if (player.skeleton.length >= player.maxSkeleton) {
     await handleSwap(player, targetToPull)
   } else {
     player.skeletonSubspace = player.skeletonSubspace.filter((s) => s.id !== pullId)
     player.addSkeleton(targetToPull)
-    renderSuccessMessage(targetToPull.name, 'pull')
+    renderSuccessMessage(SkeletonWrapper.getSkeletonName(targetToPull), 'pull')
   }
 }
 
 async function handleSwap(player: Player, targetToPull: BattleTarget) {
   Terminal.log(i18n.t('npc.subspace.manage.swap_warn'))
+  const targetToPullName = SkeletonWrapper.getSkeletonName(targetToPull)
 
   const fieldChoices = player.skeleton.map((sk) => ({
     name: sk.id,
@@ -173,20 +181,20 @@ async function handleSwap(player: Player, targetToPull: BattleTarget) {
   }))
 
   const pushId = await Terminal.select(
-    i18n.t('npc.subspace.manage.swap_select', { name: targetToPull.name }),
+    i18n.t('npc.subspace.manage.swap_select', { name: targetToPullName }),
     fieldChoices
   )
 
   const targetToPush = player.skeleton.find((sk) => sk.id === pushId)
   if (!targetToPush) return
 
-  player.skeleton = player.skeleton.filter((s) => s.id !== pushId)
+  player.removeMinion(pushId)
   player.skeletonSubspace = player.skeletonSubspace.filter((s) => s.id !== targetToPull.id)
 
   player.addSkeleton(targetToPull)
-  player.skeletonSubspace.push(targetToPush)
+  player.skeletonSubspace.push(targetToPush.raw)
 
-  renderSuccessMessage(`${targetToPush.name} ↔ ${targetToPull.name}`, 'swap')
+  renderSuccessMessage(`${targetToPush.name} ↔ ${targetToPullName}`, 'swap')
 }
 
 function renderSuccessMessage(name: string, type: 'push' | 'pull' | 'swap') {
@@ -305,7 +313,7 @@ async function handleMix(player: Player, context: GameContext) {
     return
   }
 
-  const selected = player.skeleton.filter((sk) => skeletonIdList.includes(sk.id)).sort((a, b) => b.hp - a.hp)
+  const selected = player.skeleton.filter((sk) => skeletonIdList.includes(sk.id)).sort((a, b) => b.maxHp - a.maxHp)
   const targetClass = getOriginId(selected[0].id)
   const isSameClass = selected.every((sk) => getOriginId(sk.id) === targetClass)
 

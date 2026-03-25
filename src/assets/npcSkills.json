@@ -241,6 +241,19 @@
     "targetType": "ENEMY_ALL",
     "description": "군마와 혼연일체가 되어 적진을 관통합니다. 모든 적에게 강력한 물리 피해를 입힙니다."
   },
+  "execution": {
+    "id": "execution",
+    "name": "처형",
+    "attackType": "melee",
+    "chance": 0.1,
+    "power": 10,
+    "targetType": "RANDOM",
+    "description": "하나의 적에게 필사의 데미지를 부여합니다.",
+    "options": {
+      "isSureHit": true,
+      "isSureCrit": true
+    }
+  },
   "divide_soul": {
     "id": "divide_soul",
     "name": "자가 분열",

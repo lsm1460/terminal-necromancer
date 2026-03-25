@@ -73,17 +73,17 @@ class GolemWrapper {
   }
 
   get atk(): number {
-    const bonus = this.soulCount * 10 + this.machineCount * 2
+    const bonus = this.soulCount * 20 + this.machineCount * 5
     return this.raw.atk + bonus
   }
 
   get def(): number {
-    const bonus = this.machineCount * 10 + this.soulCount * 5
+    const bonus = this.machineCount * 20 + this.soulCount * 10
     return this.raw.def + bonus
   }
 
   get maxHp(): number {
-    const bonusHp = this.machineCount * 20 + this.soulCount * 10
+    const bonusHp = this.machineCount * 40 + this.soulCount * 20
     return this.raw.maxHp + bonusHp
   }
 

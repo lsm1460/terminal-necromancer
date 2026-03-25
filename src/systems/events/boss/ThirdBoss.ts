@@ -113,11 +113,11 @@ export class ThirdBoss implements BossLogic {
     const vesper = npcs.getNPC('vesper')
     const flint = npcs.getNPC('flint')
 
-    boss && boss.dead(0)
+    boss && boss.dead({karma: 0})
 
     // 역활이 끝난 레지스탕스 영구 퇴장
-    kael && kael.dead(0)
-    vesper && vesper.dead(0)
-    flint && flint.dead(0)
+    kael && kael.dead({karma: 0, hostile: 0})
+    vesper && vesper.dead({karma: 0, hostile: 0})
+    flint && flint.dead({karma: 0, hostile: 0})
   }
 }

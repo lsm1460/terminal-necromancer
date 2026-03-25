@@ -19,6 +19,7 @@ import ratty from './ratty'
 import subspace from './subspace'
 import vending_machine from './vending_machine'
 import vesper from './vesper'
+import _knight from './_knight'
 import baron_valter from './baron_valter'
 
 const npcHandlers: Record<string, NPCHandler> = {
@@ -30,7 +31,7 @@ const npcHandlers: Record<string, NPCHandler> = {
   marco,
   caron_alive: subspace,
   caron_dead: subspace,
-
+  _knight,
   vending_machine,
 
   // 레지스탕스

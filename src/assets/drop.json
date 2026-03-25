@@ -187,5 +187,21 @@
       { "itemId": "roasted_nut_mix", "chance": 0.7, "quantity": [1, 1] },
       { "itemId": "premium_vodka", "chance": 1, "quantity": [1, 1] }
     ]
+  },
+  "b5_vip_arka": {
+    "gold": [1500, 2700],
+    "items": [
+      { "itemId": "nano_medical_kit", "chance": 0.6, "quantity": [1, 1] },
+      { "itemId": "small_pistol", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "arka_wand", "chance": 1, "quantity": [1, 1], "minRarity": "EPIC" }
+    ]
+  },
+  "b5_vip_nivalis": {
+    "gold": [300, 500],
+    "items": [
+      { "itemId": "nano_medical_kit", "chance": 0.3, "quantity": [1, 1] },
+      { "itemId": "stolen_jewelry", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "nivalis_blade", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" }
+    ]
   }
 }

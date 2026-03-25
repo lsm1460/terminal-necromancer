@@ -53,6 +53,11 @@ export class StatsCalculator {
       eva += player.equipped.armor?.eva || 0
     }
 
+    if (player.hasAffix('ALONE') && player.skeleton.length < 1) {
+      atk += player.maxSkeleton * 10
+      def += Math.floor(player.maxSkeleton * 0.5)
+    }
+
     return {
       maxHp: this.getMaxHp(player),
       maxMp: this.getMaxMp(player),

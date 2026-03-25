@@ -27,13 +27,13 @@ const KaneHandler: NPCHandler = {
         await handleJoin(player, npc, context)
         break
       case 'talk':
-        handleTalk(npc)
+        await handleTalk(npc)
         break
       case 'donation':
-        handleDonation(player, npc)
+        await handleDonation(player, npc)
         break
       case 'B5Operation':
-        handleBriefB5Operation(npc, context)
+        await handleBriefB5Operation(npc, context)
         break
       default:
         break

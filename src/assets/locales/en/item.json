@@ -218,5 +218,13 @@
   "small_pistol": {
     "label": "Small Pistol",
     "description": "Small in size, but seems decent enough for self-defense."
+  },
+  "nivalis_blade": {
+    "label": "Blade of the Frost Spirit",
+    "description": "A blade forged from the heart of an eternal, unmelting glacier. The air around its edge remains perpetually frozen in a white mist."
+  },
+  "arka_wand": {
+    "label": "Wand of the Lesser Deity",
+    "description": "A magical medium imbued with a fading fragment of divinity. It allows for the weaving of far more vast and intricate arcane circuits than ordinary staves."
   }
 }

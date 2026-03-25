@@ -46,12 +46,12 @@ async function handleEvent(flint: NPC, player: Player, context: GameContext) {
   }[]
 
   for (const line of initialScript) {
-    await delay(line.delay || 1500) // 기본 딜레이 설정
     if (!line.name) {
       Terminal.log(`  ${descColor}${line.text}\x1b[0m`)
     } else {
       Terminal.log(`${line.name}: "${line.text}"`)
     }
+    await delay(line.delay || 1500) // 기본 딜레이 설정
   }
 
   // --- [STAGE 2: 첫 번째 분기] ---

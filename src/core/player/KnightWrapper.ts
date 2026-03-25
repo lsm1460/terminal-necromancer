@@ -12,11 +12,15 @@ import { ItemRarity } from '../item/consts'
 interface KnightWrapper extends BattleTarget {}
 
 class KnightWrapper {
+  upgradeLimit: number
+
   constructor(
     public raw: BattleTarget,
-    private upgrade: ItemRarity[],
+    public upgrade: ItemRarity[],
     private player: Player
-  ) {}
+  ) {
+    this.upgradeLimit = player.upgradeLimit
+  }
 
   // Delegations for BattleTarget compatibility
   get id() {
@@ -57,9 +61,6 @@ class KnightWrapper {
   get isKnight() {
     return this.raw.isKnight
   }
-  get deathLine() {
-    return this.raw.deathLine
-  }
   get orderWeight() {
     return this.raw.orderWeight
   }
@@ -84,13 +85,31 @@ class KnightWrapper {
   }
 
   get atk() {
-    const base = this.raw.baseAtk || this.raw.atk
-    return this.isLich ? Math.floor(base * 0.6) : base
+    let base = this.raw.baseAtk || this.raw.atk
+    if (this.isLich) base = Math.floor(base * 0.6)
+
+    let bonus = 1.0
+    this.upgrade.forEach((rarity) => {
+      if (rarity === 'COMMON') bonus += 0.05
+      if (rarity === 'RARE') bonus += 0.15
+      if (rarity === 'EPIC') bonus += 0.3
+    })
+
+    return Math.floor(base * bonus)
   }
 
   get def() {
-    const base = this.raw.baseDef || this.raw.def
-    return this.isLich ? Math.floor(base * 0.6) : base
+    let base = this.raw.baseDef || this.raw.def
+    if (this.isLich) base = Math.floor(base * 0.6)
+
+    let bonus = 1.0
+    this.upgrade.forEach((rarity) => {
+      if (rarity === 'COMMON') bonus += 0.03
+      if (rarity === 'RARE') bonus += 0.1
+      if (rarity === 'EPIC') bonus += 0.2
+    })
+
+    return Math.floor(base * bonus)
   }
 
   get maxHp() {
@@ -106,7 +125,7 @@ class KnightWrapper {
       LICH_HORSE: ['abyssal_gallop', 'bone_prison', 'aging_curse'], // 망령의 군주
       LICH_FOOT: ['bone_prison', 'aging_curse'], // 타락한 리치
       KNIGHT_HORSE: ['dread_charge', 'power_smash'], // 심연의 기사
-      KNIGHT_FOOT: this.raw.skills || [], // 기본 기사 (원본 참조)
+      KNIGHT_FOOT: ['execution', 'power_smash'], // 기본 기사 (원본 참조)
     }
 
     // 3. 해당하는 상태의 스킬셋을 반환 (없을 경우를 대비해 원본 스킬을 백업으로)
@@ -130,6 +149,14 @@ class KnightWrapper {
 
   set isAlive(v: boolean) {
     this.raw.isAlive = v
+  }
+
+  get lines() {
+    return i18n.t('npc._knight.lines', { returnObjects: true }) as string[]
+  }
+
+  get deathLine() {
+    return i18n.t('npc._knight.deathLine')
   }
 }
 

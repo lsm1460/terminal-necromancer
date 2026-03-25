@@ -166,7 +166,7 @@ async function finalEncounter(player: Player, npc: NPC, context: GameContext) {
 
     events.completeEvent('caron_is_mine')
     events.completeEvent('defeat_caron')
-    npc.dead(0)
+    npc.dead({karma: 0})
 
     const tile = map.getTile(player.pos.x, player.pos.y)
     BossEvent.spawnPortal(tile)

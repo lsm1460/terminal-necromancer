@@ -24,7 +24,7 @@ export class SkillManager {
     const playerSkills = getPlayerSkills()
     const availableSkills = Object.values(playerSkills).filter((skill) => player.ref.memorize.includes(skill.id))
 
-    const skillId = await Terminal.select(i18n.t('skill.select_title', { type: costType, current: currentResource }), [
+    const skillId = await Terminal.select(i18n.t('skill.select_title', { type: costType, cost: currentResource }), [
       ...availableSkills.map((s) => ({
         name: s.id,
         message: `${s.name} (${costType}: ${s.cost}) - ${s.description}`,

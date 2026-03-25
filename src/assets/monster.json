@@ -506,7 +506,7 @@
   },
   "nivalis": {
     "id": "nivalis",
-    "attackType": "ranged",
+    "attackType": "melee",
     "hp": 160,
     "maxHp": 160,
     "atk": 32,

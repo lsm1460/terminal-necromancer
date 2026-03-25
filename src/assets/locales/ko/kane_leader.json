@@ -55,8 +55,8 @@
   },
 
   "choice": {
-    "donation": "📦기부하기",
-    "B5Operation": "🗺️새로운 작전"
+    "donation": "📦 기부하기",
+    "B5Operation": "🗺️ 새로운 작전"
   },
 
   "contribute_prompt": "얼마나 내놓겠나? 네 결정이 누군가에겐 내일의 희망이 된다.",

@@ -35,7 +35,7 @@ async function handleEvent(npc: NPC, player: Player, context: GameContext) {
   await speak(dialogues)
 
   events.completeEvent('b5_oliver')
-  npc.dead(0)
+  npc.dead({karma: 0})
 
   world.addCorpse({
     ...npc,

@@ -333,6 +333,7 @@
   },
   "kael": {
     "id": "kael",
+    "faction": "resistance",
     "attackType": "melee",
     "hp": 110,
     "maxHp": 110,
@@ -350,6 +351,7 @@
   },
   "vesper": {
     "id": "vesper",
+    "faction": "resistance",
     "attackType": "ranged",
     "hp": 95,
     "maxHp": 95,

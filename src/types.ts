@@ -246,7 +246,7 @@ export interface NPC extends BattleTarget {
   factionContribution: number
   updateHostility: (amount: number) => void
   updateContribution: (amount: number) => void
-  dead: (_karma?: number) => void
+  dead: (options?: {karma?: number, hostile?: number}) => void
   noEscape?: boolean
   scripts?: {
     friendly: NPCScripts
@@ -371,6 +371,7 @@ export type AffixId =
   | 'RESURRECTION'
   | 'MEMORY'
   | 'CLEANSE'
+  | 'ALONE'
 
 export interface Affix {
   id: AffixId // 고유 식별자

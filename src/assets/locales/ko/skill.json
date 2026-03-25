@@ -367,6 +367,10 @@
     "cmd_purity": {
       "name": "명령:정화",
       "description": "모든 적군을 정화시키는 언령을 보냅니다."
+    },
+    "execution": {
+      "name": "처형",
+      "description": "하나의 적에게 필사의 데미지를 부여합니다."
     }
   }
 }

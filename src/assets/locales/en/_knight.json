@@ -20,5 +20,32 @@
     }
   },
   "deathLine": "Does my oath... end... in this place...",
-  "description": "A noble wraith knight who cast aside his mortal honor and flesh to rise again solely for his oath to the Lord. He is taciturn, but his loyalty remains more unyielding than any fortress."
+  "description": "A noble wraith knight who cast aside his mortal honor and flesh to rise again solely for his oath to the Lord. He is taciturn, but his loyalty remains more unyielding than any fortress.",
+  "choices": {
+    "upgrade": "⚔️ Upgrade",
+    "reset": "🌑 Reset"
+  },
+  "first_encounter": {
+    "lines": [
+      "My liege, I have risen once more from the eternal darkness at your command.",
+      "Though my flesh has long since rotted away, the oath I swore to you is etched into the very marrow of my soul.",
+      "As you see, I stand with naught but a rusted, notched blade, yet my will remains unshattered.",
+      "The equipment you bestow shall be more than mere gear; it will serve as a vessel to bind my scattered spiritual essence.",
+      "The mightier the armaments I clad myself in, the more of my former prowess I shall reclaim to deliver cruel death upon your foes.",
+      "Now, command me. Wherever your will reaches, there shall be my battlefield."
+    ],
+    "system_hint": "Equipping the Death Knight with better gear permanently enhances his stats and skill potency."
+  },
+  "upgrade": {
+    "select_title": "⚔️ Select the armaments to bestow. (Weapon/Armor)",
+    "confirm": "Will you bind the spiritual essence within this gear to the knight? (This cannot be undone)",
+    "success": "💀 \"Ah... I feel my entire skeletal frame locking into place once more. I shall repay your grace, my liege.\"",
+    "cancel": "💀 \"If you hesitate, I shall await your decision further.\"",
+    "cannot_upgrade": "❌ No more room to bind spiritual essence. (Upgrade Limit Exceeded)"
+  },
+  "reset": {
+    "confirm": "🌑 Unbind the soul and reset? (Cost: {{cost}}G)\nAll spiritual essence from bestowed gear will be lost.",
+    "success": "🌫️ \"Everything... returns to nothingness. I shall begin to build my oath anew from the very start.\"",
+    "cancel": "💀 \"I thank you for maintaining our bond. My blade is still keen.\""
+  }
 }

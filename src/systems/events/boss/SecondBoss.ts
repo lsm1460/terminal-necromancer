@@ -64,6 +64,6 @@ export class SecondBoss implements BossLogic {
 
     const boss = npcs.getNPC('second_boss')
 
-    boss && boss.dead(0)
+    boss && boss.dead({karma: 0})
   }
 }

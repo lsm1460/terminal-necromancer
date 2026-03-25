@@ -55,7 +55,7 @@ export async function handleChildResistanceDiscovery(player: Player, npc: NPC, c
     { name: 'flint_friend', message: i18n.t('npc.kael.encounter.choice_friend') },
     { name: 'intimidate', message: i18n.t('npc.kael.encounter.choice_intimidate') },
   ])
-
+  
   switch (choice) {
     case 'flint_friend':
       if (npc.factionContribution >= 20) {

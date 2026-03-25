@@ -86,6 +86,14 @@
         "soul": " • \u001b[36m[👻 Soul Infusion]\u001b[0m Lv.{{level}}"
       }
     },
+    "knight": {
+      "growth_label": " 🛠️ Knight Armament Status: [{{bar}}] {{current}} / {{limit}}",
+      "upgrades": {
+        "epic": " • \u001b[35m[🔮 Epic Upgrade]\u001b[0m Lv.{{level}}",
+        "rare": " • \u001b[94m[💎 Rare Upgrade]\u001b[0m Lv.{{level}}",
+        "common": " • \u001b[37m[⚪ Common Upgrade]\u001b[0m Lv.{{level}}"
+      }
+    },
 
     "entity": {
       "type_tag": {

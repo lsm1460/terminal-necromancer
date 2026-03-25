@@ -369,6 +369,10 @@
     "cmd_purity": {
       "name": "Command: Purity",
       "description": "Sends forth a word of power that purifies all enemies."
+    },
+    "execution": {
+      "name": "Execution",
+      "description": "Inflicts a fatal blow upon a single enemy."
     }
   }
 }

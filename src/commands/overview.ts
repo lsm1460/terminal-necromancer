@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import GolemWrapper from '~/core/player/GolemWrapper'
+import KnightWrapper from '~/core/player/KnightWrapper'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { printStatus } from '~/statusPrinter'
@@ -161,6 +162,10 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
     printGolem(target)
   }
 
+  if (target.isKnight) {
+    printKnight(target)
+  }
+
   // 스킬 목록 출력
   if (skillDetails.length > 0) {
     Terminal.log(`──────────────────────────────────────────────`)
@@ -207,6 +212,38 @@ const printGolem = (target: BattleTarget) => {
 
     if (machineLv > 0) Terminal.log(i18n.t('commands.look.golem.upgrades.machine', { level: machineLv }))
     if (soulLv > 0) Terminal.log(i18n.t('commands.look.golem.upgrades.soul', { level: soulLv }))
+  }
+}
+
+const printKnight = (target: BattleTarget) => {
+  const knight = target as KnightWrapper
+  const upgrades = knight.upgrade || []
+  const limit = knight.upgradeLimit || 0
+  const currentCount = upgrades.length
+
+  Terminal.log(`──────────────────────────────────────────────`)
+  const barLength = 10
+  const filledLength = limit > 0 ? Math.round((currentCount / limit) * barLength) : 0
+  const bar = '■'.repeat(filledLength) + '□'.repeat(Math.max(0, barLength - filledLength))
+
+  // 성장도 로그 출력
+  Terminal.log(
+    i18n.t('commands.look.knight.growth_label', {
+      bar,
+      current: currentCount,
+      limit,
+    })
+  )
+
+  if (currentCount > 0) {
+    const counts = _.countBy(upgrades)
+    const epicCount = counts['EPIC'] || 0
+    const rareCount = counts['RARE'] || 0
+    const commonCount = counts['COMMON'] || 0
+
+    if (epicCount > 0) Terminal.log(i18n.t('commands.look.knight.upgrades.epic', { level: epicCount }))
+    if (rareCount > 0) Terminal.log(i18n.t('commands.look.knight.upgrades.rare', { level: rareCount }))
+    if (commonCount > 0) Terminal.log(i18n.t('commands.look.knight.upgrades.common', { level: commonCount }))
   }
 }
 

@@ -86,6 +86,14 @@
         "soul": " • \u001b[36m[👻 영혼 주입]\u001b[0m Lv.{{level}}"
       }
     },
+    "knight": {
+      "growth_label": " 🛠️ 기사 무장 상태: [{{bar}}] {{current}} / {{limit}}",
+      "upgrades": {
+        "epic": " • \u001b[35m[🔮 에픽 강화]\u001b[0m Lv.{{level}}",
+        "rare": " • \u001b[94m[💎 희귀 강화]\u001b[0m Lv.{{level}}",
+        "common": " • \u001b[37m[⚪ 일반 강화]\u001b[0m Lv.{{level}}"
+      }
+    },
 
     "entity": {
       "type_tag": {

@@ -72,6 +72,9 @@ export const getAffixList = (): Record<string, Affix> => {
     CLEANSE: {
       id: 'CLEANSE',
     },
+    ALONE: {
+      id: 'ALONE',
+    },
   }
 }
 

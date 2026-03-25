@@ -17,7 +17,10 @@ class SkeletonWrapper {
     return this.raw.id
   }
   get name() {
-    const originId = getOriginId(this.id)
+    return SkeletonWrapper.getSkeletonName(this.raw)
+  }
+  static getSkeletonName(skeleton: BattleTarget) {
+    const originId = getOriginId(skeleton.id)
 
     const rarityColors: Record<SkeletonRarity, string> = {
       common: '\x1b[37m', // 하얀색
@@ -28,7 +31,7 @@ class SkeletonWrapper {
     }
 
     const resetColor = '\x1b[0m'
-    const rarity = this.raw.rarity || 'common'
+    const rarity = skeleton.rarity || 'common'
     const color = rarityColors[rarity]
     const rarityTag = `${color}[${rarity.toUpperCase()}]${resetColor} `
 
