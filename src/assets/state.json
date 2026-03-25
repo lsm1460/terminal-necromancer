@@ -67,7 +67,8 @@
         "def": 16,
         "agi": 19,
         "skills": [
-          "lightning_bolt"
+          "lightning_bolt",
+          "lightning_storm"
         ],
         "exp": 0,
         "description": "늘러붙은 컨시어지의 유골로 만들어진 소환수입니다.",

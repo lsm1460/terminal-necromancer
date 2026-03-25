@@ -35,13 +35,27 @@
     "name": "전격 화살",
     "attackType": "ranged",
     "description": "대상에게 전격을 날려 마비시킵니다.",
-    "chance": 0.3,
-    "power": 0.8,
-    "targetType": "ENEMY_SINGLE",
+    "chance": 0.6,
+    "power": 1.2,
+    "targetType": "ENEMY_RANDOM",
     "buff": {
       "id": "paralysis",
       "type": "bind",
       "duration": 2
+    }
+  },
+  "lightning_storm": {
+    "id": "lightning_storm",
+    "name": "전기 폭풍",
+    "attackType": "ranged",
+    "description": "모든 적군을 폭풍 속에 넣습니다.",
+    "chance": 0.1,
+    "power": 0.3,
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "id": "paralysis",
+      "type": "bind",
+      "duration": 1
     }
   },
   "fire_breath": {
@@ -74,7 +88,7 @@
     "attackType": "ranged",
     "description": "끈적한 점액이나 보이지 않는 마력의 끈을 투척하여 대상의 행동을 제약합니다.",
     "chance": 0.3,
-    "targetType": "RANDOM",
+    "targetType": "ENEMY_RANDOM",
     "type": "deBuff",
     "buff": {
       "id": "bind",
@@ -199,7 +213,7 @@
     "name": "뼈 감옥",
     "attackType": "ranged",
     "chance": 0.3,
-    "targetType": "RANDOM",
+    "targetType": "ENEMY_RANDOM",
     "description": "뼈로 이루어진 감옥은 대상의 행동을 제약합니다.",
     "type": "deBuff",
     "buff": {
@@ -247,7 +261,7 @@
     "attackType": "melee",
     "chance": 0.1,
     "power": 10,
-    "targetType": "RANDOM",
+    "targetType": "ENEMY_RANDOM",
     "description": "하나의 적에게 필사의 데미지를 부여합니다.",
     "options": {
       "isSureHit": true,
@@ -271,7 +285,7 @@
     "attackType": "melee",
     "chance": 0.4,
     "power": 1.6,
-    "targetType": "RANDOM",
+    "targetType": "ENEMY_RANDOM",
     "description": "발목을 정확히 조준하여 물어뜯습니다. 날카로운 이빨이 인대를 파고들어 이동 속도와 회피율을 급격히 떨어뜨립니다.",
     "buff": {
       "id": "injury",
@@ -372,7 +386,7 @@
     "attackType": "melee",
     "chance": 0.4,
     "power": 1.5,
-    "targetType": "RANDOM",
+    "targetType": "ENEMY_RANDOM",
     "description": "보랏빛 독액이 흐르는 단검을 투척합니다. 상처를 통해 침투한 독은 매 턴마다 대상의 생명력을 조금씩 갉아먹습니다.",
     "buff": {
       "id": "poison",
@@ -469,7 +483,7 @@
     "attackType": "ranged",
     "description": "적 중 하나의 발밑에 아공간의 구멍을 뚫어 영혼을 붙잡습니다.",
     "chance": 0.3,
-    "targetType": "RANDOM",
+    "targetType": "ENEMY_RANDOM",
     "type": "deBuff",
     "buff": {
       "id": "bind",

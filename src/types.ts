@@ -326,7 +326,7 @@ export type SkillTargetType =
   | 'ALLY_LOWEST_HP'
   | 'ALLY_ALL'
   | 'SINGLE_BUFF'
-  | 'RANDOM'
+  | 'ENEMY_RANDOM'
   | 'SELF'
   | 'PLAYER'
 

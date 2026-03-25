@@ -195,6 +195,10 @@
       "name": "전격 화살",
       "description": "대상에게 전격을 날려 마비시킵니다."
     },
+    "lightning_storm": {
+      "name": "전기 폭풍",
+      "description": "모든 적군을 폭풍 속에 넣고 마비시킵니다."
+    },
     "fire_breath": {
       "name": "화염 숨결",
       "description": "강력한 불을 사방에 내뿜습니다."

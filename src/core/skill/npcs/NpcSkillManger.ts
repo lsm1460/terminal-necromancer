@@ -80,7 +80,7 @@ export class NpcSkillManager {
       case 'ENEMY_BACK':
         targets = enemies.length > 0 ? [enemies[enemies.length - 1]] : []
         break
-      case 'RANDOM':
+      case 'ENEMY_RANDOM':
         const randomIndex = Math.floor(Math.random() * enemies.length)
         targets = [enemies[randomIndex]]
         break

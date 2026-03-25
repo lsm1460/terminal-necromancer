@@ -197,6 +197,10 @@
       "name": "Lightning Bolt",
       "description": "Shoots lightning at the target, paralyzing them."
     },
+    "lightning_storm": {
+      "name": "Lightning Storm",
+      "description": "Traps all enemies within a torrential storm and paralyzes them."
+    },
     "fire_breath": {
       "name": "Fire Breath",
       "description": "Exhales a powerful blast of fire in all directions."
