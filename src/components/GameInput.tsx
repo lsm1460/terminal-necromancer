@@ -1,8 +1,9 @@
-import { Info, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GameEngine } from '~/gameEngine'
 import { useInputLock } from '~/hooks/useInputLock'
+import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
@@ -55,6 +56,14 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
     }
   }
 
+  const openHelp = async () => {
+    await engine.current?.processCommand('help', {
+      onBeforeExecute() {
+        addLog(`\n> ${i18n.t('commands.help')}`)
+      },
+    })
+  }
+
   return (
     <div className="flex items-center gap-1 p-2 xl:p-4 border-t border-primary">
       <ThemedButton.round className="xl:hidden" onClick={toggleButtonMenu}>
@@ -77,7 +86,9 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
           disabled={disabled}
         />
       </div>
-      <ThemedButton.round className="font-bold xl:hidden">?</ThemedButton.round>
+      <ThemedButton.round className="font-bold xl:hidden" onClick={openHelp}>
+        ?
+      </ThemedButton.round>
     </div>
   )
 }

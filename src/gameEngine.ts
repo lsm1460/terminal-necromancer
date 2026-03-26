@@ -58,6 +58,7 @@ export class GameEngine {
       battle,
       broadcast: broadcastSystem,
       monster: monsterFactory,
+      config: initData?.config || {},
       cheats: {},
     } as GameContext
 

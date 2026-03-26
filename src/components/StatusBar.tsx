@@ -1,11 +1,13 @@
+import { Settings } from 'lucide-react'
 import React, { useMemo } from 'react'
 import { GameEngine } from '~/gameEngine'
 import { useGameStore } from '~/stores/useGameStore'
+import { ThemedButton } from './common/ThemedButton'
 
 export const StatusBar: React.FC<{
   engine: React.RefObject<GameEngine | null>
 }> = ({ engine }) => {
-  const logs = useGameStore((state) => state.logs)
+  const { logs, toggleConfigMenu } = useGameStore((state) => state)
   const status = useMemo(() => {
     if (!engine?.current) {
       return null
@@ -24,7 +26,7 @@ export const StatusBar: React.FC<{
   }, [engine, logs])
 
   return (
-    <div className="p-2.5 border-primary border-b font-bold text-xs">
+    <div className="h-10 px-2.5 border-primary border-b font-bold text-xs flex items-center">
       {status ? (
         <>
           <p className="flex gap-5">
@@ -34,6 +36,9 @@ export const StatusBar: React.FC<{
             </span>{' '}
             |<span>GOLD: {status.gold.toLocaleString()} G</span>
           </p>
+          <ThemedButton.round className="ml-auto bg-transparent" onClick={toggleConfigMenu}>
+            <Settings size={20} />
+          </ThemedButton.round>
         </>
       ) : (
         <span>Initializing System...</span>

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
-import { LootBag, NPCState } from '~/types'
+import { GameContext, LootBag, NPCState } from '~/types'
 
 export type SaveData = {
   player: Player
@@ -13,7 +13,9 @@ export type SaveData = {
   }
   drop: LootBag | null
   completedEvents: string[]
-  locale?: 'ko' | 'en'
+  config?: {
+    locale?: 'ko' | 'en'
+  }
 }
 
 export class SaveSystem {
@@ -50,7 +52,10 @@ export class SaveSystem {
   save(saveData: SaveData) {
     const rawData = {
       ...saveData,
-      locale: i18n.language,
+      config: {
+        ...(saveData.config || {}),
+        locale: i18n.language,
+      },
       player: (saveData.player as any).raw || saveData.player,
     }
 
@@ -58,6 +63,17 @@ export class SaveSystem {
       localStorage.setItem('terminal_game_save', JSON.stringify(rawData))
     } else {
       fs.writeFileSync(this.filePath, JSON.stringify(rawData, null, 2))
+    }
+  }
+
+  static makeSaveData(player: Player, context: GameContext) {
+    return {
+      player,
+      sceneId: context.map.currentSceneId,
+      npcs: context.npcs.getSaveData(),
+      drop: context.world.lootBags,
+      config: context.config || {},
+      completedEvents: context.events.getSaveData(),
     }
   }
 }

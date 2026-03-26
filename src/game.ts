@@ -18,7 +18,7 @@ const statePath = path.join(assetsDir, 'state.json')
 const initState = loadJSON(path.join(assetsDir, 'init_state.json'))
 
 const save = new SaveSystem(statePath)
-const { locale = 'ko' } = save.load() || {}
+const locale = save.load()?.config?.locale || 'ko'
 
 const assets: GameAssets = {
   map: loadJSON(path.join(assetsDir, 'map.json')),

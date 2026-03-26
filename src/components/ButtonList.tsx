@@ -13,10 +13,10 @@ export const ButtonList: React.FC<{
   engine: React.RefObject<GameEngine | null>
 }> = ({ engine }) => {
   const { t } = useTranslation()
-  const { isOpenButtonMenu, addLog } = useGameStore()
+  const { addLog } = useGameStore()
   const disabled = useInputLock()
 
-  const [showShortcut, setShowShortcut] = useState(false)
+  const showShortcut = useShowShortcut()
 
   const commandList = useMemo(() => {
     const commandsMap = getCommandMap()
@@ -29,6 +29,44 @@ export const ButtonList: React.FC<{
         rawKey: key,
       }))
   }, [t])
+
+  const handleCommand = async (cmd: string) => {
+    if (disabled) return
+
+    await engine.current?.processCommand(cmd.toLowerCase(), {
+      onBeforeExecute() {
+        addLog(`\n> ${cmd}`)
+      },
+    })
+  }
+
+  return (
+    <ButtonWrapper>
+      {commandList.map((cmd) => (
+        <ThemedButton
+          key={cmd.name}
+          onClick={() => handleCommand(cmd.name)}
+          disabled={disabled}
+          className="w-full flex items-center justify-center xl:border-primary text-xs xl:border py-3 xl:py-2 xl:text-sm before:content-none! xl:text-primary! transition-colors active:bg-black/80"
+          tabIndex={-1}
+        >
+          <div className="flex flex-col items-center justify-center leading-tight xl:flex-row xl:gap-1">
+            <span className="font-medium whitespace-nowrap">{cmd.name}</span>
+
+            {showShortcut && (
+              <span className="opacity-70 xl:ml-1" style={{ fontSize: '0.8em' }}>
+                ({cmd.key})
+              </span>
+            )}
+          </div>
+        </ThemedButton>
+      ))}
+    </ButtonWrapper>
+  )
+}
+
+const useShowShortcut = () => {
+  const [showShortcut, setShowShortcut] = useState(false)
 
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
@@ -61,45 +99,36 @@ export const ButtonList: React.FC<{
     }
   }, [])
 
-  const handleCommand = async (cmd: string) => {
-    if (disabled) return
+  return showShortcut
+}
 
-    await engine.current?.processCommand(cmd.toLowerCase(), {
-      onBeforeExecute() {
-        addLog(`\n> ${cmd}`)
-      },
-    })
-  }
+const ButtonWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isOpenButtonMenu } = useGameStore()
 
   return (
     <div className="xl:mt-auto xl:pb-5">
       <div
         className={`
-      w-full bg-grey-800 gap-2 px-3 pb-8 pt-4 flex-1
-      grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-8
-      xl:flex! xl:flex-col xl:items-stretch xl:grid-cols-none xl:grid-rows-none xl:pb-0 xl:gap-x-0 xl:gap-y-2
-    `}
-        style={{ display: isOpenButtonMenu ? (window.innerWidth >= 1280 ? 'flex' : 'grid') : 'none' }}
+          grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+          ${isOpenButtonMenu ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}
+        `}
       >
-        {commandList.map((cmd) => (
-          <ThemedButton
-            key={cmd.name}
-            onClick={() => handleCommand(cmd.name)}
-            disabled={disabled}
-            className="w-full flex items-center justify-center xl:border-primary text-xs xl:border xl:py-2 xl:text-sm before:content-none! xl:text-primary!"
-            tabIndex={-1}
+        <div
+          className={`
+            overflow-hidden transition-all duration-300
+            ${isOpenButtonMenu ? 'translate-y-0' : 'translate-y-4'}
+          `}
+        >
+          <div
+            className={`
+              w-full bg-grey-800 pb-4 flex-1
+              grid grid-cols-3 grid-rows-2
+              xl:px-3 xl:flex! xl:flex-col xl:items-stretch xl:grid-cols-none xl:grid-rows-none xl:pb-0 xl:gap-x-0 xl:gap-y-2
+            `}
           >
-            <div className="flex flex-col items-center justify-center leading-tight xl:flex-row xl:gap-1">
-              <span className="font-medium whitespace-nowrap">{cmd.name}</span>
-
-              {showShortcut && (
-                <span className="opacity-70 xl:ml-1" style={{ fontSize: '0.8em' }}>
-                  ({cmd.key})
-                </span>
-              )}
-            </div>
-          </ThemedButton>
-        ))}
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   )

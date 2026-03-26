@@ -11,17 +11,17 @@ import { SaveSystem } from '~/systems/SaveSystem'
 // 하위 컴포넌트들
 import { assetManager } from '~/core/WebAssetManager'
 import { useShortcuts } from '~/hooks/useShortcuts'
-import { BattleStage } from './battle/BattleStage'
-import { ButtonList } from './ButtonList'
-import { GameInput } from './GameInput'
-import { LogWindow } from './LogWindow'
-import { MiniMap } from './MiniMap'
-import { StatusBar } from './StatusBar'
 import { useSwipeShortcuts } from '~/hooks/useSwipeShortcuts'
+import { useGameStore } from '~/stores/useGameStore'
+import { GameScreen } from './GameScreen'
+import { motion } from 'framer-motion'
+import { ConfigScreen } from './ConfigScreen'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
   const saveSystemRef = useRef(new SaveSystem(assets.state))
+
+  const isOpenConfigMenu = useGameStore((state) => state.isOpenConfigMenu)
 
   const [isGameOn, setIsGameOn] = useState(false)
 
@@ -34,7 +34,7 @@ export const App = () => {
       Terminal.setRenderer(renderer)
 
       const save = saveSystemRef.current
-      const { locale = 'ko' } = save.load() || {}
+      const locale = save.load()?.config?.locale || 'ko'
 
       const playData = await Title.gameStart(save, initState)
       if (playData) {
@@ -53,32 +53,23 @@ export const App = () => {
   }, [])
 
   return (
-    <div
-      className="relative grid h-dvh w-full bg-grey-800 text-primary
-    grid-cols-1 
-    grid-rows-[auto_1fr_auto_auto_auto] 
-    xl:grid-cols-[1fr_300px] xl:grid-rows-[auto_1fr_auto]
-    [grid-template-areas:'status''window''map''input''buttons'] 
-    xl:[grid-template-areas:'status_side''window_side''input_side']"
-    >
-      <div className="[grid-area:status]">
-        <StatusBar engine={engineRef} />
-      </div>
+    <div className="relative h-dvh w-full overflow-hidden bg-grey-800">
+      <motion.div
+        animate={{ x: isOpenConfigMenu ? '-30%' : 0, opacity: isOpenConfigMenu? 0 : 1 }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className="absolute inset-0"
+      >
+        <GameScreen engine={engineRef} isGameOn={isGameOn} />
+      </motion.div>
 
-      <div className="[grid-area:window] relative flex flex-col overflow-hidden">
-        <BattleStage engine={engineRef} />
-        <LogWindow engine={engineRef} />
-      </div>
-
-      <div className="[grid-area:map] xl:[grid-area:side] flex flex-col relative">
-        <MiniMap engine={engineRef} />
-      </div>
-
-      <div className="[grid-area:input]">{isGameOn && <GameInput engine={engineRef} />}</div>
-
-      <div className="[grid-area:buttons] xl:[grid-area:side] flex flex-col relative xl:border-l border-primary">
-        {isGameOn && <ButtonList engine={engineRef} />}
-      </div>
+      <motion.div
+        initial={{ x: '100%' }}
+        animate={{ x: isOpenConfigMenu ? 0 : '100%' }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className="absolute inset-0"
+      >
+        <ConfigScreen engine={engineRef} />
+      </motion.div>
     </div>
   )
 }

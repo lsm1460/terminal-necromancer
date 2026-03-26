@@ -218,7 +218,10 @@ export interface GameContext {
   battle: Battle
   broadcast: Broadcast
   monster: MonsterFactory
-
+  config?: { 
+    locale?: 'ko' | 'en'
+    isSearchFirst?: boolean
+  }
   cheats: {
     isFullMap?: boolean
   }

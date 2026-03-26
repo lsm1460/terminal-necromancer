@@ -567,5 +567,7 @@
     "vips_lost",
     "talk_death_4"
   ],
-  "locale": "ko"
+  "config": {
+    "locale": "ko"
+  }
 }

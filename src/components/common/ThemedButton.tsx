@@ -37,7 +37,7 @@ ThemedButton.round = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HT
         className={`
           flex items-center justify-center
           w-8 h-8 rounded-full bg-black/50 text-primary
-          hover:bg-primary/20 transition-colors
+          hover:bg-primary/20 active:bg-primary/20 transition-colors
           ${className} 
         `}
         {...props}

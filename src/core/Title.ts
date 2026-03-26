@@ -23,7 +23,7 @@ export class Title {
     try {
       let hasSave = save.load()
 
-      const locale = hasSave?.locale || 'ko'
+      const locale = hasSave?.config?.locale || 'ko'
 
       await i18n.changeLanguage(locale)
 
@@ -71,7 +71,10 @@ export class Title {
             if (hasSave) {
               hasSave = {
                 ...hasSave,
-                locale: lang,
+                config: {
+                  ...(hasSave.config || {}),
+                  locale: lang,
+                }
               }
 
               save.save(hasSave)

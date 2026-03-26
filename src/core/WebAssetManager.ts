@@ -4,6 +4,7 @@ import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { SceneData, UnitSprites } from '~/types'
 import { Terminal } from './Terminal'
+import { delay } from '~/utils'
 
 interface AssetSource {
   id: string
@@ -116,6 +117,9 @@ export class WebAssetManager {
   public async loadInitialAssets(assets: GameAssets, locale: 'ko' | 'en'): Promise<void> {
     Terminal.log(`\x1b[36m[System] ${i18n.t('loading.resource')}\x1b[0m`)
     await this.loadWithProgress(this.commonManifest.images, this.commonManifest.audios)
+
+    await delay(500)
+    
     Terminal.log(`\x1b[32m[System] ${i18n.t('loading.success')}\x1b[0m\n`)
   }
 

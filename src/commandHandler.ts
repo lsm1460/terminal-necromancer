@@ -4,6 +4,7 @@ import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
 import i18n from './i18n'
 import { printStatus } from './statusPrinter'
+import { SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
 
 type CommandFunction = (
@@ -96,13 +97,8 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
   } catch (e) {}
 
   // 자동 세이브
-  context.save.save({
-    player,
-    sceneId: context.map.currentSceneId,
-    npcs: context.npcs.getSaveData(),
-    drop: context.world.lootBags,
-    completedEvents: context.events.getSaveData(),
-  })
+  const saveData = SaveSystem.makeSaveData(player, context)
+  context.save.save(saveData)
 
   return false
 }

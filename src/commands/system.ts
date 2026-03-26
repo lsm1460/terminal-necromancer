@@ -1,6 +1,7 @@
 import { COMMAND_GROUPS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
+import { SaveSystem } from '~/systems/SaveSystem'
 import { CommandFunction } from '~/types'
 
 // --- Exit ---
@@ -8,13 +9,8 @@ export const exitCommand: CommandFunction = (player, args, context) => {
   Terminal.log(i18n.t('commands.system.exit.saving'))
 
   // 1. 현재 상태 저장
-  context.save.save({
-    player,
-    sceneId: context.map.currentSceneId,
-    npcs: context.npcs.getSaveData(),
-    drop: context.world.lootBags,
-    completedEvents: context.events.getSaveData(),
-  })
+  const saveData = SaveSystem.makeSaveData(player, context)
+  context.save.save(saveData)
 
   Terminal.log(i18n.t('commands.system.exit.save_complete'))
   Terminal.log(i18n.t('commands.system.exit.farewell'))
