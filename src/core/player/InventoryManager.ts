@@ -126,7 +126,7 @@ export class InventoryManager {
       const choices = [
         ...consumables.map((item) => ({
           name: item.id,
-          message: `${getItemLabel(item)} (x${item.quantity || 1}) ${
+          message: `${getItemLabel(item).label} (x${item.quantity || 1}) ${
             item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
           }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
         })),
@@ -140,11 +140,11 @@ export class InventoryManager {
     }
 
     if (!targetItem) {
-      Terminal.log(i18n.t('inventory.use.not_found'))
+      Terminal.log(i18n.t('item_not_found'))
       return false
     }
 
-    Terminal.log(i18n.t('inventory.use.using', { name: getItemLabel(targetItem) }))
+    Terminal.log(i18n.t('inventory.use.using', { name: getItemLabel(targetItem).label }))
 
     if (targetItem.hpHeal) {
       const recovered = this.player.recoverHp(targetItem.hpHeal)

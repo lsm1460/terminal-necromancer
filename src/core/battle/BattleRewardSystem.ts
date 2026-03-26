@@ -47,7 +47,7 @@ export class BattleRewardSystem {
       Terminal.log(
         i18n.t('battle.reward.drop_item', {
           name: target.name,
-          label: getItemLabel(d),
+          label: getItemLabel(d).label,
           quantity: quantityText,
         })
       )

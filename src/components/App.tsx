@@ -54,25 +54,31 @@ export const App = () => {
 
   return (
     <div
-      className="relative grid h-dvh w-full bg-grey-900 text-primary
-        grid-cols-1 grid-rows-[auto_1fr_auto_auto] 
-        xl:grid-cols-[1fr_300px] xl:grid-rows-[auto_1fr_auto]
-        [grid-template-areas:'status''window''side''input']
-        xl:[grid-template-areas:'status_side''window_side''input_side']"
+      className="relative grid h-dvh w-full bg-grey-800 text-primary
+    grid-cols-1 
+    grid-rows-[auto_1fr_auto_auto_auto] 
+    xl:grid-cols-[1fr_300px] xl:grid-rows-[auto_1fr_auto]
+    [grid-template-areas:'status''window''map''input''buttons'] 
+    xl:[grid-template-areas:'status_side''window_side''input_side']"
     >
-      <StatusBar engine={engineRef} />
+      <div className="[grid-area:status]">
+        <StatusBar engine={engineRef} />
+      </div>
 
-      <div className="relative flex flex-col overflow-hidden">
+      <div className="[grid-area:window] relative flex flex-col overflow-hidden">
         <BattleStage engine={engineRef} />
         <LogWindow engine={engineRef} />
       </div>
 
-      <div className="[grid-area:side] flex flex-col relative xl:border-l border-primary">
+      <div className="[grid-area:map] xl:[grid-area:side] flex flex-col relative">
         <MiniMap engine={engineRef} />
-        {isGameOn && <ButtonList engine={engineRef} />}
       </div>
 
       <div className="[grid-area:input]">{isGameOn && <GameInput engine={engineRef} />}</div>
+
+      <div className="[grid-area:buttons] xl:[grid-area:side] flex flex-col relative xl:border-l border-primary">
+        {isGameOn && <ButtonList engine={engineRef} />}
+      </div>
     </div>
   )
 }

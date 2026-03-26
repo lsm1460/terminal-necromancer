@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 1,
-    "y": 0,
+    "x": 0,
+    "y": 1,
     "_maxHp": 231,
     "hp": 231,
     "_maxMp": 50,
@@ -363,7 +363,7 @@
       }
     }
   },
-  "sceneId": "B5_VIP_lounge",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {

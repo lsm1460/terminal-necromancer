@@ -80,7 +80,7 @@ export const SpecialSkillLogics: Record<
             HIGHLIGHT(
               i18n.t('skill.special.item_steal.item', {
                 attacker: attacker.name,
-                item: getItemLabel(targetItem),
+                item: getItemLabel(targetItem).label,
               })
             )
           )

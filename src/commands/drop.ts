@@ -16,7 +16,12 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
   // 1. 인자(args)가 있는 경우: 이름으로 직접 찾기
   if (args.length > 0) {
     args.forEach((name) => {
-      const itemIndex = inventory.findIndex((d) => getItemLabel(d) === name)
+      const itemIndex = inventory.findIndex((d) => {
+        const { origin } = getItemLabel(d)
+
+        return origin === name
+      })
+
       if (itemIndex === -1) {
         Terminal.log(i18n.t('commands.drop.not_found', { name }))
         return
@@ -28,7 +33,7 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
     const itemId = await Terminal.select(i18n.t('commands.drop.select_prompt'), [
       ...inventory.map((item) => ({
         name: item.id,
-        message: `${getItemLabel(item)}${
+        message: `${getItemLabel(item).label}${
           item.quantity ? i18n.t('commands.drop.quantity_label', { count: item.quantity }) : ''
         }`,
       })),
@@ -53,7 +58,7 @@ export const dropCommand: CommandFunction = async (player, args, context) => {
     const qtyText = itemToDrop.quantity !== undefined ? i18n.t('commands.drop.unit') : ''
     Terminal.log(
       i18n.t('commands.drop.success', {
-        name: getItemLabel(itemToDrop),
+        name: getItemLabel(itemToDrop).label,
         qtyText,
       })
     )

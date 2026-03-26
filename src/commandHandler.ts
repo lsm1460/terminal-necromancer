@@ -68,7 +68,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
   if (!trimmed) return false
 
   // 치트키 처리
-  if (Commands.handleCheat(trimmed, context)) {
+  if (Commands.handleCheat(trimmed, player, context)) {
     return true
   }
 

@@ -65,6 +65,7 @@
   "corpses": " Corpses",
   "select_an_item": "Select an item",
 
+  "item_not_found": "That item does not exist..",
   "inventory": {
     "empty": "Your inventory is empty.",
     "select_item": "Select an item to inspect.",
@@ -79,7 +80,6 @@
     "use": {
       "no_consumables": "\n🎒 No consumable items available.",
       "select_prompt": "Which item would you like to use?",
-      "not_found": "That item does not exist..",
       "using": "\n Using [{{name}}]...",
       "hp_recovered": "❤️ HP restored by {{amount}}. (Current: {{current}}/{{max}})",
       "mp_recovered": "🧪 MP restored by {{amount}}. (Current: {{current}}/{{max}})"

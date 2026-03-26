@@ -12,7 +12,9 @@ export class Terminal {
   }
 
   public static say(list: { name: string; hasQuest: boolean }[]): void {
-    this.renderer ? this.renderer.say(list) : console.log(`${list.join(', ')}`)
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.say(list)
   }
 
   public static update(message: string) {
@@ -49,5 +51,23 @@ export class Terminal {
   ): Promise<string[]> {
     if (!this.renderer) throw new Error('Renderer not initialized')
     return await this.renderer.multiselect(message, choices, options)
+  }
+
+  public static move(directions: string[]) {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.move(directions)
+  }
+
+  public static look(message: string, name: string, type: string) {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.look(message, name, type)
+  }
+
+  public static pick(name: string) {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.pick(name)
   }
 }

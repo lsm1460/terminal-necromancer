@@ -26,7 +26,7 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   Terminal.log(i18n.t('commands.look.status.mp', { mp, maxMp }))
   Terminal.log(i18n.t('commands.look.status.atk', { atk, bonus: atk - originAtk }))
   Terminal.log(i18n.t('commands.look.status.def', { def, bonus: def - originDef }))
-  Terminal.log(i18n.t('commands.look.status.gold', { gold }))
+  Terminal.log(i18n.t('commands.look.status.gold', { gold: gold.toLocaleString()+'G' }))
 
   Terminal.log(i18n.t('commands.look.status.crit', { val: Math.floor(crit * 100) }))
   Terminal.log(i18n.t('commands.look.status.eva', { val: Math.floor(eva * 100) }))
@@ -247,12 +247,18 @@ const printKnight = (target: BattleTarget) => {
   }
 }
 
-export const printItem = (item: Item) => {
+export const printItem = (item?: Item) => {
+  if (!item) {
+    Terminal.log(i18n.t('item_not_found'))
+    return
+  }
+
   const rarityKey = item.rarity || 'COMMON'
   const rarityText = i18n.t(`commands.look.item.rarity.${rarityKey}`)
+  const { label, origin } = getItemLabel(item)
 
   Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Terminal.log(` ${rarityText} ${getItemLabel(item)} ${item.quantity ? `(x${item.quantity})` : ''}`)
+  Terminal.log(` ${rarityText} ${label} ${item.quantity ? `(x${item.quantity})` : ''}`)
   Terminal.log(`──────────────────────────────────────────────`)
 
   const stats: string[] = []
@@ -296,6 +302,8 @@ export const printItem = (item: Item) => {
     })
   )
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+
+  Terminal.pick(origin)
 }
 
 const selectTarget = async (subChoices: { name: string; message: string }[]) => {
@@ -317,9 +325,18 @@ const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) =
   return selected
 }
 
-const lookItem = async (items: { label: string; qty: number; raw: any }[], player: Player) => {
+const lookItem = async (dropList: Drop[], player: Player) => {
+  const items = _.chain(dropList)
+    .groupBy((item) => getItemLabel(item).origin)
+    .map((group, label) => ({
+      label,
+      qty: _.sumBy(group, (i) => i.quantity || 1),
+      raw: group[0],
+    }))
+    .value()
+
   const subChoices = items.map((i) => ({
-    name: i.label, // 아이템은 label을 식별자로 사용
+    name: i.label,
     message: makeItemMessage(i.raw, player),
   }))
 
@@ -410,15 +427,6 @@ export const lookAll = async (
   const aliveNPCs = (tile.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as NPC[]
   const corpse = world.getCorpsesAt(x, y)
 
-  // 아이템 수량 합산 처리
-  const itemCounts: Record<string, { label: string; qty: number; raw: any }> = {}
-  items.forEach((item) => {
-    const label = getItemLabel(item)
-    if (!itemCounts[label]) itemCounts[label] = { label: label, qty: 0, raw: item }
-    itemCounts[label].qty += item.quantity || 1
-  })
-  const groupedItems = Object.values(itemCounts)
-
   // 1. 방향 데이터 정의 (설계의 확장성을 위해)
   const NAV_CONFIG = [
     { label: i18n.t('up'), dx: 0, dy: -1 },
@@ -440,7 +448,7 @@ export const lookAll = async (
     ...(corpse.length ? [{ name: 'CORPSE', message: i18n.t('commands.look.category.corpse') }] : []),
     ...(aliveMonsters.length ? [{ name: 'MONSTER', message: i18n.t('commands.look.category.monster') }] : []),
     ...(minions.length ? [{ name: 'MINION', message: i18n.t('commands.look.category.minion') }] : []),
-    ...(groupedItems.length ? [{ name: 'ITEM', message: i18n.t('commands.look.category.item') }] : []),
+    ...(items.length ? [{ name: 'ITEM', message: i18n.t('commands.look.category.item') }] : []),
     { name: 'cancel', message: i18n.t('cancel') },
   ]
 
@@ -461,7 +469,7 @@ export const lookAll = async (
       targetId = await lookBattleTarget(aliveNPCs, context)
       break
     case 'ITEM':
-      targetId = await lookItem(groupedItems, player)
+      targetId = await lookItem(items, player)
       break
     case 'PATH':
       targetId = await lookPath(accessiblePaths)
@@ -481,11 +489,24 @@ export const lookAll = async (
 
 // lookCommand에서는 args에 따라 호출
 export const lookCommand: CommandFunction = async (player, args, context) => {
+  const [type, target] = args
+
   const { x, y } = player.pos
   const { map, world } = context
   const tile = map.getTile(x, y)
 
   const items = world.getDropsAt(x, y)
+
+  if (type === 'item' && !target) {
+    await lookItem(items, player)
+    
+    return false
+  } else if (type === 'item' && target) {
+    const targetItem = items.find((_item) => getItemLabel(_item).origin === target)
+    printItem(targetItem)
+
+    return false
+  }
 
   printStatus(player, context)
 

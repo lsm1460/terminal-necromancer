@@ -77,7 +77,7 @@ export async function handleBuy(
     return {
       name: item.id,
       message: makeItemMessage(item, player, { withPrice: true }),
-      label: getItemLabel(item),
+      label: getItemLabel(item).label,
       price: finalPrice,
     }
   })
@@ -151,7 +151,7 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
         name: `${index}`,
         id: item.id,
         message: makeItemMessage(item, player, { withPrice: true, isSell: true }),
-        label: getItemLabel(item),
+        label: getItemLabel(item).label,
         price: finalSellPrice,
         originalIndex: index,
       }

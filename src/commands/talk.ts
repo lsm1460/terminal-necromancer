@@ -4,6 +4,7 @@ import { QuestManager } from '~/core/QuestManager'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import npcHandlers from '~/npc'
+import { printDirections } from '~/statusPrinter'
 import { BattleTarget, CommandFunction, GameContext, NPC } from '~/types'
 
 export const talkCommand: CommandFunction = async (...params) => {
@@ -93,6 +94,8 @@ async function startTalkSession(npc: NPC, player: Player, context: GameContext) 
       if (action === 'exit') {
         const farewell = NPCManager.getNpcScripts(npc, 'farewell')
         Terminal.log(`\n[${npc.name}]: "${farewell}"`)
+
+        printDirections(player, context)
         break
       }
 

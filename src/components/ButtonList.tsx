@@ -13,10 +13,9 @@ export const ButtonList: React.FC<{
   engine: React.RefObject<GameEngine | null>
 }> = ({ engine }) => {
   const { t } = useTranslation()
-  const { addLog } = useGameStore()
+  const { isOpenButtonMenu, addLog } = useGameStore()
   const disabled = useInputLock()
 
-  const [isOpen, setIsOpen] = useState(false)
   const [showShortcut, setShowShortcut] = useState(false)
 
   const commandList = useMemo(() => {
@@ -73,34 +72,32 @@ export const ButtonList: React.FC<{
   }
 
   return (
-    <div className="relative mt-6 xl:mt-auto xl:pb-5">
-      <button
-        tabIndex={-1}
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          absolute px-2 xl:px-4 pt-1 xl:pt-2 pb-1 text-[10px] xl:text-xs border-t border-l border-r border-primary
-          rounded-t-lg bg-grey-900
-          z-[1] left-3 top-0.5 -translate-y-full
-          xl:hidden
-        `}
-      >
-        {isOpen ? t('web.close_command_menu') : t('web.open_command_menu')}
-      </button>
-
+    <div className="xl:mt-auto xl:pb-5">
       <div
-        className="w-full bg-grey-900 flex-wrap justify-center items-center gap-3 px-3 py-1 border-t border-primary xl:flex-col xl:flex! xl:border-t-0 xl:items-stretch flex-1"
-        style={{ display: isOpen ? 'flex' : 'none' }}
+        className={`
+      w-full bg-grey-800 gap-2 px-3 pb-8 pt-4 flex-1
+      grid grid-cols-3 grid-rows-2 gap-x-2 gap-y-8
+      xl:flex! xl:flex-col xl:items-stretch xl:grid-cols-none xl:grid-rows-none xl:pb-0 xl:gap-x-0 xl:gap-y-2
+    `}
+        style={{ display: isOpenButtonMenu ? (window.innerWidth >= 1280 ? 'flex' : 'grid') : 'none' }}
       >
         {commandList.map((cmd) => (
           <ThemedButton
             key={cmd.name}
             onClick={() => handleCommand(cmd.name)}
             disabled={disabled}
-            className="xl:border-primary text-xs xl:border xl:py-2 xl:text-sm"
+            className="w-full flex items-center justify-center xl:border-primary text-xs xl:border xl:py-2 xl:text-sm before:content-none! xl:text-primary!"
             tabIndex={-1}
           >
-            {cmd.name}
-            {showShortcut && <span style={{ fontSize: '0.8em', marginLeft: '4px', opacity: 0.7 }}>({cmd.key})</span>}
+            <div className="flex flex-col items-center justify-center leading-tight xl:flex-row xl:gap-1">
+              <span className="font-medium whitespace-nowrap">{cmd.name}</span>
+
+              {showShortcut && (
+                <span className="opacity-70 xl:ml-1" style={{ fontSize: '0.8em' }}>
+                  ({cmd.key})
+                </span>
+              )}
+            </div>
           </ThemedButton>
         ))}
       </div>

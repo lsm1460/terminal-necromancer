@@ -38,7 +38,7 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
 }
 
 async function handleItemAction(item: Item, player: Player, args: any, context: any) {
-  const label = getItemLabel(item)
+  const label = getItemLabel(item).label
   const action = await Terminal.select(i18n.t('inventory.what_to_do', { label }), getAvailableActions(item))
   
   switch (action) {
@@ -83,7 +83,7 @@ function getAvailableActions(item: Item) {
 function handleDropAction(item: Item, player: Player, context: any) {
   if (player.removeItem(item.id)) {
     context.world.addDrop({ ...item, quantity: 1, x: player.x, y: player.y } as Drop)
-    const label = getItemLabel(item)
+    const label = getItemLabel(item).label
     Terminal.log(`📦 ${i18n.t('inventory.action_drop_done', { label, count: 1 })}`)
   }
 }

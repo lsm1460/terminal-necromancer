@@ -1,9 +1,9 @@
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
+import { printTileStatus } from '~/statusPrinter'
 import { GameContext, NPC } from '~/types'
 import { speak } from '~/utils'
 import { handleTalk, NPCHandler } from './NPCHandler'
-import { printTileStatus } from '~/statusPrinter'
 
 const OliverHandler: NPCHandler = {
   getChoices(player, npc, context) {

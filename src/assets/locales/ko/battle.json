@@ -6,7 +6,7 @@
     "current_enemies": "⚠️  현재 적: {{names}}",
     "preemptive_attack": "⚠️  적: {{name}}의 기습!"
   },
-  "turn_start": "\n━━━━━━━━━ [ {{name}}의 차례 ] ━━━━━━━━━",
+  "turn_start": "\n [ {{name}}의 차례 ] ",
   "battle_start": "\n⚔️ 전투가 시작되었습니다!",
   "enemy_list": "적: {{names}}",
   "effect_expired": {

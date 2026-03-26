@@ -15,15 +15,29 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   if (!hasPickableItems(drops, lootBag)) return false
   if (!checkInventorySpace(availableSpace, player)) return false
 
-  const choices = makeDropTargetOptions(drops, player, lootBag)
-  const selectionId = await Terminal.select(i18n.t('pick.select_target', { space: availableSpace }), choices)
-  if (!selectionId || selectionId === 'cancel') return false
+  const [arg] = args
+  
+  let drop: Drop | undefined
 
-  if (selectionId === 'lootBag' && lootBag) {
-    handleLootBagPick(player, lootBag, context)
+  if (arg) {
+    drop = drops.find((d) => getItemLabel(d).origin === arg)
+
+    if (!drop) {
+      Terminal.log(i18n.t('item_not_found'))
+      return false
+    }
+  } else {
+    const choices = makeDropTargetOptions(drops, player, lootBag)
+    const selectionId = await Terminal.select(i18n.t('pick.select_target', { space: availableSpace }), choices)
+    if (!selectionId || selectionId === 'cancel') return false
+
+    if (selectionId === 'lootBag' && lootBag) {
+      handleLootBagPick(player, lootBag, context)
+    }
+
+    drop = drops.find((d) => d.id === selectionId)
   }
 
-  const drop = drops.find((d) => d.id === selectionId)
   if (drop) {
     handleItemPick(drop, player, availableSpace, context)
   }
@@ -83,7 +97,7 @@ function handleItemPick(drop: Drop, player: Player, availableSpace: number, cont
 
   player.addItem({ ...drop, quantity: pickQty })
 
-  const label = getItemLabel(drop)
+  const label = getItemLabel(drop).label
   Terminal.log(`\n✨ ${i18n.t('pick.obtained_msg', { label, count: pickQty })}`)
 
   if (remainQty > 0) {

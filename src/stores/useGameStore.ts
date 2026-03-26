@@ -7,6 +7,7 @@ interface GameState {
   logs: string[]
   uiState: UIState
   isLoading: boolean
+  isOpenButtonMenu: boolean
 
   // Actions
   setLogs: (updater: (prev: string[]) => string[]) => void
@@ -16,6 +17,7 @@ interface GameState {
   clearLogs: () => void
   setUI: (uiState: UIState) => void
   resolveUI: (value: any, message?: string) => void
+  toggleButtonMenu: () => void
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
@@ -26,6 +28,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     resolve: () => {},
   },
   isLoading: false,
+  isOpenButtonMenu: false,
 
   setLogs: (updater) => set((state) => ({ logs: updater(state.logs) })),
   setIsLoading: (isLoading) => set((state) => ({ isLoading })),
@@ -66,4 +69,5 @@ export const useGameStore = create<GameState>((set, get) => ({
       },
     })
   },
+  toggleButtonMenu: () => set((state) => ({ isOpenButtonMenu: !state.isOpenButtonMenu })),
 }))

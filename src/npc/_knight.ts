@@ -70,7 +70,7 @@ async function handleUpgrade(player: Player) {
   }
 
   const equipAbles = player.inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type))
-  const choices = equipAbles.map((item) => ({ name: item.id, message: getItemLabel(item) }))
+  const choices = equipAbles.map((item) => ({ name: item.id, message: getItemLabel(item).label }))
   choices.push({ name: 'cancel', message: i18n.t('cancel') })
   const selected = await Terminal.select(i18n.t('npc._knight.upgrade.select_title'), choices)
 

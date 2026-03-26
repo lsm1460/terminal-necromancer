@@ -1,8 +1,10 @@
+import { Info, Plus } from 'lucide-react'
 import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GameEngine } from '~/gameEngine'
 import { useInputLock } from '~/hooks/useInputLock'
 import { useGameStore } from '~/stores/useGameStore'
+import { ThemedButton } from './common/ThemedButton'
 
 interface GameInputProps {
   engine: React.RefObject<GameEngine | null>
@@ -10,7 +12,7 @@ interface GameInputProps {
 
 export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
   const { t } = useTranslation()
-  const { uiState, addLog, resolveUI } = useGameStore()
+  const { uiState, isOpenButtonMenu, addLog, resolveUI, toggleButtonMenu } = useGameStore()
   const disabled = useInputLock()
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -54,16 +56,28 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
   }
 
   return (
-    <div className="flex items-center p-2 xl:p-4 border-t border-primary">
-      <span className="mr-2.5 text-primary">{'>'}</span>
-      <input
-        ref={inputRef}
-        className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-xs xl:text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
-        autoFocus
-        onKeyDown={handleCommand}
-        placeholder={disabled ? t('web.select_an_option') : t('input_command')}
-        disabled={disabled}
-      />
+    <div className="flex items-center gap-1 p-2 xl:p-4 border-t border-primary">
+      <ThemedButton.round className="xl:hidden" onClick={toggleButtonMenu}>
+        <div
+          className={`
+      flex items-center justify-center
+      ${isOpenButtonMenu ? 'rotate-45' : 'rotate-0'}
+    `}
+        >
+          <Plus size={16} strokeWidth={2.5} />
+        </div>
+      </ThemedButton.round>
+      <div className="flex flex-1 w-full rounded-full bg-black/50 h-8 px-4 xl:px-0 xl:h-auto xl:bg-transparent">
+        <input
+          ref={inputRef}
+          className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-xs xl:text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
+          autoFocus
+          onKeyDown={handleCommand}
+          placeholder={disabled ? t('web.select_an_option') : t('input_command')}
+          disabled={disabled}
+        />
+      </div>
+      <ThemedButton.round className="font-bold xl:hidden">?</ThemedButton.round>
     </div>
   )
 }

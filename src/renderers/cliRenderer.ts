@@ -93,4 +93,14 @@ export class CLIRenderer implements Renderer {
     } as any)
     return result
   }
+
+  move(directions: string[]) {
+    console.log(i18n.t('paths_ahead') + directions.join(', '))
+  }
+
+  look(message: string) {
+    console.log(message)
+  }
+
+  pick() {/** 표기 없음. 단순 등록 */}
 }

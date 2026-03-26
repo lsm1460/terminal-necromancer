@@ -13,7 +13,6 @@ export const getCommandMap = (): Record<string, string> => ({
   m: i18n.t('commands.map.label'),
   g: i18n.t('commands.pick'),
   l: i18n.t('commands.look.label'),
-  h: i18n.t('commands.help'),
 })
 
 export const useShortcuts = (engine: React.RefObject<GameEngine | null>) => {

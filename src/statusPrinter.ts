@@ -7,6 +7,20 @@ import { Terminal } from './core/Terminal'
 import i18n from './i18n'
 import { getItemLabel } from './utils'
 
+export function printDirections(player: Player, context: GameContext) {
+  const { map } = context
+  const { x, y } = player.pos
+
+  const directions: string[] = []
+
+  if (map.canMove(x, y - 1)) directions.push(i18n.t('up'))
+  if (map.canMove(x, y + 1)) directions.push(i18n.t('down'))
+  if (map.canMove(x - 1, y)) directions.push(i18n.t('left'))
+  if (map.canMove(x + 1, y)) directions.push(i18n.t('right'))
+
+  Terminal.move(directions)
+}
+
 export function printTileStatus(player: Player, context: GameContext) {
   const { map, npcs, world } = context
   const { x, y } = player.pos
@@ -42,15 +56,7 @@ export function printTileStatus(player: Player, context: GameContext) {
 
   printLootStatus(player, context)
 
-  // 이동 가능한 방향 계산
-  const directions: string[] = []
-
-  if (map.canMove(x, y - 1)) directions.push(i18n.t('up'))
-  if (map.canMove(x, y + 1)) directions.push(i18n.t('down'))
-  if (map.canMove(x - 1, y)) directions.push(i18n.t('left'))
-  if (map.canMove(x + 1, y)) directions.push(i18n.t('right'))
-
-  Terminal.log(i18n.t('paths_ahead') + directions.join(', '))
+  printDirections(player, context)
 }
 
 export function printLootStatus(player: Player, { world, map }: GameContext) {
@@ -65,7 +71,9 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
     Terminal.log(`\n${i18n.t('local_drops')}`)
     drops.forEach((d) => {
       const qtyText = !!d.quantity ? ` x ${d.quantity}` : ''
-      Terminal.log(` - ${getItemLabel(d)}${qtyText}`)
+      const { label, origin } = getItemLabel(d)
+
+      Terminal.look(` - ${label}${qtyText}`, origin, 'item')
     })
   }
 }

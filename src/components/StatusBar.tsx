@@ -24,14 +24,16 @@ export const StatusBar: React.FC<{
   }, [engine, logs])
 
   return (
-    <div className="p-2.5 border-primary border-b flex gap-5 font-bold text-xs">
+    <div className="p-2.5 border-primary border-b font-bold text-xs">
       {status ? (
         <>
-          <span>LV. {status.level}</span> |
-          <span>
-            HP: {status.hp}/{status.maxHp}
-          </span>{' '}
-          |<span>GOLD: {status.gold}</span> |<span>LOC: {status.location}</span>
+          <p className="flex gap-5">
+            <span>LV. {status.level}</span> |
+            <span>
+              HP: {status.hp.toLocaleString()}/{status.maxHp.toLocaleString()}
+            </span>{' '}
+            |<span>GOLD: {status.gold.toLocaleString()} G</span>
+          </p>
         </>
       ) : (
         <span>Initializing System...</span>

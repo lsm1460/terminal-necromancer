@@ -6,7 +6,7 @@
     "current_enemies": "⚠️  Current Enemies: {{names}}",
     "preemptive_attack": "⚠️  Surprise attack by {{name}}!"
   },
-  "turn_start": "\n━━━━━━━━━ [ {{name}}'s Turn ] ━━━━━━━━━",
+  "turn_start": "\n [ {{name}}'s Turn ] ",
   "battle_start": "\n⚔️ Battle Started!",
   "enemy_list": "Enemies: {{names}}",
   "effect_expired": {

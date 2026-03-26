@@ -123,7 +123,7 @@ export const MiniMap: React.FC<{
   return (
     <div
       onClick={() => !isXl && setIsExpanded(!isExpanded)}
-      className="absolute top-2 right-4 -translate-y-full overflow-hidden border-primary 
+      className="absolute -top-3 right-4 -translate-y-full overflow-hidden border-primary 
       bg-black/50 backdrop-blur-[1.5px] border rounded shadow-2xl cursor-pointer 
       z-[1000] transition-all duration-300 ease-in-out
       xl:relative xl:top-0 xl:right-0 xl:translate-none xl:border-x-0 xl:border-t-0 xl:rounded-none xl:w-full! xl:h-[300px]! xl:transition-none

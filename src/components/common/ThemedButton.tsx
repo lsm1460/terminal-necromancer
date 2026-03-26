@@ -1,25 +1,19 @@
 import React, { forwardRef } from 'react'
 
+type ButtonAttributes = React.ButtonHTMLAttributes<HTMLButtonElement> & React.RefAttributes<HTMLButtonElement>
+
+interface ThemedButtonComponent extends React.ForwardRefExoticComponent<ButtonAttributes> {
+  round: React.ForwardRefExoticComponent<ButtonAttributes>
+}
+
 export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
   ({ children, className, ...props }, ref) => {
     return (
       <button
         ref={ref}
         className={`
-          pointer-events-auto
-          bg-transparent border border-transparent 
-          text-primary font-inherit text-base 
-          px-2.5 py-1 transition-colors
-          
-          cursor-pointer
-          hover:bg-primary hover:text-gray-900
-          focus:bg-primary focus:text-gray-900
-          
-          disabled:opacity-50 
-          disabled:cursor-not-allowed 
-          disabled:hover:bg-transparent 
-          disabled:hover:text-primary
-          
+          text-button has-dot
+
           ${className} 
         `}
         {...props}
@@ -33,6 +27,27 @@ export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttrib
       </button>
     )
   }
-)
+) as ThemedButtonComponent
 
-ThemedButton.displayName = 'ThemedButton'
+ThemedButton.round = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={`
+          flex items-center justify-center
+          w-8 h-8 rounded-full bg-black/50 text-primary
+          hover:bg-primary/20 transition-colors
+          ${className} 
+        `}
+        {...props}
+        onClick={(e) => {
+          e.stopPropagation()
+          props?.onClick?.(e)
+        }}
+      >
+        {children}
+      </button>
+    )
+  }
+)

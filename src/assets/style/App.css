@@ -3,11 +3,11 @@
 @theme {
   --color-grey-600: #4b5563;
   --color-grey-700: #374151;
-  --color-grey-800: #1f2937;
+  --color-grey-800: #1f1f1f;
   --color-grey-900: #181818;
   --color-grey-950: #121212;
 
-  --color-primary: #78e75e;
+  --color-primary: #89d185;
 
   @keyframes glitch {
     0%, 20%, 45%, 50%, 70%, 95%, 100% { opacity: 0.5; }
@@ -63,4 +63,23 @@
   /* 텍스트 선택(드래그)이 게임 조작을 방해하지 않게 막고 싶다면 추가 */
   user-select: none;
   -webkit-user-select: none;
+}
+
+.text-button {
+  pointer-events: auto;
+  color: white; 
+  cursor: pointer;
+  text-align: left;
+  display: inline-flex;
+}
+.text-button.has-dot::before {
+  content: '- ';
+  display: inline;
+}
+.text-button:hover {
+  font-weight: 700;
+  text-decoration: underline;
+}
+.text-button * {
+  pointer-events: none;
 }

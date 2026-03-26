@@ -54,13 +54,18 @@ export function getItemLabel(item: Item) {
   finalLabel.push(label)
   finalLabel.push('\x1b[0m')
 
-  return finalLabel.join(' ').replace(/\s+/g, ' ').trim()
+  const result = finalLabel.join(' ').replace(/\s+/g, ' ').trim()
+
+  return {
+    origin: label,
+    label: result,
+  }
 }
 
 export function makeItemMessage(item: Item, player: Player, options?: { withPrice?: boolean; isSell?: boolean }) {
   const typeLabel = i18n.t(`item.type.${item.type}`, { defaultValue: i18n.t('item.type.default') })
-
-  let message = `[${typeLabel}] ${getItemLabel(item)}${item.quantity ? ` (x ${item.quantity})` : ''}`
+  const { label: itemLabel } = getItemLabel(item)
+  let message = `[${typeLabel}] ${itemLabel}${item.quantity ? ` (x ${item.quantity})` : ''}`
 
   if (options?.withPrice) {
     const displayPrice = options.isSell ? (item.sellPrice ?? 0) : item.price

@@ -31,7 +31,7 @@ export class ReactRenderer implements Renderer {
     const aliveNames = list
       .map(
         ({ hasQuest, name }) =>
-          `<button tabindex="-1" style="color: white; cursor: pointer;" data-command="대화" data-arg="${name}">${hasQuest ? '<span style="color: #ff8181">[!] </span>' : ''}${name}</button>`
+          `<button tabindex="-1" class="text-button" data-command="대화" data-arg="${name}">${hasQuest ? '<span style="color: #ff8181">[!] </span>' : ''}${name}</button>`
       )
       .join(', ')
 
@@ -95,5 +95,27 @@ export class ReactRenderer implements Renderer {
         resolve,
       })
     })
+  }
+
+  move(directions: string[]) {
+    const pathButtons = directions
+      .map((path) => `<button tabindex="-1" class="text-button" data-command="${path}">${path}</button>`)
+      .join(', ')
+
+    const message = `${i18n.t('paths_ahead')} ${pathButtons}`
+
+    this.store.addLog(message)
+  }
+
+  look(message: string, name: string, type: string) {
+    this.store.addLog(
+      `<button tabindex="-1" class="text-button" data-command="look" data-arg="${type} --${name}">${message}</button>`
+    )
+  }
+
+  pick(origin: string) {
+    this.store.addLog(
+      `<button tabindex="-1" class="text-button" data-command="pick" data-arg="${origin}">${i18n.t('commands.pick')}</button>`
+    )
   }
 }

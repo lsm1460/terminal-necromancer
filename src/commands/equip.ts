@@ -30,7 +30,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const targetItem = equipAbles.find((i) => i.id === itemId)
 
   if (targetItem) {
-    Terminal.log(i18n.t('commands.equip.success', { name: getItemLabel(targetItem) }))
+    Terminal.log(i18n.t('commands.equip.success', { name: getItemLabel(targetItem).label }))
     await player.equip(targetItem)
   }
 
