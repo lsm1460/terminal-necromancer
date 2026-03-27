@@ -55,7 +55,7 @@ export const App = () => {
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-grey-800">
       <motion.div
-        animate={{ x: isOpenConfigMenu ? '-30%' : 0, opacity: isOpenConfigMenu? 0 : 1 }}
+        animate={{ x: isOpenConfigMenu ? '-10%' : 0, opacity: isOpenConfigMenu? 0.5 : 1 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="absolute inset-0"
       >

@@ -47,7 +47,13 @@ export const ButtonList: React.FC<{
           key={cmd.name}
           onClick={() => handleCommand(cmd.name)}
           disabled={disabled}
-          className="w-full flex items-center justify-center xl:border-primary text-xs xl:border py-3 xl:py-2 xl:text-sm before:content-none! xl:text-primary! transition-colors active:bg-black/80"
+          className="
+          w-full flex items-center justify-center
+          text-xs no-underline! py-3 transition-colors 
+          active:bg-black/80
+          xl:border-primary  xl:border xl:py-2 xl:text-sm xl:text-primary! 
+          before:content-none!
+          "
           tabIndex={-1}
         >
           <div className="flex flex-col items-center justify-center leading-tight xl:flex-row xl:gap-1">

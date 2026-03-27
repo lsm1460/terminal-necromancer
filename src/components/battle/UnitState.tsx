@@ -31,7 +31,9 @@ export const UnitState: React.FC<{
 
       <div className="p-2 space-y-1">
         <div className="flex gap-2">
+          <div className='w-1/3'>
           <UnitVisual unit={unit} isEnemy={isEnemy} />
+          </div>
 
           <div className='flex-1'>
             <div className="flex justify-between text-xs font-mono text-slate-400">

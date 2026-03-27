@@ -44,17 +44,12 @@ export const UnitVisual: React.FC<{
 
   return (
     <div className="flex flex-col items-center relative">
-      <div className="w-10 h-14 xl:w-20 xl:h-28 border border-dashed border-cyan-700 flex items-center justify-center bg-black/80 group-hover:bg-grey-800 group-hover:border-cyan-400 group-focus:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
+      <div className="max-w-full aspect-square border border-dashed border-cyan-700 flex items-center justify-center bg-black/80">
         <img
           src={displayImage}
           alt={unit.name}
           className={`w-32 h-32 object-contain pixelated ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}
         />
-        <span
-          className={`absolute left-1/2 top-1 -translate-x-1/2 w-full text-[6px] xl:text-xs drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] text-center px-1 opacity-80`}
-        >
-          <AnsiHtml message={unit.name} />
-        </span>
       </div>
     </div>
   )

@@ -71,7 +71,7 @@ export const BattleStage: React.FC<{
 
           <div className="text-primary text-xs font-black italic opacity-50 select-none">- VS -</div>
 
-          <div className="flex flex-wrap flex-1 ">
+          <div className="flex flex-wrap flex-1 justify-end">
             {enemiesSide.map((unit, i) => (
               <CombatUnitComponent unit={unit} key={unit.id} isEnemy zIndex={i + 10} />
             ))}

@@ -71,6 +71,7 @@
   cursor: pointer;
   text-align: left;
   display: inline-flex;
+  text-decoration: underline;
 }
 .text-button.has-dot::before {
   content: '- ';
@@ -78,7 +79,6 @@
 }
 .text-button:hover {
   font-weight: 700;
-  text-decoration: underline;
 }
 .text-button * {
   pointer-events: none;
