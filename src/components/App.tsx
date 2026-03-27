@@ -9,17 +9,17 @@ import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { SaveSystem } from '~/systems/SaveSystem'
 
 // 하위 컴포넌트들
+import { motion } from 'framer-motion'
 import { assetManager } from '~/core/WebAssetManager'
 import { useShortcuts } from '~/hooks/useShortcuts'
 import { useSwipeShortcuts } from '~/hooks/useSwipeShortcuts'
 import { useGameStore } from '~/stores/useGameStore'
-import { GameScreen } from './GameScreen'
-import { motion } from 'framer-motion'
 import { ConfigScreen } from './ConfigScreen'
+import { GameScreen } from './GameScreen'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
-  const saveSystemRef = useRef(new SaveSystem(assets.state))
+  const saveSystemRef = useRef(new SaveSystem())
 
   const isOpenConfigMenu = useGameStore((state) => state.isOpenConfigMenu)
 

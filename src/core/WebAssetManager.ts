@@ -1,10 +1,11 @@
 import throttle from 'lodash/throttle'
 import { assets, GameAssets } from '~/assets'
+import { loadExtraLocaleBundle } from '~/assets/locales'
 import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { SceneData, UnitSprites } from '~/types'
-import { Terminal } from './Terminal'
 import { delay } from '~/utils'
+import { Terminal } from './Terminal'
 
 interface AssetSource {
   id: string
@@ -116,6 +117,8 @@ export class WebAssetManager {
 
   public async loadInitialAssets(assets: GameAssets, locale: 'ko' | 'en'): Promise<void> {
     Terminal.log(`\x1b[36m[System] ${i18n.t('loading.resource')}\x1b[0m`)
+    await loadExtraLocaleBundle(locale)
+    
     await this.loadWithProgress(this.commonManifest.images, this.commonManifest.audios)
 
     await delay(500)

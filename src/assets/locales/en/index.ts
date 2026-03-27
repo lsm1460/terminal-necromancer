@@ -14,13 +14,11 @@ import elevator from './elevator.json'
 import events from './events.json'
 import first_boss from './first_boss.json'
 import flint from './flint.json'
-import init from './init.json'
 import item from './item.json'
 import jax_seeker from './jax_seeker.json'
 import julian from './julian.json'
 import kael from './kael.json'
 import kane_leader from './kane_leader.json'
-import map from './map.json'
 import marco from './marco.json'
 import maya_tech from './maya_tech.json'
 import minion from './minion.json'
@@ -34,14 +32,10 @@ import skill from './skill.json'
 import subspace from './subspace.json'
 import third_boss from './third_boss.json'
 import vending_machine from './vending_machine.json'
-import web from './web.json'
 
 const en = {
-  ...init,
-  ...map,
   item,
   affix,
-  web,
   broadcast,
   npc: {
     ...npc,

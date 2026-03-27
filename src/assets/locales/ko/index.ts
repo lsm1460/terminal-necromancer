@@ -37,11 +37,8 @@ import vending_machine from './vending_machine.json'
 import web from './web.json'
 
 const ko = {
-  ...init,
-  ...map,
   item,
   affix,
-  web,
   broadcast,
   npc: {
     ...npc,

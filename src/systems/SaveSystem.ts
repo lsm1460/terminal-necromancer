@@ -20,17 +20,13 @@ export type SaveData = {
 
 export class SaveSystem {
   private isWeb = typeof window !== 'undefined'
-  private defaultData: any
   private filePath: string = ''
 
   /**
    * @param config - CLI 환경에서는 파일 경로(string), 웹 환경에서는 기본 데이터 객체(any)를 전달받습니다.
    */
-  constructor(config: string | any) {
-    if (this.isWeb) {
-      // 웹: 전달받은 객체를 기본값으로 저장
-      this.defaultData = config
-    } else {
+  constructor(config?: string) {
+    if (!this.isWeb && config) {
       this.filePath = config
     }
   }

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
-import { AnsiHtml } from '../Ansi'
 
 export const UnitVisual: React.FC<{
   unit: CombatUnit

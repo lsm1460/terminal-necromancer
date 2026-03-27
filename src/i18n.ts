@@ -1,17 +1,17 @@
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
-import { resources } from './assets/locales'
+import { initialResources } from './assets/locales'
 
 i18n
-  .use(LanguageDetector) // 브라우저 언어 자동 감지
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources,
-    lng: 'ko', // 기본 언어 설정
+    resources: initialResources, // 초기화 시점에는 가벼운 데이터만 사용
+    lng: 'ko',
     fallbackLng: 'ko',
     interpolation: {
-      escapeValue: false, // React는 이미 XSS 방지를 하므로 false
+      escapeValue: false,
     },
   })
 

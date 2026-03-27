@@ -11,4 +11,16 @@ export default defineConfig({
       '~': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // node_modules에 있는 라이브러리를 별도의 vendor 청크로 분리
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
 })
