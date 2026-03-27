@@ -65,7 +65,7 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
   }
 
   return (
-    <div className="flex items-center gap-1 p-2 xl:p-4 border-t border-primary">
+    <div className="flex items-center gap-1 p-2 xl:p-4 border-t border-primary/30">
       <ThemedButton.round className="xl:hidden" onClick={toggleButtonMenu}>
         <div
           className={`

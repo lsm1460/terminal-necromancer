@@ -35,7 +35,7 @@ export const GameScreen: React.FC<{
 
       <div className="[grid-area:input]">{isGameOn && <GameInput engine={engine} />}</div>
 
-      <div className="[grid-area:buttons] xl:[grid-area:side] flex flex-col relative xl:border-l border-primary">
+      <div className="[grid-area:buttons] xl:[grid-area:side] flex flex-col relative xl:border-l border-primary/30">
         {isGameOn && <ButtonList engine={engine} />}
       </div>
     </div>

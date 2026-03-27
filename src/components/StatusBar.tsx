@@ -26,7 +26,7 @@ export const StatusBar: React.FC<{
   }, [engine, logs])
 
   return (
-    <div className="h-10 px-2.5 border-primary border-b font-bold text-xs flex items-center">
+    <div className="h-10 px-2.5 border-primary/30 border-b font-bold text-xs flex items-center">
       {status ? (
         <>
           <p className="flex gap-5">
