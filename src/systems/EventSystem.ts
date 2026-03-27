@@ -31,7 +31,7 @@ export class EventSystem {
     }
 
     if (tile.event.startsWith('monster-')) {
-      await this.monsterEvent.handle(tile, player, context)
+      await this.monsterEvent.handle(tile, context)
     }
 
     tile.isSeen = true
