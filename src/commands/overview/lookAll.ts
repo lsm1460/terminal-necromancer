@@ -1,0 +1,83 @@
+import { Terminal } from '~/core/Terminal'
+import { Player } from '~/core/player/Player'
+import i18n from '~/i18n'
+import { Drop, GameContext, Monster, NPC } from '~/types'
+import { lookCorpse } from './corpse'
+import { lookBattleTarget } from './entity'
+import { lookItem } from './item'
+import { getTileFromDirection, lookPath } from './path'
+
+export const lookAll = async (
+  player: Player,
+  context: GameContext,
+  items: Drop[],
+  monsters?: Monster[]
+): Promise<void> => {
+  const { x, y } = player.pos
+  const { map, npcs, world } = context
+  const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
+  const minions = player.minions || []
+  const tile = map.getTile(x, y)
+
+  const aliveNPCs = (tile.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as NPC[]
+  const corpse = world.getCorpsesAt(x, y)
+
+  const directions = ['up', 'down', 'left', 'right']
+
+  const accessiblePaths = directions
+    .map((direction) => {
+      const tile = getTileFromDirection(player, map, direction)
+      if (!tile) {
+        return null
+      }
+
+      return {
+        direction,
+        label: i18n.t(direction),
+        tile,
+      }
+    })
+    .filter((result): result is NonNullable<typeof result> => Boolean(result && result.tile))
+
+  const categoryChoices = [
+    ...(accessiblePaths.length ? [{ name: 'PATH', message: i18n.t('commands.look.category.path') }] : []),
+    ...(aliveNPCs.length ? [{ name: 'NPC', message: i18n.t('commands.look.category.npc') }] : []),
+    ...(corpse.length ? [{ name: 'CORPSE', message: i18n.t('commands.look.category.corpse') }] : []),
+    ...(aliveMonsters.length ? [{ name: 'MONSTER', message: i18n.t('commands.look.category.monster') }] : []),
+    ...(minions.length ? [{ name: 'MINION', message: i18n.t('commands.look.category.minion') }] : []),
+    ...(items.length ? [{ name: 'ITEM', message: i18n.t('commands.look.category.item') }] : []),
+    { name: 'cancel', message: i18n.t('cancel') },
+  ]
+
+  // 1. 카테고리 선택
+  const category = await Terminal.select(i18n.t('commands.look.select_prompt'), categoryChoices)
+
+  if (category === 'cancel') return
+
+  let targetId: string
+  switch (category) {
+    case 'MONSTER':
+      targetId = await lookBattleTarget(aliveMonsters, context)
+      break
+    case 'MINION':
+      targetId = await lookBattleTarget(minions, context)
+      break
+    case 'NPC':
+      targetId = await lookBattleTarget(aliveNPCs, context)
+      break
+    case 'ITEM':
+      targetId = await lookItem(items, player)
+      break
+    case 'PATH':
+      targetId = await lookPath(accessiblePaths)
+      break
+    case 'CORPSE':
+      targetId = await lookCorpse(corpse)
+      break
+    default:
+      targetId = 'back'
+      break
+  }
+
+  if (targetId === 'back') return await lookAll(player, context, items, monsters)
+}
