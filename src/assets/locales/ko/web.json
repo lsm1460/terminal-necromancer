@@ -4,5 +4,12 @@
 
   "corpses_count": "사용 가능한 시체 수: {{count}}",
   "remaining_turns": "[{{name}}: {{duration}}턴 남음]",
-  "confirm_selection": "확인"
+  "confirm_selection": "확인",
+
+  "config": {
+    "move": {
+      "label": "이동 전 미리보기",
+      "description": "버튼으로 타일을 이동하기 전, 위협이 있다면 해당 칸의 정보를 먼저 확인합니다."
+    }
+  }
 }

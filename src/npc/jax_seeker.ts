@@ -97,7 +97,7 @@ async function handleJoin(player: Player, npc: NPC, context: GameContext) {
 async function handleEnter(player: Player, context: GameContext) {
   const { map } = context
   Terminal.log(i18n.t('npc.jax_seeker.enter.log'))
-  await map.changeScene(MAP_IDS.B3_5_RESISTANCE_BASE, player)
+  await map.changeScene(MAP_IDS.B3_5_RESISTANCE_BASE, player, context)
 }
 
 function getActiveQuest(context: GameContext) {

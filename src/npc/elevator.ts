@@ -2,7 +2,6 @@ import { MAP_IDS, MapId } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
-import { printTileStatus } from '~/statusPrinter'
 import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
 
@@ -24,7 +23,7 @@ const ElevatorHandler: NPCHandler = {
 }
 
 async function handleElevate(player: Player, context: GameContext) {
-  const { map, events, world, broadcast } = context
+  const { map, events, world } = context
   const completed = events.getCompleted()
   const currentSceneId = map.currentSceneId
 
@@ -77,17 +76,9 @@ async function handleElevate(player: Player, context: GameContext) {
     Terminal.log(i18n.t('npc.elevator.status.working'))
 
     world.clearFloor()
-    await map.changeScene(sceneId as MapId, player)
+    await map.changeScene(sceneId as MapId, player, context)
 
     Terminal.log(i18n.t('npc.elevator.status.arrival', { location: i18n.t(`scene.${targetMapData.id}`) }))
-
-    const tile = map.getTile(player.x, player.y)
-    tile.isSeen = true
-
-    await events.handle(tile, player, context)
-    broadcast.play()
-
-    printTileStatus(player, context)
     return true
   } else {
     console.error(i18n.t('npc.elevator.menu.error', { sceneId }))

@@ -94,8 +94,6 @@ async function startTalkSession(npc: NPC, player: Player, context: GameContext) 
       if (action === 'exit') {
         const farewell = NPCManager.getNpcScripts(npc, 'farewell')
         Terminal.log(`\n[${npc.name}]: "${farewell}"`)
-
-        printDirections(player, context)
         break
       }
 

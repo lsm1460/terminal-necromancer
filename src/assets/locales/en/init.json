@@ -9,6 +9,7 @@
   "enter_new_area": "📍 Entering new area : ",
   "input_command": "Input command... (Command List: Help): ",
   "press_enter": " [Press Enter to continue]",
+  "confirm_move_to_tile": "Do you want to move toward {{direction}}?",
   "looking": {
     "around_one": "Detected Entity: ",
     "around_other": "Detected Entities: "

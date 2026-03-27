@@ -5,6 +5,21 @@ import { AnsiHtml } from './Ansi'
 import { DecisionBox } from './DecisionBox'
 import { COMMAND_GROUPS, COMMAND_KEYS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
+import { getTileFromDirection, printPath } from '~/commands'
+import i18n from '~/i18n'
+
+const DIRECTION_MAP: Record<string, string> = {}
+
+Object.entries({
+  up: COMMAND_GROUPS[COMMAND_KEYS.UP],
+  down: COMMAND_GROUPS[COMMAND_KEYS.DOWN],
+  left: COMMAND_GROUPS[COMMAND_KEYS.LEFT],
+  right: COMMAND_GROUPS[COMMAND_KEYS.RIGHT],
+}).forEach(([direction, commands]) => {
+  commands.forEach((cmd) => {
+    DIRECTION_MAP[cmd] = direction
+  })
+})
 
 export const LogWindow: React.FC<{
   engine: React.RefObject<GameEngine | null>
@@ -22,12 +37,67 @@ export const LogWindow: React.FC<{
       }
     }
 
-    scrollToBottom('smooth')
+    scrollToBottom()
 
-    const timeoutId = setTimeout(scrollToBottom, 310)
+    const timeoutId = setTimeout(scrollToBottom, 100)
 
     return () => clearTimeout(timeoutId)
   }, [logs, uiState, isOpenButtonMenu])
+
+  const handleLogCommand = async (event: any) => {
+    if (!engine.current) return
+
+    let { command, arg } = event.target.dataset
+    if (!command) return
+
+    if (arg) {
+      command += ` --${arg}`
+    }
+
+    const canProceed = await checkDirectionAndConfirm(command)
+
+    if (!canProceed) {
+      return
+    }
+
+    await processCommand(command)
+  }
+
+  const checkDirectionAndConfirm = async (command: string): Promise<boolean> => {
+    const { shouldConfirm, tile } = shouldConfirmMovement(command)
+
+    if (!shouldConfirm || !tile) {
+      return true // 검증 대상이 아니면 그냥 진행
+    }
+
+    printPath(tile)
+    return await Terminal.confirm(i18n.t('confirm_move_to_tile', { direction: command }))
+  }
+
+  const shouldConfirmMovement = (command: string) => {
+    const engineState = engine.current
+    if (!engineState) return { shouldConfirm: false }
+
+    const { player, context } = engineState
+    const { config, map } = context
+
+    const directionKey = DIRECTION_MAP[command]
+    const isSearchFirst = config?.isSearchFirst ?? true
+
+    if (!directionKey || !isSearchFirst) {
+      return { shouldConfirm: false }
+    }
+
+    const tile = getTileFromDirection(player, map, directionKey)
+    if (!tile) return { shouldConfirm: false }
+
+    const hasDanger = !tile.isClear && tile.event && (tile.event.includes('boss') || tile.event.startsWith('monster'))
+
+    return {
+      shouldConfirm: !!hasDanger, // 위험 요소가 있을 때만 true
+      tile,
+    }
+  }
 
   const processCommand = async (command: string) =>
     engine.current?.processCommand(command, {
@@ -35,37 +105,6 @@ export const LogWindow: React.FC<{
         addLog(`> ${command}`)
       },
     })
-
-  const handleLogCommand = async (event: any) => {
-    let { command, arg } = event.target.dataset
-
-    if (!command) {
-      return
-    }
-
-    if (arg) {
-      command += ` --${arg}`
-    }
-
-    const directionList = [
-      ...COMMAND_GROUPS[COMMAND_KEYS.UP],
-      ...COMMAND_GROUPS[COMMAND_KEYS.DOWN],
-      ...COMMAND_GROUPS[COMMAND_KEYS.LEFT],
-      ...COMMAND_GROUPS[COMMAND_KEYS.RIGHT],
-    ]
-
-    if (directionList.includes(command)) {
-      const isSearchFirst = engine.current?.context.config?.isSearchFirst
-
-      const proceed = await Terminal.confirm('test')
-
-      if (!proceed) {
-        return
-      }
-    }
-
-    await processCommand(command)
-  }
 
   return (
     <div

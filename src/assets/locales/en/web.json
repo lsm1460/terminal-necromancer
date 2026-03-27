@@ -4,5 +4,12 @@
 
   "corpses_count": "Available Corpses: {{count}}",
   "remaining_turns": "[{{name}}: {{duration}} turns left]",
-  "confirm_selection": "CONFIRM"
+  "confirm_selection": "CONFIRM",
+
+  "config": {
+    "move": {
+      "label": "Move Preview",
+      "description": "Before moving to a tile via button, checks and displays information if a threat is detected."
+    }
+  }
 }

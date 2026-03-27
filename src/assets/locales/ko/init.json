@@ -9,6 +9,7 @@
   "enter_new_area": "📍 새로운 지역 진입: ",
   "input_command": "명령어를 입력하세요..(명령어 리스트: 도움말): ",
   "press_enter": " [Enter를 누르면 계속]",
+  "confirm_move_to_tile": "{{direction}} 방향으로 이동하시겠습니까?",
   "looking": {
     "around_one": "주변에 보이는 것: ",
     "around_other": "주변에 보이는 것들: "

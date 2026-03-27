@@ -10,11 +10,12 @@ import { NPCManager } from './core/NpcManager'
 import { Player } from './core/player/Player'
 import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
 import { World } from './core/World'
+import i18n from './i18n'
+import { printDirections } from './statusPrinter'
 import { DropSystem } from './systems/DropSystem'
 import { EventSystem } from './systems/EventSystem'
 import { SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext, Renderer } from './types'
-import i18n from './i18n'
 
 export class GameEngine {
   public player!: Player
@@ -105,6 +106,8 @@ export class GameEngine {
 
     const currentTile = map.getTile(this.player.pos.x, this.player.pos.y)
     await events.handle(currentTile, this.player, this.context)
+
+    printDirections(this.player, this.context)
   }
 
   public async processCommand(
