@@ -70,4 +70,16 @@ export class Terminal {
 
     this.renderer.pick(name, message)
   }
+
+  public static attack(message: string, prefix?: string) {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.attack(message, prefix)
+  }
+
+  public static skill(message: string, prefix?: string) {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.skill(message, prefix)
+  }
 }

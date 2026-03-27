@@ -105,4 +105,12 @@ export class CLIRenderer implements Renderer {
   pick(origin: string, message?: string) {
     message && console.log(message)
   }
+
+  attack(message: string, prefix?: string) {
+    console.log((prefix || '') + message)
+  }
+
+  skill(message: string, prefix?: string) {
+    console.log((prefix || '') + message)
+  }
 }

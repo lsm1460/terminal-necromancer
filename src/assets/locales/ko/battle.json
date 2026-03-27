@@ -3,7 +3,7 @@
 
   "monster_event": {
     "spawn": "👾 {{name}} 등장!",
-    "current_enemies": "⚠️  현재 적: {{names}}",
+    "current_enemies": "⚠️  현재 적: ",
     "preemptive_attack": "⚠️  적: {{name}}의 기습!"
   },
   "turn_start": "\n [ {{name}}의 차례 ] ",
@@ -83,6 +83,7 @@
     "burn": "화상",
     "freeze": "동결",
     "paralysis": "마비",
+    "stun": "기절",
     "bind": "구속",
     "bleed": "출혈",
     "expose": "노출",

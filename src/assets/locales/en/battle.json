@@ -3,7 +3,7 @@
 
   "monster_event": {
     "spawn": "👾 {{name}} appeared!",
-    "current_enemies": "⚠️  Current Enemies: {{names}}",
+    "current_enemies": "⚠️  Current Enemies: ",
     "preemptive_attack": "⚠️  Surprise attack by {{name}}!"
   },
   "turn_start": "\n [ {{name}}'s Turn ] ",
@@ -83,6 +83,7 @@
     "burn": "Burn",
     "freeze": "Freeze",
     "paralysis": "Paralysis",
+    "stun": "Stun",
     "bind": "Bind",
     "bleed": "Bleed",
     "expose": "Expose",

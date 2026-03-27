@@ -27,19 +27,6 @@ export class ReactRenderer implements Renderer {
     this.store.updateLastLog(message)
   }
 
-  say(list: { name: string; hasQuest: boolean }[]) {
-    const aliveNames = list
-      .map(
-        ({ hasQuest, name }) =>
-          `<button tabindex="-1" class="text-button" data-command="대화" data-arg="${name}">${hasQuest ? '<span style="color: #ff8181">[!] </span>' : ''}${name}</button>`
-      )
-      .join(', ')
-
-    const message = `${i18n.t('looking.around', { count: aliveNames.length })} ${aliveNames}`
-
-    this.store.addLog(message)
-  }
-
   clear(): void {
     this.store.clearLogs()
     this.store.setUI({ type: 'NONE', message: '', resolve: () => {} })
@@ -97,10 +84,27 @@ export class ReactRenderer implements Renderer {
     })
   }
 
-  move(directions: string[]) {
-    const pathButtons = directions
-      .map((path) => `<button tabindex="-1" class="text-button" data-command="${path}">${path}</button>`)
+  private createButton(label: string, command: string, arg?: string): string {
+    const dataArg = arg ? ` data-arg="${arg}"` : ''
+    return `<button tabindex="-1" class="text-button" data-command="${command}"${dataArg}>${label}</button>`
+  }
+
+  say(list: { name: string; hasQuest: boolean }[]) {
+    const aliveNames = list
+      .map(({ hasQuest, name }) => {
+        const label = `${hasQuest ? '<span style="color: #ff8181">[!] </span>' : ''}${name}`
+
+        return this.createButton(label, 'talk', name)
+      })
       .join(', ')
+
+    const message = `${i18n.t('looking.around', { count: aliveNames.length })} ${aliveNames}`
+
+    this.store.addLog(message)
+  }
+
+  move(directions: string[]) {
+    const pathButtons = directions.map((path) => this.createButton(path, path)).join(', ')
 
     const message = `${i18n.t('paths_ahead')} ${pathButtons}`
 
@@ -108,14 +112,18 @@ export class ReactRenderer implements Renderer {
   }
 
   look(message: string, name: string, type: string) {
-    this.store.addLog(
-      `<button tabindex="-1" class="text-button" data-command="look" data-arg="${type} --${name}">${message}</button>`
-    )
+    this.store.addLog(this.createButton(message, 'look', `${type} --${name}`))
   }
 
   pick(origin: string, message?: string) {
-    this.store.addLog(
-      `<button tabindex="-1" class="text-button" data-command="pick" data-arg="${origin}">${message || i18n.t('commands.pick')}</button>`
-    )
+    this.store.addLog(this.createButton(message || i18n.t('commands.pick'), 'pick', origin))
+  }
+
+  attack(message: string, prefix?: string) {
+    this.store.addLog((prefix || '') + this.createButton(message, 'attack'))
+  }
+
+  skill(message: string, prefix?: string) {
+    this.store.addLog((prefix || '') + this.createButton(message, 'skill'))
   }
 }
