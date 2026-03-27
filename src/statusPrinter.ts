@@ -4,6 +4,7 @@ import { GameContext, NPC } from './types'
 import { union } from 'lodash'
 import { QuestManager } from './core/QuestManager'
 import { Terminal } from './core/Terminal'
+import { World } from './core/World'
 import i18n from './i18n'
 import { getItemLabel } from './utils'
 
@@ -22,7 +23,7 @@ export function printDirections(player: Player, context: GameContext) {
 }
 
 export function printTileStatus(player: Player, context: GameContext) {
-  const { map, npcs, world } = context
+  const { map, npcs } = context
   const { x, y } = player.pos
   const tile = map.getTile(x, y)
 
@@ -33,7 +34,6 @@ export function printTileStatus(player: Player, context: GameContext) {
     .filter((npc): npc is NPC => npc !== null)
 
   const alive = npcList.filter((npc) => npc.isAlive)
-  const corpses = world.getCorpsesAt(x, y)
 
   if (alive.length > 0) {
     const list = alive.map((_npc) => {
@@ -48,13 +48,20 @@ export function printTileStatus(player: Player, context: GameContext) {
     Terminal.say(list)
   }
 
+  printCorpses(player, context.world)
+
+  printLootStatus(player, context)
+}
+
+export function printCorpses(player: Player, world: World) {
+  const { x, y } = player.pos
+  const corpses = world.getCorpsesAt(x, y)
+
   if (corpses.length > 0) {
     const deadNames = corpses.map((_corpse) => _corpse.name + i18n.t('corpses')).join(', ')
 
-    Terminal.log(i18n.t('local_corpses') + deadNames)
+    Terminal.skill(deadNames, i18n.t('local_corpses'))
   }
-
-  printLootStatus(player, context)
 }
 
 export function printLootStatus(player: Player, { world, map }: GameContext) {
@@ -64,7 +71,13 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
   const bag = world.getLootBagAt(map.currentSceneId, tile.id)
   if (bag) Terminal.pick('lootBag', `\n \x1b[31m[!]\x1b[0m ${i18n.t('found_soul')}`)
 
-  const drops = world.getDropsAt(x, y)
+  printDrops(player, world)
+}
+
+export function printDrops(player: Player, world: World) {
+  const { x, y } = player.pos
+
+   const drops = world.getDropsAt(x, y)
   if (drops?.length) {
     Terminal.log(`\n${i18n.t('local_drops')}`)
     drops.forEach((d) => {

@@ -1,4 +1,5 @@
 import i18n from '~/i18n'
+import { printCorpses, printDrops } from '~/statusPrinter'
 import { BattleTarget, GameContext } from '~/types'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
@@ -128,7 +129,12 @@ export class Battle implements BattleManager {
     })
 
     const result = await engine.start()
-    this.rewards.handleBattleEnd(result)
+    this.rewards.handleBattleEnd(result, {
+      onVictory: () => {
+        printCorpses(this.player, context.world)
+        printDrops(this.player, context.world)
+      },
+    })
     this.units.clear()
     this.currentContext = null
 

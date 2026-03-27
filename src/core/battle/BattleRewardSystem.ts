@@ -61,11 +61,12 @@ export class BattleRewardSystem {
     }
   }
 
-  handleBattleEnd(result: BattleResult) {
+  handleBattleEnd(result: BattleResult, callbacks?: { onVictory?: () => void }) {
     if (result.isEscaped) return
 
     if (result.isVictory) {
       Terminal.log(i18n.t('battle.reward.victory'))
+      callbacks?.onVictory?.()
     } else {
       Terminal.log(i18n.t('battle.reward.defeat'))
       this.player?.onDeath && this.player.onDeath()
