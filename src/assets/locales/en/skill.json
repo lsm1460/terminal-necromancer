@@ -171,6 +171,7 @@
     },
     "debuff": {
       "paralysis": "\n [!] {{name}} is paralyzed and cannot move!",
+      "stun": "\n [!] {{name}} is stunned and cannot move!",
       "bind": "\n [!] {{name}} is bound and cannot move!",
       "bleed": "\n [!] {{name}} has sustained a deep wound and begins to bleed!",
       "burn": "\n [!] {{name}}'s skin is scorched by the flames.",
@@ -200,6 +201,10 @@
     "lightning_storm": {
       "name": "Lightning Storm",
       "description": "Traps all enemies within a torrential storm and paralyzes them."
+    },
+    "shield_bash": {
+      "name": "Shield Bash",
+      "description": "Slams the enemy with a heavy shield, dealing damage and having a chance to stun the target."
     },
     "fire_breath": {
       "name": "Fire Breath",

@@ -41,7 +41,7 @@
     "buff": {
       "id": "paralysis",
       "type": "bind",
-      "duration": 2
+      "duration": 3
     }
   },
   "lightning_storm": {
@@ -55,7 +55,21 @@
     "buff": {
       "id": "paralysis",
       "type": "bind",
-      "duration": 1
+      "duration": 2
+    }
+  },
+  "shield_bash": {
+    "id": "shield_bash",
+    "name": "방패 밀치기",
+    "attackType": "melee",
+    "description": "방패로 밀쳐내어 상대방을 잠시 기절시킵니다.",
+    "chance": 0.4,
+    "power": 0.8,
+    "targetType": "ENEMY_SINGLE",
+    "buff": {
+      "id": "stun",
+      "type": "bind",
+      "duration": 2
     }
   },
   "fire_breath": {
