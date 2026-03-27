@@ -113,9 +113,9 @@ export class ReactRenderer implements Renderer {
     )
   }
 
-  pick(origin: string) {
+  pick(origin: string, message?: string) {
     this.store.addLog(
-      `<button tabindex="-1" class="text-button" data-command="pick" data-arg="${origin}">${i18n.t('commands.pick')}</button>`
+      `<button tabindex="-1" class="text-button" data-command="pick" data-arg="${origin}">${message || i18n.t('commands.pick')}</button>`
     )
   }
 }

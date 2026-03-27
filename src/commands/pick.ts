@@ -20,6 +20,12 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   let drop: Drop | undefined
 
   if (arg) {
+    if (arg === 'lootBag' && lootBag) {
+      handleLootBagPick(player, lootBag, context)
+
+      return false
+    }
+    
     drop = drops.find((d) => getItemLabel(d).origin === arg)
 
     if (!drop) {
@@ -33,6 +39,8 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
 
     if (selectionId === 'lootBag' && lootBag) {
       handleLootBagPick(player, lootBag, context)
+
+      return false
     }
 
     drop = drops.find((d) => d.id === selectionId)

@@ -205,7 +205,7 @@ export interface Renderer {
   ): Promise<string[]>
   move(directions: string[]): void
   look(message: string, name: string, type: string): void
-  pick(name: string): void
+  pick(name: string, message?: string): void
 }
 
 export interface GameContext {

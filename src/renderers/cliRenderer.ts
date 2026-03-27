@@ -102,5 +102,7 @@ export class CLIRenderer implements Renderer {
     console.log(message)
   }
 
-  pick() {/** 표기 없음. 단순 등록 */}
+  pick(origin: string, message?: string) {
+    message && console.log(message)
+  }
 }

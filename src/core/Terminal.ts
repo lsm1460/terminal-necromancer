@@ -65,9 +65,9 @@ export class Terminal {
     this.renderer.look(message, name, type)
   }
 
-  public static pick(name: string) {
+  public static pick(name: string, message?: string) {
     if (!this.renderer) throw new Error('Renderer not initialized')
 
-    this.renderer.pick(name)
+    this.renderer.pick(name, message)
   }
 }
