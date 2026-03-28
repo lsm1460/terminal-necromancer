@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
 
@@ -78,9 +78,22 @@ export const UnitIcon: React.FC<{
     }
   }, [currentAction, controls, isEnemy])
 
+  const displayImage = useMemo(() => {
+    const basePath = '/images'
+
+    // 액션 타입별 이미지 매핑
+    const ACTION_IMAGES: Record<string, string> = {
+      HIT: `${basePath}/player_icon_hit.png`,
+      // CRITICAL: `${basePath}/player_icon_crit.png`, // 향후 확장 용이
+    }
+
+    // 현재 액션에 맞는 이미지가 있으면 반환, 없으면 기본 아이콘 반환
+    return (currentAction && ACTION_IMAGES[currentAction.type]) || `${basePath}/player_icon.png`
+  }, [currentAction])
+
   return (
     <motion.span animate={controls} className="flex flex-col items-center relative">
-      {isEnemy? 'M' : 'P'}
+      {isEnemy ? 'M' : <img src={displayImage} className="w-3.5 aspect-square" />}
     </motion.span>
   )
 }

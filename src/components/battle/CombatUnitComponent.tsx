@@ -43,7 +43,8 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, i
       <div
         className=" transition-transform duration-200"
         style={{
-          transform: isFocus ? 'scale(1.1)' : 'scale(1)',
+          transform: isFocus ? 'scale(1.5)' : 'scale(1)',
+          opacity: isFocus ? 1 : 0.8,
         }}
       >
         <UnitIcon unit={unit} isEnemy={isEnemy} />

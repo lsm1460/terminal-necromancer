@@ -20,7 +20,7 @@ export class WebAssetManager {
   private readonly commonManifest = {
     images: [
       //icon
-      { id: 'player_icon_idle', src: '/images/player_icon_idle.png' },
+      { id: 'player_icon_idle', src: '/images/player_icon.png' },
       { id: 'player_icon_hit', src: '/images/player_icon_hit.png' },
       //player
       { id: 'player_idle_0', src: '/images/player/player_idle_0.png' },

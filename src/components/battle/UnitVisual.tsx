@@ -21,7 +21,7 @@ export const UnitVisual: React.FC<{
 
     if (!s) {
       const type = currentAction?.type?.toLowerCase() || 'idle'
-      return `/src/assets/default_${type}.png`
+      return `/images/default_${type}.png`
     }
 
     if (currentAction) {
@@ -39,7 +39,6 @@ export const UnitVisual: React.FC<{
 
     return primaryIdle?.src
   }, [currentAction, idleFrame, unit])
-
 
   return (
     <div className="flex flex-col items-center relative">
