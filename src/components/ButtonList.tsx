@@ -7,8 +7,6 @@ import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
-const EXCLUDED_COMMANDS = [i18n.t('commands.map.label')]
-
 export const ButtonList: React.FC<{
   engine: React.RefObject<GameEngine | null>
 }> = ({ engine }) => {
@@ -19,8 +17,9 @@ export const ButtonList: React.FC<{
   const showShortcut = useShowShortcut()
 
   const commandList = useMemo(() => {
-    const commandsMap = getCommandMap()
+    const EXCLUDED_COMMANDS = [i18n.t('commands.map.label')]
 
+    const commandsMap = getCommandMap()
     return Object.entries(commandsMap)
       .filter(([_, name]) => !EXCLUDED_COMMANDS.includes(name))
       .map(([key, name]) => ({

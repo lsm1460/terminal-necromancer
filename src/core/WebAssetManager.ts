@@ -19,53 +19,42 @@ export class WebAssetManager {
 
   private readonly commonManifest = {
     images: [
+      //icon
+      { id: 'player_icon_idle', src: '/images/player_icon_idle.png' },
+      { id: 'player_icon_hit', src: '/images/player_icon_hit.png' },
       //player
       { id: 'player_idle_0', src: '/images/player/player_idle_0.png' },
       { id: 'player_idle_1', src: '/images/player/player_idle_1.png' },
       { id: 'player_attack', src: '/images/player/player_attack.png' },
-      { id: 'player_hit', src: '/images/player/player_hit.png' },
-      { id: 'player_die', src: '/images/player/player_die.png' },
       // skeleton
       { id: 'skeleton_idle_0', src: '/images/skeleton/skeleton_idle_0.png' },
       { id: 'skeleton_idle_1', src: '/images/skeleton/skeleton_idle_1.png' },
       { id: 'skeleton_attack', src: '/images/skeleton/skeleton_attack.png' },
-      { id: 'skeleton_hit', src: '/images/skeleton/skeleton_hit.png' },
-      { id: 'skeleton_die', src: '/images/skeleton/skeleton_die.png' },
 
       // skeleton_swordsman
       { id: 'skeleton_swordsman_idle_0', src: '/images/skeleton_swordsman/skeleton_swordsman_idle_0.png' },
       { id: 'skeleton_swordsman_idle_1', src: '/images/skeleton_swordsman/skeleton_swordsman_idle_1.png' },
       { id: 'skeleton_swordsman_attack', src: '/images/skeleton_swordsman/skeleton_swordsman_attack.png' },
-      { id: 'skeleton_swordsman_hit', src: '/images/skeleton_swordsman/skeleton_swordsman_hit.png' },
-      { id: 'skeleton_swordsman_die', src: '/images/skeleton_swordsman/skeleton_swordsman_die.png' },
 
       // skeleton_shield_bearer
       { id: 'skeleton_shield_bearer_idle_0', src: '/images/skeleton_shield_bearer/skeleton_shield_bearer_idle_0.png' },
       { id: 'skeleton_shield_bearer_idle_1', src: '/images/skeleton_shield_bearer/skeleton_shield_bearer_idle_1.png' },
       { id: 'skeleton_shield_bearer_attack', src: '/images/skeleton_shield_bearer/skeleton_shield_bearer_attack.png' },
-      { id: 'skeleton_shield_bearer_hit', src: '/images/skeleton_shield_bearer/skeleton_shield_bearer_hit.png' },
-      { id: 'skeleton_shield_bearer_die', src: '/images/skeleton_shield_bearer/skeleton_shield_bearer_die.png' },
 
       // skeleton_pyromancer
       { id: 'skeleton_pyromancer_idle_0', src: '/images/skeleton_pyromancer/skeleton_pyromancer_idle_0.png' },
       { id: 'skeleton_pyromancer_idle_1', src: '/images/skeleton_pyromancer/skeleton_pyromancer_idle_1.png' },
       { id: 'skeleton_pyromancer_attack', src: '/images/skeleton_pyromancer/skeleton_pyromancer_attack.png' },
-      { id: 'skeleton_pyromancer_hit', src: '/images/skeleton_pyromancer/skeleton_pyromancer_hit.png' },
-      { id: 'skeleton_pyromancer_die', src: '/images/skeleton_pyromancer/skeleton_pyromancer_die.png' },
 
       // skeleton_healer
       { id: 'skeleton_healer_idle_0', src: '/images/skeleton_healer/skeleton_healer_idle_0.png' },
       { id: 'skeleton_healer_idle_1', src: '/images/skeleton_healer/skeleton_healer_idle_1.png' },
       { id: 'skeleton_healer_attack', src: '/images/skeleton_healer/skeleton_healer_attack.png' },
-      { id: 'skeleton_healer_hit', src: '/images/skeleton_healer/skeleton_healer_hit.png' },
-      { id: 'skeleton_healer_die', src: '/images/skeleton_healer/skeleton_healer_die.png' },
 
       // 에셋이 없을 때를 대비한 기본 이미지
       { id: 'default_idle_0', src: '/images/default_idle_0.png' },
       { id: 'default_idle_1', src: '/images/default_idle_1.png' },
       { id: 'default_attack', src: '/images/default_attack.png' },
-      { id: 'default_hit', src: '/images/default_hit.png' },
-      { id: 'default_die', src: '/images/default_die.png' },
     ] as AssetSource[],
     audios: [
       { id: 'sfx_hit', src: '/audio/sfx/hit.wav' },
@@ -118,11 +107,11 @@ export class WebAssetManager {
   public async loadInitialAssets(assets: GameAssets, locale: 'ko' | 'en'): Promise<void> {
     Terminal.log(`\x1b[36m[System] ${i18n.t('loading.resource')}\x1b[0m`)
     await loadExtraLocaleBundle(locale)
-    
+
     await this.loadWithProgress(this.commonManifest.images, this.commonManifest.audios)
 
     await delay(500)
-    
+
     Terminal.log(`\x1b[32m[System] ${i18n.t('loading.success')}\x1b[0m\n`)
   }
 
