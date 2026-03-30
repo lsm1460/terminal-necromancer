@@ -2,9 +2,10 @@ import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
-import { Drop, Item } from '~/types'
-import { getItemLabel, getOriginId, makeItemMessage } from '~/utils'
+import { Drop } from '~/types'
+import { getOriginId } from '~/utils'
 import { selectTarget } from './utils'
+import { Item } from '~/core/item/Item'
 
 export const printItem = (item?: Item) => {
   if (!item) {
@@ -14,16 +15,16 @@ export const printItem = (item?: Item) => {
 
   const rarityKey = item.rarity || 'COMMON'
   const rarityText = i18n.t(`commands.look.item.rarity.${rarityKey}`)
-  const { label, origin } = getItemLabel(item)
+  const { name, origin } = item
 
   Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
-  Terminal.log(` ${rarityText} ${label} ${item.quantity ? `(x${item.quantity})` : ''}`)
+  Terminal.log(` ${rarityText} ${name} ${item.quantity ? `(x${item.quantity})` : ''}`)
   Terminal.log(`──────────────────────────────────────────────`)
 
   const stats: string[] = []
   if ('atk' in item) {
     stats.push(i18n.t('commands.look.item.stats.atk', { val: item.atk }))
-    stats.push(i18n.t('commands.look.item.stats.crit', { val: (item.crit * 100).toFixed(2) }))
+    stats.push(i18n.t('commands.look.item.stats.crit', { val: ((item.crit || 0) * 100).toFixed(2) }))
   }
   if ('def' in item) stats.push(i18n.t('commands.look.item.stats.def', { val: item.def }))
   if ('eva' in item && item.eva)
@@ -67,7 +68,7 @@ export const printItem = (item?: Item) => {
 
 export const lookItem = async (dropList: Drop[], player: Player) => {
   const items = _.chain(dropList)
-    .groupBy((item) => getItemLabel(item).origin)
+    .groupBy((item) => item.origin)
     .map((group, label) => ({
       label,
       qty: _.sumBy(group, (i) => i.quantity || 1),
@@ -77,7 +78,7 @@ export const lookItem = async (dropList: Drop[], player: Player) => {
 
   const subChoices = items.map((i) => ({
     name: i.label,
-    message: makeItemMessage(i.raw, player),
+    message: Item.makeItemMessage(i.raw, player),
   }))
 
   const selected = await selectTarget(subChoices)

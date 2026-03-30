@@ -1,21 +1,30 @@
 import _ from 'lodash'
 import { Corpse, Drop, LootBag } from '~/types'
 import { MapManager } from './MapManager'
+import { Player } from './player/Player'
+import { Item } from './item/Item'
 
 export class World {
   lootBags: LootBag | null = null
   drops: Drop[] = []
   corpses: Corpse[] = []
 
-  constructor(public map: MapManager) {}
+  constructor(
+    private player: Player,
+    public map: MapManager
+  ) {}
 
-  addDrop(drop: Drop) {
-    const existing = this.drops.find(_.matches({ id: drop.id, x: drop.x, y: drop.y }))
-    
-    if (existing && existing.quantity && drop.quantity) {
-      existing.quantity += drop.quantity
+  addDrop(drop: Drop, quantity = 1) {
+    const _dropItem = new Item({ ...drop.raw, quantity }) as Drop
+    const existing = this.drops.find(_.matches({ id: _dropItem.id, x: _dropItem.x, y: _dropItem.y }))
+
+    if (existing && existing.quantity && _dropItem.quantity) {
+      existing.quantity += _dropItem.quantity
     } else {
-      this.drops.push(drop)
+      _dropItem.x = this.player.x
+      _dropItem.y = this.player.y
+
+      this.drops.push(_dropItem)
     }
   }
 
@@ -23,7 +32,7 @@ export class World {
     return this.drops.filter(_.matches({ x, y }))
   }
 
-  removeDropById(dropId: string, pos: {x: number, y: number}): Drop | undefined {
+  removeDropById(dropId: string, pos: { x: number; y: number }): Drop | undefined {
     const idx = this.drops.findIndex(_.matches({ id: dropId, ...pos }))
     if (idx === -1) return undefined
 

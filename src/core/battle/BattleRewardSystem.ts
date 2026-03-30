@@ -1,6 +1,5 @@
 import i18n from '~/i18n'
 import { BattleTarget, Drop, GameContext, NPC } from '~/types'
-import { getItemLabel } from '~/utils'
 import { LootFactory } from '../LootFactory'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
@@ -41,13 +40,13 @@ export class BattleRewardSystem {
     Terminal.log(logMessage)
 
     drops.forEach((d) => {
-      world.addDrop({ ...d, x, y } as Drop)
+      world.addDrop(d as Drop)
       const quantityText = d.quantity !== undefined ? ` ${d.quantity}${i18n.t('battle.reward.item_unit')}` : ''
 
       Terminal.log(
         i18n.t('battle.reward.drop_item', {
           name: target.name,
-          label: getItemLabel(d).label,
+          label: d.name,
           quantity: quantityText,
         })
       )

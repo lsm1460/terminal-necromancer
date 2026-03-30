@@ -1,7 +1,7 @@
+import { Item } from '~/core/item/Item'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, ItemType } from '~/types'
-import { getItemLabel, makeItemMessage } from '~/utils'
 
 export const equipCommand: CommandFunction = async (player, args, context) => {
   const inventory = player.inventory
@@ -16,7 +16,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const choices = [
     ...equipAbles.map((item) => ({
       name: item.id,
-      message: makeItemMessage(item, player),
+      message: Item.makeItemMessage(item, player),
     })),
     { name: 'cancel', message: i18n.t('cancel') },
   ]
@@ -30,7 +30,7 @@ export const equipCommand: CommandFunction = async (player, args, context) => {
   const targetItem = equipAbles.find((i) => i.id === itemId)
 
   if (targetItem) {
-    Terminal.log(i18n.t('commands.equip.success', { name: getItemLabel(targetItem).label }))
+    Terminal.log(i18n.t('commands.equip.success', { name: targetItem.name }))
     await player.equip(targetItem)
   }
 

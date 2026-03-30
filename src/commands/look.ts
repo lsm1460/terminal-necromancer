@@ -1,6 +1,5 @@
 import { printStatus } from '~/statusPrinter'
 import { CommandFunction } from '~/types'
-import { getItemLabel } from '~/utils'
 import { lookAll, lookItem, printItem } from './overview'
 
 export const lookCommand: CommandFunction = async (player, args, context) => {
@@ -17,7 +16,7 @@ export const lookCommand: CommandFunction = async (player, args, context) => {
 
     return false
   } else if (type === 'item' && target) {
-    const targetItem = items.find((_item) => getItemLabel(_item).origin === target)
+    const targetItem = items.find((_item) => _item.origin === target)
     printItem(targetItem)
 
     return false

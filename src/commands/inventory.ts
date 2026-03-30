@@ -1,8 +1,8 @@
+import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { CommandFunction, ConsumableItem, Drop, Item, ItemType } from '~/types'
-import { getItemLabel, makeItemMessage } from '~/utils'
+import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (player, args, context) => {
@@ -22,7 +22,7 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
 
   const itemChoices = inventory.map((item) => ({
     name: item.id,
-    message: makeItemMessage(item, player),
+    message: Item.makeItemMessage(item, player),
   }))
 
   itemChoices.push({ name: 'cancel', message: i18n.t('cancel') })
@@ -38,9 +38,9 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
 }
 
 async function handleItemAction(item: Item, player: Player, args: any, context: any) {
-  const label = getItemLabel(item).label
+  const label = item.name
   const action = await Terminal.select(i18n.t('inventory.what_to_do', { label }), getAvailableActions(item))
-  
+
   switch (action) {
     case 'look':
       printItem(item)
@@ -82,8 +82,7 @@ function getAvailableActions(item: Item) {
  */
 function handleDropAction(item: Item, player: Player, context: any) {
   if (player.removeItem(item.id)) {
-    context.world.addDrop({ ...item, quantity: 1, x: player.x, y: player.y } as Drop)
-    const label = getItemLabel(item).label
-    Terminal.log(`📦 ${i18n.t('inventory.action_drop_done', { label, count: 1 })}`)
+    context.world.addDrop(item as Drop)
+    Terminal.log(`📦 ${i18n.t('inventory.action_drop_done', { label: item.name, count: 1 })}`)
   }
 }

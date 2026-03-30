@@ -4,7 +4,6 @@ import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { ItemType, NpcSkill } from '~/types'
-import { getItemLabel } from '~/utils'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 
@@ -80,7 +79,7 @@ export const SpecialSkillLogics: Record<
             HIGHLIGHT(
               i18n.t('skill.special.item_steal.item', {
                 attacker: attacker.name,
-                item: getItemLabel(targetItem).label,
+                item: targetItem.name,
               })
             )
           )
@@ -96,5 +95,4 @@ export const SpecialSkillLogics: Record<
 
     for (const target of targets) target.removeRandomDeBuff()
   },
-
 }

@@ -1,7 +1,7 @@
 import i18n from '~/i18n'
-import { ArmorItem, ConsumableItem, Item, ItemType, WeaponItem } from '~/types'
-import { getItemLabel } from '~/utils'
+import { ArmorItem, ConsumableItem, ItemType, WeaponItem } from '~/types'
 import { getAffixCaution } from '../affixes'
+import { Item } from '../item/Item'
 import { Terminal } from '../Terminal'
 import { Player } from './Player'
 
@@ -15,7 +15,7 @@ export class InventoryManager {
   ) {
     if (saved) {
       this.inventoryMax = saved.inventoryMax || 15
-      this.inventory = saved.inventory || []
+      this.inventory = (saved.inventory || []).map((item) => new Item(item))
     }
   }
 
@@ -84,7 +84,7 @@ export class InventoryManager {
     if (existing && existing.quantity && newItem.quantity) {
       existing.quantity += newItem.quantity
     } else {
-      this.inventory.push({ ...newItem })
+      this.inventory.push(newItem)
     }
   }
 
@@ -126,7 +126,7 @@ export class InventoryManager {
       const choices = [
         ...consumables.map((item) => ({
           name: item.id,
-          message: `${getItemLabel(item).label} (x${item.quantity || 1}) ${
+          message: `${item.name} (x${item.quantity || 1}) ${
             item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
           }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
         })),
@@ -144,7 +144,7 @@ export class InventoryManager {
       return false
     }
 
-    Terminal.log(i18n.t('inventory.use.using', { name: getItemLabel(targetItem).label }))
+    Terminal.log(i18n.t('inventory.use.using', { name: targetItem.name }))
 
     if (targetItem.hpHeal) {
       const recovered = this.player.recoverHp(targetItem.hpHeal)
@@ -178,7 +178,7 @@ export class InventoryManager {
 
   public toJSON() {
     return {
-      inventory: this.inventory,
+      inventory: this.inventory.map((item) => item.raw),
       inventoryMax: this.inventoryMax,
     }
   }

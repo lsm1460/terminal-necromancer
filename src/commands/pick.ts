@@ -1,8 +1,8 @@
+import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, Drop, GameContext, LootBag } from '~/types'
-import { getItemLabel, makeItemMessage } from '~/utils'
 
 export const pickCommand: CommandFunction = async (player, args, context) => {
   const { x, y } = player.pos
@@ -16,7 +16,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   if (!checkInventorySpace(availableSpace, player)) return false
 
   const [arg] = args
-  
+
   let drop: Drop | undefined
 
   if (arg) {
@@ -25,8 +25,8 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
 
       return false
     }
-    
-    drop = drops.find((d) => getItemLabel(d).origin === arg)
+
+    drop = drops.find((d) => d.origin === arg)
 
     if (!drop) {
       Terminal.log(i18n.t('item_not_found'))
@@ -85,7 +85,7 @@ const makeDropTargetOptions = (drops: Drop[], player: Player, lootBag?: LootBag)
         },
       ]
     : []),
-  ...drops.map((d) => ({ name: d.id, message: makeItemMessage(d, player) })),
+  ...drops.map((d) => ({ name: d.id, message: Item.makeItemMessage(d, player) })),
   { name: 'cancel', message: i18n.t('cancel') },
 ]
 
@@ -103,10 +103,10 @@ function handleItemPick(drop: Drop, player: Player, availableSpace: number, cont
   const pickQty = Math.min(totalDropQty, availableSpace)
   const remainQty = totalDropQty - pickQty
 
-  player.addItem({ ...drop, quantity: pickQty })
+  drop.quantity = pickQty
+  player.addItem(drop)
 
-  const label = getItemLabel(drop).label
-  Terminal.log(`\n✨ ${i18n.t('pick.obtained_msg', { label, count: pickQty })}`)
+  Terminal.log(`\n✨ ${i18n.t('pick.obtained_msg', { label: drop.name, count: pickQty })}`)
 
   if (remainQty > 0) {
     drop.quantity = remainQty

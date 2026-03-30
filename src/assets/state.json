@@ -2,19 +2,19 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
+    "x": 2,
     "y": 1,
     "_maxHp": 231,
     "hp": 231,
     "_maxMp": 50,
-    "mp": 27,
+    "mp": 50,
     "atk": 13,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1245,
-    "exp": 4315,
+    "gold": 1453,
+    "exp": 4799,
     "level": 6,
     "karma": 6,
     "_maxMemorize": 5,
@@ -135,7 +135,7 @@
       "attackType": "melee",
       "baseMaxHp": 90,
       "maxHp": 90,
-      "hp": 188,
+      "hp": 228,
       "baseAtk": 20,
       "atk": 20,
       "baseDef": 40,
@@ -182,36 +182,78 @@
     },
     "inventory": [
       {
-        "id": "nano_medical_kit",
+        "id": "mana_potion_small",
         "type": "consumable",
-        "hpHeal": 180,
-        "price": 600,
-        "sellPrice": 60,
+        "price": 45,
+        "sellPrice": 6,
         "quantity": 2,
-        "x": 1,
-        "y": 4
+        "mpHeal": 20
       },
       {
-        "id": "hard_steel_plate::lEpgf0dJ",
-        "type": "armor",
-        "defRange": [
-          18,
-          22
-        ],
-        "evaRange": [
-          -0.05,
-          0
-        ],
-        "price": 1900,
-        "sellPrice": 450,
+        "id": "nano_medical_kit",
+        "type": "consumable",
+        "price": 600,
+        "sellPrice": 60,
         "quantity": 1,
-        "def": 24,
+        "hpHeal": 180
+      },
+      {
+        "id": "potion_small",
+        "type": "consumable",
+        "price": 20,
+        "sellPrice": 5,
+        "quantity": 2,
+        "hpHeal": 20
+      },
+      {
+        "id": "leather_armor::dBz2uHfx",
+        "type": "armor",
+        "price": 400,
+        "sellPrice": 100,
+        "quantity": 1,
+        "def": 4,
         "eva": 0,
-        "rarity": "RARE",
+        "rarity": "COMMON",
         "perfPrefix": "",
-        "adjective": "seasoned",
-        "x": 2,
-        "y": 3
+        "adjective": ""
+      },
+      {
+        "id": "iron_sword::vpAOnzC5",
+        "type": "weapon",
+        "price": 500,
+        "sellPrice": 120,
+        "quantity": 1,
+        "atk": 2,
+        "crit": 0.04,
+        "attackType": "melee",
+        "rarity": "COMMON",
+        "perfPrefix": "worn",
+        "adjective": ""
+      },
+      {
+        "id": "leather_armor::HTto9eku",
+        "type": "armor",
+        "price": 400,
+        "sellPrice": 100,
+        "quantity": 1,
+        "def": 3,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      },
+      {
+        "id": "iron_sword::IkSJTA_c",
+        "type": "weapon",
+        "price": 500,
+        "sellPrice": 120,
+        "quantity": 1,
+        "atk": 2,
+        "crit": 0.05,
+        "attackType": "melee",
+        "rarity": "COMMON",
+        "perfPrefix": "worn",
+        "adjective": ""
       }
     ],
     "inventoryMax": 15,
@@ -297,32 +339,33 @@
     ],
     "upgradeLimit": 5,
     "equipped": {
+      "armor": {
+        "id": "phantom_cloth::VrR1Dici",
+        "type": "armor",
+        "price": 1750,
+        "sellPrice": 400,
+        "quantity": 1,
+        "def": 12,
+        "eva": 0.18,
+        "rarity": "RARE",
+        "perfPrefix": "",
+        "adjective": "superior",
+        "maxSkeleton": 2
+      },
       "weapon": {
         "id": "wraith_soul_staff::poQDc2Vu",
         "type": "weapon",
-        "attackType": "ranged",
-        "atkRange": [
-          8,
-          11
-        ],
-        "critRange": [
-          0.08,
-          0.15
-        ],
-        "maxSkeletonRange": [
-          1,
-          2
-        ],
-        "minRebornRarity": 1,
         "price": 2000,
         "sellPrice": 450,
         "quantity": 1,
         "atk": 16,
         "crit": 0.15,
-        "maxSkeleton": 2,
+        "attackType": "ranged",
         "rarity": "EPIC",
         "perfPrefix": "",
         "adjective": "mortal",
+        "minRebornRarity": 1,
+        "maxSkeleton": 2,
         "affix": {
           "id": "ELITE_SQUAD",
           "valueRange": [
@@ -330,40 +373,11 @@
             2
           ],
           "value": 2
-        },
-        "x": 0,
-        "y": 1
-      },
-      "armor": {
-        "id": "phantom_cloth::VrR1Dici",
-        "type": "armor",
-        "defRange": [
-          8,
-          12
-        ],
-        "evaRange": [
-          0.15,
-          0.25
-        ],
-        "maxSkeletonRange": [
-          1,
-          2
-        ],
-        "price": 1750,
-        "sellPrice": 400,
-        "quantity": 1,
-        "def": 12,
-        "eva": 0.18,
-        "maxSkeleton": 2,
-        "rarity": "RARE",
-        "perfPrefix": "",
-        "adjective": "superior",
-        "x": 1,
-        "y": 0
+        }
       }
     }
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -534,11 +548,14 @@
       "resistance": -11
     },
     "factionContribution": {
-      "untouchable": 40,
+      "untouchable": 90,
       "resistance": 332
     }
   },
   "drop": null,
+  "config": {
+    "locale": "ko"
+  },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
@@ -566,8 +583,5 @@
     "third_boss_resistance",
     "vips_lost",
     "talk_death_4"
-  ],
-  "config": {
-    "locale": "ko"
-  }
+  ]
 }

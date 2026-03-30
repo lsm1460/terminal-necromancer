@@ -1,8 +1,8 @@
 import { Terminal } from '~/core/Terminal'
+import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
-import { getItemLabel, makeItemMessage } from '~/utils'
 
 export interface NPCHandler {
   getChoices(player: Player, npc: NPC, context: GameContext): { name: string; message: string }[]
@@ -76,8 +76,8 @@ export async function handleBuy(
 
     return {
       name: item.id,
-      message: makeItemMessage(item, player, { withPrice: true }),
-      label: getItemLabel(item).label,
+      message: Item.makeItemMessage(item, player, { withPrice: true }),
+      label: item.name,
       price: finalPrice,
     }
   })
@@ -150,8 +150,8 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
       return {
         name: `${index}`,
         id: item.id,
-        message: makeItemMessage(item, player, { withPrice: true, isSell: true }),
-        label: getItemLabel(item).label,
+        message: Item.makeItemMessage(item, player, { withPrice: true, isSell: true }),
+        label: item.name,
         price: finalSellPrice,
         originalIndex: index,
       }

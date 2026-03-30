@@ -1,7 +1,7 @@
 import i18n from '~/i18n'
 import { GameContext, ItemType } from '~/types'
 import { handleTalk, NPCHandler } from './NPCHandler'
-import { getItemLabel, speak } from '~/utils'
+import { speak } from '~/utils'
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 
@@ -70,7 +70,7 @@ async function handleUpgrade(player: Player) {
   }
 
   const equipAbles = player.inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type))
-  const choices = equipAbles.map((item) => ({ name: item.id, message: getItemLabel(item).label }))
+  const choices = equipAbles.map((item) => ({ name: item.id, message: item.name }))
   choices.push({ name: 'cancel', message: i18n.t('cancel') })
   const selected = await Terminal.select(i18n.t('npc._knight.upgrade.select_title'), choices)
 

@@ -98,70 +98,38 @@ export enum ItemType {
   QUEST = 'quest',
 }
 
-type BaseItem = {
-  id: string
-  type: ItemType
-  description: string
-  quantity?: number
-  price: number
-  sellPrice: number
-  rarity?: ItemRarity
+import { Item as ItemClass } from './core/item/Item'
+export type Item = ItemClass
+export interface WeaponItem extends ItemClass {
+  type: ItemType.WEAPON
+  atk: number
+  crit: number
+  attackType: AttackType
+  minRebornRarity?: number
+  adjective?: string
+  perfPrefix?: string
 }
 
-// 일반 아이템 (재료 등)
-export type GenericItem = BaseItem & {
-  type: ItemType.ITEM
+export interface ArmorItem extends ItemClass {
+  type: ItemType.ARMOR
+  def: number
+  eva?: number
+  minRebornRarity?: number
+  adjective?: string
+  perfPrefix?: string
 }
 
-// 일반 아이템 (퀘스트용)
-export type QuestItem = BaseItem & {
-  type: ItemType.QUEST
-}
-
-type ItemOptions = {
-  hp?: number
-  mp?: number
-  maxSkeleton?: number
-  affix?: Affix
-}
-
-// 무기
-export type WeaponItem = BaseItem &
-  ItemOptions & {
-    type: ItemType.WEAPON
-    atk: number
-    crit: number
-    attackType: AttackType
-    minRebornRarity?: number
-    adjective?: string
-    perfPrefix?: string
-  }
-
-// 방어구
-export type ArmorItem = BaseItem &
-  ItemOptions & {
-    type: ItemType.ARMOR
-    def: number
-    eva?: number
-    minRebornRarity?: number
-    adjective?: string
-    perfPrefix?: string
-  }
-
-// 음식
-export type FoodItem = BaseItem & {
+export interface FoodItem extends ItemClass {
   type: ItemType.FOOD
   hpHeal: number
 }
 
 // 소비 아이템 (포션 등)
-export type ConsumableItem = BaseItem & {
+export interface ConsumableItem extends ItemClass {
   type: ItemType.CONSUMABLE
   hpHeal?: number
   mpHeal?: number
 }
-
-export type Item = GenericItem | WeaponItem | ArmorItem | FoodItem | ConsumableItem | QuestItem
 
 export type Drop = {
   x: number
@@ -173,7 +141,7 @@ export type Drop = {
   evaRange?: [number, number]
   minRarity?: ItemRarity
   maxRarity?: ItemRarity
-} & Item
+} & ItemClass
 
 export type Corpse = {
   x?: number
@@ -220,7 +188,7 @@ export interface GameContext {
   battle: Battle
   broadcast: Broadcast
   monster: MonsterFactory
-  config?: { 
+  config?: {
     locale?: 'ko' | 'en'
     isSearchFirst?: boolean
   }

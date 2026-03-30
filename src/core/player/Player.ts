@@ -6,13 +6,13 @@ import {
   ArmorItem,
   BattleTarget,
   ConsumableItem,
-  Item,
   LevelData,
   Skill,
   SKILL_IDS,
   SkillId,
   WeaponItem,
 } from '~/types'
+import { Item } from '../item/Item'
 import { InventoryManager } from './InventoryManager'
 import { MinionManager } from './MinionManager'
 import SkeletonWrapper from './SkeletonWrapper'
@@ -71,6 +71,7 @@ export class Player {
         upgradeLimit,
         golemUpgrade,
         knightUpgrade,
+        equipped,
         ...rest
       } = saved
       Object.assign(this, rest)
@@ -82,6 +83,14 @@ export class Player {
     this.levelTable = levelData
     this.inventoryManager = new InventoryManager(this, saved)
     this.minionManager = new MinionManager(this, saved)
+
+    if (saved?.equipped?.weapon) {
+      this.equipped.weapon = new Item(saved.equipped.weapon) as WeaponItem
+    }
+
+    if (saved?.equipped?.armor) {
+      this.equipped.armor = new Item(saved.equipped.armor) as ArmorItem
+    }
   }
 
   get inventory() {
@@ -97,10 +106,7 @@ export class Player {
   }
 
   get raw() {
-    const { levelTable, onDeath, inventoryManager, minionManager, equipped, ...rest } = this as any
-
-    delete equipped?.weapon?.label
-    delete equipped?.armor?.label
+    const { levelTable, onDeath, inventoryManager, minionManager, equipped, ...rest } = this
 
     const inventoryData = this.inventoryManager.toJSON()
     const minionData = this.minionManager.toJSON()
@@ -109,7 +115,10 @@ export class Player {
       ...rest,
       ...inventoryData,
       ...minionData,
-      equipped,
+      equipped: {
+        armor: equipped.armor ? equipped.armor.raw : null,
+        weapon: equipped.weapon ? equipped.weapon.raw : null,
+      },
     }
   }
 

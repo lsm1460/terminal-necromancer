@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { GameAssets } from './assets'
+import { loadExtraLocaleBundle } from './assets/locales'
 import { createCLI } from './cli'
 import { Terminal } from './core/Terminal'
 import { Title } from './core/Title'
@@ -44,6 +45,8 @@ i18n.changeLanguage(locale).then(() => {
       return
     }
 
+    await loadExtraLocaleBundle(locale)
+    
     await engine.init(playData)
     await engine.start()
 

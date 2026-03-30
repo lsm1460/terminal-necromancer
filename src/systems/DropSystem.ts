@@ -1,6 +1,7 @@
 import { ItemRarity } from '~/core/item/consts'
+import { Item } from '~/core/item/Item'
 import { ItemGenerator } from '~/core/item/ItemGenerator'
-import { Drop, Item } from '~/types'
+import { Drop } from '~/types'
 
 export interface DropEntry {
   itemId: string
@@ -57,13 +58,16 @@ export class DropSystem {
 
     const drops: Item[] = table.items
       .filter((entry) => Math.random() <= entry.chance)
-      .map((entry) => ({
-        ...this.items[entry.itemId],
-        quantity: entry.quantity ? this.randomRange(entry.quantity[0], entry.quantity[1]) : 1,
-        minRarity: entry.minRarity,
-        maxRarity: entry.maxRarity,
-      }))
-      .map((_item) => this.itemGenerator.createItem(_item))
+      .map((entry) => {
+        const baseItem = this.items[entry.itemId]
+        const dropData = {
+          ...baseItem,
+          quantity: entry.quantity ? this.randomRange(entry.quantity[0], entry.quantity[1]) : 1,
+          minRarity: entry.minRarity,
+          maxRarity: entry.maxRarity,
+        }
+        return this.itemGenerator.createItem(dropData as any)
+      })
 
     return { gold, drops }
   }

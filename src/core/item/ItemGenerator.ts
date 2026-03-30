@@ -1,7 +1,8 @@
-import { Affix, ArmorItem, Drop, ItemType, WeaponItem } from '~/types'
+import { Affix, Drop, ItemType } from '~/types'
 import { generateId } from '~/utils'
 import { getAffixList } from '../affixes'
 import { ItemRarity, RARITY_SETTINGS } from './consts'
+import { Item } from './Item'
 
 export class ItemGenerator {
   /** 1. 가중치 기반 등급 결정 (minRarity 고려) */
@@ -86,9 +87,9 @@ export class ItemGenerator {
   }
 
   /** 5. 메인 생성 로직 */
-  public createItem(baseItem: Drop) {
+  public createItem(baseItem: Drop): Item {
     if (![ItemType.WEAPON, ItemType.ARMOR].includes(baseItem.type)) {
-      return baseItem
+      return new Item(baseItem)
     }
 
     // [보정] baseItem에 지정된 최소 등급을 적용하여 굴림
@@ -100,7 +101,7 @@ export class ItemGenerator {
     let mainRange: [number, number] = [0, 0]
 
     // [스탯 결정] 무기 vs 방어구
-    if (baseItem.type === 'weapon') {
+    if (baseItem.type === ItemType.WEAPON) {
       mainRange = baseItem.atkRange || [0, 0]
       mainValue = this.finalizeStat(mainRange, true)
       finalStats = {
@@ -136,7 +137,7 @@ export class ItemGenerator {
       affix = _affix
     }
 
-    return {
+    return new Item({
       ...baseItem,
       ...finalStats,
       id: generateId(baseItem.id),
@@ -144,6 +145,6 @@ export class ItemGenerator {
       perfPrefix,
       adjective,
       affix,
-    } as WeaponItem | ArmorItem
+    })
   }
 }

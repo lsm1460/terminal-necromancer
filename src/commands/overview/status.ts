@@ -1,7 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, ItemType } from '~/types'
-import { getItemLabel } from '~/utils'
 
 export const statusCommand: CommandFunction = (player, args, context) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
@@ -30,7 +29,7 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   let weaponText = i18n.t('commands.look.status.equipment.none')
   if (equipped.weapon && equipped.weapon.type === ItemType.WEAPON) {
     weaponText = i18n.t('commands.look.status.equipment.bonus_atk', {
-      label: getItemLabel(equipped.weapon),
+      label: equipped.weapon.name,
       atk: equipped.weapon.atk,
     })
 
@@ -51,7 +50,7 @@ export const statusCommand: CommandFunction = (player, args, context) => {
   let armorText = i18n.t('commands.look.status.equipment.none')
   if (equipped.armor && equipped.armor.type === ItemType.ARMOR) {
     armorText = i18n.t('commands.look.status.equipment.bonus_def', {
-      label: getItemLabel(equipped.armor),
+      label: equipped.armor.name,
       def: equipped.armor.def,
     })
 

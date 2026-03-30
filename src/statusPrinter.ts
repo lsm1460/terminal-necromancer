@@ -6,7 +6,6 @@ import { QuestManager } from './core/QuestManager'
 import { Terminal } from './core/Terminal'
 import { World } from './core/World'
 import i18n from './i18n'
-import { getItemLabel } from './utils'
 
 export function printDirections(player: Player, context: GameContext) {
   const { map } = context
@@ -77,14 +76,14 @@ export function printLootStatus(player: Player, { world, map }: GameContext) {
 export function printDrops(player: Player, world: World) {
   const { x, y } = player.pos
 
-   const drops = world.getDropsAt(x, y)
+  const drops = world.getDropsAt(x, y)
   if (drops?.length) {
     Terminal.log(`\n${i18n.t('local_drops')}`)
     drops.forEach((d) => {
       const qtyText = !!d.quantity ? ` x ${d.quantity}` : ''
-      const { label, origin } = getItemLabel(d)
+      const { name, origin } = d
 
-      Terminal.look(` - ${label}${qtyText}`, origin, 'item')
+      Terminal.look(` - ${name}${qtyText}`, origin, 'item')
     })
   }
 }
