@@ -56,6 +56,23 @@ export const ConfigScreen: React.FC<{
     },
   ]
 
+  const handleFullscreenClick = () => {
+    // 1. Tauri 환경인지 체크 (데스크톱 앱일 경우 실행 방지)
+    const isTauri = !!(window as any).__TAURI_INTERNALS__
+    if (isTauri) return
+
+    // 2. 브라우저 전체화면 API 실행
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.warn(`전체 화면 전환 실패: ${err.message}`)
+      })
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
+      }
+    }
+  }
+
   return (
     <div className="flex h-full flex-col bg-grey-900 text-primary select-none">
       <ThemedHeader title="CONFIG" onBack={toggleConfigMenu} />
@@ -84,7 +101,10 @@ export const ConfigScreen: React.FC<{
         </main>
       </div>
 
-      <footer className="mt-auto px-5 py-4 text-[10px] text-primary/20 text-right font-mono uppercase">
+      <footer
+        onClick={handleFullscreenClick}
+        className="mt-auto px-5 py-4 text-[10px] text-primary/20 text-right font-mono uppercase"
+      >
         Terminal-Tester v1.0.4 // Build 2026.03
       </footer>
     </div>

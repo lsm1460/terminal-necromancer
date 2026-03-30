@@ -109,7 +109,7 @@ export const LogWindow: React.FC<{
   return (
     <div
       className="flex-1 overflow-y-auto overflow-x-hidden p-5 whitespace-pre-wrap leading-relaxed 
-             scrollbar-thin scrollbar-track-[#1e1e1e] scrollbar-thumb-[#444] hover:scrollbar-thumb-[#555] pointer-events-none text-xs xl:text-sm
+             scrollbar-thin scrollbar-track-[#1e1e1e] scrollbar-thumb-[#444] hover:scrollbar-thumb-[#555] pointer-events-none text-sm xl:text-sm
              scroll-smooth"
       ref={scrollRef}
       onClick={handleLogCommand}

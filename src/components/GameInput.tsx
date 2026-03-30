@@ -18,20 +18,20 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    const handleGlobalClick = () => {
-      if (!disabled) {
-        inputRef.current?.focus()
-      }
-    }
+  // useEffect(() => {
+  //   const handleGlobalClick = () => {
+  //     if (!disabled) {
+  //       inputRef.current?.focus()
+  //     }
+  //   }
 
-    if (!disabled) {
-      inputRef.current?.focus()
-    }
+  //   if (!disabled) {
+  //     inputRef.current?.focus()
+  //   }
 
-    window.addEventListener('click', handleGlobalClick)
-    return () => window.removeEventListener('click', handleGlobalClick)
-  }, [disabled])
+  //   window.addEventListener('click', handleGlobalClick)
+  //   return () => window.removeEventListener('click', handleGlobalClick)
+  // }, [disabled])
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return
@@ -80,7 +80,7 @@ export const GameInput: React.FC<GameInputProps> = ({ engine }) => {
         <input
           ref={inputRef}
           className="flex-1 bg-transparent border-none text-primary outline-none font-inherit text-xs xl:text-base placeholder:text-primary/50 disabled:cursor-not-allowed"
-          autoFocus
+          // autoFocus
           onKeyDown={handleCommand}
           placeholder={disabled ? t('web.select_an_option') : t('input_command')}
           disabled={disabled}
