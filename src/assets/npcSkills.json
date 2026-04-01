@@ -590,5 +590,13 @@
     "description": "모든 아군의 디버프를 제거합니다.",
     "chance": 0.3,
     "targetType": "ALLY_ALL"
+  },
+  "shadow_bind": {
+    "id": "shadow_bind",
+    "name": "그림자 묶기",
+    "attackType": "ranged",
+    "description": "가장 강한 적 3명을 묶고 이를 감시하는 파수꾼을 만들어냅니다.",
+    "chance": 0.3,
+    "targetType": "ENEMY_ALL"
   }
 }

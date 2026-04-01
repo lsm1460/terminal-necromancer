@@ -8,6 +8,7 @@ import { MapManager } from './core/MapManager'
 import { MonsterFactory } from './core/MonsterFactory'
 import { NPCManager } from './core/NpcManager'
 import { Player } from './core/player/Player'
+import { QuestManager } from './core/QuestManager'
 import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
 import { World } from './core/World'
 import i18n from './i18n'
@@ -41,6 +42,7 @@ export class GameEngine {
     const battle = new Battle(player, monsterFactory, npcSkillManager)
     const mapManager = new MapManager(map)
     const npcs = new NPCManager(npc, player, initData?.npcs)
+    const quest = new QuestManager(player, npcs)
     const world = new World(player, mapManager)
     const broadcastSystem = new Broadcast(npcs, eventSystem)
 
@@ -60,8 +62,11 @@ export class GameEngine {
       broadcast: broadcastSystem,
       monster: monsterFactory,
       config: initData?.config || {},
+      quest,
       cheats: {},
     } as GameContext
+
+    quest.initOnDeath()
 
     player.onDeath = () => {
       const hostility = npcs.getFactionContribution('resistance')

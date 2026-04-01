@@ -1,15 +1,18 @@
 import { HOSTILITY_LIMIT } from '~/consts'
-import { NPC, NPCState } from '~/types'
+import i18n from '~/i18n'
+import npcHandlers from '~/npc'
+import { GameContext, NPC, NPCState } from '~/types'
 import { Terminal } from './Terminal'
 import { Player } from './player/Player'
-import i18n from '~/i18n'
+
+type EventCallback = (npcId: string) => void
 
 export class NPCManager {
   private baseData: Record<string, any>
   private states: Record<string, NPCState> = {}
   private factionHostility: Record<string, number> = {}
   private factionContribution: Record<string, number> = {}
-
+  private onDeathHandlers: Record<string, EventCallback> = {}
   /**
    * @param npcData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
    * @param player - 플레이어 참조
@@ -47,6 +50,10 @@ export class NPCManager {
     })
   }
 
+  public onDeath(npcId: string, callback: EventCallback) {
+    this.onDeathHandlers[npcId] = callback
+  }
+
   getNPC(id: string): NPC | null {
     const base = this.baseData[id]
     const state = this.states[id]
@@ -75,6 +82,18 @@ export class NPCManager {
         this.states[id].isAlive = false
 
         npc.faction && this.setFactionHostility(npc.faction, hostile)
+
+        this.onDeathHandlers[id]?.(id)
+      },
+      hasQuest: (player: Player, context: GameContext) => {
+        const handler = npcHandlers[id]
+        if (!handler) return false
+
+        if (handler.hasQuest) {
+          return handler.hasQuest(player, context)
+        }
+
+        return false
       },
 
       get name() {
@@ -92,6 +111,10 @@ export class NPCManager {
     }
 
     return npc
+  }
+
+  setAlive(id: string) {
+    this.states[id].isAlive = true
   }
 
   reborn(id: string) {

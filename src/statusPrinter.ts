@@ -36,7 +36,7 @@ export function printTileStatus(player: Player, context: GameContext) {
 
   if (alive.length > 0) {
     const list = alive.map((_npc) => {
-      const hasQuest = QuestManager.hasQuest(player, _npc.id, context)
+      const hasQuest = _npc.hasQuest(player, context)
 
       return {
         hasQuest,

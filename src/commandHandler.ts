@@ -82,7 +82,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
   }
 
   const fn = COMMANDS[cmd]
-  
+
   try {
     // 여기서 await을 통해 talkCommand 등의 메뉴 선택이 끝날 때까지 대기합니다.
     const result = await fn(player, args, context)
@@ -94,8 +94,12 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
       printStatus(player, context)
       await events.handle(currentTile, player, context)
     }
-    
-    printDirections(player, context)
+
+    if (context.quest.hasQuest()) {
+      await context.quest.startQuest(context)
+    } else {
+      printDirections(player, context)
+    }
   } catch (e) {}
 
   // 자동 세이브

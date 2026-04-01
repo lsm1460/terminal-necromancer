@@ -2,13 +2,13 @@
   "test_man": {
     "id": "test_man",
     "attackType": "melee",
-    "hp": 500,
-    "maxHp": 500,
+    "hp": 5000,
+    "maxHp": 5000,
     "atk": 1,
     "def": 3,
     "agi": 8,
     "exp": 5,
-    "skills": ["second_phases", "third_phases"],
+    "skills": ["shadow_bind"],
     "dropTableId": "test_drop",
     "orderWeight": 20,
     "preemptive": true
@@ -541,6 +541,19 @@
     "def": 8,
     "agi": 20,
     "skills": ["heal", "holy_radiance"],
+    "orderWeight": 80,
+    "exp": 0,
+    "dropTableId": ""
+  },
+  "watcher": {
+    "id": "watcher",
+    "attackType": "melee",
+    "hp": 110,
+    "maxHp": 110,
+    "atk": 0,
+    "def": 16,
+    "agi": 10,
+    "skills": [],
     "orderWeight": 80,
     "exp": 0,
     "dropTableId": ""

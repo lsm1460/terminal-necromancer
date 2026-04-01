@@ -99,6 +99,7 @@ export enum ItemType {
 }
 
 import { Item as ItemClass } from './core/item/Item'
+import { QuestManager } from './core/QuestManager'
 export type Item = ItemClass
 export interface WeaponItem extends ItemClass {
   type: ItemType.WEAPON
@@ -195,6 +196,7 @@ export interface GameContext {
   cheats: {
     isFullMap?: boolean
   }
+  quest: QuestManager,
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
@@ -223,6 +225,7 @@ export interface NPC extends BattleTarget {
   updateHostility: (amount: number) => void
   updateContribution: (amount: number) => void
   dead: (options?: { karma?: number; hostile?: number }) => void
+  hasQuest: (player: Player, context: GameContext) => boolean
   noEscape?: boolean
   scripts?: {
     friendly: NPCScripts

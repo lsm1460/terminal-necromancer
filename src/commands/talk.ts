@@ -1,10 +1,8 @@
 import { NPCManager } from '~/core/NpcManager'
 import { Player } from '~/core/player/Player'
-import { QuestManager } from '~/core/QuestManager'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import npcHandlers from '~/npc'
-import { printDirections } from '~/statusPrinter'
 import { BattleTarget, CommandFunction, GameContext, NPC } from '~/types'
 
 export const talkCommand: CommandFunction = async (...params) => {
@@ -51,9 +49,9 @@ async function selectTargetNpc(player: Player, args: string[], context: GameCont
 
   const choices = [
     ...npcs.map((npc) => {
-      const hasQuest = QuestManager.hasQuest(player, npc.id, context)
+      const hasQuest = npc.hasQuest(player, context)
 
-      return { name: npc.id, message: `👤${hasQuest? ' \x1b[32m[!]\x1b[0m' : ''} ${npc.name}` }
+      return { name: npc.id, message: `👤${hasQuest ? ' \x1b[32m[!]\x1b[0m' : ''} ${npc.name}` }
     }),
     { name: 'cancel', message: i18n.t('cancel') },
   ]

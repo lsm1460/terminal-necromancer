@@ -120,7 +120,7 @@ export class NpcSkillManager {
 
     // 1. 특수 로직(ID 기반)이 있는지 먼저 확인
     if (SpecialSkillLogics[skillId]) {
-      await SpecialSkillLogics[skillId](attacker, targets, skill)
+      await SpecialSkillLogics[skillId](attacker, targets, skill, context)
       return
     }
 
@@ -158,7 +158,7 @@ export class NpcSkillManager {
   }
 
   public setupPassiveHook(unit: CombatUnit, battle: Battle) {
-    const skillIds = (unit.ref as any).skills || []
+    const skillIds = (unit.ref as any).skills || [] 
 
     for (const id of skillIds) {
       const skillData = this.getSkill(id)

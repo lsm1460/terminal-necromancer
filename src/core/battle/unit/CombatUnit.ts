@@ -24,6 +24,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   // 어픽스 매니저가 주입할 훅 리스트
   public onBeforeAttackHooks: UnitDamageProcessHook[] = []
   public onBeforeHitHooks: UnitDamageProcessHook[] = []
+  public onProcessHitHooks: UnitDamageProcessHook[] = []
   public onAfterAttackHooks: UnitDamageProcessHook[] = []
   public onAfterHitHooks: UnitDamageProcessHook[] = []
   public onDeath?: () => void | Promise<void>
@@ -141,6 +142,9 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   public async executeHit(attacker: CombatUnit, options: DamageOptions = {}) {
+    // 0. [Process] - isPassive 여부와 상관없이 항상 실행
+    await this.runHooks(this.onProcessHitHooks, attacker, options)
+
     // 1. [Before]
     if (!options.isPassive) {
       await this.runHooks(attacker.onBeforeAttackHooks, attacker, options)
@@ -182,7 +186,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
    */
   public async takeDamage(attacker: CombatUnit, options: DamageOptions = {}) {
     if (!this.ref.isAlive) return { isEscape: false, isDead: true, damage: 0 }
-
+    console.log('DEBUG:: options',this.name, options)
     const result = Battle.calcDamage(attacker, this, options)
     if (!result.isEscape) {
       this.ref.hp = Math.max(0, this.ref.hp - result.damage)

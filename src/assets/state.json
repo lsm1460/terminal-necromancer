@@ -2,7 +2,7 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 2,
+    "x": 3,
     "y": 1,
     "_maxHp": 231,
     "hp": 231,
@@ -13,10 +13,10 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1453,
-    "exp": 4799,
+    "gold": 1462,
+    "exp": 14809,
     "level": 6,
-    "karma": 6,
+    "karma": 8,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
@@ -135,7 +135,7 @@
       "attackType": "melee",
       "baseMaxHp": 90,
       "maxHp": 90,
-      "hp": 228,
+      "hp": 225,
       "baseAtk": 20,
       "atk": 20,
       "baseDef": 40,
@@ -377,7 +377,7 @@
       }
     }
   },
-  "sceneId": "B2_Transit_Area",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -417,7 +417,7 @@
         "relation": 0
       },
       "death": {
-        "hp": 3000,
+        "hp": 30,
         "isAlive": true,
         "reborn": false,
         "relation": 0

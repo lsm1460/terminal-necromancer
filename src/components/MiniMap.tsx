@@ -61,16 +61,22 @@ export const MiniMap: React.FC<{
       const _isFullyVisible = isCheat || (FULL_VISIBLE_MAP_ID_LIST as string[]).includes(sceneId)
 
       setIsFullyVisible(_isFullyVisible)
-      
+
       const tiles = map.currentScene.tiles.map((row) =>
         row.map((tile) =>
           tile
             ? {
                 ...tile,
                 hasQuest: (tile.npcIds || []).some((id) => {
-                  const flag = QuestManager.hasQuest(player, id, _engine.context)
+                  const _npc = _engine.context.npcs.getNPC(id)
 
-                  return flag
+                  if (_npc) {
+                    const flag = _npc.hasQuest(player, _engine.context)
+
+                    return flag
+                  }
+
+                  return false
                 }),
               }
             : tile

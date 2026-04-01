@@ -1,16 +1,41 @@
-import { GameContext, NPC } from '~/types'
+import npcDeathHandlers from '~/quest'
+import { GameContext } from '~/types'
+import { NPCManager } from './NpcManager'
 import { Player } from './player/Player'
-import npcHandlers from '~/npc'
 
 export class QuestManager {
-  static hasQuest(player: Player, npcId: string, context: GameContext): boolean {
-    const handler = npcHandlers[npcId]
-    if (!handler) return false
+  questQue: { npcId: string; questType: string }[] = []
 
-    if (handler.hasQuest) {
-      return handler.hasQuest(player, context)
+  constructor(
+    private player: Player,
+    private npcs: NPCManager
+  ) {}
+
+  async initOnDeath() {
+    this.npcs.onDeath('death', this.handleDeath)
+  }
+
+  private handleDeath = async (npcId: string) => {
+    this.questQue.push({ npcId, questType: 'death' })
+  }
+
+  public hasQuest(): boolean {
+    return this.questQue.length > 0
+  }
+
+  async startQuest(context: GameContext) {
+    const quests = [...this.questQue]
+    this.questQue = []
+
+    for (let quest of quests) {
+      if (quest.questType === 'death') {
+        const handler = npcDeathHandlers[quest.npcId]
+        if (handler) {
+          await handler(this.player, context)
+        } else {
+          console.warn(`No death handler found for NPC: ${quest.npcId}`)
+        }
+      }
     }
-
-    return false
   }
 }

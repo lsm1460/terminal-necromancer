@@ -3,13 +3,13 @@ import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { ItemType, NpcSkill } from '~/types'
+import { BattleTarget, GameContext, ItemType, NpcSkill } from '~/types'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 
 export const SpecialSkillLogics: Record<
   string,
-  (attacker: CombatUnit, targets: CombatUnit[], skill: NpcSkill) => Promise<void>
+  (attacker: CombatUnit, targets: CombatUnit[], skill: NpcSkill, context: GameContext) => Promise<void>
 > = {
   // 자폭
   self_destruct: async (attacker, targets, skill) => {
@@ -94,5 +94,33 @@ export const SpecialSkillLogics: Record<
     Terminal.log(i18n.t('skill.special.purify_essence', { attacker: attacker.name }))
 
     for (const target of targets) target.removeRandomDeBuff()
+  },
+  shadow_bind: async (attacker, targets, skill, context) => {
+    const { battle } = context
+
+    const _targets = targets
+      .filter((unit) => !unit.deBuff.some((deBuff) => deBuff.id === 'bind'))
+      .sort((a, b) => b.ref.atk - a.ref.atk)
+      .slice(0, 3)
+
+    if (_targets.length === 0) return
+
+    _targets.forEach((unit) => {
+      unit.applyDeBuff({ id: 'bind', type: 'bind', duration: Infinity })
+    })
+
+    const watcher = battle._spawnMonster('watcher', context)!
+
+    watcher.onProcessHitHooks.push(async (attacker, defender, options) => {
+      if ((attacker.ref as BattleTarget).isMinion) {
+        options.rawDamage = 0 // 대미지 무효화
+
+        Terminal.log('미니언은 때릴 수 없음')
+      }
+    })
+
+    watcher.onDeathHooks.push(async () => {
+      _targets.forEach((unit) => unit.removeDeBuff('bind'))
+    })
   },
 }

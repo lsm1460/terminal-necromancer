@@ -158,6 +158,10 @@ class KnightWrapper {
   get deathLine() {
     return i18n.t('npc._knight.deathLine')
   }
+
+  hasQuest() {
+    return false
+  }
 }
 
 export default KnightWrapper

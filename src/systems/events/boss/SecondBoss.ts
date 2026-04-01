@@ -37,7 +37,7 @@ export class SecondBoss implements BossLogic {
     const amor = monster.makeMonster('golem_chest_armor')
     const amorUnit = battle.toCombatUnit(amor!, 'monster')
 
-    amorUnit.onBeforeHitHooks.push(async (attacker, defender, options) => {
+    amorUnit.onProcessHitHooks.push(async (attacker, defender, options) => {
       if (options.attackType !== 'explode') {
         options.rawDamage = 1 // 대미지를 1로 고정
 
@@ -64,6 +64,6 @@ export class SecondBoss implements BossLogic {
 
     const boss = npcs.getNPC('second_boss')
 
-    boss && boss.dead({karma: 0})
+    boss && boss.dead({ karma: 0 })
   }
 }
