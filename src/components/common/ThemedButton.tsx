@@ -12,7 +12,7 @@ export const ThemedButton = forwardRef<HTMLButtonElement, React.ButtonHTMLAttrib
       <button
         ref={ref}
         className={`
-          text-button has-dot
+          js-focus-ignore text-button has-dot
 
           ${className} 
         `}
@@ -35,7 +35,7 @@ ThemedButton.round = forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HT
       <button
         ref={ref}
         className={`
-          flex items-center justify-center
+          js-focus-ignore flex items-center justify-center
           w-8 h-8 rounded-full bg-black/50 text-primary
           hover:bg-primary/20 active:bg-primary/20 transition-colors
           ${className} 

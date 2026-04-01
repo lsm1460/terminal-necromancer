@@ -1,20 +1,21 @@
 import { Settings } from 'lucide-react'
 import React, { useMemo } from 'react'
-import { GameEngine } from '~/gameEngine'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
+import { useGame } from '~/hooks/useGame'
 
-export const StatusBar: React.FC<{
-  engine: React.RefObject<GameEngine | null>
-}> = ({ engine }) => {
+export const StatusBar: React.FC = () => {
+  const { getPlayer, getContext } = useGame()
   const { logs, toggleConfigMenu } = useGameStore((state) => state)
   const status = useMemo(() => {
-    if (!engine?.current) {
+    const player = getPlayer()
+    const context = getContext()
+
+    if (!player || !context) {
       return null
     }
 
-    const player = engine.current.player || {}
-    const { map } = engine.current.context || {}
+    const { map } = context
 
     return {
       level: player.level,
@@ -23,7 +24,7 @@ export const StatusBar: React.FC<{
       gold: player.gold,
       location: map?.currentSceneId,
     }
-  }, [engine, logs])
+  }, [getPlayer, getContext, logs])
 
   return (
     <div className="h-10 px-2.5 border-primary/30 border-b font-bold text-xs flex items-center">

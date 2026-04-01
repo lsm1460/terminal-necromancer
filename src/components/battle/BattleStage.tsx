@@ -1,18 +1,16 @@
-import _ from 'lodash'
 import React, { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BattleDirector } from '~/core/battle/BattleDirector'
-import { GameEngine } from '~/gameEngine'
+import { useCombat } from '~/hooks/useCombat'
 import { WebBattleRenderer } from '~/renderers/BattleRenderer'
 import { useBattleStore } from '~/stores/useBattleStore'
 import { useGameStore } from '~/stores/useGameStore'
 import { CombatUnitComponent } from './CombatUnitComponent'
-import { useTranslation } from 'react-i18next'
 
-export const BattleStage: React.FC<{
-  engine: React.RefObject<GameEngine | null>
-}> = ({ engine }) => {
+export const BattleStage: React.FC = () => {
   const { t } = useTranslation()
   const logs = useGameStore((state) => state.logs)
+  const { getCorpsesCount, getSortedPlayerSide } = useCombat()
   const { inBattle, playerSide: originPlayerSide, enemiesSide } = useBattleStore()
 
   const [corpsesCount, setCorpsesCount] = useState(0)
@@ -23,29 +21,12 @@ export const BattleStage: React.FC<{
   }, [])
 
   useEffect(() => {
-    const _engine = engine.current
-
-    if (_engine && _engine.context) {
-      const { x, y } = _engine.player
-
-      const { world } = _engine.context
-
-      const corpses = world.getCorpsesAt(x, y)
-
-      setCorpsesCount(corpses.length)
-    }
-  }, [logs, engine])
+    setCorpsesCount(getCorpsesCount())
+  }, [logs, getCorpsesCount])
 
   const playerSide = useMemo(
-    () =>
-      _.chain(originPlayerSide)
-        .sortBy((unit) => {
-          if (unit.type === 'player') return Infinity
-          return _.findIndex(originPlayerSide, { id: unit.id })
-        })
-        .reverse()
-        .value(),
-    [originPlayerSide]
+    () => getSortedPlayerSide(originPlayerSide),
+    [originPlayerSide, getSortedPlayerSide]
   )
 
   if (!inBattle) {

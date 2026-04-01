@@ -10,6 +10,7 @@ import { SaveSystem } from '~/systems/SaveSystem'
 
 // 하위 컴포넌트들
 import { motion } from 'framer-motion'
+import { GameProvider } from '~/contexts/GameContext'
 import { assetManager } from '~/core/WebAssetManager'
 import { useShortcuts } from '~/hooks/useShortcuts'
 import { useSwipeShortcuts } from '~/hooks/useSwipeShortcuts'
@@ -53,23 +54,25 @@ export const App = () => {
   }, [])
 
   return (
-    <div className="relative h-dvh w-full overflow-hidden bg-grey-800">
-      <motion.div
-        animate={{ x: isOpenConfigMenu ? '-10%' : 0, opacity: isOpenConfigMenu? 0.5 : 1 }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="absolute inset-0"
-      >
-        <GameScreen engine={engineRef} isGameOn={isGameOn} />
-      </motion.div>
+    <GameProvider engine={engineRef}>
+      <div className="relative h-dvh w-full overflow-hidden bg-grey-800">
+        <motion.div
+          animate={{ x: isOpenConfigMenu ? '-10%' : 0, opacity: isOpenConfigMenu ? 0.5 : 1 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className="absolute inset-0"
+        >
+          <GameScreen isGameOn={isGameOn} />
+        </motion.div>
 
-      <motion.div
-        initial={{ x: '100%' }}
-        animate={{ x: isOpenConfigMenu ? 0 : '100%' }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="absolute inset-0"
-      >
-        <ConfigScreen engine={engineRef} />
-      </motion.div>
-    </div>
+        <motion.div
+          initial={{ x: '100%' }}
+          animate={{ x: isOpenConfigMenu ? 0 : '100%' }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className="absolute inset-0"
+        >
+          <ConfigScreen />
+        </motion.div>
+      </div>
+    </GameProvider>
   )
 }

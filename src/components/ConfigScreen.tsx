@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react'
-import { GameEngine } from '~/gameEngine'
+import { useTranslation } from 'react-i18next'
+import { useGame } from '~/hooks/useGame'
 import { useGameStore } from '~/stores/useGameStore'
-import { SaveSystem } from '~/systems/SaveSystem'
 import { ThemedHeader } from './common/ThemedHeader'
 import { ConfigItem } from './config/ConfigItem'
-import { useTranslation } from 'react-i18next'
 
-export const ConfigScreen: React.FC<{
-  engine: React.RefObject<GameEngine | null>
-}> = ({ engine }) => {
+export const ConfigScreen: React.FC = () => {
+  const { getConfig, updateConfig } = useGame()
   const { t } = useTranslation()
   const { isOpenConfigMenu, toggleConfigMenu } = useGameStore((state) => state)
 
@@ -18,31 +16,20 @@ export const ConfigScreen: React.FC<{
   })
 
   useEffect(() => {
-    if (engine.current) {
-      const currentConfig = engine.current.context.config || {}
-      setConfig({
-        isSearchFirst: currentConfig.isSearchFirst || false,
-      })
+    if (isOpenConfigMenu) {
+      const { isSearchFirst } = getConfig()
+      setConfig({ isSearchFirst: isSearchFirst || false })
     }
-  }, [isOpenConfigMenu, engine])
-
-  const saveConfig = (newConfig: typeof config) => {
-    if (!engine.current) return
-
-    const { player, context } = engine.current
-    context.config = { ...context.config, ...newConfig }
-
-    const saveData = SaveSystem.makeSaveData(player, context)
-    context.save.save(saveData)
-  }
+  }, [isOpenConfigMenu, getConfig])
 
   const handleToggle = (key: keyof typeof config) => (checked: boolean) => {
     const nextConfig = { ...config, [key]: checked }
+
     setConfig(nextConfig)
-    saveConfig(nextConfig)
+
+    updateConfig(nextConfig)
   }
 
-  // 설정 항목 정의 (섹션별 그룹화)
   const configSections = [
     {
       subtitle: 'Movement Control',

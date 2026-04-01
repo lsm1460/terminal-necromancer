@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { GameEngine } from '~/gameEngine'
 import { useGameStore } from '~/stores/useGameStore'
 import { AnsiHtml } from './Ansi'
 import { DecisionBox } from './DecisionBox'
@@ -7,6 +6,7 @@ import { COMMAND_GROUPS, COMMAND_KEYS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { getTileFromDirection, printPath } from '~/commands'
 import i18n from '~/i18n'
+import { useGame } from '~/hooks/useGame'
 
 const DIRECTION_MAP: Record<string, string> = {}
 
@@ -21,10 +21,9 @@ Object.entries({
   })
 })
 
-export const LogWindow: React.FC<{
-  engine: React.RefObject<GameEngine | null>
-}> = ({ engine }) => {
-  const { isOpenButtonMenu, logs, uiState, addLog, resolveUI } = useGameStore()
+export const LogWindow: React.FC = () => {
+  const { getPlayer, getContext, processCommand } = useGame()
+  const { isOpenButtonMenu, logs, uiState, resolveUI } = useGameStore()
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -45,8 +44,6 @@ export const LogWindow: React.FC<{
   }, [logs, uiState, isOpenButtonMenu])
 
   const handleLogCommand = async (event: any) => {
-    if (!engine.current) return
-
     let { command, arg } = event.target.dataset
     if (!command) return
 
@@ -75,10 +72,11 @@ export const LogWindow: React.FC<{
   }
 
   const shouldConfirmMovement = (command: string) => {
-    const engineState = engine.current
-    if (!engineState) return { shouldConfirm: false }
+    const player = getPlayer()
+    const context = getContext()
 
-    const { player, context } = engineState
+    if (!player || !context) return { shouldConfirm: false }
+
     const { config, map } = context
 
     const directionKey = DIRECTION_MAP[command]
@@ -98,13 +96,6 @@ export const LogWindow: React.FC<{
       tile,
     }
   }
-
-  const processCommand = async (command: string) =>
-    engine.current?.processCommand(command, {
-      onBeforeExecute() {
-        addLog(`> ${command}`)
-      },
-    })
 
   return (
     <div

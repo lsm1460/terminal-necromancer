@@ -1,25 +1,22 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GameEngine } from '~/gameEngine'
+import { useGame } from '~/hooks/useGame'
 import { useInputLock } from '~/hooks/useInputLock'
 import { getCommandMap } from '~/hooks/useShortcuts'
 import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
-export const ButtonList: React.FC<{
-  engine: React.RefObject<GameEngine | null>
-}> = ({ engine }) => {
+export const ButtonList: React.FC = () => {
   const { t } = useTranslation()
-  const { addLog } = useGameStore()
+  const { processCommand } = useGame()
   const disabled = useInputLock()
-
   const showShortcut = useShowShortcut()
 
   const commandList = useMemo(() => {
     const EXCLUDED_COMMANDS = [i18n.t('commands.map.label')]
-
     const commandsMap = getCommandMap()
+
     return Object.entries(commandsMap)
       .filter(([_, name]) => !EXCLUDED_COMMANDS.includes(name))
       .map(([key, name]) => ({
@@ -31,12 +28,8 @@ export const ButtonList: React.FC<{
 
   const handleCommand = async (cmd: string) => {
     if (disabled) return
-
-    await engine.current?.processCommand(cmd.toLowerCase(), {
-      onBeforeExecute() {
-        addLog(`\n> ${cmd}`)
-      },
-    })
+    
+    await processCommand(cmd.toLowerCase())
   }
 
   return (
@@ -46,16 +39,16 @@ export const ButtonList: React.FC<{
           key={cmd.name}
           onClick={() => handleCommand(cmd.name)}
           disabled={disabled}
-          className="
-          w-full flex items-center justify-center
-          text-xs no-underline! py-3 transition-colors 
-          active:bg-black/80
-          xl:border-primary  xl:border xl:py-2 xl:text-sm xl:text-primary! 
-          before:content-none!
-          "
           tabIndex={-1}
+          className={`
+            w-full flex items-center justify-center
+            text-xs no-underline! py-3 transition-colors 
+            active:bg-black/80
+            xl:border-primary xl:border xl:py-2 xl:text-sm xl:text-primary! 
+            before:content-none!
+          `}
         >
-          <div className="flex flex-col items-center justify-center leading-tight xl:flex-row xl:gap-1">
+          <div className="flex flex-col items-center justify-center leading-tight xl:flex-row xl:gap-1 pointer-events-none">
             <span className="font-medium whitespace-nowrap">{cmd.name}</span>
 
             {showShortcut && (

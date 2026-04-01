@@ -86,7 +86,7 @@ export class ReactRenderer implements Renderer {
 
   private createButton(label: string, command: string, arg?: string): string {
     const dataArg = arg ? ` data-arg="${arg}"` : ''
-    return `<button tabindex="-1" class="text-button" data-command="${command}"${dataArg}>${label}</button>`
+    return `<button tabindex="-1" class="js-focus-ignore text-button" data-command="${command}"${dataArg}>${label}</button>`
   }
 
   say(list: { name: string; hasQuest: boolean }[]) {
