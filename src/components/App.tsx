@@ -1,22 +1,21 @@
 import '~/assets/style/App.css'
-//
-import { useEffect, useRef, useState } from 'react'
-import { assets, initState } from '~/assets'
-import { Terminal } from '~/core/Terminal'
-import { Title } from '~/core/Title'
-import { GameEngine } from '~/gameEngine'
-import { ReactRenderer } from '~/renderers/ReactRenderer'
-import { SaveSystem } from '~/systems/SaveSystem'
-
 // 하위 컴포넌트들
-import { motion } from 'framer-motion'
-import { GameProvider } from '~/contexts/GameContext'
-import { assetManager } from '~/core/WebAssetManager'
-import { useShortcuts } from '~/hooks/useShortcuts'
-import { useSwipeShortcuts } from '~/hooks/useSwipeShortcuts'
-import { useGameStore } from '~/stores/useGameStore'
 import { ConfigScreen } from './ConfigScreen'
 import { GameScreen } from './GameScreen'
+//
+import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { assets, initState } from '~/assets'
+import { GameProvider } from '~/contexts/GameContext'
+import { Terminal } from '~/core/Terminal'
+import { Title } from '~/core/Title'
+import { assetManager } from '~/core/WebAssetManager'
+import { GameEngine } from '~/gameEngine'
+import { useShortcuts } from '~/hooks/useShortcuts'
+import { useSwipeShortcuts } from '~/hooks/useSwipeShortcuts'
+import { ReactRenderer } from '~/renderers/ReactRenderer'
+import { useGameStore } from '~/stores/useGameStore'
+import { SaveSystem } from '~/systems/SaveSystem'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)

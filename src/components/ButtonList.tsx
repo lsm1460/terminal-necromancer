@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useGame } from '~/hooks/useGame'
 import { useInputLock } from '~/hooks/useInputLock'
 import { getCommandMap } from '~/hooks/useShortcuts'
-import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
@@ -14,7 +13,7 @@ export const ButtonList: React.FC = () => {
   const showShortcut = useShowShortcut()
 
   const commandList = useMemo(() => {
-    const EXCLUDED_COMMANDS = [i18n.t('commands.map.label')]
+    const EXCLUDED_COMMANDS = [t('commands.map.label')]
     const commandsMap = getCommandMap()
 
     return Object.entries(commandsMap)
@@ -28,7 +27,7 @@ export const ButtonList: React.FC = () => {
 
   const handleCommand = async (cmd: string) => {
     if (disabled) return
-    
+
     await processCommand(cmd.toLowerCase())
   }
 
@@ -109,12 +108,16 @@ const ButtonWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         className={`
           grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
           ${isOpenButtonMenu ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}
+          
+          xl:transition-none xl:grid-rows-[1fr] xl:opacity-100
         `}
       >
         <div
           className={`
             overflow-hidden transition-all duration-300
             ${isOpenButtonMenu ? 'translate-y-0' : 'translate-y-4'}
+            
+            xl:transition-none xl:translate-y-0
           `}
         >
           <div

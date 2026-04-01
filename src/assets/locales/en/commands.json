@@ -48,7 +48,7 @@
     "corpse": {
       "menu_label": "Corpse of {{name}}",
       "description": "\nThe cold, lifeless remains of {{name}} lie here.\nIt is in an ideal condition to be reanimated as a vessel through necromancy.",
-      "status_header": "========================================\n[ Identification: {{name}} ]\n========================================",
+      "status_header": "==\n[ Identification: {{name}} ]\n==",
       "hp": "- HP: {{maxHp}}",
       "atk": "- ATK: {{atk}}",
       "def": "- DEF: {{def}}",

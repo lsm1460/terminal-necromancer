@@ -119,7 +119,7 @@ export class Battle implements BattleManager {
     const engine = new BattleEngine(this, {
       onRoundStart: async (round) => {
         this.units.refreshPlayerSide()
-        Terminal.log(`\n============== Turn: ${round} ==============`)
+        Terminal.log(`\n== Turn: ${round} ==`)
 
         BattleDirector.setUnits({
           playerSide: this.units.getPlayerSide(),

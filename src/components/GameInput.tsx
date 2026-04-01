@@ -14,25 +14,25 @@ export const GameInput: React.FC = () => {
   const { processCommand } = useGame()
   const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    const handleGlobalClick = (e: MouseEvent) => {
-      if (disabled) return
+  // useEffect(() => {
+  //   const handleGlobalClick = (e: MouseEvent) => {
+  //     if (disabled) return
 
-      const target = e.target as HTMLElement
-      const isTextButton = target.closest('.js-focus-ignore')
+  //     const target = e.target as HTMLElement
+  //     const isTextButton = target.closest('.js-focus-ignore')
 
-      if (!isTextButton) {
-        inputRef.current?.focus()
-      }
-    }
+  //     if (!isTextButton) {
+  //       inputRef.current?.focus()
+  //     }
+  //   }
 
-    if (!disabled) {
-      inputRef.current?.focus()
-    }
+  //   if (!disabled) {
+  //     inputRef.current?.focus()
+  //   }
 
-    window.addEventListener('click', handleGlobalClick)
-    return () => window.removeEventListener('click', handleGlobalClick)
-  }, [disabled])
+  //   window.addEventListener('click', handleGlobalClick)
+  //   return () => window.removeEventListener('click', handleGlobalClick)
+  // }, [disabled])
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return
