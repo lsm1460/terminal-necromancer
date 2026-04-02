@@ -1,3 +1,10 @@
+use tauri::{Manager};
+
+#[tauri::command]
+fn show_main_window(window: tauri::WebviewWindow) {
+    window.get_webview_window("main").unwrap().show().unwrap();
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   tauri::Builder::default()
@@ -11,6 +18,7 @@ pub fn run() {
       }
       Ok(())
     })
+    .invoke_handler(tauri::generate_handler![show_main_window])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

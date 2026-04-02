@@ -6,6 +6,7 @@ import { GameScreen } from './GameScreen'
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { assets, initState } from '~/assets'
+import { openWindow } from '~/bridge/window'
 import { GameProvider } from '~/contexts/GameContext'
 import { Terminal } from '~/core/Terminal'
 import { Title } from '~/core/Title'
@@ -34,6 +35,8 @@ export const App = () => {
       const save = saveSystemRef.current
       const locale = save.load()?.config?.locale || 'ko'
 
+      openWindow()
+
       const playData = await Title.gameStart(save, initState)
       if (playData) {
         await assetManager.loadInitialAssets(assets, locale)
@@ -52,7 +55,7 @@ export const App = () => {
 
   return (
     <GameProvider engine={engineRef}>
-      <div className="relative h-dvh w-full overflow-hidden bg-grey-800">
+      <div className="relative h-dvh w-full overflow-hidden">
         <motion.div
           animate={{ x: isOpenConfigMenu ? '-10%' : 0, opacity: isOpenConfigMenu ? 0.5 : 1 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
