@@ -17,8 +17,14 @@ export const useCombat = () => {
     []
   )
 
+  const getSortedEnemySide = useCallback(
+    (units: any[]) => [...units].reverse(),
+    []
+  )
+
   return {
     getCorpsesCount,
     getSortedPlayerSide,
+    getSortedEnemySide,
   }
 }

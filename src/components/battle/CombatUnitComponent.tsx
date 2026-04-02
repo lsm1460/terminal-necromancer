@@ -1,58 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { DamageDisplay } from './DamageDisplay'
-import { UnitState } from './UnitState'
-import { UnitIcon } from './UnitIcon'
+import { UnitVisual } from './UnitVisual'
 
 interface CombatUnitProps {
   unit: CombatUnit
-  zIndex: number
   isEnemy?: boolean
+  isFocus?: boolean
+  setFocusedUnit: React.Dispatch<React.SetStateAction<{ unit: CombatUnit; isEnemy: boolean } | null>>
 }
 
-export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, zIndex, isEnemy = false }) => {
-  const [isFocus, setIsFocus] = useState(false)
-
+export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isFocus, isEnemy = false, setFocusedUnit }) => {
   const wrapperRef = useRef(null)
 
-  useEffect(() => {
-    function handleClickOutside(event: Event) {
-      if (wrapperRef.current && !(wrapperRef.current as HTMLDivElement).contains(event.target as HTMLElement)) {
-        setIsFocus(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [wrapperRef])
-
   return (
-    <div
-      ref={wrapperRef}
-      className="group flex flex-col items-center outline-none cursor-pointer"
-      style={{
-        zIndex: isFocus ? 100 : zIndex,
-      }}
-      onClick={() => setIsFocus(true)}
-    >
+    <div ref={wrapperRef} className="group flex flex-col items-center outline-none relative pointer-events-none">
+      <div
+        className="absolute w-10 h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 cursor-pointer pointer-events-auto"
+        onClick={(e) => {
+          e.stopPropagation()
+          setFocusedUnit({ unit, isEnemy })
+        }}
+      />
       <DamageDisplay unit={unit} />
 
-      <div
-        className=" transition-transform duration-200"
-        style={{
-          transform: isFocus ? 'scale(1.5)' : 'scale(1)',
-          opacity: isFocus ? 1 : 0.8,
-        }}
-      >
-        <UnitIcon unit={unit} isEnemy={isEnemy} />
-        {isFocus && (
-          <div className="absolute left-1/2 w-px h-20 bg-primary -bottom-1 translate-y-full pointer-events-none" />
-        )}
+      <div style={{ opacity: isFocus === false ? 0.3 : 1 }}>
+        <UnitVisual unit={unit} isEnemy={isEnemy} />
       </div>
-      {isFocus && <UnitState unit={unit} isEnemy={isEnemy} />}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useGameStore } from '~/stores/useGameStore'
 import { AnsiHtml } from './Ansi'
 import { DecisionBox } from './DecisionBox'
@@ -22,7 +22,7 @@ Object.entries({
 })
 
 export const LogWindow: React.FC = () => {
-  const { getPlayer, getContext, processCommand } = useGame()
+  const { getPlayer, getContext, getConfig, processCommand } = useGame()
   const { isOpenButtonMenu, logs, uiState, resolveUI } = useGameStore()
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -77,7 +77,8 @@ export const LogWindow: React.FC = () => {
 
     if (!player || !context) return { shouldConfirm: false }
 
-    const { config, map } = context
+    const { map } = context
+    const config = getConfig()
 
     const directionKey = DIRECTION_MAP[command]
     const isSearchFirst = config?.isSearchFirst ?? true

@@ -1,19 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useGame } from '~/hooks/useGame'
 import { useInputLock } from '~/hooks/useInputLock'
 import { getCommandMap } from '~/hooks/useShortcuts'
+import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
 export const ButtonList: React.FC = () => {
-  const { t } = useTranslation()
   const { processCommand } = useGame()
   const disabled = useInputLock()
   const showShortcut = useShowShortcut()
 
   const commandList = useMemo(() => {
-    const EXCLUDED_COMMANDS = [t('commands.map.label')]
+    const EXCLUDED_COMMANDS = [i18n.t('commands.map.label')]
     const commandsMap = getCommandMap()
 
     return Object.entries(commandsMap)
@@ -23,7 +22,7 @@ export const ButtonList: React.FC = () => {
         key: `alt + ${key}`,
         rawKey: key,
       }))
-  }, [t])
+  }, [])
 
   const handleCommand = async (cmd: string) => {
     if (disabled) return

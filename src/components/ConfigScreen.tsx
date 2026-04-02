@@ -13,12 +13,16 @@ export const ConfigScreen: React.FC = () => {
   // 설정 상태 관리
   const [config, setConfig] = useState({
     isSearchFirst: false,
+    isAutoInputFocus: false,
   })
 
   useEffect(() => {
     if (isOpenConfigMenu) {
-      const { isSearchFirst } = getConfig()
-      setConfig({ isSearchFirst: isSearchFirst || false })
+      const { isSearchFirst, isAutoInputFocus } = getConfig()
+      setConfig({ 
+        isSearchFirst: isSearchFirst || false,
+        isAutoInputFocus: isAutoInputFocus || false,
+      })
     }
   }, [isOpenConfigMenu, getConfig])
 
@@ -32,13 +36,18 @@ export const ConfigScreen: React.FC = () => {
 
   const configSections = [
     {
-      subtitle: 'Movement Control',
+      subtitle: 'Interface & Control',
       items: [
         {
           key: 'isSearchFirst' as const,
           label: t('web.config.move.label'),
           description: t('web.config.move.description'),
         },
+        {
+        key: 'isAutoInputFocus' as const,
+        label: t('web.config.focus.label'),
+        description: t('web.config.focus.description'),
+      },
       ],
     },
   ]

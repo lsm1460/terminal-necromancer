@@ -12,7 +12,6 @@ import { Title } from '~/core/Title'
 import { assetManager } from '~/core/WebAssetManager'
 import { GameEngine } from '~/gameEngine'
 import { useShortcuts } from '~/hooks/useShortcuts'
-import { useSwipeShortcuts } from '~/hooks/useSwipeShortcuts'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { useGameStore } from '~/stores/useGameStore'
 import { SaveSystem } from '~/systems/SaveSystem'
@@ -26,7 +25,6 @@ export const App = () => {
   const [isGameOn, setIsGameOn] = useState(false)
 
   useShortcuts(engineRef)
-  useSwipeShortcuts(engineRef)
 
   useEffect(() => {
     const initGame = async () => {

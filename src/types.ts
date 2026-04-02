@@ -192,6 +192,7 @@ export interface GameContext {
   config?: {
     locale?: 'ko' | 'en'
     isSearchFirst?: boolean
+    isAutoInputFocus?: boolean
   }
   cheats: {
     isFullMap?: boolean

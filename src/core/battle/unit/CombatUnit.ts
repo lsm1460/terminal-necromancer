@@ -186,7 +186,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
    */
   public async takeDamage(attacker: CombatUnit, options: DamageOptions = {}) {
     if (!this.ref.isAlive) return { isEscape: false, isDead: true, damage: 0 }
-    console.log('DEBUG:: options',this.name, options)
     const result = Battle.calcDamage(attacker, this, options)
     if (!result.isEscape) {
       this.ref.hp = Math.max(0, this.ref.hp - result.damage)

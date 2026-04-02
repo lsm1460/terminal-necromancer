@@ -1,38 +1,38 @@
 import { Plus } from 'lucide-react'
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useGame } from '~/hooks/useGame'
 import { useInputLock } from '~/hooks/useInputLock'
 import { useGameStore } from '~/stores/useGameStore'
-import { useGame } from '~/hooks/useGame'
 import { ThemedButton } from './common/ThemedButton'
 
 export const GameInput: React.FC = () => {
   const { t } = useTranslation()
-  const { uiState, isOpenButtonMenu, resolveUI, toggleButtonMenu } = useGameStore()
+  const { uiState, isOpenButtonMenu, isOpenConfigMenu, resolveUI, toggleButtonMenu } = useGameStore()
   const disabled = useInputLock()
-  
-  const { processCommand } = useGame()
+
+  const { getConfig, processCommand } = useGame()
+
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // useEffect(() => {
-  //   const handleGlobalClick = (e: MouseEvent) => {
-  //     if (disabled) return
+  useEffect(() => {
+    const config = getConfig()
 
-  //     const target = e.target as HTMLElement
-  //     const isTextButton = target.closest('.js-focus-ignore')
+    const handleGlobalClick = (e: MouseEvent) => {
+      if (disabled) return
+      inputRef.current?.focus()
+    }
 
-  //     if (!isTextButton) {
-  //       inputRef.current?.focus()
-  //     }
-  //   }
+    if (config.isAutoInputFocus) {
+      window.addEventListener('click', handleGlobalClick)
+      console.log('이벤트 등록됨')
+    }
 
-  //   if (!disabled) {
-  //     inputRef.current?.focus()
-  //   }
-
-  //   window.addEventListener('click', handleGlobalClick)
-  //   return () => window.removeEventListener('click', handleGlobalClick)
-  // }, [disabled])
+    return () => {
+      window.removeEventListener('click', handleGlobalClick)
+      console.log('이벤트 제거됨')
+    }
+  }, [disabled, isOpenConfigMenu])
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return

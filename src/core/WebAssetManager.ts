@@ -19,9 +19,6 @@ export class WebAssetManager {
 
   private readonly commonManifest = {
     images: [
-      //icon
-      { id: 'player_icon_idle', src: '/images/player_icon.png' },
-      { id: 'player_icon_hit', src: '/images/player_icon_hit.png' },
       //player
       { id: 'player_idle_0', src: '/images/player/player_idle_0.png' },
       { id: 'player_idle_1', src: '/images/player/player_idle_1.png' },
@@ -51,6 +48,9 @@ export class WebAssetManager {
       { id: 'skeleton_healer_idle_1', src: '/images/skeleton_healer/skeleton_healer_idle_1.png' },
       { id: 'skeleton_healer_attack', src: '/images/skeleton_healer/skeleton_healer_attack.png' },
 
+      //ghoul
+      { id: 'ghoul_idle_0', src: '/images/ghoul/ghoul_idle_0.png' },
+      { id: 'ghoul_idle_1', src: '/images/ghoul/ghoul_idle_1.png' },
       // 에셋이 없을 때를 대비한 기본 이미지
       { id: 'default_idle_0', src: '/images/default_idle_0.png' },
       { id: 'default_idle_1', src: '/images/default_idle_1.png' },
@@ -147,6 +147,7 @@ export class WebAssetManager {
   public getSprites(originId: string): UnitSprites | void {
     if (typeof window === 'undefined') return
 
+    console.log('DEBUG:: this.spriteCache',this.spriteCache)
     if (this.spriteCache.has(originId)) {
       return this.spriteCache.get(originId)!
     }
@@ -219,7 +220,7 @@ export class WebAssetManager {
   }
 
   private clearMonsterAssets(): void {
-    const preserveIds = ['player', 'default', 'skeleton', 'golem', 'knight']
+    const preserveIds = ['player', 'default', 'skeleton', 'golem', 'knight', 'ghoul']
 
     const pattern = preserveIds.map((id) => `${id}_`).join('|')
     const preserveRegex = new RegExp(`^(${pattern})`)

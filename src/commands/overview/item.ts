@@ -22,45 +22,68 @@ export const printItem = (item?: Item) => {
   Terminal.log(`──────────────────────────────────────────────`)
 
   const stats: string[] = []
-  if ('atk' in item) {
+  
+  // 1. 공격 관련 스탯 (공격력이 0보다 클 때만)
+  if ('atk' in item && (item.atk || 0) > 0) {
     stats.push(i18n.t('commands.look.item.stats.atk', { val: item.atk }))
-    stats.push(i18n.t('commands.look.item.stats.crit', { val: ((item.crit || 0) * 100).toFixed(2) }))
+    // 치명타는 0%일 수도 있으므로 공격력이 있을 때 세트로 출력하거나, 0보다 클 때만 출력
+    if (item.crit && item.crit > 0) {
+      stats.push(i18n.t('commands.look.item.stats.crit', { val: (item.crit * 100).toFixed(2) }))
+    }
   }
-  if ('def' in item) stats.push(i18n.t('commands.look.item.stats.def', { val: item.def }))
-  if ('eva' in item && item.eva)
+
+  // 2. 방어/회피 (0보다 클 때만)
+  if ('def' in item && (item.def || 0) > 0) {
+    stats.push(i18n.t('commands.look.item.stats.def', { val: item.def }))
+  }
+  if ('eva' in item && item.eva && item.eva > 0) {
     stats.push(i18n.t('commands.look.item.stats.eva', { val: (item.eva * 100).toFixed(2) }))
-  if ('hpHeal' in item) stats.push(i18n.t('commands.look.item.stats.hpHeal', { val: item.hpHeal }))
+  }
 
-  if (stats.length > 0) Terminal.log(`${i18n.t('commands.look.item.stats.label')}${stats.join(' | ')}`)
+  if ('hpHeal' in item && item.hpHeal && item.hpHeal > 0) {
+    stats.push(i18n.t('commands.look.item.stats.hpHeal', { val: item.hpHeal }))
+  }
 
-  if ('mana' in item && item.mana) Terminal.log(i18n.t('commands.look.item.stats.mana', { val: item.mana }))
-  if ('maxSkeleton' in item && item.maxSkeleton)
+  if (stats.length > 0) {
+    Terminal.log(`${i18n.t('commands.look.item.stats.label')}${stats.join(' | ')}`)
+  }
+
+  if ('maxSkeleton' in item && item.maxSkeleton && item.maxSkeleton > 0) {
     Terminal.log(i18n.t('commands.look.item.stats.maxSkeleton', { val: item.maxSkeleton }))
+  }
 
-  if ('affix' in item && item.affix) {
-    const { name, description } = i18n.t(`affix.${item.affix.id}`, { returnObjects: true }) as {
+  // 5. 어픽스(특수 효과) 출력
+  if ('affix' in item && item.affix?.id) {
+    const { name: affixName, description: affixDesc } = i18n.t(`affix.${item.affix.id}`, { returnObjects: true }) as {
       name: string
       description: string
     }
 
-    Terminal.log(
-      i18n.t('commands.look.item.stats.affix', {
-        name,
-        description,
-      })
-    )
+    if (affixName) {
+      Terminal.log(
+        i18n.t('commands.look.item.stats.affix', {
+          name: affixName,
+          description: affixDesc,
+        })
+      )
+    }
   }
 
   const originId = getOriginId(item.id)
 
   Terminal.log(`──────────────────────────────────────────────`)
   Terminal.log(` 📝 ${i18n.t(`item.${originId}.description`)}`)
-  Terminal.log(
-    i18n.t('commands.look.item.info.price', {
-      price: item.price,
-      sellPrice: item.sellPrice,
-    })
-  )
+  
+  // 가격 정보 (0원이어도 출력할지, 0보다 클 때만 출력할지 선택 가능)
+  if (item.price !== undefined || item.sellPrice !== undefined) {
+    Terminal.log(
+      i18n.t('commands.look.item.info.price', {
+        price: item.price || 0,
+        sellPrice: item.sellPrice || 0,
+      })
+    )
+  }
+  
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 
   Terminal.pick(origin)

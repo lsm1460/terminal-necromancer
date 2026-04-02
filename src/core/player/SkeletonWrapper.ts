@@ -25,7 +25,7 @@ class SkeletonWrapper {
     const rarityColors: Record<SkeletonRarity, string> = {
       common: '\x1b[37m', // 하얀색
       rare: '\x1b[32m', // 초록색
-      elite: '\x1b[34m', // 파란색
+      elite: '\x1b[94m', // 파란색
       epic: '\x1b[35m', // 보라색
       legendary: '\x1b[33m', // 노란색(금색)
     }
