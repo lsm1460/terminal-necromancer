@@ -91,6 +91,30 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
     },
   },
 
+  soul_chain: {
+    onDeath: async (unit, skill, battle) => {
+      const allys = battle.getAllysOf(unit)
+      if (allys.length === 0) return
+
+      // 죽는 유신의 능력치 중 일정 비율을 남은 아군들에게 분배해서 나눠줌
+      // 아군이 적을수록 한 명당 받는 수치가 커짐
+      const bonusAtk = Math.floor((unit.ref.atk * 0.5) / allys.length)
+      const bonusDef = Math.floor((unit.ref.def * 0.5) / allys.length)
+
+      allys.forEach((allyUnit) => {
+        allyUnit.applyBuff({
+          id: 'soul_chain',
+          type: 'buff',
+          atk: bonusAtk,
+          def: bonusDef,
+          duration: Infinity, // 신의 정수이므로 전투 종료시까지 영구 지속
+        })
+
+        Terminal.log(`${unit.name}의 영혼이 ${allyUnit.name}에게 깃들어 힘이 증폭됩니다!`)
+      })
+    },
+  },
+
   frostborne: {
     onAfterAttack: async (attacker, defender, skill, battle) => {
       if (skill.buff) {

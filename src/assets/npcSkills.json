@@ -463,6 +463,14 @@
     "targetType": "ENEMY_ALL",
     "type": "passive"
   },
+  "soul_chain": {
+    "id": "soul_chain",
+    "name": "영혼 결속",
+    "description": "이 유닛이 사망 시, 가진 힘의 일부를 동료들에게 나누어 줍니다.",
+    "chance": 1,
+    "targetType": "ALLY_ALL",
+    "type": "passive"
+  },
   "frostborne": {
     "id": "frostborne",
     "name": "서리",

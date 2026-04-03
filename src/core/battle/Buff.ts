@@ -1,9 +1,28 @@
-import i18n from "~/i18n"
+import i18n from '~/i18n'
 
 export type BuffType = 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus' | 'stealth' | 'expose'
 
 export interface BuffOptions {
-  id: 'burn' | 'freeze' | 'stun' | 'paralysis' | 'bind' | 'bleed' | 'expose' | 'bone_prison' | 'overdrive' | 'aging' | 'injury' | 'curse' | 'smoke' | 'poison' | 'defense' | 'stealth' | 'focus' | 'confuse'
+  id:
+    | 'burn'
+    | 'freeze'
+    | 'stun'
+    | 'paralysis'
+    | 'bind'
+    | 'bleed'
+    | 'expose'
+    | 'bone_prison'
+    | 'overdrive'
+    | 'aging'
+    | 'injury'
+    | 'curse'
+    | 'smoke'
+    | 'poison'
+    | 'defense'
+    | 'stealth'
+    | 'focus'
+    | 'confuse'
+    | 'soul_chain'
   duration: number
   type: BuffType
   atk?: number
