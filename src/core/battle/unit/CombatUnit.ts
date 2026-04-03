@@ -141,6 +141,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.applyEffect(d)
   }
 
+  public get isConfused() {
+    return this.deBuff.some((_d) => _d.id === 'confuse')
+  }
+
   public async executeHit(attacker: CombatUnit, options: DamageOptions = {}) {
     // 0. [Process] - isPassive 여부와 상관없이 항상 실행
     await this.runHooks(this.onProcessHitHooks, attacker, options)

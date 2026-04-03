@@ -73,12 +73,16 @@ export class Battle implements BattleManager {
         return true
       }
     } else {
-      await this.actions.executeAutoAttack(
+      const [targetEnemies, targetAllies] = unit.isConfused ? [allySide, enemiesSide] : [enemiesSide, allySide]
+
+      const _params = [
         unit,
-        enemiesSide as CombatUnit<BattleTarget>[],
-        allySide,
-        this.currentContext
-      )
+        targetEnemies as CombatUnit<BattleTarget>[],
+        targetAllies as CombatUnit<BattleTarget>[],
+        this.currentContext,
+      ] as const
+
+      await this.actions.executeAutoAttack(..._params)
     }
   }
 

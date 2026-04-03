@@ -97,6 +97,7 @@
     "poison": "Poison",
     "defense": "Defense",
     "stealth": "Stealth",
-    "focus": "Marker"
+    "focus": "Marker",
+    "confuse": "Confusion"
   }
 }

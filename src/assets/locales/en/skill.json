@@ -180,8 +180,9 @@
       "curse": "\n [!] {{name}}'s strikes grow weak as they lose all composure to blind rage!",
       "smoke": "\n [!] Thick smoke completely veils {{name}}'s vision!",
       "bone_prison": "\n [!] Jagged bone bars rise, constricting {{name}}'s limbs!",
-      "aging": "\n[⏳] {{name}}'s skin withers rapidly as they gasp for air! All reactions are visibly slowed.",
-      "injury": "\n[⏳] {{name}}'s ankle is injured! Movement is visibly slowed."
+      "aging": "\n[!] {{name}}'s skin withers rapidly as they gasp for air! All reactions are visibly slowed.",
+      "injury": "\n[!] {{name}}'s ankle is injured! Movement is visibly slowed.",
+      "confuse": "\n[!] Everything before {{name}}’s eyes blurs into a haze! Even the line between friend and foe becomes unclear."
     }
   },
 
