@@ -71,6 +71,10 @@
   display: inline-flex;
   text-decoration: underline;
 }
+.text-button:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
 .text-button.has-dot::before {
   content: '- ';
   display: inline;

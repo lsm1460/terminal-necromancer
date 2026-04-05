@@ -95,9 +95,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
   if (uiState.type === 'NONE') return null
 
   return (
-    <div
-      onKeyDown={handleKeyDown}
-    >
+    <div onKeyDown={handleKeyDown}>
       <div className="text-[#ffff00] font-bold">
         <AnsiHtml message={'▶ ' + uiState.message} />
       </div>
@@ -131,7 +129,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
                     onFocus={() => setFocusedIndex(i)}
                     onClick={() => handleToggleSelect(c.name)}
                     disabled={c.disabled}
-                    className={isSelected ? 'border-solid border-yellow-400 text-yellow-400' : ''}
+                    className={isSelected ? 'border-solid border-yellow-400! text-yellow-400!' : ''}
                   >
                     <AnsiHtml message={c.message} />
                   </ThemedButton>
