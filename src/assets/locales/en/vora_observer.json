@@ -1,0 +1,32 @@
+{
+  "name": "Vora, the Hallucinating Observer",
+  "lines": [
+    "Can you see it? He is breathing within this beautiful violet mist.",
+    "Screams? No... this is a hymn sung by the angels.",
+    "Don't close your eyes. If you do, you'll miss this radiant truth."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Welcome. I can feel His light in your eyes as well. Shall we observe together?",
+      "farewell": "It's dangerous outside the mist. Within His embrace is the safest place."
+    },
+    "normal": {
+      "greeting": "Quiet now. He is speaking of something very important at this moment.",
+      "farewell": "Leaving already? You poor thing... you will never see the truth."
+    },
+    "hostile": {
+      "greeting": "An intruder defiling His mist. Shall I dye your blood in shades of violet as well?",
+      "farewell": "There's no use running. He has already taken root within your shadow!"
+    }
+  },
+  "deathLine": "Ah... finally... into His embrace... completely...",
+  "description": "A survivor who has fallen into the worship of the Ancient God after being intoxicated by the violet mists of the vehicle depot. She is completely insane.",
+
+  "encounter": [
+    "Vora: (Standing precariously over a pit emitting violet mist) Can you hear it? This soft whispering? He is finally waking up!",
+    "Vora: Don't call them monsters! They are just poor children whose forms have changed a little after receiving His blessing.",
+    "Vora: The Resistance? They are mere destroyers. They tried to carve up that corpse. Isn't His wrath only natural?",
+    "Vora: Fear exists only within your mind. If you surrender to this mist, all pain vanishes, leaving only a serene ecstasy!",
+    "Vora: (Reaching into the air) Ah, do you see it? That colossal eye looking down upon us with such mercy!"
+  ]
+}

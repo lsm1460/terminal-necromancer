@@ -626,5 +626,66 @@
         }
       ]
     ]
+  },
+  "B6_VEHICLE_DEPOT": {
+    "id": "B6_VEHICLE_DEPOT",
+    "start_pos": { "x": 0, "y": 0 },
+    "unlocks": ["talk_death_4"],
+    "tiles": [
+      [
+        { "id": "B6_001", "x": 0, "y": 0, "event": "summon-caron", "npcIds": ["elevator"] },
+        { "id": "B6_002", "x": 1, "y": 0, "npcIds": ["hansen_mechanic"] },
+        null,
+        { "id": "B6_004", "x": 3, "y": 0 },
+        { "id": "B6_005", "x": 4, "y": 0 },
+        { "id": "B6_006", "x": 5, "y": 0 },
+        { "id": "B6_007", "x": 6, "y": 0 }
+      ],
+      [
+        null,
+        { "id": "B6_009", "x": 1, "y": 1 },
+        { "id": "B6_010", "x": 2, "y": 1 },
+        { "id": "B6_011", "x": 3, "y": 1, "npcIds": ["vora_observer"] },
+        null,
+        null,
+        { "id": "B6_014", "x": 6, "y": 1, "npcIds": ["shadowed_agent"] }
+      ],
+      [
+        { "id": "B6_015", "x": 0, "y": 2, "npcIds": ["elias_survivor", "dax_looter"] },
+        { "id": "B6_016", "x": 1, "y": 2 },
+        null,
+        null,
+        { "id": "B6_019", "x": 4, "y": 2 },
+        { "id": "B6_020", "x": 5, "y": 2 },
+        { "id": "B6_021", "x": 6, "y": 2 }
+      ],
+      [
+        { "id": "B6_022", "x": 0, "y": 3 },
+        null,
+        { "id": "B6_024", "x": 2, "y": 3 },
+        { "id": "B6_025", "x": 3, "y": 3 },
+        { "id": "B6_026", "x": 4, "y": 3, "npcIds": ["silas_dissector"] },
+        null,
+        null
+      ],
+      [
+        { "id": "B6_029", "x": 0, "y": 4 },
+        { "id": "B6_030", "x": 1, "y": 4 },
+        { "id": "B6_031", "x": 2, "y": 4 },
+        null,
+        { "id": "B6_033", "x": 4, "y": 4 },
+        { "id": "B6_034", "x": 5, "y": 4 },
+        { "id": "B6_035", "x": 6, "y": 4, "npcIds": ["mika_operator"] }
+      ],
+      [
+        null,
+        null,
+        { "id": "B6_038", "x": 2, "y": 5 },
+        { "id": "B6_039", "x": 3, "y": 5 },
+        { "id": "B6_040", "x": 4, "y": 5, "npcIds": ["aris_purifier"] },
+        null,
+        { "id": "B6_042", "x": 6, "y": 5 }
+      ]
+    ]
   }
 }

@@ -1,0 +1,32 @@
+{
+  "name": "Mika, the Glitched Operator",
+  "lines": [
+    "System... unrecoverable. The signal is dying. Please, can anyone hear my voice?",
+    "Warning! Unknown contaminants spreading throughout the depot. Immediately... Argh! Get out of my head!",
+    "The control room door is locked. But they don't need doors... why didn't I realize that sooner?"
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "A living... human pulse. 80% of the control system is dead, but I'll find a way for you somehow.",
+      "farewell": "The data is fading. To reach the next sector... please, stay alive and keep the signal steady."
+    },
+    "normal": {
+      "greeting": "Access restricted area. Oh, wait... the system has gone mad, I can't distinguish friend from foe. Be careful.",
+      "farewell": "Communication terminated. I'll record the logs here until the end. I must leave proof that you survived."
+    },
+    "hostile": {
+      "greeting": "Intruder detected. Activating defense protocols. This isn't my will... the system is forcing me to kill you!",
+      "farewell": "Abnormal termination... Your data ends here. You'll be trapped in this cold server room with me."
+    }
+  },
+  "deathLine": "Finally... all... processes... terminated... Farewell...",
+  "description": "An operator who managed the main systems of the vehicle depot. Her mind is being consumed as the systems synchronize with the Ancient God's energy.",
+
+  "encounter": [
+    "Mika: (In a voice laced with static noise) Current location: B6 Central Control... External intrusion confirmed. Oh, it's you? Please help me, the system is eating my brain!",
+    "Mika: Can you hear it? When the Resistance messed with that corpse, every sensor in the depot screamed. That wasn't something data could handle!",
+    "Mika: (Staring at the monitor, trembling) The screen is full of monsters. But the sensors say there's nothing there. Am I the one who's mad, or is it this machine?",
+    "Mika: I tried to override the emergency shutters... but they've already seized the mainframe. That's no longer a machine. It's living iron!",
+    "Mika: Transmitting... transmitting... Please, just back up my memories. Who I was, what happened here... I don't want to disappear like this!"
+  ]
+}

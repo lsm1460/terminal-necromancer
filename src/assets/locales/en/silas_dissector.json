@@ -1,0 +1,32 @@
+{
+  "name": "Silas, the Cold-Blooded Dissector",
+  "lines": [
+    "Death is not the end. It is merely the point where a new form of order begins.",
+    "The neural network of this corpse is writhing like a living machine. Isn't it truly marvelous?",
+    "The regeneration of those things is faster than my scalpel can dull... such a fascinating specimen."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Ah, a new observer. Can you hear the beating of this colossal heart? Come closer and see for yourself.",
+      "farewell": "Go on then. Your physical structure is quite unique as well. I'd love to take a closer look inside you when the opportunity arises."
+    },
+    "normal": {
+      "greeting": "Do not disturb me. I am currently isolating the most vital artery. Wait a moment if your business isn't urgent.",
+      "farewell": "Leave quietly if you're going. I wouldn't want this precious specimen to be ruined by a lapse in concentration."
+    },
+    "hostile": {
+      "greeting": "A live specimen walking in on its own feet. I must see for myself how your nervous system reacts to pure terror.",
+      "farewell": "Running is futile. My scalpel is faster than death itself. I shall see you again soon on my examination table."
+    }
+  },
+  "deathLine": "Finally... I... become... the ultimate... experimental material... Perfect...",
+  "description": "A mad scholar researching the abandoned corpse of the Ancient God in the vehicle depot. He disregards all bioethics in his single-minded pursuit of knowledge.",
+
+  "encounter": [
+    "Silas: (Carving into a massive hunk of flesh in a bloodstained gown) Look! When the Resistance touched this corpse, it transformed into a sacred circuit, not mere meat!",
+    "Silas: Why are the monsters pouring out? It's simply the process of evolution. This corpse is restructuring the environment to suit itself.",
+    "Silas: (Wiping his scalpel) People are terrified, but I am delighted. I am finally completing the anatomical chart of a god—something most never see in a lifetime.",
+    "Silas: I can hear Mika's wailing from the control room even here. Poor girl... she isn't being eroded by machines; she is enjoying the honor of becoming part of a god.",
+    "Silas: Now, be careful. Those nerve bundles writhing at your feet might just snag your leg. You need to stay 'fresh' to be of any use for the experiments."
+  ]
+}

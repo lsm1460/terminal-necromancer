@@ -1,5 +1,9 @@
 ## 0. 남은 작업 정리
 
+번역해야함
+src/core/skill/passiveHandlers.ts
+src/core/skill/npcs/SpecialSkillLogics.ts
+
 combatunit 버프 관련 따로 빼서 리팩토링하기
 getNpc 리팩토링..?
 

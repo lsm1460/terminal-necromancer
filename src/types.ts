@@ -197,7 +197,7 @@ export interface GameContext {
   cheats: {
     isFullMap?: boolean
   }
-  quest: QuestManager,
+  quest: QuestManager
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 

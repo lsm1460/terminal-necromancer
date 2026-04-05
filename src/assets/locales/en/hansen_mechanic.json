@@ -1,0 +1,32 @@
+{
+  "name": "Hansen, the Stranded Mechanic",
+  "lines": [
+    "Damn it, the air is filled with the stench of blood instead of oil!",
+    "I should've welded the engine room door shut... those things are crawling through the gaps!",
+    "I'm at my limit with this wrench. These scraps are going to be my grave."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Shh, keep your voice down! They're sensitive to sound. Hide behind the tracks for now.",
+      "farewell": "Get out of here alive. Just... don't die on me, okay?"
+    },
+    "normal": {
+      "greeting": "Who are you? Are you still alive? The depot is already crawling with those monsters. Find a place to hide, now!",
+      "farewell": "Move out if you're done! You're just bait for them if you stay here."
+    },
+    "hostile": {
+      "greeting": "You're no different from those monsters, disturbing my peace! Ending you here with my own hands would be a mercy!",
+      "farewell": "Go ahead, try to run! The things hiding in the corners will tear you limb from limb anyway!"
+    }
+  },
+  "deathLine": "In the end... I was the one... to break... before the machines...",
+  "description": "The chief mechanic stranded amidst the collapse of the vehicle depot and the onslaught of monsters. He is pushed to his absolute breaking point.",
+
+  "encounter": [
+    "Hansen: (Gripping a bloodstained wrench, trembling) Look over there! Monsters are crawling from the end of the tracks! My trains have become their nests!",
+    "Hansen: The coolant line burst! I can barely breathe in this heat, and there are even worse things lurking outside. This is hell itself!",
+    "Hansen: The Resistance? Those lunatics messed with that strange corpse and caused this whole mess! They've turned the entire depot into a slaughterhouse!",
+    "Hansen: The emergency shutters won't go down! Those things chewed through the entire power grid. We're trapped in a giant steel coffin!",
+    "Hansen: Please, stop! The screams of those monsters won't stop ringing in my head! I just want to hear the sound of machines... please!"
+  ]
+}

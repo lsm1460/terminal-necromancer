@@ -1,0 +1,32 @@
+{
+  "name": "Dax, the Opportunistic Looter",
+  "lines": [
+    "Even if the world ends, the price of gold doesn't change. Right?",
+    "Monsters? They're just big. One blast from this stun baton and they all shut up.",
+    "I don't care about the Resistance or that god's corpse. I just need whatever fills my pockets."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "Oh, a fellow partner? Did you snag anything good? It'd be easier for both of us if we split the sectors.",
+      "farewell": "Watch your back. If you die, all those treasures you gathered belong to me."
+    },
+    "normal": {
+      "greeting": "Back off, I claimed this sector first. Don't go interfering with my business.",
+      "farewell": "Scram. There aren't even any scraps left worth taking here."
+    },
+    "hostile": {
+      "greeting": "Emptying a living man's pockets is much faster than scavenging from the dead! Hand it all over!",
+      "farewell": "Go ahead, try to run! I'll just reclaim it all once those monsters rip you apart anyway!"
+    }
+  },
+  "deathLine": "This was... all... mine... there's still... so much... I haven't taken...",
+  "description": "A looter taking advantage of the depot's collapse to steal valuables. He is obsessed with gathering gold bars and specialized components at any risk.",
+
+  "encounter": [
+    "Dax: (Wiping a bloodstained gold bar) Damn it, those monsters are tucked into every corner, making my job a real pain! Don't even think about touching my gold bars!",
+    "Dax: The Resistance? Thanks to those idiots messing with the corpse, the management team all ran for it. This is the opportunity of a lifetime for me!",
+    "Dax: (Clutching his bag tightly) Mika in the control room or Hansen the mechanic might be going crazy, but not me. I'm perfectly sane. The smell of money keeps me sharp!",
+    "Dax: Look over there—see those crystals dropped past the tracks? Do you have any idea what those go for on the market? They're more than worth risking a life for!",
+    "Dax: Move! There’s an emergency safe in the stationmaster's office up there that I haven't emptied yet. I have to get there before those monsters smash it to pieces!"
+  ]
+}

@@ -4,6 +4,8 @@ import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { BattleTarget, GameContext, ItemType, NpcSkill } from '~/types'
+import { SkillEffectHandlers } from './SkillEffectHandlers'
+import { DamageOptions } from '~/core/battle/Battle'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 
@@ -122,5 +124,58 @@ export const SpecialSkillLogics: Record<
     watcher.onDeathHooks.push(async () => {
       _targets.forEach((unit) => unit.removeDeBuff('bind'))
     })
+  },
+
+  return_to_ash: async (attacker, targets, skill, context) => {
+    for (const target of targets) {
+      const result = await target.executeHit(attacker, {
+        skillAtkMult: skill.power,
+        attackType: skill.attackType,
+      })
+
+      if (!result.isDead && skill.buff) {
+        await target.applyDeBuff(skill.buff)
+      }
+    }
+
+    attacker.ref.hp -= Math.floor(attacker.ref.maxHp * 0.05)
+    Terminal.log(attacker.name + '은/는 스스로를 불태우고 있다.')
+  },
+
+  last_embers: async (attacker, targets, skill, context) => {
+    const hpRatio = attacker.ref.hp / attacker.ref.maxHp
+    let skillAtkMult = skill.power
+
+    if (hpRatio <= 0.3) {
+      skillAtkMult = 5.0
+    } else {
+      const weight = (1 - hpRatio) / (1 - 0.3)
+      skillAtkMult = skill.power + (5.0 - skill.power) * Math.max(0, weight)
+    }
+
+    for (const target of targets) {
+      const result = await target.executeHit(attacker, {
+        skillAtkMult,
+        attackType: skill.attackType,
+      })
+
+      if (!result.isDead && skill.buff) {
+        await target.applyDeBuff(skill.buff)
+      }
+    }
+  },
+
+  harvest: async (attacker, targets, skill, context) => {
+    for (const target of targets) {
+      const hasStigma = target.hasDeBuff('death_stigma')
+
+      const options: DamageOptions = {
+        attackType: skill.attackType,
+
+        ...(hasStigma ? { rawDamage: Math.floor(target.ref.maxHp * 0.7) } : { skillAtkMult: skill.power }),
+      }
+
+      await target.executeHit(attacker, options)
+    }
   },
 }

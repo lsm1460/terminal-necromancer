@@ -141,6 +141,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.applyEffect(d)
   }
 
+  public hasDeBuff(_id: BuffOptions['id']) {
+    return this.deBuff.some((_d) => _d.id === _id)
+  }
+
   public get isConfused() {
     return this.deBuff.some((_d) => _d.id === 'confuse')
   }

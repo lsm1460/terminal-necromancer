@@ -20,6 +20,11 @@ import subspace from './subspace'
 import vending_machine from './vending_machine'
 import vesper from './vesper'
 import _knight from './_knight'
+import hansen_mechanic from './hansen_mechanic'
+import elias_survivor from './elias_survivor'
+import mika_operator from './mika_operator'
+import vora_observer from './vora_observer'
+import silas_dissector from './silas_dissector'
 import baron_valter from './baron_valter'
 
 const npcHandlers: Record<string, NPCHandler> = {
@@ -49,7 +54,6 @@ const npcHandlers: Record<string, NPCHandler> = {
   caron,
 
   //b5
-
   julian, // 바탠더
   oliver, // 웨이터
   adrian, // 안내 데스크
@@ -57,6 +61,13 @@ const npcHandlers: Record<string, NPCHandler> = {
   flint,
   vesper,
   kael,
+
+  //b6
+  hansen_mechanic,
+  elias_survivor,
+  vora_observer,
+  mika_operator,
+  silas_dissector,
 }
 
 export default npcHandlers

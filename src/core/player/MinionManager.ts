@@ -30,7 +30,6 @@ export class MinionManager {
       if (saved.skeletonSubspace) this.skeletonSubspace = saved.skeletonSubspace
       if (saved.subspaceLimit) this.subspaceLimit = saved.subspaceLimit
       if (saved._skeleton) this._skeleton = saved._skeleton
-      if (saved._mercenary) this._mercenary = saved._mercenary || []
       if (saved._maxSkeleton) this._maxSkeleton = saved._maxSkeleton
       if (saved.golemUpgrade) this.golemUpgrade = saved.golemUpgrade
       if (saved._golem) this._golem = saved._golem

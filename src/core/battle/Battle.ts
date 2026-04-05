@@ -73,7 +73,8 @@ export class Battle implements BattleManager {
         return true
       }
     } else {
-      const [targetEnemies, targetAllies] = unit.isConfused ? [allySide, enemiesSide] : [enemiesSide, allySide]
+      const isConfused = unit.hasDeBuff('confuse')
+      const [targetEnemies, targetAllies] = isConfused ? [allySide, enemiesSide] : [enemiesSide, allySide]
 
       const _params = [
         unit,

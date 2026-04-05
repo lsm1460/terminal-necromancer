@@ -226,5 +226,58 @@
   "arka_wand": {
     "label": "Wand of the Lesser Deity",
     "description": "A magical medium imbued with a fading fragment of divinity. It allows for the weaving of far more vast and intricate arcane circuits than ordinary staves."
+  },
+
+  "industrial_oil": {
+    "label": "Industrial Lubricant",
+    "description": "A thick, viscous oil used to keep the massive machinery of the vehicle depot running smoothly. It emits a pungent, stinging chemical odor."
+  },
+  "divine_powder": {
+    "label": "Divine Dust",
+    "description": "Golden powder left behind by the weathering of the Ancient God's fragments. It floats in the air, emitting an eerie phosphorescent glow."
+  },
+  "violet_pendant": {
+    "label": "Violet Pendant",
+    "description": "A gemstone pendant crafted by condensing the stagnant mists of the vehicle depot. Staring into it feels like your consciousness is drifting away."
+  },
+  "resistance_badge": {
+    "label": "Resistance Badge",
+    "description": "A symbol of those who stood against the oppression of the Dimensional Terminal. Now rusted and bent, it only serves to prove the tragic end of its owner."
+  },
+  "surgical_scalpel": {
+    "label": "Surgical Scalpel",
+    "description": "A razor-sharp tool used by Silas to dissect the divine remains. It precisely carves through the boundary between the living and the inanimate."
+  },
+  "mechanical_heart_part": {
+    "label": "Mechanical Heart Component",
+    "description": "The core module of an intricately designed artificial heart. Despite the power being severed, irregular vibrations can still be felt within."
+  },
+  "stolen_gold_bar": {
+    "label": "Stolen Gold Bar",
+    "description": "A heavy gold bar looted amidst the chaos. It bears an official seal and is recognized for its immense value among merchants."
+  },
+  "purified_divine_shard": {
+    "label": "Purified Divine Shard",
+    "description": "A fragment of the Ancient God purified through Aris's sacrifice. A pure and overwhelming sacred energy resonates within, replacing its once destructive aura."
+  },
+  "aris_crystal_staff": {
+    "label": "Aris's Crystal Staff",
+    "description": "A magical medium completed as golden crystals grew to envelop the staff. It amplifies the user's mana and releases it as a divine storm."
+  },
+  "reapers_touch_scythe": {
+    "label": "Reaper's Touch Scythe",
+    "description": "A massive scythe imbued with the resentment of the Shadowed Agent. Everywhere the blade touches, it leaves a cold curse that drains the very essence of life."
+  },
+  "contract_of_death": {
+    "label": "Contract of Death",
+    "description": "An ancient document containing the irrevocable pact made with the Grim Reaper. Unrolling it causes the temperature to plummet as a wave of terror takes hold."
+  },
+  "holy_water_concentrate": {
+    "label": "Holy Water Concentrate",
+    "description": "Purified holy water compressed under high pressure. It instantly mends physical wounds and clears a clouded mind."
+  },
+  "high_grade_anesthetic": {
+    "label": "High-Grade Anesthetic",
+    "description": "A potent drug formulated to completely block out pain. It temporarily numbs all senses for survival, allowing the body to focus entirely on healing."
   }
 }

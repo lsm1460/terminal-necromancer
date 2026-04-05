@@ -23,6 +23,7 @@ export interface BuffOptions {
     | 'focus'
     | 'confuse'
     | 'soul_chain'
+    | 'death_stigma'
   duration: number
   type: BuffType
   atk?: number

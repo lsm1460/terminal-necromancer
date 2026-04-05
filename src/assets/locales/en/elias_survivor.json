@@ -1,0 +1,32 @@
+{
+  "name": "Elias, the Desperate Survivor",
+  "lines": [
+    "I hear my friends' voices from somewhere. But when I turn around... it's just the flesh of those corpses.",
+    "What's scarier than hunger is the way those things stare at me, waiting with their mouths open.",
+    "Is death the only way out of this hell? No, I can't give up yet."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "A... human? Please, don't leave me alone. If we stay together, those things won't find it so easy to attack.",
+      "farewell": "Be careful as you go. And whatever you do, don't step into the places where there's no light."
+    },
+    "normal": {
+      "greeting": "Who's there? Are you with the Resistance? Or the Management? I don't care who you are, just don't hurt me.",
+      "farewell": "Survive. Someone has to be proof that humans actually existed in this nightmare."
+    },
+    "hostile": {
+      "greeting": "Don't come any closer! You're one of them, aren't you? A monster come to flay my skin!",
+      "farewell": "Get lost! I can't trust anyone. Disappear before this blade reaches you!"
+    }
+  },
+  "deathLine": "I'm sorry... guys... in the end... I'm coming... to join you...",
+  "description": "A civilian survivor who escaped the initial massacre at the vehicle depot. He is struggling to stay alive amidst extreme trauma and starvation.",
+
+  "encounter": [
+    "Elias: (Cowering in a corner, brandishing a worn knife) Stay back! Get away! ...Wait, are you human? Please, tell me who I am. I feel like I'm losing my mind!",
+    "Elias: Everything changed after the Resistance messed with that corpse. My friends... they were turned into monster meat right before my eyes!",
+    "Elias: Can you hear it? That scratching behind the walls? They're just waiting for us to get weak. This iron door won't hold forever.",
+    "Elias: (Clutching a bloodstained food tin) This is my last ration. I have to keep them from coming in at least until I finish this.",
+    "Elias: The tracks leading out of here are severed. We've been abandoned. Those bastards at the top definitely plan to bury this entire depot!"
+  ]
+}

@@ -167,6 +167,7 @@
 
   "message": {
     "buff": {
+      "burn": "\n [!] {{name}}'s skin is scorched by the flames.",
       "overdrive": "\n[🔥 Overdrive] {{name}}'s soul is forced into a frenzy, pushing its power to the limit! ({{name}} HP {{hp}} / {{maxHp}})",
       "grace": "\n[✨ Blessing] A radiant surge of celestial power empowers {{name}}'s weapon with devastating force!"
     },
@@ -183,7 +184,8 @@
       "bone_prison": "\n [!] Jagged bone bars rise, constricting {{name}}'s limbs!",
       "aging": "\n[!] {{name}}'s skin withers rapidly as they gasp for air! All reactions are visibly slowed.",
       "injury": "\n[!] {{name}}'s ankle is injured! Movement is visibly slowed.",
-      "confuse": "\n[!] Everything before {{name}}’s eyes blurs into a haze! Even the line between friend and foe becomes unclear."
+      "confuse": "\n[!] Everything before {{name}}’s eyes blurs into a haze! Even the line between friend and foe becomes unclear.",
+      "death_stigma": "\n [!] An ominous Death Stigma is etched upon {{name}}'s chest!"
     }
   },
 

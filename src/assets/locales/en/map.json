@@ -6,7 +6,8 @@
     "B3_5_Resistance_Base": "B3.5 Resistance Base",
     "B3_Steel_Loading_Dock": "B3 Steel Loading Dock",
     "B4_Waste_Disposal_Area": "B4 Waste Disposal Area",
-    "B5_VIP_lounge": "B5 VIP lounge"
+    "B5_VIP_lounge": "B5 VIP lounge",
+    "B6_VEHICLE_DEPOT": "B6 - Vehicle Depot"
   },
   "tiles": {
     "TITLE_001": {
@@ -340,6 +341,123 @@
     "B5_023": {
       "dialogue": "The edge of a luxurious carpet is curled up. A sparkling metal object is slightly visible through the gap.",
       "observe": "A corner of the room where the carpet is messy."
+    },
+
+    "B6_001": {
+      "dialogue": "As the elevator doors screech open, the vast panorama of the vehicle depot unfolds. The air is a heavy shroud of burnt wiring and the metallic, copper-like scent of divine fragments.",
+      "observe": "The entrance to the elevator leading deep into the subterranean abyss."
+    },
+    "B6_002": {
+      "dialogue": "Massive train wheels meant for maintenance lie rusted and abandoned. The floor is slick with an unidentified black liquid pooling between the tracks.",
+      "observe": "A maintenance area lined with gargantuan, rusted train wheels."
+    },
+    "B6_004": {
+      "dialogue": "High-voltage cables fallen from the ceiling writhe like living serpents, spitting erratic sparks. Eerie symbols, seemingly smeared in blood, mar the walls.",
+      "observe": "A hazardous passage with severed, sparking power lines."
+    },
+    "B6_005": {
+      "dialogue": "A dimensional train's front car is completely crumpled and embedded in the wall. It’s hard to tell if this was a collision or if something exploded from within.",
+      "observe": "A mangled train head lodged firmly into the concrete wall."
+    },
+    "B6_006": {
+      "dialogue": "A faint sobbing drifts through the mechanical hum. Looking toward the sound, shards of a god's fragment glow with a haunting golden light on the floor.",
+      "observe": "A dark track corner where golden dust flickers in the air."
+    },
+    "B6_007": {
+      "dialogue": "The upper ventilation shaft is twisted, allowing a freezing subterranean wind to howl through. The sound is so much like a scream it makes your skin crawl.",
+      "observe": "Beneath a ventilation shaft where the wind howls like a banshee."
+    },
+    "B6_009": {
+      "dialogue": "A maintenance lift is frozen in mid-air. Atop the lift, only the severed hand of a mindless soul remains, precariously gripping the railing.",
+      "observe": "A maintenance lift stalled high above the ground."
+    },
+    "B6_010": {
+      "dialogue": "The steel floor plating has buckled upward from below. A vibration at your feet suggests something massive is writhing in the depths even further down.",
+      "observe": "A distorted zone where the floor is buckled by heavy tremors."
+    },
+    "B6_011": {
+      "dialogue": "Ominous violet mist seeps from the inspection pit beneath the tracks. Within the fog, you sense the destructive energy radiating from the Ancient God's remains.",
+      "observe": "A maintenance pit filled with a stagnant, violet mist."
+    },
+    "B6_014": {
+      "dialogue": "Control monitors on the wall flicker, repeatedly outputting only the word 'JUDGMENT'. You feel an unseen gaze watching you from behind the glitching screens.",
+      "observe": "A wall covered in glitching monitors flickering in the dark."
+    },
+    "B6_015": {
+      "dialogue": "Greasy work clothes lie on the floor like shed skins. The owners are gone, but the lingering echo of their final moments of terror remains.",
+      "observe": "An area littered with abandoned tools and tattered overalls."
+    },
+    "B6_016": {
+      "dialogue": "A thick steel door is crumpled like paper, blocking the way. An overwhelming pressure, like the breath of an Ancient God, leaks from the cracks.",
+      "observe": "A massive steel door crushed and mangled by an immense force."
+    },
+    "B6_019": {
+      "dialogue": "Emergency beacons pulse red, bathing the surroundings in an ill-omened light. Instead of soul remains, only cold mechanical parts roll across the floor.",
+      "observe": "A zone where red emergency lights pulse in a rhythmic, ominous cycle."
+    },
+    "B6_020": {
+      "dialogue": "Near the depot's core power room. Titanic gears scream as they grind together, with pulsating organic tissues of the god entwined between the teeth.",
+      "observe": "A junction where massive gears and organic tissues are fused together."
+    },
+    "B6_021": {
+      "dialogue": "The high-voltage fence has collapsed. Beyond it lies an unfathomable darkness where the very fabric of the dimension has begun to tear.",
+      "observe": "A dangerous perimeter where the electric fencing has been torn down."
+    },
+    "B6_022": {
+      "dialogue": "Inside a freight car once used to transport the dead. The walls are covered in frantic claw marks, and the resentment of unreleased souls weighs heavy in the air.",
+      "observe": "An open, abandoned freight car for the transport of souls."
+    },
+    "B6_024": {
+      "dialogue": "Spilled coolant reacts with divine light, shimmering silver on the ground. It is beautiful, yet it radiates a cold that feels as though it could freeze your soul.",
+      "observe": "A floor covered in a shimmering pool of silver liquid."
+    },
+    "B6_025": {
+      "dialogue": "A massive crane has stalled while dangling a grotesque creature. The object is mangled beyond recognition, yet it continues to pulsate rhythmically.",
+      "observe": "A ceiling crane frozen with a bizarre, twitching mass suspended from it."
+    },
+    "B6_026": {
+      "dialogue": "Toolboxes have been overturned, scattering sharp drills and saw blades everywhere. There are signs that someone tried to dissect the divine remains with these tools.",
+      "observe": "A cluttered workbench area covered in sharp, scattered tools."
+    },
+    "B6_029": {
+      "dialogue": "Every window of the train has been shattered from the inside out, suggesting a tremendous internal pressure exploded within the cars.",
+      "observe": "Tracks covered in a thick blanket of shattered glass shards."
+    },
+    "B6_030": {
+      "dialogue": "Beyond the barrier, a mountain of giant train wheels is piled high. The bones of the dead are wedged between them like misplaced machine parts.",
+      "observe": "A scrap heap where rusted metal and bleached bones are intermingled."
+    },
+    "B6_031": {
+      "dialogue": "A hovering holographic sign glitches as it tries to recalculate a route. However, every destination eventually converges into the single word: 'DEATH'.",
+      "observe": "A flickering, malfunctioning holographic information display."
+    },
+    "B6_033": {
+      "dialogue": "The tracks on the floor are twisted like taffy, reaching toward the ceiling. It’s unclear if gravity has failed or if space itself has been warped.",
+      "observe": "A section of track spiraling eerily upward toward the ceiling."
+    },
+    "B6_034": {
+      "dialogue": "Hot steam hisses incessantly from the wall pipes. The mist is laced with fine dust from the god's shards, making your head swim with hallucinations.",
+      "observe": "A passage choked with thick white steam and hallucinogenic dust."
+    },
+    "B6_035": {
+      "dialogue": "The entrance to the B6 control center. A terminal with a security card still inserted displays endless logs of the facility's final, desperate moments.",
+      "observe": "A silent control room entrance where only terminal lights blink."
+    },
+    "B6_038": {
+      "dialogue": "A massive crack in the floor has formed the shape of a divine eye. The overwhelming holiness spilling from the rift feels more like a nauseating terror.",
+      "observe": "A massive fissure in the floor emitting a strange, haunting light."
+    },
+    "B6_039": {
+      "dialogue": "A fragment resembling a gargantuan finger of the Ancient God is lodged between broken train cars. It is twitching with a faint, sickening spasm.",
+      "observe": "A massive divine shard piercing through a wreckage of trains."
+    },
+    "B6_040": {
+      "dialogue": "An altar once dedicated to the Grim Reaper lies smashed and desecrated. Even the authority of Death seems to have been ruthlessly trampled here.",
+      "observe": "A stone structure shattered beyond recognition."
+    },
+    "B6_042": {
+      "dialogue": "The deepest, darkest edge of the vehicle depot. All tracks converge here, and at the center, the remnants of the Ancient God swirl like a localized storm of chaos.",
+      "observe": "The final terminus of the depot and the heart of the abyss."
     }
   }
 }

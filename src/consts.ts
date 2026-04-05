@@ -61,6 +61,7 @@ export const MAP_IDS = {
   B3_5_RESISTANCE_BASE: 'B3_5_Resistance_Base',
   B4_Waste_Disposal_Area: 'B4_Waste_Disposal_Area',
   B5_VIP_lounge: 'B5_VIP_lounge',
+  B6_VEHICLE_DEPOT: 'B6_VEHICLE_DEPOT',
 } as const
 
 export const FULL_VISIBLE_MAP_ID_LIST = [MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE]

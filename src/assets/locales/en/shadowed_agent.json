@@ -1,0 +1,31 @@
+{
+  "name": "Shadowed Agent, Shadow",
+  "lines": [
+    "Maintain comms security. Target not yet secured.",
+    "Too many variables. Contamination levels in this sector exceed projections.",
+    "Forget what you saw. It’s the only way you’ll stay alive."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "An asset? Fine. If your survival aids the mission, I will provide support.",
+      "farewell": "Keep our paths separate. If my position is compromised, you’re finished too."
+    },
+    "normal": {
+      "greeting": "Civilian? This area is off-limits. Turn back immediately.",
+      "farewell": "Watch your mouth if you make it out. Information that isn't recorded doesn't exist."
+    },
+    "hostile": {
+      "greeting": "Initiating witness elimination protocol. Security takes precedence over your life.",
+      "farewell": "Your data is being purged. No one will ever find you."
+    }
+  },
+  "deathLine": "Mission... failed... Log transmitted to HQ... Immediate... disposal...",
+  "description": "An agent dispatched by an unknown organization. Their objective is to recover biological samples and classified data from the depot.",
+
+  "encounter": [
+    "Shadow: (Checking a suppressed firearm) The Resistance messing with that corpse wasn't an accident. Someone broke the seal on purpose.",
+    "Shadow: I've analyzed the attack patterns. They're more sensitive to bio-signatures than sound. Holding your breath won't save you.",
+    "Shadow: Mika's comms went dark. System synchronization was inevitable. I need to extract the data before her brain completely merges with the mainframe.",
+    "Shadow: Intel suggests command is considering burying this entire depot. We're out of time. Secure the samples and find an extraction point."
+  ]
+}

@@ -33,6 +33,15 @@ import subspace from './subspace.json'
 import third_boss from './third_boss.json'
 import vending_machine from './vending_machine.json'
 
+import aris_purifier from './aris_purifier.json'
+import elias_survivor from './elias_survivor.json'
+import dax_looter from './dax_looter.json'
+import hansen_mechanic from './hansen_mechanic.json'
+import mika_operator from './mika_operator.json'
+import shadowed_agent from './shadowed_agent.json'
+import silas_dissector from './silas_dissector.json'
+import vora_observer from './vora_observer.json'
+
 const en = {
   item,
   affix,
@@ -68,6 +77,16 @@ const en = {
     flint,
     baron_valter,
     third_boss,
+
+    //b6
+    aris_purifier,
+    elias_survivor,
+    dax_looter,
+    hansen_mechanic,
+    mika_operator,
+    shadowed_agent,
+    silas_dissector,
+    vora_observer,
   },
   skill,
   events,

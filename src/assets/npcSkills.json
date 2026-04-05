@@ -575,12 +575,12 @@
   },
   "second_phases": {
     "id": "second_phases",
-    "name": "테스트맨의 2 페이즈",
-    "description": "테스트맨의 진정한 모습",
+    "name": "2 페이즈",
+    "description": "지하 6층의 오염이 전파되고 있다..",
     "chance": 0.5,
     "step": 2,
     "type": "passive",
-    "skills": ["cmd_purity"]
+    "skills": ["spread_of_taint"]
   },
   "third_phases": {
     "id": "third_phases",
@@ -605,6 +605,101 @@
     "attackType": "ranged",
     "description": "가장 강한 적 3명을 묶고 이를 감시하는 파수꾼을 만들어냅니다.",
     "chance": 0.3,
+    "targetType": "ENEMY_ALL"
+  },
+  "return_to_ash": {
+    "id": "return_to_ash",
+    "name": "타고 남은 재",
+    "attackType": "ranged",
+    "power": 3,
+    "description": "무작위 대상에게 높은 피해를 주고 화상을 입히지만, 본인도 타격을 입습니다.",
+    "chance": 0.3,
+    "targetType": "ENEMY_RANDOM",
+    "buff": {
+      "id": "burn",
+      "type": "dot",
+      "duration": 4,
+      "atk": 15
+    }
+  },
+  "curse_of_the_phoenix": {
+    "id": "curse_of_the_phoenix",
+    "name": "불사조의 저주",
+    "description": "고통을 받을수록 아리스의 육체는 더욱 단단해지며, 역설적으로 오염된 생명력이 그녀를 억지로 살려놓습니다.",
+    "chance": 1,
+    "type": "passive",
+    "targetType": "SELF",
+    "buff": {
+      "id": "burn",
+      "type": "buff",
+      "def": 8,
+      "duration": 3
+    }
+  },
+  "last_embers": {
+    "id": "last_embers",
+    "name": "종말의 잔불",
+    "attackType": "ranged",
+    "power": 0.8,
+    "description": "체력이 낮을 수록 더 강력한 피해를 모두에게 부여합니다.",
+    "chance": 0.3,
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "id": "burn",
+      "type": "dot",
+      "duration": 4,
+      "atk": 15
+    }
+  },
+  "spread_of_taint": {
+    "id": "spread_of_taint",
+    "name": "오염의 확산",
+    "attackType": "ranged",
+    "power": 0.8,
+    "description": "불특정 적군에게 혼란을 부여합니다.",
+    "chance": 0.3,
+    "targetType": "ENEMY_RANDOM",
+    "buff": {
+      "id": "confuse",
+      "type": "deBuff",
+      "duration": 4
+    }
+  },
+  "cloak_active": {
+    "id": "cloak_active",
+    "name": "은폐장 활성",
+    "description": "은폐장을 활성화하여 몸을 보이지 않게 됩니다.",
+    "chance": 0.2,
+    "targetType": "SELF",
+    "type": "buff",
+    "buff": {
+      "id": "stealth",
+      "type": "stealth",
+      "crit": 1,
+      "duration": 3
+    }
+  },
+  "death_stigma": {
+    "id": "death_stigma",
+    "name": "죽음의 낙인",
+    "attackType": "ranged",
+    "description": "무작위 적군에게 낙인 부여, 낙인이 찍힌 대상은 수확 대상이 됩니다.",
+    "chance": 0.3,
+    "power": 1.8,
+    "targetType": "ENEMY_RANDOM",
+    "buff": {
+      "id": "death_stigma",
+      "type": "deBuff",
+      "duration": 8
+    }
+  },
+  "harvest": {
+    "id": "harvest",
+    "name": "수확",
+    "attackType": "melee",
+    "description": "모든 적군의 영혼 수확을 시도합니다. 낙인이 있다면 치명적인 피해를 입힙니다.",
+    "chance": 0.2,
+    "power": 0.8,
     "targetType": "ENEMY_ALL"
   }
 }

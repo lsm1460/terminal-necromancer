@@ -403,5 +403,101 @@
     "critRange": [0.2, 0.6],
     "price": 4000,
     "sellPrice": 300
+  },
+
+  "industrial_oil": {
+    "id": "industrial_oil",
+    "type": "item",
+    "price": 200,
+    "sellPrice": 50
+  },
+  "divine_powder": {
+    "id": "divine_powder",
+    "type": "item",
+    "price": 500,
+    "sellPrice": 150
+  },
+  "violet_pendant": {
+    "id": "violet_pendant",
+    "type": "item",
+    "price": 4500,
+    "sellPrice": 1500
+  },
+  "resistance_badge": {
+    "id": "resistance_badge",
+    "type": "item",
+    "price": 300,
+    "sellPrice": 300
+  },
+  "surgical_scalpel": {
+    "id": "surgical_scalpel",
+    "type": "weapon",
+    "atkRange": [1, 2],
+    "critRange": [0.5, 0.8],
+    "attackType": "melee",
+    "price": 5000,
+    "sellPrice": 2000
+  },
+  "mechanical_heart_part": {
+    "id": "mechanical_heart_part",
+    "type": "item",
+    "price": 2200,
+    "sellPrice": 800
+  },
+  "stolen_gold_bar": {
+    "id": "stolen_gold_bar",
+    "type": "item",
+    "price": 3000,
+    "sellPrice": 3000
+  },
+  "purified_divine_shard": {
+    "id": "purified_divine_shard",
+    "type": "item",
+    "price": 6000,
+    "sellPrice": 2500
+  },
+  "aris_crystal_staff": {
+    "id": "aris_crystal_staff",
+    "type": "weapon",
+    "attackType": "ranged",
+    "atkRange": [8, 11],
+    "critRange": [0.3, 0.6],
+    "maxSkeletonRange": [1, 2],
+    "minRebornRarity": 1,
+    "price": 15000,
+    "sellPrice": 6000
+  },
+  "reapers_touch_scythe": {
+    "id": "reapers_touch_scythe",
+    "type": "weapon",
+    "attackType": "melee",
+    "atkRange": [28, 40],
+    "critRange": [0.4, 0.6],
+    "maxSkeletonRange": [1, 1],
+    "minRebornRarity": 1,
+    "price": 8500,
+    "sellPrice": 3500
+  },
+  "contract_of_death": {
+    "id": "contract_of_death",
+    "type": "item",
+    "price": 25000,
+    "sellPrice": 25000
+  },
+  "holy_water_concentrate": {
+    "id": "holy_water_concentrate",
+    "type": "consumable",
+    "price": 2000,
+    "sellPrice": 500,
+    "hpHeal": 100,
+    "mpHeal": 50
+  },
+  "high_grade_anesthetic": {
+    "id": "high_grade_anesthetic",
+    "type": "consumable",
+    "price": 1500,
+    "sellPrice": 300,
+    "hpHeal": 150,
+    "mpHeal": 0
   }
 }

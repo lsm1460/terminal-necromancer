@@ -134,6 +134,23 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       handlePhases(attacker, skill as PhasesShift)
     },
   },
+
+  curse_of_the_phoenix: {
+    onAfterHit: async (attacker, defender, skill) => {
+      if (skill.buff) {
+        defender.applyBuff(skill.buff)
+      }
+
+      const healAmount = Math.floor(defender.ref.maxHp * 0.03)
+
+      const previousHp = defender.ref.hp
+      defender.ref.hp = Math.min(defender.ref.maxHp, defender.ref.hp + healAmount)
+
+      if (defender.ref.hp > previousHp) {
+        Terminal.log(`${defender.name}의 불꽃이 타오르며 상처가 아물어간다. (+${healAmount})`)
+      }
+    },
+  },
 }
 
 function handlePhases(attacker: CombatUnit, phases: PhasesShift) {

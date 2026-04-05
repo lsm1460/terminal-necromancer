@@ -1,0 +1,30 @@
+{
+  "name": "Aris, the Corrupted Purifier",
+  "lines": [
+    "Burn... me... This loathsome flesh, this violet mist... everything must be turned to ash.",
+    "The pain does not matter. Please... wash my soul with the flames. Before it's too late.",
+    "Do you hear it? The squirming things inside me... I would rather hear the sound of my own searing flesh; it feels like salvation."
+  ],
+  "scripts": {
+    "friendly": {
+      "greeting": "A soul... still pure. Stay away from me. The darkness within me is trying to devour you.",
+      "farewell": "Please, run away. Before I succumb to the delusion that I must 'purify' you... please."
+    },
+    "normal": {
+      "greeting": "Halt... Can't you smell the stench of corruption from me? If you come any closer, you will be tainted too.",
+      "farewell": "Go. And if you can... do not pray for me, but bring the fire that will consume me."
+    },
+    "hostile": {
+      "greeting": "No! This isn't me! ...No, you must be purified too. We shall become ash together!",
+      "farewell": "Kill me... please... Before I turn you into ash... stop me first..."
+    }
+  },
+  "deathLine": "Ah... finally... the flames... are saving me... The cold darkness... is fading...",
+  "description": "A fanatic who tried to purge the vehicle depot but was ultimately consumed by the contamination herself. Terrified by her transforming body, she desperately wishes for someone to burn her to death.",
+  "encounter": [
+    "Aris: (Touching the flames with trembling hands) Look... my flesh is melting away. But it's not enough... I need a hotter flame!",
+    "Aris: Maybe those Resistance wretches were right... The sleeping corpse of God should never have been awakened. Now, violet poison flows through my veins instead of blood!",
+    "Aris: Those souls in the mist are calling me... No, I don't want to become one of them! Please, sever me from this cycle!",
+    "Aris: Do not come any closer! I fear my breath will defile you... but... but I loathe myself for wanting to crave that warm life force of yours!"
+  ]
+}
