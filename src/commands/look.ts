@@ -1,4 +1,3 @@
-import { printStatus } from '~/statusPrinter'
 import { CommandFunction } from '~/types'
 import { lookAll, lookItem, printItem } from './overview'
 
@@ -17,12 +16,10 @@ export const lookCommand: CommandFunction = async (player, args, context) => {
     return false
   } else if (type === 'item' && target) {
     const targetItem = items.find((_item) => _item.origin === target)
-    printItem(targetItem)
+    targetItem && printItem(targetItem)
 
     return false
   }
-
-  printStatus(player, context)
 
   await lookAll(player, context, items, tile.monsters)
 

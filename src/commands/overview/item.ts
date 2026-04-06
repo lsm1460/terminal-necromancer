@@ -7,12 +7,7 @@ import { getOriginId } from '~/utils'
 import { selectTarget } from './utils'
 import { Item } from '~/core/item/Item'
 
-export const printItem = (item?: Item) => {
-  if (!item) {
-    Terminal.log(i18n.t('item_not_found'))
-    return
-  }
-
+export const printItem = (item: Item, inInventory = false) => {
   const rarityKey = item.rarity || 'COMMON'
   const rarityText = i18n.t(`commands.look.item.rarity.${rarityKey}`)
   const { name, origin } = item
@@ -86,7 +81,9 @@ export const printItem = (item?: Item) => {
   
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 
-  Terminal.pick(origin)
+  if (!inInventory) {
+    Terminal.pick(origin, `\n${i18n.t('commands.pick_up', {item: name})}`)
+  }
 }
 
 export const lookItem = async (dropList: Drop[], player: Player) => {

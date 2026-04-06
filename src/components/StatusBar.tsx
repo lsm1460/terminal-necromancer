@@ -21,7 +21,8 @@ export const StatusBar: React.FC = () => {
       level: player.level,
       hp: player.hp,
       maxHp: player.maxHp,
-      gold: player.gold,
+      mp: player.mp,
+      maxMp: player.maxMp,
       location: map?.currentSceneId,
     }
   }, [getPlayer, getContext, logs])
@@ -34,8 +35,11 @@ export const StatusBar: React.FC = () => {
             <span>LV. {status.level}</span> |
             <span>
               HP: {status.hp.toLocaleString()}/{status.maxHp.toLocaleString()}
-            </span>{' '}
-            |<span>GOLD: {status.gold.toLocaleString()} G</span>
+            </span>
+            |
+            <span>
+              MP: {status.mp.toLocaleString()}/{status.maxMp.toLocaleString()}
+            </span>
           </p>
           <ThemedButton.round className="ml-auto bg-transparent" onClick={toggleConfigMenu}>
             <Settings size={20} />

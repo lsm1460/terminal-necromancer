@@ -32,6 +32,8 @@ export const ButtonList: React.FC = () => {
 
   return (
     <ButtonWrapper>
+      {disabled && <div className='absolute inset-0 flex items-center justify-center bg-black/90'>
+      {i18n.t('web.button_disabled')}</div>}
       {commandList.map((cmd) => (
         <ThemedButton
           key={cmd.name}
@@ -119,14 +121,17 @@ const ButtonWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             xl:transition-none xl:translate-y-0
           `}
         >
+          <div className='xl:px-3'>
           <div
             className={`
+              relative
               w-full bg-grey-800 pb-4 flex-1
               grid grid-cols-3 grid-rows-2
-              xl:px-3 xl:flex! xl:flex-col xl:items-stretch xl:grid-cols-none xl:grid-rows-none xl:pb-0 xl:gap-x-0 xl:gap-y-2
+              xl:flex! xl:flex-col xl:items-stretch xl:grid-cols-none xl:grid-rows-none xl:pb-0 xl:gap-x-0 xl:gap-y-2
             `}
           >
             {children}
+          </div>
           </div>
         </div>
       </div>

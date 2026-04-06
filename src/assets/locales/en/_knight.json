@@ -34,7 +34,7 @@
       "The mightier the armaments I clad myself in, the more of my former prowess I shall reclaim to deliver cruel death upon your foes.",
       "Now, command me. Wherever your will reaches, there shall be my battlefield."
     ],
-    "system_hint": "Equipping the Death Knight with better gear permanently enhances his stats and skill potency."
+    "system_hint": "The better the equipment you bestow upon the Death Knight, the more his stats and skill power will be permanently enhanced. \nOnce assigned, equipment cannot be retrieved, though it can be reset."
   },
   "upgrade": {
     "select_title": "⚔️ Select the armaments to bestow. (Weapon/Armor)",

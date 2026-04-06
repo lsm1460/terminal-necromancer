@@ -3,7 +3,7 @@ import { COMMAND_GROUPS, CommandKey } from './consts'
 import { Terminal } from './core/Terminal'
 import { Player } from './core/player/Player'
 import i18n from './i18n'
-import { printDirections, printStatus } from './statusPrinter'
+import { printDirections, printTileStatus } from './statusPrinter'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
 
@@ -91,7 +91,7 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
     if (result) {
       const { map, events } = context
       const currentTile = map.getTile(player.pos.x, player.pos.y)
-      printStatus(player, context)
+      printTileStatus(player, context)
       await events.handle(currentTile, player, context)
     }
 

@@ -43,7 +43,7 @@ async function handleItemAction(item: Item, player: Player, args: any, context: 
 
   switch (action) {
     case 'look':
-      printItem(item)
+      printItem(item, true)
       break
     case 'equip':
       await player.equip(item)

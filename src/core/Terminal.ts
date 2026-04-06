@@ -65,7 +65,7 @@ export class Terminal {
     this.renderer.look(message, name, type)
   }
 
-  public static pick(name: string, message?: string) {
+  public static pick(name: string, message: string) {
     if (!this.renderer) throw new Error('Renderer not initialized')
 
     this.renderer.pick(name, message)
@@ -81,5 +81,11 @@ export class Terminal {
     if (!this.renderer) throw new Error('Renderer not initialized')
 
     this.renderer.skill(message, prefix)
+  }
+
+  public static talk(name: string) {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.talk(name)
   }
 }

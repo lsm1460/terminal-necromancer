@@ -5,6 +5,8 @@
   "corpses_count": "사용 가능한 시체 수: {{count}}",
   "remaining_turns": "[{{name}}: {{duration}}턴 남음]",
   "confirm_selection": "확인",
+  "talk_to": "{{name}} 대화하기",
+  "button_disabled": "선택지 진행 중",
 
   "config": {
     "move": {

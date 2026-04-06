@@ -13,12 +13,27 @@ export const useCombat = () => {
   }, [getContext, getPlayer])
 
   const getSortedPlayerSide = useCallback(
-    (units: any[]) => [...units].sort((a, b) => (b.type === 'player' ? 1 : 0) - (a.type === 'player' ? 1 : 0)),
+    (units: any[]) =>
+      [...units].sort((a, b) => {
+        if (a.type === 'player' && b.type !== 'player') return -1
+        if (a.type !== 'player' && b.type === 'player') return 1
+
+        const weightA = a.orderWeight ?? 0
+        const weightB = b.orderWeight ?? 0
+
+        return weightB - weightA
+      }),
     []
   )
 
   const getSortedEnemySide = useCallback(
-    (units: any[]) => [...units].reverse(),
+    (units: any[]) =>
+      [...units].sort((a, b) => {
+        const weightA = a.orderWeight ?? 0
+        const weightB = b.orderWeight ?? 0
+
+        return weightB - weightA
+      }),
     []
   )
 

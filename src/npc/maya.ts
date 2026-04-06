@@ -106,6 +106,8 @@ async function handleAwakeGolem(player: Player, npc: NPC, context: GameContext) 
 }
 
 async function handleUpgradeGolem(player: Player) {
+  Terminal.log(i18n.t('npc.maya_tech.upgrade.welcome'))
+  
   const machineStacks = player.golemUpgrade.filter((s) => s === 'machine').length
   const soulStacks = player.golemUpgrade.filter((s) => s === 'soul').length
   const totalStacks = player.golemUpgrade.length

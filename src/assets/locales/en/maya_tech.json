@@ -75,6 +75,7 @@
     ]
   },
   "upgrade": {
+    "welcome": "Maya: \"Wise choice! If we add these reinforced alloy plates... this Golem's defense is going to be off the charts. Of course, there’ll be a small service fee!\"",
     "soul_hate": [
       "\nMaya: \"Ugh... what is this sticky, nasty black mist? It's that four-eyes guy's work, isn't it?!\"",
       "Maya: \"Putting this filth inside a machine... Ugh, I'm charging extra for the cleaning and labor! You brought enough gold, right?\""

@@ -1,6 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
-import { printStatus } from '~/statusPrinter'
+import { printTileStatus } from '~/statusPrinter'
 import { GameContext } from '~/types'
 import { NPCHandler } from './NPCHandler'
 import i18n from '~/i18n'
@@ -37,7 +37,7 @@ async function handlePortal(player: Player, context: GameContext) {
     await events.handle(tile, player, context)
     broadcast.play()
 
-    printStatus(player, context)
+    printTileStatus(player, context)
   } else {
     Terminal.log(i18n.t('npc.portal.cancel'))
   }

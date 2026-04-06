@@ -22,7 +22,7 @@
   "deathLine": "My body... is getting cold... This sensation... must be recorded...",
   "description": "A madman of the terminal who wields a scalpel to satisfy destructive curiosity rather than to heal. Rumored to be former Resistance.",
   "choices": {
-    "upgrade_golem": "🧬 Modify Golem",
+    "upgrade_golem": "🧬 Upgrade Golem",
     "awake_golem": "🧬 Resurrect Golem"
   },
   "heal": {
@@ -53,6 +53,7 @@
     ]
   },
   "upgrade": {
+    "welcome": "Dr. Zed: \"A magnificent plan! With the essence of my Soul Engineering, I guarantee this Golem's offensive power will reach a level you've never witnessed before!\"",
     "machine_hate": [
       "\nDr. Zed: \"Ugh! What are these fishy-smelling hunks of metal?! Get them out of my sight immediately!\"",
       "Dr. Zed: \"There's no room for my essence because of this scrap metal trash!\""

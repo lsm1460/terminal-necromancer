@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
 import i18n from '~/i18n'
 import { Player } from '../core/player/Player'
-import { printStatus } from '../statusPrinter'
+import { printTileStatus } from '../statusPrinter'
 import { GameContext, Renderer } from '../types'
 
 export class CLIRenderer implements Renderer {
@@ -25,7 +25,7 @@ export class CLIRenderer implements Renderer {
   }
 
   printStatus(player: Player, context: GameContext): void {
-    printStatus(player, context)
+    printTileStatus(player, context)
   }
 
   // --- 입력 메서드 (Terminal가 호출할 비동기 로직) ---
@@ -113,4 +113,6 @@ export class CLIRenderer implements Renderer {
   skill(message: string, prefix?: string) {
     console.log((prefix || '') + message)
   }
+
+  talk() {}
 }

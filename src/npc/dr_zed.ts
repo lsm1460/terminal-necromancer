@@ -86,6 +86,8 @@ async function handleGossip(context: GameContext) {
 }
 
 async function handleUpgradeGolem(player: Player) {
+  Terminal.log(i18n.t('npc.dr_zed.upgrade.welcome'))
+
   const ZED_LIMIT = player.upgradeLimit + 1 // 6
 
   const machineStacks = player.golemUpgrade.filter((s) => s === 'machine').length

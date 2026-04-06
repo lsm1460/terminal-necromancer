@@ -4,6 +4,7 @@
   "skill": "스킬",
   "inventory": "인벤토리",
   "pick": "줍기",
+  "pick_up": "{{item}} 줍기",
   "help": "도움말",
 
   "combat": {
@@ -38,6 +39,7 @@
     "select_prompt": "무엇을 확인하시겠습니까?",
     "select_target_prompt": "세부 대상을 선택하세요.",
     "category": {
+      "current": "📜 현재 장소",
       "path": "🔍 주변 지형 살피기",
       "npc": "👤 주변 인물",
       "corpse": "💀 시체",
@@ -98,6 +100,7 @@
     "entity": {
       "type_tag": {
         "minion": " [🧟 MINION] ",
+        "npc": " [👤 NPC] ",
         "monster": " [💀 MONSTER] "
       },
       "stats": {

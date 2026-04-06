@@ -25,12 +25,14 @@ export const GameInput: React.FC = () => {
 
     if (config.isAutoInputFocus) {
       window.addEventListener('click', handleGlobalClick)
-      console.log('이벤트 등록됨')
     }
+
+      if (!disabled && config.isAutoInputFocus) {
+        inputRef.current?.focus()
+      }
 
     return () => {
       window.removeEventListener('click', handleGlobalClick)
-      console.log('이벤트 제거됨')
     }
   }, [disabled, isOpenConfigMenu])
 

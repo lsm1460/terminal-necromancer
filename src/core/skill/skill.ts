@@ -69,7 +69,7 @@ export const getPlayerSkills = (): Record<SkillId, Skill> => {
     },
     [SKILL_IDS.BONE_STORM]: {
       attackType: 'ranged',
-      cost: 60,
+      cost: 40,
       requiredExp: 2000,
       requiredLevel: 7,
       unlocks: ['third_boss'],

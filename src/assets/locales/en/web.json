@@ -5,6 +5,8 @@
   "corpses_count": "Available Corpses: {{count}}",
   "remaining_turns": "[{{name}}: {{duration}} turns left]",
   "confirm_selection": "CONFIRM",
+  "talk_to": "Talk to {{name}}",
+  "button_disabled": "Decision in Progress",
 
   "config": {
     "move": {

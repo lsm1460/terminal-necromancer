@@ -44,7 +44,7 @@ export const BattleStage: React.FC = () => {
 
     observer.observe(parentRef.current)
 
-    return () => observer.disconnect() 
+    return () => observer.disconnect()
   }, [BASE_WIDTH, BASE_HEIGHT])
 
   useEffect(() => {
@@ -150,7 +150,10 @@ const Side: React.FC<{
   focusedUnit: { unit: CombatUnit; isEnemy: boolean } | null
   setFocusedUnit: React.Dispatch<React.SetStateAction<{ unit: CombatUnit; isEnemy: boolean } | null>>
 }> = ({ units, isEnemy = false, focusedUnit, setFocusedUnit }) => {
+  const unitActions = useBattleStore((state) => state.unitActions)
   const OFFSET_STEP = 16
+
+  const hasAnyActiveAction = Object.values(unitActions).some((action) => action.type !== 'IDLE')
 
   return (
     <div
@@ -164,6 +167,14 @@ const Side: React.FC<{
       }}
     >
       {units.map((unit, i) => {
+        const action = unitActions[unit.id]
+        const isActing = action && action.type !== 'IDLE'
+
+        let isFocus: boolean | undefined = isActing || (focusedUnit ? focusedUnit.unit.id === unit.id : false)
+        if (!hasAnyActiveAction && focusedUnit === null) {
+          isFocus = undefined
+        }
+
         const rowIndex = Math.floor(i / 4)
         const stepOffset = rowIndex * OFFSET_STEP
 
@@ -172,16 +183,11 @@ const Side: React.FC<{
             <div
               className="w-[250%] aspect-square absolute left-0 bottom-0 pointer-events-none"
               style={{
-                zIndex: rowIndex,
+                zIndex: rowIndex + (isFocus === true ? 100 : 0),
                 transform: `translateX(${stepOffset}px) ${isEnemy ? 'scaleX(-1)' : ''}`,
               }}
             >
-              <CombatUnitComponent
-                unit={unit}
-                isFocus={focusedUnit ? focusedUnit.unit.id === unit.id : undefined}
-                isEnemy={isEnemy}
-                setFocusedUnit={setFocusedUnit}
-              />
+              <CombatUnitComponent unit={unit} isFocus={isFocus} isEnemy={isEnemy} setFocusedUnit={setFocusedUnit} />
             </div>
           </div>
         )

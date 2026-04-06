@@ -4,6 +4,7 @@
   "skill": "Skill",
   "inventory": "Inventory",
   "pick": "Pick",
+  "pick_up": "Pick up {{item}}",
   "help": "Help",
 
   "combat": {
@@ -38,6 +39,7 @@
     "select_prompt": "What would you like to examine?",
     "select_target_prompt": "Select a specific target to examine.",
     "category": {
+      "current": "📜 Current Location",
       "path": "🔍 Inspect Surroundings",
       "npc": "👤 Nearby",
       "corpse": "💀 Corpses",
@@ -98,6 +100,7 @@
     "entity": {
       "type_tag": {
         "minion": " [🧟 MINION] ",
+        "npc": " [👤 NPC] ",
         "monster": " [💀 MONSTER] "
       },
       "stats": {

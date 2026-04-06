@@ -32,7 +32,7 @@ async function handleElevate(player: Player, context: GameContext) {
     message: string
   }[] = Object.entries(MAP_IDS)
     .filter(([_, value]) => value !== currentSceneId)
-    .filter(([_, value]) => value !== MAP_IDS.title)
+    .filter(([_, value]) => !( [MAP_IDS.title, MAP_IDS.B1_Last] as string[] ).includes(value))
     .filter(([_, value]) => map.isUnlocked(value, completed))
     .map(([_, value]) => {
       const mapData = map.getMap(value)

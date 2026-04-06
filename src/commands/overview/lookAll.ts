@@ -1,6 +1,7 @@
 import { Terminal } from '~/core/Terminal'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
+import { printTileStatus } from '~/statusPrinter'
 import { Drop, GameContext, Monster, NPC } from '~/types'
 import { lookCorpse } from './corpse'
 import { lookBattleTarget } from './entity'
@@ -40,6 +41,7 @@ export const lookAll = async (
     .filter((result): result is NonNullable<typeof result> => Boolean(result && result.tile))
 
   const categoryChoices = [
+    {name: 'CURRENT', message: i18n.t('commands.look.category.current') },
     ...(accessiblePaths.length ? [{ name: 'PATH', message: i18n.t('commands.look.category.path') }] : []),
     ...(aliveNPCs.length ? [{ name: 'NPC', message: i18n.t('commands.look.category.npc') }] : []),
     ...(corpse.length ? [{ name: 'CORPSE', message: i18n.t('commands.look.category.corpse') }] : []),
@@ -56,6 +58,10 @@ export const lookAll = async (
 
   let targetId: string
   switch (category) {
+    case 'CURRENT':
+      targetId = 'current'
+      printTileStatus(player, context)
+      break
     case 'MONSTER':
       targetId = await lookBattleTarget(aliveMonsters, context)
       break

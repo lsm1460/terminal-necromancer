@@ -2,7 +2,6 @@ import { Player } from './core/player/Player'
 import { GameContext, NPC } from './types'
 
 import { union } from 'lodash'
-import { QuestManager } from './core/QuestManager'
 import { Terminal } from './core/Terminal'
 import { World } from './core/World'
 import i18n from './i18n'
@@ -86,8 +85,4 @@ export function printDrops(player: Player, world: World) {
       Terminal.look(` - ${name}${qtyText}`, origin, 'item')
     })
   }
-}
-
-export function printStatus(player: Player, context: GameContext) {
-  printTileStatus(player, context)
 }

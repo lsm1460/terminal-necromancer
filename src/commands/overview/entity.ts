@@ -10,15 +10,18 @@ import { renderHpBar, selectTarget } from './utils'
 export const printEntity = (target: BattleTarget, context: GameContext) => {
   const {
     battle: { npcSkills },
+    npcs,
   } = context
 
   const isMinion = target.isMinion
+  const isNpc = target.isNpc
   const hpBar = renderHpBar(target.hp, target.maxHp)
 
-  // 타입 태그 결정
   const typeTag = isMinion
     ? i18n.t('commands.look.entity.type_tag.minion')
-    : i18n.t('commands.look.entity.type_tag.monster')
+    : isNpc
+      ? i18n.t('commands.look.entity.type_tag.npc')
+      : i18n.t('commands.look.entity.type_tag.monster')
 
   // SKILL_LIST에서 실제 스킬 객체 로드
   const skillDetails = (target.skills || []).map((id) => npcSkills.getSkill(id)).filter(Boolean)
@@ -71,6 +74,18 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   Terminal.log(`──────────────────────────────────────────────`)
   Terminal.log(` 💬 "${target.description}"`)
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+
+  console.log('isNpc',isNpc)
+  const canTalk = isNpc || target.isKnight
+
+  if (canTalk) {
+    let name = target.name
+    if (target.isKnight) {
+      name = npcs.getNPC('_knight')?.name || ''
+    }
+
+    Terminal.talk(name)
+  }
 }
 
 export const printGolem = (target: BattleTarget) => {

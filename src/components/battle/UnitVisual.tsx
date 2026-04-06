@@ -2,11 +2,13 @@ import { motion, useAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useState } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
+import { getHpColor } from '~/utils'
 
 export const UnitVisual: React.FC<{
   unit: CombatUnit
   isEnemy: boolean
 }> = ({ unit, isEnemy }) => {
+  const hpPercentage = Math.max(0, (unit.ref.hp / unit.ref.maxHp) * 100)
   const controls = useAnimation()
   const currentAction = useBattleStore((state) => state.unitActions[unit.id])
 
@@ -31,8 +33,6 @@ export const UnitVisual: React.FC<{
       switch (currentAction.type) {
         case 'ATTACK':
           return s.attack?.src
-        case 'DIE':
-          return s.die?.src
       }
     }
 
@@ -124,7 +124,18 @@ export const UnitVisual: React.FC<{
 
   return (
     <motion.div animate={controls} className="flex flex-col items-center relative">
-      <div className="max-w-full aspect-square flex items-center justify-center">
+      <div className="max-w-full aspect-square flex items-center justify-center relative">
+        <div className="w-9 h-2 bg-slate-900 border border-cyan-900 overflow-hidden absolute top-2">
+          <motion.div
+            initial={false}
+            animate={{
+              width: `${hpPercentage}%`,
+              backgroundColor: getHpColor(hpPercentage),
+            }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="h-full rounded-sm"
+          />
+        </div>
         <img
           src={displayImage}
           alt={unit.name}

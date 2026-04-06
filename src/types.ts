@@ -173,9 +173,10 @@ export interface Renderer {
   ): Promise<string[]>
   move(directions: string[]): void
   look(message: string, name: string, type: string): void
-  pick(name: string, message?: string): void
+  pick(name: string, message: string): void
   attack(message: string, prefix?: string): void
   skill(message: string, prefix?: string): void
+  talk(name: string): void
 }
 
 export interface GameContext {
