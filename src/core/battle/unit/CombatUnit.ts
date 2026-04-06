@@ -1,13 +1,13 @@
 import { Terminal } from '~/core/Terminal'
 import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
-import i18n from '~/i18n'
 import { AttackType, BattleTarget, UnitSprites } from '~/types'
 import { getOriginId } from '~/utils'
 import { Battle, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
-import { Buff, BuffOptions } from '../Buff'
+import { BuffOptions } from '../Buff'
 import { BattleLogFormatter } from './BattleLogFormatter'
+import { UnitBuffManager } from './UnitBuffManager'
 
 type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
 
@@ -16,12 +16,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public name: string
   public stats: any
   public attackType: AttackType = 'melee'
-  public buff: Buff[] = []
-  public deBuff: Buff[] = []
+  public buffManager: UnitBuffManager
   public orderWeight: number
   public phases = 1
 
-  // 어픽스 매니저가 주입할 훅 리스트
   public onBeforeAttackHooks: UnitDamageProcessHook[] = []
   public onBeforeHitHooks: UnitDamageProcessHook[] = []
   public onProcessHitHooks: UnitDamageProcessHook[] = []
@@ -30,14 +28,13 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public onDeath?: () => void | Promise<void>
   public onDeathHooks: ((attacker: CombatUnit, options?: DamageOptions) => Promise<void>)[] = []
 
-  private buffType = ['buff', 'stealth']
-
   constructor(
     public ref: T,
     public type: 'player' | 'minion' | 'monster' | 'npc'
   ) {
     this.id = ref.id
     this.name = ref.name
+    this.buffManager = new UnitBuffManager(this)
 
     this.orderWeight = (ref as any).orderWeight || 0
     this.updateStats()
@@ -57,7 +54,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   public get isStealth() {
-    return this.buff.some((b) => b.type === 'stealth')
+    return this.buffManager.isStealth
   }
 
   public updateStats() {
@@ -73,96 +70,48 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.attackType = unit.computed?.attackType || unit.attackType || 'melee'
   }
 
-  private getBuffMessage(buff: Buff) {
-    const isBuff = this.buffType.includes(buff.type)
-    const path = isBuff ? 'skill.message.buff' : 'skill.message.debuff'
-    const fullPath = `${path}.${buff.id}`
-
-    if (!i18n.exists(fullPath)) {
-      return
-    }
-
-    return (name: string, hp?: number, maxHp?: number) =>
-      i18n.t(fullPath, {
-        name,
-        hp: hp?.toString(),
-        maxHp: maxHp?.toString(),
-      })
-  }
-
-  private processEffect(effectOrOptions: BuffOptions, action: 'apply' | 'remove', force = false): void {
-    const effect = new Buff(effectOrOptions)
-    const isBuff = this.buffType.includes(effect.type)
-    const targetArray = isBuff ? this.buff : this.deBuff
-
-    if (action === 'apply') {
-      const existing = targetArray.find((e) => e.id === effect.id)
-      if (existing) {
-        existing.duration = Math.max(existing.duration, effect.duration)
-      } else {
-        targetArray.push(effect)
-      }
-
-      const getMsg = this.getBuffMessage(effect)
-      if (getMsg) {
-        Terminal.log(getMsg(this.name, this.ref.hp, this.ref.maxHp))
-      }
-    } else {
-      const initialLength = targetArray.length
-      const newArray = targetArray.filter((b) => {
-        if (b.id !== effect.id) return true
-        if (b.isLocked && !force) return true
-        return false
-      })
-
-      if (isBuff) this.buff = newArray
-      else this.deBuff = newArray
-
-      if (newArray.length < initialLength) {
-        Terminal.log(
-          i18n.t('battle.unit.status_change.effect_removed', {
-            name: this.name,
-            effectName: effect.name,
-          })
-        )
-      }
-    }
-  }
-
-  applyEffect(newEffect: BuffOptions) {
-    this.processEffect(newEffect, 'apply')
-  }
-
-  applyBuff(b: BuffOptions) {
-    this.applyEffect(b)
+  public applyBuff(b: BuffOptions) {
+    this.buffManager.applyBuff(b)
   }
 
   public applyDeBuff(d: BuffOptions) {
-    this.applyEffect(d)
+    this.buffManager.applyDeBuff(d)
   }
 
-  public hasDeBuff(_id: BuffOptions['id']) {
-    return this.deBuff.some((_d) => _d.id === _id)
+  public hasDeBuff(id: BuffOptions['id']) {
+    return this.buffManager.hasDeBuff(id)
+  }
+
+  public get buff() {
+    return this.buffManager.buffs
+  }
+
+  public set buff(val) {
+    this.buffManager.buffs = val
+  }
+
+  public get deBuff() {
+    return this.buffManager.deBuffs
+  }
+
+  public set deBuff(val) {
+    this.buffManager.deBuffs = val
   }
 
   public get isConfused() {
-    return this.deBuff.some((_d) => _d.id === 'confuse')
+    return this.buffManager.isConfused
   }
 
   public async executeHit(attacker: CombatUnit, options: DamageOptions = {}) {
-    // 0. [Process] - isPassive 여부와 상관없이 항상 실행
     await this.runHooks(this.onProcessHitHooks, attacker, options)
 
-    // 1. [Before]
     if (!options.isPassive) {
       await this.runHooks(attacker.onBeforeAttackHooks, attacker, options)
       await this.runHooks(this.onBeforeHitHooks, attacker, options)
     }
 
-    // 2. [Action]
     const result = await this.takeDamage(attacker, options)
 
-    // 3. [After]
     if (!result.isEscape && !options.isPassive) {
       await this.runHooks(attacker.onAfterAttackHooks, attacker, options)
 
@@ -171,7 +120,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       }
     }
 
-    // 4. [Death] - 사망 시에는 공격 정보(options)가 필요할 수 있으므로 함께 전달
     if (result.isDead) {
       await this.dead(attacker, options)
     }
@@ -179,9 +127,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     return result
   }
 
-  /**
-   * 비동기 훅 리스트를 순차적으로 실행하는 내부 헬퍼
-   */
   private async runHooks(hooks: Function[] = [], attacker?: CombatUnit, options: DamageOptions = {}) {
     for (const hook of hooks) {
       // 훅의 규격에 맞춰 attacker, defender(this), options를 전달
@@ -189,9 +134,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     }
   }
 
-  /**
-   * [순수 데미지 정산]
-   */
   public async takeDamage(attacker: CombatUnit, options: DamageOptions = {}) {
     if (!this.ref.isAlive) return { isEscape: false, isDead: true, damage: 0 }
     const result = Battle.calcDamage(attacker, this, options)
@@ -225,65 +167,31 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   get finalStats() {
-    // key: keyof Buff를 통해 Buff의 속성 이름만 들어올 수 있게 제한합니다.
-    const getSum = (arr: Buff[], key: keyof Buff) => arr.reduce((acc, b) => acc + (Number(b[key]) || 0), 0)
-
     return {
-      atk: Math.max(0, this.stats.atk + getSum(this.buff, 'atk') - getSum(this.deBuff, 'atk')),
-      def: Math.max(0, this.stats.def + getSum(this.buff, 'def') - getSum(this.deBuff, 'def')),
-      eva: Math.max(0, this.stats.eva + getSum(this.buff, 'eva') - getSum(this.deBuff, 'eva')),
-      crit: (this.stats.crit || 0) + getSum(this.buff, 'crit') - getSum(this.deBuff, 'crit'),
+      atk: Math.max(0, this.stats.atk + this.buffManager.getStatBonus('atk')),
+      def: Math.max(0, this.stats.def + this.buffManager.getStatBonus('def')),
+      eva: Math.max(0, this.stats.eva + this.buffManager.getStatBonus('eva')),
+      crit: (this.stats.crit || 0) + this.buffManager.getStatBonus('crit'),
     }
   }
 
   public removeStealth(): void {
-    const canReveal = this.buff.some((b) => b.type === 'stealth' && !b.isLocked)
-
-    if (canReveal) {
-      this.buff = this.buff.filter((b) => b.type !== 'stealth' || b.isLocked)
-
-      Terminal.log(i18n.t('battle.unit.status_change.stealth_broken', { name: this.name }))
-      this.applyDeBuff({
-        id: 'expose',
-        duration: 2,
-        type: 'expose',
-      })
-    }
+    this.buffManager.removeStealth()
   }
 
   public removeRandomDeBuff(): void {
-    if (this.deBuff.length === 0) return
-
-    const randomIndex = Math.floor(Math.random() * this.deBuff.length)
-    const removed = this.deBuff.splice(randomIndex, 1)[0]
-
-    Terminal.log(
-      i18n.t('battle.unit.status_change.recovered', {
-        name: this.name,
-        effectName: removed.name,
-      })
-    )
+    this.buffManager.removeRandomDeBuff()
   }
 
   public removeBuff(id: BuffOptions['id'], force = false): void {
-    this.processEffect({ id, type: 'buff' } as BuffOptions, 'remove', force)
+    this.buffManager.removeBuff(id, force)
   }
 
   public removeDeBuff(id: BuffOptions['id'], force = false): void {
-    this.processEffect({ id, type: 'deBuff' } as BuffOptions, 'remove', force)
+    this.buffManager.removeDeBuff(id, force)
   }
 
   public removeRandomBuff(): void {
-    if (this.buff.length === 0) return
-
-    const randomIndex = Math.floor(Math.random() * this.buff.length)
-    const removed = this.buff.splice(randomIndex, 1)[0]
-
-    Terminal.log(
-      i18n.t('battle.unit.status_change.forced_removed', {
-        name: this.name,
-        effectName: removed.name,
-      })
-    )
+    this.buffManager.removeRandomBuff()
   }
 }

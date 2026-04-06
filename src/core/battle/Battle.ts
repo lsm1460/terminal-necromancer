@@ -59,7 +59,7 @@ export class Battle implements BattleManager {
     if (!this.currentContext) return
 
     Terminal.log(i18n.t('battle.turn_start', { name: unit.name }))
-    this.updateEffectsDuration(unit)
+    unit.buffManager.updateDuration()
 
     if (await this.actions.handleUnitDeBuff(unit)) return
 
@@ -154,27 +154,6 @@ export class Battle implements BattleManager {
 
   static calcDamage(attacker: CombatUnit, target: CombatUnit, options: DamageOptions = {}) {
     return CombatService.calcDamage(attacker, target, options)
-  }
-
-  private updateEffectsDuration(unit: CombatUnit) {
-    const effectTypes: ('buff' | 'deBuff')[] = ['buff', 'deBuff']
-    effectTypes.forEach((type) => {
-      if (!unit[type]) return
-      unit[type].forEach((effect) => effect.duration--)
-      const expiredEffects = unit[type].filter((e) => e.duration <= 0)
-
-      const messageKey = type === 'buff' ? 'battle.effect_expired.buff' : 'battle.effect_expired.debuff'
-      expiredEffects.forEach((e) => {
-        Terminal.log(
-          i18n.t(messageKey, {
-            unitName: unit.name,
-            effectName: e.name,
-          })
-        )
-      })
-
-      unit[type] = unit[type].filter((e) => e.duration > 0)
-    })
   }
 
   public _spawnMonster(monsterId: string, context: GameContext) {
