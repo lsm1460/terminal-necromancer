@@ -59,11 +59,13 @@ export class SecondBoss implements BossLogic {
     return enemies
   }
 
-  async onVictory(player: Player, context: GameContext) {
+  async onVictory(bossNpc: NPC, context: GameContext) {
     const { npcs } = context
 
     const boss = npcs.getNPC('second_boss')
 
     boss && boss.dead({ karma: 0 })
+
+    Terminal.log(i18n.t('events.boss.victory.log', { name: bossNpc.name }))
   }
 }

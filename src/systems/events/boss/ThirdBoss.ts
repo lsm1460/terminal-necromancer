@@ -83,7 +83,7 @@ export class ThirdBoss implements BossLogic {
     }
   }
 
-  async onVictory(player: Player, context: GameContext) {
+  async onVictory(bossNpc: NPC, context: GameContext, player: Player) {
     const { npcs, events } = context
 
     player.removeMercenaries()

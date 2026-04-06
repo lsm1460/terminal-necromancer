@@ -23,7 +23,7 @@ export class FinalBoss implements BossLogic {
     return [unit]
   }
 
-  async onVictory(player: Player, context: GameContext) {
+  async onVictory(bossNpc: NPC, context: GameContext, player: Player) {
     // TODO: ending..
   }
 }

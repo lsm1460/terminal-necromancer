@@ -62,7 +62,6 @@ export interface Monster extends BattleTarget {
 
 export interface Tile {
   id: string
-  theme: string
   event: string
   dialogue: string
   observe: string

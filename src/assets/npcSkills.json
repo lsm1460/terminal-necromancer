@@ -58,6 +58,21 @@
       "duration": 2
     }
   },
+  "firestorm": {
+    "id": "firestorm",
+    "name": "화염 폭풍",
+    "attackType": "ranged",
+    "description": "모든 적군을 화염 속에 넣습니다.",
+    "chance": 0.2,
+    "power": 0.8,
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "id": "burn",
+      "type": "dot",
+      "duration": 2,
+      "atk": 2
+    }
+  },
   "shield_bash": {
     "id": "shield_bash",
     "name": "방패 밀치기",
@@ -701,5 +716,31 @@
     "chance": 0.2,
     "power": 0.8,
     "targetType": "ENEMY_ALL"
+  },
+
+  "cmd_pause": {
+    "id": "cmd_pause",
+    "name": "명령:정지",
+    "attackType": "ranged",
+    "description": "모든 적군을 멈추게하는 언령을 보냅니다.",
+    "chance": 0.2,
+    "power": 0.3,
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "id": "paralysis",
+      "type": "bind",
+      "duration": 2
+    }
+  },
+  "cmd_assemble": {
+    "id": "cmd_assemble",
+    "name": "명령:집합",
+    "description": "근처에 있는 편린들을 전투에 합류 시킵니다.",
+    "chance": 0.25,
+    "targetType": "SELF",
+    "type": "summon",
+    "options": {
+      "spawnMonsterId": "fragment_of_dead_god_war_no_gain"
+    }
   }
 }

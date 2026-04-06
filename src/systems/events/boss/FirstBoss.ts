@@ -3,6 +3,7 @@ import { Player } from '~/core/player/Player'
 import { GameContext, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
 import i18n from '~/i18n'
+import { Terminal } from '~/core/Terminal'
 
 export class FirstBoss implements BossLogic {
   withMonsterGroup = 'monster-group-b2-boss'
@@ -28,7 +29,9 @@ export class FirstBoss implements BossLogic {
     return enemies
   }
 
-  async onVictory(player: Player, context: GameContext) {
+  async onVictory(bossNpc: NPC, context: GameContext) {
     context.events.completeEvent('got_terminal_map')
+
+    Terminal.log(i18n.t('events.boss.victory.log', { name: bossNpc.name }))
   }
 }

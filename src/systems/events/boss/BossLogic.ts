@@ -8,7 +8,7 @@ export interface BossLogic {
 
   createEnemies(bossNpc: NPC, context: GameContext, player: Player): Promise<CombatUnit[]>
 
-  onVictory?: (player: Player, context: GameContext) => Promise<void>
+  onVictory?: (bossNpc: NPC, context: GameContext, player: Player) => Promise<void>
 
   defeatTalk?: string[]
 }

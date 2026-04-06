@@ -527,5 +527,23 @@
     "dropTableId": "b6_shadowed",
     "minRebornRarity": "elite",
     "skills": ["cloak_active", "death_stigma", "harvest", "second_phases"]
+  },
+
+  "fourth_boss": {
+    "id": "fourth_boss",
+    "attackType": "ranged",
+    "hp": 650,
+    "maxHp": 650,
+    "atk": 42,
+    "def": 27,
+    "eva": 0.03,
+    "exp": 1500,
+    "isAlive": true,
+    "isBoss": true,
+    "reborn": false,
+    "dropTableId": "",
+    "noEscape": true,
+    "noCorpse": true,
+    "skills": []
   }
 }

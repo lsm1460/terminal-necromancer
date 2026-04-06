@@ -26,8 +26,9 @@ class BossEvent {
     const bossLogic = BossFactory.getLogic(bossId)
 
     this.printEncounterHeader(bossNpc.name)
-    
-    const encounterTalk = bossLogic?.postTalk || i18n.t('events.boss.encounter.default_talk', { returnObjects: true }) as string[]
+
+    const encounterTalk =
+      bossLogic?.postTalk || (i18n.t('events.boss.encounter.default_talk', { returnObjects: true }) as string[])
     await speak(encounterTalk)
 
     Terminal.log(i18n.t('events.boss.encounter.start_battle'))
@@ -39,7 +40,7 @@ class BossEvent {
       enemies = [battle.toCombatUnit(bossNpc, 'npc')]
     }
 
-    const isWin = await battle.runCombatLoop(enemies, context)
+    const isWin = enemies.length > 0 ? await battle.runCombatLoop(enemies, context) : true
 
     tile.isClear = isWin
 
@@ -48,12 +49,11 @@ class BossEvent {
       bossNpc.isAlive = false
 
       events.completeEvent(bossId)
-      Terminal.log(i18n.t('events.boss.victory.log', { name: bossNpc.name }))
 
       this.spawnPortal(tile)
 
       if (bossLogic?.onVictory) {
-        await bossLogic.onVictory(player, context)
+        await bossLogic.onVictory(bossNpc, context, player)
       }
 
       // 전투 후 마무리 대화

@@ -24,17 +24,22 @@ export class QuestManager {
   }
 
   async startQuest(context: GameContext) {
-    const quests = [...this.questQue]
-    this.questQue = []
+    if (this.questQue.length === 0) return
 
-    for (let quest of quests) {
-      if (quest.questType === 'death') {
-        const handler = npcDeathHandlers[quest.npcId]
-        if (handler) {
-          await handler(this.player, context)
-        } else {
-          console.warn(`No death handler found for NPC: ${quest.npcId}`)
+    const currentQuests = this.questQue.splice(0)
+
+    for (let quest of currentQuests) {
+      try {
+        if (quest.questType === 'death') {
+          const handler = npcDeathHandlers[quest.npcId]
+          if (handler) {
+            await handler(this.player, context)
+          } else {
+            console.warn(`No death handler found for NPC: ${quest.npcId}`)
+          }
         }
+      } catch (e) {
+        console.error(`Error in quest handler for ${quest.npcId}:`, e)
       }
     }
   }

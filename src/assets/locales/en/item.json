@@ -279,5 +279,25 @@
   "high_grade_anesthetic": {
     "label": "High-Grade Anesthetic",
     "description": "A potent drug formulated to completely block out pain. It temporarily numbs all senses for survival, allowing the body to focus entirely on healing."
+  },
+  "deity_splinter_dagger": {
+    "label": "Divine Splinter Dagger",
+    "description": "A dagger forged from a razor-sharp fragment of a fallen god's flesh. An eerie, rhythmic pulse, unthinkable for a mortal weapon, can be felt emanating from the blade."
+  },
+  "divine_remnant_armor": {
+    "label": "Breastplate of Divine Remnants",
+    "description": "Armor crafted by reinforcing the remains of a once-sacred being. It offers a mystical grace that repels physical impact at the cost of the wearer's own life force."
+  },
+  "divinity_dust": {
+    "label": "Crumbled Divinity Dust",
+    "description": "Fine dust left behind when beings imbued with divinity perish. It emits a faint, ethereal glow."
+  },
+  "split_deity_staff": {
+    "label": "Staff of the Split Deity",
+    "description": "A staff haunted by the fragmented thoughts of a dead god, its tip eerily split. Every swing creates mental fractures in the air, amplifying the wielder's magical power."
+  },
+  "ethereal_thought_shroud": {
+    "label": "Ethereal Thought Shroud",
+    "description": "A translucent cloth woven from the incorporeal thoughts of a deity. It blurs the wearer's presence, allowing them to let enemy attacks pass through like illusions."
   }
 }

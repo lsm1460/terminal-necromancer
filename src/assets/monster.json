@@ -557,5 +557,76 @@
     "orderWeight": 80,
     "exp": 0,
     "dropTableId": ""
+  },
+
+  "fragment_of_dead_god_war": {
+    "id": "fragment_of_dead_god_war",
+    "attackType": "melee",
+    "hp": 110,
+    "maxHp": 110,
+    "atk": 28,
+    "def": 16,
+    "agi": 15,
+    "skills": ["whirlwind", "quick_slash", "spread_of_taint", "soul_chain"],
+    "orderWeight": 10,
+    "exp": 250,
+    "minRebornRarity": "elite",
+    "dropTableId": "b6_fragment_loot"
+  },
+  "fragment_of_dead_god_war_no_gain": {
+    "id": "fragment_of_dead_god_war_no_gain",
+    "attackType": "melee",
+    "hp": 110,
+    "maxHp": 110,
+    "atk": 28,
+    "def": 16,
+    "agi": 15,
+    "skills": ["whirlwind", "quick_slash", "spread_of_taint"],
+    "orderWeight": 10,
+    "exp": 0,
+    "minRebornRarity": "elite",
+    "dropTableId": ""
+  },
+  "fragment_of_dead_god_mercy": {
+    "id": "fragment_of_dead_god_mercy",
+    "attackType": "ranged",
+    "hp": 110,
+    "maxHp": 110,
+    "atk": 28,
+    "def": 16,
+    "agi": 8,
+    "skills": ["greater_heal", "holy_radiance", "spread_of_taint", "soul_chain"],
+    "orderWeight": 15,
+    "exp": 250,
+    "minRebornRarity": "elite",
+    "dropTableId": "b6_fragment_loot"
+  },
+  "fragment_of_dead_god_wisdom": {
+    "id": "fragment_of_dead_god_wisdom",
+    "attackType": "ranged",
+    "hp": 110,
+    "maxHp": 110,
+    "atk": 28,
+    "def": 16,
+    "agi": 12,
+    "skills": ["lightning_bolt", "firestorm", "spread_of_taint", "soul_chain"],
+    "orderWeight": 12,
+    "exp": 250,
+    "minRebornRarity": "elite",
+    "dropTableId": "b6_fragment_loot"
+  },
+  "fragmented_thought_of_the_god": {
+    "id": "fragmented_thought_of_the_god",
+    "attackType": "ranged",
+    "hp": 90,
+    "maxHp": 90,
+    "atk": 32,
+    "def": 8,
+    "agi": 5,
+    "skills": ["cmd_pause", "cmd_assemble", "cmd_purity"],
+    "orderWeight": 20,
+    "exp": 300,
+    "noCorpse": true,
+    "dropTableId": "b6_thought_loot"
   }
 }

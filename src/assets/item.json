@@ -471,9 +471,8 @@
     "id": "reapers_touch_scythe",
     "type": "weapon",
     "attackType": "melee",
-    "atkRange": [28, 40],
+    "atkRange": [20, 32],
     "critRange": [0.4, 0.6],
-    "maxSkeletonRange": [1, 1],
     "minRebornRarity": 1,
     "price": 8500,
     "sellPrice": 3500
@@ -499,5 +498,49 @@
     "sellPrice": 300,
     "hpHeal": 150,
     "mpHeal": 0
+  },
+
+  "deity_splinter_dagger": {
+    "id": "deity_splinter_dagger",
+    "type": "weapon",
+    "attackType": "melee",
+    "atkRange": [28, 44],
+    "critRange": [0.2, 0.55],
+    "price": 3500,
+    "sellPrice": 420
+  },
+  "divine_remnant_armor": {
+    "id": "divine_remnant_armor",
+    "type": "armor",
+    "defRange": [19, 23],
+    "evaRange": [0.07, 0.11],
+    "price": 2400,
+    "sellPrice": 550
+  },
+  "divinity_dust": {
+    "id": "divinity_dust",
+    "type": "item",
+    "price": 800,
+    "sellPrice": 150
+  },
+
+  "split_deity_staff": {
+    "id": "split_deity_staff",
+    "type": "weapon",
+    "attackType": "ranged",
+    "atkRange": [10, 20],
+    "critRange": [0.3, 0.6],
+    "maxSkeletonRange": [2, 2],
+    "price": 4200,
+    "sellPrice": 500
+  },
+  "ethereal_thought_shroud": {
+    "id": "ethereal_thought_shroud",
+    "type": "armor",
+    "defRange": [8, 12],
+    "evaRange": [0.3, 0.6],
+    "minRebornRarity": 2,
+    "price": 2600,
+    "sellPrice": 520
   }
 }

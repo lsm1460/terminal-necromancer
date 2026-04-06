@@ -1,12 +1,14 @@
 {
   "title": {
     "id": "title",
-    "start_pos": { "x": 0, "y": 0 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
     "tiles": [
       [
         {
           "id": "TITLE_001",
-          "theme": "start",
           "event": "title"
         }
       ]
@@ -14,26 +16,29 @@
   },
   "B1_Subway_Entrance": {
     "id": "B1_Subway_Entrance",
-    "start_pos": { "x": 0, "y": 0 },
-    "move_pos": { "x": 3, "y": 2 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
+    "move_pos": {
+      "x": 3,
+      "y": 2
+    },
     "tiles": [
       [
         {
           "id": "B1_001",
-          "theme": "tiled_floor",
           "event": "event-00"
         },
         null,
         null,
         {
           "id": "B1_002",
-          "theme": "tiled_floor",
           "event": "none",
           "npcIds": ["echo"]
         },
         {
           "id": "B1_003",
-          "theme": "tiled_floor",
           "event": "none",
           "npcIds": ["dr_zed"]
         },
@@ -42,33 +47,27 @@
       [
         {
           "id": "B1_004",
-          "theme": "tiled_floor",
           "event": "event-01"
         },
         {
           "id": "B1_005",
-          "theme": "tiled_floor",
           "event": "none"
         },
         {
           "id": "B1_006",
-          "theme": "tiled_floor",
           "event": "none"
         },
         {
           "id": "B1_007",
-          "theme": "tiled_floor",
-          "event": "npc",
+          "event": "none",
           "npcIds": ["death"]
         },
         {
           "id": "B1_008",
-          "theme": "tiled_floor",
           "event": "none"
         },
         {
           "id": "B1_009",
-          "theme": "tiled_floor",
           "event": "none",
           "npcIds": ["marco"]
         }
@@ -79,7 +78,6 @@
         null,
         {
           "id": "B1_010",
-          "theme": "tiled_floor",
           "event": "none",
           "npcIds": ["elevator"]
         },
@@ -90,26 +88,26 @@
   },
   "B2_Transit_Area": {
     "id": "B2_Transit_Area",
-    "start_pos": { "x": 0, "y": 0 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
     "unlocks": ["talk_death_1"],
     "tiles": [
       [
         {
           "id": "B2_001",
-          "theme": "iron_gate",
           "event": "summon-caron",
           "npcIds": ["elevator"]
         },
         {
           "id": "B2_002",
-          "theme": "dark_corridor",
           "event": "monster-group-b2-suburb",
           "spawn_limit": 2
         },
         null,
         {
           "id": "B2_003",
-          "theme": "vending_machine_area",
           "event": "none",
           "npcIds": ["vending_machine"]
         }
@@ -117,24 +115,20 @@
       [
         {
           "id": "B2_004",
-          "theme": "scrap_pile",
           "event": "none",
           "npcIds": ["ratty"]
         },
         {
           "id": "B2_005",
-          "theme": "dirty_track",
           "event": "monster-group-b2-rail",
           "spawn_limit": 2
         },
         {
           "id": "B2_006",
-          "theme": "sludge_pool",
           "event": "none"
         },
         {
           "id": "B2_007",
-          "theme": "junction",
           "event": "monster-group-b2-rail",
           "spawn_limit": 2
         }
@@ -142,19 +136,16 @@
       [
         {
           "id": "B2_008",
-          "theme": "spider_nest",
           "event": "monster-group-b2-deep",
           "spawn_limit": 2
         },
         null,
         {
           "id": "B2_009",
-          "theme": "ritual_altar",
           "event": "heal-once"
         },
         {
           "id": "B2_010",
-          "theme": "judgment_gate",
           "event": "boss",
           "npcIds": ["first_boss"]
         }
@@ -163,19 +154,20 @@
   },
   "B3_5_Resistance_Base": {
     "id": "B3_5_Resistance_Base",
-    "start_pos": { "x": 0, "y": 0 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
     "unlocks": ["RESISTANCE_BASE"],
     "tiles": [
       [
         {
           "id": "B3_5_001",
-          "theme": "iron_gate",
           "event": "summon-caron",
           "npcIds": ["elevator"]
         },
         {
           "id": "B3_5_002",
-          "theme": "platform",
           "event": "npc",
           "npcIds": ["maya_tech", "kane_leader"]
         }
@@ -184,37 +176,35 @@
   },
   "B3_Steel_Loading_Dock": {
     "id": "B3_Steel_Loading_Dock",
-    "start_pos": { "x": 0, "y": 0 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
     "unlocks": ["first_boss", "talk_death_2"],
     "tiles": [
       [
         {
           "id": "B3_001",
-          "theme": "iron_gate",
           "event": "summon-caron",
           "npcIds": ["elevator"]
         },
         {
           "id": "B3_002",
-          "theme": "platform",
           "event": "monster-group-b3-periphery",
           "spawn_limit": 3
         },
         {
           "id": "B3_003",
-          "theme": "platform",
           "event": "none",
           "npcIds": ["jax_seeker"]
         },
         {
           "id": "B3_004",
-          "theme": "vending_machine_area",
           "event": "none",
           "npcIds": ["vending_machine"]
         },
         {
           "id": "B3_005",
-          "theme": "cargo",
           "event": "monster-group-b3-human-managed",
           "spawn_limit": 2
         },
@@ -223,35 +213,29 @@
       [
         {
           "id": "B3_006",
-          "theme": "platform",
           "event": "event-conveyor-control-1"
         },
         {
           "id": "B3_007",
-          "theme": "platform",
           "event": "event-map-scan-once"
         },
         {
           "id": "B3_008",
-          "theme": "machinery",
           "event": "monster-group-b3-automated-security",
           "spawn_limit": 2
         },
         {
           "id": "B3_009",
-          "theme": "workshop",
           "event": "boss",
           "npcIds": ["second_boss"]
         },
         {
           "id": "B3_010",
-          "theme": "cargo",
           "event": "monster-group-b3-sludge",
           "spawn_limit": 3
         },
         {
           "id": "B3_011",
-          "theme": "cargo",
           "event": "none",
           "npcIds": ["apostle"]
         }
@@ -259,30 +243,25 @@
       [
         {
           "id": "B3_012",
-          "theme": "cargo_area",
           "event": "monster-group-b3-periphery",
           "spawn_limit": 2
         },
         {
           "id": "B3_013",
-          "theme": "platform",
           "event": "monster-group-b3-sludge",
           "spawn_limit": 3
         },
         {
           "id": "B3_014",
-          "theme": "cargo",
           "event": "event-abandoned-corpse"
         },
         {
           "id": "B3_015",
-          "theme": "cargo",
           "event": "event-voice-recorder"
         },
         null,
         {
           "id": "B3_016",
-          "theme": "cargo",
           "event": "monster-group-b3-periphery",
           "spawn_limit": 3
         }
@@ -290,34 +269,28 @@
       [
         {
           "id": "B3_017",
-          "theme": "cargo",
           "event": "event-conveyor-control-2"
         },
         {
           "id": "B3_018",
-          "theme": "cargo",
           "event": "monster-group-b3-sludge",
           "spawn_limit": 2
         },
         {
           "id": "B3_019",
-          "theme": "ritual_altar",
           "event": "heal-once"
         },
         {
           "id": "B3_020",
-          "theme": "cargo",
           "event": "none"
         },
         {
           "id": "B3_021",
-          "theme": "cargo",
           "event": "monster-group-b3-periphery",
           "spawn_limit": 2
         },
         {
           "id": "B3_022",
-          "theme": "cargo",
           "event": "monster-group-b3-automated-security",
           "spawn_limit": 2
         }
@@ -326,31 +299,30 @@
   },
   "B4_Waste_Disposal_Area": {
     "id": "B4_Waste_Disposal_Area",
-    "start_pos": { "x": 0, "y": 0 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
     "unlocks": ["talk_death_3"],
     "tiles": [
       [
         {
           "id": "B4_001",
-          "theme": "entrance",
           "event": "summon-caron",
           "npcIds": ["elevator"]
         },
         {
           "id": "B4_002",
-          "theme": "corridor",
           "event": "event-b4-reset",
           "npcIds": []
         },
         {
           "id": "B4_003",
-          "theme": "memory_fragment",
           "event": "event-caron",
           "npcIds": []
         },
         {
           "id": "B4_004",
-          "theme": "dead_end",
           "event": "none",
           "npcIds": []
         }
@@ -359,18 +331,15 @@
         null,
         {
           "id": "B4_005",
-          "theme": "resonance_point",
           "event": "event-caron"
         },
         {
           "id": "B4_006",
-          "theme": "corridor",
           "event": "event-b4-warp",
           "npcIds": []
         },
         {
           "id": "B4_007",
-          "theme": "memory_fragment",
           "event": "none",
           "npcIds": []
         }
@@ -378,25 +347,21 @@
       [
         {
           "id": "B4_008",
-          "theme": "corridor",
           "event": "none",
           "npcIds": []
         },
         {
           "id": "B4_009",
-          "theme": "trap_pit",
           "event": "event-b4-warp",
           "npcIds": []
         },
         {
           "id": "B4_010",
-          "theme": "corridor",
           "event": "none",
           "npcIds": []
         },
         {
           "id": "B4_011",
-          "theme": "dead_end",
           "event": "none",
           "npcIds": []
         }
@@ -404,25 +369,21 @@
       [
         {
           "id": "B4_012",
-          "theme": "corridor",
           "event": "none",
           "npcIds": []
         },
         {
           "id": "B4_013",
-          "theme": "warp_gate",
           "event": "event-b4-warp",
           "npcIds": []
         },
         {
           "id": "B4_014",
-          "theme": "memory_fragment",
           "event": "item",
           "npcIds": []
         },
         {
           "id": "B4_015",
-          "theme": "core_sanctuary",
           "event": "event-caron",
           "npcIds": ["caron"]
         }
@@ -431,21 +392,20 @@
   },
   "B5_VIP_lounge": {
     "id": "B5_VIP_lounge",
-    "start_pos": { "x": 0, "y": 0 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
     "unlocks": ["report_caron_to_death"],
     "tiles": [
       [
         {
           "id": "B5_001",
-          "x": 0,
-          "y": 0,
           "event": "summon-caron",
           "npcIds": ["elevator"]
         },
         {
           "id": "B5_002",
-          "x": 1,
-          "y": 0,
           "event": "monster-b5-standard-security",
           "spawn_limit": 4,
           "npcIds": []
@@ -453,16 +413,12 @@
         null,
         {
           "id": "B5_003",
-          "x": 3,
-          "y": 0,
           "event": "monster-b5-hidden-assault",
           "spawn_limit": 3,
           "npcIds": []
         },
         {
           "id": "B5_004",
-          "x": 4,
-          "y": 0,
           "event": "none",
           "npcIds": ["flint"]
         }
@@ -470,8 +426,6 @@
       [
         {
           "id": "B5_005",
-          "x": 0,
-          "y": 1,
           "event": "monster-b5-lounge-patrol",
           "spawn_limit": 5,
           "npcIds": []
@@ -479,15 +433,11 @@
         null,
         {
           "id": "B5_006",
-          "x": 2,
-          "y": 1,
           "event": "none",
           "npcIds": ["vesper", "kael"]
         },
         {
           "id": "B5_007",
-          "x": 3,
-          "y": 1,
           "event": "monster-b5-noble-escort",
           "spawn_limit": 4,
           "npcIds": []
@@ -497,31 +447,23 @@
       [
         {
           "id": "B5_008",
-          "x": 0,
-          "y": 2,
           "event": "monster-b5-hidden-assault",
           "spawn_limit": 5,
           "npcIds": []
         },
         {
           "id": "B5_009",
-          "x": 1,
-          "y": 2,
           "event": "heal-once",
           "npcIds": []
         },
         {
           "id": "B5_010",
-          "x": 2,
-          "y": 2,
           "event": "none",
           "npcIds": []
         },
         null,
         {
           "id": "B5_011",
-          "x": 4,
-          "y": 2,
           "event": "none",
           "npcIds": ["julian"]
         }
@@ -530,31 +472,23 @@
         null,
         {
           "id": "B5_012",
-          "x": 1,
-          "y": 3,
           "event": "monster-b5-noble-escort",
-          "spawn_limit": 5,
+          "spawn_limit": 3,
           "npcIds": []
         },
         {
           "id": "B5_013",
-          "x": 2,
-          "y": 3,
           "event": "none",
           "npcIds": ["oliver"]
         },
         {
           "id": "B5_014",
-          "x": 3,
-          "y": 3,
           "event": "monster-b5-standard-security",
           "spawn_limit": 4,
           "npcIds": []
         },
         {
           "id": "B5_015",
-          "x": 4,
-          "y": 3,
           "event": "monster-b5-hidden-assault",
           "spawn_limit": 4,
           "npcIds": []
@@ -563,8 +497,6 @@
       [
         {
           "id": "B5_016",
-          "x": 0,
-          "y": 4,
           "event": "monster-b5-lounge-patrol",
           "spawn_limit": 5,
           "npcIds": []
@@ -572,23 +504,17 @@
         null,
         {
           "id": "B5_017",
-          "x": 2,
-          "y": 4,
           "event": "none",
           "npcIds": ["adrian"]
         },
         {
           "id": "B5_018",
-          "x": 3,
-          "y": 4,
           "event": "monster-b5-noble-escort",
           "spawn_limit": 4,
           "npcIds": []
         },
         {
           "id": "B5_019",
-          "x": 4,
-          "y": 4,
           "event": "event-map-scan-once",
           "npcIds": []
         }
@@ -596,31 +522,23 @@
       [
         {
           "id": "B5_020",
-          "x": 0,
-          "y": 5,
           "event": "monster-b5-standard-security",
           "spawn_limit": 5,
           "npcIds": []
         },
         {
           "id": "B5_021",
-          "x": 1,
-          "y": 5,
           "event": "none",
           "npcIds": ["vending_machine"]
         },
         null,
         {
           "id": "B5_022",
-          "x": 3,
-          "y": 5,
           "event": "boss",
           "npcIds": ["third_boss"]
         },
         {
           "id": "B5_023",
-          "x": 4,
-          "y": 5,
           "event": "none",
           "npcIds": ["baron_valter"]
         }
@@ -629,62 +547,169 @@
   },
   "B6_VEHICLE_DEPOT": {
     "id": "B6_VEHICLE_DEPOT",
-    "start_pos": { "x": 0, "y": 0 },
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
     "unlocks": ["talk_death_4"],
     "tiles": [
       [
-        { "id": "B6_001", "x": 0, "y": 0, "event": "summon-caron", "npcIds": ["elevator"] },
-        { "id": "B6_002", "x": 1, "y": 0, "npcIds": ["hansen_mechanic"] },
+        {
+          "id": "B6_001",
+          "event": "summon-caron",
+          "npcIds": ["elevator"]
+        },
+        {
+          "id": "B6_002",
+          "npcIds": ["hansen_mechanic"]
+        },
         null,
-        { "id": "B6_004", "x": 3, "y": 0 },
-        { "id": "B6_005", "x": 4, "y": 0 },
-        { "id": "B6_006", "x": 5, "y": 0 },
-        { "id": "B6_007", "x": 6, "y": 0 }
+        {
+          "id": "B6_004",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_005",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_006",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_007",
+          "event": "monster-b6-fragment"
+        }
       ],
       [
         null,
-        { "id": "B6_009", "x": 1, "y": 1 },
-        { "id": "B6_010", "x": 2, "y": 1 },
-        { "id": "B6_011", "x": 3, "y": 1, "npcIds": ["vora_observer"] },
+        {
+          "id": "B6_009",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_010",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_011",
+          "npcIds": ["vora_observer"]
+        },
         null,
         null,
-        { "id": "B6_014", "x": 6, "y": 1, "npcIds": ["shadowed_agent"] }
+        {
+          "id": "B6_014",
+          "npcIds": ["shadowed_agent"]
+        }
       ],
       [
-        { "id": "B6_015", "x": 0, "y": 2, "npcIds": ["elias_survivor", "dax_looter"] },
-        { "id": "B6_016", "x": 1, "y": 2 },
+        {
+          "id": "B6_015",
+          "npcIds": ["elias_survivor", "dax_looter"]
+        },
+        {
+          "id": "B6_016",
+          "event": "monster-b6-fragment"
+        },
         null,
         null,
-        { "id": "B6_019", "x": 4, "y": 2 },
-        { "id": "B6_020", "x": 5, "y": 2 },
-        { "id": "B6_021", "x": 6, "y": 2 }
+        {
+          "id": "B6_019",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_020",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_021",
+          "event": "monster-b6-fragment"
+        }
       ],
       [
-        { "id": "B6_022", "x": 0, "y": 3 },
+        {
+          "id": "B6_022",
+          "event": "monster-b6-fragment"
+        },
         null,
-        { "id": "B6_024", "x": 2, "y": 3 },
-        { "id": "B6_025", "x": 3, "y": 3 },
-        { "id": "B6_026", "x": 4, "y": 3, "npcIds": ["silas_dissector"] },
+        {
+          "id": "B6_024",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_025",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_026",
+          "npcIds": ["silas_dissector"]
+        },
         null,
         null
       ],
       [
-        { "id": "B6_029", "x": 0, "y": 4 },
-        { "id": "B6_030", "x": 1, "y": 4 },
-        { "id": "B6_031", "x": 2, "y": 4 },
+        {
+          "id": "B6_029",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_030",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_031",
+          "event": "monster-b6-fragment"
+        },
         null,
-        { "id": "B6_033", "x": 4, "y": 4 },
-        { "id": "B6_034", "x": 5, "y": 4 },
-        { "id": "B6_035", "x": 6, "y": 4, "npcIds": ["mika_operator"] }
+        {
+          "id": "B6_033",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_034",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_035",
+          "npcIds": ["mika_operator"]
+        }
       ],
       [
         null,
         null,
-        { "id": "B6_038", "x": 2, "y": 5 },
-        { "id": "B6_039", "x": 3, "y": 5 },
-        { "id": "B6_040", "x": 4, "y": 5, "npcIds": ["aris_purifier"] },
+        {
+          "id": "B6_038",
+          "event": "monster-b6-fragment"
+        },
+        {
+          "id": "B6_039"
+        },
+        {
+          "id": "B6_040",
+          "npcIds": ["aris_purifier"]
+        },
         null,
-        { "id": "B6_042", "x": 6, "y": 5 }
+        {
+          "id": "B6_042",
+          "event": "boss",
+          "npcIds": ["fourth_boss"]
+        }
+      ]
+    ]
+  },
+  "B1_Last": {
+    "id": "B1_Last",
+    "start_pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tiles": [
+      [
+        {
+          "id": "B1_LAST",
+          "event": "none",
+          "npcIds": ["death"]
+        }
       ]
     ]
   }
