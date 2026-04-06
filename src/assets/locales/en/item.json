@@ -203,6 +203,10 @@
     "label": "Optical Carbine",
     "description": "A precision firearm incorporating lens technology from surveillance units. Offers very stable accuracy."
   },
+  "enhanced_optical_carbine": {
+    "label": "Enhanced Optical Carbine",
+    "description": "A high-precision firearm customized by the Resistance."
+  },
   "wraith_soul_staff": {
     "label": "Wraith Soul Staff",
     "description": "A staff infused with phantom ectoplasm. Emits mana and an unpleasant scream with every swing."
@@ -299,5 +303,13 @@
   "ethereal_thought_shroud": {
     "label": "Ethereal Thought Shroud",
     "description": "A translucent cloth woven from the incorporeal thoughts of a deity. It blurs the wearer's presence, allowing them to let enemy attacks pass through like illusions."
+  },
+  "modified_reinforced_steel_plate": {
+    "label": "Modified Reinforced Steel Plate",
+    "description": "An automaton armor plate repurposed and reinforced for use by Resistance members."
+  },
+  "resistance_standard_issue_blade": {
+    "label": "Resistance Standard-Issue Blade",
+    "description": "A standard-issue melee weapon distributed to regular forces, crafted for overwhelming raw power and durability rather than precision."
   }
 }

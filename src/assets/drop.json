@@ -49,6 +49,15 @@
       { "itemId": "scavenged_mantle", "chance": 0.5, "quantity": [1, 1] }
     ]
   },
+  "resistance_better_shop": {
+    "gold": [50, 100],
+    "items": [
+      { "itemId": "resistance_standard_issue_blade", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "modified_reinforced_steel_plate", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "enhanced_optical_carbine", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "scavenged_mantle", "chance": 0.5, "quantity": [1, 1] }
+    ]
+  },
   "marco_goods": {
     "gold": [0, 0],
     "items": [

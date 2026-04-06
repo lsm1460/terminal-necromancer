@@ -31,6 +31,8 @@ const MayaHandler: NPCHandler = {
     const buyScripts = i18n.t('npc.maya_tech.buy', { returnObjects: true }) as ShopScripts
     const sellScripts = i18n.t('npc.maya_tech.sell', { returnObjects: true }) as ShopScripts
 
+    const goodsId = npc.factionContribution > 100? 'resistance_better_shop' : 'resistance_shop'
+
     switch (action) {
       case 'join':
         await handleJoin(player, context)
@@ -39,7 +41,7 @@ const MayaHandler: NPCHandler = {
         handleTalk(npc)
         break
       case 'buy':
-        await handleBuy(player, npc, context, 'resistance_shop', buyScripts)
+        await handleBuy(player, npc, context, goodsId, buyScripts)
         break
       case 'sell':
         await handleSell(player, npc, context, sellScripts)

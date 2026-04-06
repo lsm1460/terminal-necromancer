@@ -116,8 +116,8 @@ export async function handleBuy(
     const actualItem = goods.find((d) => d.id === itemId)
 
     if (npc.faction) {
-      npcs.updateFactionHostility(npc.faction, -1)
-      npcs.updateFactionContribution(npc.faction, 5)
+      npc.updateHostility(-1)
+      npc.updateContribution(5)
     }
 
     if (actualItem) {
@@ -184,8 +184,8 @@ export async function handleSell(player: Player, npc: NPC, context: GameContext,
     player.removeItem(selected.id!, sellCount)
 
     if (npc.faction) {
-      context.npcs.updateFactionHostility(npc.faction, -1)
-      context.npcs.updateFactionContribution(npc.faction, 10)
+      npc.updateHostility(-1)
+      npc.updateContribution(10)
     }
 
     Terminal.log(`\n💰 [${npc.name}]: "${scripts.success}" (+${totalEarned}G)`)

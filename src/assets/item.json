@@ -542,5 +542,31 @@
     "minRebornRarity": 2,
     "price": 2600,
     "sellPrice": 520
+  },
+  "resistance_standard_issue_blade": {
+    "id": "resistance_standard_issue_blade",
+    "type": "weapon",
+    "attackType": "melee",
+    "atkRange": [36, 42],
+    "critRange": [0.01, 0.05],
+    "price": 5600,
+    "sellPrice": 1650
+  },
+  "enhanced_optical_carbine": {
+    "id": "enhanced_optical_carbine",
+    "type": "weapon",
+    "attackType": "ranged",
+    "atkRange": [28, 36],
+    "critRange": [0.4, 0.6],
+    "price": 5850,
+    "sellPrice": 1720
+  },
+  "modified_reinforced_steel_plate": {
+    "id": "modified_reinforced_steel_plate",
+    "type": "armor",
+    "defRange": [20, 26],
+    "evaRange": [-0.02, 0.01],
+    "price": 5750,
+    "sellPrice": 1680
   }
 }

@@ -204,6 +204,10 @@
     "label": "광학 카빈",
     "description": "감시 유닛의 렌즈 기술이 적용된 정밀 총기입니다. 명중률이 매우 안정적입니다."
   },
+  "enhanced_optical_carbine": {
+    "label": "강화된 광학 카빈",
+    "description": "레지스탕스에 의해 개조된 정밀 총기입니다."
+  },
   "wraith_soul_staff": {
     "label": "원혼의 지팡이",
     "description": "망령의 엑토플라즘이 깃든 지팡이입니다. 휘두를 때마다 기분 나쁜 비명이 들리며 마력을 방출합니다."
@@ -300,5 +304,13 @@
   "ethereal_thought_shroud": {
     "label": "에테르 사념의 수의",
     "description": "실체가 없는 신의 생각들이 엮여 만들어진 반투명한 천입니다. 착용자의 존재감을 흐릿하게 만들어 적의 공격을 환상처럼 흘려보내게 합니다."
+  },
+  "modified_reinforced_steel_plate": {
+    "label": "개조된 강화 강철판",
+    "description": "오토마톤이 사용하던 장갑판을 레지스탕스 대원들을 위해 사람용으로 개조, 강화하였습니다."
+  },
+  "resistance_standard_issue_blade": {
+    "label": "레지스탕스 보급형 전투검",
+    "description": "정규군에게 보급되는 표준 근접 병기로, 정교한 기술보다는 압도적인 파괴력과 내구성에 치중하여 제작되었습니다."
   }
 }
