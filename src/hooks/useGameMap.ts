@@ -29,7 +29,7 @@ export const useGameMap = () => {
     if (!isVisible) return 'GHOST'
 
     // 이벤트 우선순위 판단 로직 (비즈니스 규칙)
-    if (tile.theme === 'vending_machine_area') return 'VENDING'
+    if (tile.npcIds && tile.npcIds.includes('vending_machine')) return 'VENDING'
     if (tile.event?.startsWith('heal')) return 'HEAL'
     if (tile.event === 'boss') return 'BOSS'
 
