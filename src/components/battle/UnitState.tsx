@@ -65,7 +65,7 @@ export const UnitState: React.FC<{
         <div className="border-t border-primary/30 p-1.5 bg-black/40 flex flex-wrap gap-1">
           {unit.buff.map((b, i) => (
             <span key={`buff-${i}`} className="text-xs text-green-400 font-mono">
-              {t('battle.status.remaining_turns', {
+              {t('web.remaining_turns', {
                 name: b.name,
                 duration: b.duration,
               })}
@@ -73,7 +73,7 @@ export const UnitState: React.FC<{
           ))}
           {unit.deBuff.map((d, i) => (
             <span key={`debuff-${i}`} className="text-xs text-red-500 font-mono italic">
-              {t('battle.status.remaining_turns', {
+              {t('web.remaining_turns', {
                 name: d.name,
                 duration: d.duration,
               })}

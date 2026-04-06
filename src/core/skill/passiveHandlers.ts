@@ -107,10 +107,10 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
           type: 'buff',
           atk: bonusAtk,
           def: bonusDef,
-          duration: Infinity, // 신의 정수이므로 전투 종료시까지 영구 지속
+          duration: Infinity,
         })
 
-        Terminal.log(`${unit.name}의 영혼이 ${allyUnit.name}에게 깃들어 힘이 증폭됩니다!`)
+        Terminal.log(i18n.t('skill.passive.soul_chain', { unit: unit.name, ally: allyUnit.name }))
       })
     },
   },
@@ -147,7 +147,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       defender.ref.hp = Math.min(defender.ref.maxHp, defender.ref.hp + healAmount)
 
       if (defender.ref.hp > previousHp) {
-        Terminal.log(`${defender.name}의 불꽃이 타오르며 상처가 아물어간다. (+${healAmount})`)
+        Terminal.log(i18n.t('skill.passive.curse_of_the_phoenix', { unit: defender.name, amount: healAmount }))
       }
     },
   },

@@ -139,7 +139,8 @@
     "thorns": "\n[🦷 Thorns]: {{defender}}'s thorns tear into {{attacker}}'s flesh!",
     "death_destruct": "\n[🔥 Doomsday]: {{unit}}'s corpse explodes, consuming everything around it!",
     "soul_chain": "The soul of {{unit}} dwells within {{ally}}, amplifying its power!",
-    "phases_2": "\n[!] {{attacker}}의 본모습이 노출됩니다."
+    "phases_2": "\n[!] {{attacker}}'s true form is revealed.",
+    "curse_of_the_phoenix": "The flames of the {{defender}} blaze, healing their wounds. (+{{amount}})"
   },
 
   "special": {
@@ -151,7 +152,9 @@
       "item": "[!] Lost Item! {{attacker}} snatched '{{item}}' from your bag and fled!",
       "fail": " > {{attacker}} searched your pockets, but found absolutely nothing."
     },
-    "purify_essence": "🧼 {{attacker}} cleansed all allies' souls! One random debuff removed."
+    "purify_essence": "🧼 {{attacker}} cleansed all allies' souls! One random debuff removed.",
+    "shadow_bind": "The Shadow Barrier is immune to minion attacks.",
+    "return_to_ash": "🔥 {{attacker}} is burning its own body."
   },
 
   "effect": {
@@ -205,6 +208,10 @@
     "lightning_storm": {
       "name": "Lightning Storm",
       "description": "Traps all enemies within a torrential storm and paralyzes them."
+    },
+    "firestorm": {
+      "name": "Firestorm",
+      "description": "Burns all enemies and inflicts Burn for 2 turns."
     },
     "shield_bash": {
       "name": "Shield Bash",

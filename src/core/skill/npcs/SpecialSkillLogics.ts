@@ -1,11 +1,10 @@
 import sample from 'lodash/sample'
+import { DamageOptions } from '~/core/battle/Battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { BattleTarget, GameContext, ItemType, NpcSkill } from '~/types'
-import { SkillEffectHandlers } from './SkillEffectHandlers'
-import { DamageOptions } from '~/core/battle/Battle'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 
@@ -117,7 +116,7 @@ export const SpecialSkillLogics: Record<
       if ((attacker.ref as BattleTarget).isMinion) {
         options.rawDamage = 0 // 대미지 무효화
 
-        Terminal.log('미니언은 때릴 수 없음')
+        Terminal.log(i18n.t('skill.special.shadow_bind'))
       }
     })
 
@@ -139,7 +138,8 @@ export const SpecialSkillLogics: Record<
     }
 
     attacker.ref.hp -= Math.floor(attacker.ref.maxHp * 0.05)
-    Terminal.log(attacker.name + '은/는 스스로를 불태우고 있다.')
+
+    Terminal.log(i18n.t('skill.special.return_to_ash', { attacker: attacker.name }))
   },
 
   last_embers: async (attacker, targets, skill, context) => {

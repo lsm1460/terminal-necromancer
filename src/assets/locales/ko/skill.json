@@ -137,7 +137,8 @@
     "thorns": "\n[🦷 가시]: {{defender}}의 가시가 {{attacker}}의 살점을 찢습니다!",
     "death_destruct": "\n[🔥 종말]: {{unit}}의 시체가 폭발하며 주변을 삼킵니다!",
     "soul_chain": "{{unit}}의 영혼이 {{ally}}에게 깃들어 힘이 증폭됩니다!",
-    "phases_2": "\n[!] {{attacker}}의 본모습이 노출됩니다."
+    "phases_2": "\n[!] {{attacker}}의 본모습이 노출됩니다.",
+    "curse_of_the_phoenix": "{{unit}}의 불꽃이 타오르며 상처가 아물어갑니다. (+{{amount}})"
   },
 
   "special": {
@@ -149,7 +150,9 @@
       "item": "[!] 분실! {{attacker}}(이)가 배낭에서 '{{item}}'을(를) 훔쳐 달아납니다!",
       "fail": " > {{attacker}}(이)가 당신의 주머니를 뒤졌지만, 땡전 한 푼 나오지 않습니다."
     },
-    "purify_essence": "🧼 {{attacker}}(이)가 아군의 영혼을 정화하여 무작위 디버프 1개를 제거했습니다!"
+    "purify_essence": "🧼 {{attacker}}(이)가 아군의 영혼을 정화하여 무작위 디버프 1개를 제거했습니다!",
+    "shadow_bind": "그림자의 결계가 미니언의 공격을 튕겨냅니다.",
+    "return_to_ash": "🔥 {{attacker}}(은)는 스스로를 불태우고 있습니다."
   },
 
   "effect": {
@@ -203,6 +206,10 @@
     "lightning_storm": {
       "name": "전기 폭풍",
       "description": "모든 적군을 폭풍 속에 넣고 마비시킵니다."
+    },
+    "firestorm": {
+      "name": "화염 폭풍",
+      "description": "모든 적을 불태우고 화상 디버프를 2턴동안 부여합니다."
     },
     "shield_bash": {
       "name": "방패 가격",

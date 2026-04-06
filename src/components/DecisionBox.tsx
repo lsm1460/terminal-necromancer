@@ -143,7 +143,7 @@ export const DecisionBox = ({ uiState, resolveUI }: DecisionBoxProps) => {
                   buttonRefs.current[uiState.choices?.length || 0] = el
                 }}
                 onFocus={() => setFocusedIndex(uiState.choices?.length || 0)}
-                onClick={() => resolveUI(selectedValues, t('web.confirm'))}
+                onClick={() => resolveUI(selectedValues, t('web.confirm_selection'))}
               >
                 ▶ [{t('web.confirm_selection')}]
               </ThemedButton>
