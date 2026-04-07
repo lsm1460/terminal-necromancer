@@ -53,7 +53,7 @@ export const getPlayerSkills = (): Record<SkillId, Skill> => {
     },
     [SKILL_IDS.BONE_SPEAR]: {
       attackType: 'ranged',
-      cost: 12,
+      cost: 7,
       requiredExp: 1500,
       requiredLevel: 5,
       unlocks: ['defeat_caron'],
@@ -61,7 +61,7 @@ export const getPlayerSkills = (): Record<SkillId, Skill> => {
     },
     [SKILL_IDS.BONE_PRISON]: {
       attackType: 'ranged',
-      cost: 20,
+      cost: 8,
       requiredExp: 1200,
       requiredLevel: 5,
       unlocks: ['third_boss'],
@@ -69,7 +69,7 @@ export const getPlayerSkills = (): Record<SkillId, Skill> => {
     },
     [SKILL_IDS.BONE_STORM]: {
       attackType: 'ranged',
-      cost: 40,
+      cost: 20,
       requiredExp: 2000,
       requiredLevel: 7,
       unlocks: ['third_boss'],

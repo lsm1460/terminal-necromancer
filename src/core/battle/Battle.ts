@@ -107,7 +107,7 @@ export class Battle implements BattleManager {
     this.lastBattleResult = null
 
     initialEnemies.forEach((e) => {
-      e.onDeath = async () => this.rewards.handleUnitDeath(e.ref as BattleTarget, context)
+      this.appendUnitDeathCallback(e, context)
       this.units.registerUnit(e)
     })
 
@@ -162,8 +162,13 @@ export class Battle implements BattleManager {
     const unit = this.toCombatUnit(monster, 'monster')
     this.units.registerUnit(unit)
     BattleDirector.updateUnits({ enemiesSide: this.units.getAliveEnemies() })
-    unit.onDeath = async () => this.rewards.handleUnitDeath(monster as BattleTarget, context)
+    this.appendUnitDeathCallback(unit, context)
+
     return unit
+  }
+
+  public appendUnitDeathCallback(unit: CombatUnit, context: GameContext) {
+    unit.onDeath = async () => this.rewards.handleUnitDeath(unit.ref as BattleTarget, context)
   }
 
   // Exposed for skill executors

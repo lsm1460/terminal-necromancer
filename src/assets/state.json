@@ -2,19 +2,19 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 1,
-    "y": 1,
+    "x": 0,
+    "y": 0,
     "_maxHp": 340,
-    "hp": 340,
+    "hp": 1,
     "_maxMp": 50,
-    "mp": 50,
+    "mp": 26,
     "atk": 15,
     "def": 7,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 9535,
-    "exp": 34004,
+    "gold": 1403,
+    "exp": 0,
     "level": 8,
     "karma": 8,
     "_maxMemorize": 5,
@@ -36,31 +36,7 @@
       "BONE_STORM",
       "BONE_PRISON"
     ],
-    "_skeleton": [
-      {
-        "id": "skeleton_king::1775538061899",
-        "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
-        "attackType": "melee",
-        "maxHp": 140,
-        "hp": 140,
-        "atk": 60,
-        "def": 13,
-        "agi": 28,
-        "skills": [
-          "death_aura"
-        ],
-        "exp": 0,
-        "description": "약물 투여된 광견의 유골로 만들어진 소환수입니다.",
-        "originId": "modified_fury_hound::jnHHE4D7",
-        "rarity": "legendary",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 55
-      }
-    ],
+    "_skeleton": [],
     "_mercenary": [],
     "_golem": {
       "id": "golem",
@@ -68,7 +44,7 @@
       "attackType": "melee",
       "baseMaxHp": 90,
       "maxHp": 90,
-      "hp": 270,
+      "hp": 0,
       "baseAtk": 20,
       "atk": 20,
       "baseDef": 40,
@@ -78,7 +54,7 @@
       "description": "",
       "dropTableId": "",
       "encounterRate": 0,
-      "isAlive": true,
+      "isAlive": false,
       "skills": [
         "power_smash"
       ],
@@ -92,7 +68,7 @@
       "id": "_knight",
       "name": "",
       "attackType": "melee",
-      "hp": 720,
+      "hp": 0,
       "baseMaxHp": 720,
       "maxHp": 720,
       "baseAtk": 144,
@@ -102,7 +78,7 @@
       "exp": 0,
       "agi": 114,
       "encounterRate": 0,
-      "isAlive": true,
+      "isAlive": false,
       "isMinion": true,
       "isKnight": true,
       "deathLine": "",
@@ -114,14 +90,6 @@
       ]
     },
     "inventory": [
-      {
-        "id": "mana_potion_small",
-        "type": "consumable",
-        "price": 45,
-        "sellPrice": 6,
-        "quantity": 2,
-        "mpHeal": 20
-      },
       {
         "id": "nano_medical_kit",
         "type": "consumable",
@@ -139,54 +107,77 @@
         "hpHeal": 20
       },
       {
-        "id": "leather_armor::dBz2uHfx",
-        "type": "armor",
-        "price": 400,
-        "sellPrice": 100,
-        "quantity": 1,
-        "def": 4,
-        "eva": 0,
-        "rarity": "COMMON",
-        "perfPrefix": "",
-        "adjective": ""
-      },
-      {
-        "id": "iron_sword::vpAOnzC5",
+        "id": "deity_splinter_dagger::2yHO2NdC",
         "type": "weapon",
-        "price": 500,
-        "sellPrice": 120,
+        "price": 3500,
+        "sellPrice": 420,
         "quantity": 1,
-        "atk": 2,
-        "crit": 0.04,
+        "atk": 44,
+        "crit": 0.46,
         "attackType": "melee",
-        "rarity": "COMMON",
+        "rarity": "EPIC",
         "perfPrefix": "worn",
-        "adjective": ""
+        "adjective": "primal",
+        "affix": {
+          "id": "RESURRECTION"
+        }
       },
       {
-        "id": "leather_armor::HTto9eku",
-        "type": "armor",
-        "price": 400,
-        "sellPrice": 100,
-        "quantity": 1,
-        "def": 3,
-        "eva": 0,
-        "rarity": "COMMON",
-        "perfPrefix": "",
-        "adjective": ""
-      },
-      {
-        "id": "iron_sword::IkSJTA_c",
+        "id": "deity_splinter_dagger::okFIKpFZ",
         "type": "weapon",
-        "price": 500,
-        "sellPrice": 120,
+        "price": 3500,
+        "sellPrice": 420,
         "quantity": 1,
-        "atk": 2,
-        "crit": 0.05,
+        "atk": 52,
+        "crit": 0.52,
         "attackType": "melee",
-        "rarity": "COMMON",
-        "perfPrefix": "worn",
-        "adjective": ""
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "abyssal",
+        "affix": {
+          "id": "FROSTBORNE"
+        }
+      },
+      {
+        "id": "deity_splinter_dagger::NT0RBFB1",
+        "type": "weapon",
+        "price": 3500,
+        "sellPrice": 420,
+        "quantity": 1,
+        "atk": 64,
+        "crit": 0.44,
+        "attackType": "melee",
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "fallen",
+        "affix": {
+          "id": "OVERLORD",
+          "valueRange": [
+            1,
+            4
+          ],
+          "metadata": {
+            "needsConfirmOnUnequip": true,
+            "unEquipCaution": "장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다."
+          },
+          "value": 1
+        }
+      },
+      {
+        "id": "deity_splinter_dagger::hPfh_Fzz",
+        "type": "weapon",
+        "price": 3500,
+        "sellPrice": 420,
+        "quantity": 1,
+        "atk": 57,
+        "crit": 0.26,
+        "attackType": "melee",
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "abyssal",
+        "affix": {
+          "id": "ALONE"
+        }
       }
     ],
     "inventoryMax": 15,
@@ -270,6 +261,10 @@
       "soul"
     ],
     "knightUpgrade": [
+      "EPIC",
+      "EPIC",
+      "EPIC",
+      "EPIC",
       "EPIC"
     ],
     "upgradeLimit": 5,
@@ -312,7 +307,7 @@
       }
     }
   },
-  "sceneId": "B5_VIP_lounge",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -537,11 +532,17 @@
       "resistance": -11
     },
     "factionContribution": {
-      "untouchable": 90,
+      "untouchable": 130,
       "resistance": 332
     }
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B6_VEHICLE_DEPOT",
+    "id": "fvvKtrqA",
+    "tileId": "B6_030",
+    "exp": 4500,
+    "gold": 1404
+  },
   "config": {
     "locale": "ko"
   },

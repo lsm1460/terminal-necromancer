@@ -1,3 +1,4 @@
+import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { Buff, BuffOptions } from '../Buff'
@@ -45,6 +46,16 @@ export class UnitBuffManager {
     const targetArray = isBuff ? this.buffs : this.deBuffs
 
     if (action === 'apply') {
+      if (this.owner.ref instanceof Player && this.owner.ref.hasAffix('ALONE') && effect.type === 'bind') {
+        Terminal.log(
+          i18n.t('battle.unit.status_change.resisted', {
+            name: this.owner.name,
+            effectName: effect.name,
+          })
+        )
+        return
+      }
+
       const existing = targetArray.find((e) => e.id === effect.id)
       if (existing) {
         existing.duration = Math.max(existing.duration, effect.duration)

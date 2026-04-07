@@ -18,8 +18,7 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
     const isNpc = !!(target as NPC).faction
 
     const unit = battle.toCombatUnit(target, isNpc ? 'npc' : 'monster')
-
-    
+    battle.appendUnitDeathCallback(unit, context)
 
     return unit
   })
@@ -31,7 +30,7 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
     context,
     {
       ally,
-      enemies
+      enemies,
     }
   )
 

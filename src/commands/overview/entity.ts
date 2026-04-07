@@ -36,6 +36,7 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
     i18n.t('commands.look.entity.stats.combat', {
       atk: target.atk.toString().padEnd(3),
       def: target.def.toString().padEnd(3),
+      agi: target.agi.toString().padEnd(3),
     })
   )
 
@@ -75,7 +76,6 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   Terminal.log(` 💬 "${target.description}"`)
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 
-  console.log('isNpc',isNpc)
   const canTalk = isNpc || target.isKnight
 
   if (canTalk) {

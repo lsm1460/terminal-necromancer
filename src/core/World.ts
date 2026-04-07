@@ -15,7 +15,7 @@ export class World {
   ) {}
 
   addDrop(drop: Drop, quantity = 1) {
-    const existing = this.drops.find(_.matches({ id: drop.id, x: drop.x, y: drop.y }))
+    const existing = this.drops.find(_.matches({ id: drop.id }))
     if (existing && existing.quantity && drop.quantity) {
       existing.quantity += drop.quantity
     } else {

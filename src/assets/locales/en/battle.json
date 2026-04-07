@@ -59,6 +59,7 @@
       "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! Dealing {{damageMsg}} damage to \u001b[37m{{defender}}\u001b[0m! {{hpStatus}}"
     },
     "status_change": {
+      "resisted": "{{name}} resisted {{effectName}}.",
       "effect_removed": "\n✨ [Status Change] [{{effectName}}] has worn off from {{name}}.",
       "stealth_broken": " \u001b[90m[!] {{name}}'s stealth has been broken, revealing their presence!\u001b[0m",
       "expose_name": "Exposed",

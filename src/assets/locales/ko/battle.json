@@ -59,6 +59,7 @@
       "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! \u001b[37m{{defender}}\u001b[0m에게 {{damageMsg}}의 피해! {{hpStatus}}"
     },
     "status_change": {
+      "resisted": "{{name}}은/는 {{effectName}}에 저항했다.",
       "effect_removed": "\n✨ [상태 변화] {{name}}에게서 [{{effectName}}] 효과가 사라졌습니다.",
       "stealth_broken": " \u001b[90m[!] {{name}}의 은신이 해제되어 정체가 드러났습니다!\u001b[0m",
       "expose_name": "드러난 자",

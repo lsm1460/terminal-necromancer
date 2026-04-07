@@ -1,6 +1,7 @@
+import i18n from '~/i18n'
+import { Terminal } from '../Terminal'
+import { BattleHooks, BattleResult, BattleState } from './types'
 import { CombatUnit } from './unit/CombatUnit'
-import { BattleState, BattleHooks, BattleResult } from './types'
-import { delay } from '~/utils'
 
 export interface BattleManager {
   getAliveUnits(): CombatUnit[]
@@ -72,7 +73,7 @@ export class BattleEngine {
         break
       }
 
-      await delay()
+      await Terminal.prompt(i18n.t('web.continue'))
     }
 
     if (this.hooks.onRoundEnd) {

@@ -105,7 +105,7 @@
       },
       "stats": {
         "hp": " HP  : {{hpBar}} {{hp}}/{{maxHp}}",
-        "combat": " ATK : {{atk}} | DEF: {{def}}",
+        "combat": " ATK : {{atk}} | DEF: {{def}} | AGI: {{agi}}",
         "sub": " EVA : 회피 {{eva}}% | 크리티컬 {{crit}}%"
       },
       "skills": {
