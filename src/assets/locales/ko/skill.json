@@ -223,6 +223,10 @@
       "name": "기습적인 일격",
       "description": "상대의 빈틈을 노려 예리한 무기나 날카로운 신체 부위로 빠르게 베어 가릅니다."
     },
+    "soul_slash": {
+      "name": "영혼을 울리는 일격",
+      "description": "상대의 방어를 무시한 체, 직접 근원에 타격을 줍니다."
+    },
     "sticky_web": {
       "name": "강제 구속",
       "description": "끈적한 점액이나 보이지 않는 마력의 끈을 투척하여 대상의 행동을 제약합니다."
@@ -411,6 +415,18 @@
     "cloak_active": {
       "name": "은폐장 활성",
       "description": "은폐장을 활성화하여 몸을 보이지 않게 됩니다."
+    },
+    "cmd_pause": {
+      "name": "명령:정지",
+      "description": "모든 적군을 정지시키는 언령을 보냅니다."
+    },
+    "cmd_assemble": {
+      "name": "명령:집합",
+      "description": "근처에 있는 편린들을 전투에 합류 시킵니다."
+    },
+    "spread_of_taint": {
+      "name": "오염의 확산",
+      "description": "불특정 적군에게 혼란을 부여합니다."
     }
   }
 }

@@ -96,17 +96,19 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       const allys = battle.getAllysOf(unit)
       if (allys.length === 0) return
 
-      // 죽는 유신의 능력치 중 일정 비율을 남은 아군들에게 분배해서 나눠줌
-      // 아군이 적을수록 한 명당 받는 수치가 커짐
-      const bonusAtk = Math.floor((unit.ref.atk * 0.5) / allys.length)
-      const bonusDef = Math.floor((unit.ref.def * 0.5) / allys.length)
+      const bonusAtk = Math.floor(unit.ref.atk / allys.length)
+      const bonusDef = Math.floor(unit.ref.def / allys.length)
+      const bonusAgi = Math.floor(unit.ref.agi / allys.length)
 
       allys.forEach((allyUnit) => {
+        allyUnit.ref.hp += Math.floor(unit.ref.maxHp / allys.length)
+
         allyUnit.applyBuff({
           id: 'soul_chain',
           type: 'buff',
-          atk: bonusAtk,
-          def: bonusDef,
+          atk: bonusAtk + allyUnit.buffManager.getStatBonus('atk'),
+          def: bonusDef + allyUnit.buffManager.getStatBonus('def'),
+          agi: bonusAgi + allyUnit.buffManager.getStatBonus('agi'),
           duration: Infinity,
         })
 

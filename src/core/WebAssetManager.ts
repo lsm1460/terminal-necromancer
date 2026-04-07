@@ -147,7 +147,6 @@ export class WebAssetManager {
   public getSprites(originId: string): UnitSprites | void {
     if (typeof window === 'undefined') return
 
-    console.log('DEBUG:: this.spriteCache',this.spriteCache)
     if (this.spriteCache.has(originId)) {
       return this.spriteCache.get(originId)!
     }

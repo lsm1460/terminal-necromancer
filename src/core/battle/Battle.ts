@@ -168,9 +168,17 @@ export class Battle implements BattleManager {
 
   // Exposed for skill executors
   public getEnemiesOf(attacker: CombatUnit): CombatUnit[] {
+    if (attacker.isConfused) {
+      return this.units.getAllysOf(attacker)
+    }
+
     return this.units.getEnemiesOf(attacker)
   }
   public getAllysOf(attacker: CombatUnit): CombatUnit[] {
+    if (attacker.isConfused) {
+      return this.units.getEnemiesOf(attacker)
+    }
+
     return this.units.getAllysOf(attacker)
   }
 }

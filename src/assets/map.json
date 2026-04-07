@@ -561,87 +561,105 @@
         },
         {
           "id": "B6_002",
+          "event": "none",
           "npcIds": ["hansen_mechanic"]
         },
         null,
         {
           "id": "B6_004",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 7
         },
         {
           "id": "B6_005",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 9
         },
         {
           "id": "B6_006",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 6
         },
         {
           "id": "B6_007",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 9
         }
       ],
       [
         null,
         {
           "id": "B6_009",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 8
         },
         {
           "id": "B6_010",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 6
         },
         {
           "id": "B6_011",
+          "event": "none",
           "npcIds": ["vora_observer"]
         },
         null,
         null,
         {
           "id": "B6_014",
+          "event": "none",
           "npcIds": ["shadowed_agent"]
         }
       ],
       [
         {
           "id": "B6_015",
+          "event": "none",
           "npcIds": ["elias_survivor", "dax_looter"]
         },
         {
           "id": "B6_016",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 6
         },
         null,
         null,
         {
           "id": "B6_019",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 9
         },
         {
           "id": "B6_020",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 7
         },
         {
           "id": "B6_021",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 9
         }
       ],
       [
         {
           "id": "B6_022",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 8
         },
         null,
         {
           "id": "B6_024",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 6
         },
         {
           "id": "B6_025",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 6
         },
         {
           "id": "B6_026",
+          "event": "none",
           "npcIds": ["silas_dissector"]
         },
         null,
@@ -650,27 +668,33 @@
       [
         {
           "id": "B6_029",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 9
         },
         {
           "id": "B6_030",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 7
         },
         {
           "id": "B6_031",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 6
         },
         null,
         {
           "id": "B6_033",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 4
         },
         {
           "id": "B6_034",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 6
         },
         {
           "id": "B6_035",
+          "event": "none",
           "npcIds": ["mika_operator"]
         }
       ],
@@ -679,13 +703,16 @@
         null,
         {
           "id": "B6_038",
-          "event": "monster-b6-fragment"
+          "event": "monster-b6-fragment",
+          "spawn_limit": 8
         },
         {
-          "id": "B6_039"
+          "id": "B6_039",
+          "event": "none"
         },
         {
           "id": "B6_040",
+          "event": "none",
           "npcIds": ["aris_purifier"]
         },
         null,

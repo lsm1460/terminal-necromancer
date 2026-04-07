@@ -157,5 +157,25 @@
   "resistance_priest": {
     "name": "Resistance Priest",
     "description": "One who offers prayers on the battlefield to soothe the souls of the forsaken."
+  },
+  "fragment_of_dead_god_war": {
+    "name": "Shard of the Dead God [War]",
+    "description": "A fragment torn from the carcass of a fallen deity."
+  },
+  "fragment_of_dead_god_mercy": {
+    "name": "Shard of the Dead God [Mercy]",
+    "description": "A fragment torn from the carcass of a fallen deity."
+  },
+  "fragment_of_dead_god_wisdom": {
+    "name": "Shard of the Dead God [Wisdom]",
+    "description": "A fragment torn from the carcass of a fallen deity."
+  },
+  "fragment_of_dead_god_war_no_gain": {
+    "name": "Shard of the Dead God [War]",
+    "description": "A fragment torn from the carcass of a fallen deity."
+  },
+  "fragmented_thought_of_the_god": {
+    "name": "Fragmented Thought of the Dead God",
+    "description": "A splinter of consciousness held by the deity during its lifetime."
   }
 }

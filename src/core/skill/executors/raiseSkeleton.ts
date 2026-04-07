@@ -15,7 +15,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
   const { x, y } = player.ref.pos
 
   const makeSkeleton = (corpse: Corpse, isMultiple?: boolean) => {
-    const minIdx = SKELETON_RARITIES.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity
+    const minIdx = Math.min(SKELETON_RARITIES.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity, SKELETON_RARITIES.length - 2)
 
     const skeleton = SkeletonFactory.createFromCorpse(corpse, minIdx)
 

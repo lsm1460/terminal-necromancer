@@ -2,28 +2,28 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
+    "x": 1,
     "y": 1,
-    "_maxHp": 231,
-    "hp": 231,
+    "_maxHp": 340,
+    "hp": 340,
     "_maxMp": 50,
     "mp": 50,
-    "atk": 13,
-    "def": 5,
+    "atk": 15,
+    "def": 7,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1462,
-    "exp": 14809,
-    "level": 6,
+    "gold": 9535,
+    "exp": 34004,
+    "level": 8,
     "karma": 8,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
       "CORPSE_EXPLOSION",
-      "CURSE",
-      "SOUL_TRANSFER"
+      "BONE_STORM",
+      "BONE_PRISON"
     ],
     "unlockedSkills": [
       "RAISE_SKELETON",
@@ -31,94 +31,27 @@
       "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
       "CURSE",
-      "SOUL_TRANSFER"
+      "SOUL_TRANSFER",
+      "SOUL_HARVEST",
+      "BONE_STORM",
+      "BONE_PRISON"
     ],
     "_skeleton": [
       {
-        "id": "skeleton_warrior::1774419004772",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
-        "attackType": "melee",
-        "maxHp": 230,
-        "hp": 230,
-        "atk": 72,
-        "def": 27,
-        "agi": 57,
-        "skills": [
-          "whirlwind"
-        ],
-        "exp": 0,
-        "description": "고위 정령 '니발리스'의 유골로 만들어진 소환수입니다.",
-        "originId": "nivalis::2KptcH55",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 7
-      },
-      {
-        "id": "skeleton_electromancer::1774420842279",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 전격술사",
-        "attackType": "ranged",
-        "maxHp": 84,
-        "hp": 84,
-        "atk": 14,
-        "def": 16,
-        "agi": 19,
-        "skills": [
-          "lightning_bolt",
-          "lightning_storm"
-        ],
-        "exp": 0,
-        "description": "늘러붙은 컨시어지의 유골로 만들어진 소환수입니다.",
-        "originId": "clinging_concierge::UCrga_py",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
-        "id": "skeleton_priest::1774420844006",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 사제",
-        "attackType": "ranged",
-        "maxHp": 84,
-        "hp": 84,
-        "atk": 14,
-        "def": 16,
-        "agi": 19,
-        "skills": [
-          "holy_radiance"
-        ],
-        "exp": 0,
-        "description": "늘러붙은 컨시어지의 유골로 만들어진 소환수입니다.",
-        "originId": "clinging_concierge::NuLAQoBC",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 45
-      },
-      {
-        "id": "skeleton_king::1774420846380",
+        "id": "skeleton_king::1775538061899",
         "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
         "attackType": "melee",
-        "maxHp": 156,
-        "hp": 156,
-        "atk": 84,
-        "def": 15,
-        "agi": 96,
+        "maxHp": 140,
+        "hp": 140,
+        "atk": 60,
+        "def": 13,
+        "agi": 28,
         "skills": [
           "death_aura"
         ],
         "exp": 0,
         "description": "약물 투여된 광견의 유골로 만들어진 소환수입니다.",
-        "originId": "modified_fury_hound::pQPTmhAK",
+        "originId": "modified_fury_hound::jnHHE4D7",
         "rarity": "legendary",
         "dropTableId": "",
         "encounterRate": 0,
@@ -135,7 +68,7 @@
       "attackType": "melee",
       "baseMaxHp": 90,
       "maxHp": 90,
-      "hp": 225,
+      "hp": 270,
       "baseAtk": 20,
       "atk": 20,
       "baseDef": 40,
@@ -332,7 +265,9 @@
       "soul",
       "machine",
       "machine",
-      "machine"
+      "machine",
+      "soul",
+      "soul"
     ],
     "knightUpgrade": [
       "EPIC"
@@ -377,7 +312,7 @@
       }
     }
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B5_VIP_lounge",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -537,6 +472,60 @@
         "relation": 0
       },
       "_knight": {
+        "hp": 650,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "hansen_mechanic": {
+        "hp": 120,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "vora_observer": {
+        "hp": 85,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "elias_survivor": {
+        "hp": 60,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "silas_dissector": {
+        "hp": 150,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "mika_operator": {
+        "hp": 70,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "dax_looter": {
+        "hp": 90,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "aris_purifier": {
+        "hp": 400,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "shadowed_agent": {
+        "hp": 360,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "fourth_boss": {
         "hp": 650,
         "isAlive": true,
         "reborn": false,

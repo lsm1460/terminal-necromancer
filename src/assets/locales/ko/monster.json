@@ -157,5 +157,25 @@
   "resistance_priest": {
     "name": "레지스탕스 사제",
     "description": "버림받은 자들의 영혼을 달래며 전장에서 기도를 올리는 자입니다."
+  },
+  "fragment_of_dead_god_war": {
+    "name": "죽은 신의 편린[전쟁]",
+    "description": "죽은 신의 시체로부터 떨어져 나온 조각 입니다."
+  },
+  "fragment_of_dead_god_mercy": {
+    "name": "죽은 신의 편린[자애]",
+    "description": "죽은 신의 시체로부터 떨어져 나온 조각 입니다."
+  },
+  "fragment_of_dead_god_wisdom": {
+    "name": "죽은 신의 편린[지혜]",
+    "description": "죽은 신의 시체로부터 떨어져 나온 조각 입니다."
+  },
+  "fragment_of_dead_god_war_no_gain": {
+    "name": "죽은 신의 편린[전쟁]",
+    "description": "죽은 신의 시체로부터 떨어져 나온 조각 입니다."
+  },
+  "fragmented_thought_of_the_god": {
+    "name": "죽은 신의 사념",
+    "description": "죽은 신이 생전에 가지고 있던 의식의 파편입니다."
   }
 }

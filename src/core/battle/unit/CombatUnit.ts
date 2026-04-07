@@ -171,6 +171,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       atk: Math.max(0, this.stats.atk + this.buffManager.getStatBonus('atk')),
       def: Math.max(0, this.stats.def + this.buffManager.getStatBonus('def')),
       eva: Math.max(0, this.stats.eva + this.buffManager.getStatBonus('eva')),
+      agi: Math.max(0, this.stats.agi + this.buffManager.getStatBonus('agi')),
       crit: (this.stats.crit || 0) + this.buffManager.getStatBonus('crit'),
     }
   }

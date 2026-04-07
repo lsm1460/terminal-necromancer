@@ -17,7 +17,11 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
   const enemies: CombatUnit[] = battleTargets.map((target) => {
     const isNpc = !!(target as NPC).faction
 
-    return battle.toCombatUnit(target, isNpc ? 'npc' : 'monster')
+    const unit = battle.toCombatUnit(target, isNpc ? 'npc' : 'monster')
+
+    
+
+    return unit
   })
 
   const ally: CombatUnit[] = player.minions.map((m) => battle.toCombatUnit(m, 'minion'))

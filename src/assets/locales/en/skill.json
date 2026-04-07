@@ -225,6 +225,10 @@
       "name": "Surprise Strike",
       "description": "Quickly slashes the enemy's weak point with a keen weapon or sharp claws."
     },
+    "soul_slash": {
+      "name": "Soul-Piercing Strike",
+      "description": "Ignoring the enemy's defenses, this strike deals a direct blow to the very source of their being."
+    },
     "sticky_web": {
       "name": "Force Restraint",
       "description": "Throws sticky mucus or invisible magical threads to restrict the target's movement."
@@ -393,6 +397,18 @@
     "execution": {
       "name": "Execution",
       "description": "Inflicts a fatal blow upon a single enemy."
+    },
+    "cmd_pause": {
+      "name": "Command: Pause",
+      "description": "Sends forth a word of power that halts all enemies."
+    },
+    "cmd_assemble": {
+      "name": "Command: Assemble",
+      "description": "Sends forth a word of power that summons nearby fragments to join the battle."
+    },
+    "spread_of_taint": {
+      "name": "Spread of Taint",
+      "description": "Spreads a corrupting influence that inflicts confusion upon random enemies."
     }
   }
 }

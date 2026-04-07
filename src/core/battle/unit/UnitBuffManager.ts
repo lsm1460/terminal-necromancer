@@ -48,6 +48,12 @@ export class UnitBuffManager {
       const existing = targetArray.find((e) => e.id === effect.id)
       if (existing) {
         existing.duration = Math.max(existing.duration, effect.duration)
+        existing.atk = effect.atk
+        existing.def = effect.def
+        existing.agi = effect.agi
+        existing.eva = effect.eva
+        existing.hp = effect.hp
+        existing.crit = effect.crit
       } else {
         targetArray.push(effect)
       }
@@ -137,7 +143,7 @@ export class UnitBuffManager {
     )
   }
 
-  public getStatBonus(statName: 'atk' | 'def' | 'eva' | 'crit'): number {
+  public getStatBonus(statName: 'atk' | 'def' | 'eva' | 'agi' | 'crit'): number {
     const getSum = (arr: Buff[], key: keyof Buff) => arr.reduce((acc, b) => acc + (Number(b[key]) || 0), 0)
     return getSum(this.buffs, statName) - getSum(this.deBuffs, statName)
   }

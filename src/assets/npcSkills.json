@@ -111,6 +111,19 @@
     "power": 1.6,
     "targetType": "ENEMY_SINGLE"
   },
+  "soul_slash": {
+    "id": "soul_slash",
+    "name": "영혼을 울리는 일격",
+    "attackType": "melee",
+    "description": "상대의 방어를 무시한 체, 직접 근원에 타격을 줍니다.",
+    "chance": 0.4,
+    "power": 1.6,
+    "targetType": "ENEMY_SINGLE",
+    "options": {
+      "isIgnoreDef": true,
+      "isSureCrit": true
+    }
+  },
   "sticky_web": {
     "id": "sticky_web",
     "name": "강제 구속",
@@ -672,7 +685,7 @@
     "attackType": "ranged",
     "power": 0.8,
     "description": "불특정 적군에게 혼란을 부여합니다.",
-    "chance": 0.3,
+    "chance": 0.8,
     "targetType": "ENEMY_RANDOM",
     "buff": {
       "id": "confuse",
