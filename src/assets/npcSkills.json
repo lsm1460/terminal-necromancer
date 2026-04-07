@@ -685,7 +685,7 @@
     "attackType": "ranged",
     "power": 0.8,
     "description": "불특정 적군에게 혼란을 부여합니다.",
-    "chance": 0.4,
+    "chance": 0.3,
     "targetType": "ENEMY_RANDOM",
     "buff": {
       "id": "confuse",

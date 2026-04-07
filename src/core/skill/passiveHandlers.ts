@@ -96,12 +96,12 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       const allys = battle.getAllysOf(unit)
       if (allys.length === 0) return
 
-      const bonusAtk = Math.floor(unit.ref.atk * 0.8 / allys.length)
-      const bonusDef = Math.floor(unit.ref.def * 0.8 / allys.length)
-      const bonusAgi = Math.floor(unit.ref.agi * 0.8 / allys.length)
+      const bonusAtk = Math.floor((unit.ref.atk * 0.8) / allys.length)
+      const bonusDef = Math.floor((unit.ref.def * 0.8) / allys.length)
+      const bonusAgi = Math.floor((unit.ref.agi * 0.8) / allys.length)
 
       allys.forEach((allyUnit) => {
-        allyUnit.ref.hp += Math.floor(unit.ref.maxHp / allys.length)
+        allyUnit.ref.hp += Math.floor((unit.ref.maxHp * 0.5) / allys.length)
 
         allyUnit.applyBuff({
           id: 'soul_chain',
