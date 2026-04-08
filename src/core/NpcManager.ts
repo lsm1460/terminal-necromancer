@@ -4,6 +4,7 @@ import npcHandlers from '~/npc'
 import { GameContext, NPC, NPCState } from '~/types'
 import { Terminal } from './Terminal'
 import { Player } from './player/Player'
+import { BaseNPC } from './npc/BaseNPC'
 
 type EventCallback = (npcId: string) => void
 
@@ -13,11 +14,7 @@ export class NPCManager {
   private factionHostility: Record<string, number> = {}
   private factionContribution: Record<string, number> = {}
   private onDeathHandlers: Record<string, EventCallback> = {}
-  /**
-   * @param npcData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
-   * @param player - 플레이어 참조
-   * @param savedData - 세이브 파일에서 불러온 NPC 관련 상태 데이터
-   */
+
   constructor(
     npcData: any,
     private player: Player,
@@ -40,7 +37,6 @@ export class NPCManager {
     Object.entries(this.baseData).forEach(([id, data]) => {
       if (this.states[id]) return
 
-      // 새로 추가된 NPC인 경우 초기값 주입
       this.states[id] = {
         hp: data.hp ?? data.maxHp ?? 100,
         isAlive: data.isAlive ?? true,
@@ -61,68 +57,19 @@ export class NPCManager {
     if (!base || !state) return null
     if (state.reborn) return null
 
-    const npc: NPC = {
-      id,
-      ...base,
-      ...state,
-      // 현재 소속이 적대적이라면 강제로 role을 변경하거나 상태 반영 가능
-      isNpc: true,
-      isHostile: this.isHostile(id),
-      factionHostility: this.factionHostility[base.faction] || 0,
-      factionContribution: this.factionContribution[base.faction] || 0,
-      updateHostility: (_amount: number) => {
-        this.updateFactionHostility(base.faction, _amount)
-      },
-      updateContribution: (_amount: number) => {
-        this.updateFactionContribution(base.faction, _amount)
-      },
-      dead: (params) => {
-        const { karma = 1, hostile = 100 } = params || {}
-        this.player.karma += karma
-        this.states[id].isAlive = false
-
-        npc.faction && this.setFactionHostility(npc.faction, hostile)
-
-        this.onDeathHandlers[id]?.(id)
-      },
-      hasQuest: (player: Player, context: GameContext) => {
-        const handler = npcHandlers[id]
-        if (!handler) return false
-
-        if (handler.hasQuest) {
-          return handler.hasQuest(player, context)
-        }
-
-        return false
-      },
-
-      get name() {
-        return i18n.t(`npc.${this.id}.name`)
-      },
-      get deathLine() {
-        return i18n.t(`npc.${this.id}.deathLine`)
-      },
-      get description() {
-        return i18n.t(`npc.${this.id}.description`)
-      },
-      get lines() {
-        return (i18n.t(`npc.${this.id}.lines`, { returnObjects: true }) || ['...']) as string[]
-      },
-    }
-
-    return npc
+    return new BaseNPC(id, base, state, this, this.player)
   }
 
-  setAlive(id: string) {
-    this.states[id].isAlive = true
+  setAlive(id: string, alive: boolean = true) {
+    if (this.states[id]) {
+      this.states[id].isAlive = alive
+    }
   }
 
   reborn(id: string) {
-    if (!this.states[id]) {
-      return
+    if (this.states[id]) {
+      this.states[id].reborn = true
     }
-
-    this.states[id].reborn = true
   }
 
   public updateFactionContribution(faction: string, amount: number) {
@@ -160,7 +107,11 @@ export class NPCManager {
   }
 
   public getFactionContribution(faction: string) {
-    return this.factionContribution[faction]
+    return this.factionContribution[faction] || 0
+  }
+
+  public getFactionHostility(faction: string) {
+    return this.factionHostility[faction] || 0
   }
 
   public setFactionHostility(faction: string, amount: number) {
@@ -169,23 +120,23 @@ export class NPCManager {
     }
 
     this.factionHostility[faction] = amount
-
-    // 로그 공유
     this.updateFactionHostility(faction, 0)
   }
 
-  /**
-   * 특정 NPC가 적대적인지 확인 (소속 기반)
-   */
+  public triggerDeathHandler(npcId: string) {
+    this.onDeathHandlers[npcId]?.(npcId)
+  }
+
   isHostile(id: string): boolean {
-    const npc: NPC = this.baseData[id]
+    const npc = this.baseData[id]
+    if (!npc) return false
 
     if (npc.isBoss) {
       return true
     }
 
-    if (this.factionHostility[npc.faction]) {
-      return this.factionHostility[npc?.faction] >= HOSTILITY_LIMIT
+    if (npc.faction && this.factionHostility[npc.faction]) {
+      return this.factionHostility[npc.faction] >= HOSTILITY_LIMIT
     }
 
     return false
@@ -203,9 +154,6 @@ export class NPCManager {
     return i18n.exists(key) ? i18n.t(key) : '...'
   }
 
-  /**
-   * 세이브를 위한 전체 데이터 추출
-   */
   getSaveData() {
     return {
       states: this.states,
