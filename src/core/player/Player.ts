@@ -238,6 +238,16 @@ export class Player {
     return i18n.t('player.description.karma_max')
   }
 
+  get skills() {
+    const passiveList = ['resist_confuse'] as string[]
+
+    if (this.hasAffix('ALONE')) {
+      passiveList.push('resist_bind')
+    }
+
+    return passiveList
+  }
+
   get affixes(): Affix[] {
     return [this.equipped.weapon, this.equipped.armor]
       .filter((item): item is WeaponItem | ArmorItem => !!item && !!item.affix)

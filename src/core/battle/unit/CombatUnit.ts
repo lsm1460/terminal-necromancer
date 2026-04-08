@@ -5,7 +5,7 @@ import { AttackType, BattleTarget, UnitSprites } from '~/types'
 import { getOriginId } from '~/utils'
 import { Battle, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
-import { BuffOptions } from '../Buff'
+import { Buff, BuffOptions, BuffType } from '../Buff'
 import { BattleLogFormatter } from './BattleLogFormatter'
 import { UnitBuffManager } from './UnitBuffManager'
 
@@ -80,6 +80,17 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   public hasDeBuff(id: BuffOptions['id']) {
     return this.buffManager.hasDeBuff(id)
+  }
+
+  public hasImmunity(d: Buff) {
+    const skills = this.ref.skills ?? []
+
+    const immunityMap: Record<string, BuffType> = {
+      resist_bind: 'bind',
+      resist_confuse: 'confuse',
+    }
+
+    return skills.some((skill) => immunityMap[skill] === d.type)
   }
 
   public get buff() {

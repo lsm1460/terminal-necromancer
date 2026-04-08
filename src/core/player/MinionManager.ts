@@ -89,6 +89,7 @@ export class MinionManager {
 
       if (removedSkeleton) {
         Terminal.log(` └ ⚠️ 장비가 해제되어 ${removedSkeleton.name}이(가) 소멸했습니다.`)
+        this.removeMinion(removedSkeleton.id)
       }
     }
   }

@@ -152,7 +152,6 @@
     "gold": [20, 35],
     "items": [
       { "itemId": "nano_medical_kit", "chance": 0.25, "quantity": [1, 1] },
-      { "itemId": "mana_potion_medium", "chance": 0.3, "quantity": [1, 1] },
       { "itemId": "optical_carbine", "chance": 0.2, "quantity": [1, 1] },
       { "itemId": "priest_rosary", "chance": 0.15, "quantity": [1, 1] }
     ]
@@ -265,7 +264,7 @@
     "gold": [40, 60],
     "items": [
       { "itemId": "deity_splinter_dagger", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" },
-      { "itemId": "mechanical_heart_part", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" },
+      { "itemId": "divine_remnant_armor", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" },
       { "itemId": "divinity_dust", "chance": 0.7, "quantity": [1, 2] }
     ]
   },

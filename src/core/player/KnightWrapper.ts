@@ -122,10 +122,10 @@ class KnightWrapper {
     const state = `${this.isLich ? 'LICH' : 'KNIGHT'}_${this.hasHorse ? 'HORSE' : 'FOOT'}`
 
     const skillTable: Record<string, string[]> = {
-      LICH_HORSE: ['abyssal_gallop', 'bone_prison', 'aging_curse'], // 망령의 군주
-      LICH_FOOT: ['bone_prison', 'aging_curse'], // 타락한 리치
-      KNIGHT_HORSE: ['dread_charge', 'power_smash'], // 심연의 기사
-      KNIGHT_FOOT: ['execution', 'power_smash'], // 기본 기사 (원본 참조)
+      LICH_HORSE: ['resist_confuse', 'abyssal_gallop', 'bone_prison', 'aging_curse'], // 망령의 군주
+      LICH_FOOT: ['resist_confuse', 'bone_prison', 'aging_curse'], // 타락한 리치
+      KNIGHT_HORSE: ['resist_confuse', 'dread_charge', 'power_smash'], // 심연의 기사
+      KNIGHT_FOOT: ['resist_confuse', 'execution', 'power_smash'], // 기본 기사 (원본 참조)
     }
 
     // 3. 해당하는 상태의 스킬셋을 반환 (없을 경우를 대비해 원본 스킬을 백업으로)

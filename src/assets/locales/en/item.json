@@ -75,10 +75,6 @@
     "label": "Medium Health Potion",
     "description": "A standard-issue potion for security personnel. Restores 100 HP."
   },
-  "mana_potion_medium": {
-    "label": "Medium Mana Potion",
-    "description": "A potion that replenishes spiritual energy. Restores 80 MP."
-  },
   "nano_medical_kit": {
     "label": "Nano Medkit",
     "description": "An advanced medical kit used by Security Priests. Restores 180 HP."

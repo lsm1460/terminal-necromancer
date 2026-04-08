@@ -65,7 +65,7 @@ async function executeBoneStormAttack(
       id: 'bleed',
       type: 'dot',
       duration: 4,
-      atk: sacrificeCount * 5,
+      dot: sacrificeCount * 5,
     })
   }
 }

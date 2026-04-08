@@ -11,7 +11,7 @@
       "id": "burn",
       "type": "dot",
       "duration": 2,
-      "atk": 2
+      "dot": 2
     }
   },
   "ice_bolt": {
@@ -26,7 +26,7 @@
       "id": "freeze",
       "type": "deBuff",
       "duration": 2,
-      "agi": 2,
+      "agi": 10,
       "eva": 0.1
     }
   },
@@ -70,7 +70,52 @@
       "id": "burn",
       "type": "dot",
       "duration": 2,
-      "atk": 2
+      "dot": 10
+    }
+  },
+  "blizzard": {
+    "id": "blizzard",
+    "name": "눈보라",
+    "attackType": "ranged",
+    "description": "눈보라가 모든 적을 덮칩니다. 모든 적의 행동이 둔해집니다.",
+    "chance": 0.2,
+    "power": 1.5,
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "id": "freeze",
+      "type": "deBuff",
+      "duration": 2,
+      "agi": 20,
+      "eva": 0.1
+    }
+  },
+  "icicle_lance": {
+    "id": "icicle_lance",
+    "name": "고드름 창",
+    "attackType": "melee",
+    "description": "날카롭게 제련된 얼음 창을 투척하여 적 두 명을 꿰뚫습니다. 상처 입은 적은 한기에 노출되어 움직임이 눈에 띄게 둔해집니다.",
+    "chance": 0.5,
+    "power": 2.2,
+    "targetType": "ENEMY_DOUBLE",
+    "buff": {
+      "id": "freeze",
+      "type": "deBuff",
+      "duration": 2,
+      "agi": 20,
+      "eva": 0.1
+    }
+  },
+  "crystal_aegis": {
+    "id": "crystal_aegis",
+    "name": "수정 방패",
+    "description": "모든 아군에게 투명한 방어막을 두릅니다.",
+    "chance": 0.3,
+    "targetType": "ALLY_ALL",
+    "type": "buff",
+    "buff": {
+      "id": "barrie",
+      "duration": 3,
+      "def": 20
     }
   },
   "shield_bash": {
@@ -99,7 +144,7 @@
       "id": "burn",
       "type": "dot",
       "duration": 2,
-      "atk": 2
+      "dot": 8
     }
   },
   "quick_slash": {
@@ -434,7 +479,7 @@
       "id": "poison",
       "type": "dot",
       "duration": 15,
-      "atk": 2
+      "dot": 2
     }
   },
   "vitals_strike": {
@@ -458,7 +503,7 @@
       "id": "bleed",
       "type": "dot",
       "duration": 3,
-      "atk": 5
+      "dot": 5
     }
   },
   "thorns": {
@@ -647,7 +692,7 @@
       "id": "burn",
       "type": "dot",
       "duration": 4,
-      "atk": 15
+      "dot": 15
     }
   },
   "curse_of_the_phoenix": {
@@ -676,7 +721,7 @@
       "id": "burn",
       "type": "dot",
       "duration": 4,
-      "atk": 15
+      "dot": 15
     }
   },
   "spread_of_taint": {
@@ -689,8 +734,22 @@
     "targetType": "ENEMY_RANDOM",
     "buff": {
       "id": "confuse",
-      "type": "deBuff",
-      "duration": 4
+      "type": "confuse",
+      "duration": 3
+    }
+  },
+  "chaos": {
+    "id": "chaos",
+    "name": "혼돈",
+    "attackType": "ranged",
+    "power": 1.5,
+    "description": "모든 적군에게 혼란을 부여합니다.",
+    "chance": 0.2,
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "id": "confuse",
+      "type": "confuse",
+      "duration": 2
     }
   },
   "cloak_active": {

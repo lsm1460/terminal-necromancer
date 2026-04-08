@@ -46,7 +46,7 @@ export class UnitBuffManager {
     const targetArray = isBuff ? this.buffs : this.deBuffs
 
     if (action === 'apply') {
-      if (this.owner.ref instanceof Player && this.owner.ref.hasAffix('ALONE') && effect.type === 'bind') {
+      if (this.owner.hasImmunity(effect)) {
         Terminal.log(
           i18n.t('battle.unit.status_change.resisted', {
             name: this.owner.name,
@@ -58,7 +58,7 @@ export class UnitBuffManager {
 
       const existing = targetArray.find((e) => e.id === effect.id)
       if (existing) {
-        existing.duration = Math.max(existing.duration, effect.duration)
+        existing.duration = effect.duration
         existing.atk = effect.atk
         existing.def = effect.def
         existing.agi = effect.agi

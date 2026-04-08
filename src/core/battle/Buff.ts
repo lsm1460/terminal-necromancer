@@ -1,6 +1,6 @@
 import i18n from '~/i18n'
 
-export type BuffType = 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus' | 'stealth' | 'expose'
+export type BuffType = 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus' | 'stealth' | 'expose' | 'confuse'
 
 export interface BuffOptions {
   id:
@@ -28,6 +28,7 @@ export interface BuffOptions {
   type: BuffType
   atk?: number
   agi?: number
+  dot?: number
   def?: number
   eva?: number
   hp?: number
@@ -44,6 +45,7 @@ export class Buff {
   def?: number
   eva?: number
   hp?: number
+  dot?: number
   crit?: number
   isLocked?: boolean
 
@@ -56,6 +58,7 @@ export class Buff {
     this.def = options.def
     this.eva = options.eva
     this.hp = options.hp
+    this.dot = options.dot
     this.crit = options.crit
     this.isLocked = options.isLocked
   }
