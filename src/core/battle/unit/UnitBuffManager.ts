@@ -65,6 +65,7 @@ export class UnitBuffManager {
         existing.eva = effect.eva
         existing.hp = effect.hp
         existing.crit = effect.crit
+        existing.stack++
       } else {
         targetArray.push(effect)
       }

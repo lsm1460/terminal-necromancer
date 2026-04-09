@@ -40,6 +40,8 @@ export class Buff {
   id: BuffOptions['id']
   duration: number
   type: BuffType
+  stack = 0
+  
   atk?: number
   agi?: number
   def?: number
