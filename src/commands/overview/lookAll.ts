@@ -1,5 +1,4 @@
 import { Terminal } from '~/core/Terminal'
-import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { printTileStatus } from '~/statusPrinter'
 import { Drop, GameContext, Monster, NPC } from '~/types'
@@ -8,20 +7,14 @@ import { lookBattleTarget } from './entity'
 import { lookItem } from './item'
 import { getTileFromDirection, lookPath } from './path'
 
-export const lookAll = async (
-  player: Player,
-  context: GameContext,
-  items: Drop[],
-  monsters?: Monster[]
-): Promise<void> => {
-  const { x, y } = player.pos
-  const { map, npcs, world } = context
+export const lookAll = async (context: GameContext, items: Drop[], monsters?: Monster[]): Promise<void> => {
+  const { player, map, npcs, world } = context
   const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
   const minions = player.minions || []
-  const tile = map.getTile(x, y)
+  const tile = map.getTile(player.pos)
 
   const aliveNPCs = (tile.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as NPC[]
-  const corpse = world.getCorpsesAt(x, y)
+  const corpse = world.getCorpsesAt(player.pos)
 
   const directions = ['up', 'down', 'left', 'right']
 
@@ -41,7 +34,7 @@ export const lookAll = async (
     .filter((result): result is NonNullable<typeof result> => Boolean(result && result.tile))
 
   const categoryChoices = [
-    {name: 'CURRENT', message: i18n.t('commands.look.category.current') },
+    { name: 'CURRENT', message: i18n.t('commands.look.category.current') },
     ...(accessiblePaths.length ? [{ name: 'PATH', message: i18n.t('commands.look.category.path') }] : []),
     ...(aliveNPCs.length ? [{ name: 'NPC', message: i18n.t('commands.look.category.npc') }] : []),
     ...(corpse.length ? [{ name: 'CORPSE', message: i18n.t('commands.look.category.corpse') }] : []),
@@ -60,7 +53,7 @@ export const lookAll = async (
   switch (category) {
     case 'CURRENT':
       targetId = 'current'
-      printTileStatus(player, context)
+      printTileStatus(context)
       break
     case 'MONSTER':
       targetId = await lookBattleTarget(aliveMonsters, context)
@@ -85,5 +78,5 @@ export const lookAll = async (
       break
   }
 
-  if (targetId === 'back') return await lookAll(player, context, items, monsters)
+  if (targetId === 'back') return await lookAll(context, items, monsters)
 }

@@ -50,15 +50,15 @@ const DIRECTION_OFFSETS: Record<string, { dx: number; dy: number }> = {
 }
 
 export const getTileFromDirection = (player: Player, map: MapManager, direction: string) => {
-  const { x, y } = player.pos
+  const { x: originX, y: originY } = player.pos
 
   const offset = DIRECTION_OFFSETS[direction]
   if (!offset) return null // 유효하지 않은 방향 예외 처리
 
-  const targetX = x + offset.dx
-  const targetY = y + offset.dy
+  const x = originX + offset.dx
+  const y = originY + offset.dy
 
-  const tile = map.getTile(targetX, targetY) as Tile | null
+  const tile = map.getTile({ x, y }) as Tile | null
 
   return tile
 }

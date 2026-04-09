@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import i18n from '~/i18n'
 import { printTileStatus } from '~/statusPrinter'
-import { GameContext, SceneData, Tile } from '~/types'
+import { GameContext, PositionType, SceneData, Tile } from '~/types'
 import { Player } from './player/Player'
 import { Terminal } from './Terminal'
 import { assetManager } from './WebAssetManager'
@@ -26,12 +26,12 @@ export class MapManager {
     return this.mapData[this.currentSceneId]
   }
 
-  getTile(x: number, y: number): Tile {
+  getTile({ x, y }: PositionType): Tile {
     return this.currentScene.tiles?.[y]?.[x]
   }
 
-  canMove(x: number, y: number): boolean {
-    const tile = this.getTile(x, y)
+  canMove(pos: PositionType): boolean {
+    const tile = this.getTile(pos)
 
     return !!tile
   }
@@ -40,8 +40,8 @@ export class MapManager {
     return this.mapData[sceneId]
   }
 
-  async changeScene(targetSceneId: MapId, player: Player, context: GameContext) {
-    const { map, events, broadcast } = context
+  async changeScene(targetSceneId: MapId, context: GameContext) {
+    const { player, map, events, broadcast } = context
     if (!this.mapData[targetSceneId]) {
       console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
       return
@@ -65,13 +65,13 @@ export class MapManager {
     Terminal.log(i18n.t(`enter_new_area`) + i18n.t(`scene.${newScene.id}`))
     Terminal.log(`------------------------------------------`)
 
-    const tile = map.getTile(player.x, player.y)
+    const tile = map.getTile(player.pos)
     tile.isSeen = true
 
-    await events.handle(tile, player, context)
+    await events.handle(tile, context)
     broadcast.play()
 
-    printTileStatus(player, context)
+    printTileStatus(context)
   }
 
   private shuffleTiles(sceneId: string) {

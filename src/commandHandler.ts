@@ -1,14 +1,12 @@
 import * as Commands from './commands'
 import { COMMAND_GROUPS, CommandKey } from './consts'
 import { Terminal } from './core/Terminal'
-import { Player } from './core/player/Player'
 import i18n from './i18n'
 import { printDirections, printTileStatus } from './statusPrinter'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameContext } from './types'
 
 type CommandFunction = (
-  player: Player,
   args: string[],
   context: GameContext
 ) => (boolean | string) | Promise<boolean | string>
@@ -64,12 +62,12 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   map: Commands.mapCommand,
 }
 
-export async function handleCommand(rawCmd: string, player: Player, context: GameContext): Promise<string | boolean> {
+export async function handleCommand(rawCmd: string, context: GameContext): Promise<string | boolean> {
   const trimmed = rawCmd.trim()
   if (!trimmed) return false
 
   // 치트키 처리
-  if (Commands.handleCheat(trimmed, player, context)) {
+  if (Commands.handleCheat(trimmed, context)) {
     return true
   }
 
@@ -85,25 +83,25 @@ export async function handleCommand(rawCmd: string, player: Player, context: Gam
 
   try {
     // 여기서 await을 통해 talkCommand 등의 메뉴 선택이 끝날 때까지 대기합니다.
-    const result = await fn(player, args, context)
+    const result = await fn(args, context)
     if (result === 'exit') return 'exit'
 
     if (result) {
-      const { map, events } = context
-      const currentTile = map.getTile(player.pos.x, player.pos.y)
-      printTileStatus(player, context)
-      await events.handle(currentTile, player, context)
+      const { player, map, events } = context
+      const currentTile = map.getTile(player.pos)
+      printTileStatus(context)
+      await events.handle(currentTile, context)
     }
 
     if (context.quest.hasQuest()) {
       await context.quest.startQuest(context)
     } else {
-      printDirections(player, context)
+      printDirections(context)
     }
   } catch (e) {}
 
   // 자동 세이브
-  const saveData = SaveSystem.makeSaveData(player, context)
+  const saveData = SaveSystem.makeSaveData(context)
   context.save.save(saveData)
 
   return false

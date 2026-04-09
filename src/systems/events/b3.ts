@@ -6,10 +6,10 @@ import { delay } from '~/utils'
 import { EventHandler } from '.'
 
 export const b3Handlers: Record<string, EventHandler> = {
-  'event-abandoned-corpse': async (tile, player, context) => {
+  'event-abandoned-corpse': async (tile, context) => {
     if (tile.isClear) return
 
-    const { world, battle } = context
+    const { player, world, battle } = context
     const candidates = ['shipyard_worker', 'shipyard_hound', 'ratman_scout', 'mutated_worker']
     const randomId = candidates[Math.floor(Math.random() * candidates.length)]
     const monster = battle.monster.makeMonster(randomId)
@@ -32,7 +32,7 @@ export const b3Handlers: Record<string, EventHandler> = {
     })
   },
 
-  'event-voice-recorder': async (tile, player, context) => {
+  'event-voice-recorder': async (tile, context) => {
     if (tile.isClear) return
 
     Terminal.log(i18n.t('events.b3.voice_recorder.found'))
@@ -58,26 +58,24 @@ export const b3Handlers: Record<string, EventHandler> = {
     Terminal.log(i18n.t('events.b3.voice_recorder.ended'))
   },
 
-  'event-conveyor-control-1': async (tile, player, context) => {
+  'event-conveyor-control-1': async (tile, context) => {
     const proceed = await Terminal.confirm(i18n.t('events.b3.conveyor.prompt_1'))
 
     if (proceed) {
       await transportPlayerByConveyor(
         context,
-        player,
         'event-conveyor-control-2',
         i18n.t('events.b3.conveyor.move_1')
       )
     }
   },
 
-  'event-conveyor-control-2': async (tile, player, context) => {
+  'event-conveyor-control-2': async (tile, context) => {
     const proceed = await Terminal.confirm(i18n.t('events.b3.conveyor.prompt_2'))
 
     if (proceed) {
       await transportPlayerByConveyor(
         context,
-        player,
         'event-conveyor-control-1',
         i18n.t('events.b3.conveyor.move_2')
       )
@@ -87,11 +85,10 @@ export const b3Handlers: Record<string, EventHandler> = {
 
 const transportPlayerByConveyor = async (
   context: GameContext,
-  player: Player,
   targetEvent: string,
   message: string
 ) => {
-  const { map } = context
+  const { player, map } = context
   const tiles = map.currentScene.tiles
 
   let targetX = -1

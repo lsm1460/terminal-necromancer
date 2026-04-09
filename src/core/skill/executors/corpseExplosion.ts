@@ -19,7 +19,7 @@ interface ExplosionTarget {
  */
 export const corpseExplosion: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
   const isChaining = player.ref.hasAffix('CHAIN_EXPLOSION')
-  const targets = collectExplosionTargets(player, context, isChaining)
+  const targets = collectExplosionTargets(context, isChaining)
 
   if (targets.length === 0) {
     Terminal.log(i18n.t('skill.not_found'))
@@ -63,14 +63,9 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
  * 폭발 가능한 자원(시체 & 스켈레톤) 수집
  * : isChaining이 true라면 시체(corpses)만 수집합니다.
  */
-function collectExplosionTargets(
-  player: CombatUnit<Player>,
-  context: GameContext,
-  isChaining: boolean
-): ExplosionTarget[] {
-  const { world } = context
-  const { x, y } = player.ref.pos
-  const corpses = world.getCorpsesAt(x, y)
+function collectExplosionTargets(context: GameContext, isChaining: boolean): ExplosionTarget[] {
+  const { player, world } = context
+  const corpses = world.getCorpsesAt(player.pos)
 
   const targets: ExplosionTarget[] = corpses.map((corpse) => ({
     id: corpse.id,
@@ -81,7 +76,7 @@ function collectExplosionTargets(
   }))
 
   if (!isChaining) {
-    const skeletons = player.ref.skeleton
+    const skeletons = player.skeleton
     targets.push(
       ...skeletons.map((sk: BattleTarget) => ({
         id: sk.id,

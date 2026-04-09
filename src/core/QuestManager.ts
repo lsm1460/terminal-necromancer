@@ -1,12 +1,10 @@
-import { GameContext } from '~/types'
-import { NPCManager } from './NpcManager'
-import { Player } from './player/Player'
+import { GameContext } from '~/types';
+import { NPCManager } from './NpcManager';
 
 export class QuestManager {
   private questQue: { npcId: string; questType: string }[] = []
 
   constructor(
-    private player: Player,
     private npcs: NPCManager
   ) {}
 
@@ -33,6 +31,6 @@ export class QuestManager {
   async processNpcDeaths(npcId: string, context: GameContext) {
     const npc = context.npcs.getNPC(npcId)
 
-    if (npc) await npc.afterDead(this.player, context)
+    if (npc) await npc.afterDead(context)
   }
 }

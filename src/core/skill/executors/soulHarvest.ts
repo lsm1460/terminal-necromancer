@@ -12,7 +12,6 @@ import { SkillManager } from '../SkillManager'
 export const soulHarvest: ExecuteSkill = async (player, context) => {
   const { world } = context
   const isVampirism = player.ref.hasAffix('VAMPIRISM')
-  const { x, y } = player.ref.pos
 
   // 1. 대상 시체 선택
   const targetId = await SkillManager.selectCorpse(player.ref, context)
@@ -20,7 +19,7 @@ export const soulHarvest: ExecuteSkill = async (player, context) => {
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }
 
-  const corpses = world.getCorpsesAt(x, y)
+  const corpses = world.getCorpsesAt(player.ref.pos)
   const selectedCorpse = corpses.find((c) => c.id === targetId)
 
   if (!selectedCorpse) {

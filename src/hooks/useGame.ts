@@ -22,7 +22,7 @@ export const useGame = () => {
   )
 
   const getPlayer = useCallback(() => {
-    return engine.current?.player
+    return engine.current?.context?.player
   }, [engine])
 
   const getContext = useCallback(() => {
@@ -32,12 +32,12 @@ export const useGame = () => {
   const updateConfig = useCallback(
     (newConfig: Record<string, any>) => {
       if (!engine.current) return
-      const { context, player } = engine.current
+      const { context } = engine.current
       context.config = { ...context.config, ...newConfig }
 
       context.config = { ...context.config, ...newConfig }
 
-      const saveData = SaveSystem.makeSaveData(player, context)
+      const saveData = SaveSystem.makeSaveData(context)
       context.save.save(saveData)
     },
     [engine]

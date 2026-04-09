@@ -540,7 +540,7 @@
         {
           "id": "B5_023",
           "event": "none",
-          "npcIds": ["baron_valter"]
+          "npcIds": []
         }
       ]
     ]

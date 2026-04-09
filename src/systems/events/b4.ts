@@ -1,13 +1,13 @@
 import { sample, without } from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { relocateCaron } from '~/npc/caron'
+import { CaronService } from '~/npc/caron/service'
 import { Tile } from '~/types'
 import { EventHandler } from '.'
 
 export const b4Handlers: Record<string, EventHandler> = {
-  'event-b4-warp': (tile, player, context) => {
-    const { map } = context
+  'event-b4-warp': (tile, context) => {
+    const { player, map } = context
     const tiles: (Tile | null)[][] = map.currentScene.tiles
 
     const safeTargets = tiles.flatMap((row, y) =>
@@ -27,8 +27,8 @@ export const b4Handlers: Record<string, EventHandler> = {
       Terminal.log(i18n.t('events.b4.warp.message'))
     }
   },
-  'event-b4-reset': (tile, player, context) => {
-    const { map, events, npcs } = context
+  'event-b4-reset': (tile, context) => {
+    const { player, map, events, npcs } = context
     const isCaronEventFinished = events.isCompleted('defeat_caron')
 
     if (isCaronEventFinished) {
@@ -45,7 +45,7 @@ export const b4Handlers: Record<string, EventHandler> = {
       })
     } else {
       const caron = npcs.getNPC('caron')
-      relocateCaron(player, caron!, context)
+      CaronService.relocate(caron!, context)
     }
   },
 }

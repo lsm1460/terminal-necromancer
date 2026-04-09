@@ -1,7 +1,6 @@
-import { Terminal } from '~/core/Terminal'
 import { MonsterFactory } from '~/core/MonsterFactory'
-import { Player } from '~/core/player/Player'
-import { GameContext, GameEvent, Tile } from '~/types'
+import { Terminal } from '~/core/Terminal'
+import { GameContext, Tile } from '~/types'
 import { allEventHandlers } from './events'
 import { MonsterEvent } from './events/MonsterEvent'
 
@@ -23,11 +22,11 @@ export class EventSystem {
     this.monsterEvent = new MonsterEvent(monsterFactory)
   }
 
-  async handle(tile: Tile, player: Player, context: GameContext) {
+  async handle(tile: Tile, context: GameContext) {
     const handler = allEventHandlers[tile.event]
 
     if (handler) {
-      await handler(tile, player, context)
+      await handler(tile, context)
     }
 
     if (tile.event.startsWith('monster-')) {

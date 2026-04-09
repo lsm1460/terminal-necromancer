@@ -1,22 +1,21 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, GameContext, NPC } from '~/types'
 
 export const talkCommand: CommandFunction = async (...params) => {
-  const [player, args, context] = params
+  const [args, context] = params
   let targetNpc = await selectTargetNpc(...params)
   if (!targetNpc) return false
 
   printNpcHeader(targetNpc)
 
-  await startTalkSession(targetNpc, player, context)
+  await startTalkSession(targetNpc, context)
 
   return false
 }
 
-async function selectTargetNpc(player: Player, args: string[], context: GameContext): Promise<BaseNPC | null> {
+async function selectTargetNpc(args: string[], context: GameContext): Promise<BaseNPC | null> {
   const npcs = context.npcs.getAliveNPCInTile()
 
   if (npcs.length < 1) {
@@ -36,7 +35,7 @@ async function selectTargetNpc(player: Player, args: string[], context: GameCont
 
   const choices = [
     ...npcs.map((npc) => {
-      const hasQuest = npc.hasQuest(player, context)
+      const hasQuest = npc.hasQuest(context)
 
       return { name: npc.id, message: `👤${hasQuest ? ' \x1b[32m[!]\x1b[0m' : ''} ${npc.name}` }
     }),
@@ -58,13 +57,13 @@ function printNpcHeader(npc: NPC) {
   Terminal.log(`──────────────────────────────────────────────────`)
 }
 
-async function startTalkSession(npc: BaseNPC, player: Player, context: GameContext) {
+async function startTalkSession(npc: BaseNPC, context: GameContext) {
   npc.relation += 1 // 대화 시 호감도 소폭 상승
 
   try {
     while (true) {
       const menuChoices = [
-        ...npc.getChoices(player, context),
+        ...npc.getChoices(context),
         { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` },
       ]
 
@@ -76,7 +75,7 @@ async function startTalkSession(npc: BaseNPC, player: Player, context: GameConte
         break
       }
 
-      const isEscape = await npc.handle(action, player, context)
+      const isEscape = await npc.handle(action, context)
       if (isEscape) break
     }
   } catch (e) {

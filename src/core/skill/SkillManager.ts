@@ -61,7 +61,7 @@ export class SkillManager {
   }
 
   static async selectCorpse(player: Player, context: GameContext) {
-    const corpses = context.world.getCorpsesAt(player.pos.x, player.pos.y)
+    const corpses = context.world.getCorpsesAt(player.pos)
 
     if (corpses.length === 0) {
       Terminal.log('\n💬 ' + i18n.t('skill.no_corpses_nearby'))

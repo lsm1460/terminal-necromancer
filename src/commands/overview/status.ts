@@ -2,7 +2,7 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, ItemType } from '~/types'
 
-export const statusCommand: CommandFunction = (player, args, context) => {
+export const statusCommand: CommandFunction = (args, { player }) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
   const { atk, def, crit, eva, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
 

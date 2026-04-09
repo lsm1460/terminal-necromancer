@@ -1,12 +1,10 @@
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import { GameContext } from '~/types'
 
-export const handleCheat = (rawCmd: string, player: Player, context: GameContext): boolean => {
+export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
   const trimmed = rawCmd.trim()
-  const { map } = context
-  const { x, y } = player.pos
-  const tile = map.getTile(x, y)
+  const { player, map } = context
+  const tile = map.getTile(player.pos)
 
   switch (trimmed) {
     case 'show me the money':

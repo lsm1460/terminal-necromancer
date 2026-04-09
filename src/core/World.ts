@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Corpse, Drop, LootBag } from '~/types'
+import { Corpse, Drop, LootBag, PositionType } from '~/types'
 import { MapManager } from './MapManager'
 import { Player } from './player/Player'
 import { Item } from './item/Item'
@@ -28,8 +28,8 @@ export class World {
     }
   }
 
-  getDropsAt(x: number, y: number): Drop[] {
-    return this.drops.filter(_.matches({ x, y }))
+  getDropsAt(pos: PositionType): Drop[] {
+    return this.drops.filter(_.matches(pos))
   }
 
   removeDropById(dropId: string, pos: { x: number; y: number }): Drop | undefined {
@@ -64,7 +64,7 @@ export class World {
     this.corpses.push(corpse)
   }
 
-  getCorpsesAt(x: number, y: number): Corpse[] {
+  getCorpsesAt({ x, y}: PositionType): Corpse[] {
     return this.corpses.filter((d) => d.x === x && d.y === y)
   }
 

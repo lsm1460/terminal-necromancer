@@ -2,14 +2,14 @@ import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { CommandFunction, ConsumableItem, Drop, ItemType } from '~/types'
+import { CommandFunction, ConsumableItem, Drop, GameContext, ItemType } from '~/types'
 import { printItem } from './overview'
 
-export const inventoryCommand: CommandFunction = async (player, args, context) => {
-  const selectedItem = await selectItemFromInventory(player)
+export const inventoryCommand: CommandFunction = async (args, context) => {
+  const selectedItem = await selectItemFromInventory(context.player)
   if (!selectedItem) return false
 
-  return await handleItemAction(selectedItem, player, args, context)
+  return await handleItemAction(selectedItem, args, context)
 }
 
 async function selectItemFromInventory(player: Player): Promise<Item | null> {
@@ -37,7 +37,7 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
   }
 }
 
-async function handleItemAction(item: Item, player: Player, args: any, context: any) {
+async function handleItemAction(item: Item, args: any, context: any) {
   const label = item.name
   const action = await Terminal.select(i18n.t('inventory.what_to_do', { label }), getAvailableActions(item))
 
@@ -46,17 +46,17 @@ async function handleItemAction(item: Item, player: Player, args: any, context: 
       printItem(item, true)
       break
     case 'equip':
-      await player.equip(item)
+      await context.player.equip(item)
       Terminal.log(`\n✨ ${i18n.t('inventory.action_equip_done', { label })}`)
       break
     case 'use':
-      await player.useItem(item as ConsumableItem)
+      await context.player.useItem(item as ConsumableItem)
       break
     case 'drop':
-      handleDropAction(item, player, context)
+      handleDropAction(item, context)
       break
     case 'back':
-      return await inventoryCommand(player, args, context)
+      return await inventoryCommand(args, context)
   }
 
   return false
@@ -80,9 +80,11 @@ function getAvailableActions(item: Item) {
 /**
  * 아이템 버리기 실행
  */
-function handleDropAction(item: Item, player: Player, context: any) {
+function handleDropAction(item: Item, context: GameContext) {
+  const { player, world } = context
+
   if (player.removeItem(item.id)) {
-    context.world.addDrop(item as Drop)
+    world.addDrop(item as Drop)
     Terminal.log(`📦 ${i18n.t('inventory.action_drop_done', { label: item.name, count: 1 })}`)
   }
 }

@@ -19,7 +19,6 @@ import { SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext, Renderer } from './types'
 
 export class GameEngine {
-  public player!: Player
   public context!: GameContext
 
   isProcessing = false
@@ -42,7 +41,7 @@ export class GameEngine {
     const battle = new Battle(player, monsterFactory, npcSkillManager)
     const mapManager = new MapManager(map)
     const npcs = new NPCManager(npc, player, mapManager, initData?.npcs)
-    const quest = new QuestManager(player, npcs)
+    const quest = new QuestManager(npcs)
     const world = new World(player, mapManager)
     const broadcastSystem = new Broadcast(npcs, eventSystem)
 
@@ -50,8 +49,8 @@ export class GameEngine {
       world.addLootBag(initData.drop)
     }
 
-    this.player = player
     this.context = {
+      player,
       map: mapManager,
       world,
       events: eventSystem,
@@ -101,18 +100,18 @@ export class GameEngine {
       player.hp = 1
       player.removeMercenaries()
 
-      this.renderer.printStatus(player, this.context)
+      this.renderer.printStatus(this.context)
     }
   }
 
   public async start(): Promise<void> {
-    const { map, events } = this.context
-    this.renderer.printStatus(this.player, this.context)
+    const { map, events, player } = this.context
+    this.renderer.printStatus(this.context)
 
-    const currentTile = map.getTile(this.player.pos.x, this.player.pos.y)
-    await events.handle(currentTile, this.player, this.context)
+    const currentTile = map.getTile(player.pos)
+    await events.handle(currentTile, this.context)
 
-    printDirections(this.player, this.context)
+    printDirections(this.context)
   }
 
   public async processCommand(
@@ -127,7 +126,7 @@ export class GameEngine {
 
     this.isProcessing = true
     try {
-      await handleCommand(command, this.player, this.context)
+      await handleCommand(command, this.context)
     } finally {
       this.isProcessing = false
     }

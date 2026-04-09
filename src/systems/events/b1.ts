@@ -3,11 +3,11 @@ import { Drop } from '~/types'
 import { EventHandler } from '.'
 
 export const b1Handlers: Record<string, EventHandler> = {
-  'event-00': async (tile, player, context) => {
+  'event-00': async (tile, context) => {
     context.events.completeEvent('START_GAME')
   },
 
-  'event-01': async (tile, player, context) => {
+  'event-01': async (tile, context) => {
     if (context.events.isCompleted('item-tutorial')) return
 
     const { drops } = context.drop.generateDrops('tutorial_drop')
@@ -17,7 +17,7 @@ export const b1Handlers: Record<string, EventHandler> = {
     })
 
     context.events.completeEvent('item-tutorial')
-    printLootStatus(player, context)
+    printLootStatus(context)
 
     // Terminal.log('')
   },

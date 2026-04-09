@@ -1,10 +1,10 @@
+import { MAP_IDS } from '~/consts'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { BattleTarget, GameContext, NPC } from '~/types'
+import { GameContext, NPC } from '~/types'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
-import { MAP_IDS } from '~/consts'
 
 export class FourthBoss implements BossLogic {
   withResistance = false
@@ -82,7 +82,7 @@ export class FourthBoss implements BossLogic {
       const _res = await Terminal.confirm('바로 이동 ㄱ 하실?')
 
       if (_res) {
-        await map.changeScene(MAP_IDS.B1_Last, player, context)
+        await map.changeScene(MAP_IDS.B1_Last, context)
       } else {
         await speak(['네가 준비되었을 때 사신을 공격한다면 우리도 합류하겠다는 이야기'])
       }

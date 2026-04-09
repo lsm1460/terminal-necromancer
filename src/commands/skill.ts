@@ -3,9 +3,9 @@ import { SkillManager } from '~/core/skill'
 import { CommandFunction, NPC } from '~/types'
 import { delay } from '~/utils'
 
-export const skillCommand: CommandFunction = async (player, args, context) => {
-  const { map, npcs, battle } = context
-  const tile = map.getTile(player.pos.x, player.pos.y)
+export const skillCommand: CommandFunction = async (args, context) => {
+  const { player, map, npcs, battle } = context
+  const tile = map.getTile(player.pos)
 
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []),

@@ -1,8 +1,7 @@
 import i18n from '~/i18n'
-import npcHandlers from '~/npc'
 import { GameContext, NPC, NPCState } from '~/types'
-import { Player } from '../player/Player'
 import { NPCManager } from '../NpcManager'
+import { Terminal } from '../Terminal'
 
 export class BaseNPC implements NPC {
   id: string
@@ -36,8 +35,7 @@ export class BaseNPC implements NPC {
     id: string,
     baseData: any,
     state: NPCState,
-    private manager: NPCManager,
-    private player: Player
+    protected manager: NPCManager
   ) {
     this.id = id
     this.faction = baseData.faction || ''
@@ -90,43 +88,31 @@ export class BaseNPC implements NPC {
   }
 
   dead(params?: { karma?: number; hostile?: number }) {
-    const { karma = 1, hostile = 100 } = params || {}
-    this.player.karma += karma
     this.isAlive = false
-    this.manager.setAlive(this.id, false)
 
-    if (this.faction) {
-      this.manager.setFactionHostility(this.faction, hostile)
-    }
-
-    this.manager.triggerDeathHandler(this.id)
+    this.manager.triggerDeathHandler(this, params)
   }
 
-  hasQuest(player: Player, context: GameContext): boolean {
-    const handler = npcHandlers[this.id]
-    if (!handler) return false
-
-    if (handler.hasQuest) {
-      return handler.hasQuest(player, context)
-    }
-
+  hasQuest(context: GameContext) {
     return false
   }
 
-  // For NPCHandler compatibility
-  getChoices(player: Player, context: GameContext) {
-    const handler = npcHandlers[this.id]
-    if (handler) {
-      return handler.getChoices(player, this, context)
-    }
+  getChoices(context: GameContext) {
     return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   }
 
-  async handle(action: string, player: Player, context: GameContext) {
-    const handler = npcHandlers[this.id]
-    if (handler) {
-      return await handler.handle(action, player, this, context)
+  async handle(action: string, context: GameContext): Promise<void | boolean> {}
+
+  handleTalk() {
+    if (!this.lines || this.lines.length === 0) {
+      Terminal.log(`\n💬 [${this.name}]: ...`)
+      return
     }
+
+    const randomIndex = Math.floor(Math.random() * this.lines.length)
+    const selectedLine = this.lines[randomIndex]
+
+    Terminal.log(`\n💬 [${this.name}]: "${selectedLine}"`)
   }
 
   getScripts(greetings: 'greeting' | 'farewell') {
@@ -141,5 +127,5 @@ export class BaseNPC implements NPC {
     return i18n.exists(key) ? i18n.t(key) : '...'
   }
 
-  afterDead(player: Player, context: GameContext) {}
+  afterDead(context: GameContext) {}
 }

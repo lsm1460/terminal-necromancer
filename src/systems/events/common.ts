@@ -8,11 +8,11 @@ import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
 
 export const commonHandlers: Record<string, EventHandler> = {
-  heal: (tile, player) => {
+  heal: (tile, {player}) => {
     player.restoreAll()
   },
 
-  'heal-once': async (tile, player, context) => {
+  'heal-once': async (tile, {player}) => {
     if (tile.isClear) return
 
     Terminal.log(i18n.t('events.heal_once.discovery'))
@@ -37,15 +37,15 @@ export const commonHandlers: Record<string, EventHandler> = {
     tile.isClear = true
   },
 
-  boss: async (tile, player, context) => {
-    await BossEvent.handle(tile, player, context)
+  boss: async (tile, context) => {
+    await BossEvent.handle(context)
   },
 
-  npc: async (tile, player, context) => {
-    await NpcEvent.handle(tile, player, context)
+  npc: async (tile, context) => {
+    await NpcEvent.handle(tile, context)
   },
 
-  'summon-caron': async (tile, player, context) => {
+  'summon-caron': async (tile, context) => {
     const { events } = context
     const isMine = events.isCompleted('caron_is_mine')
     const isDead = events.isCompleted('caron_is_dead')
@@ -62,7 +62,7 @@ export const commonHandlers: Record<string, EventHandler> = {
     }
   },
 
-  'event-map-scan-once': async (tile, player, context) => {
+  'event-map-scan-once': async (tile, context) => {
     if (tile.isClear) return
 
     const { map } = context

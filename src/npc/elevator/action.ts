@@ -1,0 +1,55 @@
+import { MAP_IDS, MapId } from '~/consts'
+import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
+import { GameContext } from '~/types'
+import { ElevatorService } from './service'
+
+export const ElevatorActions = {
+  async handleElevate(context: GameContext): Promise<boolean> {
+    const { player, map, world } = context
+    const completed = context.events.getCompleted()
+    const currentSceneId = map.currentSceneId
+
+    const choices: { name: string; message: string }[] = ElevatorService.getAvailableDestinations(
+      map,
+      currentSceneId,
+      completed
+    )
+
+    if (choices.length < 1) {
+      Terminal.log(i18n.t('npc.elevator.menu.no_access'))
+      return true
+    }
+
+    choices.push({ name: 'cancel', message: i18n.t('npc.elevator.menu.cancel') })
+
+    const sceneId = await Terminal.select(i18n.t('npc.elevator.menu.title'), choices)
+    if (sceneId === 'cancel') return true
+
+    const enterMessage =
+      currentSceneId !== MAP_IDS.B1_SUBWAY
+        ? i18n.t('npc.elevator.confirm.leave_area')
+        : i18n.t('npc.elevator.confirm.leave_safezone')
+
+    const proceed = await Terminal.confirm(enterMessage)
+    if (!proceed) {
+      Terminal.log(i18n.t('npc.elevator.confirm.cancel'))
+      return true
+    }
+
+    const targetMapData = map.getMap(sceneId)
+    if (targetMapData) {
+      Terminal.log(i18n.t('npc.elevator.status.working'))
+      world.clearFloor()
+      await map.changeScene(sceneId as MapId, context)
+      Terminal.log(
+        i18n.t('npc.elevator.status.arrival', {
+          location: i18n.t(`scene.${targetMapData.id}`),
+        })
+      )
+      return true
+    }
+
+    return false
+  },
+}

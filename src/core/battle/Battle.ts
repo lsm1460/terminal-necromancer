@@ -136,8 +136,8 @@ export class Battle implements BattleManager {
     const result = await engine.start()
     this.rewards.handleBattleEnd(result, {
       onVictory: () => {
-        printCorpses(this.player, context.world)
-        printDrops(this.player, context.world)
+        printCorpses(context.world, this.player.pos)
+        printDrops(context.world, this.player.pos)
       },
     })
     this.units.clear()

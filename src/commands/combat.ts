@@ -3,9 +3,9 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction } from '~/types'
 
-export const attackCommand: CommandFunction = async (player, args, context) => {
-  const { map, npcs, battle } = context
-  const tile = map.getTile(player.pos.x, player.pos.y)
+export const attackCommand: CommandFunction = async (args, context) => {
+  const { player, map, npcs, battle } = context
+  const tile = map.getTile(player.pos)
 
   if ((tile.npcIds || [])?.length > 0) {
     const proceed = await Terminal.confirm(i18n.t('commands.combat.confirm_kill'))

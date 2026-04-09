@@ -1,4 +1,3 @@
-import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { printTileStatus } from '~/statusPrinter'
 import { useGameStore } from '~/stores/useGameStore'
@@ -32,8 +31,8 @@ export class ReactRenderer implements Renderer {
     this.store.setUI({ type: 'NONE', message: '', resolve: () => {} })
   }
 
-  printStatus(player: Player, context: GameContext): void {
-    printTileStatus(player, context)
+  printStatus(context: GameContext): void {
+    printTileStatus(context)
   }
 
   async select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string> {
@@ -129,7 +128,7 @@ export class ReactRenderer implements Renderer {
 
   talk(name: string) {
     const log = this.createButton(i18n.t('web.talk_to', { name }), 'talk', name)
-    
+
     this.store.addLog(log)
   }
 }

@@ -7,6 +7,7 @@ import {
   BattleTarget,
   ConsumableItem,
   LevelData,
+  PositionType,
   Skill,
   SKILL_IDS,
   SkillId,
@@ -102,7 +103,7 @@ export class Player {
   }
 
   get pos() {
-    return { x: this.x, y: this.y }
+    return { x: this.x, y: this.y } as PositionType
   }
 
   get raw() {

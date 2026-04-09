@@ -12,10 +12,12 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     gross: 0,
   }
   const { world, npcs } = context
-  const { x, y } = player.ref.pos
 
   const makeSkeleton = (corpse: Corpse, isMultiple?: boolean) => {
-    const minIdx = Math.min(SKELETON_RARITIES.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity, SKELETON_RARITIES.length - 2)
+    const minIdx = Math.min(
+      SKELETON_RARITIES.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity,
+      SKELETON_RARITIES.length - 2
+    )
 
     const skeleton = SkeletonFactory.createFromCorpse(corpse, minIdx)
 
@@ -42,7 +44,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     return false
   }
 
-  const corpses = world.getCorpsesAt(x, y)
+  const corpses = world.getCorpsesAt(player.ref.pos)
 
   if (corpses.length === 0) {
     Terminal.log(i18n.t('skill.RAISE_SKELETON.no_corpse'))

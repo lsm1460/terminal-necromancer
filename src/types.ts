@@ -161,7 +161,7 @@ export interface Renderer {
   update(message: string): void
   say(list: { name: string; hasQuest: boolean }[]): void
   clear(): void
-  printStatus(player: Player, context: GameContext): void
+  printStatus(context: GameContext): void
   // 입력 관련 메서드 추가
   select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string>
   confirm(message: string): Promise<boolean>
@@ -180,6 +180,7 @@ export interface Renderer {
 }
 
 export interface GameContext {
+  player: Player
   map: MapManager
   npcs: NPCManager
   world: World
@@ -202,7 +203,6 @@ export interface GameContext {
 }
 
 export type CommandFunction = (
-  player: Player,
   args: string[],
   context: GameContext
 ) => boolean | string | Promise<boolean | string>
@@ -226,7 +226,7 @@ export interface NPC extends BattleTarget {
   updateHostility: (amount: number) => void
   updateContribution: (amount: number) => void
   dead: (options?: { karma?: number; hostile?: number }) => void
-  hasQuest: (player: Player, context: GameContext) => boolean
+  hasQuest: (context: GameContext) => boolean
   getScripts: (greetings: 'greeting' | 'farewell') => string
   noEscape?: boolean
   scripts?: {
@@ -381,7 +381,12 @@ export interface UnitSprites {
 export interface SceneData {
   id: string
   unlocks?: string[]
-  start_pos: { x: number; y: number }
-  move_pos?: { x: number; y: number }
+  start_pos: PositionType
+  move_pos?: PositionType
   tiles: Tile[][]
+}
+
+export type PositionType = {
+  x: number
+  y: number
 }

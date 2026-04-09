@@ -1,6 +1,6 @@
 import { HOSTILITY_LIMIT } from '~/consts'
 import i18n from '~/i18n'
-import { ElevatorNPC } from '~/npc/ElevatorNPC'
+import { getNPCClass } from '~/npc'
 import { NPCState } from '~/types'
 import { MapManager } from './MapManager'
 import { Terminal } from './Terminal'
@@ -55,17 +55,20 @@ export class NPCManager {
     if (!base || !state) return null
     if (state.reborn) return null
 
-    if (id === 'elevator') {
-      return new ElevatorNPC(id, base, state, this, this.player)
-    }
+    const NpcClass = getNPCClass(id)
 
-    return new BaseNPC(id, base, state, this, this.player)
+    return new NpcClass(id, base, state, this)
   }
 
   getAliveNPCInTile(options?: { withoutFaction?: string[] }) {
-    const { x, y } = this.player.pos
-    const tile = this.map.getTile(x, y)
-    let _list = (tile.npcIds || []).map((_id) => this.getNPC(_id)).filter((_npc) => _npc !== null)
+    const tile = this.map.getTile(this.player.pos)
+    const ids = [...(tile.npcIds || [])]
+
+    if (this.player.knight) {
+      ids.push('_knight')
+    }
+
+    let _list = ids.map((_id) => this.getNPC(_id)).filter((_npc) => _npc !== null)
 
     if (options?.withoutFaction) {
       _list = _list.filter((_npc) => !(options.withoutFaction || []).includes(_npc.faction))
@@ -156,8 +159,18 @@ export class NPCManager {
     this.onDeathHandlers.push(_callback)
   }
 
-  triggerDeathHandler(npcId: string) {
-    this.onDeathHandlers.forEach((fn) => fn(npcId))
+  triggerDeathHandler(npc: BaseNPC, params?: { karma?: number; hostile?: number }) {
+    const { karma = 1, hostile = 100 } = params || {}
+
+    this.player.karma += karma
+
+    this.setAlive(npc.id, false)
+
+    if (npc.faction) {
+      this.setFactionHostility(npc.faction, hostile)
+    }
+
+    this.onDeathHandlers.forEach((fn) => fn(npc.id))
   }
 
   getSaveData() {
