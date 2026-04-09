@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
-    "y": 0,
+    "x": 3,
+    "y": 1,
     "_maxHp": 340,
     "hp": 1,
     "_maxMp": 50,
@@ -536,13 +536,7 @@
       "resistance": 332
     }
   },
-  "drop": {
-    "scendId": "B6_VEHICLE_DEPOT",
-    "id": "fvvKtrqA",
-    "tileId": "B6_030",
-    "exp": 4500,
-    "gold": 1404
-  },
+  "drop": null,
   "config": {
     "locale": "ko"
   },

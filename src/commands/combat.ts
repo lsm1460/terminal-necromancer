@@ -1,7 +1,7 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { CommandFunction, NPC } from '~/types'
+import { CommandFunction } from '~/types'
 
 export const attackCommand: CommandFunction = async (player, args, context) => {
   const { map, npcs, battle } = context
@@ -16,21 +16,18 @@ export const attackCommand: CommandFunction = async (player, args, context) => {
     }
   }
 
+  npcs.getAliveNPCInTile({ withoutFaction: ['untouchable'] })
+
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []).map((m) => battle.toCombatUnit(m, 'monster')),
-    ...(tile.npcIds || [])
-      .map((id) => context.npcs.getNPC(id)) // ID로 NPC 객체 조회
-      .filter((npc): npc is NPC => !!npc && npc.isAlive && npc.faction !== 'untouchable')
-      .map((n) => battle.toCombatUnit(n!, 'npc')),
+    ...npcs.getAliveNPCInTile({ withoutFaction: ['untouchable'] }).map((n) => battle.toCombatUnit(n!, 'npc')),
   ] as CombatUnit[]
 
-  // 2. 공격 대상이 없으면 종료
   if (battleTargets.length === 0) {
     Terminal.log(i18n.t('commands.combat.no_targets'))
     return false
   }
 
-  // 3. 다대다 전투 루프(combatLoop) 진입
   tile.isClear = await battle.runCombatLoop(battleTargets, context)
 
   return false

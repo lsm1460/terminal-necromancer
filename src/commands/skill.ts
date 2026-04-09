@@ -9,9 +9,7 @@ export const skillCommand: CommandFunction = async (player, args, context) => {
 
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []),
-    ...(tile.npcIds || [])
-      .map((id) => npcs.getNPC(id)) // ID로 NPC 객체 조회
-      .filter((npc): npc is NPC => !!npc && npc.isAlive && npc.faction !== 'untouchable'),
+    ...npcs.getAliveNPCInTile({ withoutFaction: ['untouchable'] }),
   ]
 
   const enemies: CombatUnit[] = battleTargets.map((target) => {

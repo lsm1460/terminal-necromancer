@@ -1,10 +1,8 @@
 import { Player } from './core/player/Player'
-import { GameContext, NPC } from './types'
-
-import { union } from 'lodash'
 import { Terminal } from './core/Terminal'
 import { World } from './core/World'
 import i18n from './i18n'
+import { GameContext } from './types'
 
 export function printDirections(player: Player, context: GameContext) {
   const { map } = context
@@ -26,12 +24,8 @@ export function printTileStatus(player: Player, context: GameContext) {
   const tile = map.getTile(x, y)
 
   Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
-
-  const npcList = union(tile.npcIds || [], player.knight ? ['_knight'] : [])
-    .map((_id) => (_id === '_knight' ? player.knight : npcs.getNPC(_id)))
-    .filter((npc): npc is NPC => npc !== null)
-
-  const alive = npcList.filter((npc) => npc.isAlive)
+  
+  const alive = npcs.getAliveNPCInTile()
 
   if (alive.length > 0) {
     const list = alive.map((_npc) => {

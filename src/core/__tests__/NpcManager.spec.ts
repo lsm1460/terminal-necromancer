@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NPCManager } from '../NpcManager'
 import { Player } from '../player/Player'
+import { MapManager } from '../MapManager'
 
 // Mock i18n
 vi.mock('~/i18n', () => ({
@@ -20,6 +21,7 @@ vi.mock('../Terminal', () => ({
 describe('NPCManager (Legacy Behavior)', () => {
   let npcManager: NPCManager
   let player: Player
+  let map: MapManager
   const mockNpcData = {
     test_npc: {
       id: 'test_npc',
@@ -38,7 +40,8 @@ describe('NPCManager (Legacy Behavior)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     player = new Player([])
-    npcManager = new NPCManager(mockNpcData, player)
+    map = new MapManager('{}')
+    npcManager = new NPCManager(mockNpcData, player, map)
   })
 
   it('should return an NPC object with correct properties', () => {

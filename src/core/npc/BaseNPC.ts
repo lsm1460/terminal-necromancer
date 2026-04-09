@@ -1,7 +1,6 @@
 import i18n from '~/i18n'
 import npcHandlers from '~/npc'
 import { GameContext, NPC, NPCState } from '~/types'
-import { Terminal } from '../Terminal'
 import { Player } from '../player/Player'
 import { NPCManager } from '../NpcManager'
 
@@ -15,7 +14,7 @@ export class BaseNPC implements NPC {
   isBoss: boolean
   factionHostility: number
   factionContribution: number
-  
+
   // BattleTarget properties
   attackType: 'melee' | 'ranged' | 'explode'
   maxHp: number
@@ -29,13 +28,6 @@ export class BaseNPC implements NPC {
   isAlive: boolean
   noEscape?: boolean
   noCorpse?: boolean
-  isMinion?: boolean
-  isSkeleton?: boolean
-  originId?: string
-  rarity?: any
-  isGolem?: boolean
-  madeBy?: string
-  isKnight?: boolean
   minRebornRarity?: any
   orderWeight?: number
   skills?: string[]
@@ -53,9 +45,8 @@ export class BaseNPC implements NPC {
     this.relation = state.relation
     this.isHostile = manager.isHostile(id)
     this.isBoss = baseData.isBoss || false
-    // @ts-ignore - Will be added to NPCManager
-    this.factionHostility = manager.getFactionHostility?.(this.faction) || 0
-    this.factionContribution = manager.getFactionContribution(this.faction) || 0
+    this.factionHostility = manager.getFactionHostility(this.faction)
+    this.factionContribution = manager.getFactionContribution(this.faction)
 
     // BattleTarget attributes
     this.attackType = baseData.attackType || 'melee'
@@ -89,11 +80,6 @@ export class BaseNPC implements NPC {
   get lines(): string[] {
     return (i18n.t(`npc.${this.id}.lines`, { returnObjects: true }) || ['...']) as string[]
   }
-  
-  set name(_: string) {}
-  set deathLine(_: string | undefined) {}
-  set description(_: string) {}
-  set lines(_: string[]) {}
 
   updateHostility(amount: number) {
     this.manager.updateFactionHostility(this.faction, amount)
@@ -113,8 +99,7 @@ export class BaseNPC implements NPC {
       this.manager.setFactionHostility(this.faction, hostile)
     }
 
-    // @ts-ignore - Will be added/fixed in NPCManager
-    this.manager.triggerDeathHandler?.(this.id)
+    this.manager.triggerDeathHandler(this.id)
   }
 
   hasQuest(player: Player, context: GameContext): boolean {
@@ -127,7 +112,7 @@ export class BaseNPC implements NPC {
 
     return false
   }
-  
+
   // For NPCHandler compatibility
   getChoices(player: Player, context: GameContext) {
     const handler = npcHandlers[this.id]
@@ -143,4 +128,18 @@ export class BaseNPC implements NPC {
       return await handler.handle(action, player, this, context)
     }
   }
+
+  getScripts(greetings: 'greeting' | 'farewell') {
+    const hostility = this.faction === 'resistance' ? this.factionHostility : (this.relation || 0) * -1
+
+    let dialect: 'friendly' | 'hostile' | 'normal' = 'normal'
+    if (hostility <= -20) dialect = 'friendly'
+    else if (hostility >= 40) dialect = 'hostile'
+
+    const key = `npc.${this.id}.scripts.${dialect}.${greetings}`
+
+    return i18n.exists(key) ? i18n.t(key) : '...'
+  }
+
+  afterDead(player: Player, context: GameContext) {}
 }

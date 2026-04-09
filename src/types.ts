@@ -227,6 +227,7 @@ export interface NPC extends BattleTarget {
   updateContribution: (amount: number) => void
   dead: (options?: { karma?: number; hostile?: number }) => void
   hasQuest: (player: Player, context: GameContext) => boolean
+  getScripts: (greetings: 'greeting' | 'farewell') => string
   noEscape?: boolean
   scripts?: {
     friendly: NPCScripts

@@ -4,7 +4,6 @@ import caron from './caron'
 import death from './death'
 import dr_zed from './dr_zed'
 import echo from './echo'
-import elevator from './elevator'
 import flint from './flint'
 import jax_seeker from './jax_seeker'
 import julian from './julian'
@@ -29,7 +28,6 @@ import baron_valter from './baron_valter'
 
 const npcHandlers: Record<string, NPCHandler> = {
   portal,
-  elevator,
   death,
   echo,
   dr_zed,

@@ -41,7 +41,7 @@ export class GameEngine {
     const npcSkillManager = new NpcSkillManager(npcSkills, player)
     const battle = new Battle(player, monsterFactory, npcSkillManager)
     const mapManager = new MapManager(map)
-    const npcs = new NPCManager(npc, player, initData?.npcs)
+    const npcs = new NPCManager(npc, player, mapManager, initData?.npcs)
     const quest = new QuestManager(player, npcs)
     const world = new World(player, mapManager)
     const broadcastSystem = new Broadcast(npcs, eventSystem)
