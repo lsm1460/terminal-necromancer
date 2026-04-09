@@ -84,13 +84,6 @@
     "price": 300,
     "sellPrice": 30
   },
-  "mana_potion_medium": {
-    "id": "mana_potion_medium",
-    "type": "consumable",
-    "mpHeal": 80,
-    "price": 450,
-    "sellPrice": 45
-  },
   "nano_medical_kit": {
     "id": "nano_medical_kit",
     "type": "consumable",

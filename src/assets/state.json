@@ -2,19 +2,19 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
+    "x": 0,
     "y": 1,
     "_maxHp": 340,
-    "hp": 1,
+    "hp": 229,
     "_maxMp": 50,
-    "mp": 26,
+    "mp": 6,
     "atk": 15,
     "def": 7,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1403,
-    "exp": 0,
+    "gold": 1777,
+    "exp": 1750,
     "level": 8,
     "karma": 8,
     "_maxMemorize": 5,
@@ -36,7 +36,100 @@
       "BONE_STORM",
       "BONE_PRISON"
     ],
-    "_skeleton": [],
+    "_skeleton": [
+      {
+        "id": "skeleton_great_shield_bearer::1775633143997",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 대형 방패병",
+        "attackType": "melee",
+        "maxHp": 308,
+        "hp": 308,
+        "atk": 31,
+        "def": 137,
+        "agi": 63,
+        "skills": [
+          "shield_bash"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::vVCjePq8",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 5
+      },
+      {
+        "id": "skeleton_warrior::1775633146601",
+        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
+        "attackType": "melee",
+        "maxHp": 144,
+        "hp": 144,
+        "atk": 63,
+        "def": 28,
+        "agi": 24,
+        "skills": [
+          "whirlwind"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[지혜]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_wisdom::vDgIQCjD",
+        "rarity": "epic",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 7
+      },
+      {
+        "id": "skeleton_monk::1775633148323",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 수도자",
+        "attackType": "ranged",
+        "maxHp": 145,
+        "hp": 145,
+        "atk": 21,
+        "def": 20,
+        "agi": 7,
+        "skills": [
+          "heal"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_mercy::640K4gk6",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 35
+      },
+      {
+        "id": "skeleton_cryomancer::1775633149732",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 빙결술사",
+        "attackType": "ranged",
+        "maxHp": 145,
+        "hp": 145,
+        "atk": 21,
+        "def": 20,
+        "agi": 8,
+        "skills": [
+          "ice_bolt"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_mercy::ABObD5cK",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 30
+      }
+    ],
     "_mercenary": [],
     "_golem": {
       "id": "golem",
@@ -68,7 +161,7 @@
       "id": "_knight",
       "name": "",
       "attackType": "melee",
-      "hp": 0,
+      "hp": 704,
       "baseMaxHp": 720,
       "maxHp": 720,
       "baseAtk": 144,
@@ -78,7 +171,7 @@
       "exp": 0,
       "agi": 114,
       "encounterRate": 0,
-      "isAlive": false,
+      "isAlive": true,
       "isMinion": true,
       "isKnight": true,
       "deathLine": "",
@@ -164,19 +257,26 @@
         }
       },
       {
-        "id": "deity_splinter_dagger::hPfh_Fzz",
+        "id": "wraith_soul_staff::poQDc2Vu",
         "type": "weapon",
-        "price": 3500,
-        "sellPrice": 420,
+        "price": 2000,
+        "sellPrice": 450,
         "quantity": 1,
-        "atk": 57,
-        "crit": 0.26,
-        "attackType": "melee",
+        "atk": 16,
+        "crit": 0.15,
+        "attackType": "ranged",
         "rarity": "EPIC",
         "perfPrefix": "",
-        "adjective": "abyssal",
+        "adjective": "mortal",
+        "minRebornRarity": 1,
+        "maxSkeleton": 2,
         "affix": {
-          "id": "ALONE"
+          "id": "ELITE_SQUAD",
+          "valueRange": [
+            1,
+            2
+          ],
+          "value": 2
         }
       }
     ],
@@ -253,12 +353,11 @@
     "subspaceLimit": 15,
     "_maxSkeleton": 4,
     "golemUpgrade": [
-      "soul",
       "machine",
       "machine",
       "machine",
-      "soul",
-      "soul"
+      "machine",
+      "machine"
     ],
     "knightUpgrade": [
       "EPIC",
@@ -283,31 +382,24 @@
         "maxSkeleton": 2
       },
       "weapon": {
-        "id": "wraith_soul_staff::poQDc2Vu",
+        "id": "deity_splinter_dagger::hPfh_Fzz",
         "type": "weapon",
-        "price": 2000,
-        "sellPrice": 450,
+        "price": 3500,
+        "sellPrice": 420,
         "quantity": 1,
-        "atk": 16,
-        "crit": 0.15,
-        "attackType": "ranged",
+        "atk": 57,
+        "crit": 0.26,
+        "attackType": "melee",
         "rarity": "EPIC",
         "perfPrefix": "",
-        "adjective": "mortal",
-        "minRebornRarity": 1,
-        "maxSkeleton": 2,
+        "adjective": "abyssal",
         "affix": {
-          "id": "ELITE_SQUAD",
-          "valueRange": [
-            1,
-            2
-          ],
-          "value": 2
+          "id": "ALONE"
         }
       }
     }
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B6_VEHICLE_DEPOT",
   "npcs": {
     "states": {
       "kane_leader": {

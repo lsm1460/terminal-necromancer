@@ -80,7 +80,7 @@ async function executeBoneSpearAttack(player: CombatUnit<Player>, targets: Comba
       id: 'bleed',
       type: 'dot',
       duration: 4, // 3턴 지속 (구현 방식에 따라 3+1 또는 4)
-      atk: 5,
+      dot: 5,
     })
   }
 

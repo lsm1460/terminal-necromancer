@@ -88,9 +88,9 @@
   ],
   "monster-b6-fragment": [
     { "id": "fragment_of_dead_god_war", "encounterRate": 100 },
+    { "id": "fragment_of_dead_god_war", "encounterRate": 50 },
     { "id": "fragment_of_dead_god_mercy", "encounterRate": 100 },
     { "id": "fragment_of_dead_god_wisdom", "encounterRate": 100 },
-    { "id": "fragment_of_dead_god_war", "encounterRate": 50 },
     { "id": "fragmented_thought_of_the_god", "encounterRate": 20 }
   ]
 }

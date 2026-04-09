@@ -47,6 +47,7 @@
     "exp": 50,
     "isAlive": true,
     "reborn": false,
+    "orderWeight": 90,
     "dropTableId": "resistance"
   },
   "jax_seeker": {
@@ -104,7 +105,8 @@
     "isAlive": true,
     "reborn": false,
     "dropTableId": "",
-    "noEscape": true
+    "noEscape": true,
+    "skills": ["resist_bind"]
   },
   "first_boss": {
     "id": "first_boss",

@@ -171,8 +171,9 @@
   "message": {
     "buff": {
       "burn": "\n [!] {{name}}'s skin is scorched by the flames.",
-      "overdrive": "\n[🔥 Overdrive] {{name}}'s soul is forced into a frenzy, pushing its power to the limit! ({{name}} HP {{hp}} / {{maxHp}})",
-      "grace": "\n[✨ Blessing] A radiant surge of celestial power empowers {{name}}'s weapon with devastating force!"
+      "overdrive": "\n[🔥 Rage] {{name}}'s soul is forced into a frenzy, pushing its power to the limit! ({{name}} HP {{hp}} / {{maxHp}})",
+      "grace": "\n[✨ Blessing] A radiant surge of celestial power empowers {{name}}'s weapon with devastating force!",
+      "barrier": "\n[🛡️ Shield] Mana flows around {{name}}, providing protection against blows."
     },
     "debuff": {
       "paralysis": "\n [!] {{name}} is paralyzed and cannot move!",
@@ -212,6 +213,18 @@
     "firestorm": {
       "name": "Firestorm",
       "description": "Burns all enemies and inflicts Burn for 2 turns."
+    },
+    "icicle_lance": {
+      "name": "Icicle Lance",
+      "description": "Hurls keenly refined ice spears to pierce through two enemies. Those struck are exposed to a bitter cold, significantly dulling their movements."
+    },
+    "blizzard": {
+      "name": "Blizzard",
+      "description": "A fierce blizzard sweeps over all foes, dulling their movements."
+    },
+    "crystal_aegis": {
+      "name": "Crystal Aegis",
+      "description": "Wreathes all allies in a shimmering, translucent shield."
     },
     "shield_bash": {
       "name": "Shield Bash",

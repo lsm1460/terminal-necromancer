@@ -52,8 +52,9 @@ export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], e
 
     targetMinion.applyBuff({
       id: 'overdrive',
-      type: 'buff',
-      atk: 15,
+      type: 'dot',
+      atk: 20,
+      dot: 10,
       duration: 3 + 1, // 행동 시작 시 차감 고려
     })
 

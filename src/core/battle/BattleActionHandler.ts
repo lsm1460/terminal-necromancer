@@ -18,9 +18,9 @@ export class BattleActionHandler {
   ) {}
 
   async handleUnitDeBuff(unit: CombatUnit): Promise<boolean> {
-    const dotEffects = unit.deBuff.filter((d) => d.type === 'dot')
+    const dotEffects = [...unit.buff, ...unit.deBuff].filter((d) => (d.dot || 0) > 0)
     for (const effect of dotEffects) {
-      const damage = Math.max(1, effect.atk || 0)
+      const damage = effect.dot || 0
       unit.ref.hp -= damage
       Terminal.log(i18n.t('battle.action.dot_damage', { effectName: effect.name, damage, duration: effect.duration }))
 

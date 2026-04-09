@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "commonjs",
+    "module": "ESNext",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "resolvePackageJsonExports": true,
+    "allowArbitraryExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -13,9 +15,8 @@
     "outDir": "./dist",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["node", "vite/client"],
-    "baseUrl": ".", 
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["./src/*"]
     }
   },
   "include": ["src"]

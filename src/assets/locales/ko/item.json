@@ -75,10 +75,6 @@
     "label": "중급 체력 포션",
     "description": "보안 요원들이 상비하는 포션입니다. HP를 100 회복합니다."
   },
-  "mana_potion_medium": {
-    "label": "중급 마나 포션",
-    "description": "영적인 기운을 보충해주는 포션입니다. MP를 80 회복합니다."
-  },
   "nano_medical_kit": {
     "label": "나노 메디킷",
     "description": "보안 사제들의 첨단 의료 키트입니다. HP를 180 회복합니다."
