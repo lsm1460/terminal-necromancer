@@ -23,9 +23,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, { world, eventBus }) =
 
     // 4. 플레이어에게 추가 및 세계에서 시체 제거
     if (player.ref.addSkeleton(skeleton)) {
-      eventBus.emitAsync(GameEventType.SKILL_RAISE_SKELETON_SUCCESS)
-      // world.removeCorpse(corpse.id)
-      // npcs.reborn(corpse.id)
+      eventBus.emitAsync(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, corpse.id)
 
       Terminal.log(i18n.t('skill.RAISE_SKELETON.reborn_start', { name: corpse.name }))
       Terminal.log(

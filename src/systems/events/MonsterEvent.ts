@@ -10,11 +10,16 @@ import { delay } from '~/utils'
 import { EventBus } from '../EventBus'
 
 export class MonsterEvent {
-  constructor(private monsterFactory: MonsterFactory, eventBus: EventBus, private battle: Battle, private world: World) {
+  constructor(
+    private monsterFactory: MonsterFactory,
+    eventBus: EventBus,
+    private battle: Battle,
+    private world: World
+  ) {
     eventBus.subscribe(GameEventType.SPAWN_MONSTER, this.handle)
   }
 
-  async handle(tile: Tile) {
+  handle = async (tile: Tile) => {
     if (tile.isClear) return
 
     if (!tile.monsters) tile.monsters = []

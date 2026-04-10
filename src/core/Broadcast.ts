@@ -19,7 +19,7 @@ export class Broadcast {
     eventBus.subscribe(GameEventType.COMPLETE_EVENT, this.onEventCleared)
   }
 
-  private onEventCleared(eventId: string) {
+  private onEventCleared = (eventId: string) => {
     const key = `broadcast.${eventId}`
 
     if (i18n.exists(key) && !this.playedState[eventId]) {

@@ -64,14 +64,14 @@ export class World {
   }
 
   addCorpse(corpse: Corpse) {
-    this.corpses.push({...corpse})
+    this.corpses.push({ ...corpse })
   }
 
-  getCorpsesAt({ x, y}: PositionType): Corpse[] {
+  getCorpsesAt({ x, y }: PositionType): Corpse[] {
     return this.corpses.filter((d) => d.x === x && d.y === y)
   }
 
-  removeCorpse(corpseId: string) {
+  removeCorpse = (corpseId: string) => {
     const idx = this.corpses.findIndex((c) => c.id === corpseId)
     if (idx === -1) return undefined
 

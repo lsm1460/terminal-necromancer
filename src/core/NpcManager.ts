@@ -87,7 +87,7 @@ export class NPCManager {
     }
   }
 
-  reborn(id: string) {
+  reborn = (id: string) => {
     if (this.states[id]) {
       this.states[id].reborn = true
     }
