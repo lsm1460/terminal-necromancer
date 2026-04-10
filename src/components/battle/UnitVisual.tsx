@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
 import { getHpColor } from '~/utils'
@@ -47,80 +47,69 @@ export const UnitVisual: React.FC<{
     return spriteResource
   }, [spriteResource, idleFrame])
 
-  useEffect(() => {
+  const isAlive = unit.ref.isAlive
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  const playUnitAnimation = async () => {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    controls.stop()
+
     if (!currentAction) {
+      controls.start({
+        x: 0,
+        scale: 1,
+        opacity: isAlive ? 1 : 0,
+        transition: { duration: 0.2 },
+      })
       return
     }
 
-    let isCancelled = false
+    controls.set({ x: 0, scale: 1, opacity: 1 })
 
-    const execute = async () => {
-      controls.stop()
-
-      try {
-        switch (currentAction.type) {
-          case 'ATTACK':
-            await controls.start({
-              x: isEnemy ? -100 : 100,
-              scale: 1.1,
-              transition: { duration: 0.15, ease: 'easeOut' },
-            })
-            break
-
-          case 'HIT':
-            await controls.start({
-              x: isEnemy ? 15 : -15,
-              transition: { duration: 0.05 },
-            })
-            await controls.start({
-              x: [0, -4, 4, -2, 2, 0],
-              transition: { duration: 0.2 },
-            })
-            break
-
-          case 'DIE':
-            await controls.start({
-              opacity: [1, 0, 1, 0, 0],
-              transition: { duration: 0.4, times: [0, 0.2, 0.4, 0.6, 1] },
-            })
-            break
-
-          case 'ESCAPE':
-            await controls.start({
-              x: isEnemy ? 20 : -20,
-              transition: { duration: 0.4, ease: 'easeIn' },
-            })
-            break
-
-          default:
-            break
-        }
-
-        if (!isCancelled) {
-          setTimeout(() => {
-            if (!isCancelled) {
-              currentAction.onComplete?.()
-
-              controls.start({
-                x: 0,
-                scale: 1,
-                opacity: 1, // 죽었을 때 투명해진 상태를 복구 (만약 유닛이 재사용된다면 필요)
-                transition: { duration: 0, type: false },
-              })
-            }
-          }, 1000)
-        }
-      } catch (error) {
-        console.error('Animation interrupted', error)
+    try {
+      switch (currentAction.type) {
+        case 'ATTACK':
+          await controls.start({
+            x: isEnemy ? -100 : 100,
+            scale: 1.1,
+            transition: { duration: 0.15, ease: 'easeOut' },
+          })
+          break
+        case 'HIT':
+          await controls.start({ x: isEnemy ? 15 : -15, transition: { duration: 0.05 } })
+          await controls.start({ x: [0, -4, 4, -2, 2, 0], transition: { duration: 0.2 } })
+          break
+        case 'DIE':
+          await controls.start({
+            opacity: [1, 0, 1, 0, 0],
+            transition: { duration: 0.4, times: [0, 0.2, 0.4, 0.6, 1] },
+          })
+          break
       }
-    }
 
-    execute()
+      if (currentAction.type !== 'DIE') {
+        controls.start({
+          x: 0,
+          scale: 1,
+          opacity: 1,
+          transition: { duration: 0.3 },
+        })
+      }
+
+      timerRef.current = setTimeout(() => {
+        currentAction.onComplete?.()
+      }, 1000)
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    playUnitAnimation()
 
     return () => {
-      isCancelled = true
+      if (timerRef.current) clearTimeout(timerRef.current)
     }
-  }, [currentAction, controls, isEnemy])
+  }, [currentAction, isEnemy, isAlive])
 
   return (
     <motion.div animate={controls} className="flex flex-col items-center relative">
