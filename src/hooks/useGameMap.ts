@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
-import { useGame } from './useGame'
 import { FULL_VISIBLE_MAP_ID_LIST, MAP_IDS } from '~/consts'
 import { Tile } from '~/types'
+import { useGame } from './useGame'
 
 // 타일의 시각적 상태를 정의하는 유니온 타입
 export type TileDisplayType =
@@ -71,7 +71,7 @@ export const useGameMap = () => {
         // 1. 퀘스트 여부 판단
         const hasQuest = (tile.npcIds || []).some((id) => {
           const npc = npcs.getNPC(id)
-          return npc ? npc.hasQuest(player, context) : false
+          return npc ? npc.hasQuest(context) : false
         })
 
         const tileWithQuest = { ...tile, hasQuest }

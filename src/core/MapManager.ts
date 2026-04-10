@@ -2,8 +2,10 @@ import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import i18n from '~/i18n'
 import { printTileStatus } from '~/statusPrinter'
-import { GameContext, SceneData, Tile } from '~/types'
-import { Player } from './player/Player'
+import { EventBus } from '~/systems/EventBus'
+import { allEventHandlers } from '~/systems/events'
+import { GameContext, PositionType, SceneData, Tile } from '~/types'
+import { GameEventType } from '~/types/event'
 import { Terminal } from './Terminal'
 import { assetManager } from './WebAssetManager'
 
@@ -15,7 +17,7 @@ export class MapManager {
   /**
    * @param mapData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
    */
-  constructor(mapData: any) {
+  constructor(mapData: any, private eventBus: EventBus) {
     this.mapData = JSON.parse(JSON.stringify(mapData))
     this.originMapData = JSON.parse(JSON.stringify(mapData))
 
@@ -26,12 +28,29 @@ export class MapManager {
     return this.mapData[this.currentSceneId]
   }
 
-  getTile(x: number, y: number): Tile {
+  getTile({ x, y }: PositionType): Tile {
     return this.currentScene.tiles?.[y]?.[x]
   }
 
-  canMove(x: number, y: number): boolean {
-    const tile = this.getTile(x, y)
+  async handleTileEvent(tile: Tile, context: GameContext) {
+    const handler = allEventHandlers[tile.event]
+
+    if (handler) {
+      await handler(tile, context)
+    }
+
+    if (tile.event.startsWith('monster-')) {
+      await this.eventBus.emitAsync(GameEventType.SPAWN_MONSTER, tile)
+    }
+
+    tile.isSeen = true
+    if (!(tile.event === 'boss' || tile.event.startsWith('monster') || tile.event.endsWith('-once'))) {
+      tile.isClear = true
+    }
+  }
+
+  canMove(pos: PositionType): boolean {
+    const tile = this.getTile(pos)
 
     return !!tile
   }
@@ -40,8 +59,8 @@ export class MapManager {
     return this.mapData[sceneId]
   }
 
-  async changeScene(targetSceneId: MapId, player: Player, context: GameContext) {
-    const { map, events, broadcast } = context
+  async changeScene(targetSceneId: MapId, context: GameContext) {
+    const { player, map, events, broadcast } = context
     if (!this.mapData[targetSceneId]) {
       console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
       return
@@ -65,13 +84,13 @@ export class MapManager {
     Terminal.log(i18n.t(`enter_new_area`) + i18n.t(`scene.${newScene.id}`))
     Terminal.log(`------------------------------------------`)
 
-    const tile = map.getTile(player.x, player.y)
+    const tile = map.getTile(player.pos)
     tile.isSeen = true
 
-    await events.handle(tile, player, context)
+    await map.handleTileEvent(tile, context)
     broadcast.play()
 
-    printTileStatus(player, context)
+    printTileStatus(context)
   }
 
   private shuffleTiles(sceneId: string) {

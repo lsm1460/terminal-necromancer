@@ -1,14 +1,25 @@
+import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Terminal } from '~/core/Terminal'
+import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { GameContext, Tile } from '~/types'
+import { Tile } from '~/types'
+import { GameEventType } from '~/types/event'
 import { delay } from '~/utils'
+import { EventBus } from '../EventBus'
 
 export class MonsterEvent {
-  constructor(public monsterFactory: MonsterFactory) {}
+  constructor(
+    private monsterFactory: MonsterFactory,
+    eventBus: EventBus,
+    private battle: Battle,
+    private world: World
+  ) {
+    eventBus.subscribe(GameEventType.SPAWN_MONSTER, this.handle)
+  }
 
-  async handle(tile: Tile, context: GameContext) {
+  handle = async (tile: Tile) => {
     if (tile.isClear) return
 
     if (!tile.monsters) tile.monsters = []
@@ -39,9 +50,9 @@ export class MonsterEvent {
 
         await delay()
 
-        const units: CombatUnit[] = finalAlive.map((m) => context.battle.toCombatUnit(m, 'monster'))
+        const units: CombatUnit[] = finalAlive.map((m) => this.battle.toCombatUnit(m, 'monster'))
 
-        tile.isClear = await context.battle.runCombatLoop(units, context)
+        tile.isClear = await this.battle.runCombatLoop(units, this.world)
       }
     }
   }

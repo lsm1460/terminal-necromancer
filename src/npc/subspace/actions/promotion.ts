@@ -1,0 +1,42 @@
+import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
+import { speak } from '~/utils'
+import { GameContext } from '~/types'
+
+export const handlePromotion = async (context: GameContext) => {
+  const { player, events } = context
+  const isMine = events.isCompleted('caron_is_mine')
+  const npcKey = isMine ? 'caron_is_mine' : 'caron_is_dead'
+  const getMsg = (key: string, p?: any) => i18n.t(`npc.subspace.promotion.${npcKey}.${key}`, p) as string
+
+  const selectedId = await Terminal.select(i18n.t('npc.subspace.promotion.select_title'), [
+    ...player.skeleton.map((sk) => ({
+      name: sk.id,
+      message: i18n.t('skill.choice_format', { name: sk.name, hp: sk.hp, maxHp: sk.maxHp }),
+      disabled: sk.maxHp < 200,
+    })),
+    { name: 'cancel', message: i18n.t('cancel') },
+  ])
+
+  if (selectedId === 'cancel') return
+
+  const target = player.skeleton.find((sk) => sk.id === selectedId)!
+  if (await Terminal.confirm(getMsg('confirm', { name: target.name }))) {
+    player.unlockKnight(target)
+    player.removeMinion(selectedId)
+    Terminal.log(getMsg('success'))
+    Terminal.log(i18n.t('npc.subspace.promotion.system.result', { name: target.name }))
+  }
+}
+
+export const handleTutorialPromotion = async (context: GameContext) => {
+  const { events } = context
+  const isMine = events.isCompleted('caron_is_mine')
+  const npcKey = isMine ? 'caron_is_mine' : 'caron_is_dead'
+
+  // 튜토리얼 대사 실행 (발견의 강조)
+  const lines = i18n.t(`npc.subspace.promotion.tutorial.${npcKey}`, { returnObjects: true }) as string[]
+  await speak(lines)
+
+  events.completeEvent('tutorial_knight')
+}

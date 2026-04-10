@@ -2,7 +2,6 @@ import _knight from './_knight.json'
 import adrian from './adrian.json'
 import affix from './affix.json'
 import apostle from './apostle.json'
-import baron_valter from './baron_valter.json'
 import battle from './battle.json'
 import broadcast from './broadcast.json'
 import caron from './caron.json'
@@ -75,7 +74,6 @@ const en = {
     kael,
     adrian,
     flint,
-    baron_valter,
     third_boss,
 
     //b6

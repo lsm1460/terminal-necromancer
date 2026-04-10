@@ -7,6 +7,7 @@ import {
   BattleTarget,
   ConsumableItem,
   LevelData,
+  PositionType,
   Skill,
   SKILL_IDS,
   SkillId,
@@ -17,6 +18,8 @@ import { InventoryManager } from './InventoryManager'
 import { MinionManager } from './MinionManager'
 import SkeletonWrapper from './SkeletonWrapper'
 import { StatsCalculator } from './StatsCalculator'
+import { EventBus } from '~/systems/EventBus'
+import { GameEventType } from '~/types/event'
 
 export type PlayerSaveData = Partial<Player> & {
   _skeleton?: BattleTarget[]
@@ -59,7 +62,7 @@ export class Player {
    * @param levelData - 이제 경로 문자열이 아닌 JSON 객체 데이터를 직접 받습니다.
    * @param saved - 저장된 플레이어 데이터
    */
-  constructor(levelData: any, saved?: PlayerSaveData) {
+  constructor(levelData: any, eventBus: EventBus, saved?: PlayerSaveData) {
     if (saved) {
       const {
         inventory,
@@ -91,6 +94,8 @@ export class Player {
     if (saved?.equipped?.armor) {
       this.equipped.armor = new Item(saved.equipped.armor) as ArmorItem
     }
+
+    eventBus.subscribe(GameEventType.NPC_IS_DEAD, ({ karma = 1 }) => (this.karma += karma))
   }
 
   get inventory() {
@@ -102,7 +107,7 @@ export class Player {
   }
 
   get pos() {
-    return { x: this.x, y: this.y }
+    return { x: this.x, y: this.y } as PositionType
   }
 
   get raw() {
@@ -414,6 +419,9 @@ export class Player {
     this.hp = this.maxHp
     this.mp = this.maxMp
 
-    this.minions.forEach((minion) => (minion.hp = minion.maxHp))
+    this.minions.forEach((minion) => {
+      minion.isAlive = true
+      minion.hp = minion.maxHp
+    })
   }
 }

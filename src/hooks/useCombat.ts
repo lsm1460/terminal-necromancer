@@ -9,7 +9,7 @@ export const useCombat = () => {
     const player = getPlayer()
     if (!context || !player) return 0
 
-    return context.world.getCorpsesAt(player.x, player.y).length
+    return context.world.getCorpsesAt(player.pos).length
   }, [getContext, getPlayer])
 
   const getSortedPlayerSide = useCallback(

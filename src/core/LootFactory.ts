@@ -6,8 +6,7 @@ import { MapManager } from './MapManager'
 
 export class LootFactory {
   static fromPlayer(player: Player, map: MapManager): LootBag {
-    const { x, y } = player.pos
-    const tile = map.getTile(x, y)
+    const tile = map.getTile(player.pos)
     
     return {
       scendId: map.currentSceneId,

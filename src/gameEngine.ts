@@ -1,7 +1,7 @@
 import { GameAssets } from './assets'
 import { handleCommand } from './commandHandler'
 import { MAP_IDS } from './consts'
-import { Battle } from './core/battle/Battle'
+import { Battle, BattleComponentFactory } from './core/battle'
 import { Broadcast } from './core/Broadcast'
 import { LootFactory } from './core/LootFactory'
 import { MapManager } from './core/MapManager'
@@ -14,12 +14,13 @@ import { World } from './core/World'
 import i18n from './i18n'
 import { printDirections } from './statusPrinter'
 import { DropSystem } from './systems/DropSystem'
-import { EventSystem } from './systems/EventSystem'
+import { EventBus } from './systems/EventBus'
+import { EventLedger } from './systems/EventLedger'
+import { MonsterEvent } from './systems/events/MonsterEvent'
 import { SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext, Renderer } from './types'
 
 export class GameEngine {
-  public player!: Player
   public context!: GameContext
 
   isProcessing = false
@@ -36,37 +37,41 @@ export class GameEngine {
 
     const dropSystem = new DropSystem(item, drop)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
-    const player = new Player(level, initData?.player)
-    const eventSystem = new EventSystem(monsterFactory, initData?.completedEvents)
+    
+    const eventBus = new EventBus()
+    const player = new Player(level, eventBus, initData?.player)
+    const mapManager = new MapManager(map, eventBus)
+    const world = new World(player, eventBus)
+    const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
     const npcSkillManager = new NpcSkillManager(npcSkills, player)
-    const battle = new Battle(player, monsterFactory, npcSkillManager)
-    const mapManager = new MapManager(map)
-    const npcs = new NPCManager(npc, player, initData?.npcs)
-    const quest = new QuestManager(player, npcs)
-    const world = new World(player, mapManager)
-    const broadcastSystem = new Broadcast(npcs, eventSystem)
+    const battleFactory = new BattleComponentFactory(player, npcSkillManager, world, dropSystem, eventBus)
+    const battle = new Battle(player, monsterFactory, battleFactory)
+    const npcs = new NPCManager(npc, eventBus, initData?.npcs)
+    const quest = new QuestManager(eventBus)
+    new MonsterEvent(monsterFactory, eventBus, battle, world)
+    const broadcastSystem = new Broadcast(npcs, eventBus)
 
     if (initData?.drop) {
       world.addLootBag(initData.drop)
     }
 
-    this.player = player
     this.context = {
+      player,
       map: mapManager,
       world,
-      events: eventSystem,
+      events: eventLedger,
+      eventBus,
       npcs,
       drop: dropSystem,
       save: this.saveSystem,
       battle,
       broadcast: broadcastSystem,
       monster: monsterFactory,
+      npcSkills: npcSkillManager,
       config: initData?.config || {},
       quest,
       cheats: {},
     } as GameContext
-
-    quest.initOnDeath()
 
     player.onDeath = () => {
       const hostility = npcs.getFactionContribution('resistance')
@@ -101,18 +106,18 @@ export class GameEngine {
       player.hp = 1
       player.removeMercenaries()
 
-      this.renderer.printStatus(player, this.context)
+      this.renderer.printStatus(this.context)
     }
   }
 
   public async start(): Promise<void> {
-    const { map, events } = this.context
-    this.renderer.printStatus(this.player, this.context)
+    const { map, player } = this.context
+    this.renderer.printStatus(this.context)
 
-    const currentTile = map.getTile(this.player.pos.x, this.player.pos.y)
-    await events.handle(currentTile, this.player, this.context)
+    const currentTile = map.getTile(player.pos)
+    await map.handleTileEvent(currentTile, this.context)
 
-    printDirections(this.player, this.context)
+    printDirections(this.context)
   }
 
   public async processCommand(
@@ -127,7 +132,7 @@ export class GameEngine {
 
     this.isProcessing = true
     try {
-      await handleCommand(command, this.player, this.context)
+      await handleCommand(command, this.context)
     } finally {
       this.isProcessing = false
     }

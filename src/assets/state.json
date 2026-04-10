@@ -2,7 +2,7 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
+    "x": 5,
     "y": 1,
     "_maxHp": 340,
     "hp": 229,
@@ -13,7 +13,7 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1777,
+    "gold": 1765,
     "exp": 1750,
     "level": 8,
     "karma": 8,
@@ -399,7 +399,7 @@
       }
     }
   },
-  "sceneId": "B6_VEHICLE_DEPOT",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -546,12 +546,6 @@
         "reborn": false,
         "relation": 0
       },
-      "baron_valter": {
-        "hp": 480,
-        "isAlive": true,
-        "reborn": false,
-        "relation": 0
-      },
       "third_boss": {
         "hp": 650,
         "isAlive": false,
@@ -624,17 +618,11 @@
       "resistance": -11
     },
     "factionContribution": {
-      "untouchable": 130,
+      "untouchable": 145,
       "resistance": 332
     }
   },
-  "drop": {
-    "scendId": "B6_VEHICLE_DEPOT",
-    "id": "fvvKtrqA",
-    "tileId": "B6_030",
-    "exp": 4500,
-    "gold": 1404
-  },
+  "drop": null,
   "config": {
     "locale": "ko"
   },

@@ -368,21 +368,6 @@
     "minRebornRarity": "epic",
     "dropTableId": "resistance"
   },
-  "baron_valter": {
-    "id": "baron_valter",
-    "attackType": "melee",
-    "hp": 480,
-    "maxHp": 480,
-    "atk": 35,
-    "def": 20,
-    "eva": 0.05,
-    "exp": 1500,
-    "isAlive": true,
-    "reborn": false,
-    "dropTableId": "b5_baron",
-    "minRebornRarity": "epic",
-    "skills": ["vitals_strike", "whirlwind", "greater_heal"]
-  },
   "third_boss": {
     "id": "third_boss",
     "attackType": "ranged",
@@ -402,6 +387,7 @@
   },
   "_knight": {
     "id": "_knight",
+    "faction": "untouchable",
     "attackType": "melee",
     "hp": 650,
     "maxHp": 650,

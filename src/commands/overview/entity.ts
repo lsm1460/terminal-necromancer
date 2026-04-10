@@ -8,10 +8,7 @@ import { renderHpBar, selectTarget } from './utils'
 
 // 미니언 및 몬스터 정보 출력
 export const printEntity = (target: BattleTarget, context: GameContext) => {
-  const {
-    battle: { npcSkills },
-    npcs,
-  } = context
+  const { npcs, npcSkills } = context
 
   const isMinion = target.isMinion
   const isNpc = target.isNpc

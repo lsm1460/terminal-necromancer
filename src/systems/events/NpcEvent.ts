@@ -1,5 +1,4 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { GameContext, Tile } from '~/types'
@@ -8,9 +7,9 @@ import { delay } from '~/utils'
 export class NpcEvent {
   constructor() {}
 
-  static async handle(tile: Tile, player: Player, context: GameContext) {
+  static async handle(tile: Tile, context: GameContext) {
     // 적대 세력은 선공한다
-    const { npcs, battle } = context
+    const { npcs, battle, world } = context
 
     const npcAlive = (tile.npcIds || [])
       .map((id: string) => npcs.getNPC(id))
@@ -28,7 +27,7 @@ export class NpcEvent {
 
       const units: CombatUnit[] = preemptiveEnemies.map((m) => context.battle.toCombatUnit(m, 'npc'))
 
-      tile.isClear = await battle.runCombatLoop(units, context)
+      tile.isClear = await battle.runCombatLoop(units, world)
     }
   }
 }

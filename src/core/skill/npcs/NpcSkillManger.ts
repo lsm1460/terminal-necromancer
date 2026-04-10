@@ -6,7 +6,7 @@ import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { BattleTarget, GameContext, NpcSkill } from '~/types'
+import { BattleTarget, NpcSkill } from '~/types'
 import { PASSIVE_EFFECTS } from '../passiveHandlers'
 import { SkillEffectHandlers } from './SkillEffectHandlers'
 import { SpecialSkillLogics } from './SpecialSkillLogics'
@@ -16,7 +16,7 @@ type SkillExecutor<T = void> = (
   attacker: CombatUnit,
   ally: CombatUnit[],
   enemies: CombatUnit<BattleTarget>[],
-  context: GameContext
+  battle: Battle
 ) => T
 
 export class NpcSkillManager {
@@ -98,7 +98,7 @@ export class NpcSkillManager {
   }
 
   execute: SkillExecutor = async (...params) => {
-    const [skillId, attacker, ally, enemies, context] = params
+    const [skillId, attacker, ally, enemies, battle] = params
     const skill = this.getSkill(skillId)
     if (!skill) return
 
@@ -120,14 +120,14 @@ export class NpcSkillManager {
 
     // 1. 특수 로직(ID 기반)이 있는지 먼저 확인
     if (SpecialSkillLogics[skillId]) {
-      await SpecialSkillLogics[skillId](attacker, targets, skill, context)
+      await SpecialSkillLogics[skillId](attacker, targets, skill, battle)
       return
     }
 
     // 2. 특수 로직이 없다면 공통 타입(Type 기반) 핸들러 실행
     const handler = SkillEffectHandlers[skill.type] || SkillEffectHandlers.damage
     for (const target of targets) {
-      await handler(target, skill, attacker, context)
+      await handler(target, skill, attacker, battle)
     }
   }
 

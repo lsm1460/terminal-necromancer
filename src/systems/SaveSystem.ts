@@ -62,9 +62,9 @@ export class SaveSystem {
     }
   }
 
-  static makeSaveData(player: Player, context: GameContext) {
+  static makeSaveData(context: GameContext) {
     return {
-      player,
+      player: context.player,
       sceneId: context.map.currentSceneId,
       npcs: context.npcs.getSaveData(),
       drop: context.world.lootBags,

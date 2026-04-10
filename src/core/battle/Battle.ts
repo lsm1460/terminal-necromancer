@@ -1,11 +1,12 @@
 import i18n from '~/i18n'
 import { printCorpses, printDrops } from '~/statusPrinter'
-import { BattleTarget, GameContext } from '~/types'
+import { BattleTarget } from '~/types'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
-import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { Terminal } from '../Terminal'
+import { World } from '../World'
 import { BattleActionHandler } from './BattleActionHandler'
+import { BattleComponentFactory } from './BattleComponentFactory'
 import { BattleDirector } from './BattleDirector'
 import { BattleEngine, BattleManager } from './BattleEngine'
 import { BattleRewardSystem } from './BattleRewardSystem'
@@ -29,16 +30,15 @@ export class Battle implements BattleManager {
   private rewards: BattleRewardSystem
   private actions: BattleActionHandler
   private lastBattleResult: BattleResult | null = null
-  private currentContext: GameContext | null = null
 
   constructor(
     private player: Player,
-    public monster: MonsterFactory,
-    public npcSkills: NpcSkillManager
+    private monster: MonsterFactory,
+    private factory: BattleComponentFactory
   ) {
-    this.units = new BattleUnitManager(player, this, npcSkills)
-    this.rewards = new BattleRewardSystem(player, this.units)
-    this.actions = new BattleActionHandler(player, this.units, npcSkills)
+    this.units = this.factory.createUnits(this)
+    this.rewards = this.factory.createRewards(this.units)
+    this.actions = this.factory.createActions(this.units)
   }
 
   getAliveUnits(): CombatUnit[] {
@@ -56,8 +56,6 @@ export class Battle implements BattleManager {
   }
 
   async handleUnitTurn(unit: CombatUnit): Promise<boolean | void> {
-    if (!this.currentContext) return
-
     Terminal.log(i18n.t('battle.turn_start', { name: unit.name }))
     unit.buffManager.updateDuration()
 
@@ -67,7 +65,7 @@ export class Battle implements BattleManager {
     const allySide = this.units.getAllysOf(unit)
 
     if (unit.type === 'player') {
-      const isEscaped = await this.actions.handlePlayerAction(unit as CombatUnit<Player>, allySide, this.currentContext)
+      const isEscaped = await this.actions.handlePlayerAction(unit as CombatUnit<Player>, allySide)
       if (isEscaped) {
         this.lastBattleResult = { isVictory: false, isEscaped: true, gold: 0, exp: 0, drops: [] }
         return true
@@ -80,7 +78,7 @@ export class Battle implements BattleManager {
         unit,
         targetEnemies as CombatUnit<BattleTarget>[],
         targetAllies as CombatUnit<BattleTarget>[],
-        this.currentContext,
+        this,
       ] as const
 
       await this.actions.executeAutoAttack(..._params)
@@ -102,12 +100,11 @@ export class Battle implements BattleManager {
     }
   }
 
-  async runCombatLoop(initialEnemies: CombatUnit[], context: GameContext) {
-    this.currentContext = context
+  async runCombatLoop(initialEnemies: CombatUnit[], world: World) {
     this.lastBattleResult = null
 
     initialEnemies.forEach((e) => {
-      this.appendUnitDeathCallback(e, context)
+      this.appendUnitDeathCallback(e)
       this.units.registerUnit(e)
     })
 
@@ -136,12 +133,11 @@ export class Battle implements BattleManager {
     const result = await engine.start()
     this.rewards.handleBattleEnd(result, {
       onVictory: () => {
-        printCorpses(this.player, context.world)
-        printDrops(this.player, context.world)
+        printCorpses(world, this.player.pos)
+        printDrops(world, this.player.pos)
       },
     })
     this.units.clear()
-    this.currentContext = null
 
     BattleDirector.end()
 
@@ -156,19 +152,19 @@ export class Battle implements BattleManager {
     return CombatService.calcDamage(attacker, target, options)
   }
 
-  public _spawnMonster(monsterId: string, context: GameContext) {
+  public _spawnMonster(monsterId: string) {
     const monster = this.monster.makeMonster(monsterId)
     if (!monster) return
     const unit = this.toCombatUnit(monster, 'monster')
     this.units.registerUnit(unit)
     BattleDirector.updateUnits({ enemiesSide: this.units.getAliveEnemies() })
-    this.appendUnitDeathCallback(unit, context)
+    this.appendUnitDeathCallback(unit)
 
     return unit
   }
 
-  public appendUnitDeathCallback(unit: CombatUnit, context: GameContext) {
-    unit.onDeath = async () => this.rewards.handleUnitDeath(unit.ref as BattleTarget, context)
+  public appendUnitDeathCallback(unit: CombatUnit) {
+    unit.onDeath = async () => this.rewards.handleUnitDeath(unit.ref as BattleTarget)
   }
 
   // Exposed for skill executors

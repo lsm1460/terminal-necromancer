@@ -1,19 +1,22 @@
 import i18n from '~/i18n'
-import { BattleTarget, Drop, GameContext, NPC } from '~/types'
+import { DropSystem } from '~/systems/DropSystem'
+import { BattleTarget, Drop, NPC } from '~/types'
 import { LootFactory } from '../LootFactory'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
+import { World } from '../World'
 import { BattleUnitManager } from './BattleUnitManager'
 import { BattleResult } from './types'
 
 export class BattleRewardSystem {
   constructor(
     private player: Player,
-    private unitManager: BattleUnitManager
+    private unitManager: BattleUnitManager,
+    private world: World,
+    private dropSystem: DropSystem
   ) {}
 
-  handleUnitDeath(target: BattleTarget, context: GameContext) {
-    const { world, drop: dropTable } = context
+  handleUnitDeath(target: BattleTarget) {
     const { x, y } = this.player.pos
 
     target.hp = 0
@@ -24,7 +27,7 @@ export class BattleRewardSystem {
     target.deathLine && Terminal.log(target.deathLine)
     target.isNpc && (target as NPC).dead()
 
-    const { gold, drops } = LootFactory.fromTarget(target, dropTable)
+    const { gold, drops } = LootFactory.fromTarget(target, this.dropSystem)
 
     this.player.gainExp(target.exp || 0)
     this.player.gainGold(gold)
@@ -40,7 +43,7 @@ export class BattleRewardSystem {
     Terminal.log(logMessage)
 
     drops.forEach((d) => {
-      world.addDrop(d as Drop)
+      this.world.addDrop(d as Drop)
       const quantityText = d.quantity !== undefined ? ` ${d.quantity}${i18n.t('battle.reward.item_unit')}` : ''
 
       Terminal.log(
@@ -53,7 +56,17 @@ export class BattleRewardSystem {
     })
 
     if (!target.noCorpse) {
-      world.addCorpse({ ...target, x, y })
+      this.world.addCorpse({
+        maxHp: target.maxHp,
+        atk: target.atk,
+        def: target.def,
+        agi: target.agi,
+        name: target.name,
+        id: target.id,
+        minRebornRarity: target.minRebornRarity,
+        x,
+        y,
+      })
       Terminal.log(i18n.t('battle.reward.corpse_left', { name: target.name }))
     } else {
       Terminal.log(i18n.t('battle.reward.vanished', { name: target.name }))

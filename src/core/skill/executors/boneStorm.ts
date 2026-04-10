@@ -10,7 +10,7 @@ import { failWithLog, sacrificeSkeleton } from './lib'
  * : 모든 스켈레톤을 희생시켜 적 전체에게 치명적인 광역 피해와 [출혈]을 부여합니다.
  * : 희생된 모든 스켈레톤 현재 HP 합계의 30%를 데미지로 입힙니다.
  */
-export const boneStorm: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
+export const boneStorm: ExecuteSkill = async (player, skillContext, { enemies = [] } = {}) => {
   const skeletons = player.ref.skeleton
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 

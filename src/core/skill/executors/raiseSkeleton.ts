@@ -2,27 +2,28 @@ import { SKELETON_RARITIES, SkeletonFactory } from '~/core/SkeletonFactory'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { Corpse, ExecuteSkill } from '~/types'
+import { GameEventType } from '~/types/event'
 import { getOriginId } from '~/utils'
 import { SkillManager } from '../SkillManager'
 
-export const raiseSkeleton: ExecuteSkill = async (player, context) => {
+export const raiseSkeleton: ExecuteSkill = async (player, { world, eventBus }) => {
   const failure = {
     isSuccess: false,
     isAggressive: false,
     gross: 0,
   }
-  const { world, npcs } = context
-  const { x, y } = player.ref.pos
 
   const makeSkeleton = (corpse: Corpse, isMultiple?: boolean) => {
-    const minIdx = Math.min(SKELETON_RARITIES.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity, SKELETON_RARITIES.length - 2)
+    const minIdx = Math.min(
+      SKELETON_RARITIES.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity,
+      SKELETON_RARITIES.length - 2
+    )
 
     const skeleton = SkeletonFactory.createFromCorpse(corpse, minIdx)
 
     // 4. 플레이어에게 추가 및 세계에서 시체 제거
     if (player.ref.addSkeleton(skeleton)) {
-      world.removeCorpse(corpse.id)
-      npcs.reborn(corpse.id)
+      eventBus.emitAsync(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, corpse.id)
 
       Terminal.log(i18n.t('skill.RAISE_SKELETON.reborn_start', { name: corpse.name }))
       Terminal.log(
@@ -42,7 +43,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
     return false
   }
 
-  const corpses = world.getCorpsesAt(x, y)
+  const corpses = world.getCorpsesAt(player.ref.pos)
 
   if (corpses.length === 0) {
     Terminal.log(i18n.t('skill.RAISE_SKELETON.no_corpse'))
@@ -65,7 +66,7 @@ export const raiseSkeleton: ExecuteSkill = async (player, context) => {
       Terminal.log(i18n.t('skill.RAISE_SKELETON.legion_success'))
     }
   } else {
-    const targetId = await SkillManager.selectCorpse(player.ref, context)
+    const targetId = await SkillManager.selectCorpse(player.ref, world)
     const selectedCorpse = corpses.find((c) => c.id === targetId)
 
     if (!selectedCorpse) {

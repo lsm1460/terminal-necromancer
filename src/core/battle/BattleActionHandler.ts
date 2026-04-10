@@ -1,6 +1,9 @@
 import i18n from '~/i18n'
-import { BattleTarget, GameContext } from '~/types'
+import { EventBus } from '~/systems/EventBus'
+import { BattleTarget } from '~/types'
+import { Battle } from '.'
 import { Terminal } from '../Terminal'
+import { World } from '../World'
 import { Player } from '../player/Player'
 import { SkillManager } from '../skill'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
@@ -13,6 +16,8 @@ import { CombatUnit } from './unit/CombatUnit'
 export class BattleActionHandler {
   constructor(
     private player: Player,
+    private eventBus: EventBus,
+    private world: World,
     private unitManager: BattleUnitManager,
     private npcSkills: NpcSkillManager
   ) {}
@@ -46,11 +51,7 @@ export class BattleActionHandler {
     return false
   }
 
-  async handlePlayerAction(
-    playerUnit: CombatUnit<Player>,
-    playerSide: CombatUnit[],
-    context: GameContext
-  ): Promise<boolean> {
+  async handlePlayerAction(playerUnit: CombatUnit<Player>, playerSide: CombatUnit[]): Promise<boolean> {
     const menu = ['status', 'attack', 'defense', 'skill', 'item', 'escape']
     const choices = menu.map((key) => ({
       name: key,
@@ -62,23 +63,23 @@ export class BattleActionHandler {
     switch (action) {
       case 'status':
         await this.showBattleStatus(playerSide)
-        return await this.handlePlayerAction(playerUnit, playerSide, context)
+        return await this.handlePlayerAction(playerUnit, playerSide)
       case 'attack':
-        if (!(await this.handlePlayerAttackAction(playerUnit, playerSide, context))) {
-          return await this.handlePlayerAction(playerUnit, playerSide, context)
+        if (!(await this.handlePlayerAttackAction(playerUnit))) {
+          return await this.handlePlayerAction(playerUnit, playerSide)
         }
         break
       case 'defense':
         this.handleGuardAction(playerUnit)
         break
       case 'skill':
-        if (!(await this.handlePlayerSkillAction(playerUnit, playerSide, context))) {
-          return await this.handlePlayerAction(playerUnit, playerSide, context)
+        if (!(await this.handlePlayerSkillAction(playerUnit, playerSide, this.world))) {
+          return await this.handlePlayerAction(playerUnit, playerSide)
         }
         break
       case 'item':
-        if (!(await this.handlePlayerItemAction(playerUnit, playerSide, context))) {
-          return await this.handlePlayerAction(playerUnit, playerSide, context)
+        if (!(await this.handlePlayerItemAction(playerUnit))) {
+          return await this.handlePlayerAction(playerUnit, playerSide)
         }
         break
       case 'escape':
@@ -110,11 +111,7 @@ export class BattleActionHandler {
     return line
   }
 
-  private async handlePlayerAttackAction(
-    playerUnit: CombatUnit<Player>,
-    playerSide: CombatUnit[],
-    context: GameContext
-  ): Promise<boolean> {
+  private async handlePlayerAttackAction(playerUnit: CombatUnit<Player>): Promise<boolean> {
     const enemies = this.unitManager.getAliveEnemies()
     const { choices } = new TargetSelector(enemies).excludeStealth().build()
     const targetId = await Terminal.select(i18n.t('battle.action.target_prompt'), [
@@ -146,13 +143,17 @@ export class BattleActionHandler {
   private async handlePlayerSkillAction(
     playerUnit: CombatUnit<Player>,
     playerSide: CombatUnit[],
-    context: GameContext
+    world: World
   ): Promise<boolean> {
     const ally = playerSide.filter((unit) => unit.type !== 'player')
-    const { skillId, isSuccess } = await SkillManager.requestAndExecuteSkill(playerUnit, context, {
-      ally,
-      enemies: this.unitManager.getAliveEnemies(),
-    })
+    const { skillId, isSuccess } = await SkillManager.requestAndExecuteSkill(
+      playerUnit,
+      { world: this.world, eventBus: this.eventBus },
+      {
+        ally,
+        enemies: this.unitManager.getAliveEnemies(),
+      }
+    )
 
     if (isSuccess) {
       await this.unitManager.refreshPlayerSide()
@@ -164,11 +165,7 @@ export class BattleActionHandler {
     return isSuccess
   }
 
-  private async handlePlayerItemAction(
-    playerUnit: CombatUnit<Player>,
-    playerSide: CombatUnit[],
-    context: GameContext
-  ): Promise<boolean> {
+  private async handlePlayerItemAction(playerUnit: CombatUnit<Player>): Promise<boolean> {
     return await playerUnit.ref.useItem()
   }
 
@@ -187,7 +184,7 @@ export class BattleActionHandler {
     attacker: CombatUnit,
     targets: CombatUnit<BattleTarget>[],
     ally: CombatUnit[],
-    context: GameContext
+    battle: Battle
   ) {
     const visibleTargets = targets.filter((t) => !t.isStealth)
     if (visibleTargets.length === 0) {
@@ -197,7 +194,7 @@ export class BattleActionHandler {
 
     const autoSkill = this.npcSkills.getRandomSkill(attacker)
     if (autoSkill) {
-      await this.npcSkills.execute(autoSkill.id, attacker, ally, visibleTargets, context)
+      await this.npcSkills.execute(autoSkill.id, attacker, ally, visibleTargets, battle)
     } else {
       let target: CombatUnit
       if (['monster', 'npc'].includes(attacker.type)) {

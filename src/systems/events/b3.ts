@@ -1,18 +1,19 @@
-import { Terminal } from '~/core/Terminal'
+import { MapManager } from '~/core/MapManager'
 import { Player } from '~/core/player/Player'
+import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { GameContext, Tile } from '~/types'
+import { Tile } from '~/types'
 import { delay } from '~/utils'
 import { EventHandler } from '.'
 
 export const b3Handlers: Record<string, EventHandler> = {
-  'event-abandoned-corpse': async (tile, player, context) => {
+  'event-abandoned-corpse': async (tile, context) => {
     if (tile.isClear) return
 
-    const { world, battle } = context
+    const { player, world, monster: monsterFactory } = context
     const candidates = ['shipyard_worker', 'shipyard_hound', 'ratman_scout', 'mutated_worker']
     const randomId = candidates[Math.floor(Math.random() * candidates.length)]
-    const monster = battle.monster.makeMonster(randomId)
+    const monster = monsterFactory.makeMonster(randomId)
 
     if (!monster) return
 
@@ -22,7 +23,7 @@ export const b3Handlers: Record<string, EventHandler> = {
 
     const flavors = i18n.t('events.b3.abandoned_corpse.flavors', { returnObjects: true }) as string[]
     const flavorText = flavors[Math.floor(Math.random() * flavors.length)]
-    
+
     Terminal.log(`   \x1b[3m"${flavorText}"\x1b[0m`)
     Terminal.log(`\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m\n`)
 
@@ -32,7 +33,7 @@ export const b3Handlers: Record<string, EventHandler> = {
     })
   },
 
-  'event-voice-recorder': async (tile, player, context) => {
+  'event-voice-recorder': async (tile, context) => {
     if (tile.isClear) return
 
     Terminal.log(i18n.t('events.b3.voice_recorder.found'))
@@ -58,40 +59,28 @@ export const b3Handlers: Record<string, EventHandler> = {
     Terminal.log(i18n.t('events.b3.voice_recorder.ended'))
   },
 
-  'event-conveyor-control-1': async (tile, player, context) => {
+  'event-conveyor-control-1': async (tile, context) => {
     const proceed = await Terminal.confirm(i18n.t('events.b3.conveyor.prompt_1'))
 
     if (proceed) {
-      await transportPlayerByConveyor(
-        context,
-        player,
-        'event-conveyor-control-2',
-        i18n.t('events.b3.conveyor.move_1')
-      )
+      await transportPlayerByConveyor(context, 'event-conveyor-control-2', i18n.t('events.b3.conveyor.move_1'))
     }
   },
 
-  'event-conveyor-control-2': async (tile, player, context) => {
+  'event-conveyor-control-2': async (tile, context) => {
     const proceed = await Terminal.confirm(i18n.t('events.b3.conveyor.prompt_2'))
 
     if (proceed) {
-      await transportPlayerByConveyor(
-        context,
-        player,
-        'event-conveyor-control-1',
-        i18n.t('events.b3.conveyor.move_2')
-      )
+      await transportPlayerByConveyor(context, 'event-conveyor-control-1', i18n.t('events.b3.conveyor.move_2'))
     }
   },
 }
 
 const transportPlayerByConveyor = async (
-  context: GameContext,
-  player: Player,
+  { player, map }: { player: Player; map: MapManager },
   targetEvent: string,
   message: string
 ) => {
-  const { map } = context
   const tiles = map.currentScene.tiles
 
   let targetX = -1

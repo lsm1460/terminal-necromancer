@@ -10,7 +10,7 @@ import { NPCManager } from './core/NpcManager'
 import { Player } from './core/player/Player'
 import { World } from './core/World'
 import { DropSystem } from './systems/DropSystem'
-import { EventSystem } from './systems/EventSystem'
+import { EventLedger } from './systems/EventLedger'
 import { SaveSystem } from './systems/SaveSystem'
 
 export type AttackType = 'melee' | 'ranged' | 'explode'
@@ -99,6 +99,8 @@ export enum ItemType {
 
 import { Item as ItemClass } from './core/item/Item'
 import { QuestManager } from './core/QuestManager'
+import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
+import { EventBus } from './systems/EventBus'
 export type Item = ItemClass
 export interface WeaponItem extends ItemClass {
   type: ItemType.WEAPON
@@ -146,7 +148,14 @@ export type Drop = {
 export type Corpse = {
   x?: number
   y?: number
-} & BattleTarget
+  maxHp: number
+  atk: number
+  def: number
+  agi: number
+  name: string
+  id: string
+  minRebornRarity?: SkeletonRarity
+}
 
 export type LootBag = {
   id: string
@@ -161,7 +170,7 @@ export interface Renderer {
   update(message: string): void
   say(list: { name: string; hasQuest: boolean }[]): void
   clear(): void
-  printStatus(player: Player, context: GameContext): void
+  printStatus(context: GameContext): void
   // 입력 관련 메서드 추가
   select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string>
   confirm(message: string): Promise<boolean>
@@ -180,13 +189,16 @@ export interface Renderer {
 }
 
 export interface GameContext {
+  player: Player
   map: MapManager
   npcs: NPCManager
   world: World
-  events: EventSystem
+  events: EventLedger
+  eventBus: EventBus
   drop: DropSystem
   save: SaveSystem
   battle: Battle
+  npcSkills: NpcSkillManager
   broadcast: Broadcast
   monster: MonsterFactory
   config?: {
@@ -201,11 +213,7 @@ export interface GameContext {
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
-export type CommandFunction = (
-  player: Player,
-  args: string[],
-  context: GameContext
-) => boolean | string | Promise<boolean | string>
+export type CommandFunction = (args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
 
 type NPCScripts = {
   greeting: string
@@ -226,7 +234,8 @@ export interface NPC extends BattleTarget {
   updateHostility: (amount: number) => void
   updateContribution: (amount: number) => void
   dead: (options?: { karma?: number; hostile?: number }) => void
-  hasQuest: (player: Player, context: GameContext) => boolean
+  hasQuest: (context: GameContext) => boolean
+  getScripts: (greetings: 'greeting' | 'farewell') => string
   noEscape?: boolean
   scripts?: {
     friendly: NPCScripts
@@ -259,7 +268,7 @@ export type SkillResult = {
 
 export type ExecuteSkill = (
   player: CombatUnit<Player>,
-  context: GameContext,
+  context: {world: World, eventBus: EventBus},
   units?: {
     ally?: CombatUnit[]
     enemies?: CombatUnit[]
@@ -380,7 +389,12 @@ export interface UnitSprites {
 export interface SceneData {
   id: string
   unlocks?: string[]
-  start_pos: { x: number; y: number }
-  move_pos?: { x: number; y: number }
+  start_pos: PositionType
+  move_pos?: PositionType
   tiles: Tile[][]
+}
+
+export type PositionType = {
+  x: number
+  y: number
 }

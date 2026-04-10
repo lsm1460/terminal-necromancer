@@ -1,73 +1,82 @@
-import adrian from './adrian'
-import apostle from './apostle'
-import caron from './caron'
-import death from './death'
-import dr_zed from './dr_zed'
-import echo from './echo'
-import elevator from './elevator'
-import flint from './flint'
-import jax_seeker from './jax_seeker'
-import julian from './julian'
-import kael from './kael'
-import kane_leader from './kane'
-import marco from './marco'
-import maya_tech from './maya'
-import { NPCHandler } from './NPCHandler'
-import oliver from './oliver'
-import portal from './portal'
-import ratty from './ratty'
-import subspace from './subspace'
-import vending_machine from './vending_machine'
-import vesper from './vesper'
-import _knight from './_knight'
-import hansen_mechanic from './hansen_mechanic'
-import elias_survivor from './elias_survivor'
-import mika_operator from './mika_operator'
-import vora_observer from './vora_observer'
-import silas_dissector from './silas_dissector'
-import baron_valter from './baron_valter'
+import { BaseNPC } from '~/core/npc/BaseNPC'
+import { KnightNPC } from './_knight/KnightNPC'
+import { AdrianNPC } from './adrian/AdrianNPC'
+import { ApostleNPC } from './apostle/ApostleNPC'
+import { CaronNPC } from './caron/CaronNPC'
+import { DaxNPC } from './dax_looter/DaxNPC'
+import { DeathNPC } from './death/DeathNPC'
+import { ZedNPC } from './dr_zed/DrZedNPC'
+import { EchoNPC } from './echo/EchoNpc'
+import { ElevatorNPC } from './elevator/ElevatorNPC'
+import { EliasNPC } from './elias_survivor/EliasNPC'
+import { FlintNPC } from './flint/FlintNPC'
+import { HansenNPC } from './hansen_mechanic/HansenNPC'
+import { JaxNPC } from './jax_seeker/JaxNPC'
+import { JulianNPC } from './julian/JulianNPC'
+import { KaelNPC } from './kael/KaelNPC'
+import { KaneNPC } from './kane_leader/KaneNPC'
+import { MarcoNPC } from './marco/MarcoNPC'
+import { MayaNPC } from './maya/MayaNPC'
+import { MikaNPC } from './mika_operator/MikaNPC'
+import { OliverNPC } from './oliver/OliverNPC'
+import { PortalNPC } from './portal/PortalNPC'
+import { RattyNPC } from './ratty/RattyNPC'
+import { ShadowedNPC } from './shadowed_agent/ShadowedNPC'
+import { SilasNPC } from './silas_dissector/SilasNPC'
+import { SubspaceNPC } from './subspace/SubspaceNPC'
+import { VendingMachineNPC } from './vending_machine/VendingMachineNPC'
+import { VesperNPC } from './vesper/VesperNPC'
+import { VoraNPC } from './vora_observer/VoraNPC'
 
-const npcHandlers: Record<string, NPCHandler> = {
-  portal,
-  elevator,
-  death,
-  echo,
-  dr_zed,
-  marco,
-  caron_alive: subspace,
-  caron_dead: subspace,
-  _knight,
-  vending_machine,
+export const getNPCClass = (id: string): typeof BaseNPC => {
+  const map: Record<string, typeof BaseNPC> = {
+    _knight: KnightNPC,
+    caron_alive: SubspaceNPC,
+    caron_dead: SubspaceNPC,
+    //
+    portal: PortalNPC,
+    vending_machine: VendingMachineNPC,
+    elevator: ElevatorNPC,
 
-  // 레지스탕스
-  kane_leader,
-  maya_tech,
-  jax_seeker,
+    //b1
+    death: DeathNPC,
+    echo: EchoNPC,
+    marco: MarcoNPC,
+    dr_zed: ZedNPC,
 
-  // b2
-  ratty,
+    //b2
+    ratty: RattyNPC,
 
-  // b3
-  apostle,
+    //b3
+    apostle: ApostleNPC,
+    jax_seeker: JaxNPC,
 
-  // b4
-  caron,
+    //b3.5
+    maya_tech: MayaNPC,
+    kane_leader: KaneNPC,
 
-  //b5
-  julian, // 바탠더
-  oliver, // 웨이터
-  adrian, // 안내 데스크
-  //레지스탕스
-  flint,
-  vesper,
-  kael,
+    //b4
+    caron: CaronNPC,
 
-  //b6
-  hansen_mechanic,
-  elias_survivor,
-  vora_observer,
-  mika_operator,
-  silas_dissector,
+    //b5
+    adrian: AdrianNPC,
+    flint: FlintNPC,
+    julian: JulianNPC,
+    oliver: OliverNPC,
+
+    kael: KaelNPC,
+    vesper: VesperNPC,
+
+    //b6
+    dax_looter: DaxNPC,
+    elias_survivor: EliasNPC,
+    hansen_mechanic: HansenNPC,
+    mika_operator: MikaNPC,
+    vora_observer: VoraNPC,
+    silas_dissector: SilasNPC,
+    shadowed_agent: ShadowedNPC
+  }
+
+  return map[id] || BaseNPC
 }
 
-export default npcHandlers

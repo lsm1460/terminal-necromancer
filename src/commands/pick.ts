@@ -4,12 +4,12 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, Drop, GameContext, LootBag } from '~/types'
 
-export const pickCommand: CommandFunction = async (player, args, context) => {
-  const { x, y } = player.pos
-  const tile = context.map.getTile(x, y)
+export const pickCommand: CommandFunction = async (args, context) => {
+  const { player, map, world } = context
+  const tile = map.getTile(player.pos)
 
-  const drops = context.world.getDropsAt(player.x, player.y)
-  const lootBag = context.world.getLootBagAt(context.map.currentSceneId, tile.id)
+  const drops = world.getDropsAt(player.pos)
+  const lootBag = world.getLootBagAt(map.currentSceneId, tile.id)
   const availableSpace = getAvailableSpace(player)
 
   if (!hasPickableItems(drops, lootBag)) return false
@@ -21,7 +21,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
 
   if (arg) {
     if (arg === 'lootBag' && lootBag) {
-      handleLootBagPick(player, lootBag, context)
+      handleLootBagPick(lootBag, context)
 
       return false
     }
@@ -38,7 +38,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
     if (!selectionId || selectionId === 'cancel') return false
 
     if (selectionId === 'lootBag' && lootBag) {
-      handleLootBagPick(player, lootBag, context)
+      handleLootBagPick(lootBag, context)
 
       return false
     }
@@ -47,7 +47,7 @@ export const pickCommand: CommandFunction = async (player, args, context) => {
   }
 
   if (drop) {
-    handleItemPick(drop, player, availableSpace, context)
+    handleItemPick(drop, availableSpace, context)
   }
 
   return false
@@ -89,16 +89,19 @@ const makeDropTargetOptions = (drops: Drop[], player: Player, lootBag?: LootBag)
   { name: 'cancel', message: i18n.t('cancel') },
 ]
 
-function handleLootBagPick(player: Player, lootBag: LootBag, context: GameContext) {
+function handleLootBagPick(lootBag: LootBag, context: GameContext) {
+  const { player, world } = context
   Terminal.log(`\n${i18n.t('pick.lootbag_recover_msg', { exp: lootBag.exp, gold: lootBag.gold })}`)
   Terminal.log(`"${i18n.t('pick.lootbag_flavor_text')}"`)
 
   player.gainExp(lootBag.exp)
   player.gainGold(lootBag.gold)
-  context.world.removeLootBag()
+  world.removeLootBag()
 }
 
-function handleItemPick(drop: Drop, player: Player, availableSpace: number, context: GameContext) {
+function handleItemPick(drop: Drop, availableSpace: number, context: GameContext) {
+  const { player, world } = context
+
   const totalDropQty = drop.quantity || 1
   const pickQty = Math.min(totalDropQty, availableSpace)
   const remainQty = totalDropQty - pickQty
@@ -112,6 +115,6 @@ function handleItemPick(drop: Drop, player: Player, availableSpace: number, cont
     drop.quantity = remainQty
     Terminal.log(`⚠️ ${i18n.t('pick.partial_pick_warning', { count: remainQty })}`)
   } else {
-    context.world.removeDropById(drop.id, player.pos)
+    world.removeDropById(drop.id, player.pos)
   }
 }

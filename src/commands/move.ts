@@ -5,9 +5,9 @@ import { CommandFunction } from '~/types'
 
 // --- 공통 이동 함수 ---
 export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
-  return async (player, args, context) => {
-    const { map, npcs } = context
-    const { monsters, npcIds } = map.getTile(player.pos.x, player.pos.y)
+  return async (args, context) => {
+    const { player, map, npcs } = context
+    const { monsters, npcIds } = map.getTile(player.pos)
 
     // 1. 길을 막고 있는 몬스터 찾기
     const blockingMonster = monsters?.find((m) => m.isAlive && m.noEscape)
@@ -28,7 +28,7 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
     const { dx, dy } = DIRECTIONS[direction]
     const { x, y } = player.pos
 
-    if (map.canMove(x + dx, y + dy)) {
+    if (map.canMove({ x: x + dx, y: y + dy })) {
       await context.broadcast.play()
       player.move(dx, dy)
       return true

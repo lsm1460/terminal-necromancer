@@ -1,0 +1,48 @@
+import { BaseNPC } from '~/core/npc/BaseNPC'
+import { GameContext, NPCState } from '~/types'
+import { NPCManager } from '~/core/NpcManager'
+import i18n from '~/i18n'
+import { JaxService } from './service'
+import { JaxActions } from './action'
+
+export class JaxNPC extends BaseNPC {
+  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+    super(id, baseData, state, manager)
+  }
+
+  getChoices(context: GameContext) {
+    const quest = JaxService.getActiveAction(context)
+
+    // 가입 전이면 '대화하기(join)' 선택지만 노출
+    if (quest) {
+      return [{ name: 'join', message: i18n.t('talk.small_talk') }]
+    }
+
+    // 가입 후라면 일반 대화와 기지 입장 선택지 노출
+    return [
+      { name: 'talk', message: i18n.t('talk.small_talk') },
+      { name: 'enter', message: i18n.t('npc.jax_seeker.choices.enter') },
+    ]
+  }
+
+  hasQuest(context: GameContext) {
+    return !JaxService.isJoined(context)
+  }
+
+  async handle(action: string, context: GameContext) {
+    switch (action) {
+      case 'talk':
+        this.handleTalk()
+        break
+      case 'enter':
+        await JaxActions.handleEnter(context)
+        break
+      case 'join':
+        await JaxActions.handleJoin(this, context)
+        break
+      default:
+        break
+    }
+    return true
+  }
+}

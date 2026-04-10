@@ -1,16 +1,16 @@
 import sample from 'lodash/sample'
-import { DamageOptions } from '~/core/battle/Battle'
+import { Battle, DamageOptions } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { BattleTarget, GameContext, ItemType, NpcSkill } from '~/types'
+import { BattleTarget, ItemType, NpcSkill } from '~/types'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 
 export const SpecialSkillLogics: Record<
   string,
-  (attacker: CombatUnit, targets: CombatUnit[], skill: NpcSkill, context: GameContext) => Promise<void>
+  (attacker: CombatUnit, targets: CombatUnit[], skill: NpcSkill, context: Battle) => Promise<void>
 > = {
   // 자폭
   self_destruct: async (attacker, targets, skill) => {
@@ -96,8 +96,7 @@ export const SpecialSkillLogics: Record<
 
     for (const target of targets) target.removeRandomDeBuff()
   },
-  shadow_bind: async (attacker, targets, skill, context) => {
-    const { battle } = context
+  shadow_bind: async (attacker, targets, skill, battle) => {
 
     const _targets = targets
       .filter((unit) => !unit.deBuff.some((deBuff) => deBuff.id === 'bind'))
@@ -110,7 +109,7 @@ export const SpecialSkillLogics: Record<
       unit.applyDeBuff({ id: 'bind', type: 'bind', duration: Infinity })
     })
 
-    const watcher = battle._spawnMonster('watcher', context)!
+    const watcher = battle._spawnMonster('watcher')!
 
     watcher.onProcessHitHooks.push(async (attacker, defender, options) => {
       if ((attacker.ref as BattleTarget).isMinion) {

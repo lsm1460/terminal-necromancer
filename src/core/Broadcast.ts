@@ -1,8 +1,9 @@
+import _ from 'lodash'
 import i18n from '~/i18n'
-import { EventSystem } from '~/systems/EventSystem'
+import { EventBus } from '~/systems/EventBus'
+import { GameEventType } from '~/types/event'
 import { NPCManager } from './NpcManager'
 import { Terminal } from './Terminal'
-import _ from 'lodash'
 
 export class Broadcast {
   private pendingQueue: string[] = []
@@ -11,18 +12,14 @@ export class Broadcast {
 
   private justFinishedEvent = false
 
-  /**
-   * @param npcManager - NPC 상태 확인을 위한 매니저
-   * @param eventSystem - 이벤트 구독을 위한 시스템
-   */
   constructor(
     private npcManager: NPCManager,
-    eventSystem: EventSystem
+    eventBus: EventBus
   ) {
-    eventSystem.subscribe((eventId) => this.onEventCleared(eventId))
+    eventBus.subscribe(GameEventType.COMPLETE_EVENT, this.onEventCleared)
   }
 
-  private onEventCleared(eventId: string) {
+  private onEventCleared = (eventId: string) => {
     const key = `broadcast.${eventId}`
 
     if (i18n.exists(key) && !this.playedState[eventId]) {

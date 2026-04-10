@@ -1,15 +1,16 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { GameContext, Tile } from '~/types'
 import { speak } from '~/utils'
 import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
-  static async handle(tile: Tile, player: Player, context: GameContext) {
-    const { npcs, events, battle } = context
+  static async handle(context: GameContext) {
+    const { player, npcs, events, battle, map, world } = context
+
+    const tile = map.getTile(player.pos)
 
     // 1. 타일 정보에서 보스 NPC 아이디 추출
     const bossId = tile.npcIds?.[0]
@@ -40,7 +41,7 @@ class BossEvent {
       enemies = [battle.toCombatUnit(bossNpc, 'npc')]
     }
 
-    const isWin = enemies.length > 0 ? await battle.runCombatLoop(enemies, context) : true
+    const isWin = enemies.length > 0 ? await battle.runCombatLoop(enemies, world) : true
 
     tile.isClear = isWin
 

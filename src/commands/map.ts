@@ -3,8 +3,8 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction } from '~/types'
 
-export const mapCommand: CommandFunction = async (player, args, context) => {
-  const { events, map } = context
+export const mapCommand: CommandFunction = async (args, context) => {
+  const { player, events, map } = context
   const isCheat = context.cheats.isFullMap
   const sceneId = map.currentSceneId
 
@@ -64,10 +64,10 @@ export const mapCommand: CommandFunction = async (player, args, context) => {
 
   Terminal.log(mapDisplay)
   Terminal.log(i18n.t('commands.map.legend_title'))
-  
+
   const legendItems = i18n.t('commands.map.legend_items', { returnObjects: true }) as string[]
-  legendItems.forEach(item => Terminal.log(item))
-  
+  legendItems.forEach((item) => Terminal.log(item))
+
   Terminal.log(i18n.t('commands.map.footer'))
 
   return false

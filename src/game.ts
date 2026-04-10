@@ -50,6 +50,6 @@ i18n.changeLanguage(locale).then(() => {
     await engine.init(playData)
     await engine.start()
 
-    await createCLI(engine.player, engine.context)
+    await createCLI(engine.context)
   })
 })

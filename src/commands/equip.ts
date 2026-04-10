@@ -3,7 +3,7 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, ItemType } from '~/types'
 
-export const equipCommand: CommandFunction = async (player, args, context) => {
+export const equipCommand: CommandFunction = async (args, {player}) => {
   const inventory = player.inventory
 
   const equipAbles = inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type))
