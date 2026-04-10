@@ -3,6 +3,7 @@ import { ExecuteSkill, GameContext, SkillId, SkillResult } from '~/types'
 import { Terminal } from '../Terminal'
 import { Player } from '../player/Player'
 import { getPlayerSkills } from './skill'
+import { World } from '../World'
 
 type EnhancedSkillResult =
   | (SkillResult & { isSuccess: boolean; skillId: string })
@@ -60,8 +61,8 @@ export class SkillManager {
     return { ...result, skillId }
   }
 
-  static async selectCorpse(player: Player, context: GameContext) {
-    const corpses = context.world.getCorpsesAt(player.pos)
+  static async selectCorpse(player: Player, world: World) {
+    const corpses = world.getCorpsesAt(player.pos)
 
     if (corpses.length === 0) {
       Terminal.log('\n💬 ' + i18n.t('skill.no_corpses_nearby'))

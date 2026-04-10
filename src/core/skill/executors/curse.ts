@@ -9,7 +9,7 @@ import { ExecuteSkill } from '~/types'
  * - 부식(CORROSION): 방어력 5% 감소 (나머지 버림) ※ 공격력 감소는 적용 안 함
  * - 광역(WIDE_CURSE): 모든 생존한 적에게 적용
  */
-export const curse: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
+export const curse: ExecuteSkill = async (player, skillContext, { enemies = [] } = {}) => {
   const duration = 3
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 

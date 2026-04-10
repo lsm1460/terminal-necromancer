@@ -11,7 +11,7 @@ import { failWithLog, sacrificeSkeleton } from './lib'
  * : 소환된 스켈레톤 하나를 희생시켜 날카로운 뼈의 창으로 부수어 날립니다.
  * : 전열의 적 최대 2명에게 시체의 최대 체력의 0.4배율의 관통 피해를 입힙니다.
  */
-export const boneSpear: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
+export const boneSpear: ExecuteSkill = async (player, skillContext, { enemies = [] } = {}) => {
   const skeletons = player.ref.skeleton
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 

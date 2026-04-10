@@ -8,7 +8,7 @@ import { BattleTarget, ExecuteSkill } from '~/types'
  * : [기본] 미니언 치유
  * : [어픽스: EMPOWER_SOUL] 미니언 공격력 버프 부여 + 체력 감소
  */
-export const soulTransfer: ExecuteSkill = async (player, context, { ally = [], enemies } = {}) => {
+export const soulTransfer: ExecuteSkill = async (player, skillContext, { ally = [], enemies } = {}) => {
   const minions = ally.filter((target) => (target.ref as BattleTarget).isMinion)
 
   // 1. 소환수 존재 여부 체크

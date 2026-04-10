@@ -7,12 +7,7 @@ import { ZedService } from './service'
 
 export const ZedActions = {
   handleHeal(player: Player) {
-    player.hp = player.maxHp
-    player.mp = player.maxMp
-    player.minions.forEach((m) => {
-      m.isAlive = true
-      m.hp = m.maxHp
-    })
+    player.restoreAll()
 
     Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
     Terminal.log(i18n.t('npc.dr_zed.heal.title'))

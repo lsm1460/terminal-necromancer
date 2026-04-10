@@ -4,7 +4,7 @@ import i18n from '~/i18n'
 import { CommandFunction } from '~/types'
 
 export const attackCommand: CommandFunction = async (args, context) => {
-  const { player, map, npcs, battle } = context
+  const { player, map, npcs, battle, world } = context
   const tile = map.getTile(player.pos)
 
   if ((tile.npcIds || [])?.length > 0) {
@@ -19,7 +19,7 @@ export const attackCommand: CommandFunction = async (args, context) => {
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []).map((m) => battle.toCombatUnit(m, 'monster')),
     ...npcs
-      .getAliveNPCInTile(context, { withoutFaction: ['untouchable'] })
+      .getAliveNPCInTile({ pos: player.pos, hasKnight: !!player.knight, map }, { withoutFaction: ['untouchable'] })
       .map((n) => battle.toCombatUnit(n!, 'npc')),
   ] as CombatUnit[]
 
@@ -28,7 +28,7 @@ export const attackCommand: CommandFunction = async (args, context) => {
     return false
   }
 
-  tile.isClear = await battle.runCombatLoop(battleTargets, context)
+  tile.isClear = await battle.runCombatLoop(battleTargets, world)
 
   return false
 }

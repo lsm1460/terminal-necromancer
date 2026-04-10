@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import { Corpse, Drop, LootBag, PositionType } from '~/types'
-import { MapManager } from './MapManager'
-import { Player } from './player/Player'
 import { Item } from './item/Item'
+import { Player } from './player/Player'
+import { EventBus } from '~/systems/EventBus'
+import { GameEventType } from '~/types/event'
 
 export class World {
   lootBags: LootBag | null = null
@@ -11,8 +12,10 @@ export class World {
 
   constructor(
     private player: Player,
-    public map: MapManager
-  ) {}
+    eventBus: EventBus
+  ) {
+    eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, this.removeCorpse)
+  }
 
   addDrop(drop: Drop, quantity = 1) {
     const existing = this.drops.find(_.matches({ id: drop.id }))
@@ -61,7 +64,7 @@ export class World {
   }
 
   addCorpse(corpse: Corpse) {
-    this.corpses.push(corpse)
+    this.corpses.push({...corpse})
   }
 
   getCorpsesAt({ x, y}: PositionType): Corpse[] {
@@ -72,8 +75,8 @@ export class World {
     const idx = this.corpses.findIndex((c) => c.id === corpseId)
     if (idx === -1) return undefined
 
-    // 배열에서 제거하고 반환
     const [picked] = this.corpses.splice(idx, 1)
+
     return picked
   }
 

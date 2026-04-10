@@ -1,10 +1,13 @@
 import { HOSTILITY_LIMIT } from '~/consts'
 import i18n from '~/i18n'
 import { getNPCClass } from '~/npc'
-import { GameContext, NPC, NPCState } from '~/types'
+import { EventBus } from '~/systems/EventBus'
+import { NPC, NPCState, PositionType } from '~/types'
+import { GameEventType } from '~/types/event'
 import { MapManager } from './MapManager'
 import { Terminal } from './Terminal'
 import { BaseNPC } from './npc/BaseNPC'
+
 type EventCallback = (npcId: string, params?: { karma?: number; hostile?: number }) => void
 
 export class NPCManager {
@@ -12,10 +15,10 @@ export class NPCManager {
   private states: Record<string, NPCState> = {}
   private factionHostility: Record<string, number> = {}
   private factionContribution: Record<string, number> = {}
-  private onDeathHandlers: EventCallback[] = []
 
   constructor(
     npcData: any,
+    private eventBus: EventBus,
     savedData?: any
   ) {
     this.baseData = npcData
@@ -29,6 +32,8 @@ export class NPCManager {
     }
 
     this.initializeStates()
+
+    eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, this.reborn)
   }
 
   private initializeStates() {
@@ -56,13 +61,14 @@ export class NPCManager {
     return new NpcClass(id, base, state, this)
   }
 
-  getAliveNPCInTile(context: GameContext, options?: { withoutFaction?: string[] }) {
-    const {player, map} = context
-
-    const tile = map.getTile(player.pos)
+  getAliveNPCInTile(
+    { pos, hasKnight, map }: { pos: PositionType; hasKnight: boolean; map: MapManager },
+    options?: { withoutFaction?: string[] }
+  ) {
+    const tile = map.getTile(pos)
     const ids = [...(tile.npcIds || [])]
 
-    if (player.knight) {
+    if (hasKnight) {
       ids.push('_knight')
     }
 
@@ -153,12 +159,8 @@ export class NPCManager {
     return false
   }
 
-  subscribeDeath(_callback: EventCallback) {
-    this.onDeathHandlers.push(_callback)
-  }
-
   triggerDeathHandler(npc: NPC, params?: Parameters<EventCallback>[1]) {
-    const { hostile = 100 } = params || {}
+    const { hostile = 100, karma } = params || {}
 
     this.setAlive(npc.id, false)
 
@@ -166,7 +168,7 @@ export class NPCManager {
       this.setFactionHostility(npc.faction, hostile)
     }
 
-    this.onDeathHandlers.forEach((fn) => fn(npc.id, params))
+    this.eventBus.emitAsync(GameEventType.NPC_IS_DEAD, { npcId: npc.id, karma })
   }
 
   getSaveData() {

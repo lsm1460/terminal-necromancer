@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { EventBus } from '~/systems/EventBus'
 import { NPCManager } from '../NpcManager'
 import { Player } from '../player/Player'
-import { MapManager } from '../MapManager'
 
 // Mock i18n
 vi.mock('~/i18n', () => ({
@@ -19,9 +19,10 @@ vi.mock('../Terminal', () => ({
 }))
 
 describe('NPCManager (Legacy Behavior)', () => {
+  let eventBus: EventBus
   let npcManager: NPCManager
   let player: Player
-  let map: MapManager
+  
   const mockNpcData = {
     test_npc: {
       id: 'test_npc',
@@ -39,9 +40,9 @@ describe('NPCManager (Legacy Behavior)', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    player = new Player([])
-    map = new MapManager('{}')
-    npcManager = new NPCManager(mockNpcData)
+    eventBus = new EventBus()
+    player = new Player([], eventBus)
+    npcManager = new NPCManager(mockNpcData, eventBus)
   })
 
   it('should return an NPC object with correct properties', () => {

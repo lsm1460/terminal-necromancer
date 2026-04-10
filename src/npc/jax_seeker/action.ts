@@ -13,7 +13,7 @@ export const JaxActions = {
 
   /** 가입 이벤트 분기 처리 */
   async handleJoin(npc: NPC, context: GameContext) {
-    const { map, events, battle, player } = context
+    const { map, events, battle, player, world } = context
     const tile = map.getTile(player.pos)
 
     const dialogues = i18n.t('npc.jax_seeker.join.dialogues', { returnObjects: true }) as string[]
@@ -37,7 +37,7 @@ export const JaxActions = {
     else if (choice === 'kill') {
       Terminal.log(i18n.t('npc.jax_seeker.join.result_kill_jax'))
       Terminal.log(i18n.t('npc.jax_seeker.join.result_kill_player'))
-      const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
+      const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], world)
       
       if (isWin) {
         events.completeEvent('RESISTANCE_BASE')

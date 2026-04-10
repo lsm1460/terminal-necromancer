@@ -23,7 +23,7 @@ export function printTileStatus(context: GameContext) {
 
   Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
 
-  const alive = npcs.getAliveNPCInTile(context)
+  const alive = npcs.getAliveNPCInTile({ pos: player.pos, hasKnight: !!player.knight, map })
 
   if (alive.length > 0) {
     const list = alive.map((_npc) => {

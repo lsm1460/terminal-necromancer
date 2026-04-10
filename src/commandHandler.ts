@@ -87,10 +87,11 @@ export async function handleCommand(rawCmd: string, context: GameContext): Promi
     if (result === 'exit') return 'exit'
 
     if (result) {
-      const { player, map, events } = context
+      const { player, map } = context
       const currentTile = map.getTile(player.pos)
       printTileStatus(context)
-      await events.handle(currentTile, context)
+      
+      await map.handleTileEvent(currentTile, context)
     }
 
     if (context.quest.hasQuest()) {

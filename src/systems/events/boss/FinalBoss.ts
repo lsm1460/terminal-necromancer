@@ -1,9 +1,10 @@
+import { Terminal } from '~/core/Terminal'
+import { Battle } from '~/core/battle'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { BattleTarget, GameContext, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
-import { Terminal } from '~/core/Terminal'
-import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 
 export class FinalBoss implements BossLogic {
   selectedSide = ''
@@ -18,7 +19,7 @@ export class FinalBoss implements BossLogic {
     const boss = monster.makeMonster('test_man')!
     const unit = battle.toCombatUnit(boss, 'monster')
 
-    registerPhaseGimmicks(unit, context)
+    registerPhaseGimmicks(unit, battle)
 
     return [unit]
   }
@@ -28,8 +29,7 @@ export class FinalBoss implements BossLogic {
   }
 }
 
-const registerPhaseGimmicks = (boss: CombatUnit, context: GameContext) => {
-  const { battle } = context
+const registerPhaseGimmicks = (boss: CombatUnit, battle: Battle) => {
   const thresholds = [0.7, 0.4]
 
   boss.onAfterHitHooks.push(async (attacker, defender) => {
@@ -49,16 +49,16 @@ const registerPhaseGimmicks = (boss: CombatUnit, context: GameContext) => {
 
       // 2. 반복문을 통한 일괄 소환 및 설정
       spawnList.forEach(({ id, setup }) => {
-        const minion = battle._spawnMonster(id, context)
+        const minion = battle._spawnMonster(id)
         if (minion) {
-          setup(minion, context)
+          setup(minion, battle)
         }
       })
     }
   })
 }
 
-const setupRealBoomer = (boomer: CombatUnit, context: GameContext) => {
+const setupRealBoomer = (boomer: CombatUnit, battle: Battle) => {
   let timer = 3
   applyMinionProtection(boomer)
 
@@ -67,14 +67,14 @@ const setupRealBoomer = (boomer: CombatUnit, context: GameContext) => {
     Terminal.log(`[위험] ${boomer.ref.name}: ${timer}턴 후 폭발!`)
 
     if (timer < 1) {
-      const enemies = context.battle.getEnemiesOf(boomer)
+      const enemies = battle.getEnemiesOf(boomer)
       enemies.forEach((u) => u.takeDamage(boomer, { rawDamage: 99999, isSureHit: true }))
       await boomer.dead()
     }
   })
 }
 
-const setupFakeUnit = (unit: CombatUnit, context: GameContext) => {
+const setupFakeUnit = (unit: CombatUnit) => {
   let timer = 3
   applyMinionProtection(unit)
 

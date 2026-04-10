@@ -16,7 +16,8 @@ export const talkCommand: CommandFunction = async (...params) => {
 }
 
 async function selectTargetNpc(args: string[], context: GameContext): Promise<BaseNPC | null> {
-  const npcs = context.npcs.getAliveNPCInTile(context)
+  const { npcs: npcManager, player, map } = context
+  const npcs = npcManager.getAliveNPCInTile({ pos: player.pos, hasKnight: !!player.knight, map })
 
   if (npcs.length < 1) {
     Terminal.log(`\n${i18n.t('talk.no_one_here')}`)
@@ -62,10 +63,7 @@ async function startTalkSession(npc: BaseNPC, context: GameContext) {
 
   try {
     while (true) {
-      const menuChoices = [
-        ...npc.getChoices(context),
-        { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` },
-      ]
+      const menuChoices = [...npc.getChoices(context), { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` }]
 
       const action = await Terminal.select(i18n.t('talk.what_to_do'), menuChoices)
 

@@ -1,8 +1,9 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { BattleTarget, ExecuteSkill, GameContext } from '~/types'
+import { BattleTarget, ExecuteSkill } from '~/types'
 
 interface ExplosionTarget {
   id: string
@@ -17,9 +18,9 @@ interface ExplosionTarget {
  * : 현재 위치의 시체 또는 스켈레톤을 소모하여 주변 적들에게 광역 피해를 입힙니다.
  * : 공격자의 스탯이 아닌 '시체의 최대 생명력'에 기반한 데미지를 전달합니다.
  */
-export const corpseExplosion: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
+export const corpseExplosion: ExecuteSkill = async (player, { world }, { enemies = [] } = {}) => {
   const isChaining = player.ref.hasAffix('CHAIN_EXPLOSION')
-  const targets = collectExplosionTargets(context, isChaining)
+  const targets = collectExplosionTargets(player.ref, world, isChaining)
 
   if (targets.length === 0) {
     Terminal.log(i18n.t('skill.not_found'))
@@ -32,7 +33,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
   if (isChaining) {
     // 모든 시체/스켈레톤 연쇄 폭발
     for (const target of targets) {
-      const result = await executeSingleExplosion(player, context, target, enemies)
+      const result = await executeSingleExplosion(player, world, target, enemies)
       if (result.isAggressive) isAggressive = true
       totalGross += 70
     }
@@ -46,7 +47,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
 
     const target = targets.find((t) => t.id === selectedId)
     if (target) {
-      const result = await executeSingleExplosion(player, context, target, enemies)
+      const result = await executeSingleExplosion(player, world, target, enemies)
       isAggressive = result.isAggressive
       totalGross = 70
     }
@@ -63,8 +64,7 @@ export const corpseExplosion: ExecuteSkill = async (player, context, { enemies =
  * 폭발 가능한 자원(시체 & 스켈레톤) 수집
  * : isChaining이 true라면 시체(corpses)만 수집합니다.
  */
-function collectExplosionTargets(context: GameContext, isChaining: boolean): ExplosionTarget[] {
-  const { player, world } = context
+function collectExplosionTargets(player: Player, world: World, isChaining: boolean): ExplosionTarget[] {
   const corpses = world.getCorpsesAt(player.pos)
 
   const targets: ExplosionTarget[] = corpses.map((corpse) => ({
@@ -113,11 +113,10 @@ async function selectTarget(targets: ExplosionTarget[]): Promise<string> {
  */
 async function executeSingleExplosion(
   player: CombatUnit<Player>,
-  context: GameContext,
+  world: World,
   target: ExplosionTarget,
   enemies: CombatUnit[]
 ): Promise<{ isAggressive: boolean }> {
-  const { world } = context
   const rawExplosionDamage = Math.floor(target.maxHp * 0.6)
 
   Terminal.log(

@@ -10,7 +10,7 @@ import { NPCManager } from './core/NpcManager'
 import { Player } from './core/player/Player'
 import { World } from './core/World'
 import { DropSystem } from './systems/DropSystem'
-import { EventSystem } from './systems/EventSystem'
+import { EventLedger } from './systems/EventLedger'
 import { SaveSystem } from './systems/SaveSystem'
 
 export type AttackType = 'melee' | 'ranged' | 'explode'
@@ -99,6 +99,8 @@ export enum ItemType {
 
 import { Item as ItemClass } from './core/item/Item'
 import { QuestManager } from './core/QuestManager'
+import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
+import { EventBus } from './systems/EventBus'
 export type Item = ItemClass
 export interface WeaponItem extends ItemClass {
   type: ItemType.WEAPON
@@ -146,7 +148,14 @@ export type Drop = {
 export type Corpse = {
   x?: number
   y?: number
-} & BattleTarget
+  maxHp: number
+  atk: number
+  def: number
+  agi: number
+  name: string
+  id: string
+  minRebornRarity?: SkeletonRarity
+}
 
 export type LootBag = {
   id: string
@@ -184,10 +193,12 @@ export interface GameContext {
   map: MapManager
   npcs: NPCManager
   world: World
-  events: EventSystem
+  events: EventLedger
+  eventBus: EventBus
   drop: DropSystem
   save: SaveSystem
   battle: Battle
+  npcSkills: NpcSkillManager
   broadcast: Broadcast
   monster: MonsterFactory
   config?: {
@@ -202,10 +213,7 @@ export interface GameContext {
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
-export type CommandFunction = (
-  args: string[],
-  context: GameContext
-) => boolean | string | Promise<boolean | string>
+export type CommandFunction = (args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
 
 type NPCScripts = {
   greeting: string
@@ -260,7 +268,7 @@ export type SkillResult = {
 
 export type ExecuteSkill = (
   player: CombatUnit<Player>,
-  context: GameContext,
+  context: {world: World, eventBus: EventBus},
   units?: {
     ally?: CombatUnit[]
     enemies?: CombatUnit[]

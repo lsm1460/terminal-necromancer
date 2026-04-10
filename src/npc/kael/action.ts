@@ -37,7 +37,7 @@ export const KaelActions = {
 
 /** 카엘 & 베스퍼 연합 전투 실행 */
 async function startAmbushBattle(npc: NPC, context: GameContext) {
-  const { battle, npcs, events, map, player } = context
+  const { battle, npcs, events, map, player, world } = context
   const tile = map.getTile(player.pos)
 
   const kael = npcs.getNPC('kael')
@@ -46,7 +46,7 @@ async function startAmbushBattle(npc: NPC, context: GameContext) {
   const kUnit = battle.toCombatUnit(kael!, 'npc')
   const vUnit = battle.toCombatUnit(vesper!, 'npc')
 
-  const isWin = await battle.runCombatLoop([kUnit, vUnit], context)
+  const isWin = await battle.runCombatLoop([kUnit, vUnit], world)
 
   npc.updateHostility(isWin ? 40 : 10)
   events.completeEvent('b5_child_resistance_encounter')

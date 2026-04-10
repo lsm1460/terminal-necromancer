@@ -7,7 +7,7 @@ import { ExecuteSkill } from '~/types'
  * 표식 (Curse)
  * - 일반: 미니언들의 공격 대상을 지정합니다.
  */
-export const focusFire: ExecuteSkill = async (player, context, { enemies = [] } = {}) => {
+export const focusFire: ExecuteSkill = async (player, skillContext, { enemies = [] } = {}) => {
   const duration = 3
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
   const curseName = i18n.t('skill.FOCUS_FIRE.name')

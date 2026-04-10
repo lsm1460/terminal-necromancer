@@ -25,7 +25,7 @@ export const DeathService = {
   },
 
   getSkillUnlockChoices(context: GameContext) {
-    const {player, events} = context
+    const { player, events } = context
     const completed = events.getCompleted()
     const playerSkills = getPlayerSkills()
     const lockableSkills = Object.values(playerSkills).filter((s) => !player.hasSkill(s.id))

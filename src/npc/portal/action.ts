@@ -1,7 +1,7 @@
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
 import { printTileStatus } from '~/statusPrinter'
+import { GameContext } from '~/types'
 import { PortalService } from './service'
 
 export const PortalActions = {
@@ -9,7 +9,7 @@ export const PortalActions = {
    * 포탈 사용 확인 후 실제 이동 및 연출 수행
    */
   async handleMove(context: GameContext) {
-    const { player, map, events, broadcast } = context
+    const { player, map, broadcast } = context
 
     const confirm = await Terminal.confirm(i18n.t('npc.portal.confirm'))
 
@@ -22,7 +22,7 @@ export const PortalActions = {
 
       // 3. 이동한 타일의 이벤트 처리 및 방송 재생
       const tile = map.getTile(player.pos)
-      await events.handle(tile, context)
+      await map.handleTileEvent(tile, context)
       broadcast.play()
 
       // 4. 타일 상태 출력

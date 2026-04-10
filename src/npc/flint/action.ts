@@ -39,12 +39,12 @@ export const FlintActions = {
 }
 
 async function handleSurpriseAttack(npc: NPC, context: GameContext) {
-  const { battle, map, player } = context
+  const { battle, map, player, world } = context
   Terminal.log(`  \x1b[31m${i18n.t('npc.flint.encounter.surprise_attack_msg')}\x1b[0m`)
   await delay(1000)
   Terminal.log(i18n.t('npc.flint.encounter.surprise_attack_reply'))
 
-  const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
+  const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], world)
   npc.updateHostility(isWin ? 40 : 10)
   map.getTile(player.pos).isClear = true
   return true

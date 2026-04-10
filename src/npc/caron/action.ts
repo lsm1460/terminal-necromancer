@@ -61,11 +61,11 @@ export const CaronActions = {
 
   /** 전투 실행 */
   async handleBattle(npc: NPC, context: GameContext, isManual = false) {
-    const { battle, events, map, player } = context
+    const { battle, events, map, player, world } = context
     if (isManual) await speak([i18n.t('npc.caron.encounters.battle.manual_start')])
 
     Terminal.log(i18n.t('npc.caron.encounters.battle.start_log'))
-    const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], context)
+    const isWin = await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], world)
 
     if (isWin) {
       await speak(i18n.t('npc.caron.encounters.battle.win_script', { returnObjects: true }) as string[])

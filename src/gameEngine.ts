@@ -1,7 +1,7 @@
 import { GameAssets } from './assets'
 import { handleCommand } from './commandHandler'
 import { MAP_IDS } from './consts'
-import { Battle } from './core/battle/Battle'
+import { Battle, BattleComponentFactory } from './core/battle'
 import { Broadcast } from './core/Broadcast'
 import { LootFactory } from './core/LootFactory'
 import { MapManager } from './core/MapManager'
@@ -14,7 +14,9 @@ import { World } from './core/World'
 import i18n from './i18n'
 import { printDirections } from './statusPrinter'
 import { DropSystem } from './systems/DropSystem'
-import { EventSystem } from './systems/EventSystem'
+import { EventBus } from './systems/EventBus'
+import { EventLedger } from './systems/EventLedger'
+import { MonsterEvent } from './systems/events/MonsterEvent'
 import { SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext, Renderer } from './types'
 
@@ -35,24 +37,19 @@ export class GameEngine {
 
     const dropSystem = new DropSystem(item, drop)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
-    const player = new Player(level, initData?.player)
-    const eventSystem = new EventSystem(monsterFactory, initData?.completedEvents)
+    
+    const eventBus = new EventBus()
+    const player = new Player(level, eventBus, initData?.player)
+    const mapManager = new MapManager(map, eventBus)
+    const world = new World(player, eventBus)
+    const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
     const npcSkillManager = new NpcSkillManager(npcSkills, player)
-    const battle = new Battle(player, monsterFactory, npcSkillManager)
-    const mapManager = new MapManager(map)
-    const npcs = new NPCManager(npc, initData?.npcs)
-    const quest = new QuestManager()
-    const world = new World(player, mapManager)
-    const broadcastSystem = new Broadcast(npcs, eventSystem)
-
-    npcs.subscribeDeath((_, params) => {
-      const { karma = 1 } = params || {}
-      player.karma += karma
-    })
-
-    npcs.subscribeDeath((npcId) => {
-      quest.registerDeath(npcId)
-    })
+    const battleFactory = new BattleComponentFactory(player, npcSkillManager, world, dropSystem, eventBus)
+    const battle = new Battle(player, monsterFactory, battleFactory)
+    const npcs = new NPCManager(npc, eventBus, initData?.npcs)
+    const quest = new QuestManager(eventBus)
+    new MonsterEvent(monsterFactory, eventBus, battle, world)
+    const broadcastSystem = new Broadcast(npcs, eventBus)
 
     if (initData?.drop) {
       world.addLootBag(initData.drop)
@@ -62,19 +59,19 @@ export class GameEngine {
       player,
       map: mapManager,
       world,
-      events: eventSystem,
+      events: eventLedger,
+      eventBus,
       npcs,
       drop: dropSystem,
       save: this.saveSystem,
       battle,
       broadcast: broadcastSystem,
       monster: monsterFactory,
+      npcSkills: npcSkillManager,
       config: initData?.config || {},
       quest,
       cheats: {},
     } as GameContext
-
-    
 
     player.onDeath = () => {
       const hostility = npcs.getFactionContribution('resistance')
@@ -114,11 +111,11 @@ export class GameEngine {
   }
 
   public async start(): Promise<void> {
-    const { map, events, player } = this.context
+    const { map, player } = this.context
     this.renderer.printStatus(this.context)
 
     const currentTile = map.getTile(player.pos)
-    await events.handle(currentTile, this.context)
+    await map.handleTileEvent(currentTile, this.context)
 
     printDirections(this.context)
   }

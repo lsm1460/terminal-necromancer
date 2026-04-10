@@ -8,7 +8,7 @@ import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
   static async handle(context: GameContext) {
-    const { player, npcs, events, battle, map } = context
+    const { player, npcs, events, battle, map, world } = context
 
     const tile = map.getTile(player.pos)
 
@@ -41,7 +41,7 @@ class BossEvent {
       enemies = [battle.toCombatUnit(bossNpc, 'npc')]
     }
 
-    const isWin = enemies.length > 0 ? await battle.runCombatLoop(enemies, context) : true
+    const isWin = enemies.length > 0 ? await battle.runCombatLoop(enemies, world) : true
 
     tile.isClear = isWin
 

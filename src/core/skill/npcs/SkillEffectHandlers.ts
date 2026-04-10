@@ -1,11 +1,12 @@
+import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { GameContext, NpcSkill } from '~/types'
+import { NpcSkill } from '~/types'
 
 export const SkillEffectHandlers: Record<
   string,
-  (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit, context: GameContext) => void
+  (target: CombatUnit, skill: NpcSkill, attacker: CombatUnit, battle: Battle) => void
 > = {
   heal: (target, skill) => {
     const healAmount = Math.floor(target.ref.maxHp * skill.power)
@@ -38,9 +39,7 @@ export const SkillEffectHandlers: Record<
     }
   },
 
-  summon: (target, skill, attacker, context) => {
-    const { battle } = context
-
+  summon: (target, skill, attacker, battle) => {
     if (!skill.options?.spawnMonsterId) {
       Terminal.log(
         i18n.t('skill.effect.summon.fail', {
@@ -51,7 +50,7 @@ export const SkillEffectHandlers: Record<
       return
     }
 
-    const reinforcement = battle._spawnMonster(skill.options.spawnMonsterId, context)
+    const reinforcement = battle._spawnMonster(skill.options.spawnMonsterId)
 
     if (!reinforcement) {
       Terminal.log(

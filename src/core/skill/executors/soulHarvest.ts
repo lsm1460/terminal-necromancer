@@ -9,12 +9,11 @@ import { SkillManager } from '../SkillManager'
  * 영혼 흡수: 적 대상으로부터 정수를 추출하여 마나(또는 체력)를 회복
  * : VAMPIRISM 어픽스가 있다면 체력을 20% 회복합니다.
  */
-export const soulHarvest: ExecuteSkill = async (player, context) => {
-  const { world } = context
+export const soulHarvest: ExecuteSkill = async (player, { world }) => {
   const isVampirism = player.ref.hasAffix('VAMPIRISM')
 
   // 1. 대상 시체 선택
-  const targetId = await SkillManager.selectCorpse(player.ref, context)
+  const targetId = await SkillManager.selectCorpse(player.ref, world)
   if (!targetId || targetId === 'cancel') {
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }

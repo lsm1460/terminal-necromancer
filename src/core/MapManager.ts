@@ -2,8 +2,10 @@ import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import i18n from '~/i18n'
 import { printTileStatus } from '~/statusPrinter'
+import { EventBus } from '~/systems/EventBus'
+import { allEventHandlers } from '~/systems/events'
 import { GameContext, PositionType, SceneData, Tile } from '~/types'
-import { Player } from './player/Player'
+import { GameEventType } from '~/types/event'
 import { Terminal } from './Terminal'
 import { assetManager } from './WebAssetManager'
 
@@ -15,7 +17,7 @@ export class MapManager {
   /**
    * @param mapData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
    */
-  constructor(mapData: any) {
+  constructor(mapData: any, private eventBus: EventBus) {
     this.mapData = JSON.parse(JSON.stringify(mapData))
     this.originMapData = JSON.parse(JSON.stringify(mapData))
 
@@ -28,6 +30,23 @@ export class MapManager {
 
   getTile({ x, y }: PositionType): Tile {
     return this.currentScene.tiles?.[y]?.[x]
+  }
+
+  async handleTileEvent(tile: Tile, context: GameContext) {
+    const handler = allEventHandlers[tile.event]
+
+    if (handler) {
+      await handler(tile, context)
+    }
+
+    if (tile.event.startsWith('monster-')) {
+      await this.eventBus.emitAsync(GameEventType.SPAWN_MONSTER, tile)
+    }
+
+    tile.isSeen = true
+    if (!(tile.event === 'boss' || tile.event.startsWith('monster') || tile.event.endsWith('-once'))) {
+      tile.isClear = true
+    }
   }
 
   canMove(pos: PositionType): boolean {
@@ -68,7 +87,7 @@ export class MapManager {
     const tile = map.getTile(player.pos)
     tile.isSeen = true
 
-    await events.handle(tile, context)
+    await map.handleTileEvent(tile, context)
     broadcast.play()
 
     printTileStatus(context)

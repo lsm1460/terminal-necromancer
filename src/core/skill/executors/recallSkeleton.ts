@@ -2,7 +2,7 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { ExecuteSkill } from '~/types'
 
-export const recallSkeleton: ExecuteSkill = async (player, context) => {
+export const recallSkeleton: ExecuteSkill = async (player) => {
   const skeletons = player.ref.skeleton
 
   const corpseId = await Terminal.select(i18n.t('skill.RECALL_SKELETON.select_prompt'), [
