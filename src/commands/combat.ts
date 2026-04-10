@@ -16,11 +16,11 @@ export const attackCommand: CommandFunction = async (args, context) => {
     }
   }
 
-  npcs.getAliveNPCInTile({ withoutFaction: ['untouchable'] })
-
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []).map((m) => battle.toCombatUnit(m, 'monster')),
-    ...npcs.getAliveNPCInTile({ withoutFaction: ['untouchable'] }).map((n) => battle.toCombatUnit(n!, 'npc')),
+    ...npcs
+      .getAliveNPCInTile(context, { withoutFaction: ['untouchable'] })
+      .map((n) => battle.toCombatUnit(n!, 'npc')),
   ] as CombatUnit[]
 
   if (battleTargets.length === 0) {

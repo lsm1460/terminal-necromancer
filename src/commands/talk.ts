@@ -16,7 +16,7 @@ export const talkCommand: CommandFunction = async (...params) => {
 }
 
 async function selectTargetNpc(args: string[], context: GameContext): Promise<BaseNPC | null> {
-  const npcs = context.npcs.getAliveNPCInTile()
+  const npcs = context.npcs.getAliveNPCInTile(context)
 
   if (npcs.length < 1) {
     Terminal.log(`\n${i18n.t('talk.no_one_here')}`)

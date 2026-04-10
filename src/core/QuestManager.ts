@@ -4,14 +4,10 @@ import { NPCManager } from './NpcManager';
 export class QuestManager {
   private questQue: { npcId: string; questType: string }[] = []
 
-  constructor(
-    private npcs: NPCManager
-  ) {}
+  constructor() {}
 
-  async initOnDeath() {
-    this.npcs.subscribeDeath((npcId) => {
-      this.questQue.push({ npcId, questType: 'death' })
-    })
+  public registerDeath(npcId: string) {
+    this.questQue.push({ npcId, questType: 'death' });
   }
 
   public hasQuest(): boolean {

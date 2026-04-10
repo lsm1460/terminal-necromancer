@@ -40,10 +40,19 @@ export class GameEngine {
     const npcSkillManager = new NpcSkillManager(npcSkills, player)
     const battle = new Battle(player, monsterFactory, npcSkillManager)
     const mapManager = new MapManager(map)
-    const npcs = new NPCManager(npc, player, mapManager, initData?.npcs)
-    const quest = new QuestManager(npcs)
+    const npcs = new NPCManager(npc, initData?.npcs)
+    const quest = new QuestManager()
     const world = new World(player, mapManager)
     const broadcastSystem = new Broadcast(npcs, eventSystem)
+
+    npcs.subscribeDeath((_, params) => {
+      const { karma = 1 } = params || {}
+      player.karma += karma
+    })
+
+    npcs.subscribeDeath((npcId) => {
+      quest.registerDeath(npcId)
+    })
 
     if (initData?.drop) {
       world.addLootBag(initData.drop)
@@ -65,7 +74,7 @@ export class GameEngine {
       cheats: {},
     } as GameContext
 
-    quest.initOnDeath()
+    
 
     player.onDeath = () => {
       const hostility = npcs.getFactionContribution('resistance')

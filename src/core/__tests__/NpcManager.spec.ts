@@ -41,7 +41,7 @@ describe('NPCManager (Legacy Behavior)', () => {
     vi.clearAllMocks()
     player = new Player([])
     map = new MapManager('{}')
-    npcManager = new NPCManager(mockNpcData, player, map)
+    npcManager = new NPCManager(mockNpcData)
   })
 
   it('should return an NPC object with correct properties', () => {

@@ -12,7 +12,6 @@ export class EventSystem {
   private subscribers: EventCallback[] = [] // 구독자 명단
 
   /**
-   * @param eventData - 경로 대신 JSON 객체 데이터를 직접 받습니다.
    * @param monsterFactory - 몬스터 생성을 위한 팩토리
    * @param savedData - 완료된 이벤트 목록
    */

@@ -1,13 +1,11 @@
 import { HOSTILITY_LIMIT } from '~/consts'
 import i18n from '~/i18n'
 import { getNPCClass } from '~/npc'
-import { NPCState } from '~/types'
+import { GameContext, NPC, NPCState } from '~/types'
 import { MapManager } from './MapManager'
 import { Terminal } from './Terminal'
 import { BaseNPC } from './npc/BaseNPC'
-import { Player } from './player/Player'
-
-type EventCallback = (npcId: string) => void
+type EventCallback = (npcId: string, params?: { karma?: number; hostile?: number }) => void
 
 export class NPCManager {
   private baseData: Record<string, any>
@@ -18,8 +16,6 @@ export class NPCManager {
 
   constructor(
     npcData: any,
-    private player: Player,
-    private map: MapManager,
     savedData?: any
   ) {
     this.baseData = npcData
@@ -60,11 +56,13 @@ export class NPCManager {
     return new NpcClass(id, base, state, this)
   }
 
-  getAliveNPCInTile(options?: { withoutFaction?: string[] }) {
-    const tile = this.map.getTile(this.player.pos)
+  getAliveNPCInTile(context: GameContext, options?: { withoutFaction?: string[] }) {
+    const {player, map} = context
+
+    const tile = map.getTile(player.pos)
     const ids = [...(tile.npcIds || [])]
 
-    if (this.player.knight) {
+    if (player.knight) {
       ids.push('_knight')
     }
 
@@ -159,10 +157,8 @@ export class NPCManager {
     this.onDeathHandlers.push(_callback)
   }
 
-  triggerDeathHandler(npc: BaseNPC, params?: { karma?: number; hostile?: number }) {
-    const { karma = 1, hostile = 100 } = params || {}
-
-    this.player.karma += karma
+  triggerDeathHandler(npc: NPC, params?: Parameters<EventCallback>[1]) {
+    const { hostile = 100 } = params || {}
 
     this.setAlive(npc.id, false)
 
@@ -170,7 +166,7 @@ export class NPCManager {
       this.setFactionHostility(npc.faction, hostile)
     }
 
-    this.onDeathHandlers.forEach((fn) => fn(npc.id))
+    this.onDeathHandlers.forEach((fn) => fn(npc.id, params))
   }
 
   getSaveData() {

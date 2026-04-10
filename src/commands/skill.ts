@@ -9,7 +9,7 @@ export const skillCommand: CommandFunction = async (args, context) => {
 
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []),
-    ...npcs.getAliveNPCInTile({ withoutFaction: ['untouchable'] }),
+    ...npcs.getAliveNPCInTile(context, { withoutFaction: ['untouchable'] }),
   ]
 
   const enemies: CombatUnit[] = battleTargets.map((target) => {
