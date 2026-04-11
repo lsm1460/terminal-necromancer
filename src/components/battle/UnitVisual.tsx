@@ -114,7 +114,7 @@ export const UnitVisual: React.FC<{
   return (
     <motion.div animate={controls} className="flex flex-col items-center relative">
       <div className="max-w-full aspect-square flex items-center justify-center relative">
-        <div className="w-9 h-2 bg-slate-900 border border-cyan-900 overflow-hidden absolute top-2">
+        <div className="w-9 h-1.5 bg-slate-900 border border-cyan-900 overflow-hidden absolute top-2">
           <motion.div
             initial={false}
             animate={{
@@ -122,7 +122,7 @@ export const UnitVisual: React.FC<{
               backgroundColor: getHpColor(hpPercentage),
             }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="h-full rounded-sm"
+            className="h-full"
           />
         </div>
         <img
