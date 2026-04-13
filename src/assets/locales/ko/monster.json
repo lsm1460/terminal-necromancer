@@ -177,5 +177,17 @@
   "fragmented_thought_of_the_god": {
     "name": "죽은 신의 사념",
     "description": "죽은 신이 생전에 가지고 있던 의식의 파편입니다."
+  },
+  "fallen_god_1": {
+    "name": "폭주하는 신의 잔재",
+    "description": "누군가 신의 시체로 만든 결과물입니다."
+  },
+  "fallen_god_2": {
+    "name": "불완전한 신의 잔재",
+    "description": "마야가 신의 시체로 만든 결과물입니다. 하지만 완성을 시키기엔 시간이 부족하였습니다."
+  },
+  "maya_golem": {
+    "name": "마야의 작업용 골렘",
+    "description": "레지스탕스의 일원 마야가 거대한 작업을 위하 만들어낸 골렘입니다."
   }
 }

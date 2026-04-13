@@ -140,7 +140,8 @@
     "death_destruct": "\n[🔥 Doomsday]: {{unit}}'s corpse explodes, consuming everything around it!",
     "soul_chain": "The soul of {{unit}} dwells within {{ally}}, amplifying its power!",
     "phases_2": "\n[!] {{attacker}}'s true form is revealed.",
-    "curse_of_the_phoenix": "The flames of the {{defender}} blaze, healing their wounds. (+{{amount}})"
+    "curse_of_the_phoenix": "The flames of the {{defender}} blaze, healing their wounds. (+{{amount}})",
+    "overdrive": "[!] A surge of uncontrollable power! {{unit}}'s defense is weakened, and inflicting enough damage will cause Confusion."
   },
 
   "special": {
@@ -422,6 +423,14 @@
     "spread_of_taint": {
       "name": "Spread of Taint",
       "description": "Spreads a corrupting influence that inflicts confusion upon random enemies."
+    },
+    "chaos": {
+      "name": "Chaos",
+      "description": "Inflicts Confusion on all enemies."
+    },
+    "overdrive": {
+      "name": "Overdrive",
+      "description": "Occasionally loses control and goes into a frenzy."
     }
   }
 }

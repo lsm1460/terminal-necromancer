@@ -15,11 +15,14 @@ export const DeathService = {
     const caronFinished = events.isCompleted('defeat_caron')
     const caronReported = events.isCompleted('report_caron_to_death')
 
+    const isB6Completed = events.isCompleted('defeat_fourth')
+
     if (caronFinished && !caronReported) return { name: 'reportCaron', message: i18n.t('npc.death.report_charon') }
     if (!isB2Completed) return { name: 'intro', message: i18n.t('talk.speak') }
     if (isB2Completed && !isSecond) return { name: 'tutorialOver', message: i18n.t('talk.speak') }
     if (isB3Completed && !isThird) return { name: 'defeatGolem', message: i18n.t('talk.speak') }
     if (isB5Completed && !isFourth) return { name: 'cleanupVipLounge', message: i18n.t('talk.speak') }
+    if (isB6Completed) return { name: 'end', message: i18n.t('talk.speak') }
 
     return null
   },

@@ -9,7 +9,12 @@ import { Buff, BuffOptions, BuffType } from '../Buff'
 import { BattleLogFormatter } from './BattleLogFormatter'
 import { UnitBuffManager } from './UnitBuffManager'
 
-type UnitDamageProcessHook = (attacker: CombatUnit, defender: CombatUnit, options: DamageOptions) => Promise<void>
+type UnitDamageProcessHook = (
+  attacker: CombatUnit,
+  defender: CombatUnit,
+  options: DamageOptions,
+  damage?: number
+) => Promise<void>
 
 export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player> {
   public id: string
@@ -19,6 +24,9 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public buffManager: UnitBuffManager
   public orderWeight: number
   public phases = 1
+
+  public initBreakPoint = 200
+  public breakPoint = 200
 
   public onBeforeAttackHooks: UnitDamageProcessHook[] = []
   public onBeforeHitHooks: UnitDamageProcessHook[] = []
@@ -78,6 +86,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.buffManager.applyDeBuff(d)
   }
 
+  public hasBuff(id: BuffOptions['id']) {
+    return this.buffManager.hasBuff(id)
+  }
+
   public hasDeBuff(id: BuffOptions['id']) {
     return this.buffManager.hasDeBuff(id)
   }
@@ -124,7 +136,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     const result = await this.takeDamage(attacker, options)
 
     if (!result.isEscape && !options.isPassive) {
-      await this.runHooks(attacker.onAfterAttackHooks, attacker, options)
+      await this.runHooks(attacker.onAfterAttackHooks, attacker, options, result.damage)
 
       if (!result.isDead) {
         await this.runHooks(this.onAfterHitHooks, attacker, options)
@@ -138,10 +150,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     return result
   }
 
-  private async runHooks(hooks: Function[] = [], attacker?: CombatUnit, options: DamageOptions = {}) {
+  private async runHooks(hooks: Function[] = [], attacker?: CombatUnit, options: DamageOptions = {}, damage?: number) {
     for (const hook of hooks) {
       // 훅의 규격에 맞춰 attacker, defender(this), options를 전달
-      await hook(attacker, this, options)
+      await hook(attacker, this, options, damage)
     }
   }
 

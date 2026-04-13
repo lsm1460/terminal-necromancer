@@ -158,7 +158,7 @@ export class NpcSkillManager {
   }
 
   public setupPassiveHook(unit: CombatUnit, battle: Battle) {
-    const skillIds = (unit.ref as any).skills || [] 
+    const skillIds = (unit.ref as any).skills || []
 
     for (const id of skillIds) {
       const skillData = this.getSkill(id)
@@ -181,8 +181,8 @@ export class NpcSkillManager {
       }
 
       if (hooks.onAfterAttack) {
-        unit.onAfterAttackHooks.push(async (attacker, defender, options) => {
-          await hooks.onAfterAttack!(attacker, defender, skillData, battle, options)
+        unit.onAfterAttackHooks.push(async (attacker, defender, options, damage) => {
+          await hooks.onAfterAttack!(attacker, defender, skillData, battle, options, damage)
         })
       }
 

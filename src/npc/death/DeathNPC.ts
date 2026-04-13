@@ -46,6 +46,9 @@ export class DeathNPC extends BaseNPC {
         return await DeathAction.handleReportCaron(context)
       case 'cleanupVipLounge':
         return await DeathAction.handleAfterCleanup(context)
+
+      case 'end':
+        return await DeathAction.handleEnd(context)
       default:
         return true
     }
@@ -53,7 +56,7 @@ export class DeathNPC extends BaseNPC {
 
   async afterDead(context: GameContext) {
     context.npcs.setAlive(this.id)
-    
+
     await BossEvent.handle(context)
   }
 }

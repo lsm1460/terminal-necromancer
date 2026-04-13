@@ -99,5 +99,9 @@
     "phases": {
       "2": "2 페이즈 시작 문구 테스트"
     }
+  },
+
+  "fourth_boss": {
+    "name": "Divine Remnant"
   }
 }

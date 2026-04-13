@@ -10,7 +10,8 @@ type PassiveEffect = (
   defender: CombatUnit,
   skill: NpcSkill,
   battle: Battle,
-  options?: DamageOptions
+  options: DamageOptions,
+  damage?: number
 ) => Promise<void>
 
 interface PassiveDefinition {
@@ -150,6 +151,38 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
 
       if (defender.ref.hp > previousHp) {
         Terminal.log(i18n.t('skill.passive.curse_of_the_phoenix', { unit: defender.name, amount: healAmount }))
+      }
+    },
+  },
+
+  overdrive: {
+    onBeforeAttack: async (attacker, defender, skill, battle) => {
+      if (!attacker.hasBuff('overdrive') && !attacker.hasDeBuff('confuse') && Math.random() < 0.3) {
+        attacker.applyBuff({
+          id: 'overdrive',
+          type: 'dot',
+          atk: 20,
+          def: -20,
+          dot: 10,
+          duration: 3 + 1, // 행동 시작 시 차감 고려
+        })
+
+        Terminal.log(i18n.t('skill.passive.overdrive', { unit: attacker.name }))
+      }
+    },
+    onAfterAttack: async (attacker, defender, skill, battle, options, damage) => {
+      if (defender.hasBuff('overdrive')) {
+        defender.breakPoint -= damage || 0
+
+        if (defender.breakPoint <= 0) {
+          defender.breakPoint = defender.initBreakPoint
+
+          defender.applyDeBuff({
+            id: 'confuse',
+            type: 'confuse',
+            duration: 4,
+          })
+        }
       }
     },
   },

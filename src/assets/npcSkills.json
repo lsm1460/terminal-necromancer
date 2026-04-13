@@ -814,5 +814,20 @@
     "options": {
       "spawnMonsterId": "fragment_of_dead_god_war_no_gain"
     }
+  },
+  "overdrive": {
+    "id": "overdrive",
+    "name": "폭주",
+    "description": "때때로 자아를 잃고 폭주합니다.",
+    "chance": 1,
+    "type": "passive",
+    "targetType": "SELF",
+    "buff": {
+      "id": "overdrive",
+      "type": "dot",
+      "atk": 20,
+      "dot": 10,
+      "duration": 4
+    }
   }
 }

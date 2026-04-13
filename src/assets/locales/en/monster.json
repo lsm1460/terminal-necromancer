@@ -177,5 +177,17 @@
   "fragmented_thought_of_the_god": {
     "name": "Fragmented Thought of the Dead God",
     "description": "A splinter of consciousness held by the deity during its lifetime."
+  },
+  "fallen_god_1": {
+    "name": "Remnant of the Frenzied God",
+    "description": "A creation fashioned from the corpse of a god."
+  },
+  "fallen_god_2": {
+    "name": "Incomplete Godly Remnant",
+    "description": "A result of Maya's attempt to craft using a god's corpse, though there was not enough time to perfect it."
+  },
+  "maya_golem": {
+    "name": "Maya's Work Golem",
+    "description": "A golem created by Maya, a member of the Resistance, for large-scale engineering tasks."
   }
 }

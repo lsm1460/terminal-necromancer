@@ -1,0 +1,94 @@
+{
+  "name": "Divine Remnant",
+  "lines": ["..."],
+  "scripts": {
+    "friendly": { "greeting": "...", "farewell": "..." },
+    "normal": { "greeting": "...", "farewell": "..." },
+    "hostile": { "greeting": "...", "farewell": "..." }
+  },
+  "deathLine": "...",
+  "description": "...",
+
+  "postTalk": [
+    "At the far edge of the underground depot, amidst a tangle of rusted trains, the Divine Remnant leans powerlessly against the wall.",
+    "Black fragments scatter continuously from its crumbling divinity, as the very magic that held its form together spills onto the floor.",
+    "Its collapsing frame trembles precariously like an ancient ruin, leaving only hollow vibrations to echo through the dark subterranean void."
+  ],
+
+  "encounter_maya": [
+    "Maya: \"...You're here? The uncles, the Captain... no one answers me anymore. They say you killed them all, right? Hehe, but it's okay. Once I wake this 'Divine Remnant'... everyone will call my name again.\"",
+    "Maya: \"It's still missing something... just a little more divine mana, and it will be the perfect weapon. You say the machine is screaming? No, this is ecstasy! It's a power far greater than the souls of the people you slaughtered!\"",
+    "Maya: \"Now, look... at this beautiful form of destruction! It's still incomplete, so even I don't know who it will tear apart first. Who knows? Maybe it'll be you.\""
+  ],
+
+  "encounter_resistance": {
+    "kane": [
+      "Kane: \"Our dialogue with the Reaper has come to an end. To a man who views the lives of hostages as nothing more than fallen leaves, peaceful resolution was never a valid option to begin with.\"",
+      "Kane: \"Now, we must choose the most solemn path. We will awaken the 'Divine Remnant' that Maya has prepared for so long and breach the Terminal's iron gates head-on. That colossal power shall be the only hammer capable of forging our way forward.\"",
+      "Kane: \"You have witnessed the tragedies of this underworld yourself. Will you step out from the Reaper's shadow and stand beneath the Resistance banner? Your presence could be the very variable that secures our victory.\""
+    ],
+    "ren": [
+      "Ren: \"Negotiations, my foot. That bastard didn't even flinch at the lives of the hostages we held. To him, they weren't bargaining chips—they were just cumbersome baggage.\"",
+      "Ren: \"So, it's come to this. We're taking the 'Divine Remnant' Maya worked so hard to finish and blowing the Terminal entrance wide open. Since they rejected mercy, we'll answer with overwhelming force.\"",
+      "Ren: \"Now, what’s your move? Are you going to keep playing the Reaper's loyal hound, never knowing when you'll be discarded, or will you join us in this reckless yet grand advance? Decide now, we're out of time.\""
+    ]
+  },
+
+  "join_resistance_prompt": "Will you join the Resistance?",
+
+  "refuse_resistance_battle": {
+    "kane": [
+      "Kane: \"...That is unfortunate. If I cannot bring a variable like you to our side, I have no choice but to eliminate you for the safety of our operation.\"",
+      "Kane: \"If remaining as the Reaper's hound is your choice, then you must bear the consequences that follow.\"",
+      "Kane: \"Everyone, prepare for battle! There is no mercy for those who stand in the way of the revolution!\""
+    ],
+    "ren": [
+      "Ren: \"Hmph, just as I thought. The Captain's decision to trust you was the only mistake he made in his life.\"",
+      "Ren: \"Actually, this works out better. Instead of worrying about a knife in our backs, I'd rather flay you right here and offer you as a sacrifice at the Captain's grave.\"",
+      "Ren: \"It's time for the hound hunt! I'll tear apart anyone who dares to block the path of the Resistance the Captain left behind!\""
+    ]
+  },
+
+  "join_resistance_battle": {
+    "kane": [
+      "Kane: \"An excellent choice. With you joining us, the final piece of our revolution has fallen into place.\"",
+      "Kane: \"Men, check our ally's equipment and tend to their wounds. This is the person who will be our sharpest spear in today's operation.\""
+    ],
+    "ren": [
+      "Ren: \"...Hmph, finally speaking my language. This reckless plunge into hell with us suits you much better than playing a lapdog anyway.\"",
+      "Ren: \"Tech team! Check their condition. It'll be a problem if they collapse before we can even slit the Reaper's throat.\""
+    ]
+  },
+  "wait_resistance_battle": {
+    "kane": [
+      "Kane: \"Prudence is a skill in itself. Let me know when you've finished your preparations. The moment you strike the Reaper, we will advance alongside the Divine Remnant.\""
+    ],
+    "ren": [
+      "Ren: \"Not getting cold feet, are you? Fine, have it your way. The second you kick down the Reaper's door, we'll synchronize and activate this weapon.\""
+    ]
+  },
+  "system": {
+    "recovery_log": "The Resistance technicians have treated your wounds and tuned your gear. All stats have been fully restored.",
+    "move_confirm": "Will you advance to the heart of the Reaper's domain right now?",
+    "charon_distrust_confirm": "Will you execute Charon and extract his soul?"
+  },
+
+  "caron_distrust": [
+    "Caron: \"...So, you left not a single soul alive. While their arrogance in using the Divine Remnant as a weapon was loathsome, was it truly necessary to extinguish every last breath they drew?\"",
+    "Caron: \"Is your goal truly to slay the Reaper, or do you simply wish to crush every living thing in your sight? What I read in your eyes just now was not vengeance... it was pure, unadulterated destruction.\"",
+    "Caron: \"My soul trembles at the thought that I might be aiding yet another monster vying for the Reaper's throne. Answer me: are you truly going there to kill the Reaper?\"",
+    "Caron: \"Or is this all just to drag him down for the sake of an even greater slaughter? Tell me... does your 'cause' still live, or has it died with them?\""
+  ],
+
+  "caron_battle_start": [
+    "Caron: \"...So, it was me you were aiming for all along, not the Reaper. I watched your catastrophic power from the closest distance, yet I chose to ignore the fact that I was fanning the very flames that would consume me.\"",
+    "Caron: \"I have crafted a monster to replace the Reaper with my own hands, and it seems I must pay for this karma with my very soul. I know all too well that this resistance is futile... but I cannot let you walk out of here like this.\"",
+    "Caron: \"Come forth, my own end that I created. Break every piece of me and sate that bottomless hunger!\""
+  ],
+
+  "caron_cooperate_after_slaughter": [
+    "Caron: \"...I see. Your blade is still aimed at the Reaper's throat. But those you just cut down were more than just obstacles in your path.\"",
+    "Caron: \"There may be no one left to block your way, but there is also no one left to hold you back. Is this the ending you desired? To decapitate a god as a lonely slaughterer?\"",
+    "Caron: \"...Very well. I, too, have already stepped into the abyss that is you. I will watch until the very end—whether you take the Reaper's throne, or become a void even deeper than he ever was.\""
+  ]
+}

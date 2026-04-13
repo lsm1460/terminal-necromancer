@@ -16,7 +16,7 @@ export const StoryActions = {
 
     const dialogues = i18n.t('npc.death.intro.dialogues', { returnObjects: true }) as string[]
     await speak(dialogues)
-    
+
     Terminal.log(`\n${i18n.t('npc.death.intro.failure_threat')}`)
     events.completeEvent('talk_death_1')
     return true
@@ -25,7 +25,7 @@ export const StoryActions = {
   async handleTutorialOver(context: GameContext) {
     const { events } = context
     const messages = i18n.t('npc.death.tutorial_over', { returnObjects: true }) as string[]
-    
+
     await speak(messages)
     events.completeEvent('talk_death_2')
     return true
@@ -34,7 +34,7 @@ export const StoryActions = {
   async handleDefeatGolem(context: GameContext) {
     const { events } = context
     const messages = i18n.t('npc.death.defeat_golem', { returnObjects: true }) as string[]
-    
+
     await speak(messages)
     events.completeEvent('talk_death_3')
     return true
@@ -59,7 +59,7 @@ export const StoryActions = {
 
     // 공통 후속 대사 (B5로 가라는 명령)
     await speak(i18n.t('npc.death.report_caron.order_go_to_b5', { returnObjects: true }) as string[])
-    
+
     events.completeEvent('report_caron_to_death')
     return true
   },
@@ -78,5 +78,19 @@ export const StoryActions = {
 
     events.completeEvent('talk_death_4')
     return true
-  }
+  },
+
+  async handleEnd(context: GameContext) {
+    const { battle, events, npcs, world } = context
+    await speak(i18n.t('npc.death.reaper_mockery_final', { returnObjects: true }) as string[])
+
+    if (events.isCompleted('join_resistance_battle')) {
+      await speak(i18n.t('npc.death.reaper_rebellion_noticed', { returnObjects: true }) as string[])
+    } else {
+      // TODO: 레지스탕스와 같이 오지 않았을 때의 대사
+    }
+
+    const npc = npcs.getNPC('death')!
+    await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], world)
+  },
 }

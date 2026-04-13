@@ -74,9 +74,8 @@ export const getNPCClass = (id: string): typeof BaseNPC => {
     mika_operator: MikaNPC,
     vora_observer: VoraNPC,
     silas_dissector: SilasNPC,
-    shadowed_agent: ShadowedNPC
+    shadowed_agent: ShadowedNPC,
   }
 
   return map[id] || BaseNPC
 }
-

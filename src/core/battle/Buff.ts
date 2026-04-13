@@ -24,6 +24,7 @@ export interface BuffOptions {
     | 'confuse'
     | 'soul_chain'
     | 'death_stigma'
+    | 'grace'
   duration: number
   type: BuffType
   atk?: number
@@ -41,7 +42,7 @@ export class Buff {
   duration: number
   type: BuffType
   stack = 0
-  
+
   atk?: number
   agi?: number
   def?: number

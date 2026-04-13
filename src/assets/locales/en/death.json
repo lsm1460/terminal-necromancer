@@ -16,7 +16,7 @@
     }
   },
   "deathLine": "TODO: Ending",
-  "description": "The Final Boss.",
+  "description": "The incarnation of demise, awaiting you at the end of the Terminal where all flows have ceased.",
   "levelup": "✨ Level Up",
   "report_charon": "💀 Report the traces of Charon",
   "expand_legion": "🦴 Expand Skeleton Legion",
@@ -126,5 +126,16 @@
     "Reaper: \"...This is no mere disturbance. That lounge was a sanctuary for those who serve as the eyes and ears of the high gods from the upper realms.\"",
     "Reaper: \"Once word of this reaches the council, those arrogant gods will surely mock my lack of control.\"",
     "Reaper: \"Keep your mouth shut until this is handled. We must erase every trace of this and find those vermin at any cost. The price for tarnishing my name... will be anything but light.\""
+  ],
+
+  "reaper_mockery_final": [
+    "Reaper: \"So the commotion on B6 has finally died down. Whatever those insects struggled for, it all ends in my stillness anyway.\"",
+    "Reaper: \"Now, stay here in silence until the next disturbance arises. I will summon you when you are needed again.\""
+  ],
+
+  "reaper_rebellion_noticed": [
+    "Reaper: \"...And what are those crude things trailing behind you? Why have you brought those insects here alive instead of exterminating them?\"",
+    "Reaper: \"No... your gaze has changed. Do you truly intend to side with those lowly creatures and point your blade at me?\"",
+    "Reaper: \"For a mere tool to defy its master's will and dream of rebellion... how amusing. I shall carve into your soul exactly what kind of demise such a foolish choice brings.\""
   ]
 }

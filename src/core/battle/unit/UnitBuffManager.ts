@@ -1,4 +1,3 @@
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { Buff, BuffOptions } from '../Buff'
@@ -17,6 +16,10 @@ export class UnitBuffManager {
 
   public get isConfused() {
     return this.deBuffs.some((_d) => _d.id === 'confuse')
+  }
+
+  public hasBuff(id: BuffOptions['id']) {
+    return this.buffs.some((_d) => _d.id === id)
   }
 
   public hasDeBuff(id: BuffOptions['id']) {
