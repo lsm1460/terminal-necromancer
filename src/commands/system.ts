@@ -3,9 +3,11 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { CommandFunction } from '~/types'
+import { GameEventType } from '~/types/event'
+import { delay } from '~/utils'
 
 // --- Exit ---
-export const exitCommand: CommandFunction = (args, context) => {
+export const exitCommand: CommandFunction = async (args, context) => {
   Terminal.log(i18n.t('commands.system.exit.saving'))
 
   // 1. 현재 상태 저장
@@ -15,6 +17,10 @@ export const exitCommand: CommandFunction = (args, context) => {
   Terminal.log(i18n.t('commands.system.exit.save_complete'))
   Terminal.log(i18n.t('commands.system.exit.farewell'))
 
+  await delay()
+
+  await context.eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
+  
   return 'exit'
 }
 

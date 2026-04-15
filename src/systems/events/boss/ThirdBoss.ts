@@ -12,8 +12,8 @@ export class ThirdBoss implements BossLogic {
     return i18n.t('npc.third_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: NPC, context: GameContext, player: Player) {
-    const { battle, monster, npcs } = context
+  async createEnemies(bossNpc: NPC, context: GameContext) {
+    const { player, battle, monster, npcs } = context
 
     await speak(i18n.t('npc.third_boss.encounter.vip_scorn', { returnObjects: true }) as string[])
 
@@ -83,8 +83,8 @@ export class ThirdBoss implements BossLogic {
     }
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext, player: Player) {
-    const { npcs, events } = context
+  async onVictory(bossNpc: NPC, context: GameContext) {
+    const { player, npcs, events } = context
 
     player.removeMercenaries()
 
@@ -113,11 +113,11 @@ export class ThirdBoss implements BossLogic {
     const vesper = npcs.getNPC('vesper')
     const flint = npcs.getNPC('flint')
 
-    boss && boss.dead({karma: 0})
+    boss && boss.dead({ karma: 0 })
 
     // 역활이 끝난 레지스탕스 영구 퇴장
-    kael && kael.dead({karma: 0, hostile: 0})
-    vesper && vesper.dead({karma: 0, hostile: 0})
-    flint && flint.dead({karma: 0, hostile: 0})
+    kael && kael.dead({ karma: 0, hostile: 0 })
+    vesper && vesper.dead({ karma: 0, hostile: 0 })
+    flint && flint.dead({ karma: 0, hostile: 0 })
   }
 }

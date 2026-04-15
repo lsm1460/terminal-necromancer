@@ -3,7 +3,6 @@ import '~/assets/style/App.css'
 import { ConfigScreen } from './ConfigScreen'
 import { GameScreen } from './GameScreen'
 //
-import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { assets, initState } from '~/assets'
 import { openWindow } from '~/bridge/window'
@@ -14,64 +13,79 @@ import { assetManager } from '~/core/WebAssetManager'
 import { GameEngine } from '~/gameEngine'
 import { useShortcuts } from '~/hooks/useShortcuts'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
-import { useGameStore } from '~/stores/useGameStore'
+import { EventBus } from '~/systems/EventBus'
 import { SaveSystem } from '~/systems/SaveSystem'
+import { GameEventType } from '~/types/event'
+import { CreditScreen } from './CreditScreen'
+import { ScreenRouter } from './ScreenRouter'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
   const saveSystemRef = useRef(new SaveSystem())
-
-  const isOpenConfigMenu = useGameStore((state) => state.isOpenConfigMenu)
 
   const [isGameOn, setIsGameOn] = useState(false)
 
   useShortcuts(engineRef)
 
   useEffect(() => {
-    const initGame = async () => {
-      const renderer = new ReactRenderer()
-      Terminal.setRenderer(renderer)
+    const renderer = new ReactRenderer()
+    const save = saveSystemRef.current
+    Terminal.setRenderer(renderer)
 
-      const save = saveSystemRef.current
-      const locale = save.load()?.config?.locale || 'ko'
+    const config = save.loadConfig()
+    const locale = config?.locale || 'ko'
 
-      openWindow()
+    openWindow()
+
+    const run = async () => {
+      const eventBus = new EventBus()
+      const engine = new GameEngine(assets, renderer, save, eventBus)
+      engineRef.current = engine
 
       const playData = await Title.gameStart(save, initState)
-      if (playData) {
-        await assetManager.loadInitialAssets(assets, locale)
 
-        const engine = new GameEngine(assets, renderer, save)
-        engineRef.current = engine
-
-        await engine.init(playData)
-        await engine.start()
-
-        setIsGameOn(true)
+      if (playData === null) {
+        //TODO: exit game
+        setIsGameOn(false)
+        return
       }
+
+      if (!playData) {
+        console.error('게임 데이터를 불러오지 못했습니다.')
+        return
+      }
+
+      await assetManager.loadInitialAssets(assets, locale)
+      await engine.init(playData, config)
+      await engine.start()
+
+      setIsGameOn(true)
+
+      const exitWait = new Promise<void>((resolve) => {
+        eventBus.subscribe(GameEventType.SYSTEM_EXIT, () => {
+          resolve()
+        })
+      })
+
+      await exitWait
+
+      setIsGameOn(false)
+      Terminal.clear()
+
+      setTimeout(run, 0)
     }
-    initGame()
+
+    run()
   }, [])
 
   return (
     <GameProvider engine={engineRef}>
-      <div className="relative h-dvh w-full overflow-hidden">
-        <motion.div
-          animate={{ x: isOpenConfigMenu ? '-10%' : 0, opacity: isOpenConfigMenu ? 0.5 : 1 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="absolute inset-0"
-        >
+      <div className="relative h-dvh w-full overflow-hidden bg-black">
+        <ScreenRouter>
           <GameScreen isGameOn={isGameOn} />
-        </motion.div>
-
-        <motion.div
-          initial={{ x: '100%' }}
-          animate={{ x: isOpenConfigMenu ? 0 : '100%' }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="absolute inset-0"
-        >
           <ConfigScreen />
-        </motion.div>
+          <CreditScreen />
+        </ScreenRouter>
       </div>
     </GameProvider>
   )

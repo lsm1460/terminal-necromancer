@@ -17,7 +17,7 @@ import { DropSystem } from './systems/DropSystem'
 import { EventBus } from './systems/EventBus'
 import { EventLedger } from './systems/EventLedger'
 import { MonsterEvent } from './systems/events/MonsterEvent'
-import { SaveData, SaveSystem } from './systems/SaveSystem'
+import { ConfigData, SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext, Renderer } from './types'
 
 export class GameEngine {
@@ -29,16 +29,17 @@ export class GameEngine {
   constructor(
     private assets: GameAssets,
     private renderer: Renderer,
-    private saveSystem: SaveSystem
+    private saveSystem: SaveSystem,
+    private eventBus: EventBus
   ) {}
 
-  public async init(initData?: SaveData): Promise<void> {
+  public async init(initData: SaveData, configData?: ConfigData): Promise<void> {
     const { item, drop, monsterGroup, monster, level, npcSkills, map, npc, state } = this.assets
 
     const dropSystem = new DropSystem(item, drop)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
     
-    const eventBus = new EventBus()
+    const eventBus = this.eventBus
     const player = new Player(level, eventBus, initData?.player)
     const mapManager = new MapManager(map, eventBus)
     const world = new World(player, eventBus)
@@ -68,7 +69,7 @@ export class GameEngine {
       broadcast: broadcastSystem,
       monster: monsterFactory,
       npcSkills: npcSkillManager,
-      config: initData?.config || {},
+      config: configData || {},
       quest,
       cheats: {},
     } as GameContext

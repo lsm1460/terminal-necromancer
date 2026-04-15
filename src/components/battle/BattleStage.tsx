@@ -36,7 +36,7 @@ export const BattleStage: React.FC = () => {
 
         const scaleX = targetWidth / BASE_WIDTH
         const scaleY = targetHeight / BASE_HEIGHT
-        console.log(scaleX, scaleY, 1.5)
+        
         const newScale = Math.min(scaleX, scaleY, 1)
         setScale(newScale)
       }

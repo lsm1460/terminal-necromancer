@@ -8,11 +8,11 @@ import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
 
 export const commonHandlers: Record<string, EventHandler> = {
-  heal: (tile, {player}) => {
+  heal: (tile, { player }) => {
     player.restoreAll()
   },
 
-  'heal-once': async (tile, {player}) => {
+  'heal-once': async (tile, { player }) => {
     if (tile.isClear) return
 
     Terminal.log(i18n.t('events.heal_once.discovery'))
@@ -52,13 +52,13 @@ export const commonHandlers: Record<string, EventHandler> = {
 
     if (!isMine && !isDead) return
 
-    const caronNpcId = isMine ? 'caron_alive' : 'caron_dead'
+    const caronNpcId = isDead ? 'caron_dead' : 'caron_alive'
     tile.npcIds = _.uniq([...(tile.npcIds || []), caronNpcId])
 
-    if (isMine) {
-      Terminal.log(i18n.t('events.caron.whisper_alive'))
-    } else {
+    if (isDead) {
       Terminal.log(i18n.t('events.caron.whisper_dead'))
+    } else {
+      Terminal.log(i18n.t('events.caron.whisper_alive'))
     }
   },
 

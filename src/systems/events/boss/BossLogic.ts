@@ -6,9 +6,9 @@ export interface BossLogic {
   postTalk: string[]
   withMonsterGroup?: string
 
-  createEnemies(bossNpc: NPC, context: GameContext, player: Player): Promise<CombatUnit[]>
+  createEnemies(bossNpc: NPC, context: GameContext): Promise<CombatUnit[]>
 
-  onVictory?: (bossNpc: NPC, context: GameContext, player: Player) => Promise<void>
+  onVictory?: (bossNpc: NPC, context: GameContext) => Promise<void | 'exit'>
 
   defeatTalk?: string[]
 }

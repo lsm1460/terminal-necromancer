@@ -7,7 +7,7 @@ export const handleIncreaseLimit = async (context: GameContext) => {
   const { player, events } = context
   const { currentLimit, isMax, cost } = SubspaceService.getUpgradeInfo(player)
 
-  const scriptKey = events.isCompleted('caron_is_mine') ? 'caron_is_mine' : 'caron_is_dead'
+  const scriptKey = events.isCompleted('caron_is_dead') ? 'caron_is_dead' : 'caron_is_mine'
   const t = (key: string) => i18n.t(`npc.subspace.increase_limit.${scriptKey}.${key}`)
 
   if (isMax) {

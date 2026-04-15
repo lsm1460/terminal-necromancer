@@ -1,11 +1,12 @@
 import { MAP_IDS } from '~/consts'
-import { Player } from '~/core/player/Player'
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { Ending } from '~/core/Ending'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
+import { GameEventType } from '~/types/event'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
-import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 
 export class FourthBoss implements BossLogic {
   withResistance = false
@@ -14,7 +15,7 @@ export class FourthBoss implements BossLogic {
     return i18n.t('npc.fourth_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: NPC, context: GameContext, player: Player) {
+  async createEnemies(bossNpc: NPC, context: GameContext) {
     const { npcs, events, battle, monster } = context
 
     const maya = npcs.getNPC('maya_tech')
@@ -132,8 +133,8 @@ export class FourthBoss implements BossLogic {
     }
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext, player: Player) {
-    const { map, npcs, events, battle, world } = context
+  async onVictory(bossNpc: NPC, context: GameContext) {
+    const { player, map, npcs, events, battle, world, eventBus } = context
 
     if (this.withResistance) {
       events.completeEvent('join_resistance_battle')
@@ -160,7 +161,6 @@ export class FourthBoss implements BossLogic {
         Terminal.log(i18n.t(resEndKey))
       }
 
-      events.completeEvent('defeat_fourth')
       bossNpc && bossNpc.dead({ karma: 0 })
 
       return
@@ -178,15 +178,28 @@ export class FourthBoss implements BossLogic {
         const _isWin = await battle.runCombatLoop([battle.toCombatUnit(caron!, 'npc')], world)
 
         if (_isWin) {
-          events.completeEvent('defeat_fourth')
-          bossNpc && bossNpc.dead({ karma: 0 })
+          if (bossNpc) {
+            bossNpc.hp = bossNpc.maxHp
+            bossNpc.isAlive = true
+          }
+
+          events.completeEvent('caron_is_dead')
+
+          await Ending.run(context)
+
+          await eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
+          
+          return 'exit'
         }
       } else {
         await speak(i18n.t('npc.fourth_boss.caron_cooperate_after_slaughter', { returnObjects: true }) as string[])
 
-        events.completeEvent('defeat_fourth')
         bossNpc && bossNpc.dead({ karma: 0 })
       }
+
+      return
     }
+
+    //TODO: 사신과의 마지막 싸움만이 남았다..
   }
 }

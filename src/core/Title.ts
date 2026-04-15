@@ -1,29 +1,20 @@
-import { SaveSystem } from '~/systems/SaveSystem'
-import { Terminal } from './Terminal'
-import { speak } from '~/utils'
 import i18n from '~/i18n'
-
-/**
- * UI 환경(CLI/Web)에 따라 다르게 구현될 인터페이스
- */
-export interface TitleUI {
-  select: (message: string, choices: { name: string; message: string }[]) => Promise<string>
-  confirm: (message: string) => Promise<boolean>
-  alert: (message: string) => Promise<void>
-}
+import { SaveSystem } from '~/systems/SaveSystem'
+import { speak } from '~/utils'
+import { Terminal } from './Terminal'
 
 export class Title {
   /**
    * CLI와 Web에서 공통으로 사용하는 게임 시작 흐름 제어 로직
-   * @param ui - 각 환경에 맞는 UI 구현체
    * @param save - 세이브 시스템 인스턴스
    * @param initState - 새 게임 시작 시 사용할 초기 데이터
    */
   static async gameStart(save: SaveSystem, initState: any): Promise<any> {
     try {
+      let config = save.loadConfig()
       let hasSave = save.load()
 
-      const locale = hasSave?.config?.locale || 'ko'
+      const locale = config?.locale || 'ko'
 
       await i18n.changeLanguage(locale)
 
@@ -47,16 +38,16 @@ export class Title {
         }
 
         if (menu === 'config') {
-          const config = await Terminal.select(i18n.t(`title.config`), [
+          const _config = await Terminal.select(i18n.t(`title.config`), [
             { name: 'locale', message: i18n.t(`title.language`) },
             { name: 'cancel', message: i18n.t(`cancel`) },
           ])
 
-          if (config === 'cancel') {
+          if (_config === 'cancel') {
             return this.gameStart(save, initState)
           }
 
-          if (config === 'locale') {
+          if (_config === 'locale') {
             const lang = await Terminal.select<'ko' | 'en'>(
               i18n.t(`title.language`),
               [
@@ -67,23 +58,13 @@ export class Title {
             )
 
             await i18n.changeLanguage(lang)
-
-            if (hasSave) {
-              hasSave = {
-                ...hasSave,
-                config: {
-                  ...(hasSave.config || {}),
-                  locale: lang,
-                }
-              }
-
-              save.save(hasSave)
-            } else {
-              initState = {
-                ...initState,
-                locale: lang,
-              }
+            console.log('?????config?', config)
+            config = {
+              ...(config || {}),
+              locale: lang,
             }
+
+            save.saveConfig(config)
 
             return this.gameStart(save, initState)
           }

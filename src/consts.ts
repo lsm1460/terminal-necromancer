@@ -54,7 +54,6 @@ export const DIRECTIONS: Record<Direction, Vector> = {
 export const HOSTILITY_LIMIT = 50
 
 export const MAP_IDS = {
-  title: 'title',
   B1_SUBWAY: 'B1_Subway_Entrance',
   B2_TRANSIT: 'B2_Transit_Area',
   B3_STEEL_DOCK: 'B3_Steel_Loading_Dock',

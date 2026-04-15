@@ -35,10 +35,7 @@ export const useGame = () => {
       const { context } = engine.current
       context.config = { ...context.config, ...newConfig }
 
-      context.config = { ...context.config, ...newConfig }
-
-      const saveData = SaveSystem.makeSaveData(context)
-      context.save.save(saveData)
+      context.save.saveConfig(context.config)
     },
     [engine]
   )

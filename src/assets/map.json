@@ -1,19 +1,4 @@
 {
-  "title": {
-    "id": "title",
-    "start_pos": {
-      "x": 0,
-      "y": 0
-    },
-    "tiles": [
-      [
-        {
-          "id": "TITLE_001",
-          "event": "title"
-        }
-      ]
-    ]
-  },
   "B1_Subway_Entrance": {
     "id": "B1_Subway_Entrance",
     "start_pos": {

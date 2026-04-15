@@ -36,7 +36,7 @@ class BossEvent {
 
     let enemies: CombatUnit[] = []
     if (bossLogic) {
-      enemies = await bossLogic.createEnemies(bossNpc, context, player)
+      enemies = await bossLogic.createEnemies(bossNpc, context)
     } else {
       enemies = [battle.toCombatUnit(bossNpc, 'npc')]
     }
@@ -49,13 +49,18 @@ class BossEvent {
       bossNpc.hp = 0
       bossNpc.isAlive = false
 
+      
+      if (bossLogic?.onVictory) {
+        const _res = await bossLogic.onVictory(bossNpc, context)
+
+        if (_res === 'exit') {
+          return
+        }
+      }
+
       events.completeEvent(bossId)
 
       this.spawnPortal(tile)
-
-      if (bossLogic?.onVictory) {
-        await bossLogic.onVictory(bossNpc, context, player)
-      }
 
       // 전투 후 마무리 대화
       if (bossLogic?.defeatTalk) {

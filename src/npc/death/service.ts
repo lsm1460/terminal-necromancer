@@ -15,7 +15,7 @@ export const DeathService = {
     const caronFinished = events.isCompleted('defeat_caron')
     const caronReported = events.isCompleted('report_caron_to_death')
 
-    const isB6Completed = events.isCompleted('defeat_fourth')
+    const isB6Completed = events.isCompleted('fourth_boss')
 
     if (caronFinished && !caronReported) return { name: 'reportCaron', message: i18n.t('npc.death.report_charon') }
     if (!isB2Completed) return { name: 'intro', message: i18n.t('talk.speak') }

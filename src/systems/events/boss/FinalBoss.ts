@@ -1,19 +1,17 @@
+import { Ending } from '~/core/Ending'
 import { Terminal } from '~/core/Terminal'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { BattleTarget, GameContext, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
 
 export class FinalBoss implements BossLogic {
-  selectedSide = ''
-
   get postTalk() {
     return i18n.t('npc.third_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: NPC, context: GameContext, player: Player) {
+  async createEnemies(bossNpc: NPC, context: GameContext) {
     const { monster, battle } = context
 
     const boss = monster.makeMonster('test_man')!
@@ -24,8 +22,14 @@ export class FinalBoss implements BossLogic {
     return [unit]
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext, player: Player) {
-    // TODO: ending..
+  async onVictory(bossNpc: NPC, context: GameContext) {
+    await Ending.run(context)
+
+    const _res = await Terminal.confirm('타이틀로 돌아가시겠습니까?')
+
+    if (_res) {
+
+    }
   }
 }
 

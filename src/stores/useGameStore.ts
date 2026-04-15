@@ -1,14 +1,15 @@
 import { create } from 'zustand'
+import { AppScreen } from '~/components/lib/types'
 import { UIState } from '~/renderers/ReactRenderer'
 
 const MAX_LOGS = 100
 
 interface GameState {
+  currentScreen: AppScreen
   logs: string[]
   uiState: UIState
   isLoading: boolean
   isOpenButtonMenu: boolean
-  isOpenConfigMenu: boolean
 
   // Actions
   setLogs: (updater: (prev: string[]) => string[]) => void
@@ -19,10 +20,11 @@ interface GameState {
   setUI: (uiState: UIState) => void
   resolveUI: (value: any, message?: string) => void
   toggleButtonMenu: () => void
-  toggleConfigMenu: () => void
+  setScreen: (screen: AppScreen) => void
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
+  currentScreen: 'GAME',
   logs: [],
   uiState: {
     type: 'NONE',
@@ -31,7 +33,6 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
   isLoading: false,
   isOpenButtonMenu: false,
-  isOpenConfigMenu: false,
 
   setLogs: (updater) => set((state) => ({ logs: updater(state.logs) })),
   setIsLoading: (isLoading) => set((state) => ({ isLoading })),
@@ -73,5 +74,5 @@ export const useGameStore = create<GameState>((set, get) => ({
     })
   },
   toggleButtonMenu: () => set((state) => ({ isOpenButtonMenu: !state.isOpenButtonMenu })),
-  toggleConfigMenu: () => set((state) => ({ isOpenConfigMenu: !state.isOpenConfigMenu })),
+  setScreen: (screen: AppScreen) => set({ currentScreen: screen }),
 }))

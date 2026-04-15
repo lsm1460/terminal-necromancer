@@ -1,13 +1,12 @@
-// 하위 컴포넌트들
-import { GameEngine } from '~/gameEngine'
 import { BattleStage } from './battle/BattleStage'
 import { ButtonList } from './ButtonList'
 import { GameInput } from './GameInput'
+import { ScreenComponent } from './lib/types'
 import { LogWindow } from './LogWindow'
 import { MiniMap } from './MiniMap'
 import { StatusBar } from './StatusBar'
 
-export const GameScreen: React.FC<{
+export const GameScreen: ScreenComponent<{
   isGameOn: boolean
 }> = ({ isGameOn }) => {
   return (
@@ -20,7 +19,7 @@ export const GameScreen: React.FC<{
       xl:[grid-template-areas:'status_side''window_side''input_side']"
     >
       <div className="[grid-area:status]">
-        <StatusBar />
+        <StatusBar isGameOn={isGameOn} />
       </div>
 
       <div className="[grid-area:window] relative flex flex-col overflow-hidden">
@@ -40,3 +39,5 @@ export const GameScreen: React.FC<{
     </div>
   )
 }
+
+GameScreen.screenId = 'GAME'

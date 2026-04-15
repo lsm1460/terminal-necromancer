@@ -3,10 +3,11 @@ import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { GameContext } from '~/types'
 import { ElevatorService } from './service'
+import { SaveSystem } from '~/systems/SaveSystem'
 
 export const ElevatorActions = {
   async handleElevate(context: GameContext): Promise<boolean> {
-    const { player, map, world } = context
+    const { map, world, save } = context
     const completed = context.events.getCompleted()
     const currentSceneId = map.currentSceneId
 
@@ -47,6 +48,10 @@ export const ElevatorActions = {
           location: i18n.t(`scene.${targetMapData.id}`),
         })
       )
+
+      const saveData = SaveSystem.makeSaveData(context)
+      save.save(saveData)
+
       return true
     }
 

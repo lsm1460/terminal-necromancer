@@ -5,8 +5,8 @@ import { GameContext } from '~/types'
 
 export const handlePromotion = async (context: GameContext) => {
   const { player, events } = context
-  const isMine = events.isCompleted('caron_is_mine')
-  const npcKey = isMine ? 'caron_is_mine' : 'caron_is_dead'
+  const isDead = events.isCompleted('caron_is_dead')
+  const npcKey = isDead ? 'caron_is_dead' : 'caron_is_mine'
   const getMsg = (key: string, p?: any) => i18n.t(`npc.subspace.promotion.${npcKey}.${key}`, p) as string
 
   const selectedId = await Terminal.select(i18n.t('npc.subspace.promotion.select_title'), [
@@ -31,8 +31,8 @@ export const handlePromotion = async (context: GameContext) => {
 
 export const handleTutorialPromotion = async (context: GameContext) => {
   const { events } = context
-  const isMine = events.isCompleted('caron_is_mine')
-  const npcKey = isMine ? 'caron_is_mine' : 'caron_is_dead'
+  const isDead = events.isCompleted('caron_is_dead')
+  const npcKey = isDead ? 'caron_is_dead' : 'caron_is_mine'
 
   // 튜토리얼 대사 실행 (발견의 강조)
   const lines = i18n.t(`npc.subspace.promotion.tutorial.${npcKey}`, { returnObjects: true }) as string[]

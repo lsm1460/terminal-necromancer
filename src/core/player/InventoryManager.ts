@@ -79,6 +79,10 @@ export class InventoryManager {
     return true
   }
 
+  hasItem(id: string) {
+    return !!this.inventory.find((i) => i.id === id)
+  }
+
   addItem(newItem: Item) {
     const existing = this.inventory.find((i) => i.id === newItem.id)
     if (existing && existing.quantity && newItem.quantity) {

@@ -101,9 +101,5 @@ export async function handleCommand(rawCmd: string, context: GameContext): Promi
     }
   } catch (e) {}
 
-  // 자동 세이브
-  const saveData = SaveSystem.makeSaveData(context)
-  context.save.save(saveData)
-
   return false
 }

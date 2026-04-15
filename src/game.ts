@@ -8,7 +8,9 @@ import { Title } from './core/Title'
 import { GameEngine } from './gameEngine'
 import i18n from './i18n'
 import { CLIRenderer } from './renderers/cliRenderer'
+import { EventBus } from './systems/EventBus'
 import { SaveSystem } from './systems/SaveSystem'
+import { GameEventType } from './types/event'
 
 const loadJSON = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -16,10 +18,12 @@ const loadJSON = (filePath: string) => {
 
 const assetsDir = path.join(__dirname, 'assets')
 const statePath = path.join(assetsDir, 'state.json')
+const configPath = path.join(assetsDir, 'config.json')
 const initState = loadJSON(path.join(assetsDir, 'init_state.json'))
 
-const save = new SaveSystem(statePath)
-const locale = save.load()?.config?.locale || 'ko'
+const save = new SaveSystem(statePath, configPath)
+const config = save.loadConfig()
+const locale = config?.locale || 'ko'
 
 const assets: GameAssets = {
   map: loadJSON(path.join(assetsDir, 'map.json')),
@@ -33,23 +37,44 @@ const assets: GameAssets = {
   npcSkills: loadJSON(path.join(assetsDir, 'npcSkills.json')),
 }
 
-const renderer = new CLIRenderer()
-Terminal.setRenderer(renderer)
+const run = async () => {
+  const renderer = new CLIRenderer()
+  Terminal.setRenderer(renderer)
 
-const engine = new GameEngine(assets, renderer, save)
+  const eventBus = new EventBus()
+  const engine = new GameEngine(assets, renderer, save, eventBus)
 
-i18n.changeLanguage(locale).then(() => {
-  Title.gameStart(save, initState).then(async (playData) => {
-    if (!playData) {
-      console.error('게임 데이터를 불러오지 못했습니다.')
-      return
-    }
+  await i18n.changeLanguage(locale)
 
-    await loadExtraLocaleBundle(locale)
-    
-    await engine.init(playData)
-    await engine.start()
+  const playData = await Title.gameStart(save, initState)
+  if (playData === null) {
+    return
+  }
 
-    await createCLI(engine.context)
+  if (!playData) {
+    console.error('게임 데이터를 불러오지 못했습니다.')
+    return
+  }
+
+  const currentLocale = i18n.language as 'ko' | 'en'
+  await loadExtraLocaleBundle(currentLocale)
+
+  await engine.init(playData)
+  await engine.start()
+
+  const exitWait = new Promise<void>((resolve) => {
+    eventBus.subscribe(GameEventType.SYSTEM_EXIT, () => {
+      resolve()
+    })
   })
-})
+
+  createCLI(engine.context)
+
+  await exitWait
+
+  Terminal.clear()
+
+  setTimeout(() => run(), 0)
+}
+
+run()

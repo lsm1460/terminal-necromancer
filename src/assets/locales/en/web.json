@@ -12,6 +12,12 @@
     "move": {
       "label": "Move Preview",
       "description": "Before moving to a tile via button, checks and displays information if a threat is detected."
+    },
+    "focus": {
+      "label": "Auto-Input Focus",
+      "description": "Immediately focuses the terminal input line after combat or events end."
     }
-  }
+  },
+
+  "save_and_exit": "Save and return to title?"
 }

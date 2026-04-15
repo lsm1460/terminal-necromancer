@@ -20,6 +20,6 @@ export async function createCLI(context: any) {
   while (true) {
     const line = await askQuestion(i18n.t('input_command'))
     const shouldExit = await handleCommand(line, context)
-    if (shouldExit === 'exit') break
+    if (shouldExit === 'exit') return 'exit'
   }
 }

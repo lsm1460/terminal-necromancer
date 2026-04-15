@@ -7,8 +7,8 @@ import { SubspaceService } from '../service'
 
 export const handleMix = async (context: GameContext) => {
   const { player, events } = context
-  const isMine = events.isCompleted('caron_is_mine')
-  const npcKey = isMine ? 'caron_is_mine' : 'caron_is_dead'
+  const isDead = events.isCompleted('caron_is_dead')
+  const npcKey = isDead ? 'caron_is_dead' : 'caron_is_mine'
   const getMsg = (key: string, p?: any) => i18n.t(`npc.subspace.mix.${npcKey}.${key}`, p) as string
 
   // 튜토리얼 체크

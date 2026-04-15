@@ -392,7 +392,11 @@ export class Player {
   }
 
   async useItem(targetItem?: ConsumableItem) {
-    return this.inventoryManager.useItem(targetItem)
+    return await this.inventoryManager.useItem(targetItem)
+  }
+
+  hasItem(id: string) {
+    return this.inventoryManager.hasItem(id)
   }
 
   unlockGolem(type: 'zed' | 'maya') {

@@ -8,7 +8,7 @@ import { ThemedButton } from './common/ThemedButton'
 
 export const GameInput: React.FC = () => {
   const { t } = useTranslation()
-  const { uiState, isOpenButtonMenu, isOpenConfigMenu, resolveUI, toggleButtonMenu } = useGameStore()
+  const { uiState, isOpenButtonMenu, currentScreen, resolveUI, toggleButtonMenu } = useGameStore()
   const disabled = useInputLock()
 
   const { getConfig, processCommand } = useGame()
@@ -34,7 +34,7 @@ export const GameInput: React.FC = () => {
     return () => {
       window.removeEventListener('click', handleGlobalClick)
     }
-  }, [disabled, isOpenConfigMenu])
+  }, [disabled, currentScreen])
 
   const handleCommand = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return

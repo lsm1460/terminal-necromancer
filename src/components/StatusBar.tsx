@@ -1,13 +1,18 @@
-import { Settings } from 'lucide-react'
+import { LogOut, Settings } from 'lucide-react'
 import React, { useMemo } from 'react'
-import { useGameStore } from '~/stores/useGameStore'
-import { ThemedButton } from './common/ThemedButton'
+import { Terminal } from '~/core/Terminal'
 import { useGame } from '~/hooks/useGame'
+import { useGameStore } from '~/stores/useGameStore'
+import { GameEventType } from '~/types/event'
+import { ThemedButton } from './common/ThemedButton'
+import i18n from '~/i18n'
 
-export const StatusBar: React.FC = () => {
+export const StatusBar: React.FC<{ isGameOn: boolean }> = ({ isGameOn }) => {
   const { getPlayer, getContext } = useGame()
-  const { logs, toggleConfigMenu } = useGameStore((state) => state)
+  const { logs, setScreen } = useGameStore((state) => state)
   const status = useMemo(() => {
+    if (!isGameOn) return
+
     const player = getPlayer()
     const context = getContext()
 
@@ -25,7 +30,19 @@ export const StatusBar: React.FC = () => {
       maxMp: player.maxMp,
       location: map?.currentSceneId,
     }
-  }, [getPlayer, getContext, logs])
+  }, [getPlayer, getContext, logs, isGameOn])
+
+  const handleExit = async () => {
+    const _res = await Terminal.confirm(i18n.t('web.save_and_exit'))
+
+    if (_res) {
+      const context = getContext()
+
+      if (context) {
+        context.eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
+      }
+    }
+  }
 
   return (
     <div className="h-10 px-2.5 border-primary/30 border-b font-bold text-xs flex items-center">
@@ -41,9 +58,15 @@ export const StatusBar: React.FC = () => {
               MP: {status.mp.toLocaleString()}/{status.maxMp.toLocaleString()}
             </span>
           </p>
-          <ThemedButton.round className="ml-auto bg-transparent" onClick={toggleConfigMenu}>
-            <Settings size={20} />
-          </ThemedButton.round>
+
+          <div className="ml-auto flex gap-1 items-center">
+            <ThemedButton.round className="bg-transparent" onClick={() => setScreen('CONFIG')}>
+              <Settings size={20} />
+            </ThemedButton.round>
+            <ThemedButton.round className="bg-transparent" onClick={handleExit}>
+              <LogOut size={20} />
+            </ThemedButton.round>
+          </div>
         </>
       ) : (
         <span>Initializing System...</span>

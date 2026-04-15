@@ -6,9 +6,9 @@ import { Player } from '~/core/player/Player'
 
 export const handleManageSpace = async (context: GameContext) => {
   const { player, events } = context
-  const caronIsMine = events.isCompleted('caron_is_mine')
+  const caronIsDead = events.isCompleted('caron_is_dead')
 
-  Terminal.log(i18n.t(`npc.subspace.manage.intro_${caronIsMine ? 'mine' : 'dead'}`))
+  Terminal.log(i18n.t(`npc.subspace.manage.intro_${caronIsDead ? 'dead' : 'mine'}`))
 
   const choices = [
     ...(player.skeleton.length > 0 && player.skeletonSubspace.length < player.subspaceLimit

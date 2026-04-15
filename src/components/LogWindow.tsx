@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { getTileFromDirection, printPath } from '~/commands'
+import { COMMAND_GROUPS, COMMAND_KEYS } from '~/consts'
+import { Terminal } from '~/core/Terminal'
+import { useGame } from '~/hooks/useGame'
+import { useInputLock } from '~/hooks/useInputLock'
+import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { AnsiHtml } from './Ansi'
 import { DecisionBox } from './DecisionBox'
-import { COMMAND_GROUPS, COMMAND_KEYS } from '~/consts'
-import { Terminal } from '~/core/Terminal'
-import { getTileFromDirection, printPath } from '~/commands'
-import i18n from '~/i18n'
-import { useGame } from '~/hooks/useGame'
 
 const DIRECTION_MAP: Record<string, string> = {}
 
@@ -24,6 +25,7 @@ Object.entries({
 export const LogWindow: React.FC = () => {
   const { getPlayer, getContext, getConfig, processCommand } = useGame()
   const { isOpenButtonMenu, logs, uiState, resolveUI } = useGameStore()
+  const disabled = useInputLock()
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -44,6 +46,8 @@ export const LogWindow: React.FC = () => {
   }, [logs, uiState, isOpenButtonMenu])
 
   const handleLogCommand = async (event: any) => {
+    if (disabled) return
+    
     let { command, arg } = event.target.dataset
     if (!command) return
 
