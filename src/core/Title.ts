@@ -1,19 +1,24 @@
 import i18n from '~/i18n'
+import { AchievementManager } from '~/systems/AchievementManager'
+import { ConfigSystem } from '~/systems/ConfigSystem'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { speak } from '~/utils'
 import { Terminal } from './Terminal'
-import { ConfigSystem } from '~/systems/ConfigSystem'
 
 export class Title {
+  constructor(
+    private save: SaveSystem,
+    private config: ConfigSystem,
+    private achievement: AchievementManager
+  ) {}
+
   /**
-   * CLI와 Web에서 공통으로 사용하는 게임 시작 흐름 제어 로직
-   * @param save - 세이브 시스템 인스턴스
    * @param initState - 새 게임 시작 시 사용할 초기 데이터
    */
-  static async gameStart(save: SaveSystem, config: ConfigSystem, initState: any): Promise<any> {
+  async gameStart(initState: any): Promise<any> {
     try {
-      let _config = config.load()
-      let hasSave = save.load()
+      let _config = this.config.load()
+      let hasSave = this.save.load()
 
       const locale = _config?.locale || 'ko'
 
@@ -45,7 +50,7 @@ export class Title {
           ])
 
           if (_res === 'cancel') {
-            return this.gameStart(save, config, initState)
+            return this.gameStart(initState)
           }
 
           if (_res === 'locale') {
@@ -64,9 +69,9 @@ export class Title {
               locale: lang,
             }
 
-            config.save(_config)
+            this.config.save(_config)
 
-            return this.gameStart(save, config, initState)
+            return this.gameStart(initState)
           }
         }
 
@@ -81,7 +86,7 @@ export class Title {
           await speak(dialogue)
 
           // 초기 데이터로 저장소 갱신
-          save.save(initState)
+          this.save.save(initState)
           Terminal.log(`${i18n.t('title.start_game')}\n`)
           return initState
         }

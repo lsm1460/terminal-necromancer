@@ -1,13 +1,14 @@
 // src/assets.ts
+import achievementsData from './achievements.json'
+import dropData from './drop.json'
+import itemData from './item.json'
+import levelData from './level.json'
 import mapData from './map.json'
 import monsterGroupData from './monster-group.json'
 import monsterData from './monster.json'
-import stateData from './state.json'
-import levelData from './level.json'
-import itemData from './item.json'
-import dropData from './drop.json'
 import npcData from './npc.json'
 import npcSkillData from './npcSkills.json'
+import stateData from './state.json'
 
 import initState from './init_state.json'
 
@@ -21,6 +22,7 @@ export const assets = {
   drop: dropData,
   npc: npcData,
   npcSkills: npcSkillData,
+  achievements: achievementsData,
 }
 
 export { initState }

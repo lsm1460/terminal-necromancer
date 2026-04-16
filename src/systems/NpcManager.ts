@@ -87,14 +87,18 @@ export class NPCManager {
     }
   }
 
-  reborn = (id: string) => {
-    if (this.states[id]) {
-      this.states[id].reborn = true
+  reborn = ({ corpseId }: { corpseId: string }) => {
+    if (this.states[corpseId]) {
+      this.states[corpseId].reborn = true
     }
   }
 
-  public updateFactionContribution(faction: string, amount: number) {
-    this.factionContribution[faction] = (this.factionContribution[faction] || 0) + amount
+  public updateFactionContribution(faction: string, delta: number) {
+    const nextTotal = (this.factionContribution[faction] || 0) + delta
+
+    this.eventBus.emitAsync(GameEventType.UPDATE_FACTION_CONTRIBUTION, { faction, amount: nextTotal })
+
+    this.factionContribution[faction] = nextTotal
   }
 
   public updateFactionHostility(faction: string, amount: number) {

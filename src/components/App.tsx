@@ -13,6 +13,7 @@ import { assetManager } from '~/core/WebAssetManager'
 import { GameEngine } from '~/core/gameEngine'
 import { useShortcuts } from '~/hooks/useShortcuts'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
+import { AchievementManager } from '~/systems/AchievementManager'
 import { ConfigSystem } from '~/systems/ConfigSystem'
 import { EventBus } from '~/systems/EventBus'
 import { SaveSystem } from '~/systems/SaveSystem'
@@ -30,7 +31,9 @@ export const App = () => {
   useShortcuts(engineRef)
 
   useEffect(() => {
+    const eventBus = new EventBus()
     const renderer = new ReactRenderer()
+
     const save = saveSystemRef.current
     const config = configSystemRef.current
     Terminal.setRenderer(renderer)
@@ -38,11 +41,13 @@ export const App = () => {
     openWindow()
 
     const run = async () => {
-      const eventBus = new EventBus()
       const engine = new GameEngine(assets, renderer, save, config, eventBus)
       engineRef.current = engine
+      
+      const achievement = new AchievementManager(eventBus, assets.achievements)
 
-      const playData = await Title.gameStart(save, config, initState)
+      const title = new Title(save, config, achievement)
+      const playData = await title.gameStart(initState)
 
       if (playData === null) {
         //TODO: exit game

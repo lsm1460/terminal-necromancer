@@ -1,0 +1,12 @@
+{
+  "achievements": [
+    { "id": "RATTY_SILENCED", "title": "입막음", "description": "혀가 긴 래티를 처치했습니다.", "hidden": false },
+    { "id": "CARON_DEAD", "title": "사신의 추락", "description": "카론을 처치하고 자유를 얻었습니다.", "hidden": false },
+    { "id": "CARON_PARTNER", "title": "나의 동반자", "description": "카론과 계약을 맺었습니다.", "hidden": false },
+    { "id": "LEGENDARY_RAISER", "title": "기적의 소생", "description": "전설 등급의 해골을 소생시켰습니다.", "hidden": false },
+    { "id": "RESISTANCE_HERO", "title": "해방의 선봉장", "description": "레지스탕스 공헌도 200을 달성했습니다.", "hidden": false },
+    
+    { "id": "ENDING_1", "title": "진실의 끝", "description": "첫 번째 엔딩을 보았습니다.", "hidden": true },
+    { "id": "ENDING_2", "title": "반복되는 굴레", "description": "두 번째 엔딩을 보았습니다.", "hidden": true }
+  ]
+}

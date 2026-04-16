@@ -14,7 +14,7 @@ export class World {
     private player: Player,
     eventBus: EventBus
   ) {
-    eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, this.removeCorpse)
+    eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, ({ corpseId }) => this.removeCorpse(corpseId))
   }
 
   addDrop(drop: Drop, quantity = 1) {

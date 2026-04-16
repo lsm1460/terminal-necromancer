@@ -3,15 +3,16 @@ import path from 'path'
 import { GameAssets } from './assets'
 import { loadExtraLocaleBundle } from './assets/locales'
 import { createCLI } from './core/cli'
+import { GameEngine } from './core/gameEngine'
 import { Terminal } from './core/Terminal'
 import { Title } from './core/Title'
-import { GameEngine } from './core/gameEngine'
 import i18n from './i18n'
 import { CLIRenderer } from './renderers/cliRenderer'
+import { AchievementManager } from './systems/AchievementManager'
+import { ConfigSystem } from './systems/ConfigSystem'
 import { EventBus } from './systems/EventBus'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameEventType } from './types/event'
-import { ConfigSystem } from './systems/ConfigSystem'
 
 const loadJSON = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -37,6 +38,7 @@ const assets: GameAssets = {
   drop: loadJSON(path.join(assetsDir, 'drop.json')),
   npc: loadJSON(path.join(assetsDir, 'npc.json')),
   npcSkills: loadJSON(path.join(assetsDir, 'npcSkills.json')),
+  achievements: loadJSON(path.join(assetsDir, 'achievements.json')),
 }
 
 const run = async () => {
@@ -48,7 +50,11 @@ const run = async () => {
 
   await i18n.changeLanguage(locale)
 
-  const playData = await Title.gameStart(save, config, initState)
+  const achievement = new AchievementManager(eventBus, assets.achievements)
+
+  const title = new Title(save, config, achievement)
+
+  const playData = await title.gameStart(initState)
   if (playData === null) {
     return
   }
