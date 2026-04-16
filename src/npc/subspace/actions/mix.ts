@@ -1,5 +1,5 @@
 import { Terminal } from '~/core/Terminal'
-import { SkeletonFactory, SKELETON_RARITIES } from '~/core/SkeletonFactory'
+import { SkeletonFactory, SKELETON_RARITIES } from '~/core/skill/SkeletonFactory'
 import i18n from '~/i18n'
 import { GameContext } from '~/types'
 import { speak, getOriginId } from '~/utils'

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { EventBus } from '~/systems/EventBus'
-import { NPCManager } from '../NpcManager'
+import { NPCManager } from '../../systems/NpcManager'
 import { Player } from '../player/Player'
 
 // Mock i18n

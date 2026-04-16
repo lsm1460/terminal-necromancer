@@ -1,4 +1,4 @@
-import { printLootStatus } from '~/statusPrinter'
+import { printLootStatus } from '~/core/statusPrinter'
 import { Drop } from '~/types'
 import { EventHandler } from '.'
 

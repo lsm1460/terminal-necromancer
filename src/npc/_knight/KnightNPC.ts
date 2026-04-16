@@ -1,5 +1,5 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { NPCManager } from '~/core/NpcManager'
+import { NPCManager } from '~/systems/NpcManager'
 import i18n from '~/i18n'
 import { GameContext, NPCState } from '~/types'
 import { KnightActions } from './action'

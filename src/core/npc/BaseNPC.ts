@@ -1,6 +1,6 @@
 import i18n from '~/i18n'
 import { GameContext, NPC, NPCState } from '~/types'
-import { NPCManager } from '../NpcManager'
+import { NPCManager } from '../../systems/NpcManager'
 import { Terminal } from '../Terminal'
 
 export class BaseNPC implements NPC {

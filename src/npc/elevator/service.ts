@@ -1,5 +1,5 @@
 import { MAP_IDS } from '~/consts'
-import { MapManager } from '~/core/MapManager'
+import { MapManager } from '~/systems/MapManager'
 import i18n from '~/i18n'
 
 export const ElevatorService = {

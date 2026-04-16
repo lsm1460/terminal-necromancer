@@ -1,6 +1,6 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext, NPCState } from '~/types'
-import { NPCManager } from '~/core/NpcManager'
+import { NPCManager } from '~/systems/NpcManager'
 import i18n from '~/i18n'
 import { KaelService } from './service'
 import { KaelActions } from './action'

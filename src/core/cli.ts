@@ -1,6 +1,6 @@
 import readline from 'readline'
-import { handleCommand } from '~/commandHandler'
-import i18n from './i18n'
+import { handleCommand } from '~/core/commandHandler'
+import i18n from '~/i18n'
 
 async function askQuestion(query: string): Promise<string> {
   const rl = readline.createInterface({

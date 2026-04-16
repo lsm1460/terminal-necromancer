@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { GameEngine } from '~/gameEngine'
+import { GameEngine } from '~/core/gameEngine'
 import { useGameStore } from '~/stores/useGameStore'
 import { useInputLock } from './useInputLock'
 import i18n from '~/i18n'

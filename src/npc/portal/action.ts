@@ -1,6 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { printTileStatus } from '~/statusPrinter'
+import { printTileStatus } from '~/core/statusPrinter'
 import { GameContext } from '~/types'
 import { PortalService } from './service'
 

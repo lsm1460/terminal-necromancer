@@ -1,6 +1,6 @@
+import { printTileStatus } from '~/core/statusPrinter'
 import { assetManager } from '~/core/WebAssetManager'
 import i18n from '~/i18n'
-import { printTileStatus } from '~/statusPrinter'
 import { useGameStore } from '~/stores/useGameStore'
 import { GameContext, NPC, Renderer } from '~/types'
 

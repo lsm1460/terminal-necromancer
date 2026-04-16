@@ -1,15 +1,11 @@
-import * as Commands from './commands'
-import { COMMAND_GROUPS, CommandKey } from './consts'
-import { Terminal } from './core/Terminal'
-import i18n from './i18n'
+import * as Commands from '~/commands'
+import { COMMAND_GROUPS, CommandKey } from '~/consts'
+import { Terminal } from '~/core/Terminal'
+import i18n from '~/i18n'
+import { GameContext } from '~/types'
 import { printDirections, printTileStatus } from './statusPrinter'
-import { SaveSystem } from './systems/SaveSystem'
-import { GameContext } from './types'
 
-type CommandFunction = (
-  args: string[],
-  context: GameContext
-) => (boolean | string) | Promise<boolean | string>
+type CommandFunction = (args: string[], context: GameContext) => (boolean | string) | Promise<boolean | string>
 
 const mapInput = (cmd: string) => {
   const trimmed = cmd.trim()
@@ -90,7 +86,7 @@ export async function handleCommand(rawCmd: string, context: GameContext): Promi
       const { player, map } = context
       const currentTile = map.getTile(player.pos)
       printTileStatus(context)
-      
+
       await map.handleTileEvent(currentTile, context)
     }
 

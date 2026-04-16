@@ -1,5 +1,5 @@
 import i18n from '~/i18n'
-import { printCorpses, printDrops } from '~/statusPrinter'
+import { printCorpses, printDrops } from '~/core/statusPrinter'
 import { BattleTarget } from '~/types'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'

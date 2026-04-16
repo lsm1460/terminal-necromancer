@@ -1,25 +1,25 @@
-import { GameAssets } from './assets'
+import { GameAssets } from '~/assets'
+import { MAP_IDS } from '~/consts'
+import { Battle, BattleComponentFactory } from '~/core/battle'
+import { LootFactory } from '~/core/LootFactory'
+import { MonsterFactory } from '~/core/MonsterFactory'
+import { Player } from '~/core/player/Player'
+import { NpcSkillManager } from '~/core/skill/npcs/NpcSkillManger'
+import { World } from '~/core/World'
+import i18n from '~/i18n'
+import { Broadcast } from '~/systems/Broadcast'
+import { ConfigSystem } from '~/systems/ConfigSystem'
+import { DropSystem } from '~/systems/DropSystem'
+import { EventBus } from '~/systems/EventBus'
+import { EventLedger } from '~/systems/EventLedger'
+import { MonsterEvent } from '~/systems/events/MonsterEvent'
+import { MapManager } from '~/systems/MapManager'
+import { NPCManager } from '~/systems/NpcManager'
+import { QuestManager } from '~/systems/QuestManager'
+import { SaveData, SaveSystem } from '~/systems/SaveSystem'
+import { GameContext, Renderer } from '~/types'
 import { handleCommand } from './commandHandler'
-import { MAP_IDS } from './consts'
-import { Battle, BattleComponentFactory } from './core/battle'
-import { Broadcast } from './core/Broadcast'
-import { LootFactory } from './core/LootFactory'
-import { MapManager } from './core/MapManager'
-import { MonsterFactory } from './core/MonsterFactory'
-import { NPCManager } from './core/NpcManager'
-import { Player } from './core/player/Player'
-import { QuestManager } from './core/QuestManager'
-import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
-import { World } from './core/World'
-import i18n from './i18n'
 import { printDirections } from './statusPrinter'
-import { ConfigData, ConfigSystem } from './systems/ConfigSystem'
-import { DropSystem } from './systems/DropSystem'
-import { EventBus } from './systems/EventBus'
-import { EventLedger } from './systems/EventLedger'
-import { MonsterEvent } from './systems/events/MonsterEvent'
-import { SaveData, SaveSystem } from './systems/SaveSystem'
-import { GameContext, Renderer } from './types'
 
 export class GameEngine {
   public context!: GameContext
@@ -40,7 +40,7 @@ export class GameEngine {
 
     const dropSystem = new DropSystem(item, drop)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
-    
+
     const eventBus = this.eventBus
     const player = new Player(level, eventBus, initData?.player)
     const mapManager = new MapManager(map, eventBus)

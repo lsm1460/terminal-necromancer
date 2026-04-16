@@ -1,6 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { printTileStatus } from '~/statusPrinter'
+import { printTileStatus } from '~/core/statusPrinter'
 import { Drop, GameContext, Monster, NPC } from '~/types'
 import { lookCorpse } from './corpse'
 import { lookBattleTarget } from './entity'

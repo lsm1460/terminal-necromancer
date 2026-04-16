@@ -1,13 +1,13 @@
 import _ from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import i18n from '~/i18n'
-import { printTileStatus } from '~/statusPrinter'
+import { printTileStatus } from '~/core/statusPrinter'
 import { EventBus } from '~/systems/EventBus'
 import { allEventHandlers } from '~/systems/events'
 import { GameContext, PositionType, SceneData, Tile } from '~/types'
 import { GameEventType } from '~/types/event'
-import { Terminal } from './Terminal'
-import { assetManager } from './WebAssetManager'
+import { Terminal } from '../core/Terminal'
+import { assetManager } from '../core/WebAssetManager'
 
 export class MapManager {
   private originMapData: Record<string, SceneData>

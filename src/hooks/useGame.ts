@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useGameContext } from '~/contexts/GameContext'
 import { useGameStore } from '~/stores/useGameStore'
+import { GameContext } from '~/types'
 
 export const useGame = () => {
   const { engine } = useGameContext()
@@ -25,7 +26,7 @@ export const useGame = () => {
   }, [engine])
 
   const getContext = useCallback(() => {
-    return engine.current?.context
+    return engine.current?.context as GameContext | undefined
   }, [engine])
 
   const updateConfig = useCallback(

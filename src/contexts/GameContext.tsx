@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactNode } from 'react'
-import { GameEngine } from '~/gameEngine'
+import { GameEngine } from '~/core/gameEngine'
 
 interface GameContextType {
   engine: React.RefObject<GameEngine | null>

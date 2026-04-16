@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
+import { printTileStatus } from '~/core/statusPrinter'
 import i18n from '~/i18n'
-import { printTileStatus } from '../statusPrinter'
-import { GameContext, NPC, Renderer } from '../types'
+import { GameContext, NPC, Renderer } from '~/types'
 
 export class CLIRenderer implements Renderer {
   // --- 출력 메서드 ---

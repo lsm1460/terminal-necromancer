@@ -1,7 +1,7 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Player } from '~/core/player/Player'
 import { GameContext, NPCState } from '~/types'
-import { NPCManager } from '~/core/NpcManager'
+import { NPCManager } from '~/systems/NpcManager'
 import i18n from '~/i18n'
 import { ZedService } from './service'
 import { ZedActions } from './action'

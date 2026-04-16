@@ -2,7 +2,7 @@ import { Player } from '~/core/player/Player'
 import { DropSystem } from '~/systems/DropSystem'
 import { BattleTarget, LootBag } from '~/types'
 import { generateId } from '~/utils'
-import { MapManager } from './MapManager'
+import { MapManager } from '../systems/MapManager'
 
 export class LootFactory {
   static fromPlayer(player: Player, map: MapManager): LootBag {

@@ -1,7 +1,7 @@
 import { speak } from '~/utils'
 import i18n from '~/i18n'
 import { GameContext, NPC } from '~/types'
-import { printTileStatus } from '~/statusPrinter'
+import { printTileStatus } from '~/core/statusPrinter'
 
 export const OliverActions = {
   /**

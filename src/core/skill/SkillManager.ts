@@ -1,9 +1,9 @@
 import i18n from '~/i18n'
-import { ExecuteSkill, GameContext, SkillId, SkillResult } from '~/types'
+import { ExecuteSkill, SkillId, SkillResult } from '~/types'
 import { Terminal } from '../Terminal'
+import { World } from '../World'
 import { Player } from '../player/Player'
 import { getPlayerSkills } from './skill'
-import { World } from '../World'
 
 type EnhancedSkillResult =
   | (SkillResult & { isSuccess: boolean; skillId: string })

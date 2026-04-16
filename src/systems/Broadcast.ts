@@ -3,7 +3,7 @@ import i18n from '~/i18n'
 import { EventBus } from '~/systems/EventBus'
 import { GameEventType } from '~/types/event'
 import { NPCManager } from './NpcManager'
-import { Terminal } from './Terminal'
+import { Terminal } from '../core/Terminal'
 
 export class Broadcast {
   private pendingQueue: string[] = []

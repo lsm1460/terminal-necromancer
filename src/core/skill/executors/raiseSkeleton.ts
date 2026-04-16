@@ -1,4 +1,4 @@
-import { SKELETON_RARITIES, SkeletonFactory } from '~/core/SkeletonFactory'
+import { SKELETON_RARITIES, SkeletonFactory } from '~/core/skill/SkeletonFactory'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { Corpse, ExecuteSkill } from '~/types'

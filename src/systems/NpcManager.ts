@@ -5,8 +5,8 @@ import { EventBus } from '~/systems/EventBus'
 import { NPC, NPCState, PositionType } from '~/types'
 import { GameEventType } from '~/types/event'
 import { MapManager } from './MapManager'
-import { Terminal } from './Terminal'
-import { BaseNPC } from './npc/BaseNPC'
+import { Terminal } from '../core/Terminal'
+import { BaseNPC } from '../core/npc/BaseNPC'
 
 type EventCallback = (npcId: string, params?: { karma?: number; hostile?: number }) => void
 

@@ -1,4 +1,4 @@
-import { MapManager } from '~/core/MapManager'
+import { MapManager } from '~/systems/MapManager'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
