@@ -1,7 +1,8 @@
+import { assetManager } from '~/core/WebAssetManager'
 import i18n from '~/i18n'
 import { printTileStatus } from '~/statusPrinter'
 import { useGameStore } from '~/stores/useGameStore'
-import { GameContext, Renderer } from '~/types'
+import { GameContext, NPC, Renderer } from '~/types'
 
 export interface UIState {
   type: 'SELECT' | 'MULTISELECT' | 'CONFIRM' | 'PROMPT' | 'NONE'
@@ -88,7 +89,7 @@ export class ReactRenderer implements Renderer {
     return `<button tabindex="-1" class="js-focus-ignore text-button" data-command="${command}"${dataArg}>${label}</button>`
   }
 
-  say(list: { name: string; hasQuest: boolean }[]) {
+  availableTalks(list: { name: string; hasQuest: boolean }[]) {
     const aliveNames = list
       .map(({ hasQuest, name }) => {
         const label = `${hasQuest ? '<span style="color: #ff8181">[!] </span>' : ''}${name}`
@@ -130,5 +131,29 @@ export class ReactRenderer implements Renderer {
     const log = this.createButton(i18n.t('web.talk_to', { name }), 'talk', name)
 
     this.store.addLog(log)
+  }
+
+  printNpcCard(npc: NPC) {
+    const greeting = npc.getScripts('greeting')
+    const sprites = assetManager.getSprites(npc.id)
+
+    let profileImage = ''
+    if (sprites && !sprites.isFallback) {
+      profileImage = sprites.idle[0].src
+    } else {
+      profileImage = ''
+    }
+
+    const profileCard = `<div class="dialogue-container"><div class="npc-profile">
+          <img src="${profileImage}" alt="${npc.name}" class="npc-avatar">
+        </div>
+        
+        <div class="dialogue-content">
+          <p class="npc-name">[${npc.name}]</p>
+          <p class="npc-desc">${npc.description}</p>
+          <p class="speech-bubble">"${greeting}"</p>
+        </div></div>`
+
+    this.store.addLog(profileCard)
   }
 }

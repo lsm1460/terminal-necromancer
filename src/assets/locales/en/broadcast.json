@@ -56,6 +56,34 @@
       "Proceed to the Reaper's office immediately. You'll be listening to his nagging for as many pieces of the golem as you broke."
     ]
   },
+  "vips_saved": {
+    "hostile": [
+      "Notice: The dissidents who occupied Basement Level 5 have been 'completely suppressed.' The yellow safety lines on the platform have regained order once again.",
+      "The reckless attempt to take high-class citizens hostage concluded with cold corpses piled in the corners.",
+      "Whether thanks to the crude magic of the necromancer on-site or Lord Arca's mercy, the VIPs have safely boarded their private shuttles.",
+      "However, invoices for excessive bloodstains and damaged property incurred during the suppression will be applied retroactively to the regional manager."
+    ],
+    "normal": [
+      "The situation at the B5 VIP lounge has ended. We inform you that the filth causing the commotion has been cleared without a trace.",
+      "Our precious guests experienced slight discomfort, but fortunately, they were swiftly moved to a secure area without physical harm.",
+      "Thanks to the necromancer's hard work on-site, a paralyzing disruption of loading dock operations was avoided. Just make sure to wipe up the marrow spilled by the bones.",
+      "As a result of resolving this incident, the security rating for this sector has been temporarily upgraded. Maintaining order is everyone's duty."
+    ]
+  },
+  "vips_lost": {
+    "hostile": [
+      "Emergency Report: The B5 VIP lounge has been brutally devastated by a Resistance raid. This is a tragic scene where order has collapsed.",
+      "The noble blood of the Upper Tier has soaked the cold platform floor. This is a grave challenge to the security of the Reaper Sector and an intolerable situation.",
+      "It is presumed that the necromancer on-site either stood by and watched the mob or was incompetently defeated. Severe disciplinary action for management failure is expected.",
+      "The area is currently sealed, and the economic losses from the VIP casualties are beyond imagination. The credit ratings of everyone involved will be demoted."
+    ],
+    "normal": [
+      "Regrettable news: It has been finalized that the VIPs in the B5 lounge are either missing or in a state of 'permanent suspension.'",
+      "The incompetence of the field supervisors, who failed to respond in time to the Resistance's surprise attack, has led to this painful outcome.",
+      "The Reaper Sector's external credibility has plummeted. Consequently, an 'Incompetence Tax' will be immediately reflected in the price of all goods you purchase moving forward.",
+      "To restore the destroyed shuttles and the tarnished honor of the VIPs, be warned that decades of forced labor may follow."
+    ]
+  },
   "RESISTANCE_BASE": {
     "hostile": [
       "So, the hideous union has finally been consummated. News reached us that the Necromancer and the Resistance are now rolling around in the same pit.",

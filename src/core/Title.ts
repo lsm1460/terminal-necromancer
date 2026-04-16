@@ -58,7 +58,6 @@ export class Title {
             )
 
             await i18n.changeLanguage(lang)
-            console.log('?????config?', config)
             config = {
               ...(config || {}),
               locale: lang,

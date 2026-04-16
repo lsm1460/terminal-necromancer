@@ -168,7 +168,7 @@ export type LootBag = {
 export interface Renderer {
   print(message: string): void
   update(message: string): void
-  say(list: { name: string; hasQuest: boolean }[]): void
+  availableTalks(list: { name: string; hasQuest: boolean }[]): void
   clear(): void
   printStatus(context: GameContext): void
   // 입력 관련 메서드 추가
@@ -186,6 +186,7 @@ export interface Renderer {
   attack(message: string, prefix?: string): void
   skill(message: string, prefix?: string): void
   talk(name: string): void
+  printNpcCard(npc: NPC): void
 }
 
 export interface GameContext {
@@ -384,6 +385,7 @@ export interface UnitSprites {
   hit: HTMLImageElement | null
   die: HTMLImageElement | null
   escape: HTMLImageElement | null
+  isFallback?: boolean
 }
 
 export interface SceneData {

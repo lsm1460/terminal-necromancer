@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useBattleStore } from '~/stores/useBattleStore'
 import { getHpColor } from '~/utils'

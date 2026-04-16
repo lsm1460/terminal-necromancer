@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 import { useGameContext } from '~/contexts/GameContext'
 import { useGameStore } from '~/stores/useGameStore'
-import { SaveSystem } from '~/systems/SaveSystem'
 
 export const useGame = () => {
   const { engine } = useGameContext()
@@ -41,7 +40,7 @@ export const useGame = () => {
   )
 
   const getConfig = useCallback(() => {
-    return engine.current?.context.config || {}
+    return engine.current?.context?.config || {}
   }, [engine])
 
   return {

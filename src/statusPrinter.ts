@@ -35,7 +35,7 @@ export function printTileStatus(context: GameContext) {
       }
     })
 
-    Terminal.say(list)
+    Terminal.availableTalks(list)
   }
 
   printCorpses(context.world, player.pos)

@@ -1,4 +1,4 @@
-import { Renderer } from '../types'
+import { NPC, Renderer } from '../types'
 
 export class Terminal {
   private static renderer: Renderer | null = null
@@ -11,10 +11,10 @@ export class Terminal {
     this.renderer ? this.renderer.print(message) : console.log(message)
   }
 
-  public static say(list: { name: string; hasQuest: boolean }[]): void {
+  public static availableTalks(list: { name: string; hasQuest: boolean }[]): void {
     if (!this.renderer) throw new Error('Renderer not initialized')
 
-    this.renderer.say(list)
+    this.renderer.availableTalks(list)
   }
 
   public static update(message: string) {
@@ -87,5 +87,11 @@ export class Terminal {
     if (!this.renderer) throw new Error('Renderer not initialized')
 
     this.renderer.talk(name)
+  }
+
+  public static printNpcCard(npc: NPC) {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    this.renderer.printNpcCard(npc)
   }
 }

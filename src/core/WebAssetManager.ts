@@ -1,5 +1,5 @@
 import throttle from 'lodash/throttle'
-import { assets, GameAssets } from '~/assets'
+import { assets } from '~/assets'
 import { loadExtraLocaleBundle } from '~/assets/locales'
 import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
@@ -104,15 +104,44 @@ export class WebAssetManager {
     store.setIsLoading(false)
   }
 
-  public async loadInitialAssets(assets: GameAssets, locale: 'ko' | 'en'): Promise<void> {
+  public async loadInitialAssets(sceneData: SceneData, locale: 'ko' | 'en'): Promise<void> {
     Terminal.log(`\x1b[36m[System] ${i18n.t('loading.resource')}\x1b[0m`)
     await loadExtraLocaleBundle(locale)
 
-    await this.loadWithProgress(this.commonManifest.images, this.commonManifest.audios)
+    const assetSources = this.getSceneAssetSources(sceneData)
+
+    await this.loadWithProgress([...this.commonManifest.images, ...assetSources], this.commonManifest.audios)
 
     await delay(500)
 
     Terminal.log(`\x1b[32m[System] ${i18n.t('loading.success')}\x1b[0m\n`)
+  }
+
+  private getSceneAssetSources(sceneData: SceneData): AssetSource[] {
+    if (!sceneData) return []
+
+    const resourceIds = new Set<string>()
+
+    sceneData.tiles.flat().forEach((tile) => {
+      if (!tile) return
+
+      // NPC 리소스 ID 수집
+      tile.npcIds?.forEach((id) => resourceIds.add(id))
+
+      // 이벤트(몬스터 그룹) 리소스 ID 수집
+      if (tile.event) {
+        const group = (assets.monsterGroup as any)[tile.event]
+        if (group) {
+          group.forEach((m: any) => resourceIds.add(m.id))
+        }
+      }
+    })
+
+    const sources = this.buildUnitManifest(Array.from(resourceIds))
+
+    sources.push({id: sceneData.id, src: `/images/scene/${sceneData.id}.png`})
+
+    return sources
   }
 
   public async loadSceneAssets(sceneData: SceneData): Promise<void> {
@@ -122,24 +151,13 @@ export class WebAssetManager {
     this.clearMonsterAssets()
     this.spriteCache.clear()
 
-    const resourceIds = new Set<string>()
-
-    sceneData.tiles.flat().forEach((tile) => {
-      if (!tile) return
-      tile.npcIds?.forEach((id) => resourceIds.add(id))
-      if (tile.event) {
-        const group = (assets.monsterGroup as any)[tile.event]
-        if (group) group.forEach((m: any) => resourceIds.add(m.id))
-      }
-    })
-
-    const manifest = this.buildUnitManifest(Array.from(resourceIds))
+    const assetSources = this.getSceneAssetSources(sceneData)
 
     const sceneName = i18n.t(`scene.${sceneData.id}`)
 
     Terminal.log(`\n\x1b[36m[System] ${i18n.t('loading.scene.start', { name: sceneName })}\x1b[0m`)
 
-    await this.loadWithProgress(manifest, [])
+    await this.loadWithProgress(assetSources, [])
 
     Terminal.log(`\x1b[32m[System] ${i18n.t('loading.scene.complete')}\x1b[0m`)
   }
@@ -151,18 +169,33 @@ export class WebAssetManager {
       return this.spriteCache.get(originId)!
     }
 
+    let isFallbackUsed = false
+
     const getWithFallback = (suffix: string) => {
-      return this.images.get(`${originId}${suffix}`) || this.images.get(`default${suffix}`) || null
+      const original = this.images.get(`${originId}${suffix}`)
+      if (original) return original
+
+      const fallback = this.images.get(`default${suffix}`)
+      if (fallback) {
+        isFallbackUsed = true
+        return fallback
+      }
+
+      return null
     }
 
-    const states = ['attack', 'hit', 'die'] as const
-    const sprites = {
+    const states = ['attack'] as const
+
+    const sprites: any = {
       idle: [getWithFallback('_idle_0'), getWithFallback('_idle_1')].filter(Boolean),
-    } as any
+      isFallback: false, // 초기값
+    }
 
     states.forEach((state) => {
       sprites[state] = getWithFallback(`_${state}`)
     })
+
+    sprites.isFallback = isFallbackUsed
 
     this.spriteCache.set(originId, sprites)
 
@@ -178,14 +211,13 @@ export class WebAssetManager {
     }
   }
 
-  // --- 내부 지원 메서드 ---
   private buildUnitManifest(originIds: string[]): AssetSource[] {
     const manifest: AssetSource[] = []
-    originIds.forEach((id) => {
-      ;['idle_0', 'idle_1', 'attack', 'hit', 'die'].forEach((state) => {
+    originIds.forEach((id) =>
+      ['idle_0', 'idle_1', 'attack'].forEach((state) => {
         manifest.push({ id: `${id}_${state}`, src: `/images/${id}/${id}_${state}.png` })
       })
-    })
+    )
     return manifest
   }
 

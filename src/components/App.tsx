@@ -31,12 +31,9 @@ export const App = () => {
     const renderer = new ReactRenderer()
     const save = saveSystemRef.current
     Terminal.setRenderer(renderer)
-
-    const config = save.loadConfig()
-    const locale = config?.locale || 'ko'
-
+    
     openWindow()
-
+    
     const run = async () => {
       const eventBus = new EventBus()
       const engine = new GameEngine(assets, renderer, save, eventBus)
@@ -55,8 +52,13 @@ export const App = () => {
         return
       }
 
-      await assetManager.loadInitialAssets(assets, locale)
+      const config = save.loadConfig()
+      const locale = config?.locale || 'ko'
+
       await engine.init(playData, config)
+      const sceneData = engine.context.map.currentScene
+
+      await assetManager.loadInitialAssets(sceneData, locale)
       await engine.start()
 
       setIsGameOn(true)

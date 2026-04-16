@@ -1,7 +1,7 @@
 import enquirer from 'enquirer'
 import i18n from '~/i18n'
 import { printTileStatus } from '../statusPrinter'
-import { GameContext, Renderer } from '../types'
+import { GameContext, NPC, Renderer } from '../types'
 
 export class CLIRenderer implements Renderer {
   // --- 출력 메서드 ---
@@ -13,7 +13,7 @@ export class CLIRenderer implements Renderer {
     process.stdout.write(`\rmessage`)
   }
 
-  say(list: { name: string; hasQuest: boolean }[]) {
+  availableTalks(list: { name: string; hasQuest: boolean }[]) {
     const aliveNames = list.map(({ hasQuest, name }) => (hasQuest ? `\x1b[32m[!]\x1b[0m ${name}` : name)).join(', ')
 
     console.log(`${i18n.t('looking.around', { count: list.length })} ${aliveNames}`)
@@ -98,4 +98,13 @@ export class CLIRenderer implements Renderer {
   }
 
   talk() {}
+
+  printNpcCard(npc: NPC) {
+    const greeting = npc.getScripts('greeting')
+
+    console.log(`\n──────────────────────────────────────────────────`)
+    console.log(`  👤 [${npc.name}] - ${npc.description}`)
+    console.log(`  💬 "${greeting}"`)
+    console.log(`──────────────────────────────────────────────────`)
+  }
 }

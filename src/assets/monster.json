@@ -332,7 +332,7 @@
     "exp": 1500,
     "dropTableId": "boss2",
     "skills": ["call_reinforcements"],
-    "orderWeight": 50,
+    "orderWeight": 55,
     "noCorpse": true,
     "noEscape": true
   },

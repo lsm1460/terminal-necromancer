@@ -52,10 +52,7 @@ async function selectTargetNpc(args: string[], context: GameContext): Promise<Ba
 function printNpcHeader(npc: NPC) {
   const greeting = npc.getScripts('greeting')
 
-  Terminal.log(`\n──────────────────────────────────────────────────`)
-  Terminal.log(`  👤 [${npc.name}] - ${npc.description}`)
-  Terminal.log(`  💬 "${greeting}"`)
-  Terminal.log(`──────────────────────────────────────────────────`)
+  Terminal.printNpcCard(npc)
 }
 
 async function startTalkSession(npc: BaseNPC, context: GameContext) {

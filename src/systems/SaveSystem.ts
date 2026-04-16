@@ -85,13 +85,8 @@ export class SaveSystem {
       console.error('fail to make config data')
     }
 
-    if (!_config) {
-      console.error('fail to make config data')
-      return
-    }
-    console.log('this.isWeb????', this.isWeb)
+    if (!_config) return
     if (this.isWeb) {
-      console.log('????')
       localStorage.setItem('terminal_game_config', _config)
     } else {
       fs.writeFileSync(this.configPath, _config)

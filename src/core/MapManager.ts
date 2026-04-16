@@ -17,7 +17,10 @@ export class MapManager {
   /**
    * @param mapData - 경로 문자열 대신 JSON 객체 데이터를 직접 받습니다.
    */
-  constructor(mapData: any, private eventBus: EventBus) {
+  constructor(
+    mapData: any,
+    private eventBus: EventBus
+  ) {
     this.mapData = JSON.parse(JSON.stringify(mapData))
     this.originMapData = JSON.parse(JSON.stringify(mapData))
 
@@ -60,7 +63,7 @@ export class MapManager {
   }
 
   async changeScene(targetSceneId: MapId, context: GameContext) {
-    const { player, map, events, broadcast } = context
+    const { player, map, broadcast } = context
     if (!this.mapData[targetSceneId]) {
       console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
       return

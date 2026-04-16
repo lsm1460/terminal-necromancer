@@ -85,3 +85,54 @@
 .text-button * {
   pointer-events: none;
 }
+
+.dialogue-container {
+  display: flex;
+  gap: 20px;
+  border-top: 1px solid var(--color-grey-600);
+  border-bottom: 1px solid var(--color-grey-600);
+  padding: 12px 0;
+  margin: 24px 0 12px;
+}
+
+.dialogue-container br {
+  display: none;
+}
+
+.npc-profile {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--color-primary);
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.npc-profile > img {
+  /* width: 150%; */
+  aspect-ratio: 1;
+  max-width: 170%;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dialogue-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.dialogue-content .npc-name {
+  font-weight: bolder;
+}
+
+.dialogue-content .speech-bubble {
+  margin-top: 8px;
+  word-break: break-word;
+  font-style: italic;
+  font-weight: lighter;
+}
