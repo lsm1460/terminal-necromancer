@@ -101,6 +101,7 @@ import { Item as ItemClass } from './core/item/Item'
 import { QuestManager } from './core/QuestManager'
 import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
 import { EventBus } from './systems/EventBus'
+import { ConfigSystem } from './systems/ConfigSystem'
 export type Item = ItemClass
 export interface WeaponItem extends ItemClass {
   type: ItemType.WEAPON
@@ -202,11 +203,7 @@ export interface GameContext {
   npcSkills: NpcSkillManager
   broadcast: Broadcast
   monster: MonsterFactory
-  config?: {
-    locale?: 'ko' | 'en'
-    isSearchFirst?: boolean
-    isAutoInputFocus?: boolean
-  }
+  config: ConfigSystem
   cheats: {
     isFullMap?: boolean
   }
@@ -269,7 +266,7 @@ export type SkillResult = {
 
 export type ExecuteSkill = (
   player: CombatUnit<Player>,
-  context: {world: World, eventBus: EventBus},
+  context: { world: World; eventBus: EventBus },
   units?: {
     ally?: CombatUnit[]
     enemies?: CombatUnit[]

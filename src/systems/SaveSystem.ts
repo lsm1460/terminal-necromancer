@@ -15,22 +15,13 @@ export type SaveData = {
   completedEvents: string[]
 }
 
-export type ConfigData = {
-  locale?: 'ko' | 'en'
-}
-
 export class SaveSystem {
   private isWeb = typeof window !== 'undefined'
   private filePath: string = ''
-  private configPath: string = ''
 
-  constructor(savePath?: string, configPath?: string) {
+  constructor(savePath?: string) {
     if (!this.isWeb && savePath) {
       this.filePath = savePath
-    }
-
-    if (!this.isWeb && configPath) {
-      this.configPath = configPath
     }
   }
 
@@ -48,19 +39,6 @@ export class SaveSystem {
     }
   }
 
-  loadConfig(): ConfigData | undefined {
-    if (this.isWeb) {
-      // 1. 브라우저 저장소 확인
-      const saved = localStorage.getItem('terminal_game_config')
-      if (saved) return JSON.parse(saved)
-
-      return
-    } else {
-      if (!fs.existsSync(this.configPath)) return
-      return JSON.parse(fs.readFileSync(this.configPath, 'utf-8'))
-    }
-  }
-
   save(saveData: SaveData) {
     const rawData = {
       ...saveData,
@@ -74,22 +52,6 @@ export class SaveSystem {
       localStorage.setItem('terminal_game_save', JSON.stringify(rawData))
     } else {
       fs.writeFileSync(this.filePath, JSON.stringify(rawData, null, 2))
-    }
-  }
-
-  saveConfig(config: ConfigData) {
-    let _config = ''
-    try {
-      _config = JSON.stringify(config)
-    } catch(e) {
-      console.error('fail to make config data')
-    }
-
-    if (!_config) return
-    if (this.isWeb) {
-      localStorage.setItem('terminal_game_config', _config)
-    } else {
-      fs.writeFileSync(this.configPath, _config)
     }
   }
 

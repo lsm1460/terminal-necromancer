@@ -11,6 +11,7 @@ import { CLIRenderer } from './renderers/cliRenderer'
 import { EventBus } from './systems/EventBus'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameEventType } from './types/event'
+import { ConfigSystem } from './systems/ConfigSystem'
 
 const loadJSON = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -21,9 +22,10 @@ const statePath = path.join(assetsDir, 'state.json')
 const configPath = path.join(assetsDir, 'config.json')
 const initState = loadJSON(path.join(assetsDir, 'init_state.json'))
 
-const save = new SaveSystem(statePath, configPath)
-const config = save.loadConfig()
-const locale = config?.locale || 'ko'
+const save = new SaveSystem(statePath)
+const config = new ConfigSystem(configPath)
+const _config = config.load()
+const locale = _config?.locale || 'ko'
 
 const assets: GameAssets = {
   map: loadJSON(path.join(assetsDir, 'map.json')),
@@ -42,11 +44,11 @@ const run = async () => {
   Terminal.setRenderer(renderer)
 
   const eventBus = new EventBus()
-  const engine = new GameEngine(assets, renderer, save, eventBus)
+  const engine = new GameEngine(assets, renderer, save, config, eventBus)
 
   await i18n.changeLanguage(locale)
 
-  const playData = await Title.gameStart(save, initState)
+  const playData = await Title.gameStart(save, config, initState)
   if (playData === null) {
     return
   }

@@ -32,15 +32,16 @@ export const useGame = () => {
     (newConfig: Record<string, any>) => {
       if (!engine.current) return
       const { context } = engine.current
-      context.config = { ...context.config, ...newConfig }
+      const _config = context.config.load()
 
-      context.save.saveConfig(context.config)
+      context.config.save({ ..._config, ...newConfig })
     },
     [engine]
   )
 
   const getConfig = useCallback(() => {
-    return engine.current?.context?.config || {}
+    if (!engine.current) return {}
+    return engine.current.context.config.load() || {}
   }, [engine])
 
   return {

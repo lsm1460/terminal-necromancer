@@ -13,6 +13,7 @@ import { assetManager } from '~/core/WebAssetManager'
 import { GameEngine } from '~/gameEngine'
 import { useShortcuts } from '~/hooks/useShortcuts'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
+import { ConfigSystem } from '~/systems/ConfigSystem'
 import { EventBus } from '~/systems/EventBus'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { GameEventType } from '~/types/event'
@@ -22,6 +23,7 @@ import { ScreenRouter } from './ScreenRouter'
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
   const saveSystemRef = useRef(new SaveSystem())
+  const configSystemRef = useRef(new ConfigSystem())
 
   const [isGameOn, setIsGameOn] = useState(false)
 
@@ -30,16 +32,17 @@ export const App = () => {
   useEffect(() => {
     const renderer = new ReactRenderer()
     const save = saveSystemRef.current
+    const config = configSystemRef.current
     Terminal.setRenderer(renderer)
-    
+
     openWindow()
-    
+
     const run = async () => {
       const eventBus = new EventBus()
-      const engine = new GameEngine(assets, renderer, save, eventBus)
+      const engine = new GameEngine(assets, renderer, save, config, eventBus)
       engineRef.current = engine
 
-      const playData = await Title.gameStart(save, initState)
+      const playData = await Title.gameStart(save, config, initState)
 
       if (playData === null) {
         //TODO: exit game
@@ -52,10 +55,10 @@ export const App = () => {
         return
       }
 
-      const config = save.loadConfig()
-      const locale = config?.locale || 'ko'
+      const _config = config.load()
+      const locale = _config?.locale || 'ko'
 
-      await engine.init(playData, config)
+      await engine.init(playData)
       const sceneData = engine.context.map.currentScene
 
       await assetManager.loadInitialAssets(sceneData, locale)

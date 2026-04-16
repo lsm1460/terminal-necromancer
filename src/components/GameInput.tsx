@@ -8,10 +8,12 @@ import { ThemedButton } from './common/ThemedButton'
 
 export const GameInput: React.FC = () => {
   const { t } = useTranslation()
-  const { uiState, isOpenButtonMenu, currentScreen, resolveUI, toggleButtonMenu } = useGameStore()
-  const disabled = useInputLock()
 
+  const disabled = useInputLock()
   const { getConfig, processCommand } = useGame()
+  const { uiState, isOpenButtonMenu, screenHistory, resolveUI, toggleButtonMenu } = useGameStore()
+
+  const currentScreen = screenHistory[screenHistory.length - 1]
 
   const inputRef = useRef<HTMLInputElement>(null)
 

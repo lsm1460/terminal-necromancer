@@ -2,6 +2,7 @@ import i18n from '~/i18n'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { speak } from '~/utils'
 import { Terminal } from './Terminal'
+import { ConfigSystem } from '~/systems/ConfigSystem'
 
 export class Title {
   /**
@@ -9,12 +10,12 @@ export class Title {
    * @param save - 세이브 시스템 인스턴스
    * @param initState - 새 게임 시작 시 사용할 초기 데이터
    */
-  static async gameStart(save: SaveSystem, initState: any): Promise<any> {
+  static async gameStart(save: SaveSystem, config: ConfigSystem, initState: any): Promise<any> {
     try {
-      let config = save.loadConfig()
+      let _config = config.load()
       let hasSave = save.load()
 
-      const locale = config?.locale || 'ko'
+      const locale = _config?.locale || 'ko'
 
       await i18n.changeLanguage(locale)
 
@@ -38,16 +39,16 @@ export class Title {
         }
 
         if (menu === 'config') {
-          const _config = await Terminal.select(i18n.t(`title.config`), [
+          const _res = await Terminal.select(i18n.t(`title.config`), [
             { name: 'locale', message: i18n.t(`title.language`) },
             { name: 'cancel', message: i18n.t(`cancel`) },
           ])
 
-          if (_config === 'cancel') {
-            return this.gameStart(save, initState)
+          if (_res === 'cancel') {
+            return this.gameStart(save, config, initState)
           }
 
-          if (_config === 'locale') {
+          if (_res === 'locale') {
             const lang = await Terminal.select<'ko' | 'en'>(
               i18n.t(`title.language`),
               [
@@ -58,14 +59,14 @@ export class Title {
             )
 
             await i18n.changeLanguage(lang)
-            config = {
-              ...(config || {}),
+            _config = {
+              ...(_config || {}),
               locale: lang,
             }
 
-            save.saveConfig(config)
+            config.save(_config)
 
-            return this.gameStart(save, initState)
+            return this.gameStart(save, config, initState)
           }
         }
 

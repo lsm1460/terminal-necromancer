@@ -13,11 +13,12 @@ import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
 import { World } from './core/World'
 import i18n from './i18n'
 import { printDirections } from './statusPrinter'
+import { ConfigData, ConfigSystem } from './systems/ConfigSystem'
 import { DropSystem } from './systems/DropSystem'
 import { EventBus } from './systems/EventBus'
 import { EventLedger } from './systems/EventLedger'
 import { MonsterEvent } from './systems/events/MonsterEvent'
-import { ConfigData, SaveData, SaveSystem } from './systems/SaveSystem'
+import { SaveData, SaveSystem } from './systems/SaveSystem'
 import { GameContext, Renderer } from './types'
 
 export class GameEngine {
@@ -30,10 +31,11 @@ export class GameEngine {
     private assets: GameAssets,
     private renderer: Renderer,
     private saveSystem: SaveSystem,
+    private configSystem: ConfigSystem,
     private eventBus: EventBus
   ) {}
 
-  public async init(initData: SaveData, configData?: ConfigData): Promise<void> {
+  public async init(initData: SaveData): Promise<void> {
     const { item, drop, monsterGroup, monster, level, npcSkills, map, npc, state } = this.assets
 
     const dropSystem = new DropSystem(item, drop)
@@ -69,7 +71,7 @@ export class GameEngine {
       broadcast: broadcastSystem,
       monster: monsterFactory,
       npcSkills: npcSkillManager,
-      config: configData || {},
+      config: this.configSystem,
       quest,
       cheats: {},
     } as GameContext
