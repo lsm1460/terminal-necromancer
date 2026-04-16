@@ -1,0 +1,30 @@
+{
+  "RATTY_SILENCED": {
+    "title": "Silenced",
+    "description": "Eliminated Ratty, the long-tongued informant."
+  },
+  "CARON_DEAD": {
+    "title": "Slayer of the Void",
+    "description": "Took the life of Caron, the guide of the sub-space."
+  },
+  "CARON_PARTNER": {
+    "title": "Caron's Compact",
+    "description": "Entered into a binding contract with Caron."
+  },
+  "LEGENDARY_RAISER": {
+    "title": "Miraculous Resurrection",
+    "description": "Raised a skeleton of Legendary rarity."
+  },
+  "RESISTANCE_HERO": {
+    "title": "Vanguard of Liberation",
+    "description": "Reached 200 contribution points with the Resistance."
+  },
+  "ENDING_1": {
+    "title": "The End of Truth",
+    "description": "Witnessed the first ending."
+  },
+  "ENDING_2": {
+    "title": "Cycle of Samsara",
+    "description": "Witnessed the second ending."
+  }
+}

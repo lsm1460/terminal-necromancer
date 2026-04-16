@@ -1,0 +1,30 @@
+{
+  "RATTY_SILENCED": {
+    "title": "입막음",
+    "description": "혀가 긴 래티를 처치했습니다."
+  },
+  "CARON_DEAD": {
+    "title": "아공간의 인도자",
+    "description": "카론을 죽였습니다."
+  },
+  "CARON_PARTNER": {
+    "title": "카론과의 계약",
+    "description": "카론과 계약을 맺었습니다."
+  },
+  "LEGENDARY_RAISER": {
+    "title": "기적의 소생",
+    "description": "전설 등급의 해골을 소생시켰습니다."
+  },
+  "RESISTANCE_HERO": {
+    "title": "해방의 선봉장",
+    "description": "레지스탕스 공헌도 200을 달성했습니다."
+  },
+  "ENDING_1": {
+    "title": "진실의 끝",
+    "description": "첫 번째 엔딩을 보았습니다."
+  },
+  "ENDING_2": {
+    "title": "반복되는 굴레",
+    "description": "두 번째 엔딩을 보았습니다."
+  }
+}

@@ -21,6 +21,7 @@ const loadJSON = (filePath: string) => {
 const assetsDir = path.join(__dirname, 'assets')
 const statePath = path.join(assetsDir, 'state.json')
 const configPath = path.join(assetsDir, 'config.json')
+const achievementPath = path.join(assetsDir, 'archives.json')
 const initState = loadJSON(path.join(assetsDir, 'init_state.json'))
 
 const save = new SaveSystem(statePath)
@@ -50,7 +51,7 @@ const run = async () => {
 
   await i18n.changeLanguage(locale)
 
-  const achievement = new AchievementManager(eventBus, assets.achievements)
+  const achievement = new AchievementManager(eventBus, assets.achievements, achievementPath)
 
   const title = new Title(save, config, achievement)
 

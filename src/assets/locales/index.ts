@@ -4,18 +4,20 @@ import i18n from 'i18next'
 import koInit from './ko/init.json'
 import koMap from './ko/map.json'
 import koWeb from './ko/web.json'
+import koAchievement from './ko/achievement.json'
 
 import enInit from './en/init.json'
 import enMap from './en/map.json'
 import enWeb from './en/web.json'
+import enAchievement from './en/achievement.json'
 
 // 1. 초기 리소스 설정
 export const initialResources = {
   ko: {
-    translation: { ...koInit, ...koMap, web: koWeb },
+    translation: { ...koInit, ...koMap, web: koWeb, achievement: koAchievement },
   },
   en: {
-    translation: { ...enInit, ...enMap, web: enWeb },
+    translation: { ...enInit, ...enMap, web: enWeb, achievement: enAchievement },
   },
 }
 
