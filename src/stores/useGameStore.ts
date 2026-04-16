@@ -5,7 +5,7 @@ import { UIState } from '~/renderers/ReactRenderer'
 const MAX_LOGS = 100
 
 interface GameState {
-  currentScreen: AppScreen
+  screenHistory: AppScreen[]
   logs: string[]
   uiState: UIState
   isLoading: boolean
@@ -21,10 +21,11 @@ interface GameState {
   resolveUI: (value: any, message?: string) => void
   toggleButtonMenu: () => void
   setScreen: (screen: AppScreen) => void
+  backScreen: () => void
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
-  currentScreen: 'GAME',
+  screenHistory: ['GAME'],
   logs: [],
   uiState: {
     type: 'NONE',
@@ -74,5 +75,17 @@ export const useGameStore = create<GameState>((set, get) => ({
     })
   },
   toggleButtonMenu: () => set((state) => ({ isOpenButtonMenu: !state.isOpenButtonMenu })),
-  setScreen: (screen: AppScreen) => set({ currentScreen: screen }),
+  setScreen: (screen: AppScreen) =>
+    set((state) => ({
+      screenHistory: [...state.screenHistory, screen],
+    })),
+  backScreen: () =>
+    set((state) => {
+      if (state.screenHistory.length <= 1) return state
+      const newHistory = [...state.screenHistory]
+      newHistory.pop()
+      return {
+        screenHistory: newHistory,
+      }
+    }),
 }))

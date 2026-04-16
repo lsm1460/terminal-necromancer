@@ -17,7 +17,7 @@ interface CreditSection {
 }
 
 export const CreditScreen: ScreenComponent = () => {
-  const setScreen = useGameStore((state) => state.setScreen)
+  const { backScreen } = useGameStore((state) => state)
 
   const creditSections: CreditSection[] = [
     {
@@ -102,7 +102,7 @@ export const CreditScreen: ScreenComponent = () => {
 
   return (
     <div className="flex h-full flex-col bg-grey-900 text-primary select-none">
-      <ThemedHeader title="CREDITS" onBack={() => setScreen('CONFIG')} />
+      <ThemedHeader title="CREDITS" onBack={backScreen} />
 
       <div className="lg:border lg:border-primary/50 lg:rounded-2xl lg:max-w-[480px] w-full mx-auto flex-1 overflow-hidden flex flex-col">
         <main className="flex-1 overflow-y-auto p-4 space-y-10 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">

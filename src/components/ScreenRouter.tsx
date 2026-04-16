@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { useGameStore } from '~/stores/useGameStore'
 import { AppScreen, ScreenConfig, ScreenInfo } from './lib/types'
 import { SCREEN_ROUTE } from './route'
@@ -19,8 +19,20 @@ const flattenTree = (config: ScreenConfig, depth = 0, parentId: AppScreen | null
 flattenTree(SCREEN_ROUTE)
 
 export const ScreenRouter = ({ children }: { children: ReactNode[] }) => {
-  const currentScreen = useGameStore((state) => state.currentScreen)
+  const currentScreen = useGameStore((state) => state.screenHistory[state.screenHistory.length - 1])
+  const backScreen = useGameStore((state) => state.backScreen)
   const currentInfo = SCREEN_MAP.get(currentScreen)
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        backScreen()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [backScreen])
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-black">

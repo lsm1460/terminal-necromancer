@@ -10,8 +10,9 @@ import { ScreenComponent } from './lib/types'
 export const ConfigScreen: ScreenComponent = () => {
   const { getConfig, updateConfig } = useGame()
   const { t } = useTranslation()
-  const { currentScreen, setScreen } = useGameStore((state) => state)
+  const { screenHistory, setScreen, backScreen } = useGameStore((state) => state)
 
+  const currentScreen = screenHistory[screenHistory.length - 1]
   const isOpenConfigMenu = currentScreen === 'CONFIG'
   
   const [config, setConfig] = useState({
@@ -84,7 +85,7 @@ export const ConfigScreen: ScreenComponent = () => {
 
   return (
     <div className="flex h-full flex-col bg-grey-900 text-primary select-none">
-      <ThemedHeader title="CONFIG" onBack={() => setScreen('GAME')} />
+      <ThemedHeader title="CONFIG" onBack={backScreen} />
 
       <div className="lg:border lg:border-primary/50 lg:rounded-2xl lg:max-w-[480px] w-full mx-auto flex-1 overflow-hidden flex flex-col">
         <main className="flex-1 overflow-y-auto p-4 space-y-8">
