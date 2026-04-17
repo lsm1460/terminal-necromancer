@@ -1,4 +1,6 @@
 {
+  "display_format": "[업적 달성] {{title}}",
+  "unknown_record": "아직 알려지지 않은 기록입니다.",
   "RATTY_SILENCED": {
     "title": "입막음",
     "description": "혀가 긴 래티를 처치했습니다."

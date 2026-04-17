@@ -1,4 +1,6 @@
 {
+  "display_format": "Achievement Unlocked: {{title}}",
+  "unknown_record": "This record is yet to be discovered. (또는 Unknown record.",
   "RATTY_SILENCED": {
     "title": "Silenced",
     "description": "Eliminated Ratty, the long-tongued informant."

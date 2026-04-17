@@ -85,9 +85,10 @@ export class AchievementManager {
     if (achievement && !achievement.resolved) {
       achievement.resolved = true
 
-      // 토스트 알림 등을 위해 이벤트 발행 (ToastManager가 수신)
       this.eventBus.emitAsync(GameEventType.SHOW_TOAST, {
-        message: `[업적 달성] ${i18n.t(`achievement.${achievement.id}.title`)}`,
+        message: i18n.t('achievement.display_format', {
+          title: i18n.t(`achievement.list.${achievement.id}`),
+        }),
         type: 'ACHIEVEMENT',
       })
 
@@ -95,12 +96,12 @@ export class AchievementManager {
     }
   }
 
-  getAchievements() {
+  get() {
     return this.achievements.map((a) => ({
       ...a,
       title: a.hidden && !a.resolved ? '???' : i18n.t(`achievement.${a.id}.title`),
       description:
-        a.hidden && !a.resolved ? '아직 알려지지 않은 기록입니다.' : i18n.t(`achievement.${a.id}.description`),
+        a.hidden && !a.resolved ? i18n.t('achievement.unknown_record') : i18n.t(`achievement.${a.id}.description`),
     }))
   }
 
