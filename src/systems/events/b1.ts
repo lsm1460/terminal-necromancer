@@ -1,5 +1,5 @@
 import { printLootStatus } from '~/core/statusPrinter'
-import { Drop } from '~/types'
+import { Drop } from '~/types/item'
 import { EventHandler } from '.'
 
 export const b1Handlers: Record<string, EventHandler> = {

@@ -1,25 +1,14 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import i18n from '~/i18n'
-import {
-  Affix,
-  AffixId,
-  ArmorItem,
-  BattleTarget,
-  ConsumableItem,
-  LevelData,
-  PositionType,
-  Skill,
-  SKILL_IDS,
-  SkillId,
-  WeaponItem,
-} from '~/types'
+import { EventBus } from '~/systems/EventBus'
+import { BattleTarget, LevelData, PositionType, Skill, SKILL_IDS, SkillId } from '~/types'
+import { GameEventType } from '~/types/event'
+import { Affix, AffixId, ArmorItem, ConsumableItem, WeaponItem } from '~/types/item'
 import { Item } from '../item/Item'
 import { InventoryManager } from './InventoryManager'
 import { MinionManager } from './MinionManager'
 import SkeletonWrapper from './SkeletonWrapper'
 import { StatsCalculator } from './StatsCalculator'
-import { EventBus } from '~/systems/EventBus'
-import { GameEventType } from '~/types/event'
 
 export type PlayerSaveData = Partial<Player> & {
   _skeleton?: BattleTarget[]

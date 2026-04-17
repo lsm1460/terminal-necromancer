@@ -1,7 +1,8 @@
 import { ItemRarity } from '~/core/item/consts'
 import { Item } from '~/core/item/Item'
 import { ItemGenerator } from '~/core/item/ItemGenerator'
-import { Drop } from '~/types'
+import { Affix, Drop } from '~/types/item'
+import { ItemPolicy } from './item/ItemPolicy'
 
 export interface DropEntry {
   itemId: string
@@ -24,14 +25,14 @@ export interface DropResult {
 export class DropSystem {
   private items: Record<string, Drop> = {}
   private tables: Record<string, DropTable> = {}
-  private itemGenerator: ItemGenerator
+  private itemGenerator: ItemGenerator<ItemRarity, Affix, Drop>
 
   constructor(itemData: any, dropTableData: any) {
-    this.itemGenerator = new ItemGenerator()
+    this.itemGenerator = new ItemGenerator(new ItemPolicy())
 
     this.items = itemData
     this.tables = dropTableData
-    
+
     this.validateTables()
   }
 
@@ -51,7 +52,7 @@ export class DropSystem {
 
   public generateDrops(dropTableId: string): DropResult {
     const table = this.tables[dropTableId] || this.tables['none']
-    
+
     if (!table) return { gold: 0, drops: [] }
 
     const gold = this.randomRange(table.gold[0], table.gold[1])
