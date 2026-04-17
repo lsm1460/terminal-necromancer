@@ -1,34 +1,78 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { ItemGenerator } from '../item/ItemGenerator'
-import { ItemType } from '~/types'
-import { ItemRarity } from '../item/consts'
+import { ItemType } from '~/types/item'
 import { Item } from '../item/Item'
+import { ItemGenerator } from '../item/ItemGenerator'
+import { IGenerationPolicy } from '../item/types'
+import * as utils from '../utils'
 
 // Mock dependencies
-vi.mock('~/utils', () => ({
+vi.mock('../utils', () => ({
   generateId: vi.fn((id) => `${id}_mocked`),
+  rollFromRange: vi.fn((range, isInt) => (isInt ? range[0] : range[0])),
 }))
 
-vi.mock('~/i18n', () => ({
-  default: {
-    t: vi.fn((key) => key),
-  },
-}))
+/**
+ * 테스트를 위한 더미 정책 클래스
+ * IGenerationPolicy 인터페이스를 구현하며, 생성 로직을 세부적으로 제어합니다.
+ */
+class DummyItemPolicy implements IGenerationPolicy<string, any, any> {
+  isEquippable(baseItem: any): boolean {
+    return ['weapon', 'armor'].includes(baseItem.type)
+  }
 
-vi.mock('../affixes', () => ({
-  getAffixList: vi.fn(() => ({
-    TEST_AFFIX: {
-      id: 'TEST_AFFIX',
-      valueRange: [10, 20],
-    },
-  })),
-}))
+  getMinRarity(baseItem: any): string | undefined {
+    return baseItem.minRarity
+  }
 
-describe('ItemGenerator', () => {
-  let generator: ItemGenerator
+  getMaxRarity(baseItem: any): string | undefined {
+    return baseItem.maxRarity
+  }
+
+  rollRarity(min?: string, max?: string): string {
+    return min || 'COMMON'
+  }
+
+  getStatRanges(baseItem: any) {
+    return {
+      baseId: baseItem.id,
+      atkRange: baseItem.atkRange,
+      defRange: baseItem.defRange,
+      critRange: baseItem.critRange,
+      evaRange: baseItem.evaRange,
+      maxSkeletonRange: baseItem.maxSkeletonRange,
+    }
+  }
+
+  getSetting(rarity: string) {
+    switch (rarity) {
+      case 'EPIC':
+        return { multiplier: 1.5, hasAffix: true, adjectives: ['legendary'] }
+      case 'RARE':
+        return { multiplier: 1.25, hasAffix: false, adjectives: ['rare'] }
+      default:
+        return { multiplier: 1.0, hasAffix: false, adjectives: [] }
+    }
+  }
+
+  pickAffix(rarity: string) {
+    return { id: `AFFIX_${rarity}`, value: 10 }
+  }
+
+  getPerformancePrefix(value: number, range: [number, number]): string {
+    if (!range || range[0] === range[1]) return ''
+    if (value >= range[1] * 0.9) return 'masterwork'
+    if (value <= range[0] * 1.1) return 'worn'
+    return ''
+  }
+}
+
+describe('ItemGenerator (Refactored with Dummy Policy)', () => {
+  let generator: ItemGenerator<string, any, any>
+  let policy: DummyItemPolicy
 
   beforeEach(() => {
-    generator = new ItemGenerator()
+    policy = new DummyItemPolicy()
+    generator = new ItemGenerator(policy)
     vi.clearAllMocks()
   })
 
@@ -90,15 +134,15 @@ describe('ItemGenerator', () => {
         id: 'epic_sword',
         type: ItemType.WEAPON,
         atkRange: [100, 200],
-        minRarity: 'EPIC' as ItemRarity,
-        maxRarity: 'EPIC' as ItemRarity,
+        minRarity: 'EPIC',
+        maxRarity: 'EPIC',
       }
 
       const item = generator.createItem(baseItem)
 
       expect(item.rarity).toBe('EPIC')
       expect(item.affix).toBeDefined()
-      expect(item.affix?.id).toBe('TEST_AFFIX')
+      expect(item.affix?.id).toBe('AFFIX_EPIC')
     })
   })
 
@@ -133,14 +177,7 @@ describe('ItemGenerator', () => {
 
   describe('performance prefix', () => {
     it('should assign "masterwork" for high rolls', () => {
-      // Mock Math.random to return high values for stats
-      const spy = vi.spyOn(Math, 'random')
-      // 1. rollRarity roll (common)
-      // 2. atk roll (high)
-      // 3. adjectives roll
-      spy.mockReturnValueOnce(0.9) // rollRarity: > 20 => COMMON
-      spy.mockReturnValueOnce(0.99) // finalizeStat (atk): high
-      spy.mockReturnValueOnce(0) // adjectives
+      (utils.rollFromRange as any).mockImplementation((range: [number, number]) => range[1]);
 
       const baseItem: any = {
         id: 'sword',
@@ -150,14 +187,10 @@ describe('ItemGenerator', () => {
 
       const item = generator.createItem(baseItem)
       expect(item.perfPrefix).toBe('masterwork')
-      spy.mockRestore()
     })
 
     it('should assign "worn" for low rolls', () => {
-      const spy = vi.spyOn(Math, 'random')
-      spy.mockReturnValueOnce(0.9) // rollRarity: COMMON
-      spy.mockReturnValueOnce(0.01) // finalizeStat (atk): low
-      spy.mockReturnValueOnce(0) // adjectives
+      (utils.rollFromRange as any).mockImplementation((range: [number, number]) => range[0]);
 
       const baseItem: any = {
         id: 'sword',
@@ -167,7 +200,6 @@ describe('ItemGenerator', () => {
 
       const item = generator.createItem(baseItem)
       expect(item.perfPrefix).toBe('worn')
-      spy.mockRestore()
     })
   })
 })
