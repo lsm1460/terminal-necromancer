@@ -1,4 +1,4 @@
-import { EventBus } from '~/systems/EventBus';
+import { EventBus } from '~/core/EventBus';
 import { GameContext } from '~/types';
 import { GameEventType } from '~/types/event';
 

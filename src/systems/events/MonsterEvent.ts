@@ -7,7 +7,7 @@ import i18n from '~/i18n'
 import { Tile } from '~/types'
 import { GameEventType } from '~/types/event'
 import { delay } from '~/utils'
-import { EventBus } from '../EventBus'
+import { EventBus } from '../../core/EventBus'
 
 export class MonsterEvent {
   constructor(

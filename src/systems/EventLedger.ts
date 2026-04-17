@@ -1,6 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import { GameEventType } from '~/types/event'
-import { EventBus } from './EventBus'
+import { EventBus } from '../core/EventBus'
 
 export class EventLedger {
   private completedEvents: Set<string> = new Set()

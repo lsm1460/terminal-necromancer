@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { EventBus } from '~/systems/EventBus'
+import { EventBus } from '~/core/EventBus'
 import { Corpse, LootBag, PositionType } from '~/types'
 import { GameEventType } from '~/types/event'
 import { Drop } from '~/types/item'

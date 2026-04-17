@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import i18n from '~/i18n'
-import { EventBus } from '~/systems/EventBus'
+import { EventBus } from '~/core/EventBus'
 import { GameEventType } from '~/types/event'
 import { NPCManager } from './NpcManager'
 import { Terminal } from '../core/Terminal'

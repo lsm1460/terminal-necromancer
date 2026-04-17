@@ -1,5 +1,5 @@
 import i18n from '~/i18n'
-import { EventBus } from '~/systems/EventBus'
+import { EventBus } from '~/core/EventBus'
 import { BattleTarget } from '~/types'
 import { Battle } from '.'
 import { Terminal } from '../Terminal'

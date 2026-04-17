@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { EventBus } from '~/systems/EventBus'
+import { EventBus } from '~/core/EventBus'
 import { NPCManager } from '../../systems/NpcManager'
 import { Player } from '../player/Player'
 

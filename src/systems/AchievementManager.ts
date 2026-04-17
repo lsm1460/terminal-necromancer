@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { GameEventType } from '~/types/event'
-import { EventBus } from './EventBus'
+import { EventBus } from '../core/EventBus'
 import { SkeletonRarity } from '~/consts'
 import i18n from '~/i18n'
 

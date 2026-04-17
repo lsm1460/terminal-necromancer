@@ -1,6 +1,6 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import i18n from '~/i18n'
-import { EventBus } from '~/systems/EventBus'
+import { EventBus } from '~/core/EventBus'
 import { BattleTarget, LevelData, PositionType, Skill, SKILL_IDS, SkillId } from '~/types'
 import { GameEventType } from '~/types/event'
 import { Affix, AffixId, ArmorItem, ConsumableItem, WeaponItem } from '~/types/item'

@@ -10,7 +10,7 @@ import i18n from './i18n'
 import { CLIRenderer } from './renderers/cliRenderer'
 import { AchievementManager } from './systems/AchievementManager'
 import { ConfigSystem } from './systems/ConfigSystem'
-import { EventBus } from './systems/EventBus'
+import { EventBus } from './core/EventBus'
 import { SaveSystem } from './systems/SaveSystem'
 import { GameEventType } from './types/event'
 

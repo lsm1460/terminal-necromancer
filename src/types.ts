@@ -88,7 +88,7 @@ export type Vector = { dx: number; dy: number }
 import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
 import { AttackType } from './core/types'
 import { ConfigSystem } from './systems/ConfigSystem'
-import { EventBus } from './systems/EventBus'
+import { EventBus } from './core/EventBus'
 import { QuestManager } from './systems/QuestManager'
 import { Item } from './types/item'
 

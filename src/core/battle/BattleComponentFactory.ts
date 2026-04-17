@@ -1,5 +1,5 @@
 import { DropSystem } from '~/systems/DropSystem'
-import { EventBus } from '~/systems/EventBus'
+import { EventBus } from '~/core/EventBus'
 import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { World } from '../World'
