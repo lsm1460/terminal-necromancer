@@ -1,12 +1,12 @@
 import { HOSTILITY_LIMIT } from '~/consts'
+import { EventBus } from '~/core/EventBus'
+import { GameEventType } from '~/core/types'
 import i18n from '~/i18n'
 import { getNPCClass } from '~/npc'
-import { EventBus } from '~/core/EventBus'
 import { NPC, NPCState, PositionType } from '~/types'
-import { GameEventType } from '~/types/event'
-import { MapManager } from './MapManager'
 import { Terminal } from '../core/Terminal'
 import { BaseNPC } from '../core/npc/BaseNPC'
+import { MapManager } from './MapManager'
 
 type EventCallback = (npcId: string, params?: { karma?: number; hostile?: number }) => void
 

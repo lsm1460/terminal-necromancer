@@ -1,6 +1,6 @@
 import { EventBus } from '~/core/EventBus';
+import { GameEventType } from '~/core/types';
 import { GameContext } from '~/types';
-import { GameEventType } from '~/types/event';
 
 export class QuestManager {
   private questQue: { npcId: string; questType: string }[] = []

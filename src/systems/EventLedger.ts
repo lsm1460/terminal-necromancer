@@ -1,5 +1,5 @@
 import { Terminal } from '~/core/Terminal'
-import { GameEventType } from '~/types/event'
+import { GameEventType } from '~/core/types'
 import { EventBus } from '../core/EventBus'
 
 export class EventLedger {

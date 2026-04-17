@@ -1,4 +1,4 @@
-import { GameEventType } from '~/types/event'
+import { GameEventType } from "./types";
 
 type BusCallback<T = any> = (payload: T) => void
 

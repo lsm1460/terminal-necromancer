@@ -1,26 +1,9 @@
+import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { Terminal } from '~/core/Terminal'
+import { PassiveDefinition } from '~/core/types'
+import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
-import { BattleTarget, NpcSkill, PhasesShift } from '~/types'
-import { Battle, DamageOptions } from '../battle/Battle'
-import { CombatUnit } from '../battle/unit/CombatUnit'
-import { Terminal } from '../Terminal'
-import { getOriginId } from '../utils'
-
-type PassiveEffect = (
-  attacker: CombatUnit,
-  defender: CombatUnit,
-  skill: NpcSkill,
-  battle: Battle,
-  options: DamageOptions,
-  damage?: number
-) => Promise<void>
-
-interface PassiveDefinition {
-  onProcessHit?: PassiveEffect
-  onBeforeAttack?: PassiveEffect
-  onAfterAttack?: PassiveEffect
-  onAfterHit?: PassiveEffect
-  onDeath?: (attacker: CombatUnit, skill: NpcSkill, battle: Battle, options?: DamageOptions) => Promise<void>
-}
+import { BattleTarget, PhasesShift } from '~/types'
 
 const RED = (text: string) => `\x1b[31m${text}\x1b[0m`
 

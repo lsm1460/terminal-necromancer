@@ -1,11 +1,11 @@
 import { LogOut, Settings } from 'lucide-react'
 import React, { useMemo } from 'react'
 import { Terminal } from '~/core/Terminal'
+import { GameEventType } from '~/core/types'
 import { useGame } from '~/hooks/useGame'
-import { useGameStore } from '~/stores/useGameStore'
-import { GameEventType } from '~/types/event'
-import { ThemedButton } from './common/ThemedButton'
 import i18n from '~/i18n'
+import { useGameStore } from '~/stores/useGameStore'
+import { ThemedButton } from './common/ThemedButton'
 
 export const StatusBar: React.FC<{ isGameOn: boolean }> = ({ isGameOn }) => {
   const { getPlayer, getContext } = useGame()

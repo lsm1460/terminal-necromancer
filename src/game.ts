@@ -3,16 +3,17 @@ import path from 'path'
 import { GameAssets } from './assets'
 import { loadExtraLocaleBundle } from './assets/locales'
 import { createCLI } from './core/cli'
+import { EventBus } from './core/EventBus'
 import { GameEngine } from './core/gameEngine'
 import { Terminal } from './core/Terminal'
 import { Title } from './core/Title'
+import { GameEventType } from './core/types'
 import i18n from './i18n'
 import { CLIRenderer } from './renderers/cliRenderer'
 import { AchievementManager } from './systems/AchievementManager'
 import { ConfigSystem } from './systems/ConfigSystem'
-import { EventBus } from './core/EventBus'
+import { SkillEffectPresenter } from './systems/presenter/SkillEffectPresenter'
 import { SaveSystem } from './systems/SaveSystem'
-import { GameEventType } from './types/event'
 
 const loadJSON = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -42,11 +43,14 @@ const assets: GameAssets = {
   achievements: loadJSON(path.join(assetsDir, 'achievements.json')),
 }
 
+const eventBus = new EventBus()
+
+new SkillEffectPresenter(eventBus)
+
 const run = async () => {
   const renderer = new CLIRenderer()
   Terminal.setRenderer(renderer)
 
-  const eventBus = new EventBus()
   const engine = new GameEngine(assets, renderer, save, config, eventBus)
 
   await i18n.changeLanguage(locale)

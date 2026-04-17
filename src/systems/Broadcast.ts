@@ -1,9 +1,9 @@
 import _ from 'lodash'
-import i18n from '~/i18n'
 import { EventBus } from '~/core/EventBus'
-import { GameEventType } from '~/types/event'
-import { NPCManager } from './NpcManager'
+import { GameEventType } from '~/core/types'
+import i18n from '~/i18n'
 import { Terminal } from '../core/Terminal'
+import { NPCManager } from './NpcManager'
 
 export class Broadcast {
   private pendingQueue: string[] = []

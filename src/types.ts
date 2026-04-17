@@ -1,6 +1,5 @@
 import { SkeletonRarity } from './consts'
-import { Battle, CalcDamageOptions } from './core/battle/Battle'
-import { BuffOptions } from './core/battle/Buff'
+import { Battle } from './core/battle/Battle'
 import { CombatUnit } from './core/battle/unit/CombatUnit'
 import { MonsterFactory } from './core/MonsterFactory'
 import { Player } from './core/player/Player'
@@ -85,10 +84,10 @@ export type LevelData = {
 export type Direction = 'up' | 'down' | 'left' | 'right'
 export type Vector = { dx: number; dy: number }
 
-import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
-import { AttackType } from './core/types'
-import { ConfigSystem } from './systems/ConfigSystem'
 import { EventBus } from './core/EventBus'
+import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
+import { AttackType, NpcSkill } from './core/types'
+import { ConfigSystem } from './systems/ConfigSystem'
 import { QuestManager } from './systems/QuestManager'
 import { Item } from './types/item'
 
@@ -247,35 +246,6 @@ export type GameEvent = {
   withMonster?: string
   postTalk?: string[]
   defeatTalk?: string[]
-}
-
-export type SkillTargetType =
-  | 'ENEMY_SINGLE'
-  | 'ENEMY_DOUBLE'
-  | 'ENEMY_BACK'
-  | 'ENEMY_LOWEST_HP'
-  | 'ENEMY_ALL'
-  | 'ALLY_SINGLE'
-  | 'ALLY_LOWEST_HP'
-  | 'ALLY_ALL'
-  | 'SINGLE_BUFF'
-  | 'ENEMY_RANDOM'
-  | 'SELF'
-  | 'PLAYER'
-
-export type NpcSkill = {
-  id: string
-  name: string
-  attackType?: AttackType
-  description: string
-  chance: number
-  power: number
-  targetType: SkillTargetType
-  type: string // "physical", "dark", "holy" 등 자유롭게 확장 가능
-  buff?: BuffOptions
-  options?: CalcDamageOptions & {
-    spawnMonsterId?: string
-  }
 }
 
 export type PhasesShift = {

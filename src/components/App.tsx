@@ -1,24 +1,25 @@
 import '~/assets/style/App.css'
 // 하위 컴포넌트들
 import { ConfigScreen } from './ConfigScreen'
+import { CreditScreen } from './CreditScreen'
 import { GameScreen } from './GameScreen'
 //
 import { useEffect, useRef, useState } from 'react'
 import { assets, initState } from '~/assets'
 import { openWindow } from '~/bridge/window'
 import { GameProvider } from '~/contexts/GameContext'
+import { EventBus } from '~/core/EventBus'
 import { Terminal } from '~/core/Terminal'
 import { Title } from '~/core/Title'
 import { assetManager } from '~/core/WebAssetManager'
 import { GameEngine } from '~/core/gameEngine'
+import { GameEventType } from '~/core/types'
 import { useShortcuts } from '~/hooks/useShortcuts'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { AchievementManager } from '~/systems/AchievementManager'
 import { ConfigSystem } from '~/systems/ConfigSystem'
-import { EventBus } from '~/core/EventBus'
 import { SaveSystem } from '~/systems/SaveSystem'
-import { GameEventType } from '~/types/event'
-import { CreditScreen } from './CreditScreen'
+import { SkillEffectPresenter } from '~/systems/presenter/SkillEffectPresenter'
 import { ScreenRouter } from './ScreenRouter'
 
 export const App = () => {
@@ -32,7 +33,9 @@ export const App = () => {
 
   useEffect(() => {
     const eventBus = new EventBus()
+
     const renderer = new ReactRenderer()
+    new SkillEffectPresenter(eventBus)
 
     const save = saveSystemRef.current
     const config = configSystemRef.current
@@ -43,7 +46,7 @@ export const App = () => {
     const run = async () => {
       const engine = new GameEngine(assets, renderer, save, config, eventBus)
       engineRef.current = engine
-      
+
       const achievement = new AchievementManager(eventBus, assets.achievements)
 
       const title = new Title(save, config, achievement)

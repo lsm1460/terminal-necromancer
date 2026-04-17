@@ -1,8 +1,8 @@
 import fs from 'fs'
-import { GameEventType } from '~/types/event'
-import { EventBus } from '../core/EventBus'
 import { SkeletonRarity } from '~/consts'
+import { GameEventType } from '~/core/types'
 import i18n from '~/i18n'
+import { EventBus } from '../core/EventBus'
 
 type Achievement = {
   id: string

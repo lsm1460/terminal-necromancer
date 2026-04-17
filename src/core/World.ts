@@ -1,10 +1,10 @@
 import _ from 'lodash'
 import { EventBus } from '~/core/EventBus'
 import { Corpse, LootBag, PositionType } from '~/types'
-import { GameEventType } from '~/types/event'
 import { Drop } from '~/types/item'
 import { Item } from './item/Item'
 import { Player } from './player/Player'
+import { GameEventType } from './types'
 
 export class World {
   lootBags: LootBag | null = null

@@ -1,9 +1,9 @@
 import { SKELETON_RARITIES, SkeletonFactory } from '~/core/skill/SkeletonFactory'
 import { Terminal } from '~/core/Terminal'
+import { GameEventType } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { Corpse, ExecuteSkill } from '~/types'
-import { GameEventType } from '~/types/event'
 import { SkillManager } from '../SkillManager'
 
 export const raiseSkeleton: ExecuteSkill = async (player, { world, eventBus }) => {

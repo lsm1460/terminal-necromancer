@@ -17,6 +17,8 @@ import { MapManager } from '~/systems/MapManager'
 import { NPCManager } from '~/systems/NpcManager'
 import { QuestManager } from '~/systems/QuestManager'
 import { SaveData, SaveSystem } from '~/systems/SaveSystem'
+import { PASSIVE_EFFECTS } from '~/systems/skill/passiveHandlers'
+import { SpecialSkillLogics } from '~/systems/skill/SpecialSkillLogics'
 import { GameContext, Renderer } from '~/types'
 import { handleCommand } from './commandHandler'
 import { printDirections } from './statusPrinter'
@@ -46,7 +48,11 @@ export class GameEngine {
     const mapManager = new MapManager(map, eventBus)
     const world = new World(player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
-    const npcSkillManager = new NpcSkillManager(npcSkills)
+    const npcSkillManager = new NpcSkillManager(npcSkills, eventBus)
+    npcSkillManager.registerLogics({
+      passives: PASSIVE_EFFECTS,
+      specials: SpecialSkillLogics,
+    })
     const battleFactory = new BattleComponentFactory(player, npcSkillManager, world, dropSystem, eventBus)
     const battle = new Battle(player, monsterFactory, battleFactory)
     const npcs = new NPCManager(npc, eventBus, initData?.npcs)

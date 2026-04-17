@@ -1,13 +1,11 @@
-import _ from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 import { Battle } from '~/core/battle/Battle'
 import { BattleDirector } from '~/core/battle/BattleDirector'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Terminal } from '~/core/Terminal'
-import i18n from '~/i18n'
-import { BattleTarget, NpcSkill } from '~/types'
-import { PASSIVE_EFFECTS } from '../passiveHandlers'
+import { EventBus } from '~/core/EventBus'
+import { GameEventType, NpcSkill, PassiveDefinition, SpecialSkillLogic } from '~/core/types'
+import { BattleTarget } from '~/types'
 import { SkillEffectHandlers } from './SkillEffectHandlers'
-import { SpecialSkillLogics } from './SpecialSkillLogics'
 
 type SkillExecutor<T = void> = (
   skillId: string,
@@ -19,28 +17,34 @@ type SkillExecutor<T = void> = (
 
 export class NpcSkillManager {
   private skillData: Record<string, NpcSkill>
+  private passiveEffects: Record<string, PassiveDefinition> = {}
+  private specialLogics: Record<string, SpecialSkillLogic> = {}
 
-  /**
-   * @param skillData
-   */
   constructor(
     skillData: any,
+    private eventBus: EventBus
   ) {
     this.skillData = skillData
   }
 
   getSkill(skillId: string) {
-    return {
-      ..._.cloneDeep(this.skillData[skillId]),
+    return cloneDeep(this.skillData[skillId])
+  }
 
-      get name() {
-        return i18n.t(`skill.npc.${skillId}.name`)
-      },
+  public registerLogics(config: {
+    passives?: Record<string, PassiveDefinition>
+    specials?: Record<string, SpecialSkillLogic>
+  }) {
+    if (config.passives) this.passiveEffects = { ...this.passiveEffects, ...config.passives }
+    if (config.specials) this.specialLogics = { ...this.specialLogics, ...config.specials }
+  }
 
-      get description() {
-        return i18n.t(`skill.npc.${skillId}.description`)
-      },
-    }
+  private getPassive(id: string) {
+    return this.passiveEffects[id]
+  }
+
+  private getSpecial(id: string): SpecialSkillLogic | undefined {
+    return this.specialLogics[id]
   }
 
   findTargets: SkillExecutor<CombatUnit[]> = (skillId, attacker, ally, enemies) => {
@@ -98,32 +102,32 @@ export class NpcSkillManager {
     const skill = this.getSkill(skillId)
     if (!skill) return
 
-    Terminal.log(
-      i18n.t('skill.execution', {
-        attacker: attacker.name,
-        skill: skill.name,
-      })
-    )
-    Terminal.log(`💬 ${skill.description}`)
+    this.eventBus.emitAsync(GameEventType.SKILL_EFFECT_LOG, {
+      type: 'execute',
+      attackerName: attacker.name,
+      skillId: skill.id,
+    })
 
     let targets = this.findTargets(...params)
     if (targets.length === 0) {
-      Terminal.log(i18n.t('skill.target_not_found'))
+      this.eventBus.emitAsync(GameEventType.SKILL_EFFECT_LOG, {
+        type: 'not_found',
+      })
       return
     }
 
     BattleDirector.playAttack(attacker.id, skillId)
 
-    // 1. 특수 로직(ID 기반)이 있는지 먼저 확인
-    if (SpecialSkillLogics[skillId]) {
-      await SpecialSkillLogics[skillId](attacker, targets, skill, battle)
+    const special = this.getSpecial(skillId)
+    if (special) {
+      await special(attacker, targets, skill, battle)
       return
     }
 
-    // 2. 특수 로직이 없다면 공통 타입(Type 기반) 핸들러 실행
     const handler = SkillEffectHandlers[skill.type] || SkillEffectHandlers.damage
     for (const target of targets) {
-      await handler(target, skill, attacker, battle)
+      const _res = await handler(target, skill, attacker, battle)
+      _res && this.eventBus.emitAsync(GameEventType.SKILL_EFFECT_LOG, _res)
     }
   }
 
@@ -160,7 +164,7 @@ export class NpcSkillManager {
       const skillData = this.getSkill(id)
       if (!skillData || skillData.type !== 'passive') continue
 
-      const hooks = PASSIVE_EFFECTS[id]
+      const hooks = this.getPassive(id)
       if (!hooks) continue
 
       if (hooks.onBeforeAttack) {
