@@ -1,6 +1,6 @@
 import i18n from '~/i18n'
 
-export type BuffType = 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus' | 'stealth' | 'expose' | 'confuse'
+export type BuffType = 'deBuff' | 'bind' | 'buff' | 'dot' | 'focus' | 'stealth' | 'expose' | 'confuse' | 'aggro'
 
 export interface BuffOptions {
   id:
@@ -25,6 +25,7 @@ export interface BuffOptions {
     | 'soul_chain'
     | 'death_stigma'
     | 'grace'
+    | 'roar'
   duration: number
   type: BuffType
   atk?: number

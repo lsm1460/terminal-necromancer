@@ -26,6 +26,6 @@ export class BattleComponentFactory {
   }
 
   createActions(units: BattleUnitManager): BattleActionHandler {
-    return new BattleActionHandler(this.player, this.eventBus, this.world, units, this.npcSkills)
+    return new BattleActionHandler(this.eventBus, this.world, units, this.npcSkills)
   }
 }

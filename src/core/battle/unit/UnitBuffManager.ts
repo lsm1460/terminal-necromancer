@@ -3,6 +3,8 @@ import i18n from '~/i18n'
 import { Buff, BuffOptions } from '../Buff'
 import { CombatUnit } from './CombatUnit'
 
+export type BuffFilterCondition = { id?: BuffOptions['id']; type?: BuffOptions['type'] }
+
 export class UnitBuffManager {
   public buffs: Buff[] = []
   public deBuffs: Buff[] = []
@@ -15,15 +17,28 @@ export class UnitBuffManager {
   }
 
   public get isConfused() {
-    return this.deBuffs.some((_d) => _d.id === 'confuse')
+    return this.deBuffs.some((_d) => _d.type === 'confuse')
   }
 
-  public hasBuff(id: BuffOptions['id']) {
-    return this.buffs.some((_d) => _d.id === id)
+  private _hasEffect(effects: BuffOptions[], condition: BuffFilterCondition) {
+    const { id, type } = condition
+    return effects.some((effect) => {
+      const matchId = id ? effect.id === id : true
+      const matchType = type ? effect.type === type : true
+      return matchId && matchType
+    })
   }
 
-  public hasDeBuff(id: BuffOptions['id']) {
-    return this.deBuffs.some((_d) => _d.id === id)
+  public hasBuff(condition: BuffFilterCondition) {
+    return this._hasEffect(this.buffs, condition)
+  }
+
+  public hasDeBuff(condition: BuffFilterCondition) {
+    return this._hasEffect(this.deBuffs, condition)
+  }
+
+  public hasEffect(condition: BuffFilterCondition) {
+    return this.hasBuff(condition) || this.hasDeBuff(condition)
   }
 
   private getBuffMessage(buff: Buff) {

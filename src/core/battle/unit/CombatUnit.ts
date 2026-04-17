@@ -1,13 +1,13 @@
 import { Terminal } from '~/core/Terminal'
 import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
-import { AttackType } from '~/core/types'
+import { AttackType, TakeDamageReturn } from '~/core/types'
 import { BattleTarget, UnitSprites } from '~/types'
 import { Battle, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
 import { Buff, BuffOptions, BuffType } from '../Buff'
 import { BattleLogFormatter } from './BattleLogFormatter'
-import { UnitBuffManager } from './UnitBuffManager'
+import { BuffFilterCondition, UnitBuffManager } from './UnitBuffManager'
 import { getOriginId } from '~/core/utils'
 
 type UnitDamageProcessHook = (
@@ -39,7 +39,8 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   constructor(
     public ref: T,
-    public type: 'player' | 'minion' | 'monster' | 'npc'
+    public type: 'player' | 'minion' | 'monster' | 'npc',
+    private manager: Battle
   ) {
     this.id = ref.id
     this.name = ref.name
@@ -87,12 +88,12 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     this.buffManager.applyDeBuff(d)
   }
 
-  public hasBuff(id: BuffOptions['id']) {
-    return this.buffManager.hasBuff(id)
+  public hasBuff(_params: BuffFilterCondition) {
+    return this.buffManager.hasBuff(_params)
   }
 
-  public hasDeBuff(id: BuffOptions['id']) {
-    return this.buffManager.hasDeBuff(id)
+  public hasDeBuff(_params: BuffFilterCondition) {
+    return this.buffManager.hasDeBuff(_params)
   }
 
   public hasImmunity(d: Buff) {
@@ -126,7 +127,14 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     return this.buffManager.isConfused
   }
 
-  public async executeHit(attacker: CombatUnit, options: DamageOptions = {}) {
+  public async executeHit(attacker: CombatUnit, options: DamageOptions = {}): Promise<TakeDamageReturn> {
+    if (!options.isRedirected) {
+      const taunter = this.manager.getAggroUnit(this)
+      if (taunter && taunter !== this) {
+        return await taunter.executeHit(attacker, { ...options, isRedirected: true })
+      }
+    }
+
     await this.runHooks(this.onProcessHitHooks, attacker, options)
 
     if (!options.isPassive) {
@@ -134,7 +142,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       await this.runHooks(this.onBeforeHitHooks, attacker, options)
     }
 
-    const result = await this.takeDamage(attacker, options)
+    const result = this.takeDamage(attacker, options)
 
     if (!result.isEscape && !options.isPassive) {
       await this.runHooks(attacker.onAfterAttackHooks, attacker, options, result.damage)
@@ -158,8 +166,17 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     }
   }
 
-  public async takeDamage(attacker: CombatUnit, options: DamageOptions = {}) {
-    if (!this.ref.isAlive) return { isEscape: false, isDead: true, damage: 0 }
+  public takeDamage(attacker: CombatUnit, options: DamageOptions = {}): TakeDamageReturn {
+    if (!this.ref.isAlive) {
+      return {
+        isEscape: false,
+        isDead: true,
+        damage: 0,
+        currentHp: 0,
+        isCritical: false,
+      }
+    }
+
     const result = Battle.calcDamage(attacker, this, options)
     if (!result.isEscape) {
       this.ref.hp = Math.max(0, this.ref.hp - result.damage)

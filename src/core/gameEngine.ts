@@ -1,6 +1,7 @@
 import { GameAssets } from '~/assets'
 import { MAP_IDS } from '~/consts'
 import { Battle, BattleComponentFactory } from '~/core/battle'
+import { EventBus } from '~/core/EventBus'
 import { LootFactory } from '~/core/LootFactory'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Player } from '~/core/player/Player'
@@ -10,7 +11,6 @@ import i18n from '~/i18n'
 import { Broadcast } from '~/systems/Broadcast'
 import { ConfigSystem } from '~/systems/ConfigSystem'
 import { DropSystem } from '~/systems/DropSystem'
-import { EventBus } from '~/core/EventBus'
 import { EventLedger } from '~/systems/EventLedger'
 import { MonsterEvent } from '~/systems/events/MonsterEvent'
 import { MapManager } from '~/systems/MapManager'
@@ -46,7 +46,7 @@ export class GameEngine {
     const mapManager = new MapManager(map, eventBus)
     const world = new World(player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
-    const npcSkillManager = new NpcSkillManager(npcSkills, player)
+    const npcSkillManager = new NpcSkillManager(npcSkills)
     const battleFactory = new BattleComponentFactory(player, npcSkillManager, world, dropSystem, eventBus)
     const battle = new Battle(player, monsterFactory, battleFactory)
     const npcs = new NPCManager(npc, eventBus, initData?.npcs)

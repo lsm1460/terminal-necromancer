@@ -1,4 +1,4 @@
-import { AttackType } from '../types'
+import { AttackType, CalcDamageReturn } from '../types'
 import { CombatUnit } from './unit/CombatUnit'
 
 export type DamageOptions = {
@@ -10,10 +10,11 @@ export type DamageOptions = {
   isSureCrit?: boolean // 무조건 치명타
   attackType?: AttackType
   isPassive?: boolean
+  isRedirected?: boolean
 }
 
 export class CombatService {
-  static calcDamage(attacker: CombatUnit, target: CombatUnit, options: DamageOptions = {}) {
+  static calcDamage(attacker: CombatUnit, target: CombatUnit, options: DamageOptions = {}): CalcDamageReturn {
     const { atk, crit } = attacker.finalStats
     const { def, eva } = target.finalStats
 

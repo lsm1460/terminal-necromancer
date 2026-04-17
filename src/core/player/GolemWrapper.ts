@@ -124,6 +124,10 @@ class GolemWrapper {
       skillList.push('self_destruct')
     }
 
+    if (this.player.hasAffix('ROAR')) {
+      skillList.push('roar')
+    }
+
     return skillList
   }
 

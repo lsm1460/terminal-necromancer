@@ -1,5 +1,5 @@
-import i18n from '~/i18n'
 import { EventBus } from '~/core/EventBus'
+import i18n from '~/i18n'
 import { BattleTarget } from '~/types'
 import { Battle } from '.'
 import { Terminal } from '../Terminal'
@@ -7,7 +7,6 @@ import { World } from '../World'
 import { Player } from '../player/Player'
 import { SkillManager } from '../skill'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
-import { AffixManager } from './AffixManager'
 import { BattleDirector } from './BattleDirector'
 import { BattleUnitManager } from './BattleUnitManager'
 import { TargetSelector } from './TargetSelector'
@@ -15,7 +14,6 @@ import { CombatUnit } from './unit/CombatUnit'
 
 export class BattleActionHandler {
   constructor(
-    private player: Player,
     private eventBus: EventBus,
     private world: World,
     private unitManager: BattleUnitManager,
@@ -198,7 +196,7 @@ export class BattleActionHandler {
     } else {
       let target: CombatUnit
       if (['monster', 'npc'].includes(attacker.type)) {
-        target = AffixManager.handleBeforeAttack(this.player, attacker, visibleTargets)[0]
+        target = visibleTargets[0]
       } else {
         target = [...visibleTargets].sort((a, b) => {
           const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0

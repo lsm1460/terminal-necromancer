@@ -71,7 +71,7 @@ export class Battle implements BattleManager {
         return true
       }
     } else {
-      const isConfused = unit.hasDeBuff('confuse')
+      const isConfused = unit.hasDeBuff({ type: 'confuse' })
       const [targetEnemies, targetAllies] = isConfused ? [allySide, enemiesSide] : [enemiesSide, allySide]
 
       const _params = [
@@ -168,18 +168,24 @@ export class Battle implements BattleManager {
   }
 
   // Exposed for skill executors
-  public getEnemiesOf(attacker: CombatUnit): CombatUnit[] {
-    if (attacker.isConfused) {
-      return this.units.getAllysOf(attacker)
+  public getEnemiesOf(unit: CombatUnit): CombatUnit[] {
+    if (unit.isConfused) {
+      return this.units.getAllysOf(unit)
     }
 
-    return this.units.getEnemiesOf(attacker)
+    return this.units.getEnemiesOf(unit)
   }
-  public getAllysOf(attacker: CombatUnit): CombatUnit[] {
-    if (attacker.isConfused) {
-      return this.units.getEnemiesOf(attacker)
+  public getAllysOf(unit: CombatUnit): CombatUnit[] {
+    if (unit.isConfused) {
+      return this.units.getEnemiesOf(unit)
     }
 
-    return this.units.getAllysOf(attacker)
+    return this.units.getAllysOf(unit)
+  }
+
+  public getAggroUnit(unit: CombatUnit): CombatUnit | undefined {
+    const allys = this.getAllysOf(unit)
+
+    return allys.find((unit) => unit.hasBuff({ type: 'aggro' }))
   }
 }

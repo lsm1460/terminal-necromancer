@@ -19,7 +19,7 @@ export class BattleUnitManager {
   public toCombatUnit<T extends Player | BattleTarget>(unit: T, type: CombatUnit['type']): CombatUnit<T> {
     const cached = this.getUnit(unit.id)
     if (cached) return cached as CombatUnit<T>
-    const combatUnit = new CombatUnit<T>(unit, type)
+    const combatUnit = new CombatUnit<T>(unit, type, this.manager)
     this.npcSkills.setupPassiveHook(combatUnit, this.manager)
     return combatUnit
   }

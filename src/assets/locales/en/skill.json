@@ -141,7 +141,8 @@
     "soul_chain": "The soul of {{unit}} dwells within {{ally}}, amplifying its power!",
     "phases_2": "\n[!] {{attacker}}'s true form is revealed.",
     "curse_of_the_phoenix": "The flames of the {{defender}} blaze, healing their wounds. (+{{amount}})",
-    "overdrive": "[!] A surge of uncontrollable power! {{unit}}'s defense is weakened, and inflicting enough damage will cause Confusion."
+    "overdrive": "[!] A surge of uncontrollable power! {{unit}}'s defense is weakened, and inflicting enough damage will cause Confusion.",
+    "roar": "[📢 Roar]: {{unit}} lets out a deafening roar!! Everyone's gaze is fixed on {{unit}}."
   },
 
   "special": {

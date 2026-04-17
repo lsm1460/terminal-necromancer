@@ -98,9 +98,8 @@ export const SpecialSkillLogics: Record<
     for (const target of targets) target.removeRandomDeBuff()
   },
   shadow_bind: async (attacker, targets, skill, battle) => {
-
     const _targets = targets
-      .filter((unit) => !unit.deBuff.some((deBuff) => deBuff.id === 'bind'))
+      .filter((unit) => !unit.deBuff.some((deBuff) => deBuff.type === 'bind'))
       .sort((a, b) => b.ref.atk - a.ref.atk)
       .slice(0, 3)
 
@@ -167,7 +166,7 @@ export const SpecialSkillLogics: Record<
 
   harvest: async (attacker, targets, skill, context) => {
     for (const target of targets) {
-      const hasStigma = target.hasDeBuff('death_stigma')
+      const hasStigma = target.hasDeBuff({ id: 'death_stigma' })
 
       const options: DamageOptions = {
         attackType: skill.attackType,

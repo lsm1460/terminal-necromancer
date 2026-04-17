@@ -15,6 +15,7 @@ type PassiveEffect = (
 ) => Promise<void>
 
 interface PassiveDefinition {
+  onProcessHit?: PassiveEffect
   onBeforeAttack?: PassiveEffect
   onAfterAttack?: PassiveEffect
   onAfterHit?: PassiveEffect
@@ -157,7 +158,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
 
   overdrive: {
     onBeforeAttack: async (attacker, defender, skill, battle) => {
-      if (!attacker.hasBuff('overdrive') && !attacker.hasDeBuff('confuse') && Math.random() < 0.3) {
+      if (!attacker.hasBuff({ id: 'overdrive' }) && !attacker.hasDeBuff({ type: 'confuse' }) && Math.random() < 0.3) {
         attacker.applyBuff({
           id: 'overdrive',
           type: 'dot',
@@ -171,7 +172,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       }
     },
     onAfterAttack: async (attacker, defender, skill, battle, options, damage) => {
-      if (defender.hasBuff('overdrive')) {
+      if (defender.hasBuff({ id: 'overdrive' })) {
         defender.breakPoint -= damage || 0
 
         if (defender.breakPoint <= 0) {
@@ -184,6 +185,19 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
           })
         }
       }
+    },
+  },
+
+  roar: {
+    onBeforeAttack: async (attacker) => {
+      Terminal.log(i18n.t('skill.passive.roar', { unit: attacker.name }))
+
+      attacker.applyBuff({
+        id: 'roar',
+        type: 'aggro',
+        def: 20,
+        duration: 5,
+      })
     },
   },
 }

@@ -1,9 +1,7 @@
 import _ from 'lodash'
-import { AffixManager } from '~/core/battle/AffixManager'
 import { Battle } from '~/core/battle/Battle'
 import { BattleDirector } from '~/core/battle/BattleDirector'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { BattleTarget, NpcSkill } from '~/types'
@@ -24,11 +22,9 @@ export class NpcSkillManager {
 
   /**
    * @param skillData
-   * @param player - 스킬 효과 적용을 위한 플레이어 인스턴스
    */
   constructor(
     skillData: any,
-    public player: Player
   ) {
     this.skillData = skillData
   }
@@ -94,7 +90,7 @@ export class NpcSkillManager {
         break
     }
 
-    return AffixManager.handleBeforeAttack(this.player, attacker, targets as any)
+    return targets
   }
 
   execute: SkillExecutor = async (...params) => {
