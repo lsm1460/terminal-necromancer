@@ -45,11 +45,12 @@ export class AchievementManager {
     if (this.isWeb) {
       const saved = localStorage.getItem('terminal_game_achievements')
       if (saved) return JSON.parse(saved)
-      return
     } else {
       if (!this.achievementsPath || !fs.existsSync(this.achievementsPath)) return
       return JSON.parse(fs.readFileSync(this.achievementsPath, 'utf-8'))
     }
+
+    return {}
   }
 
   private save() {
