@@ -1,8 +1,8 @@
 import i18n from '~/i18n'
 import { BattleTarget } from '~/types'
-import { getOriginId } from '~/utils'
 import { ItemRarity } from '../item/consts'
 import { AttackType } from '../types'
+import { getOriginId } from '../utils'
 import { Player } from './Player'
 
 /**

@@ -2,9 +2,9 @@ import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
+import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { Drop } from '~/types/item'
-import { getOriginId } from '~/utils'
 import { selectTarget } from './utils'
 
 export const printItem = (item: Item, inInventory = false) => {

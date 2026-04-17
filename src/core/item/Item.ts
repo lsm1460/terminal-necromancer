@@ -1,8 +1,8 @@
 import i18n from '~/i18n'
 import { Affix, ItemType } from '~/types/item'
-import { getOriginId } from '~/utils'
 import { Player } from '../player/Player'
 import { AttackType } from '../types'
+import { getOriginId } from '../utils'
 import { ItemRarity, RARITY_SETTINGS } from './consts'
 
 export class Item {

@@ -1,5 +1,11 @@
 import { nanoid } from 'nanoid'
 
+export function getOriginId(id: string) {
+  const parts = id.split('::')
+
+  return parts.length > 1 ? parts[0] : id
+}
+
 export function generateId(baseId?: string, length = 8): string {
   const uniqueHash = nanoid(length)
   return baseId ? `${baseId}::${uniqueHash}` : uniqueHash

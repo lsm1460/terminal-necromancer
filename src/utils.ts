@@ -14,12 +14,6 @@ export async function delay(amount: number = 1500) {
   await new Promise((resolve) => setTimeout(resolve, amount))
 }
 
-export function getOriginId(id: string) {
-  const parts = id.split('::')
-
-  return parts.length > 1 ? parts[0] : id
-}
-
 export async function speak(messages: string[]) {
   for (const message of messages) {
     await Terminal.prompt(message)

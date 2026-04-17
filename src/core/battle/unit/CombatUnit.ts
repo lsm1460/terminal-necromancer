@@ -3,12 +3,12 @@ import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
 import { AttackType } from '~/core/types'
 import { BattleTarget, UnitSprites } from '~/types'
-import { getOriginId } from '~/utils'
 import { Battle, DamageOptions } from '../Battle'
 import { BattleDirector } from '../BattleDirector'
 import { Buff, BuffOptions, BuffType } from '../Buff'
 import { BattleLogFormatter } from './BattleLogFormatter'
 import { UnitBuffManager } from './UnitBuffManager'
+import { getOriginId } from '~/core/utils'
 
 type UnitDamageProcessHook = (
   attacker: CombatUnit,
