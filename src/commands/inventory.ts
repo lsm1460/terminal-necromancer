@@ -2,7 +2,8 @@ import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { CommandFunction, ConsumableItem, Drop, GameContext, ItemType } from '~/types'
+import { CommandFunction, GameContext } from '~/types'
+import { ConsumableItem, Drop, ItemType } from '~/types/item'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (args, context) => {

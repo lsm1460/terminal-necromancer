@@ -1,5 +1,5 @@
+import { AttackType } from '../types'
 import { CombatUnit } from './unit/CombatUnit'
-import { AttackType } from '~/types'
 
 export type DamageOptions = {
   skillAtkMult?: number // 데미지 배율

@@ -1,9 +1,10 @@
 import _ from 'lodash'
-import { Corpse, Drop, LootBag, PositionType } from '~/types'
+import { EventBus } from '~/systems/EventBus'
+import { Corpse, LootBag, PositionType } from '~/types'
+import { GameEventType } from '~/types/event'
+import { Drop } from '~/types/item'
 import { Item } from './item/Item'
 import { Player } from './player/Player'
-import { EventBus } from '~/systems/EventBus'
-import { GameEventType } from '~/types/event'
 
 export class World {
   lootBags: LootBag | null = null
@@ -17,7 +18,7 @@ export class World {
     eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, ({ corpseId }) => this.removeCorpse(corpseId))
   }
 
-  addDrop(drop: Drop, quantity = 1) {
+  addDrop(drop: Drop | Item, quantity = 1) {
     const existing = this.drops.find(_.matches({ id: drop.id }))
     if (existing && existing.quantity && drop.quantity) {
       existing.quantity += drop.quantity

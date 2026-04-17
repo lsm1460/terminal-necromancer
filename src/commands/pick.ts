@@ -2,7 +2,8 @@ import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { CommandFunction, Drop, GameContext, LootBag } from '~/types'
+import { CommandFunction, GameContext, LootBag } from '~/types'
+import { Drop } from '~/types/item'
 
 export const pickCommand: CommandFunction = async (args, context) => {
   const { player, map, world } = context

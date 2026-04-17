@@ -1,7 +1,7 @@
 import { SkeletonRarity } from '~/consts'
 import i18n from '~/i18n'
 import { BattleTarget } from '~/types'
-import { getOriginId } from '~/utils'
+import { getOriginId } from '../utils'
 import { Player } from './Player'
 
 interface SkeletonWrapper extends BattleTarget {}

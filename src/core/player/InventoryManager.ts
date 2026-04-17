@@ -1,5 +1,5 @@
 import i18n from '~/i18n'
-import { ArmorItem, ConsumableItem, ItemType, WeaponItem } from '~/types'
+import { ArmorItem, ConsumableItem, ItemType, WeaponItem } from '~/types/item'
 import { getAffixCaution } from '../affixes'
 import { Item } from '../item/Item'
 import { Terminal } from '../Terminal'

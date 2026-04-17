@@ -1,11 +1,11 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
-import { Player } from '~/core/player/Player'
-import i18n from '~/i18n'
-import { Drop } from '~/types'
-import { getOriginId } from '~/utils'
-import { selectTarget } from './utils'
 import { Item } from '~/core/item/Item'
+import { Player } from '~/core/player/Player'
+import { getOriginId } from '~/core/utils'
+import i18n from '~/i18n'
+import { Drop } from '~/types/item'
+import { selectTarget } from './utils'
 
 export const printItem = (item: Item, inInventory = false) => {
   const rarityKey = item.rarity || 'COMMON'

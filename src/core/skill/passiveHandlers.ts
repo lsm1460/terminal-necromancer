@@ -3,7 +3,7 @@ import { BattleTarget, NpcSkill, PhasesShift } from '~/types'
 import { Battle, DamageOptions } from '../battle/Battle'
 import { CombatUnit } from '../battle/unit/CombatUnit'
 import { Terminal } from '../Terminal'
-import { getOriginId } from '~/utils'
+import { getOriginId } from '../utils'
 
 type PassiveEffect = (
   attacker: CombatUnit,

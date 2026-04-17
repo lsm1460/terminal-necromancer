@@ -1,7 +1,8 @@
 import { Item } from '~/core/item/Item'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { CommandFunction, ItemType } from '~/types'
+import { CommandFunction } from '~/types'
+import { ItemType } from '~/types/item'
 
 export const equipCommand: CommandFunction = async (args, {player}) => {
   const inventory = player.inventory

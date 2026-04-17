@@ -1,5 +1,5 @@
 import { SKELETON_UPGRADE } from '~/consts'
-import { getOriginId } from '~/utils'
+import { getOriginId } from '~/core/utils'
 
 export const SubspaceService = {
   /** 해골 소환 제한 확장 비용 및 가능 여부 계산 */

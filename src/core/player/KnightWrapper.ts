@@ -1,8 +1,9 @@
-import { AttackType, BattleTarget } from '~/types'
-import { Player } from './Player'
 import i18n from '~/i18n'
-import { getOriginId } from '~/utils'
+import { BattleTarget } from '~/types'
 import { ItemRarity } from '../item/consts'
+import { AttackType } from '../types'
+import { getOriginId } from '../utils'
+import { Player } from './Player'
 
 /**
  * 1. 인터페이스 병합 (Declaration Merging)

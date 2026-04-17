@@ -1,5 +1,5 @@
+import { Drop } from '~/types/item'
 import { CombatUnit } from './unit/CombatUnit'
-import { Drop } from '~/types'
 
 export enum BattleState {
   READY = 'READY',

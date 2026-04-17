@@ -4,7 +4,8 @@ import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { BattleTarget, ItemType, NpcSkill } from '~/types'
+import { BattleTarget, NpcSkill } from '~/types'
+import { ItemType } from '~/types/item'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 

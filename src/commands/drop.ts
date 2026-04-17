@@ -1,7 +1,7 @@
 import { Item } from '~/core/item/Item'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { CommandFunction, Drop } from '~/types'
+import { CommandFunction } from '~/types'
 
 export const dropCommand: CommandFunction = async (args, context) => {
   const { player, world } = context
@@ -43,7 +43,7 @@ export const dropCommand: CommandFunction = async (args, context) => {
   if (itemToDrop) {
     player.removeItem(itemToDrop.id)
 
-    world.addDrop(itemToDrop as Drop)
+    world.addDrop(itemToDrop)
 
     const qtyText = itemToDrop.quantity !== undefined ? i18n.t('commands.drop.unit') : ''
     Terminal.log(
