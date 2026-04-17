@@ -1,4 +1,5 @@
-import { AttackType, Direction, Vector } from './types'
+import { AttackType } from './core/types'
+import { Direction, Vector } from './types'
 
 export const COMMAND_KEYS = {
   UP: 'up',

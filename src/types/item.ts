@@ -1,5 +1,5 @@
 import { Item as ItemClass } from '~/core/item/Item'
-import { AttackType } from '~/types'
+import { AttackType } from '~/core/types'
 
 export type ItemRarity = 'COMMON' | 'RARE' | 'EPIC'
 export enum ItemType {
