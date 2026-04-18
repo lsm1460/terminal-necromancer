@@ -92,7 +92,7 @@ export class ReactRenderer implements Renderer {
   availableTalks(list: { name: string; hasQuest: boolean }[]) {
     const aliveNames = list
       .map(({ hasQuest, name }) => {
-        const label = `${hasQuest ? '<span style="color: #ff8181">[!] </span>' : ''}${name}`
+        const label = `${hasQuest ? '<span style="color: #00cc00">[!] </span>' : ''}${name}`
 
         return this.createButton(label, 'talk', name)
       })
