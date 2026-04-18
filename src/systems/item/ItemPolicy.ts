@@ -1,13 +1,8 @@
+import { RARITY_SETTINGS } from '~/core/item/consts'
 import { IGenerationPolicy } from '~/core/item/types'
 import { rollFromRange } from '~/core/utils'
 import { Affix, Drop, ItemRarity, ItemType } from '~/types/item'
 import { getAffixList } from '../affixes'
-
-export const RARITY_SETTINGS: Record<ItemRarity, any> = {
-  COMMON: { multiplier: 1.0, hasAffix: false, adjectives: [''] },
-  RARE: { multiplier: 1.2, hasAffix: false, adjectives: ['Sharp', 'Sturdy'] },
-  EPIC: { multiplier: 1.5, hasAffix: true, adjectives: ['Legendary', 'Ancient'] },
-}
 
 export class ItemPolicy implements IGenerationPolicy<ItemRarity, Affix, Drop> {
   isEquippable(baseItem: Drop): boolean {
