@@ -151,6 +151,7 @@ export interface GameContext {
   config: ConfigSystem
   cheats: {
     isFullMap?: boolean
+    playerIsHide?: boolean
   }
   quest: QuestManager
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백

@@ -19,7 +19,7 @@ export class MonsterEvent {
     eventBus.subscribe(GameEventType.SPAWN_MONSTER, this.handle)
   }
 
-  handle = async (tile: Tile) => {
+  handle = async ({ tile, isPassMonster }: { tile: Tile; isPassMonster: boolean }) => {
     if (tile.isClear) return
 
     if (!tile.monsters) tile.monsters = []
@@ -45,7 +45,7 @@ export class MonsterEvent {
 
       const preemptiveEnemy = finalAlive.find((_monster) => _monster.preemptive)
 
-      if (preemptiveEnemy) {
+      if (!isPassMonster && preemptiveEnemy) {
         Terminal.log(i18n.t('battle.monster_event.preemptive_attack', { name: preemptiveEnemy.name }))
 
         await delay()

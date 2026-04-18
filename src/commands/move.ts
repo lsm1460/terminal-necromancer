@@ -6,7 +6,7 @@ import { CommandFunction } from '~/types'
 // --- 공통 이동 함수 ---
 export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
   return async (args, context) => {
-    const { player, map, npcs } = context
+    const { player, map, npcs, cheats } = context
     const { monsters, npcIds } = map.getTile(player.pos)
 
     // 1. 길을 막고 있는 몬스터 찾기
@@ -18,10 +18,11 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
       .find((npc) => npc && npc.isAlive && npc.isHostile && npc.noEscape)
 
     // 3. 둘 중 하나라도 존재하면 해당 타겟을 변수에 담기
-    const target = blockingMonster || blockingNPC
+    const blockingTarget = blockingMonster || blockingNPC
+    const cannotPass = !cheats.playerIsHide && blockingTarget
 
-    if (target) {
-      Terminal.log(i18n.t('commands.move.cannot_escape', { name: target.name }))
+    if (cannotPass) {
+      Terminal.log(i18n.t('commands.move.cannot_escape', { name: blockingTarget.name }))
       return false
     }
 

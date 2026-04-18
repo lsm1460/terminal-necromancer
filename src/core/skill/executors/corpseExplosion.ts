@@ -117,7 +117,7 @@ async function executeSingleExplosion(
   target: ExplosionTarget,
   enemies: CombatUnit[]
 ): Promise<{ isAggressive: boolean }> {
-  const rawExplosionDamage = Math.floor(target.maxHp * 0.6)
+  const rawExplosionDamage = Math.floor(target.maxHp * 0.5)
 
   Terminal.log(
     i18n.t('skill.CORPSE_EXPLOSION.activation', {

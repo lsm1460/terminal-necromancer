@@ -31,6 +31,11 @@ export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
       Terminal.log(`\n[Cheat] The legion's limit has been expanded.`)
       return true
 
+    case 'the ring is mine':
+      context.cheats.playerIsHide = true
+      Terminal.log('\n[Cheat] You can disappear. That is its power.')
+      return true
+
     // 향후 다른 치트키 추가 가능
     // case 'power overwhelming':
     //   ...

@@ -9,7 +9,7 @@ import { failWithLog, sacrificeSkeleton } from './lib'
 /**
  * 뼈 창 (Bone Spear)
  * : 소환된 스켈레톤 하나를 희생시켜 날카로운 뼈의 창으로 부수어 날립니다.
- * : 전열의 적 최대 2명에게 시체의 최대 체력의 0.4배율의 관통 피해를 입힙니다.
+ * : 전열의 적 최대 2명에게 시체의 최대 체력의 0.7배율의 관통 피해를 입힙니다.
  */
 export const boneSpear: ExecuteSkill = async (player, skillContext, { enemies = [] } = {}) => {
   const skeletons = player.ref.skeleton
@@ -67,9 +67,9 @@ async function executeBoneSpearAttack(player: CombatUnit<Player>, targets: Comba
 
     Terminal.log(i18n.t(`skill.BONE_SPEAR.log.${typeKey}_${roleKey}`, { name: target.name }))
 
-    // 대미지 계산 및 히트 실행 (체력의 40% 물리 대미지)
+    // 대미지 계산 및 히트 실행 (체력의 70% 물리 대미지)
     await target.executeHit(player, {
-      rawDamage: Math.floor(source.maxHp * 0.4),
+      rawDamage: Math.floor(source.maxHp * 0.7),
       isIgnoreDef: true,
       isSureHit: true,
       attackType: 'ranged',

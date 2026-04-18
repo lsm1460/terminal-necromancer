@@ -40,6 +40,7 @@ import mika_operator from './mika_operator.json'
 import shadowed_agent from './shadowed_agent.json'
 import silas_dissector from './silas_dissector.json'
 import vora_observer from './vora_observer.json'
+import fourth_boss from './fourth_boss.json'
 
 const en = {
   item,
@@ -85,6 +86,7 @@ const en = {
     shadowed_agent,
     silas_dissector,
     vora_observer,
+    fourth_boss,
   },
   skill,
   events,

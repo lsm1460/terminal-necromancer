@@ -43,7 +43,7 @@ export class MapManager {
     }
 
     if (tile.event.startsWith('monster-')) {
-      await this.eventBus.emitAsync(GameEventType.SPAWN_MONSTER, tile)
+      await this.eventBus.emitAsync(GameEventType.SPAWN_MONSTER, { tile, isPassMonster: context.cheats.playerIsHide })
     }
 
     tile.isSeen = true
