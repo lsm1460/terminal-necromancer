@@ -67,6 +67,10 @@ export const UnitVisual: React.FC<{
 
     controls.set({ x: 0, scale: 1, opacity: 1 })
 
+    timerRef.current = setTimeout(() => {
+      currentAction.onComplete?.()
+    }, 1000)
+
     try {
       switch (currentAction.type) {
         case 'ATTACK':
@@ -96,10 +100,6 @@ export const UnitVisual: React.FC<{
           transition: { duration: 0.3 },
         })
       }
-
-      timerRef.current = setTimeout(() => {
-        currentAction.onComplete?.()
-      }, 1000)
     } catch (error) {}
   }
 
