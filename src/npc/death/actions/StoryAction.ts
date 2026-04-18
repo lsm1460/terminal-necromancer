@@ -92,5 +92,7 @@ export const StoryActions = {
 
     const npc = npcs.getNPC('death')!
     await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], world)
+
+    return true
   },
 }
