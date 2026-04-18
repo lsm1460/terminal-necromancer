@@ -24,7 +24,7 @@ export const CombatUnitComponent: React.FC<CombatUnitProps> = ({ unit, isFocus, 
       />
       <DamageDisplay unit={unit} />
 
-      <div style={{ opacity: isFocus === false ? 0.3 : 1 }}>
+      <div style={{ opacity: isFocus === false ? 0.3 : 1 }} className="transition-opacity">
         <UnitVisual unit={unit} isEnemy={isEnemy} />
       </div>
     </div>
