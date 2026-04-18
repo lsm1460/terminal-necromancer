@@ -26,16 +26,7 @@ export const useCombat = () => {
     []
   )
 
-  const getSortedEnemySide = useCallback(
-    (units: any[]) =>
-      [...units].sort((a, b) => {
-        const weightA = a.orderWeight ?? 0
-        const weightB = b.orderWeight ?? 0
-
-        return weightB - weightA
-      }),
-    []
-  )
+  const getSortedEnemySide = useCallback((units: any[]) => [...units].reverse(), [])
 
   return {
     getCorpsesCount,
