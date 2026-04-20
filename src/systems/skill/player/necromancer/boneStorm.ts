@@ -4,7 +4,7 @@ import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { failWithLog, sacrificeSkeleton } from '~/core/skill/executors/lib'
+import { SkillUtils } from '..'
 
 /**
  * 뼈 폭풍 (Bone Storm)
@@ -16,8 +16,8 @@ export const boneStorm: ExecuteSkill<Necromancer> = async (player, skillContext,
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
   // 1. 유효성 검사
-  if (skeletons.length === 0) return failWithLog('skill.BONE_STORM.no_skeletons')
-  if (aliveEnemies.length === 0) return failWithLog('skill.BONE_STORM.no_enemies')
+  if (skeletons.length === 0) return SkillUtils.failWithLog('skill.BONE_STORM.no_skeletons')
+  if (aliveEnemies.length === 0) return SkillUtils.failWithLog('skill.BONE_STORM.no_enemies')
 
   // 2. 희생 데이터 계산 (데미지 및 개수)
   const sacrificeCount = skeletons.length
@@ -28,7 +28,7 @@ export const boneStorm: ExecuteSkill<Necromancer> = async (player, skillContext,
 
   // 3. 모든 스켈레톤 희생 처리 (배열 복사본 사용 권장)
   const targetIds = skeletons.map((sk) => sk.id)
-  targetIds.forEach((id) => sacrificeSkeleton(player, id))
+  targetIds.forEach((id) => SkillUtils.sacrificeSkeleton(player, id))
 
   // 4. 모든 적에게 광역 공격 집행
   await executeBoneStormAttack(player, aliveEnemies, totalRawDamage, sacrificeCount)

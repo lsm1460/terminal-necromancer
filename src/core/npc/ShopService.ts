@@ -1,4 +1,3 @@
-import i18n from '~/i18n'
 import { ItemRarity } from '../item/consts'
 
 export const ShopService = {

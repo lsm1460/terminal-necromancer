@@ -5,7 +5,7 @@ import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import SkeletonWrapper from '~/systems/job/necromancer/SkeletonWrapper'
-import { failWithLog, sacrificeSkeleton } from '~/core/skill/executors/lib'
+import { SkillUtils } from '..'
 
 /**
  * 뼈 창 (Bone Spear)
@@ -16,8 +16,8 @@ export const boneSpear: ExecuteSkill<Necromancer> = async (player, skillContext,
   const skeletons = player.ref.skeleton
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 
-  if (skeletons.length === 0) return failWithLog('skill.BONE_SPEAR.no_skeletons')
-  if (aliveEnemies.length === 0) return failWithLog('skill.BONE_SPEAR.no_enemies')
+  if (skeletons.length === 0) return SkillUtils.failWithLog('skill.BONE_SPEAR.no_skeletons')
+  if (aliveEnemies.length === 0) return SkillUtils.failWithLog('skill.BONE_SPEAR.no_enemies')
 
   const selectedId = await selectSkeletonToSacrifice(player.ref.skeleton)
   if (selectedId === 'cancel') {
@@ -26,8 +26,8 @@ export const boneSpear: ExecuteSkill<Necromancer> = async (player, skillContext,
   }
 
   // 2-2. 실제 희생 처리 (로직 수행)
-  const targetSkeleton = sacrificeSkeleton(player, selectedId)
-  if (!targetSkeleton) return failWithLog('skill.BONE_SPEAR.no_skeletons')
+  const targetSkeleton = SkillUtils.sacrificeSkeleton(player, selectedId)
+  if (!targetSkeleton) return SkillUtils.failWithLog('skill.BONE_SPEAR.no_skeletons')
 
   Terminal.log(i18n.t('skill.BONE_SPEAR.activation', { player: player.name, target: targetSkeleton.name }))
 
