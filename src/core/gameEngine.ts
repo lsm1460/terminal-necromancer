@@ -4,7 +4,6 @@ import { Battle, BattleComponentFactory } from '~/core/battle'
 import { EventBus } from '~/core/EventBus'
 import { LootFactory } from '~/core/LootFactory'
 import { MonsterFactory } from '~/core/MonsterFactory'
-import { Player } from '~/core/player/Player'
 import { NpcSkillManager } from '~/core/skill/npcs/NpcSkillManger'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
@@ -13,6 +12,7 @@ import { ConfigSystem } from '~/systems/ConfigSystem'
 import { DropSystem } from '~/systems/DropSystem'
 import { EventLedger } from '~/systems/EventLedger'
 import { MonsterEvent } from '~/systems/events/MonsterEvent'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { MapManager } from '~/systems/MapManager'
 import { NPCManager } from '~/systems/NpcManager'
 import { QuestManager } from '~/systems/QuestManager'
@@ -37,14 +37,14 @@ export class GameEngine {
     private eventBus: EventBus
   ) {}
 
-  public async init(initData: SaveData): Promise<void> {
+  public async init(initData: SaveData<Necromancer>): Promise<void> {
     const { item, drop, monsterGroup, monster, level, npcSkills, map, npc, state } = this.assets
 
     const dropSystem = new DropSystem(item, drop)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
 
     const eventBus = this.eventBus
-    const player = new Player(level, eventBus, initData?.player)
+    const player = new Necromancer(level, eventBus, initData?.player)
     const mapManager = new MapManager(map, eventBus)
     const world = new World(player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)

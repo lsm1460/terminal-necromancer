@@ -1,15 +1,15 @@
 import { SkeletonRarity } from '~/consts'
+import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { BattleTarget } from '~/types'
-import { getOriginId } from '../utils'
-import { Player } from './Player'
+import { Necromancer } from './Necromancer'
 
 interface SkeletonWrapper extends BattleTarget {}
 
 class SkeletonWrapper {
   constructor(
     public raw: BattleTarget,
-    private player: Player
+    private player: Necromancer
   ) {}
 
   // Delegations for BattleTarget compatibility

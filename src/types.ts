@@ -72,24 +72,16 @@ export interface MapData {
   tiles: Tile[][]
 }
 
-export type LevelData = {
-  level: number
-  expRequired: number
-  atk: number
-  def: number
-  hp: number
-  mp: number
-}
-
 export type Direction = 'up' | 'down' | 'left' | 'right'
 export type Vector = { dx: number; dy: number }
 
 import { EventBus } from './core/EventBus'
 import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
-import { AttackType, NpcSkill } from './core/types'
+import { AttackType, NpcSkill, PositionType } from './core/types'
 import { ConfigSystem } from './systems/ConfigSystem'
 import { QuestManager } from './systems/QuestManager'
 import { Item } from './types/item'
+import { Necromancer } from './systems/job/necromancer/Necromancer'
 
 export type Corpse = {
   x?: number
@@ -136,7 +128,7 @@ export interface Renderer {
 }
 
 export interface GameContext {
-  player: Player
+  player: Necromancer
   map: MapManager
   npcs: NPCManager
   world: World
@@ -204,35 +196,6 @@ export const SKILL_IDS = {
 // 2. 위 객체의 값들만 모아서 타입으로 추출
 export type SkillId = (typeof SKILL_IDS)[keyof typeof SKILL_IDS]
 
-export type SkillResult = {
-  isSuccess: boolean
-  isAggressive: boolean
-  gross: number
-}
-
-export type ExecuteSkill = (
-  player: CombatUnit<Player>,
-  context: { world: World; eventBus: EventBus },
-  units?: {
-    ally?: CombatUnit[]
-    enemies?: CombatUnit[]
-  }
-) => Promise<SkillResult>
-
-// 3. 스킬 인터페이스 정의
-export interface Skill {
-  id: SkillId
-  name: string
-  attackType?: AttackType
-  description: string
-  cost: number
-  requiredExp: number
-  requiredLevel: number
-  unlocks: string[]
-  unlockHint: string
-  execute: ExecuteSkill
-}
-
 export interface NPCState {
   hp: number
   isAlive: boolean
@@ -277,7 +240,3 @@ export interface SceneData {
   tiles: Tile[][]
 }
 
-export type PositionType = {
-  x: number
-  y: number
-}

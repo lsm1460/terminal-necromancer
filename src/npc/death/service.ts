@@ -1,7 +1,8 @@
 import { Player } from '~/core/player/Player'
 import { getPlayerSkills } from '~/core/skill'
+import { Skill } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, Skill, SkillId } from '~/types'
+import { GameContext, SkillId } from '~/types'
 
 export const DeathService = {
   getActiveQuest(context: GameContext) {
@@ -31,7 +32,7 @@ export const DeathService = {
     const { player, events } = context
     const completed = events.getCompleted()
     const playerSkills = getPlayerSkills()
-    const lockableSkills = Object.values(playerSkills).filter((s) => !player.hasSkill(s.id))
+    const lockableSkills: Skill[] = Object.values(playerSkills).filter((s) => !player.hasSkill(s.id))
 
     return lockableSkills.map((s) => {
       const isUnlocked = !s.unlocks || s.unlocks.every((req) => completed.includes(req))

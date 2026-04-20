@@ -1,9 +1,9 @@
+import { Terminal } from '~/core/Terminal'
 import { BattleTarget } from '~/types'
-import { ItemRarity } from '../item/consts'
-import { Terminal } from '../Terminal'
+import { ItemRarity } from '~/types/item'
 import GolemWrapper from './GolemWrapper'
 import KnightWrapper from './KnightWrapper'
-import { Player, PlayerSaveData } from './Player'
+import { Necromancer, NecromancerSaveData } from './Necromancer'
 import SkeletonWrapper from './SkeletonWrapper'
 
 export class MinionManager {
@@ -23,8 +23,8 @@ export class MinionManager {
   private _knight: BattleTarget | undefined = undefined
 
   constructor(
-    private player: Player,
-    saved?: PlayerSaveData
+    private player: Necromancer,
+    saved?: NecromancerSaveData
   ) {
     if (saved) {
       if (saved.skeletonSubspace) this.skeletonSubspace = saved.skeletonSubspace

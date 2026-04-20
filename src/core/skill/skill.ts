@@ -1,11 +1,13 @@
-import i18n from '~/i18n';
-import { SKILL_IDS, Skill, SkillId } from '~/types';
-import { Player } from '../player/Player';
-import { SkillExecutor } from './executors';
+import i18n from '~/i18n'
+import { SKILL_IDS, SkillId } from '~/types'
+import { Player } from '../player/Player'
+import { Skill } from '../types'
+import { SkillExecutor } from './executors'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
-export const getPlayerSkills = (): Record<SkillId, Skill> => {
+export const getPlayerSkills = () => {
   // 1. 각 스킬별 고유 설정 (수치 및 실행 로직)
-  const skillConfigs: Record<SkillId, Partial<Skill>> = {
+  const skillConfigs: Record<SkillId, Partial<Skill<Necromancer>>> = {
     [SKILL_IDS.RAISE_SKELETON]: {
       cost: 5,
       execute: (p, c) => SkillExecutor.raiseSkeleton(p, c),
@@ -75,29 +77,32 @@ export const getPlayerSkills = (): Record<SkillId, Skill> => {
       unlocks: ['third_boss'],
       execute: (p, c, u) => SkillExecutor.boneStorm(p, c, u),
     },
-  };
+  }
 
   // 2. 공통 주입 로직 (ID와 i18n 자동 매핑)
-  return Object.keys(SKILL_IDS).reduce((acc, id) => {
-    const skillId = id as SkillId;
-    const config = skillConfigs[skillId];
+  return Object.keys(SKILL_IDS).reduce(
+    (acc, id) => {
+      const skillId = id as SkillId
+      const config = skillConfigs[skillId]
 
-    acc[skillId] = {
-      id: skillId,
-      name: i18n.t(`skill.${skillId}.name`),
-      description: i18n.t(`skill.${skillId}.description`),
-      unlockHint: i18n.t(`skill.${skillId}.unlockHint`),
-      cost: config?.cost ?? 0,
-      requiredExp: config?.requiredExp ?? 0,
-      requiredLevel: config?.requiredLevel ?? 1,
-      unlocks: config?.unlocks ?? [],
-      attackType: config?.attackType,
-      execute: config?.execute || (async () => ({ isSuccess: false, gross: 0, isAggressive: false })),
-    } as Skill;
+      acc[skillId] = {
+        id: skillId,
+        name: i18n.t(`skill.${skillId}.name`),
+        description: i18n.t(`skill.${skillId}.description`),
+        unlockHint: i18n.t(`skill.${skillId}.unlockHint`),
+        cost: config?.cost ?? 0,
+        requiredExp: config?.requiredExp ?? 0,
+        requiredLevel: config?.requiredLevel ?? 1,
+        unlocks: config?.unlocks ?? [],
+        attackType: config?.attackType,
+        execute: config?.execute || (async () => ({ isSuccess: false, gross: 0, isAggressive: false })),
+      } as Skill
 
-    return acc;
-  }, {} as Record<SkillId, Skill>);
-};
+      return acc
+    },
+    {} as Record<SkillId, Skill>
+  )
+}
 
 export const SkillUtils = {
   canLearn: (player: Player, skill: Skill): boolean => {

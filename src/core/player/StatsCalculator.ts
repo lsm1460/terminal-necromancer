@@ -1,71 +1,50 @@
-import { Player } from './Player'
+import { Player } from './Player';
 
-type StatOptions = {
-  ignoreBloodAffix?: boolean
-}
+export type StatModifier = {
+  key: 'maxHp' | 'maxMp' | 'atk' | 'def' | 'crit' | 'eva';
+  value: (current: number, player: Player) => number;
+};
 
 export class StatsCalculator {
   static getMaxHp(player: Player): number {
-    let maxHp = player._maxHp
+    let maxHp = player._maxHp;
+    maxHp += player.equipped.weapon?.hp || 0;
+    maxHp += player.equipped.armor?.hp || 0;
 
-    maxHp += player.equipped.weapon?.hp || 0
-    maxHp += player.equipped.armor?.hp || 0
-
-    if (player.hasAffix('BLOOD')) {
-      const potentialMp = StatsCalculator.getMaxMp(player, { ignoreBloodAffix: true })
-
-      maxHp = Math.floor((maxHp + potentialMp) * 1.3)
-    }
-
-    return maxHp
+    // 외부 수정자 적용 (예: BLOOD 어픽스 로직이 여기서 실행됨)
+    return this.applyModifiers(maxHp, 'maxHp', player);
   }
 
-  static getMaxMp(player: Player, options: StatOptions = {}): number {
-    const { ignoreBloodAffix = false } = options
+  static getMaxMp(player: Player): number {
+    let maxMp = player._maxMp;
+    maxMp += player.equipped.weapon?.mp || 0;
+    maxMp += player.equipped.armor?.mp || 0;
 
-    if (!ignoreBloodAffix && player.hasAffix('BLOOD')) {
-      return 0
-    }
-
-    let maxMp = player._maxMp
-
-    maxMp += player.equipped.weapon?.mp || 0
-    maxMp += player.equipped.armor?.mp || 0
-
-    return maxMp
+    // 외부 수정자 적용
+    return this.applyModifiers(maxMp, 'maxMp', player);
   }
 
   static getComputed(player: Player) {
-    let atk = player.atk
-    let crit = player.crit
-    let def = player.def
-    let eva = player.eva
-    let attackType = 'melee'
-
-    if (player.equipped.weapon) {
-      atk += player.equipped.weapon.atk
-      attackType = player.equipped.weapon.attackType || 'melee'
-      crit += player.equipped.weapon.crit
-    }
-
-    if (player.equipped.armor) {
-      def += player.equipped.armor.def
-      eva += player.equipped.armor?.eva || 0
-    }
-
-    if (player.hasAffix('ALONE') && player.skeleton.length < 1) {
-      atk += player.maxSkeleton * 10
-      def += Math.floor(player.maxSkeleton * 0.5)
-    }
+    let atk = player.atk + (player.equipped.weapon?.atk || 0);
+    let def = player.def + (player.equipped.armor?.def || 0);
+    let crit = player.crit + (player.equipped.weapon?.crit || 0);
+    let eva = player.eva + (player.equipped.armor?.eva || 0);
+    const attackType = player.equipped.weapon?.attackType || 'melee';
 
     return {
       maxHp: this.getMaxHp(player),
       maxMp: this.getMaxMp(player),
-      atk,
-      crit,
-      def,
-      eva,
+      atk: this.applyModifiers(atk, 'atk', player),
+      def: this.applyModifiers(def, 'def', player),
+      crit: this.applyModifiers(crit, 'crit', player),
+      eva: this.applyModifiers(eva, 'eva', player),
       attackType,
-    }
+    };
+  }
+
+  private static applyModifiers(base: number, key: StatModifier['key'], player: Player): number {
+    return player.modifiers
+      .filter((mod) => mod.key === key)
+      .reduce((val, mod) => mod.value(val, player), base);
   }
 }

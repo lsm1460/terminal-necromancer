@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
-import GolemWrapper from '~/core/player/GolemWrapper'
-import KnightWrapper from '~/core/player/KnightWrapper'
 import i18n from '~/i18n'
+import GolemWrapper from '~/systems/job/necromancer/GolemWrapper'
+import KnightWrapper from '~/systems/job/necromancer/KnightWrapper'
 import { BattleTarget, GameContext } from '~/types'
 import { renderHpBar, selectTarget } from './utils'
 

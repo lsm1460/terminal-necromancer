@@ -1,12 +1,13 @@
 import { SKELETON_RARITIES, SkeletonFactory } from '~/core/skill/SkeletonFactory'
 import { Terminal } from '~/core/Terminal'
-import { GameEventType } from '~/core/types'
+import { ExecuteSkill, GameEventType } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
-import { Corpse, ExecuteSkill } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { Corpse } from '~/types'
 import { SkillManager } from '../SkillManager'
 
-export const raiseSkeleton: ExecuteSkill = async (player, { world, eventBus }) => {
+export const raiseSkeleton: ExecuteSkill<Necromancer> = async (player, { world, eventBus }) => {
   const failure = {
     isSuccess: false,
     isAggressive: false,

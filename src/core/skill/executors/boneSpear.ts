@@ -1,9 +1,10 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
-import SkeletonWrapper from '~/core/player/SkeletonWrapper'
 import { Terminal } from '~/core/Terminal'
+import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
-import { ExecuteSkill } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import SkeletonWrapper from '~/systems/job/necromancer/SkeletonWrapper'
 import { failWithLog, sacrificeSkeleton } from './lib'
 
 /**
@@ -11,7 +12,7 @@ import { failWithLog, sacrificeSkeleton } from './lib'
  * : 소환된 스켈레톤 하나를 희생시켜 날카로운 뼈의 창으로 부수어 날립니다.
  * : 전열의 적 최대 2명에게 시체의 최대 체력의 0.7배율의 관통 피해를 입힙니다.
  */
-export const boneSpear: ExecuteSkill = async (player, skillContext, { enemies = [] } = {}) => {
+export const boneSpear: ExecuteSkill<Necromancer> = async (player, skillContext, { enemies = [] } = {}) => {
   const skeletons = player.ref.skeleton
   const aliveEnemies = enemies.filter((e) => e.ref.hp > 0)
 

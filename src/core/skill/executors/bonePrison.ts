@@ -1,7 +1,7 @@
 import { TargetSelector } from '~/core/battle/TargetSelector'
 import { Terminal } from '~/core/Terminal'
+import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
-import { ExecuteSkill } from '~/types'
 
 /**
  * 뼈 감옥 (Bone Prison)

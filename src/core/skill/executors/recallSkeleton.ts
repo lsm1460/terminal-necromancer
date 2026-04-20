@@ -1,8 +1,9 @@
 import { Terminal } from '~/core/Terminal'
+import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
-import { ExecuteSkill } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
-export const recallSkeleton: ExecuteSkill = async (player) => {
+export const recallSkeleton: ExecuteSkill<Necromancer> = async (player) => {
   const skeletons = player.ref.skeleton
 
   const corpseId = await Terminal.select(i18n.t('skill.RECALL_SKELETON.select_prompt'), [

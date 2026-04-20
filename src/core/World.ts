@@ -1,10 +1,10 @@
-import _ from 'lodash'
+import matches from 'lodash/matches'
 import { EventBus } from '~/core/EventBus'
-import { Corpse, LootBag, PositionType } from '~/types'
+import { Corpse, LootBag } from '~/types'
 import { Drop } from '~/types/item'
 import { Item } from './item/Item'
 import { Player } from './player/Player'
-import { GameEventType } from './types'
+import { GameEventType, PositionType } from './types'
 
 export class World {
   lootBags: LootBag | null = null
@@ -19,7 +19,7 @@ export class World {
   }
 
   addDrop(drop: Drop | Item, quantity = 1) {
-    const existing = this.drops.find(_.matches({ id: drop.id }))
+    const existing = this.drops.find(matches({ id: drop.id }))
     if (existing && existing.quantity && drop.quantity) {
       existing.quantity += drop.quantity
     } else {
@@ -33,11 +33,11 @@ export class World {
   }
 
   getDropsAt(pos: PositionType): Drop[] {
-    return this.drops.filter(_.matches(pos))
+    return this.drops.filter(matches(pos))
   }
 
   removeDropById(dropId: string, pos: { x: number; y: number }): Drop | undefined {
-    const idx = this.drops.findIndex(_.matches({ id: dropId, ...pos }))
+    const idx = this.drops.findIndex(matches({ id: dropId, ...pos }))
     if (idx === -1) return undefined
 
     // 배열에서 제거하고 반환

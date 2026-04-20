@@ -1,8 +1,8 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
-import { ExecuteSkill } from '~/types'
 import { SkillManager } from '../SkillManager'
 
 /**

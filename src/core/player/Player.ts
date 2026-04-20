@@ -1,23 +1,13 @@
-import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
-import { EventBus } from '~/core/EventBus'
-import i18n from '~/i18n'
-import { BattleTarget, LevelData, PositionType, Skill, SKILL_IDS, SkillId } from '~/types'
-import { Affix, AffixId, ArmorItem, ConsumableItem, WeaponItem } from '~/types/item'
+import { BattleTarget } from '~/types'
+import { ArmorItem, ConsumableItem, WeaponItem } from '~/types/item'
 import { Item } from '../item/Item'
-import { GameEventType } from '../types'
+import { LevelData, PositionType, Skill } from '../types'
 import { InventoryManager } from './InventoryManager'
-import { MinionManager } from './MinionManager'
-import SkeletonWrapper from './SkeletonWrapper'
-import { StatsCalculator } from './StatsCalculator'
+import { StatModifier, StatsCalculator } from './StatsCalculator'
 
-export type PlayerSaveData = Partial<Player> & {
-  _skeleton?: BattleTarget[]
-  _mercenary?: BattleTarget[]
-  _golem?: BattleTarget
-  _knight?: BattleTarget
-}
+export interface PlayerSaveData extends Partial<Player> {}
 
-export class Player {
+export abstract class Player {
   id = 'player'
   name = 'player'
   x = 0
@@ -34,38 +24,24 @@ export class Player {
   gold = 0
   exp = 0
   level = 1
-  karma = 0
-  _maxMemorize = INIT_MAX_MEMORIZE_COUNT
-  memorize: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
+
   equipped = { weapon: null as WeaponItem | null, armor: null as ArmorItem | null }
 
-  public unlockedSkills: (SkillId | 'SPACE')[] = [SKILL_IDS.RAISE_SKELETON]
+  public unlockedSkills: string[] = []
+  public readonly modifiers: StatModifier[] = []
 
   onDeath?: () => void
 
   private levelTable: LevelData[]
   private inventoryManager: InventoryManager
-  private minionManager: MinionManager
 
   /**
    * @param levelData - 이제 경로 문자열이 아닌 JSON 객체 데이터를 직접 받습니다.
    * @param saved - 저장된 플레이어 데이터
    */
-  constructor(levelData: any, eventBus: EventBus, saved?: PlayerSaveData) {
+  constructor(levelData: any, saved?: PlayerSaveData) {
     if (saved) {
-      const {
-        inventory,
-        inventoryMax,
-        skeletonSubspace,
-        subspaceLimit,
-        skeleton,
-        _maxSkeleton,
-        upgradeLimit,
-        golemUpgrade,
-        knightUpgrade,
-        equipped,
-        ...rest
-      } = saved
+      const { inventory, inventoryMax, equipped, ...rest } = saved
       Object.assign(this, rest)
     }
 
@@ -74,7 +50,6 @@ export class Player {
 
     this.levelTable = levelData
     this.inventoryManager = new InventoryManager(this, saved)
-    this.minionManager = new MinionManager(this, saved)
 
     if (saved?.equipped?.weapon) {
       this.equipped.weapon = new Item(saved.equipped.weapon) as WeaponItem
@@ -83,8 +58,6 @@ export class Player {
     if (saved?.equipped?.armor) {
       this.equipped.armor = new Item(saved.equipped.armor) as ArmorItem
     }
-
-    eventBus.subscribe(GameEventType.NPC_IS_DEAD, ({ karma = 1 }) => (this.karma += karma))
   }
 
   get inventory() {
@@ -100,20 +73,22 @@ export class Player {
   }
 
   get raw() {
-    const { levelTable, onDeath, inventoryManager, minionManager, equipped, ...rest } = this
+    const { levelTable, onDeath, inventoryManager, equipped, ...rest } = this
 
     const inventoryData = this.inventoryManager.toJSON()
-    const minionData = this.minionManager.toJSON()
 
     return {
       ...rest,
       ...inventoryData,
-      ...minionData,
       equipped: {
         armor: equipped.armor ? equipped.armor.raw : null,
         weapon: equipped.weapon ? equipped.weapon.raw : null,
       },
     }
+  }
+
+  addModifier(mod: StatModifier) {
+    this.modifiers.push(mod)
   }
 
   get maxHp() {
@@ -131,86 +106,6 @@ export class Player {
     }
   }
 
-  get maxSkeleton() {
-    return this.minionManager.maxSkeleton
-  }
-
-  get maxMemorize(): number {
-    let totalSlots = this._maxMemorize
-
-    if (this.hasAffix('MEMORY')) totalSlots += 2
-
-    return totalSlots
-  }
-
-  get golem() {
-    return this.minionManager.golem
-  }
-
-  get knight() {
-    return this.minionManager.knight
-  }
-
-  get minions(): BattleTarget[] {
-    return this.minionManager.minions
-  }
-
-  get skeletonSubspace() {
-    return this.minionManager.skeletonSubspace
-  }
-
-  set skeletonSubspace(v) {
-    this.minionManager.skeletonSubspace = v
-  }
-
-  get subspaceLimit() {
-    return this.minionManager.subspaceLimit
-  }
-
-  set subspaceLimit(v) {
-    this.minionManager.subspaceLimit = v
-  }
-
-  get skeleton() {
-    return this.minionManager.skeleton
-  }
-
-  set skeleton(v) {
-    this.minionManager.skeleton = v
-  }
-
-  get _maxSkeleton() {
-    return this.minionManager._maxSkeleton
-  }
-
-  set _maxSkeleton(v) {
-    this.minionManager._maxSkeleton = v
-  }
-
-  get golemUpgrade() {
-    return this.minionManager.golemUpgrade
-  }
-
-  set golemUpgrade(v) {
-    this.minionManager.golemUpgrade = v
-  }
-
-  get knightUpgrade() {
-    return this.minionManager.knightUpgrade
-  }
-
-  set knightUpgrade(v) {
-    this.minionManager.knightUpgrade = v
-  }
-
-  get upgradeLimit() {
-    return this.minionManager.upgradeLimit
-  }
-
-  set upgradeLimit(v) {
-    this.minionManager.upgradeLimit = v
-  }
-
   get isAlive() {
     return this.hp > 0
   }
@@ -219,57 +114,16 @@ export class Player {
     this.hp = 0
   }
 
-  get description() {
-    if (this.karma <= 0) {
-      return i18n.t('player.description.karma_0')
-    }
-    if (this.karma <= 5) {
-      return i18n.t('player.description.karma_5')
-    }
-    if (this.karma <= 10) {
-      return i18n.t('player.description.karma_10')
-    }
-    return i18n.t('player.description.karma_max')
-  }
+  abstract get description(): string
+  abstract get party(): BattleTarget[]
+  abstract hasAffix(name: string): boolean
+  abstract dismissMember(id: string): void
+
+  onEquipmentChanged() {}
+
 
   get skills() {
-    const passiveList = ['resist_confuse'] as string[]
-
-    if (this.hasAffix('ALONE')) {
-      passiveList.push('resist_bind')
-    }
-
-    return passiveList
-  }
-
-  get affixes(): Affix[] {
-    return [this.equipped.weapon, this.equipped.armor]
-      .filter((item): item is WeaponItem | ArmorItem => !!item && !!item.affix)
-      .flatMap((item) => item.affix!)
-  }
-
-  get minRebornRarity() {
-    let minRebornRarity = this.getAffixValue('ELITE_SQUAD')
-
-    if (this.equipped.weapon) minRebornRarity += this.equipped.weapon?.minRebornRarity || 0
-    if (this.equipped.armor) minRebornRarity += this.equipped.armor?.minRebornRarity || 0
-
-    return minRebornRarity
-  }
-
-  public getAffixValue(affixId: AffixId): number {
-    const values = [this.equipped.weapon, this.equipped.armor]
-      .filter((item) => item?.affix?.id === affixId)
-      .map((item) => item!.affix!.value || 0)
-
-    // 장착된 아이템 중 해당 어픽스가 없으면 0, 있으면 최댓값 반환
-    return values.length > 0 ? Math.max(...values) : 0
-  }
-
-  public hasAffix(affixId: AffixId): boolean {
-    const affixes = this.affixes.map((affix) => affix.id)
-
-    return affixes.includes(affixId)
+    return [] as string[]
   }
 
   move(dx: number, dy: number) {
@@ -328,10 +182,6 @@ export class Player {
     return this.inventoryManager.equip(newItem)
   }
 
-  public updateSkeletonLimit() {
-    return this.minionManager.updateSkeletonLimit()
-  }
-
   unEquip(slot: keyof typeof this.equipped): boolean {
     return this.inventoryManager.unEquip(slot)
   }
@@ -356,24 +206,8 @@ export class Player {
     }
   }
 
-  hasSkill(skillId: SkillId | 'SPACE'): boolean {
+  hasSkill(skillId: string): boolean {
     return this.unlockedSkills.includes(skillId)
-  }
-
-  addSkeleton(minion: BattleTarget) {
-    return this.minionManager.addSkeleton(minion)
-  }
-
-  addMercenary(mercenary: BattleTarget) {
-    return this.minionManager.addMercenary(mercenary)
-  }
-
-  removeMercenaries() {
-    return this.minionManager.removeMercenaries()
-  }
-
-  removeMinion(minionId: string) {
-    return this.minionManager.removeMinion(minionId)
   }
 
   removeItem(itemId: string, amount: number = 1): boolean {
@@ -386,14 +220,6 @@ export class Player {
 
   hasItem(id: string) {
     return this.inventoryManager.hasItem(id)
-  }
-
-  unlockGolem(type: 'zed' | 'maya') {
-    return this.minionManager.unlockGolem(type)
-  }
-
-  unlockKnight(skeleton: SkeletonWrapper) {
-    return this.minionManager.unlockKnight(skeleton)
   }
 
   public recoverHp(amount: number): number {
@@ -411,10 +237,5 @@ export class Player {
   restoreAll() {
     this.hp = this.maxHp
     this.mp = this.maxMp
-
-    this.minions.forEach((minion) => {
-      minion.isAlive = true
-      minion.hp = minion.maxHp
-    })
   }
 }

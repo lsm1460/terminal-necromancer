@@ -1,7 +1,8 @@
 import { Terminal } from '~/core/Terminal'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { GameContext, PositionType } from '~/types'
+import { GameContext } from '~/types'
+import { PositionType } from './types'
 
 export function printDirections(context: GameContext) {
   const { player, map } = context

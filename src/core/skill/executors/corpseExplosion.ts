@@ -1,9 +1,10 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import { ExecuteSkill } from '~/core/types'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { BattleTarget, ExecuteSkill } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { BattleTarget } from '~/types'
 
 interface ExplosionTarget {
   id: string
@@ -18,7 +19,7 @@ interface ExplosionTarget {
  * : 현재 위치의 시체 또는 스켈레톤을 소모하여 주변 적들에게 광역 피해를 입힙니다.
  * : 공격자의 스탯이 아닌 '시체의 최대 생명력'에 기반한 데미지를 전달합니다.
  */
-export const corpseExplosion: ExecuteSkill = async (player, { world }, { enemies = [] } = {}) => {
+export const corpseExplosion: ExecuteSkill<Necromancer> = async (player, { world }, { enemies = [] } = {}) => {
   const isChaining = player.ref.hasAffix('CHAIN_EXPLOSION')
   const targets = collectExplosionTargets(player.ref, world, isChaining)
 
@@ -64,7 +65,7 @@ export const corpseExplosion: ExecuteSkill = async (player, { world }, { enemies
  * 폭발 가능한 자원(시체 & 스켈레톤) 수집
  * : isChaining이 true라면 시체(corpses)만 수집합니다.
  */
-function collectExplosionTargets(player: Player, world: World, isChaining: boolean): ExplosionTarget[] {
+function collectExplosionTargets(player: Necromancer, world: World, isChaining: boolean): ExplosionTarget[] {
   const corpses = world.getCorpsesAt(player.pos)
 
   const targets: ExplosionTarget[] = corpses.map((corpse) => ({
@@ -112,7 +113,7 @@ async function selectTarget(targets: ExplosionTarget[]): Promise<string> {
  * 단일 대상 폭발 실행
  */
 async function executeSingleExplosion(
-  player: CombatUnit<Player>,
+  player: CombatUnit<Necromancer>,
   world: World,
   target: ExplosionTarget,
   enemies: CombatUnit[]

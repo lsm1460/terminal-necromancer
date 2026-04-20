@@ -1,65 +1,75 @@
 import i18n from '~/i18n'
-import { ExecuteSkill, SkillId, SkillResult } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { SkillId } from '~/types'
 import { Terminal } from '../Terminal'
 import { World } from '../World'
+import { CombatUnit } from '../battle/unit/CombatUnit'
 import { Player } from '../player/Player'
+import { ExecuteSkill, SkillResult } from '../types'
 import { getPlayerSkills } from './skill'
 
-type EnhancedSkillResult =
-  | (SkillResult & { isSuccess: boolean; skillId: string })
+type BaseSkillInfo = {
+  isAggressive: boolean
+  gross: number
+}
+
+type EnhancedSkillResult = (
+  | (SkillResult & { isSuccess: true; skillId: string })
   | (SkillResult & { isSuccess: false; skillId?: undefined })
+) &
+  BaseSkillInfo
 
 export class SkillManager {
-  static requestAndExecuteSkill: (...args: Parameters<ExecuteSkill>) => Promise<EnhancedSkillResult> = async (
-    player,
-    context,
-    units
-  ) => {
-    const isConsumeBlood = player.ref.hasAffix('BLOOD')
-    const costType = isConsumeBlood ? 'HP' : 'MP'
+  static requestAndExecuteSkill: (...args: Parameters<ExecuteSkill>) => Promise<EnhancedSkillResult> =
+    async (player, context, units) => {
+      const playableUnit = player as unknown as CombatUnit<Necromancer>
+      const isConsumeBlood = playableUnit.ref.hasAffix('BLOOD')
+      const costType = isConsumeBlood ? 'HP' : 'MP'
 
-    const currentResource = isConsumeBlood ? player.ref.hp : player.ref.mp
+      const currentResource = isConsumeBlood ? playableUnit.ref.hp : playableUnit.ref.mp
 
-    const failResult = { isSuccess: false, isAggressive: false, gross: 0 } as const
+      const failResult = { isSuccess: false, isAggressive: false, gross: 0 } as const
 
-    const playerSkills = getPlayerSkills()
-    const availableSkills = Object.values(playerSkills).filter((skill) => player.ref.memorize.includes(skill.id))
-
-    const skillId = await Terminal.select(i18n.t('skill.select_title', { type: costType, cost: currentResource }), [
-      ...availableSkills.map((s) => ({
-        name: s.id,
-        message: `${s.name} (${costType}: ${s.cost}) - ${s.description}`,
-      })),
-      { name: 'cancel', message: i18n.t('cancel') },
-    ])
-
-    if (skillId === 'cancel') return failResult
-
-    const targetSkill = playerSkills[skillId as SkillId]
-
-    if (currentResource < targetSkill.cost) {
-      Terminal.log(
-        `\n🚫 ${i18n.t('skill.not_enough', {
-          type: costType,
-          cost: targetSkill.cost,
-          current: currentResource,
-        })}`
+      const playerSkills = getPlayerSkills()
+      const availableSkills = Object.values(playerSkills).filter((skill) =>
+        playableUnit.ref.memorize.includes(skill.id as SkillId)
       )
-      return failResult
-    }
 
-    const result = await targetSkill.execute(player, context, units)
+      const skillId = await Terminal.select(i18n.t('skill.select_title', { type: costType, cost: currentResource }), [
+        ...availableSkills.map((s) => ({
+          name: s.id,
+          message: `${s.name} (${costType}: ${s.cost}) - ${s.description}`,
+        })),
+        { name: 'cancel', message: i18n.t('cancel') },
+      ])
 
-    if (result.isSuccess) {
-      if (isConsumeBlood) {
-        player.ref.hp -= targetSkill.cost
-      } else {
-        player.ref.mp -= targetSkill.cost
+      if (skillId === 'cancel') return failResult
+
+      const targetSkill = playerSkills[skillId as SkillId]
+
+      if (currentResource < targetSkill.cost) {
+        Terminal.log(
+          `\n🚫 ${i18n.t('skill.not_enough', {
+            type: costType,
+            cost: targetSkill.cost,
+            current: currentResource,
+          })}`
+        )
+        return failResult
       }
-    }
 
-    return { ...result, skillId }
-  }
+      const result = await targetSkill.execute(player, context, units)
+
+      if (result.isSuccess) {
+        if (isConsumeBlood) {
+          player.ref.hp -= targetSkill.cost
+        } else {
+          player.ref.mp -= targetSkill.cost
+        }
+      }
+
+      return { ...result, skillId } as EnhancedSkillResult
+    }
 
   static async selectCorpse(player: Player, world: World) {
     const corpses = world.getCorpsesAt(player.pos)

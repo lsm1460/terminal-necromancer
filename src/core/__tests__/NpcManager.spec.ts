@@ -3,6 +3,29 @@ import { EventBus } from '~/core/EventBus'
 import { NPCManager } from '../../systems/NpcManager'
 import { Player } from '../player/Player'
 
+class TestPlayer extends Player {
+  karma = 0
+  
+  constructor(levelData: [], eventBus: EventBus) {
+    super(levelData)
+  }
+
+  get party() {
+    return []
+  }
+
+  get description() {
+    return '테스트용 플레이어';
+  }
+
+  // 추상 메서드로 정의한 내용이 더 있다면 여기에 구현
+  hasAffix(name: string): boolean {
+    return false; 
+  }
+
+  dismissMember() {}
+}
+
 // Mock i18n
 vi.mock('~/i18n', () => ({
   default: {
@@ -21,7 +44,7 @@ vi.mock('../Terminal', () => ({
 describe('NPCManager (Legacy Behavior)', () => {
   let eventBus: EventBus
   let npcManager: NPCManager
-  let player: Player
+  let player: TestPlayer
   
   const mockNpcData = {
     test_npc: {
@@ -41,7 +64,7 @@ describe('NPCManager (Legacy Behavior)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     eventBus = new EventBus()
-    player = new Player([], eventBus)
+    player = new TestPlayer([], eventBus)
     npcManager = new NPCManager(mockNpcData, eventBus)
   })
 

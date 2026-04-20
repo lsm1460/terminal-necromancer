@@ -4,6 +4,7 @@ import { Terminal } from '~/core/Terminal'
 import { speak } from '~/utils'
 import i18n from '~/i18n'
 import { KnightService } from './service'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export const KnightActions = {
   async handleFirst(context: GameContext) {
@@ -14,7 +15,7 @@ export const KnightActions = {
     return true
   },
 
-  async handleUpgrade(player: Player) {
+  async handleUpgrade(player: Necromancer) {
     if (player.knightUpgrade.length >= player.upgradeLimit) {
       Terminal.log(i18n.t('npc._knight.upgrade.cannot_upgrade'))
       return true
@@ -41,7 +42,7 @@ export const KnightActions = {
     return true
   },
 
-  async handleReset(player: Player) {
+  async handleReset(player: Necromancer) {
     const cost = KnightService.getResetCost(player.knightUpgrade.length)
     const proceed = await Terminal.confirm(i18n.t('npc._knight.upgrade.reset', { cost }))
 

@@ -1,6 +1,7 @@
 import { Player } from '~/core/player/Player'
 import { GameContext } from '~/types'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export const MayaService = {
   getActiveQuest(context: GameContext) {
@@ -20,7 +21,7 @@ export const MayaService = {
     return null
   },
 
-  calculateUpgradeStats(player: Player) {
+  calculateUpgradeStats(player: Necromancer) {
     const machineStacks = player.golemUpgrade.filter((s) => s === 'machine').length
     const soulStacks = player.golemUpgrade.filter((s) => s === 'soul').length
     const totalStacks = player.golemUpgrade.length

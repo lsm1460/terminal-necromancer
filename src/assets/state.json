@@ -2,29 +2,20 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 5,
+    "x": 1,
     "y": 1,
     "_maxHp": 340,
-    "hp": 229,
+    "hp": 17,
     "_maxMp": 50,
-    "mp": 6,
+    "mp": 3,
     "atk": 15,
     "def": 7,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1765,
-    "exp": 1750,
+    "gold": 2203,
+    "exp": 4000,
     "level": 8,
-    "karma": 8,
-    "_maxMemorize": 5,
-    "memorize": [
-      "RAISE_SKELETON",
-      "RECALL_SKELETON",
-      "CORPSE_EXPLOSION",
-      "BONE_STORM",
-      "BONE_PRISON"
-    ],
     "unlockedSkills": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
@@ -36,36 +27,22 @@
       "BONE_STORM",
       "BONE_PRISON"
     ],
+    "karma": 8,
+    "_maxMemorize": 5,
+    "memorize": [
+      "RAISE_SKELETON",
+      "RECALL_SKELETON",
+      "CORPSE_EXPLOSION",
+      "BONE_STORM",
+      "BONE_PRISON"
+    ],
     "_skeleton": [
-      {
-        "id": "skeleton_great_shield_bearer::1775633143997",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 대형 방패병",
-        "attackType": "melee",
-        "maxHp": 308,
-        "hp": 308,
-        "atk": 31,
-        "def": 137,
-        "agi": 63,
-        "skills": [
-          "shield_bash"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_war::vVCjePq8",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 5
-      },
       {
         "id": "skeleton_warrior::1775633146601",
         "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
         "attackType": "melee",
         "maxHp": 144,
-        "hp": 144,
+        "hp": 16,
         "atk": 63,
         "def": 28,
         "agi": 24,
@@ -82,52 +59,6 @@
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 7
-      },
-      {
-        "id": "skeleton_monk::1775633148323",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 수도자",
-        "attackType": "ranged",
-        "maxHp": 145,
-        "hp": 145,
-        "atk": 21,
-        "def": 20,
-        "agi": 7,
-        "skills": [
-          "heal"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_mercy::640K4gk6",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 35
-      },
-      {
-        "id": "skeleton_cryomancer::1775633149732",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 빙결술사",
-        "attackType": "ranged",
-        "maxHp": 145,
-        "hp": 145,
-        "atk": 21,
-        "def": 20,
-        "agi": 8,
-        "skills": [
-          "ice_bolt"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_mercy::ABObD5cK",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
       }
     ],
     "_mercenary": [],
@@ -161,7 +92,7 @@
       "id": "_knight",
       "name": "",
       "attackType": "melee",
-      "hp": 704,
+      "hp": 678,
       "baseMaxHp": 720,
       "maxHp": 720,
       "baseAtk": 144,
@@ -278,9 +209,78 @@
           ],
           "value": 2
         }
+      },
+      {
+        "id": "divinity_dust",
+        "type": "item",
+        "price": 800,
+        "sellPrice": 150,
+        "quantity": 1
+      },
+      {
+        "id": "deity_splinter_dagger::0Vq9m7wj",
+        "type": "weapon",
+        "price": 3500,
+        "sellPrice": 420,
+        "quantity": 1,
+        "atk": 59,
+        "crit": 0.55,
+        "attackType": "melee",
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "mortal",
+        "affix": {
+          "id": "VAMPIRISM"
+        }
+      },
+      {
+        "id": "divine_remnant_armor::6cxzzXl4",
+        "type": "armor",
+        "price": 2400,
+        "sellPrice": 550,
+        "quantity": 1,
+        "def": 34,
+        "eva": 0.07,
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "fallen",
+        "affix": {
+          "id": "RESURRECTION"
+        }
       }
     ],
     "inventoryMax": 15,
+    "equipped": {
+      "armor": {
+        "id": "phantom_cloth::VrR1Dici",
+        "type": "armor",
+        "price": 1750,
+        "sellPrice": 400,
+        "quantity": 1,
+        "def": 12,
+        "eva": 0.18,
+        "rarity": "RARE",
+        "perfPrefix": "",
+        "adjective": "superior",
+        "maxSkeleton": 2
+      },
+      "weapon": {
+        "id": "deity_splinter_dagger::hPfh_Fzz",
+        "type": "weapon",
+        "price": 3500,
+        "sellPrice": 420,
+        "quantity": 1,
+        "atk": 57,
+        "crit": 0.26,
+        "attackType": "melee",
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "abyssal",
+        "affix": {
+          "id": "ALONE"
+        }
+      }
+    },
     "skeletonSubspace": [
       {
         "id": "skeleton_pyromancer::1774401209303",
@@ -366,40 +366,9 @@
       "EPIC",
       "EPIC"
     ],
-    "upgradeLimit": 5,
-    "equipped": {
-      "armor": {
-        "id": "phantom_cloth::VrR1Dici",
-        "type": "armor",
-        "price": 1750,
-        "sellPrice": 400,
-        "quantity": 1,
-        "def": 12,
-        "eva": 0.18,
-        "rarity": "RARE",
-        "perfPrefix": "",
-        "adjective": "superior",
-        "maxSkeleton": 2
-      },
-      "weapon": {
-        "id": "deity_splinter_dagger::hPfh_Fzz",
-        "type": "weapon",
-        "price": 3500,
-        "sellPrice": 420,
-        "quantity": 1,
-        "atk": 57,
-        "crit": 0.26,
-        "attackType": "melee",
-        "rarity": "EPIC",
-        "perfPrefix": "",
-        "adjective": "abyssal",
-        "affix": {
-          "id": "ALONE"
-        }
-      }
-    }
+    "upgradeLimit": 5
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B6_VEHICLE_DEPOT",
   "npcs": {
     "states": {
       "kane_leader": {

@@ -1,6 +1,6 @@
-import { BattleTarget } from '~/types'
-import { Player } from './Player'
 import i18n from '~/i18n'
+import { BattleTarget } from '~/types'
+import { Necromancer } from './Necromancer'
 
 interface GolemWrapper extends BattleTarget {}
 
@@ -10,7 +10,7 @@ class GolemWrapper {
   constructor(
     public raw: BattleTarget,
     public upgrade: ('machine' | 'soul')[],
-    private player: Player
+    private player: Necromancer
   ) {
     this.upgradeLimit = player.upgradeLimit
   }

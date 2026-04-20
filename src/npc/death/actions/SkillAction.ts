@@ -1,9 +1,9 @@
-import { Player } from '~/core/player/Player'
-import { GameContext, SkillId } from '~/types'
+import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { getPlayerSkills, SkillUtils } from '~/core/skill'
-import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { GameContext, SkillId } from '~/types'
 import { DeathService } from '../service'
 
 export const SkillActions = {
@@ -34,7 +34,7 @@ export const SkillActions = {
     return true
   },
 
-  async handleMemorize(player: Player) {
+  async handleMemorize(player: Necromancer) {
     const playerSkills = getPlayerSkills()
     const isSoulGrown = player.maxMemorize > INIT_MAX_MEMORIZE_COUNT
     const welcomeMessage = isSoulGrown ? i18n.t('npc.death.memorize.welcome_grown') : i18n.t('npc.death.memorize.welcome_default')

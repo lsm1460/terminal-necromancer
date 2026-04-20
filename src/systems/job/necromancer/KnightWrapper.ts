@@ -1,9 +1,9 @@
+import { AttackType } from '~/core/types'
+import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { BattleTarget } from '~/types'
-import { ItemRarity } from '../item/consts'
-import { AttackType } from '../types'
-import { getOriginId } from '../utils'
-import { Player } from './Player'
+import { ItemRarity } from '~/types/item'
+import { Necromancer } from './Necromancer'
 
 /**
  * 1. 인터페이스 병합 (Declaration Merging)
@@ -18,7 +18,7 @@ class KnightWrapper {
   constructor(
     public raw: BattleTarget,
     public upgrade: ItemRarity[],
-    private player: Player
+    private player: Necromancer
   ) {
     this.upgradeLimit = player.upgradeLimit
   }

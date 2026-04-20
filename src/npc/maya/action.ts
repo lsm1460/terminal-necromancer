@@ -1,8 +1,8 @@
-import { Player } from '~/core/player/Player'
-import { GameContext, NPC } from '~/types'
 import { Terminal } from '~/core/Terminal'
-import { speak } from '~/utils'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { GameContext, NPC } from '~/types'
+import { speak } from '~/utils'
 import { MayaService } from './service'
 
 export const MayaActions = {
@@ -14,15 +14,15 @@ export const MayaActions = {
     let dialogues: string[] = i18n.t('npc.maya_tech.join.intro', { returnObjects: true }) as string[]
     dialogues.push(i18n.t(jaxIsAlive ? 'npc.maya_tech.join.jax_alive' : 'npc.maya_tech.join.jax_dead'))
 
-    const golemKey = player.golem ? 'has_golem' : (isB3Completed ? 'can_make_golem' : 'cannot_make_golem')
+    const golemKey = player.golem ? 'has_golem' : isB3Completed ? 'can_make_golem' : 'cannot_make_golem'
     dialogues = [...dialogues, ...(i18n.t(`npc.maya_tech.join.${golemKey}`, { returnObjects: true }) as string[])]
-    
+
     dialogues.push(i18n.t('npc.maya_tech.join.outro'))
     await speak(dialogues)
     events.completeEvent('maya_1')
   },
 
-  async handleAwakeGolem(player: Player, npc: NPC) {
+  async handleAwakeGolem(player: Necromancer, npc: NPC) {
     if (player.golem) {
       Terminal.log(`\n${i18n.t('npc.maya_tech.awake.already_has')}`)
       return
@@ -33,27 +33,33 @@ export const MayaActions = {
       player.unlockGolem('maya')
       npc.updateContribution(20)
       const successMsgs = i18n.t('npc.maya_tech.awake.success', { returnObjects: true }) as string[]
-      successMsgs.forEach(msg => Terminal.log(msg))
+      successMsgs.forEach((msg) => Terminal.log(msg))
     } else {
       Terminal.log(i18n.t('npc.maya_tech.awake.cancel'))
     }
   },
 
-  async handleUpgradeGolem(player: Player) {
+  async handleUpgradeGolem(player: Necromancer) {
     Terminal.log(i18n.t('npc.maya_tech.upgrade.welcome'))
     const stats = MayaService.calculateUpgradeStats(player)
 
     if (stats.soulStacks > 0) {
       const hateMsgs = i18n.t('npc.maya_tech.upgrade.soul_hate', { returnObjects: true }) as string[]
-      hateMsgs.forEach(msg => Terminal.log(msg))
+      hateMsgs.forEach((msg) => Terminal.log(msg))
     }
 
     const action = await Terminal.select(
-      i18n.t('npc.maya_tech.upgrade.menu_title', { slots: player.golemUpgrade.join(' | ') || 'EMPTY', gold: player.gold }),
+      i18n.t('npc.maya_tech.upgrade.menu_title', {
+        slots: player.golemUpgrade.join(' | ') || 'EMPTY',
+        gold: player.gold,
+      }),
       [
-        { name: 'machine_upgrade', message: i18n.t('npc.maya_tech.upgrade.choices.machine', { cost: stats.upgradeCost }) },
+        {
+          name: 'machine_upgrade',
+          message: i18n.t('npc.maya_tech.upgrade.choices.machine', { cost: stats.upgradeCost }),
+        },
         { name: 'remove_machine', message: i18n.t('npc.maya_tech.upgrade.choices.remove', { cost: stats.removeCost }) },
-        { name: 'exit', message: i18n.t('cancel') }
+        { name: 'exit', message: i18n.t('cancel') },
       ]
     )
 
@@ -77,5 +83,5 @@ export const MayaActions = {
         Terminal.log(i18n.t('npc.maya_tech.upgrade.remove_log'))
       }
     }
-  }
+  },
 }

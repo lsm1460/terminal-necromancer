@@ -27,8 +27,8 @@ export class BattleUnitManager {
   refreshPlayerSide() {
     this.registerUnit(this.toCombatUnit(this.player, 'player'))
 
-    if (this.player.minions) {
-      this.player.minions.forEach((m) => {
+    if (this.player.party) {
+      this.player.party.forEach((m) => {
         if (m.isAlive) {
           const mUnit = this.toCombatUnit(m, 'minion')
           const _res = this.registerUnit(mUnit)
@@ -38,7 +38,7 @@ export class BattleUnitManager {
               this.unregisterUnit(m.id)
               m.hp = 0
               m.isAlive = false
-              this.player.removeMinion(m.id)
+              this.player.dismissMember(m.id)
               Terminal.log(i18n.t('battle.unit_death', { name: m.name }))
             }
           }
@@ -81,7 +81,7 @@ export class BattleUnitManager {
       .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
       .sortBy((unit) => {
         if (unit.type === 'player') return Infinity
-        return _.findIndex(this.player.minions, { id: unit.id })
+        return _.findIndex(this.player.party, { id: unit.id })
       })
       .value() as CombatUnit<BattleTarget>[]
   }

@@ -1,9 +1,9 @@
 import { CombatUnit } from "~/core/battle/unit/CombatUnit"
-import { Player } from "~/core/player/Player"
 import { Terminal } from "~/core/Terminal"
 import i18n from "~/i18n"
+import { Necromancer } from "~/systems/job/necromancer/Necromancer"
 
-export function sacrificeSkeleton(player: CombatUnit<Player>, skeletonId: string) {
+export function sacrificeSkeleton(player: CombatUnit<Necromancer>, skeletonId: string) {
   const isResurrection = player.ref.hasAffix('RESURRECTION')
   const target = player.ref.skeleton.find((sk) => sk.id === skeletonId)
 

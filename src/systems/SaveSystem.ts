@@ -3,8 +3,8 @@ import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { GameContext, LootBag, NPCState } from '~/types'
 
-export type SaveData = {
-  player: Player
+export type SaveData<T extends Player = Player> = {
+  player: T
   sceneId: string
   npcs: {
     states: Record<string, NPCState>

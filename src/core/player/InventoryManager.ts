@@ -63,7 +63,7 @@ export class InventoryManager {
     }
 
     this.inventory = updatedInventory
-    this.player.updateSkeletonLimit()
+    this.player.onEquipmentChanged()
 
     return true
   }
@@ -74,7 +74,7 @@ export class InventoryManager {
 
     this.player.equipped[slot] = null
     this.inventory.push(item)
-    this.player.updateSkeletonLimit()
+    this.player.onEquipmentChanged()
 
     return true
   }

@@ -1,8 +1,8 @@
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import SkeletonWrapper from '~/core/player/SkeletonWrapper'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import SkeletonWrapper from '~/systems/job/necromancer/SkeletonWrapper'
 import { GameContext } from '~/types'
-import { Player } from '~/core/player/Player'
 
 export const handleManageSpace = async (context: GameContext) => {
   const { player, events } = context
@@ -27,7 +27,7 @@ export const handleManageSpace = async (context: GameContext) => {
   if (action === 'pull') await executePull(player)
 }
 
-async function executePush(player: Player) {
+async function executePush(player: Necromancer) {
   const targetId = await Terminal.select(i18n.t('npc.subspace.manage.push_select'), [
     ...player.skeleton.map((sk) => ({ name: sk.id, message: `${sk.name} (HP: ${sk.hp}/${sk.maxHp})` })),
     { name: 'cancel', message: i18n.t('cancel') },
@@ -42,7 +42,7 @@ async function executePush(player: Player) {
   Terminal.log(i18n.t('npc.subspace.manage.msg_push', { name: target.name }))
 }
 
-async function executePull(player: Player) {
+async function executePull(player: Necromancer) {
   const targetId = await Terminal.select(i18n.t('npc.subspace.manage.pull_select'), [
     ...player.skeletonSubspace.map((sk) => ({
       name: sk.id,

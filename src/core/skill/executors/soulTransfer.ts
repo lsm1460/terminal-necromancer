@@ -1,6 +1,7 @@
 import { Terminal } from '~/core/Terminal'
+import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
-import { BattleTarget, ExecuteSkill } from '~/types'
+import { BattleTarget } from '~/types'
 
 /**
  * 영혼 전달 (Soul Transfer)

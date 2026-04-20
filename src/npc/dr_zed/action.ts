@@ -4,6 +4,7 @@ import i18n from '~/i18n'
 import { GameContext } from '~/types'
 import { speak } from '~/utils'
 import { ZedService } from './service'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export const ZedActions = {
   handleHeal(player: Player) {
@@ -51,7 +52,7 @@ export const ZedActions = {
     logs.forEach((log) => Terminal.log(log))
   },
 
-  async handleUpgradeGolem(player: Player) {
+  async handleUpgradeGolem(player: Necromancer) {
     Terminal.log(i18n.t('npc.dr_zed.upgrade.welcome'))
     const stats = ZedService.calculateUpgradeStats(player)
 
