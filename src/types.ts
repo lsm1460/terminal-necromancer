@@ -1,8 +1,6 @@
 import { SkeletonRarity } from './consts'
 import { Battle } from './core/battle/Battle'
-import { CombatUnit } from './core/battle/unit/CombatUnit'
 import { MonsterFactory } from './core/MonsterFactory'
-import { Player } from './core/player/Player'
 import { World } from './core/World'
 import { Broadcast } from './systems/Broadcast'
 import { DropSystem } from './systems/DropSystem'
@@ -79,9 +77,9 @@ import { EventBus } from './core/EventBus'
 import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
 import { AttackType, NpcSkill, PositionType } from './core/types'
 import { ConfigSystem } from './systems/ConfigSystem'
+import { Necromancer } from './systems/job/necromancer/Necromancer'
 import { QuestManager } from './systems/QuestManager'
 import { Item } from './types/item'
-import { Necromancer } from './systems/job/necromancer/Necromancer'
 
 export type Corpse = {
   x?: number
@@ -156,7 +154,7 @@ type NPCScripts = {
   farewell: string
 }
 
-export interface NPC extends BattleTarget {
+export interface NPC<T = any> extends BattleTarget {
   id: string
   faction: string
   reborn: boolean
@@ -170,7 +168,7 @@ export interface NPC extends BattleTarget {
   updateHostility: (amount: number) => void
   updateContribution: (amount: number) => void
   dead: (options?: { karma?: number; hostile?: number }) => void
-  hasQuest: (context: GameContext) => boolean
+  hasQuest: (context: T) => boolean
   getScripts: (greetings: 'greeting' | 'farewell') => string
   noEscape?: boolean
   scripts?: {

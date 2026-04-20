@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import i18n from '~/i18n'
 import { Monster, MonsterGroupMember, Tile } from '~/types'
-import { generateId } from '~/utils'
+import { generateId } from './utils'
 
 export class MonsterFactory {
   private monster: Record<string, Monster> = {}

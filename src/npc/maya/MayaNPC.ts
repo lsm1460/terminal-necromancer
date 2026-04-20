@@ -1,7 +1,6 @@
 import { MerchantNPC, ShopScripts } from '~/core/npc/MerchantNPC'
-import { NPCManager } from '~/systems/NpcManager'
-import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
+import { NPCManager } from '~/systems/NpcManager'
 import { GameContext, NPCState } from '~/types'
 import { MayaActions } from './action'
 import { MayaService } from './service'

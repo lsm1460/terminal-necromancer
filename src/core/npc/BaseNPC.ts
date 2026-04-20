@@ -1,9 +1,17 @@
 import i18n from '~/i18n'
-import { GameContext, NPC, NPCState } from '~/types'
-import { NPCManager } from '../../systems/NpcManager'
+import { NPC, NPCState } from '~/types'
 import { Terminal } from '../Terminal'
 
-export class BaseNPC implements NPC {
+export interface INPCActionHandler {
+  updateFactionHostility(faction: string, amount: number): void
+  updateFactionContribution(faction: string, amount: number): void
+  triggerDeathHandler(npc: any, params?: any): void
+  isHostile(id: string): boolean
+  getFactionHostility(faction: string): number
+  getFactionContribution(faction: string): number
+}
+
+export class BaseNPC<T = any> implements NPC<T> {
   id: string
   faction: string
   reborn: boolean
@@ -35,7 +43,7 @@ export class BaseNPC implements NPC {
     id: string,
     baseData: any,
     state: NPCState,
-    protected manager: NPCManager
+    protected manager: INPCActionHandler
   ) {
     this.id = id
     this.faction = baseData.faction || ''
@@ -93,15 +101,15 @@ export class BaseNPC implements NPC {
     this.manager.triggerDeathHandler(this, params)
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: T) {
     return false
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: T) {
     return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   }
 
-  async handle(action: string, context: GameContext): Promise<void | boolean> {}
+  async handle(action: string, context: T): Promise<void | boolean> {}
 
   handleTalk() {
     if (!this.lines || this.lines.length === 0) {
@@ -127,5 +135,5 @@ export class BaseNPC implements NPC {
     return i18n.exists(key) ? i18n.t(key) : '...'
   }
 
-  afterDead(context: GameContext) {}
+  afterDead(context: T) {}
 }
