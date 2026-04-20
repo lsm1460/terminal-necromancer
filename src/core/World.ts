@@ -18,12 +18,12 @@ export class World {
     eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, ({ corpseId }) => this.removeCorpse(corpseId))
   }
 
-  addDrop(drop: Drop | Item, quantity = 1) {
+  addDrop(drop: Drop | Item) {
     const existing = this.drops.find(matches({ id: drop.id }))
     if (existing && existing.quantity && drop.quantity) {
       existing.quantity += drop.quantity
     } else {
-      const _dropItem = new Item({ ...drop.raw, quantity }) as Drop
+      const _dropItem = new Item({ ...drop.raw, quantity: drop.quantity }) as Drop
 
       _dropItem.x = this.player.x
       _dropItem.y = this.player.y

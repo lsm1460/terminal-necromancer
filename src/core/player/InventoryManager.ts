@@ -1,6 +1,6 @@
 import i18n from '~/i18n'
+import { getAffixCaution } from '~/systems/affixes'
 import { ArmorItem, ConsumableItem, ItemType, WeaponItem } from '~/types/item'
-import { getAffixCaution } from '../affixes'
 import { Item } from '../item/Item'
 import { Terminal } from '../Terminal'
 import { Player } from './Player'
@@ -88,7 +88,7 @@ export class InventoryManager {
     if (existing && existing.quantity && newItem.quantity) {
       existing.quantity += newItem.quantity
     } else {
-      this.inventory.push(newItem)
+      this.inventory.push(new Item(newItem.raw))
     }
   }
 
