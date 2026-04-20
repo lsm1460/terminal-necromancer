@@ -11,13 +11,13 @@ export const ElevatorActions = {
     const completed = context.events.getCompleted()
     const currentSceneId = map.currentSceneId
 
-    const choices: { name: string; message: string }[] = ElevatorService.getAvailableDestinations(
+    const { destinations: choices, isAllHidden } = ElevatorService.getAvailableDestinations(
       map,
       currentSceneId,
       completed
     )
 
-    if (choices.length < 1) {
+    if (isAllHidden) {
       Terminal.log(i18n.t('npc.elevator.menu.no_access'))
       return true
     }

@@ -1,11 +1,11 @@
-import { SKELETON_RARITIES, SkeletonFactory } from '~/core/skill/SkeletonFactory'
 import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill, GameEventType } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { SKELETON_RARITIES, SkeletonFactory } from '~/systems/skill/player/necromancer/SkeletonFactory'
 import { Corpse } from '~/types'
-import { SkillManager } from '../SkillManager'
+import { SkillUtils } from '..'
 
 export const raiseSkeleton: ExecuteSkill<Necromancer> = async (player, { world, eventBus }) => {
   const failure = {
@@ -67,7 +67,7 @@ export const raiseSkeleton: ExecuteSkill<Necromancer> = async (player, { world, 
       Terminal.log(i18n.t('skill.RAISE_SKELETON.legion_success'))
     }
   } else {
-    const targetId = await SkillManager.selectCorpse(player.ref, world)
+    const targetId = await SkillUtils.selectCorpse(player.ref, world)
     const selectedCorpse = corpses.find((c) => c.id === targetId)
 
     if (!selectedCorpse) {

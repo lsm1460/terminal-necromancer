@@ -3,7 +3,7 @@ import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
-import { SkillManager } from '../SkillManager'
+import { SkillUtils } from '..'
 
 /**
  * 영혼 흡수: 적 대상으로부터 정수를 추출하여 마나(또는 체력)를 회복
@@ -13,7 +13,7 @@ export const soulHarvest: ExecuteSkill = async (player, { world }) => {
   const isVampirism = player.ref.hasAffix('VAMPIRISM')
 
   // 1. 대상 시체 선택
-  const targetId = await SkillManager.selectCorpse(player.ref, world)
+  const targetId = await SkillUtils.selectCorpse(player.ref, world)
   if (!targetId || targetId === 'cancel') {
     return { isSuccess: false, isAggressive: false, gross: 0 }
   }

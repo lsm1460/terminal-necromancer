@@ -1,5 +1,5 @@
 import { Terminal } from '~/core/Terminal'
-import { SKELETON_RARITIES, SkeletonFactory } from '~/core/skill/SkeletonFactory'
+import { SKELETON_RARITIES, SkeletonFactory } from '~/systems/skill/player/necromancer/SkeletonFactory'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { GameContext } from '~/types'

@@ -50,6 +50,10 @@ new SkillEffectPresenter(eventBus)
 const run = async () => {
   const renderer = new CLIRenderer()
   Terminal.setRenderer(renderer)
+  Terminal.setTranslator((info) => {
+    if (typeof info === 'string') return info
+    return i18n.t(info.key, info.args)
+  })
 
   const engine = new GameEngine(assets, renderer, save, config, eventBus)
 

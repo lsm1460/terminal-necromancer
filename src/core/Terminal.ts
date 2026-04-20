@@ -1,14 +1,42 @@
 import { NPC, Renderer } from '../types'
+import { Translatable } from './types'
 
 export class Terminal {
   private static renderer: Renderer | null = null
+  private static translate: (info: Translatable) => string = (m) => (typeof m === 'string' ? m : m.key)
 
   public static setRenderer(renderer: Renderer): void {
     this.renderer = renderer
   }
 
-  public static log(message: string): void {
-    this.renderer ? this.renderer.print(message) : console.log(message)
+  public static setTranslator(translator: (info: Translatable) => string): void {
+    this.translate = translator
+  }
+
+  private static t(message: Translatable): string {
+    return this.translate(message)
+  }
+
+  public static log(message: Translatable): void {
+    const translated = this.t(message)
+    this.renderer ? this.renderer.print(translated) : console.log(translated)
+  }
+
+  public static async select<T extends string>(
+    message: Translatable, // 수정됨
+    choices: { name: string; message: Translatable; disabled?: boolean }[], // message 수정됨
+    defaultValue?: string
+  ): Promise<T> {
+    if (!this.renderer) throw new Error('Renderer not initialized')
+
+    const translatedTitle = this.t(message)
+
+    const translatedChoices = choices.map((choice) => ({
+      ...choice,
+      message: this.t(choice.message),
+    }))
+
+    return (await this.renderer.select(translatedTitle, translatedChoices, defaultValue)) as T
   }
 
   public static availableTalks(list: { name: string; hasQuest: boolean }[]): void {
@@ -23,15 +51,6 @@ export class Terminal {
 
   public static clear(): void {
     this.renderer ? this.renderer.clear() : console.clear()
-  }
-
-  public static async select<T extends string>(
-    message: string,
-    choices: { name: string; message: string; disabled?: boolean }[],
-    defaultValue?: string
-  ): Promise<T> {
-    if (!this.renderer) throw new Error('Renderer not initialized')
-    return (await this.renderer.select(message, choices, defaultValue)) as T
   }
 
   public static async confirm(message: string): Promise<boolean> {

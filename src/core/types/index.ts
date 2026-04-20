@@ -51,6 +51,13 @@ export interface Skill<T extends Player = Player> {
   execute: ExecuteSkill<T>
 }
 
+export interface TranslationInfo {
+  key: string;
+  args?: Record<string, any>;
+}
+
+export type Translatable = string | TranslationInfo;
+
 export * from './battle'
 export * from './events'
 export * from './skill'

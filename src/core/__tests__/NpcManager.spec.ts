@@ -5,7 +5,7 @@ import { Player } from '../player/Player'
 
 class TestPlayer extends Player {
   karma = 0
-  
+
   constructor(levelData: [], eventBus: EventBus) {
     super(levelData)
   }
@@ -15,12 +15,22 @@ class TestPlayer extends Player {
   }
 
   get description() {
-    return '테스트용 플레이어';
+    return '테스트용 플레이어'
   }
 
-  // 추상 메서드로 정의한 내용이 더 있다면 여기에 구현
   hasAffix(name: string): boolean {
-    return false; 
+    return false
+  }
+
+  canPay(cost: number) {
+    return true
+  }
+  pay(cost: number) {}
+  getLearnedSkills() {
+    return []
+  }
+  getResourceStatus() {
+    return { type: '', value: 0 }
   }
 
   dismissMember() {}
@@ -45,7 +55,7 @@ describe('NPCManager (Legacy Behavior)', () => {
   let eventBus: EventBus
   let npcManager: NPCManager
   let player: TestPlayer
-  
+
   const mockNpcData = {
     test_npc: {
       id: 'test_npc',

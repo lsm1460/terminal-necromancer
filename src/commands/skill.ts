@@ -1,5 +1,5 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { SkillManager } from '~/core/skill'
+import { SkillManager } from '~/core/skill/SkillManager'
 import { CommandFunction, NPC } from '~/types'
 import { delay } from '~/utils'
 

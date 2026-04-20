@@ -1,7 +1,7 @@
 import { Player } from '~/core/player/Player'
-import { getPlayerSkills } from '~/core/skill'
 import { Skill } from '~/core/types'
 import i18n from '~/i18n'
+import { getPlayerSkills } from '~/systems/skill/player'
 import { GameContext, SkillId } from '~/types'
 
 export const DeathService = {

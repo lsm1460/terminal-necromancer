@@ -4,6 +4,7 @@ import { Player, PlayerSaveData } from '~/core/player/Player'
 import { StatsCalculator } from '~/core/player/StatsCalculator'
 import { GameEventType } from '~/core/types'
 import i18n from '~/i18n'
+import { getPlayerSkills } from '~/systems/skill/player'
 import { BattleTarget, SKILL_IDS, SkillId } from '~/types'
 import { Affix, AffixId, ArmorItem, WeaponItem } from '~/types/item'
 import { MinionManager } from './MinionManager'
@@ -129,6 +130,35 @@ export class Necromancer extends Player {
 
     // 장착된 아이템 중 해당 어픽스가 없으면 0, 있으면 최댓값 반환
     return values.length > 0 ? Math.max(...values) : 0
+  }
+
+  public getLearnedSkills() {
+    const allSkills = getPlayerSkills()
+
+    return Object.values(allSkills).filter((s) => this.memorize.includes(s.id as SkillId))
+  }
+
+  getResourceStatus() {
+    const isBlood = this.hasAffix('BLOOD');
+    return {
+      type: isBlood ? 'HP' : 'MP',
+      value: isBlood ? this.hp : this.mp
+    };
+  }
+  
+  canPay(cost: number): boolean {
+    if (this.hasAffix('BLOOD')) {
+      return this.hp > cost
+    }
+    return this.mp >= cost
+  }
+
+  pay(cost: number): void {
+    if (this.hasAffix('BLOOD')) {
+      this.hp -= cost
+    } else {
+      this.mp -= cost
+    }
   }
 
   public hasAffix(affixId: AffixId): boolean {

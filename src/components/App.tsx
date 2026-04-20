@@ -21,11 +21,14 @@ import { ConfigSystem } from '~/systems/ConfigSystem'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { SkillEffectPresenter } from '~/systems/presenter/SkillEffectPresenter'
 import { ScreenRouter } from './ScreenRouter'
+import { useTranslation } from 'react-i18next'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
   const saveSystemRef = useRef(new SaveSystem())
   const configSystemRef = useRef(new ConfigSystem())
+
+  const { t } = useTranslation()
 
   const [isGameOn, setIsGameOn] = useState(false)
 
@@ -40,6 +43,10 @@ export const App = () => {
     const save = saveSystemRef.current
     const config = configSystemRef.current
     Terminal.setRenderer(renderer)
+    Terminal.setTranslator((info) => {
+      if (typeof info === 'string') return info
+      return t(info.key, info.args)
+    })
 
     openWindow()
 

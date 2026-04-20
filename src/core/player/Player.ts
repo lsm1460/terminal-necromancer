@@ -116,6 +116,12 @@ export abstract class Player {
 
   abstract get description(): string
   abstract get party(): BattleTarget[]
+  //skill
+  abstract canPay(cost: number): boolean;
+  abstract pay(cost: number): void;
+  abstract getLearnedSkills(): Skill[]
+  abstract getResourceStatus(): { type: string; value: number }
+  //
   abstract hasAffix(name: string): boolean
   abstract dismissMember(id: string): void
 

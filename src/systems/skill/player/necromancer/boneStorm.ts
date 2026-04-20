@@ -4,7 +4,7 @@ import { Terminal } from '~/core/Terminal'
 import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { failWithLog, sacrificeSkeleton } from './lib'
+import { failWithLog, sacrificeSkeleton } from '~/core/skill/executors/lib'
 
 /**
  * 뼈 폭풍 (Bone Storm)

@@ -1,12 +1,6 @@
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { SkillId } from '~/types'
 import { Terminal } from '../Terminal'
-import { World } from '../World'
-import { CombatUnit } from '../battle/unit/CombatUnit'
-import { Player } from '../player/Player'
 import { ExecuteSkill, SkillResult } from '../types'
-import { getPlayerSkills } from './skill'
 
 type BaseSkillInfo = {
   isAggressive: boolean
@@ -20,84 +14,42 @@ type EnhancedSkillResult = (
   BaseSkillInfo
 
 export class SkillManager {
-  static requestAndExecuteSkill: (...args: Parameters<ExecuteSkill>) => Promise<EnhancedSkillResult> =
-    async (player, context, units) => {
-      const playableUnit = player as unknown as CombatUnit<Necromancer>
-      const isConsumeBlood = playableUnit.ref.hasAffix('BLOOD')
-      const costType = isConsumeBlood ? 'HP' : 'MP'
+  static requestAndExecuteSkill: (...args: Parameters<ExecuteSkill>) => Promise<EnhancedSkillResult> = async (
+    player,
+    context,
+    units
+  ) => {
+    const resource = player.ref.getResourceStatus()
+    const failResult = { isSuccess: false, isAggressive: false, gross: 0 } as const
 
-      const currentResource = isConsumeBlood ? playableUnit.ref.hp : playableUnit.ref.mp
+    const availableSkills = player.ref.getLearnedSkills()
 
-      const failResult = { isSuccess: false, isAggressive: false, gross: 0 } as const
-
-      const playerSkills = getPlayerSkills()
-      const availableSkills = Object.values(playerSkills).filter((skill) =>
-        playableUnit.ref.memorize.includes(skill.id as SkillId)
-      )
-
-      const skillId = await Terminal.select(i18n.t('skill.select_title', { type: costType, cost: currentResource }), [
+    const skillId = await Terminal.select(
+      { key: 'skill.select_title', args: { type: resource.type, cost: resource.value } },
+      [
         ...availableSkills.map((s) => ({
           name: s.id,
-          message: `${s.name} (${costType}: ${s.cost}) - ${s.description}`,
+          message: `${s.name} (${resource.type}: ${s.cost}) - ${s.description}`,
         })),
         { name: 'cancel', message: i18n.t('cancel') },
-      ])
+      ]
+    )
 
-      if (skillId === 'cancel') return failResult
+    if (skillId === 'cancel') return failResult
 
-      const targetSkill = playerSkills[skillId as SkillId]
+    const targetSkill = availableSkills.find((s) => s.id === skillId)
+    if (!targetSkill) return failResult
 
-      if (currentResource < targetSkill.cost) {
-        Terminal.log(
-          `\n🚫 ${i18n.t('skill.not_enough', {
-            type: costType,
-            cost: targetSkill.cost,
-            current: currentResource,
-          })}`
-        )
-        return failResult
-      }
-
-      const result = await targetSkill.execute(player, context, units)
-
-      if (result.isSuccess) {
-        if (isConsumeBlood) {
-          player.ref.hp -= targetSkill.cost
-        } else {
-          player.ref.mp -= targetSkill.cost
-        }
-      }
-
-      return { ...result, skillId } as EnhancedSkillResult
+    if (!player.ref.canPay(targetSkill.cost)) {
+      Terminal.log({
+        key: 'skill.not_enough',
+        args: { type: resource.type, cost: targetSkill.cost, current: resource.value },
+      })
+      return failResult
     }
 
-  static async selectCorpse(player: Player, world: World) {
-    const corpses = world.getCorpsesAt(player.pos)
+    const result = await targetSkill.execute(player, context, units)
 
-    if (corpses.length === 0) {
-      Terminal.log('\n💬 ' + i18n.t('skill.no_corpses_nearby'))
-      return false
-    }
-
-    const corpseChoices = [
-      ...corpses.map((c, index) => ({
-        name: c.id || index.toString(),
-        message: i18n.t('skill.corpse_choice_format', {
-          name: c.name,
-          hp: c.maxHp,
-          atk: c.atk,
-        }),
-      })),
-      { name: 'cancel', message: i18n.t('cancel') },
-    ]
-
-    const corpseId = await Terminal.select(i18n.t('skill.select_corpse_to_consume'), corpseChoices)
-
-    if (corpseId === 'cancel') {
-      Terminal.log('\n💬 ' + i18n.t('skill.cancel_action'))
-      return false
-    }
-
-    return corpseId
+    return { ...result, skillId: skillId as string } as EnhancedSkillResult
   }
 }

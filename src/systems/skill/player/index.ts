@@ -1,9 +1,11 @@
+import { Player } from '~/core/player/Player'
+import { Terminal } from '~/core/Terminal'
+import { ExecuteSkill, Skill } from '~/core/types'
+import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { SKILL_IDS, SkillId } from '~/types'
-import { Player } from '../player/Player'
-import { Skill } from '../types'
-import { SkillExecutor } from './executors'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { SKILL_IDS, SkillId } from '~/types'
+import { SkillExecutor } from './necromancer'
 
 export const getPlayerSkills = () => {
   // 1. 각 스킬별 고유 설정 (수치 및 실행 로직)
@@ -85,6 +87,27 @@ export const getPlayerSkills = () => {
       const skillId = id as SkillId
       const config = skillConfigs[skillId]
 
+      const wrappedExecute: ExecuteSkill<Necromancer> = async (p, c, u) => {
+        const cost = config?.cost ?? 0
+
+        // 1. 공통 체크: 자원이 부족하면 즉시 실패 반환
+        if (!p.ref.canPay(cost)) {
+          // Terminal.log 등 UI 처리는 여기서 하거나 SkillManager에서 처리
+          return { isSuccess: false, isAggressive: false, gross: 0 }
+        }
+
+        // 2. 실제 스킬 로직 실행
+        const originalExecute = config?.execute || (async () => ({ isSuccess: false, gross: 0, isAggressive: false }))
+        const result = await originalExecute(p, c, u)
+
+        // 3. 성공했을 때만 자원 소모
+        if (result.isSuccess) {
+          p.ref.pay(cost)
+        }
+
+        return result
+      }
+
       acc[skillId] = {
         id: skillId,
         name: i18n.t(`skill.${skillId}.name`),
@@ -95,7 +118,7 @@ export const getPlayerSkills = () => {
         requiredLevel: config?.requiredLevel ?? 1,
         unlocks: config?.unlocks ?? [],
         attackType: config?.attackType,
-        execute: config?.execute || (async () => ({ isSuccess: false, gross: 0, isAggressive: false })),
+        execute: wrappedExecute,
       } as Skill
 
       return acc
@@ -108,4 +131,34 @@ export const SkillUtils = {
   canLearn: (player: Player, skill: Skill): boolean => {
     return player.level >= skill.requiredLevel && player.exp >= skill.requiredExp
   },
+
+  async selectCorpse(player: Player, world: World) {
+    const corpses = world.getCorpsesAt(player.pos)
+
+    if (corpses.length === 0) {
+      Terminal.log('\n💬 ' + i18n.t('skill.no_corpses_nearby'))
+      return false
+    }
+
+    const corpseChoices = [
+      ...corpses.map((c, index) => ({
+        name: c.id || index.toString(),
+        message: i18n.t('skill.corpse_choice_format', {
+          name: c.name,
+          hp: c.maxHp,
+          atk: c.atk,
+        }),
+      })),
+      { name: 'cancel', message: i18n.t('cancel') },
+    ]
+
+    const corpseId = await Terminal.select(i18n.t('skill.select_corpse_to_consume'), corpseChoices)
+
+    if (corpseId === 'cancel') {
+      Terminal.log('\n💬 ' + i18n.t('skill.cancel_action'))
+      return false
+    }
+
+    return corpseId
+  }
 }
