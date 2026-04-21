@@ -2,6 +2,7 @@ import i18n from '~/i18n'
 import { getAffixCaution } from '~/systems/affixes'
 import { ArmorItem, ConsumableItem, ItemType, WeaponItem } from '~/types/item'
 import { Item } from '../item/Item'
+import { IGameItemFactory } from '../item/types'
 import { Terminal } from '../Terminal'
 import { Player } from './Player'
 
@@ -10,12 +11,13 @@ export class InventoryManager {
   inventory: Item[] = []
 
   constructor(
+    private itemFactory: IGameItemFactory,
     private player: Player,
     saved?: Partial<Player>
   ) {
     if (saved) {
       this.inventoryMax = saved.inventoryMax || 15
-      this.inventory = (saved.inventory || []).map((item) => new Item(item))
+      this.inventory = (saved.inventory || []).map((item) => itemFactory.make(item))
     }
   }
 
@@ -59,7 +61,7 @@ export class InventoryManager {
 
     const updatedInventory = this.inventory.filter((i) => i.id !== newItem.id)
     if (oldItem) {
-      updatedInventory.push(oldItem)
+      updatedInventory.push(this.itemFactory.make(oldItem))
     }
 
     this.inventory = updatedInventory
@@ -73,7 +75,7 @@ export class InventoryManager {
     if (!item) return false
 
     this.player.equipped[slot] = null
-    this.inventory.push(item)
+    this.inventory.push(this.itemFactory.make(item))
     this.player.onEquipmentChanged()
 
     return true
@@ -88,7 +90,7 @@ export class InventoryManager {
     if (existing && existing.quantity && newItem.quantity) {
       existing.quantity += newItem.quantity
     } else {
-      this.inventory.push(new Item(newItem.raw))
+      this.inventory.push(this.itemFactory.make(newItem.raw))
     }
   }
 
@@ -118,7 +120,7 @@ export class InventoryManager {
 
   async useItem(targetItem?: ConsumableItem) {
     const consumables = this.inventory.filter((item): item is ConsumableItem =>
-      [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type)
+      [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type as any)
     )
 
     if (consumables.length === 0) {
@@ -148,7 +150,8 @@ export class InventoryManager {
       return false
     }
 
-    Terminal.log(i18n.t('inventory.use.using', { name: targetItem.name }))
+    const gameItem = targetItem instanceof Item ? targetItem : this.itemFactory.make(targetItem)
+    Terminal.log(i18n.t('inventory.use.using', { name: gameItem.name }))
 
     if (targetItem.hpHeal) {
       const recovered = this.player.recoverHp(targetItem.hpHeal)

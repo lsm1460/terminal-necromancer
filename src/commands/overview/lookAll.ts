@@ -2,13 +2,13 @@ import { printTileStatus } from '~/core/statusPrinter'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { GameContext, Monster, NPC } from '~/types'
-import { Drop } from '~/types/item'
+import { GameDrop } from '~/types/item'
 import { lookCorpse } from './corpse'
 import { lookBattleTarget } from './entity'
 import { lookItem } from './item'
 import { getTileFromDirection, lookPath } from './path'
 
-export const lookAll = async (context: GameContext, items: Drop[], monsters?: Monster[]): Promise<void> => {
+export const lookAll = async (context: GameContext, items: GameDrop[], monsters?: Monster[]): Promise<void> => {
   const { player, map, npcs, world } = context
   const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
   const minions = player.minions || []

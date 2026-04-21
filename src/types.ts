@@ -1,9 +1,9 @@
 import { SkeletonRarity } from './consts'
 import { Battle } from './core/battle/Battle'
+import { DropSystem } from './core/item/DropSystem'
 import { MonsterFactory } from './core/MonsterFactory'
 import { World } from './core/World'
 import { Broadcast } from './systems/Broadcast'
-import { DropSystem } from './systems/DropSystem'
 import { EventLedger } from './systems/EventLedger'
 import { MapManager } from './systems/MapManager'
 import { NPCManager } from './systems/NpcManager'
@@ -51,7 +51,7 @@ export type MonsterGroupMember = {
 }
 
 export interface Monster extends BattleTarget {
-  drops: Item[]
+  drops: Drop[]
 }
 
 export interface Tile {
@@ -74,12 +74,12 @@ export type Direction = 'up' | 'down' | 'left' | 'right'
 export type Vector = { dx: number; dy: number }
 
 import { EventBus } from './core/EventBus'
+import { Drop } from './core/item/types'
 import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
 import { AttackType, NpcSkill, PositionType } from './core/types'
 import { ConfigSystem } from './systems/ConfigSystem'
 import { Necromancer } from './systems/job/necromancer/Necromancer'
 import { QuestManager } from './systems/QuestManager'
-import { Item } from './types/item'
 
 export type Corpse = {
   x?: number

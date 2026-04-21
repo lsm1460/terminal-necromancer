@@ -1,13 +1,15 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import { Item } from '~/core/item/Item'
+import { Drop } from '~/core/item/types'
 import { Player } from '~/core/player/Player'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
-import { Drop } from '~/types/item'
+import { GameItem } from '~/systems/item/GameItem'
 import { selectTarget } from './utils'
 
-export const printItem = (item: Item, inInventory = false) => {
+export const printItem = (_item: Item, inInventory = false) => {
+  const item = _item as GameItem
   const rarityKey = item.rarity || 'COMMON'
   const rarityText = i18n.t(`commands.look.item.rarity.${rarityKey}`)
   const { name, origin } = item
@@ -98,7 +100,7 @@ export const lookItem = async (dropList: Drop[], player: Player) => {
 
   const subChoices = items.map((i) => ({
     name: i.label,
-    message: Item.makeItemMessage(i.raw, player),
+    message: i.raw.makeItemMessage(player),
   }))
 
   const selected = await selectTarget(subChoices)

@@ -1,4 +1,3 @@
-import { Item } from '~/core/item/Item'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction } from '~/types'
@@ -7,7 +6,7 @@ import { ItemType } from '~/types/item'
 export const equipCommand: CommandFunction = async (args, {player}) => {
   const inventory = player.inventory
 
-  const equipAbles = inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type))
+  const equipAbles = inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type as ItemType))
 
   if (equipAbles.length < 1) {
     Terminal.log(i18n.t('commands.equip.no_equippables'))
@@ -17,7 +16,7 @@ export const equipCommand: CommandFunction = async (args, {player}) => {
   const choices = [
     ...equipAbles.map((item) => ({
       name: item.id,
-      message: Item.makeItemMessage(item, player),
+      message: item.makeItemMessage(player),
     })),
     { name: 'cancel', message: i18n.t('cancel') },
   ]

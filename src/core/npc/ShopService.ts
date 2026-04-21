@@ -1,13 +1,11 @@
-import { ItemRarity } from '../item/consts'
-
 export const ShopService = {
   /** 등급별 가격 배율 계산 */
-  getRarityMultiplier(rarity?: ItemRarity): number {
+  getRarityMultiplier(rarity?: string): number {
     if (!rarity) {
       return 1
     }
 
-    const multipliers: Record<ItemRarity, number> = {
+    const multipliers: Record<string, number> = {
       COMMON: 1.0,
       RARE: 1.5,
       EPIC: 2.5,

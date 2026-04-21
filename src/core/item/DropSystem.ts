@@ -1,15 +1,11 @@
-import { ItemRarity } from '~/core/item/consts'
 import { Item } from '~/core/item/Item'
 import { ItemGenerator } from '~/core/item/ItemGenerator'
-import { Affix, Drop } from '~/types/item'
-import { ItemPolicy } from './item/ItemPolicy'
+import { Drop, IGameItemFactory, IGenerationPolicy } from './types'
 
 export interface DropEntry {
   itemId: string
   chance: number
   quantity?: [number, number]
-  minRarity?: ItemRarity
-  maxRarity?: ItemRarity
 }
 
 export interface DropTable {
@@ -25,10 +21,10 @@ export interface DropResult {
 export class DropSystem {
   private items: Record<string, Drop> = {}
   private tables: Record<string, DropTable> = {}
-  private itemGenerator: ItemGenerator<ItemRarity, Affix, Drop>
+  private itemGenerator: ItemGenerator<string, any, Drop>
 
-  constructor(itemData: any, dropTableData: any) {
-    this.itemGenerator = new ItemGenerator(new ItemPolicy())
+  constructor(itemData: any, dropTableData: any, policy: IGenerationPolicy<string, any, Drop>, itemFactory: IGameItemFactory) {
+    this.itemGenerator = new ItemGenerator(policy, itemFactory)
 
     this.items = itemData
     this.tables = dropTableData
@@ -63,9 +59,8 @@ export class DropSystem {
         const baseItem = this.items[entry.itemId]
         const dropData = {
           ...baseItem,
+          ...entry,
           quantity: entry.quantity ? this.randomRange(entry.quantity[0], entry.quantity[1]) : 1,
-          minRarity: entry.minRarity,
-          maxRarity: entry.maxRarity,
         }
         return this.itemGenerator.createItem(dropData as any)
       })

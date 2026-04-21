@@ -1,10 +1,10 @@
-import { Player } from '~/core/player/Player'
-import { GameContext } from '~/types'
 import { Terminal } from '~/core/Terminal'
-import { speak } from '~/utils'
 import i18n from '~/i18n'
-import { KnightService } from './service'
+import { GameItem } from '~/systems/item/GameItem'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { GameContext } from '~/types'
+import { speak } from '~/utils'
+import { KnightService } from './service'
 
 export const KnightActions = {
   async handleFirst(context: GameContext) {
@@ -33,7 +33,7 @@ export const KnightActions = {
       return true
     }
 
-    const targetItem = player.inventory.find((item) => item.id === selected)
+    const targetItem = player.inventory.find((item) => item.id === selected) as GameItem
     if (targetItem) {
       player.knightUpgrade.push(targetItem.rarity || 'COMMON')
       player.removeItem(targetItem.id)

@@ -33,7 +33,7 @@ export abstract class MerchantNPC extends BaseNPC {
 
       return {
         name: item.id,
-        message: Item.makeItemMessage(item, player, { withPrice: true }),
+        message: item.makeItemMessage(player, { withPrice: true }),
         price: finalPrice,
       }
     })
@@ -95,7 +95,7 @@ export abstract class MerchantNPC extends BaseNPC {
       const choices = player.inventory.map((item, index) => ({
         name: `${index}`,
         id: item.id,
-        message: Item.makeItemMessage(item, player, { withPrice: true, isSell: true }),
+        message: item.makeItemMessage(player, { withPrice: true, isSell: true }),
         price: Math.floor((item.sellPrice || 0) * (1 + bonusRate)),
         originalIndex: index,
       }))

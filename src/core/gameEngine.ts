@@ -2,6 +2,7 @@ import { GameAssets } from '~/assets'
 import { MAP_IDS } from '~/consts'
 import { Battle, BattleComponentFactory } from '~/core/battle'
 import { EventBus } from '~/core/EventBus'
+import { DropSystem } from '~/core/item/DropSystem'
 import { LootFactory } from '~/core/LootFactory'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { NpcSkillManager } from '~/core/skill/npcs/NpcSkillManger'
@@ -9,9 +10,10 @@ import { World } from '~/core/World'
 import i18n from '~/i18n'
 import { Broadcast } from '~/systems/Broadcast'
 import { ConfigSystem } from '~/systems/ConfigSystem'
-import { DropSystem } from '~/systems/DropSystem'
 import { EventLedger } from '~/systems/EventLedger'
 import { MonsterEvent } from '~/systems/events/MonsterEvent'
+import { GameItemFactory } from '~/systems/item/GameItemFactory'
+import { ItemPolicy } from '~/systems/item/ItemPolicy'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { MapManager } from '~/systems/MapManager'
 import { NPCManager } from '~/systems/NpcManager'
@@ -38,15 +40,16 @@ export class GameEngine {
   ) {}
 
   public async init(initData: SaveData<Necromancer>): Promise<void> {
-    const { item, drop, monsterGroup, monster, level, npcSkills, map, npc, state } = this.assets
+    const { item, drop, monsterGroup, monster, level, npcSkills, map, npc } = this.assets
 
-    const dropSystem = new DropSystem(item, drop)
+    const itemFactory = new GameItemFactory()
+    const dropSystem = new DropSystem(item, drop, new ItemPolicy(), itemFactory)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
 
     const eventBus = this.eventBus
-    const player = new Necromancer(level, eventBus, initData?.player)
+    const player = new Necromancer(itemFactory, level, eventBus, initData?.player)
     const mapManager = new MapManager(map, eventBus)
-    const world = new World(player, eventBus)
+    const world = new World(itemFactory, player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
     const npcSkillManager = new NpcSkillManager(npcSkills, eventBus)
     npcSkillManager.registerLogics({

@@ -1,15 +1,7 @@
-export type ItemRarity = 'COMMON' | 'RARE' | 'EPIC'
-export type ItemType = 'weapon' | 'armor'
-
-export interface RaritySetting {
-  rarity: ItemRarity
-  multiplier: number
-  weight: number
-  hasAffix: boolean
-  color: string
-  symbol: string
-  adjectives: string[]
-}
+import { Item } from '~/core/item/Item'
+import { ItemRarity, RaritySetting } from '~/types/item'
+import { GameItem } from './GameItem'
+import { IGameItemFactory } from '~/core/item/types'
 
 export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
   COMMON: {
@@ -39,4 +31,10 @@ export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
     symbol: '🟣',
     adjectives: ['abyssal', 'fallen', 'forbidden', 'primal', 'mortal'],
   },
+}
+
+export class GameItemFactory implements IGameItemFactory {
+  make(data: Partial<Item>) {
+    return new GameItem(data)
+  }
 }

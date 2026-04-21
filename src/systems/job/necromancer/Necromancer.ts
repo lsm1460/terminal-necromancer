@@ -1,5 +1,6 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import { EventBus } from '~/core/EventBus'
+import { IGameItemFactory } from '~/core/item/types'
 import { Player, PlayerSaveData } from '~/core/player/Player'
 import { StatsCalculator } from '~/core/player/StatsCalculator'
 import { GameEventType } from '~/core/types'
@@ -37,7 +38,7 @@ export class Necromancer extends Player {
 
   public unlockedSkills: SkillId[] = [SKILL_IDS.RAISE_SKELETON]
 
-  constructor(levelData: any, eventBus: EventBus, saved?: NecromancerSaveData) {
+  constructor(itemFactory: IGameItemFactory, levelData: any, eventBus: EventBus, saved?: NecromancerSaveData) {
     const {
       skeletonSubspace,
       subspaceLimit,
@@ -50,7 +51,7 @@ export class Necromancer extends Player {
       ...rest
     } = saved || {}
 
-    super(levelData, rest)
+    super(itemFactory, levelData, rest)
 
     this.karma = saved?.karma || 0
     this.memorize = saved?.memorize || []

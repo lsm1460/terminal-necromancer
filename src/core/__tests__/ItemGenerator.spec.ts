@@ -1,8 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { ItemType } from '~/types/item'
+import { GameItem } from '~/systems/item/GameItem'
+import { GameItemFactory } from '~/systems/item/GameItemFactory'
+import { ItemPolicy } from '~/systems/item/ItemPolicy'
+import { Affix, GameDrop, ItemRarity, ItemType } from '~/types/item'
 import { Item } from '../item/Item'
 import { ItemGenerator } from '../item/ItemGenerator'
-import { IGenerationPolicy } from '../item/types'
 import * as utils from '../utils'
 
 // Mock dependencies
@@ -15,64 +17,14 @@ vi.mock('../utils', () => ({
  * 테스트를 위한 더미 정책 클래스
  * IGenerationPolicy 인터페이스를 구현하며, 생성 로직을 세부적으로 제어합니다.
  */
-class DummyItemPolicy implements IGenerationPolicy<string, any, any> {
-  isEquippable(baseItem: any): boolean {
-    return ['weapon', 'armor'].includes(baseItem.type)
-  }
-
-  getMinRarity(baseItem: any): string | undefined {
-    return baseItem.minRarity
-  }
-
-  getMaxRarity(baseItem: any): string | undefined {
-    return baseItem.maxRarity
-  }
-
-  rollRarity(min?: string, max?: string): string {
-    return min || 'COMMON'
-  }
-
-  getStatRanges(baseItem: any) {
-    return {
-      baseId: baseItem.id,
-      atkRange: baseItem.atkRange,
-      defRange: baseItem.defRange,
-      critRange: baseItem.critRange,
-      evaRange: baseItem.evaRange,
-      maxSkeletonRange: baseItem.maxSkeletonRange,
-    }
-  }
-
-  getSetting(rarity: string) {
-    switch (rarity) {
-      case 'EPIC':
-        return { multiplier: 1.5, hasAffix: true, adjectives: ['legendary'] }
-      case 'RARE':
-        return { multiplier: 1.25, hasAffix: false, adjectives: ['rare'] }
-      default:
-        return { multiplier: 1.0, hasAffix: false, adjectives: [] }
-    }
-  }
-
-  pickAffix(rarity: string) {
-    return { id: `AFFIX_${rarity}`, value: 10 }
-  }
-
-  getPerformancePrefix(value: number, range: [number, number]): string {
-    if (!range || range[0] === range[1]) return ''
-    if (value >= range[1] * 0.9) return 'masterwork'
-    if (value <= range[0] * 1.1) return 'worn'
-    return ''
-  }
-}
 
 describe('ItemGenerator (Refactored with Dummy Policy)', () => {
   let generator: ItemGenerator<string, any, any>
-  let policy: DummyItemPolicy
+  let policy: ItemPolicy
 
   beforeEach(() => {
-    policy = new DummyItemPolicy()
-    generator = new ItemGenerator(policy)
+    policy = new ItemPolicy()
+    generator = new ItemGenerator<ItemRarity, Affix, GameDrop>(policy, new GameItemFactory())
     vi.clearAllMocks()
   })
 
@@ -138,11 +90,11 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         maxRarity: 'EPIC',
       }
 
-      const item = generator.createItem(baseItem)
+      const item = generator.createItem<GameItem>(baseItem)
 
       expect(item.rarity).toBe('EPIC')
       expect(item.affix).toBeDefined()
-      expect(item.affix?.id).toBe('AFFIX_EPIC')
+      expect(item.affix?.id).toBeDefined()
     })
   })
 
@@ -177,7 +129,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
 
   describe('performance prefix', () => {
     it('should assign "masterwork" for high rolls', () => {
-      (utils.rollFromRange as any).mockImplementation((range: [number, number]) => range[1]);
+      ;(utils.rollFromRange as any).mockImplementation((range: [number, number]) => range[1])
 
       const baseItem: any = {
         id: 'sword',
@@ -185,12 +137,12 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         atkRange: [10, 20],
       }
 
-      const item = generator.createItem(baseItem)
+      const item = generator.createItem<GameItem>(baseItem)
       expect(item.perfPrefix).toBe('masterwork')
     })
 
     it('should assign "worn" for low rolls', () => {
-      (utils.rollFromRange as any).mockImplementation((range: [number, number]) => range[0]);
+      ;(utils.rollFromRange as any).mockImplementation((range: [number, number]) => range[0])
 
       const baseItem: any = {
         id: 'sword',
@@ -198,7 +150,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         atkRange: [10, 20],
       }
 
-      const item = generator.createItem(baseItem)
+      const item = generator.createItem<GameItem>(baseItem)
       expect(item.perfPrefix).toBe('worn')
     })
   })

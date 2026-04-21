@@ -1,5 +1,5 @@
 import i18n from '~/i18n'
-import { DropSystem } from '~/systems/DropSystem'
+import { DropSystem } from '~/core/item/DropSystem'
 import { BattleTarget, NPC } from '~/types'
 import { LootFactory } from '../LootFactory'
 import { Player } from '../player/Player'

@@ -1,8 +1,8 @@
 import matches from 'lodash/matches'
 import { EventBus } from '~/core/EventBus'
 import { Corpse, LootBag } from '~/types'
-import { Drop } from '~/types/item'
 import { Item } from './item/Item'
+import { Drop, IGameItemFactory } from './item/types'
 import { Player } from './player/Player'
 import { GameEventType, PositionType } from './types'
 
@@ -12,6 +12,7 @@ export class World {
   corpses: Corpse[] = []
 
   constructor(
+    private itemFactory: IGameItemFactory,
     private player: Player,
     eventBus: EventBus
   ) {
@@ -23,7 +24,7 @@ export class World {
     if (existing && existing.quantity && drop.quantity) {
       existing.quantity += drop.quantity
     } else {
-      const _dropItem = new Item({ ...drop.raw, quantity: drop.quantity }) as Drop
+      const _dropItem = this.itemFactory.make({ ...drop.raw, quantity: drop.quantity }) as Drop
 
       _dropItem.x = this.player.x
       _dropItem.y = this.player.y
@@ -32,8 +33,8 @@ export class World {
     }
   }
 
-  getDropsAt(pos: PositionType): Drop[] {
-    return this.drops.filter(matches(pos))
+  getDropsAt<TDrop = Drop>(pos: PositionType) {
+    return this.drops.filter(matches(pos)) as TDrop[]
   }
 
   removeDropById(dropId: string, pos: { x: number; y: number }): Drop | undefined {

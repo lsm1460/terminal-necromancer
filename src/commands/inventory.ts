@@ -3,7 +3,7 @@ import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, GameContext } from '~/types'
-import { ConsumableItem, Drop, ItemType } from '~/types/item'
+import { ConsumableItem, ItemType } from '~/types/item'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (args, context) => {
@@ -23,7 +23,7 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
 
   const itemChoices = inventory.map((item) => ({
     name: item.id,
-    message: Item.makeItemMessage(item, player),
+    message: item.makeItemMessage(player),
   }))
 
   itemChoices.push({ name: 'cancel', message: i18n.t('cancel') })
@@ -85,7 +85,7 @@ function handleDropAction(item: Item, context: GameContext) {
   const { player, world } = context
 
   if (player.removeItem(item.id)) {
-    world.addDrop(item as Drop)
+    world.addDrop(item)
     Terminal.log(`📦 ${i18n.t('inventory.action_drop_done', { label: item.name, count: 1 })}`)
   }
 }

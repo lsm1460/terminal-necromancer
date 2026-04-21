@@ -1,3 +1,5 @@
+import { Item } from './Item'
+
 export interface IGenerationPolicy<TRarity, TAffix, TDrop> {
   isEquippable(baseItem: TDrop): boolean
 
@@ -11,9 +13,8 @@ export interface IGenerationPolicy<TRarity, TAffix, TDrop> {
     defRange?: [number, number]
     critRange?: [number, number]
     evaRange?: [number, number]
-    maxSkeletonRange?: [number, number]
     baseId: string
-  }
+  } & Partial<TDrop>
 
   getSetting(rarity: TRarity): {
     multiplier: number
@@ -23,4 +24,28 @@ export interface IGenerationPolicy<TRarity, TAffix, TDrop> {
 
   pickAffix(rarity: TRarity): TAffix
   getPerformancePrefix(value: number, range: [number, number]): string
+
+  calculateBaseStats(
+    ranges: ReturnType<IGenerationPolicy<TRarity, TAffix, TDrop>['getStatRanges']>,
+    multiplier: number
+  ): {
+    finalStats: any
+    mainValue: number
+    mainRange: [number, number]
+  }
+}
+
+export interface Drop extends Item {
+  baseId: string
+  x: number
+  y: number
+
+  atkRange?: [number, number]
+  defRange?: [number, number]
+  critRange?: [number, number]
+  evaRange?: [number, number]
+}
+
+export interface IGameItemFactory {
+  make(data: Partial<Item> | Drop): Item
 }

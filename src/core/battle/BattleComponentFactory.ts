@@ -1,4 +1,4 @@
-import { DropSystem } from '~/systems/DropSystem'
+import { DropSystem } from '~/core/item/DropSystem'
 import { EventBus } from '~/core/EventBus'
 import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'

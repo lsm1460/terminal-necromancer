@@ -1,5 +1,5 @@
 import { Player } from '~/core/player/Player'
-import { DropSystem } from '~/systems/DropSystem'
+import { DropSystem } from '~/core/item/DropSystem'
 import { BattleTarget, LootBag } from '~/types'
 import { generateId } from '~/utils'
 import { MapManager } from '../systems/MapManager'

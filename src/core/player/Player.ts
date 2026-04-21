@@ -1,9 +1,11 @@
 import { BattleTarget } from '~/types'
 import { ArmorItem, ConsumableItem, WeaponItem } from '~/types/item'
+import { GameItem } from '../../systems/item/GameItem'
 import { Item } from '../item/Item'
 import { LevelData, PositionType, Skill } from '../types'
 import { InventoryManager } from './InventoryManager'
 import { StatModifier, StatsCalculator } from './StatsCalculator'
+import { IGameItemFactory } from '../item/types'
 
 export interface PlayerSaveData extends Partial<Player> {}
 
@@ -39,7 +41,7 @@ export abstract class Player {
    * @param levelData - 이제 경로 문자열이 아닌 JSON 객체 데이터를 직접 받습니다.
    * @param saved - 저장된 플레이어 데이터
    */
-  constructor(levelData: any, saved?: PlayerSaveData) {
+  constructor(itemFactory: IGameItemFactory, levelData: any, saved?: PlayerSaveData) {
     if (saved) {
       const { inventory, inventoryMax, equipped, ...rest } = saved
       Object.assign(this, rest)
@@ -49,14 +51,14 @@ export abstract class Player {
     this.y = 0
 
     this.levelTable = levelData
-    this.inventoryManager = new InventoryManager(this, saved)
+    this.inventoryManager = new InventoryManager(itemFactory, this, saved)
 
     if (saved?.equipped?.weapon) {
-      this.equipped.weapon = new Item(saved.equipped.weapon) as WeaponItem
+      this.equipped.weapon = new GameItem(saved.equipped.weapon) as any
     }
 
     if (saved?.equipped?.armor) {
-      this.equipped.armor = new Item(saved.equipped.armor) as ArmorItem
+      this.equipped.armor = new GameItem(saved.equipped.armor) as any
     }
   }
 

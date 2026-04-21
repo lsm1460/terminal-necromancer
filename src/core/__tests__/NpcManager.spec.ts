@@ -7,7 +7,7 @@ class TestPlayer extends Player {
   karma = 0
 
   constructor(levelData: [], eventBus: EventBus) {
-    super(levelData)
+    super({ make: (_base: any) => _base }, levelData)
   }
 
   get party() {

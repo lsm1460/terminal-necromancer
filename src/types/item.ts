@@ -1,5 +1,6 @@
-import { Item as ItemClass } from '~/core/item/Item'
+import { Drop as CoreDrop } from '~/core/item/types'
 import { AttackType } from '~/core/types'
+import { GameItem } from '~/systems/item/GameItem'
 
 export type ItemRarity = 'COMMON' | 'RARE' | 'EPIC'
 export enum ItemType {
@@ -44,8 +45,7 @@ export interface Affix {
   }
 }
 
-export type Item = ItemClass
-export interface WeaponItem extends ItemClass {
+export interface WeaponItem extends GameItem {
   type: ItemType.WEAPON
   atk: number
   crit: number
@@ -55,7 +55,7 @@ export interface WeaponItem extends ItemClass {
   perfPrefix?: string
 }
 
-export interface ArmorItem extends ItemClass {
+export interface ArmorItem extends GameItem {
   type: ItemType.ARMOR
   def: number
   eva?: number
@@ -64,26 +64,33 @@ export interface ArmorItem extends ItemClass {
   perfPrefix?: string
 }
 
-export interface FoodItem extends ItemClass {
+export interface FoodItem extends GameItem {
   type: ItemType.FOOD
   hpHeal: number
 }
 
 // 소비 아이템 (포션 등)
-export interface ConsumableItem extends ItemClass {
+export interface ConsumableItem extends GameItem {
   type: ItemType.CONSUMABLE
   hpHeal?: number
   mpHeal?: number
 }
 
-export type Drop = {
-  x: number
-  y: number
-  atkRange?: [number, number]
-  defRange?: [number, number]
+export interface GameDrop extends CoreDrop, GameItem {
   maxSkeletonRange?: [number, number]
-  critRange?: [number, number]
-  evaRange?: [number, number]
+
   minRarity?: ItemRarity
   maxRarity?: ItemRarity
-} & ItemClass
+
+  rarity?: ItemRarity
+}
+
+export interface RaritySetting {
+  rarity: ItemRarity
+  multiplier: number
+  weight: number
+  hasAffix: boolean
+  color: string
+  symbol: string
+  adjectives: string[]
+}

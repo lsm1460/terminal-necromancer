@@ -1,23 +1,23 @@
-import { RARITY_SETTINGS } from '~/core/item/consts'
 import { IGenerationPolicy } from '~/core/item/types'
 import { rollFromRange } from '~/core/utils'
-import { Affix, Drop, ItemRarity, ItemType } from '~/types/item'
+import { Affix, GameDrop, ItemRarity, ItemType } from '~/types/item'
 import { getAffixList } from '../affixes'
+import { RARITY_SETTINGS } from './GameItemFactory'
 
-export class ItemPolicy implements IGenerationPolicy<ItemRarity, Affix, Drop> {
-  isEquippable(baseItem: Drop): boolean {
-    return [ItemType.WEAPON, ItemType.ARMOR].includes(baseItem.type)
+export class ItemPolicy implements IGenerationPolicy<ItemRarity, Affix, GameDrop> {
+  isEquippable(baseItem: GameDrop): boolean {
+    return [ItemType.WEAPON, ItemType.ARMOR].includes(baseItem.type as ItemType)
   }
 
-  getMinRarity(baseItem: Drop): ItemRarity | undefined {
+  getMinRarity(baseItem: GameDrop): ItemRarity | undefined {
     return baseItem.minRarity
   }
 
-  getMaxRarity(baseItem: Drop): ItemRarity | undefined {
+  getMaxRarity(baseItem: GameDrop): ItemRarity | undefined {
     return baseItem.maxRarity
   }
 
-  getStatRanges(baseItem: Drop) {
+  getStatRanges(baseItem: GameDrop) {
     return {
       atkRange: baseItem.atkRange,
       defRange: baseItem.defRange,
@@ -69,5 +69,32 @@ export class ItemPolicy implements IGenerationPolicy<ItemRarity, Affix, Drop> {
     if (value >= max - diff * 0.15) return 'masterwork'
     if (value <= min + diff * 0.15) return 'worn'
     return ''
+  }
+
+  calculateBaseStats(
+    ranges: ReturnType<IGenerationPolicy<ItemRarity, Affix, GameDrop>['getStatRanges']>,
+    multiplier: number
+  ) {
+    let finalStats: any = {}
+    let mainValue = 0
+    let mainRange: [number, number] = [0, 0]
+
+    if (ranges.atkRange) {
+      mainRange = ranges.atkRange
+      mainValue = rollFromRange(mainRange, true)
+      finalStats.atk = Math.floor(mainValue * multiplier)
+      if (ranges.critRange) finalStats.crit = rollFromRange(ranges.critRange)
+    } else if (ranges.defRange) {
+      mainRange = ranges.defRange
+      mainValue = rollFromRange(mainRange)
+      finalStats.def = Math.floor(mainValue * multiplier)
+      if (ranges.evaRange) finalStats.eva = rollFromRange(ranges.evaRange)
+    }
+
+    if (ranges.maxSkeletonRange) {
+      finalStats.maxSkeleton = rollFromRange(ranges.maxSkeletonRange, true)
+    }
+
+    return { finalStats, mainValue, mainRange }
   }
 }

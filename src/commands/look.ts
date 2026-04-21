@@ -1,4 +1,5 @@
 import { CommandFunction } from '~/types'
+import { GameDrop } from '~/types/item'
 import { lookAll, lookItem, printItem } from './overview'
 
 export const lookCommand: CommandFunction = async (args, context) => {
@@ -7,7 +8,7 @@ export const lookCommand: CommandFunction = async (args, context) => {
   const { player, map, world } = context
   const tile = map.getTile(player.pos)
 
-  const items = world.getDropsAt(player.pos)
+  const items = world.getDropsAt<GameDrop>(player.pos)
 
   if (type === 'item' && !target) {
     await lookItem(items, player)
