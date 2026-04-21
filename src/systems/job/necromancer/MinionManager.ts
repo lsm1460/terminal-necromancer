@@ -1,4 +1,6 @@
 import { Terminal } from '~/core/Terminal'
+import { GameAmor } from '~/systems/item/GameAmor'
+import { GameWeapon } from '~/systems/item/GameWeapon'
 import { BattleTarget } from '~/types'
 import { ItemRarity } from '~/types/item'
 import GolemWrapper from './GolemWrapper'
@@ -41,8 +43,8 @@ export class MinionManager {
   get maxSkeleton() {
     let maxSkeleton = this._maxSkeleton
 
-    if (this.player.equipped.weapon) maxSkeleton += this.player.equipped.weapon?.maxSkeleton || 0
-    if (this.player.equipped.armor) maxSkeleton += this.player.equipped.armor?.maxSkeleton || 0
+    if (this.player.equipped.weapon) maxSkeleton += (this.player.equipped.weapon as GameWeapon)?.maxSkeleton || 0
+    if (this.player.equipped.armor) maxSkeleton += (this.player.equipped.armor as GameAmor)?.maxSkeleton || 0
 
     const _val = this.player.getAffixValue('OVERLORD')
 

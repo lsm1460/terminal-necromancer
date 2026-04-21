@@ -2,7 +2,7 @@ import { IGenerationPolicy } from '~/core/item/types'
 import { rollFromRange } from '~/core/utils'
 import { Affix, GameDrop, ItemRarity, ItemType } from '~/types/item'
 import { getAffixList } from '../affixes'
-import { RARITY_SETTINGS } from './GameItemFactory'
+import { RARITY_SETTINGS } from './consts'
 
 export class ItemPolicy implements IGenerationPolicy<ItemRarity, Affix, GameDrop> {
   isEquippable(baseItem: GameDrop): boolean {

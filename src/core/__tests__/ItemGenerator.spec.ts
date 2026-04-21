@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { GameEquipAble } from '~/systems/item/GameEquipAble'
 import { GameItem } from '~/systems/item/GameItem'
 import { GameItemFactory } from '~/systems/item/GameItemFactory'
 import { ItemPolicy } from '~/systems/item/ItemPolicy'
 import { Affix, GameDrop, ItemRarity, ItemType } from '~/types/item'
 import { Item } from '../item/Item'
 import { ItemGenerator } from '../item/ItemGenerator'
+import { IArmor, IWeapon } from '../item/types'
 import * as utils from '../utils'
 
 // Mock dependencies
@@ -52,7 +54,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         price: 1000,
       }
 
-      const item = generator.createItem(baseItem)
+      const item = generator.createItem<IWeapon>(baseItem)
 
       expect(item).toBeInstanceOf(Item)
       expect(item.id).toBe('sword_mocked')
@@ -71,7 +73,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         price: 800,
       }
 
-      const item = generator.createItem(baseItem)
+      const item = generator.createItem<IArmor>(baseItem)
 
       expect(item).toBeInstanceOf(Item)
       expect(item.id).toBe('plate_mocked')
@@ -90,7 +92,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         maxRarity: 'EPIC',
       }
 
-      const item = generator.createItem<GameItem>(baseItem)
+      const item = generator.createItem<GameEquipAble>(baseItem)
 
       expect(item.rarity).toBe('EPIC')
       expect(item.affix).toBeDefined()
@@ -108,7 +110,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         maxRarity: 'COMMON',
       }
 
-      const item = generator.createItem(baseItem)
+      const item = generator.createItem<IWeapon>(baseItem)
       expect(item.atk).toBe(10)
     })
 
@@ -122,7 +124,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         maxRarity: 'COMMON',
       }
 
-      const item = generator.createItem(baseItem)
+      const item = generator.createItem<IWeapon>(baseItem)
       expect(item.crit).toBe(0.5)
     })
   })
@@ -137,7 +139,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         atkRange: [10, 20],
       }
 
-      const item = generator.createItem<GameItem>(baseItem)
+      const item = generator.createItem<GameEquipAble>(baseItem)
       expect(item.perfPrefix).toBe('masterwork')
     })
 
@@ -150,7 +152,7 @@ describe('ItemGenerator (Refactored with Dummy Policy)', () => {
         atkRange: [10, 20],
       }
 
-      const item = generator.createItem<GameItem>(baseItem)
+      const item = generator.createItem<GameEquipAble>(baseItem)
       expect(item.perfPrefix).toBe('worn')
     })
   })

@@ -1,11 +1,9 @@
 import { BattleTarget } from '~/types'
-import { ArmorItem, ConsumableItem, WeaponItem } from '~/types/item'
-import { GameItem } from '../../systems/item/GameItem'
 import { Item } from '../item/Item'
+import { IArmor, IConsumable, IGameItemFactory, IWeapon } from '../item/types'
 import { LevelData, PositionType, Skill } from '../types'
 import { InventoryManager } from './InventoryManager'
 import { StatModifier, StatsCalculator } from './StatsCalculator'
-import { IGameItemFactory } from '../item/types'
 
 export interface PlayerSaveData extends Partial<Player> {}
 
@@ -27,7 +25,7 @@ export abstract class Player {
   exp = 0
   level = 1
 
-  equipped = { weapon: null as WeaponItem | null, armor: null as ArmorItem | null }
+  equipped = { weapon: null as IWeapon | null, armor: null as IArmor | null }
 
   public unlockedSkills: string[] = []
   public readonly modifiers: StatModifier[] = []
@@ -54,11 +52,12 @@ export abstract class Player {
     this.inventoryManager = new InventoryManager(itemFactory, this, saved)
 
     if (saved?.equipped?.weapon) {
-      this.equipped.weapon = new GameItem(saved.equipped.weapon) as any
+      
+      this.equipped.weapon = itemFactory.make<IWeapon>(saved.equipped.weapon)
     }
 
     if (saved?.equipped?.armor) {
-      this.equipped.armor = new GameItem(saved.equipped.armor) as any
+      this.equipped.armor = itemFactory.make<IArmor>(saved.equipped.armor)
     }
   }
 
@@ -222,7 +221,7 @@ export abstract class Player {
     return this.inventoryManager.removeItem(itemId, amount)
   }
 
-  async useItem(targetItem?: ConsumableItem) {
+  async useItem(targetItem?: IConsumable) {
     return await this.inventoryManager.useItem(targetItem)
   }
 

@@ -1,6 +1,6 @@
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { GameItem } from '~/systems/item/GameItem'
+import { GameEquipAble } from '~/systems/item/GameEquipAble'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameContext } from '~/types'
 import { speak } from '~/utils'
@@ -33,7 +33,7 @@ export const KnightActions = {
       return true
     }
 
-    const targetItem = player.inventory.find((item) => item.id === selected) as GameItem
+    const targetItem = player.inventory.find((item) => item.id === selected) as GameEquipAble
     if (targetItem) {
       player.knightUpgrade.push(targetItem.rarity || 'COMMON')
       player.removeItem(targetItem.id)

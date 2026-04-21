@@ -5,12 +5,15 @@ import { Player, PlayerSaveData } from '~/core/player/Player'
 import { StatsCalculator } from '~/core/player/StatsCalculator'
 import { GameEventType } from '~/core/types'
 import i18n from '~/i18n'
+import { GameEquipAble } from '~/systems/item/GameEquipAble'
 import { getPlayerSkills } from '~/systems/skill/player'
 import { BattleTarget, SKILL_IDS, SkillId } from '~/types'
-import { Affix, AffixId, ArmorItem, WeaponItem } from '~/types/item'
+import { Affix, AffixId } from '~/types/item'
 import { MinionManager } from './MinionManager'
 import { necromancerModifiers } from './Modifiers'
 import SkeletonWrapper from './SkeletonWrapper'
+import { GameWeapon } from '~/systems/item/GameWeapon'
+import { GameAmor } from '~/systems/item/GameAmor'
 
 export interface NecromancerSaveData extends PlayerSaveData {
   karma: number
@@ -102,16 +105,16 @@ export class Necromancer extends Player {
   }
 
   get affixes(): Affix[] {
-    return [this.equipped.weapon, this.equipped.armor]
-      .filter((item): item is WeaponItem | ArmorItem => !!item && !!item.affix)
+    return ([this.equipped.weapon, this.equipped.armor] as GameEquipAble[])
+      .filter((item) => !!item && !!item.affix)
       .flatMap((item) => item.affix!)
   }
 
   get minRebornRarity() {
     let minRebornRarity = this.getAffixValue('ELITE_SQUAD')
 
-    if (this.equipped.weapon) minRebornRarity += this.equipped.weapon?.minRebornRarity || 0
-    if (this.equipped.armor) minRebornRarity += this.equipped.armor?.minRebornRarity || 0
+    if (this.equipped.weapon) minRebornRarity += (this.equipped.weapon as GameWeapon)?.minRebornRarity || 0
+    if (this.equipped.armor) minRebornRarity += (this.equipped.armor as GameAmor)?.minRebornRarity || 0
 
     return minRebornRarity
   }
@@ -125,7 +128,7 @@ export class Necromancer extends Player {
   }
 
   public getAffixValue(affixId: AffixId): number {
-    const values = [this.equipped.weapon, this.equipped.armor]
+    const values = ([this.equipped.weapon, this.equipped.armor] as GameEquipAble[])
       .filter((item) => item?.affix?.id === affixId)
       .map((item) => item!.affix!.value || 0)
 
@@ -140,13 +143,13 @@ export class Necromancer extends Player {
   }
 
   getResourceStatus() {
-    const isBlood = this.hasAffix('BLOOD');
+    const isBlood = this.hasAffix('BLOOD')
     return {
       type: isBlood ? 'HP' : 'MP',
-      value: isBlood ? this.hp : this.mp
-    };
+      value: isBlood ? this.hp : this.mp,
+    }
   }
-  
+
   canPay(cost: number): boolean {
     if (this.hasAffix('BLOOD')) {
       return this.hp > cost

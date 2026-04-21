@@ -46,6 +46,32 @@ export interface Drop extends Item {
   evaRange?: [number, number]
 }
 
+export interface IDisplayable {
+  readonly infoTags: string[]
+}
+
+export interface IEquipAble extends Item, IDisplayable {
+  readonly isEquipAble: true
+  readonly needsUnequipConfirm: boolean
+  readonly unequipWarning: string
+}
+
+export interface IWeapon extends IEquipAble {
+  atk: number
+  crit: number
+  attackType: string
+}
+
+export interface IArmor extends IEquipAble {
+  def: number
+  eva: number
+}
+
+export interface IConsumable extends Item, IDisplayable {
+  hpHeal?: number
+  mpHeal?: number
+}
+
 export interface IGameItemFactory {
-  make(data: Partial<Item> | Drop): Item
+  make<TItem = Item>(data: Partial<Item> | Drop): TItem
 }

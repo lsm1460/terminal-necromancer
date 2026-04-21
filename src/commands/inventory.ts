@@ -1,9 +1,10 @@
 import { Item } from '~/core/item/Item'
+import { IConsumable } from '~/core/item/types'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
 import { CommandFunction, GameContext } from '~/types'
-import { ConsumableItem, ItemType } from '~/types/item'
+import { ItemType } from '~/types/item'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (args, context) => {
@@ -51,7 +52,7 @@ async function handleItemAction(item: Item, args: any, context: any) {
       Terminal.log(`\n✨ ${i18n.t('inventory.action_equip_done', { label })}`)
       break
     case 'use':
-      await context.player.useItem(item as ConsumableItem)
+      await context.player.useItem(item as IConsumable)
       break
     case 'drop':
       handleDropAction(item, context)

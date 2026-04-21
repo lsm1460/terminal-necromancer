@@ -75,6 +75,7 @@
         "hpHeal": "Instant HP Heal {{val}}",
         "mana": " Mana Increase : +{{val}}MP",
         "maxSkeleton": " Spirits : Max Skeletons +{{val}}",
+        "minRebornRarity": " Spirits : Min Skeletons Reborn Rarity +{{val}}",
         "affix": " Blessing : Grants [{{name}}] ({{description}})"
       },
       "info": {

@@ -1,8 +1,7 @@
 import i18n from '~/i18n'
-import { getAffixCaution } from '~/systems/affixes'
-import { ArmorItem, ConsumableItem, ItemType, WeaponItem } from '~/types/item'
+import { ItemType } from '~/types/item'
 import { Item } from '../item/Item'
-import { IGameItemFactory } from '../item/types'
+import { IArmor, IConsumable, IGameItemFactory, IWeapon } from '../item/types'
 import { Terminal } from '../Terminal'
 import { Player } from './Player'
 
@@ -40,23 +39,19 @@ export class InventoryManager {
     }
 
     const oldItem = this.player.equipped[slot]
-    if (oldItem?.affix?.metadata?.needsConfirmOnUnequip) {
-      const caution = oldItem.affix
-      const cautionAffixName = i18n.t(`affix.${caution.id}.name`)
 
-      const warningMsg =
-        getAffixCaution(caution.id) || i18n.t('inventory.equip.unequip_caution', { name: cautionAffixName })
+    if (oldItem && oldItem.needsUnequipConfirm) {
+      const proceed = await Terminal.confirm(oldItem.unequipWarning)
 
-      const proceed = await Terminal.confirm(warningMsg)
       if (!proceed) {
         return false
       }
     }
 
     if (slot === 'weapon') {
-      this.player.equipped.weapon = newItem as WeaponItem
+      this.player.equipped.weapon = newItem as IWeapon
     } else if (slot === 'armor') {
-      this.player.equipped.armor = newItem as ArmorItem
+      this.player.equipped.armor = newItem as IArmor
     }
 
     const updatedInventory = this.inventory.filter((i) => i.id !== newItem.id)
@@ -118,8 +113,8 @@ export class InventoryManager {
     return true
   }
 
-  async useItem(targetItem?: ConsumableItem) {
-    const consumables = this.inventory.filter((item): item is ConsumableItem =>
+  async useItem(targetItem?: IConsumable) {
+    const consumables = this.inventory.filter((item): item is IConsumable =>
       [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type as any)
     )
 

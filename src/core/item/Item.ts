@@ -7,19 +7,6 @@ export abstract class Item {
   price!: number
   sellPrice!: number
 
-  // Common options (Food, Consumables, etc)
-  hpHeal?: number
-  mpHeal?: number
-
-  // Weapon specific
-  atk?: number
-  crit?: number
-  attackType?: string
-
-  // Armor specific
-  def?: number
-  eva?: number
-
   // Shared Dynamic Props
   hp?: number
   mp?: number

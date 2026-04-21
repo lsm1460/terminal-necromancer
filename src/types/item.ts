@@ -1,5 +1,4 @@
 import { Drop as CoreDrop } from '~/core/item/types'
-import { AttackType } from '~/core/types'
 import { GameItem } from '~/systems/item/GameItem'
 
 export type ItemRarity = 'COMMON' | 'RARE' | 'EPIC'
@@ -45,38 +44,16 @@ export interface Affix {
   }
 }
 
-export interface WeaponItem extends GameItem {
-  type: ItemType.WEAPON
-  atk: number
-  crit: number
-  attackType: AttackType
+export type EquipAbleOptions = {
+  affix?: Affix
+  maxSkeleton?: number
   minRebornRarity?: number
   adjective?: string
   perfPrefix?: string
-}
-
-export interface ArmorItem extends GameItem {
-  type: ItemType.ARMOR
-  def: number
-  eva?: number
-  minRebornRarity?: number
-  adjective?: string
-  perfPrefix?: string
-}
-
-export interface FoodItem extends GameItem {
-  type: ItemType.FOOD
-  hpHeal: number
-}
-
-// 소비 아이템 (포션 등)
-export interface ConsumableItem extends GameItem {
-  type: ItemType.CONSUMABLE
-  hpHeal?: number
-  mpHeal?: number
 }
 
 export interface GameDrop extends CoreDrop, GameItem {
+  type: ItemType
   maxSkeletonRange?: [number, number]
 
   minRarity?: ItemRarity

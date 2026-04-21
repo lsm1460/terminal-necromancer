@@ -74,7 +74,8 @@
         "eva": "회피율 +{{val}}%",
         "hpHeal": "즉시 회복 HP {{val}}",
         "mana": " 마나 증가 : +{{val}}MP",
-        "maxSkeleton": " 영령 : 최대 해골 소환수 +{{val}}",
+        "maxSkeleton": " 소환수 : 최대 해골 소환수 +{{val}}",
+        "minRebornRarity": " 소환수 : 최소 해골 소환수 등급 +{{val}}",
         "affix": " 축복 : [{{name}}] 효과 부여 ({{description}})"
       },
       "info": {

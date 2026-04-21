@@ -153,7 +153,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     }
 
     if (result.isDead) {
-      await this.dead(attacker, options)
+      await this.dead(options)
     }
 
     return result
@@ -187,7 +187,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     return { ...result, currentHp: this.ref.hp, isDead: this.ref.hp <= 0 }
   }
 
-  async dead(attacker?: CombatUnit, options: DamageOptions = {}) {
+  async dead(options: DamageOptions = {}) {
     if (!this.ref.isAlive) {
       return
     }

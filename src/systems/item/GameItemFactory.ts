@@ -1,40 +1,21 @@
 import { Item } from '~/core/item/Item'
-import { ItemRarity, RaritySetting } from '~/types/item'
+import { ItemRarity, ItemType, RaritySetting } from '~/types/item'
 import { GameItem } from './GameItem'
 import { IGameItemFactory } from '~/core/item/types'
-
-export const RARITY_SETTINGS: Record<ItemRarity, RaritySetting> = {
-  COMMON: {
-    rarity: 'COMMON',
-    multiplier: 1.0,
-    weight: 86,
-    hasAffix: false,
-    color: '\x1b[37m', // White
-    symbol: '⚪',
-    adjectives: [''],
-  },
-  RARE: {
-    rarity: 'RARE',
-    multiplier: 1.25,
-    weight: 10,
-    hasAffix: false,
-    color: '\x1b[94m', // Blue
-    symbol: '🔵',
-    adjectives: ['exquisite', 'superior', 'keen', 'reinforced', 'seasoned'],
-  },
-  EPIC: {
-    rarity: 'EPIC',
-    multiplier: 1.6,
-    weight: 4,
-    hasAffix: true,
-    color: '\x1b[35m', // Purple
-    symbol: '🟣',
-    adjectives: ['abyssal', 'fallen', 'forbidden', 'primal', 'mortal'],
-  },
-}
+import { GameWeapon } from './GameWeapon'
+import { GameAmor } from './GameAmor'
+import { GameConsumable } from './GameConsumable'
 
 export class GameItemFactory implements IGameItemFactory {
-  make(data: Partial<Item>) {
-    return new GameItem(data)
+  make<TItem = GameItem>(data: Partial<Item>) {
+    if (data.type === ItemType.WEAPON) {
+      return new GameWeapon(data) as TItem
+    } else if (data.type === ItemType.ARMOR) {
+      return new GameAmor(data) as TItem
+    } else if ([ItemType.FOOD, ItemType.CONSUMABLE].includes(data.type as ItemType)) {
+      return new GameConsumable(data) as TItem
+    }
+
+    return new GameItem(data) as TItem
   }
 }
