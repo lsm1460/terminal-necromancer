@@ -1,13 +1,13 @@
 import { MAP_IDS } from '~/consts'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Ending } from '~/core/Ending'
+import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
 import { GameContext, GameEventType } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPC } from '~/types'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export class FourthBoss implements BossLogic {
   withResistance = false
@@ -16,7 +16,7 @@ export class FourthBoss implements BossLogic {
     return i18n.t('npc.fourth_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: NPC, context: GameContext) {
+  async createEnemies(bossNpc: BaseNPC, context: GameContext) {
     const { npcs, events, battle, monster } = context
 
     const maya = npcs.getNPC('maya_tech')
@@ -134,7 +134,7 @@ export class FourthBoss implements BossLogic {
     }
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext<Necromancer>) {
+  async onVictory(bossNpc: BaseNPC, context: GameContext) {
     const { player, map, npcs, events, battle, world, eventBus } = context
 
     if (this.withResistance) {
@@ -186,7 +186,7 @@ export class FourthBoss implements BossLogic {
 
           events.completeEvent('caron_is_dead')
 
-          await Ending.run(context)
+          await Ending.run(context as GameContext<Necromancer>)
 
           await eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
           

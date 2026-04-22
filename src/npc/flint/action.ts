@@ -54,6 +54,7 @@ async function handleSurpriseAttack(npc: NPC, context: GameContext) {
 
 async function handleAskSituation(npc: NPC, context: GameContext) {
   const { player, drop } = context
+  const necromancer = player as Necromancer
   Terminal.log(i18n.t('npc.flint.encounter.ask_reply_1'))
   await delay(1000)
   Terminal.log(i18n.t('npc.flint.encounter.ask_reply_2'))
@@ -67,8 +68,8 @@ async function handleAskSituation(npc: NPC, context: GameContext) {
     Terminal.log(i18n.t('npc.flint.encounter.result_join'))
     const { drops: goods } = drop.generateDrops('b5_flint_medical_kit')
     npc.updateContribution(25)
-    player.addItem(goods[0])
-    player.karma += 5
+    necromancer.addItem(goods[0])
+    necromancer.karma += 5
   } else {
     Terminal.log(i18n.t('npc.flint.encounter.result_refuse'))
     npc.updateContribution(-20)

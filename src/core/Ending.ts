@@ -1,4 +1,5 @@
 import { Necromancer } from "~/systems/job/necromancer/Necromancer"
+import { NPCManager } from "~/systems/NpcManager"
 import { GameContext } from "./types"
 
 export class Ending {
@@ -12,8 +13,8 @@ export class Ending {
     const killAll = events.isCompleted('third_boss_kill_all')
     const vipIsSafe = events.isCompleted('third_boss_vip')
     
-    const contribution = npcs.getFactionContribution('resistance')
-    const isHostility = npcs.isFactionHostility('resistance')
+    const contribution = (npcs as NPCManager).getFactionContribution('resistance')
+    const isHostility = (npcs as NPCManager).isFactionHostility('resistance')
 
     // 1. 진정한 안식 (True Ending)
     // 조건: 카론을 살려 동료로 만들었고, 레지스탕스와 최고 우호도이며, 무고한 살생(karma)이 없어야 함.

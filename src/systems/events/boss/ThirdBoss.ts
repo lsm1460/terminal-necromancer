@@ -1,8 +1,10 @@
+import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { BattleTarget, NPC } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
+import { BattleTarget } from '~/types'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
 
@@ -13,20 +15,20 @@ export class ThirdBoss implements BossLogic {
     return i18n.t('npc.third_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: NPC, context: GameContext<Necromancer>) {
+  async createEnemies(bossNpc: BaseNPC, context: GameContext) {
     const { player, battle, monster, npcs } = context
-
+    const necromancer = player as Necromancer
     await speak(i18n.t('npc.third_boss.encounter.vip_scorn', { returnObjects: true }) as string[])
 
-    let leader: NPC
-    const kane = npcs.getNPC('kane_leader')
+    let leader: GameNPC
+    const kane = npcs.getNPC('kane_leader') as GameNPC
 
     const isKaneAlive = kane?.isAlive
     const resDemandKey = isKaneAlive
       ? 'npc.third_boss.encounter.res_demand_kane'
       : 'npc.third_boss.encounter.res_demand_ren'
 
-    leader = isKaneAlive ? kane : npcs.getNPC('ren')!
+    leader = isKaneAlive ? kane : npcs.getNPC('ren')! as GameNPC
 
     await speak(i18n.t(resDemandKey, { returnObjects: true }) as string[])
 
@@ -52,13 +54,13 @@ export class ThirdBoss implements BossLogic {
     await speak([i18n.t(`npc.third_boss.results.${_res}`)])
 
     if (_res === 'resistance') {
-      player.addMercenary(leader)
+      necromancer.addMercenary(leader)
       // enemy is VIP
       return monster.makeMonsters('monster-b5-vip').map((m) => battle.toCombatUnit(m, 'monster'))
     } else if (_res === 'vip') {
       // enemy is resistance
       const arka = monster.makeMonster('arka')
-      player.addMercenary(arka!)
+      necromancer.addMercenary(arka!)
 
       return [
         leader,
@@ -84,10 +86,10 @@ export class ThirdBoss implements BossLogic {
     }
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext<Necromancer>) {
+  async onVictory(bossNpc: BaseNPC, context: GameContext) {
     const { player, npcs, events } = context
-
-    player.removeMercenaries()
+    const necromancer = player as Necromancer
+    necromancer.removeMercenaries()
 
     const victoryLines = i18n.t(`npc.third_boss.victory.${this.selectedSide}`, { returnObjects: true }) as string[]
 

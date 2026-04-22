@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { NPC } from '~/types'
@@ -14,7 +15,7 @@ export const CaronService = {
   getAnswers: () => answers,
 
   /** 카론 위치 재배치 로직 */
-  relocate(npc: NPC, context: GameContext) {
+  relocate(npc: BaseNPC, context: GameContext) {
     const { map, currentTile } = context
     const tiles: (Tile | null)[][] = map.currentScene.tiles
 
