@@ -1,9 +1,9 @@
-import { GameContext } from "~/core/types"
 import { GameNPC } from "~/systems/npc/GameNPC"
+import { AppContext } from "~/systems/types"
 
 export const KaneService = {
   /** 현재 진행 가능한 특별 액션 확인 */
-  getActiveAction(context: GameContext) {
+  getActiveAction(context: AppContext) {
     const { events, npcs } = context
     const isJoined = events.isCompleted('RESISTANCE_BASE')
     const isFirst = events.isCompleted('kane_1')

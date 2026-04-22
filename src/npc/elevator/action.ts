@@ -1,12 +1,12 @@
 import { MAP_IDS, MapId } from '~/consts'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { SaveSystem } from '~/systems/SaveSystem'
+import { AppContext } from '~/systems/types'
 import { ElevatorService } from './service'
 
 export const ElevatorActions = {
-  async handleElevate(context: GameContext): Promise<boolean> {
+  async handleElevate(context: AppContext): Promise<boolean> {
     const { map, world, save } = context
     const completed = context.events.getCompleted()
     const currentSceneId = map.currentSceneId

@@ -1,7 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import * as SubspaceActions from './actions'
 
 export class SubspaceNPC extends GameNPC {
@@ -9,13 +9,12 @@ export class SubspaceNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const { player, events } = context
-    const necromancer = player as Necromancer
     const isTutorialCompleted = events.isCompleted('tutorial_knight')
 
     // 강한 해골(HP 200↑)이 있는데 기사 승격 튜토리얼을 안 봤다면 퀘스트 우선 노출
-    if (necromancer.skeleton.some((sk) => sk.maxHp >= 200) && !isTutorialCompleted) {
+    if (player.skeleton.some((sk) => sk.maxHp >= 200) && !isTutorialCompleted) {
       return [{ name: 'tutorialPromotion', message: i18n.t('npc.subspace.choices.tutorial_knight') }]
     }
 
@@ -28,7 +27,7 @@ export class SubspaceNPC extends GameNPC {
     ]
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         await this.handleTalk()
@@ -46,14 +45,13 @@ export class SubspaceNPC extends GameNPC {
         await SubspaceActions.handlePromotion(context)
         break
       case 'tutorialPromotion':
-        await SubspaceActions.handleTutorialPromotion(context)
+        await SubspaceActions.handleTutorialPromotion(context.events)
         break
     }
     return true
   }
 
-  hasQuest(context: GameContext) {
-    const necromancer = context.player as Necromancer
-    return necromancer.skeleton.some((sk) => sk.maxHp >= 200) && !context.events.isCompleted('tutorial_knight')
+  hasQuest(context: AppContext) {
+    return context.player.skeleton.some((sk) => sk.maxHp >= 200) && !context.events.isCompleted('tutorial_knight')
   }
 }

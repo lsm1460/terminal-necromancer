@@ -1,4 +1,5 @@
 import { GameContext, Monster, PositionType } from '.'
+import { Player } from '../player/Player'
 
 export interface Tile {
   id: string
@@ -24,11 +25,15 @@ export interface SceneData {
   tiles: Tile[][]
 }
 
-export interface IMapManager {
+export interface IMinContext {
+  player: Player;
+}
+
+export interface IMapManager<TContext extends IMinContext = any> {
   currentSceneId: string
   currentScene: SceneData
-  changeScene(targetSceneId: string, context: GameContext): Promise<void>
-  handleTileEvent(tile: Tile, context: GameContext): Promise<void>
+  changeScene(targetId: string, context: TContext): Promise<void>;
+  handleTileEvent(tile: Tile, context: TContext): Promise<void>
 
   getTile(pos: PositionType): Tile | undefined | null
   canMove(pos: PositionType): boolean

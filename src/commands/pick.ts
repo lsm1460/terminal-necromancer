@@ -1,7 +1,7 @@
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { AppContext } from '~/systems/types'
 import { CommandFunction, LootBag } from '~/types'
 import { GameDrop } from '~/types/item'
 
@@ -89,7 +89,7 @@ const makeDropTargetOptions = (drops: GameDrop[], player: Player, lootBag?: Loot
   { name: 'cancel', message: i18n.t('cancel') },
 ]
 
-function handleLootBagPick(lootBag: LootBag, context: GameContext) {
+function handleLootBagPick(lootBag: LootBag, context: AppContext) {
   const { player, world } = context
   Terminal.log(`\n${i18n.t('pick.lootbag_recover_msg', { exp: lootBag.exp, gold: lootBag.gold })}`)
   Terminal.log(`"${i18n.t('pick.lootbag_flavor_text')}"`)
@@ -99,7 +99,7 @@ function handleLootBagPick(lootBag: LootBag, context: GameContext) {
   world.removeLootBag()
 }
 
-function handleItemPick(drop: GameDrop, availableSpace: number, context: GameContext) {
+function handleItemPick(drop: GameDrop, availableSpace: number, context: AppContext) {
   const { player, world } = context
 
   const totalDropQty = drop.quantity || 1

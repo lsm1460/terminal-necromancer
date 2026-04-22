@@ -1,7 +1,7 @@
-import { GameContext, INpcManager, NPCState } from "~/core/types"
+import { INpcManager, NPCState } from "~/core/types"
 import i18n from "~/i18n"
-import { Necromancer } from "~/systems/job/necromancer/Necromancer"
 import { GameNPC } from "~/systems/npc/GameNPC"
+import { AppContext } from "~/systems/types"
 import { FlintActions } from "./action"
 import { FlintService } from "./service"
 
@@ -11,7 +11,7 @@ export class FlintNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const activeAction = FlintService.getActiveAction(context)
 
     if (activeAction) {
@@ -21,11 +21,11 @@ export class FlintNPC extends GameNPC {
     return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return !FlintService.isEventCompleted(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk()

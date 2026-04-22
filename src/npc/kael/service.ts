@@ -1,9 +1,9 @@
-import { GameContext } from "~/core/types"
 import { GameNPC } from "~/systems/npc/GameNPC"
+import { AppContext } from "~/systems/types"
 
 export const KaelService = {
   /** 어린이 저항군 조우 이벤트 완료 여부 */
-  isEncountered(context: GameContext): boolean {
+  isEncountered(context: AppContext): boolean {
     return context.events.isCompleted('b5_child_resistance_encounter')
   },
 

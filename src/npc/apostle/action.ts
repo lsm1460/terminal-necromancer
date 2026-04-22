@@ -1,10 +1,10 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { AppContext } from '~/systems/types'
 import { delay } from '~/utils'
 
 export const ApostleActions = {
-  async handleEvent(context: GameContext) {
+  async handleEvent(context: AppContext) {
     const script = i18n.t('npc.apostle.event.script', { returnObjects: true }) as { text: string; delay: number }[]
 
     // 인트로 로그 출력 (회색)

@@ -1,14 +1,14 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { GameContext, Tile } from '~/core/types'
+import { Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { speak } from '~/utils'
-import { Necromancer } from '../job/necromancer/Necromancer'
+import { AppContext } from '../types'
 import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
-  static async handle(context: GameContext) {
+  static async handle(context: AppContext) {
     const { npcs, events, battle, world, currentTile: tile } = context
 
     // 1. 타일 정보에서 보스 NPC 아이디 추출

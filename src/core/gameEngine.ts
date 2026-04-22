@@ -25,13 +25,14 @@ import { handleCommand } from './commandHandler'
 import { ItemGenerator } from './item/ItemGenerator'
 import { BaseMapManager } from './map/BaseMapManager'
 import { MapData } from './map/MapData'
-import { printDirections } from './statusPrinter'
-import { GameContext, IMapManager, INpcManager } from './types'
-import { NPCData } from './npc/NPCData'
 import { BaseNPCManager } from './npc/BaseNPCManager'
+import { NPCData } from './npc/NPCData'
+import { printDirections } from './statusPrinter'
+import { DefaultContextTypes, GameContext, IMapManager, INpcManager } from './types'
+import { Player } from './player/Player'
 
-export class GameEngine {
-  public context!: GameContext
+export class GameEngine<T extends Partial<DefaultContextTypes>> {
+  public context!: GameContext<T>
 
   isProcessing = false
 
@@ -104,9 +105,9 @@ export class GameEngine {
       cheats: {},
 
       get currentTile() {
-        return this.map.getTile(this.player.pos)!;
+        return this.map.getTile((this.player as Player).pos)!;
       }
-    } as GameContext
+    } as GameContext<T>
 
     player.onDeath = () => {
       const hostility = (npcs as NPCManager).getFactionContribution('resistance')

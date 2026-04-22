@@ -1,13 +1,13 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { GameEquipAble } from '~/systems/item/GameEquipAble'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 import { KnightService } from './service'
 
 export const KnightActions = {
-  async handleFirst(context: GameContext) {
+  async handleFirst(context: AppContext) {
     const { events } = context
     await speak(i18n.t('npc._knight.first_encounter.lines', { returnObjects: true }) as string[])
     Terminal.log(`\x1b[36m[System] ${i18n.t('npc._knight.first_encounter.system_hint')}\x1b[0m`)

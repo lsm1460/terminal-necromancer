@@ -1,21 +1,20 @@
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 
 export const ZedService = {
   /**
    * 퀘스트 우선순위 판별
    */
-  getActiveQuest(context: GameContext) {
-    const { events } = context
-    const necromancer = context.player as Necromancer
+  getActiveQuest(context: AppContext) {
+    const { player, events } = context
 
     const isB2Completed = events.isCompleted('talk_death_2')
     const isB3Completed = events.isCompleted('second_boss')
     const alreadyHeard = events.isCompleted('HEARD_RESISTANCE')
     const alreadyDenied = events.isCompleted('golem_generation_denied_zed')
 
-    if (isB3Completed && !necromancer.golem && !alreadyDenied) {
+    if (isB3Completed && !player.golem && !alreadyDenied) {
       return { name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }
     }
 

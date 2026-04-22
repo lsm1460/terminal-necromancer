@@ -1,13 +1,13 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 import { KaelService } from './service'
 
 export const KaelActions = {
   /** 어린이 저항군 조우 이벤트 실행 */
-  async handleDiscovery(npc: GameNPC, context: GameContext) {
+  async handleDiscovery(npc: GameNPC, context: AppContext) {
     const { events } = context
 
     // 1. 초기 대화 재생
@@ -37,7 +37,7 @@ export const KaelActions = {
 }
 
 /** 카엘 & 베스퍼 연합 전투 실행 */
-async function startAmbushBattle(npc: GameNPC, context: GameContext) {
+async function startAmbushBattle(npc: GameNPC, context: AppContext) {
   const { battle, npcs, events, world, currentTile: tile } = context
 
   const kael = npcs.getNPC('kael')

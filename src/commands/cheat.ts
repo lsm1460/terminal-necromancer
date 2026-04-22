@@ -1,11 +1,9 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 
-export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
+export const handleCheat = (rawCmd: string, context: AppContext): boolean => {
   const trimmed = rawCmd.trim()
   const { player, currentTile: tile } = context
-  const necromancer = player as Necromancer
 
   switch (trimmed) {
     case 'show me the money':
@@ -28,7 +26,7 @@ export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
       }
       return true
     case 'make room!':
-      necromancer._maxSkeleton += 1
+      player._maxSkeleton += 1
       Terminal.log(`\n[Cheat] The legion's limit has been expanded.`)
       return true
 

@@ -1,7 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { KnightActions } from './action'
 import { KnightService } from './service'
 
@@ -10,7 +10,7 @@ export class KnightNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const quest = KnightService.getActiveQuest(context)
     if (quest) return [quest]
 
@@ -21,20 +21,20 @@ export class KnightNPC extends GameNPC {
     ]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return KnightService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         return this.handleTalk()
       case 'first':
         return await KnightActions.handleFirst(context)
       case 'upgrade':
-        return await KnightActions.handleUpgrade(context.player as Necromancer)
+        return await KnightActions.handleUpgrade(context.player)
       case 'reset':
-        return await KnightActions.handleReset(context.player as Necromancer)
+        return await KnightActions.handleReset(context.player)
       default:
         return
     }

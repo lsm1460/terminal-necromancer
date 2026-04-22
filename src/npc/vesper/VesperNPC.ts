@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { VesperActions } from './action'
 import { VesperService } from './service'
 
@@ -9,7 +10,7 @@ export class VesperNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const isEncountered = VesperService.isEncountered(context)
 
     if (isEncountered) {
@@ -20,11 +21,11 @@ export class VesperNPC extends GameNPC {
     return [{ name: 'event', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return !VesperService.isEncountered(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk() // BaseNPC의 기본 대화 로직

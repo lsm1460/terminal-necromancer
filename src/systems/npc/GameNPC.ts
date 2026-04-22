@@ -3,6 +3,7 @@ import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { NPCManager } from '../NpcManager'
+import { AppContext } from '../types'
 
 export class GameNPC extends BaseNPC {
   get name(): string {
@@ -57,9 +58,9 @@ export class GameNPC extends BaseNPC {
     return i18n.exists(key) ? i18n.t(key) : '...'
   }
 
-  override getChoices(context: GameContext) {
+  override getChoices(context: AppContext) {
     return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   }
 
-  override afterDead(context: GameContext) {}
+  override afterDead(context: AppContext) {}
 }

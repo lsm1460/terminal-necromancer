@@ -1,7 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { PortalActions } from './action'
 
 export class PortalNPC extends GameNPC {
@@ -13,7 +13,7 @@ export class PortalNPC extends GameNPC {
     return [{ name: 'portal', message: i18n.t('npc.portal.choices.move') }]
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'portal':
         return await PortalActions.handleMove(context)

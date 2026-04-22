@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { KaelActions } from './action'
 import { KaelService } from './service'
 
@@ -9,7 +10,7 @@ export class KaelNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const isEncountered = KaelService.isEncountered(context)
 
     if (isEncountered) {
@@ -20,11 +21,11 @@ export class KaelNPC extends GameNPC {
     return [{ name: 'event', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return !KaelService.isEncountered(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk()

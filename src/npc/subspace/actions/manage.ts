@@ -3,29 +3,29 @@ import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import SkeletonWrapper from '~/systems/job/necromancer/SkeletonWrapper'
+import { AppContext } from '~/systems/types'
 
-export const handleManageSpace = async (context: GameContext) => {
+export const handleManageSpace = async (context: AppContext) => {
   const { player, events } = context
-  const necromancer = player as Necromancer
   const caronIsDead = events.isCompleted('caron_is_dead')
 
   Terminal.log(i18n.t(`npc.subspace.manage.intro_${caronIsDead ? 'dead' : 'mine'}`))
 
   const choices = [
-    ...(necromancer.skeleton.length > 0 && necromancer.skeletonSubspace.length < necromancer.subspaceLimit
+    ...(player.skeleton.length > 0 && player.skeletonSubspace.length < player.subspaceLimit
       ? [{ name: 'push', message: i18n.t('npc.subspace.manage.push') }]
       : []),
-    ...(necromancer.skeletonSubspace.length > 0 ? [{ name: 'pull', message: i18n.t('npc.subspace.manage.pull') }] : []),
+    ...(player.skeletonSubspace.length > 0 ? [{ name: 'pull', message: i18n.t('npc.subspace.manage.pull') }] : []),
     { name: 'cancel', message: i18n.t('npc.subspace.manage.cancel') },
   ]
 
   const action = await Terminal.select(
-    i18n.t('npc.subspace.manage.select_title', { current: necromancer.skeletonSubspace.length, max: necromancer.subspaceLimit }),
+    i18n.t('npc.subspace.manage.select_title', { current: player.skeletonSubspace.length, max: player.subspaceLimit }),
     choices
   )
 
-  if (action === 'push') await executePush(necromancer)
-  if (action === 'pull') await executePull(necromancer)
+  if (action === 'push') await executePush(player)
+  if (action === 'pull') await executePull(player)
 }
 
 async function executePush(player: Necromancer) {

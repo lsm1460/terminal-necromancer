@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { MikaActions } from './action'
 import { MikaService } from './service'
 
@@ -9,7 +10,7 @@ export class MikaNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const alreadyTalk = MikaService.isMet(context)
 
     if (alreadyTalk) {
@@ -20,12 +21,12 @@ export class MikaNPC extends GameNPC {
     return [{ name: 'event', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     // 미조우 상태일 때 맵 상에 퀘스트 마크 노출
     return !MikaService.isMet(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk() // BaseNPC의 공통 대화 로직

@@ -1,14 +1,14 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import BossEvent from '~/systems/events/BossEvent'
+import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 import { CaronService } from './service'
 
 export const CaronActions = {
   /** 1차 대면 */
-  async firstEncounter(npc: BaseNPC, context: GameContext) {
+  async firstEncounter(npc: BaseNPC, context: AppContext) {
     await speak(i18n.t('npc.caron.encounters.first.dialogue', { returnObjects: true }) as string[])
     const answer = await Terminal.confirm(i18n.t('npc.caron.encounters.first.confirm'))
 
@@ -22,7 +22,7 @@ export const CaronActions = {
   },
 
   /** 2차 대면 */
-  async secondEncounter(npc: BaseNPC, context: GameContext) {
+  async secondEncounter(npc: BaseNPC, context: AppContext) {
     await speak(i18n.t('npc.caron.encounters.second.dialogue', { returnObjects: true }) as string[])
     const answer = await Terminal.confirm(i18n.t('npc.caron.encounters.second.confirm'))
 
@@ -34,7 +34,7 @@ export const CaronActions = {
   },
 
   /** 최종 대면 */
-  async finalEncounter(npc: BaseNPC, context: GameContext) {
+  async finalEncounter(npc: BaseNPC, context: AppContext) {
     const { events, currentTile } = context
     const { first, second } = CaronService.getAnswers()
 
@@ -61,7 +61,7 @@ export const CaronActions = {
   },
 
   /** 전투 실행 */
-  async handleBattle(npc: BaseNPC, context: GameContext, isManual = false) {
+  async handleBattle(npc: BaseNPC, context: AppContext, isManual = false) {
     const { battle, events, world, currentTile } = context
     if (isManual) await speak([i18n.t('npc.caron.encounters.battle.manual_start')])
 

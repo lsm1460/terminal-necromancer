@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext, Tile } from '~/core/types'
+import { Tile } from '~/core/types'
 import i18n from '~/i18n'
+import { AppContext } from '~/systems/types'
 
 // NPC 인스턴스가 아닌 서비스 레벨에서 상태 관리 (필요 시 세이브 데이터와 연동)
 let encounterCount = 0
@@ -14,7 +15,7 @@ export const CaronService = {
   getAnswers: () => answers,
 
   /** 카론 위치 재배치 로직 */
-  relocate(npc: BaseNPC, context: GameContext) {
+  relocate(npc: BaseNPC, context: AppContext) {
     const { map, currentTile } = context
     const tiles: (Tile | null)[][] = map.currentScene.tiles
 

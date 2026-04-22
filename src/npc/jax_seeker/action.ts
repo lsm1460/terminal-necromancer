@@ -1,19 +1,19 @@
 import { MAP_IDS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 
 export const JaxActions = {
   /** 기지 입장 처리 */
-  async handleEnter(context: GameContext) {
+  async handleEnter(context: AppContext) {
     Terminal.log(i18n.t('npc.jax_seeker.enter.log'))
     await context.map.changeScene(MAP_IDS.B3_5_RESISTANCE_BASE, context)
   },
 
   /** 가입 이벤트 분기 처리 */
-  async handleJoin(npc: GameNPC, context: GameContext) {
+  async handleJoin(npc: GameNPC, context: AppContext) {
     const { events, battle, world, currentTile: tile } = context
 
     const dialogues = i18n.t('npc.jax_seeker.join.dialogues', { returnObjects: true }) as string[]

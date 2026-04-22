@@ -1,8 +1,8 @@
 import { ShopService } from '~/core/npc/ShopService'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { AppContext } from '../types'
 import { GameNPC } from './GameNPC'
 
 export interface ShopScripts {
@@ -15,7 +15,7 @@ export interface ShopScripts {
 }
 
 export abstract class MerchantNPC extends GameNPC {
-  protected async openBuyShop(dropTableId: string, scripts: ShopScripts, context: GameContext) {
+  protected async openBuyShop(dropTableId: string, scripts: ShopScripts, context: AppContext) {
     const { player, drop } = context
     const { drops: goods } = drop.generateDrops(dropTableId)
 

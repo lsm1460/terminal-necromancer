@@ -1,9 +1,9 @@
 import { printTileStatus } from '~/core/statusPrinter'
-import { GameContext } from '~/core/types'
 import { assetManager } from '~/core/WebAssetManager'
 import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { Renderer } from '~/types'
 
 export interface UIState {
@@ -34,7 +34,7 @@ export class ReactRenderer implements Renderer {
     this.store.setUI({ type: 'NONE', message: '', resolve: () => {} })
   }
 
-  printStatus(context: GameContext): void {
+  printStatus(context: AppContext): void {
     printTileStatus(context)
   }
 

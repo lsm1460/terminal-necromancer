@@ -1,9 +1,9 @@
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { AppContext } from '~/systems/types'
 import { ItemType } from '~/types/item'
 
 export const KnightService = {
-  getActiveQuest(context: GameContext) {
+  getActiveQuest(context: AppContext) {
     const { events } = context
     const alreadyTalk = events.isCompleted('talk_knight')
 

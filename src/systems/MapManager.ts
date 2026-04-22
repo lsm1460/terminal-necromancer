@@ -9,7 +9,6 @@ import { printTileStatus } from '~/core/statusPrinter'
 import { GameContext, GameEventType, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { allEventHandlers } from '~/systems/events'
-import { Necromancer } from './job/necromancer/Necromancer'
 
 export class MapManager extends BaseMapManager {
   constructor(

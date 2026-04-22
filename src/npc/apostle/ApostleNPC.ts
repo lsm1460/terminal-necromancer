@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { ApostleActions } from './action'
 import { ApostleService } from './service'
 
@@ -9,7 +10,7 @@ export class ApostleNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const activeAction = ApostleService.getActiveAction(context)
 
     if (activeAction?.name === 'event') {
@@ -19,11 +20,11 @@ export class ApostleNPC extends GameNPC {
     return [{ name: 'talk', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return !ApostleService.isEventCompleted(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk() // BaseNPC에 구현된 기본 대화

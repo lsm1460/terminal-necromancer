@@ -1,7 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { OliverActions } from './action'
 import { OliverService } from './service'
 
@@ -10,7 +10,7 @@ export class OliverNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const alreadyTalk = OliverService.isMet(context)
 
     if (alreadyTalk) {
@@ -21,12 +21,12 @@ export class OliverNPC extends GameNPC {
     return [{ name: 'event', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     // 유언 이벤트가 남은 경우 맵에 표시
     return !OliverService.isMet(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk() // BaseNPC 기본 대화

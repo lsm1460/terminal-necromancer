@@ -1,21 +1,19 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { printTileStatus } from '~/core/statusPrinter'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 import { GameDrop } from '~/types/item'
 import { lookCorpse } from './corpse'
 import { lookBattleTarget } from './entity'
 import { lookItem } from './item'
 import { getTileFromDirection, lookPath } from './path'
 
-export const lookAll = async (context: GameContext, items: GameDrop[]): Promise<void> => {
+export const lookAll = async (context: AppContext, items: GameDrop[]): Promise<void> => {
   const { player, map, npcs, world, currentTile: tile } = context
   const monsters = tile?.monsters || []
   const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
-  const necromancer = player as Necromancer
-  const minions = necromancer.minions || []
+  const minions = player.minions || []
 
   const aliveNPCs = (tile?.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as BaseNPC[]
   const corpse = world.getCorpsesAt(player.pos)

@@ -1,8 +1,9 @@
 import fs from 'fs'
 import { Player } from '~/core/player/Player'
-import { GameContext, NPCState } from '~/core/types'
+import { NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { LootBag } from '~/types'
+import { AppContext } from './types'
 
 export type SaveData<T extends Player = Player> = {
   player: T
@@ -56,7 +57,7 @@ export class SaveSystem {
     }
   }
 
-  static makeSaveData(context: GameContext) {
+  static makeSaveData(context: AppContext) {
     return {
       player: context.player,
       sceneId: context.map.currentSceneId,

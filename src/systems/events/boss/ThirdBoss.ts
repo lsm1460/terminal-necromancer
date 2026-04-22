@@ -1,9 +1,8 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { BattleTarget } from '~/types'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
@@ -15,9 +14,8 @@ export class ThirdBoss implements BossLogic {
     return i18n.t('npc.third_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: BaseNPC, context: GameContext) {
+  async createEnemies(bossNpc: BaseNPC, context: AppContext) {
     const { player, battle, monster, npcs } = context
-    const necromancer = player as Necromancer
     await speak(i18n.t('npc.third_boss.encounter.vip_scorn', { returnObjects: true }) as string[])
 
     let leader: GameNPC
@@ -54,13 +52,13 @@ export class ThirdBoss implements BossLogic {
     await speak([i18n.t(`npc.third_boss.results.${_res}`)])
 
     if (_res === 'resistance') {
-      necromancer.addMercenary(leader)
+      player.addMercenary(leader)
       // enemy is VIP
       return monster.makeMonsters('monster-b5-vip').map((m) => battle.toCombatUnit(m, 'monster'))
     } else if (_res === 'vip') {
       // enemy is resistance
       const arka = monster.makeMonster('arka')
-      necromancer.addMercenary(arka!)
+      player.addMercenary(arka!)
 
       return [
         leader,
@@ -86,10 +84,9 @@ export class ThirdBoss implements BossLogic {
     }
   }
 
-  async onVictory(bossNpc: BaseNPC, context: GameContext) {
+  async onVictory(bossNpc: BaseNPC, context: AppContext) {
     const { player, npcs, events } = context
-    const necromancer = player as Necromancer
-    necromancer.removeMercenaries()
+    player.removeMercenaries()
 
     const victoryLines = i18n.t(`npc.third_boss.victory.${this.selectedSide}`, { returnObjects: true }) as string[]
 

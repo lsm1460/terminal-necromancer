@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { KaneActions } from './action'
 import { KaneService } from './service'
 
@@ -9,7 +10,7 @@ export class KaneNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const quest = KaneService.getActiveAction(context)
     if (quest) {
       return [{ name: quest.name, message: i18n.t(quest.message) }]
@@ -21,11 +22,11 @@ export class KaneNPC extends GameNPC {
     ]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return KaneService.getActiveAction(context) !== null
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'join':
         await KaneActions.handleJoin(this, context)

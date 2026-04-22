@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { DaxActions } from './action'
 import { DaxService } from './service'
 
@@ -9,7 +10,7 @@ export class DaxNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const alreadyTalk = DaxService.isMet(context)
 
     if (alreadyTalk) {
@@ -20,12 +21,12 @@ export class DaxNPC extends GameNPC {
     return [{ name: 'event', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     // 아직 만나지 않았다면 맵에 퀘스트 마크 표시
     return !DaxService.isMet(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk() // BaseNPC의 기본 대화 로직

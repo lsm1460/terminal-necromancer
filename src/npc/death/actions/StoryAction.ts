@@ -1,10 +1,10 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 
 export const StoryActions = {
-  async handleIntro(context: GameContext) {
+  async handleIntro(context: AppContext) {
     const { events } = context
     const isFirst = events.isCompleted('talk_death_1')
     const isB2Completed = events.isCompleted('first_boss')
@@ -22,7 +22,7 @@ export const StoryActions = {
     return true
   },
 
-  async handleTutorialOver(context: GameContext) {
+  async handleTutorialOver(context: AppContext) {
     const { events } = context
     const messages = i18n.t('npc.death.tutorial_over', { returnObjects: true }) as string[]
 
@@ -31,7 +31,7 @@ export const StoryActions = {
     return true
   },
 
-  async handleDefeatGolem(context: GameContext) {
+  async handleDefeatGolem(context: AppContext) {
     const { events } = context
     const messages = i18n.t('npc.death.defeat_golem', { returnObjects: true }) as string[]
 
@@ -40,7 +40,7 @@ export const StoryActions = {
     return true
   },
 
-  async handleReportCaron(context: GameContext) {
+  async handleReportCaron(context: AppContext) {
     const { events } = context
     const isCaronMine = events.isCompleted('caron_is_mine')
     const isCaronDead = events.isCompleted('caron_is_dead')
@@ -64,7 +64,7 @@ export const StoryActions = {
     return true
   },
 
-  async handleAfterCleanup(context: GameContext) {
+  async handleAfterCleanup(context: AppContext) {
     const { events } = context
     const isVipLost = events.isCompleted('third_boss_resistance') || events.isCompleted('third_boss_kill_all')
 
@@ -80,7 +80,7 @@ export const StoryActions = {
     return true
   },
 
-  async handleEnd(context: GameContext) {
+  async handleEnd(context: AppContext) {
     const { battle, events, npcs, world } = context
     await speak(i18n.t('npc.death.reaper_mockery_final', { returnObjects: true }) as string[])
 

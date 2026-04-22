@@ -1,9 +1,8 @@
-import { Necromancer } from "~/systems/job/necromancer/Necromancer"
 import { NPCManager } from "~/systems/NpcManager"
-import { GameContext } from "./types"
+import { AppContext } from "~/systems/types"
 
 export class Ending {
-  static async run(context: GameContext<Necromancer>): Promise<void> {
+  static async run(context: AppContext): Promise<void> {
     const { player, events, npcs } = context
 
     // 주요 변수 추출

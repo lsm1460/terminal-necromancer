@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { SilasActions } from './action'
 import { SilasService } from './service'
 
@@ -9,7 +10,7 @@ export class SilasNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const alreadyTalk = SilasService.isMet(context)
 
     if (alreadyTalk) {
@@ -20,12 +21,12 @@ export class SilasNPC extends GameNPC {
     return [{ name: 'event', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     // 아직 만나지 않은 상태라면 맵 상에 퀘스트 마크 표시
     return !SilasService.isMet(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk() // BaseNPC의 공통 대화 로직

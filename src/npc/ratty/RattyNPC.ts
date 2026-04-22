@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { RattyActions } from './action'
 import { RattyService } from './service'
 
@@ -9,7 +10,7 @@ export class RattyNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const alreadyTalk = RattyService.isMet(context)
 
     if (alreadyTalk) {
@@ -20,11 +21,11 @@ export class RattyNPC extends GameNPC {
     return [{ name: 'threat', message: i18n.t('talk.small_talk') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return !RattyService.isMet(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk()

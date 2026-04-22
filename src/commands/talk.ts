@@ -1,8 +1,7 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { CommandFunction } from '~/types'
 
 export const talkCommand: CommandFunction = async (...params) => {
@@ -17,10 +16,9 @@ export const talkCommand: CommandFunction = async (...params) => {
   return false
 }
 
-async function selectTargetNpc(args: string[], context: GameContext) {
+async function selectTargetNpc(args: string[], context: AppContext) {
   const { npcs: npcManager, player, currentTile: tile } = context
-  const necromancer = player as Necromancer
-  const npcs = npcManager.getAliveNPCInTile({ tile, hasKnight: !!necromancer.knight })
+  const npcs = npcManager.getAliveNPCInTile({ tile, hasKnight: !!player.knight })
 
   if (npcs.length < 1) {
     Terminal.log(`\n${i18n.t('talk.no_one_here')}`)
@@ -58,7 +56,7 @@ function printNpcHeader(npc: GameNPC) {
   Terminal.printNpcCard(npc)
 }
 
-async function startTalkSession(npc: GameNPC, context: GameContext) {
+async function startTalkSession(npc: GameNPC, context: AppContext) {
   npc.relation += 1 // 대화 시 호감도 소폭 상승
 
   try {

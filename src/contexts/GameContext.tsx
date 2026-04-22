@@ -1,14 +1,16 @@
-import React, { createContext, useContext, ReactNode } from 'react'
+import React, { createContext, ReactNode, useContext } from 'react'
 import { GameEngine } from '~/core/gameEngine'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { NPCManager } from '~/systems/NpcManager'
 
 interface GameContextType {
-  engine: React.RefObject<GameEngine | null>
+  engine: React.RefObject<GameEngine<{player: Necromancer, npcs: NPCManager}> | null>
 }
 
 const GameContext = createContext<GameContextType | null>(null)
 
 export const GameProvider: React.FC<{
-  engine: React.RefObject<GameEngine | null>
+  engine: React.RefObject<GameEngine<{player: Necromancer, npcs: NPCManager}> | null>
   children: ReactNode
 }> = ({ engine, children }) => {
   return <GameContext.Provider value={{ engine }}>{children}</GameContext.Provider>

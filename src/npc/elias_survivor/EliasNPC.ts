@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from "~/core/types"
+import { INpcManager, NPCState } from "~/core/types"
 import i18n from "~/i18n"
 import { GameNPC } from "~/systems/npc/GameNPC"
+import { AppContext } from "~/systems/types"
 import { EliasActions } from "./action"
 import { EliasService } from "./service"
 
@@ -10,7 +11,7 @@ export class EliasNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const alreadyTalk = EliasService.isMet(context)
 
     if (alreadyTalk) {
@@ -20,12 +21,12 @@ export class EliasNPC extends GameNPC {
     return [{ name: 'event', message: i18n.t('talk.examine') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     // 미조우 상태일 때만 퀘스트 마크 표시
     return !EliasService.isMet(context)
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         this.handleTalk() // BaseNPC에서 제공하는 기본 대화 기능

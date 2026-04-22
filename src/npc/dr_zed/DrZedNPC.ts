@@ -1,7 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { ZedActions } from './action'
 import { ZedService } from './service'
 
@@ -10,8 +10,7 @@ export class ZedNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
-    const necromancer = context.player as Necromancer
+  getChoices(context: AppContext) {
     const quest = ZedService.getActiveQuest(context)
     const isB3Completed = context.events.isCompleted('second_boss')
 
@@ -19,19 +18,19 @@ export class ZedNPC extends GameNPC {
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
-      ...(isB3Completed && !necromancer.golem ? [{ name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }] : []),
-      ...(isB3Completed && necromancer.golem
+      ...(isB3Completed && !context.player.golem ? [{ name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }] : []),
+      ...(isB3Completed && context.player.golem
         ? [{ name: 'upgrade_golem', message: i18n.t('npc.dr_zed.choices.upgrade_golem') }]
         : []),
       { name: 'heal', message: i18n.t('talk.heal') },
     ]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return ZedService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         return this.handleTalk() // BaseNPC의 메서드 사용
@@ -40,9 +39,9 @@ export class ZedNPC extends GameNPC {
       case 'heal':
         return ZedActions.handleHeal(context.player)
       case 'golem':
-        return await ZedActions.handleAwakeGolem(context.player as Necromancer, context.events)
+        return await ZedActions.handleAwakeGolem(context.player, context.events)
       case 'upgrade_golem':
-        return await ZedActions.handleUpgradeGolem(context.player as Necromancer)
+        return await ZedActions.handleUpgradeGolem(context.player)
       default:
         return 
     }

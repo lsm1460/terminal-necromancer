@@ -1,11 +1,11 @@
+import { EventLedger } from '~/core/EventLedger'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 import { ZedService } from './service'
-import { EventLedger } from '~/core/EventLedger'
 
 export const ZedActions = {
   handleHeal(player: Player) {
@@ -19,7 +19,7 @@ export const ZedActions = {
     Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
   },
 
-  async handleGossip(context: GameContext) {
+  async handleGossip(context: AppContext) {
     const { events } = context
     const alreadyKnow = events.isCompleted('RESISTANCE_BASE')
     let dialogues = i18n.t('npc.dr_zed.gossip.intro', { returnObjects: true }) as string[]

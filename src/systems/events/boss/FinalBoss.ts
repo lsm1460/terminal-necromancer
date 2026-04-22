@@ -3,9 +3,8 @@ import { Terminal } from '~/core/Terminal'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 import { BattleTarget } from '~/types'
 import { BossLogic } from './BossLogic'
 
@@ -14,7 +13,7 @@ export class FinalBoss implements BossLogic {
     return i18n.t('npc.third_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: BaseNPC, context: GameContext) {
+  async createEnemies(bossNpc: BaseNPC, context: AppContext) {
     const { monster, battle } = context
 
     const boss = monster.makeMonster('test_man')!
@@ -25,8 +24,8 @@ export class FinalBoss implements BossLogic {
     return [unit]
   }
 
-  async onVictory(bossNpc: BaseNPC, context: GameContext) {
-    await Ending.run(context as GameContext<Necromancer>)
+  async onVictory(bossNpc: BaseNPC, context: AppContext) {
+    await Ending.run(context)
 
     const _res = await Terminal.confirm('타이틀로 돌아가시겠습니까?')
 

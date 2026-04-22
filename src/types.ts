@@ -1,7 +1,7 @@
 import { SkeletonRarity } from './consts'
 import { BaseNPC } from './core/npc/BaseNPC'
 import { AttackType, GameContext, NpcSkill } from './core/types'
-import { Necromancer } from './systems/job/necromancer/Necromancer'
+import { AppContext } from './systems/types'
 
 export type BattleTarget = {
   id: string
@@ -76,7 +76,7 @@ export interface Renderer {
   update(message: string): void
   availableTalks(list: { name: string; hasQuest: boolean }[]): void
   clear(): void
-  printStatus(context: GameContext): void
+  printStatus(context: AppContext): void
   // 입력 관련 메서드 추가
   select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string>
   confirm(message: string): Promise<boolean>
@@ -95,7 +95,7 @@ export interface Renderer {
   printNpcCard(npc: BaseNPC): void
 }
 
-export type CommandFunction = (args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
+export type CommandFunction = (args: string[], context: AppContext) => boolean | string | Promise<boolean | string>
 
 export const SKILL_IDS = {
   RAISE_SKELETON: 'RAISE_SKELETON',

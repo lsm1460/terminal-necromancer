@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { AdrianActions } from './action'
 import { AdrianService } from './service'
 
@@ -9,7 +10,7 @@ export class AdrianNPC extends GameNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: AppContext) {
     const quest = AdrianService.getActiveQuest(context)
 
     if (quest) {
@@ -19,11 +20,11 @@ export class AdrianNPC extends GameNPC {
     return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: AppContext) {
     return AdrianService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         return this.handleTalk()

@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { MerchantNPC, ShopScripts } from '~/systems/npc/MerchantNPC'
+import { AppContext } from '~/systems/types'
 
 export class VendingMachineNPC extends MerchantNPC {
   constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
@@ -11,7 +12,7 @@ export class VendingMachineNPC extends MerchantNPC {
     return [{ name: 'buy', message: i18n.t('talk.buy') }]
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     const buyScripts = i18n.t('npc.vending_machine.buy', { returnObjects: true }) as ShopScripts
 
     switch (action) {

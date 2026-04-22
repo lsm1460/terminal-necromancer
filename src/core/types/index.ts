@@ -69,10 +69,15 @@ export interface TranslationInfo {
 
 export type Translatable = string | TranslationInfo;
 
-export interface GameContext<TPlayer = Player> {
-  player: TPlayer
+export interface DefaultContextTypes {
+  player: Player;
+  npcs: INpcManager;
+}
+
+export interface GameContext<T extends Partial<DefaultContextTypes> = {}> {
+ player: 'player' extends keyof T ? T['player'] : DefaultContextTypes['player'];
   map: IMapManager
-  npcs: INpcManager
+  npcs: 'npcs' extends keyof T ? T['npcs'] : DefaultContextTypes['npcs'];
   world: World
   events: EventLedger
   eventBus: EventBus

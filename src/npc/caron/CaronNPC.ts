@@ -1,6 +1,6 @@
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { CaronActions } from './action'
 import { CaronService } from './service'
 
@@ -12,7 +12,7 @@ export class CaronNPC extends GameNPC {
     ]
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'talk':
         await this.processEvent(context)
@@ -24,7 +24,7 @@ export class CaronNPC extends GameNPC {
     return true
   }
 
-  private async processEvent(context: GameContext) {
+  private async processEvent(context: AppContext) {
     const count = CaronService.getEncounterCount()
 
     if (count === 0) {

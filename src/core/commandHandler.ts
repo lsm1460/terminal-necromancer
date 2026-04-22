@@ -2,13 +2,12 @@ import * as Commands from '~/commands'
 import { COMMAND_GROUPS, CommandKey } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 import { printDirections, printTileStatus } from './statusPrinter'
-import { GameContext } from './types'
 
 type CommandFunction = (
   args: string[],
-  context: GameContext
+  context: AppContext
 ) => (boolean | string) | Promise<boolean | string>
 
 const mapInput = (cmd: string) => {
@@ -62,7 +61,7 @@ const COMMANDS: Record<CommandKey, CommandFunction> = {
   map: Commands.mapCommand,
 }
 
-export async function handleCommand(rawCmd: string, context: GameContext): Promise<string | boolean> {
+export async function handleCommand(rawCmd: string, context: AppContext): Promise<string | boolean> {
   const trimmed = rawCmd.trim()
   if (!trimmed) return false
 

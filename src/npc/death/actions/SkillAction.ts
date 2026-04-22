@@ -1,14 +1,14 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { getPlayerSkills, SkillUtils } from '~/systems/skill/player'
+import { AppContext } from '~/systems/types'
 import { SkillId } from '~/types'
 import { DeathService } from '../service'
 
 export const SkillActions = {
-  async handleUnlock(context: GameContext) {
+  async handleUnlock(context: AppContext) {
     const choices = DeathService.getSkillUnlockChoices(context)
 
     if (choices.length === 0) {

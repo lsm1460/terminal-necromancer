@@ -1,6 +1,7 @@
-import { GameContext, INpcManager, NPCState } from "~/core/types"
+import { INpcManager, NPCState } from "~/core/types"
 import i18n from "~/i18n"
 import { GameNPC } from "~/systems/npc/GameNPC"
+import { AppContext } from "~/systems/types"
 import { ElevatorActions } from "./action"
 
 
@@ -17,7 +18,7 @@ export class ElevatorNPC extends GameNPC {
     return false
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: AppContext) {
     switch (action) {
       case 'elevate':
         return await ElevatorActions.handleElevate(context)

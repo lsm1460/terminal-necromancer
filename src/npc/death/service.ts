@@ -1,11 +1,12 @@
 import { Player } from '~/core/player/Player'
-import { GameContext, Skill } from '~/core/types'
+import { Skill } from '~/core/types'
 import i18n from '~/i18n'
 import { getPlayerSkills } from '~/systems/skill/player'
+import { AppContext } from '~/systems/types'
 import { SkillId } from '~/types'
 
 export const DeathService = {
-  getActiveQuest(context: GameContext) {
+  getActiveQuest(context: AppContext) {
     const { events } = context
     const isSecond = events.isCompleted('talk_death_2')
     const isThird = events.isCompleted('talk_death_3')
@@ -28,7 +29,7 @@ export const DeathService = {
     return null
   },
 
-  getSkillUnlockChoices(context: GameContext) {
+  getSkillUnlockChoices(context: AppContext) {
     const { player, events } = context
     const completed = events.getCompleted()
     const playerSkills = getPlayerSkills()

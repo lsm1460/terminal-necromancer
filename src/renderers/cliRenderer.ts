@@ -1,8 +1,8 @@
 import enquirer from 'enquirer'
 import { printTileStatus } from '~/core/statusPrinter'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
 import { Renderer } from '~/types'
 
 export class CLIRenderer implements Renderer {
@@ -25,7 +25,7 @@ export class CLIRenderer implements Renderer {
     console.clear()
   }
 
-  printStatus(context: GameContext): void {
+  printStatus(context: AppContext): void {
     printTileStatus(context)
   }
 

@@ -1,7 +1,7 @@
 import { Terminal } from '~/core/Terminal'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { AppContext } from '~/systems/types'
 import { GameContext, PositionType } from './types'
 
 export function printDirections(context: GameContext) {
@@ -18,13 +18,12 @@ export function printDirections(context: GameContext) {
   Terminal.move(directions)
 }
 
-export function printTileStatus(context: GameContext) {
+export function printTileStatus(context: AppContext) {
   const { player, npcs, currentTile: tile } = context
-  const necromancer = player as Necromancer
 
   Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
 
-  const alive = npcs.getAliveNPCInTile({ tile, hasKnight: !!necromancer.knight })
+  const alive = npcs.getAliveNPCInTile({ tile, hasKnight: !!player.knight })
 
   if (alive.length > 0) {
     const list = alive.map((_npc) => {
@@ -54,7 +53,7 @@ export function printCorpses(world: World, pos: PositionType) {
   }
 }
 
-export function printLootStatus({ player, world, map, currentTile }: GameContext) {
+export function printLootStatus({ player, world, map, currentTile }: AppContext) {
   const bag = world.getLootBagAt(map.currentSceneId, currentTile.id)
   if (bag) Terminal.pick('lootBag', `\n \x1b[31m[!]\x1b[0m ${i18n.t('found_soul')}`)
 
