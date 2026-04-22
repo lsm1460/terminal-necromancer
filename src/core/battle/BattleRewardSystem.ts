@@ -1,7 +1,8 @@
-import i18n from '~/i18n'
 import { DropSystem } from '~/core/item/DropSystem'
-import { BattleTarget, NPC } from '~/types'
+import i18n from '~/i18n'
+import { BattleTarget } from '~/types'
 import { LootFactory } from '../LootFactory'
+import { BaseNPC } from '../npc/BaseNPC'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
 import { World } from '../World'
@@ -25,7 +26,7 @@ export class BattleRewardSystem {
 
     Terminal.log(i18n.t('battle.reward.unit_death', { name: target.name }))
     target.deathLine && Terminal.log(target.deathLine)
-    target.isNpc && (target as NPC).dead()
+    target.isNpc && (target as BaseNPC).dead()
 
     const { gold, drops } = LootFactory.fromTarget(target, this.dropSystem)
 

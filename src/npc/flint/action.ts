@@ -1,12 +1,13 @@
+import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPC } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { delay } from '~/utils'
 
 export const FlintActions = {
-  async handleEncounter(npc: NPC, context: GameContext) {
+  async handleEncounter(npc: GameNPC, context: GameContext) {
     const { events } = context
     const descColor = '\x1b[36m'
 
@@ -40,7 +41,7 @@ export const FlintActions = {
   },
 }
 
-async function handleSurpriseAttack(npc: NPC, context: GameContext) {
+async function handleSurpriseAttack(npc: GameNPC, context: GameContext) {
   const { battle, world, currentTile } = context
   Terminal.log(`  \x1b[31m${i18n.t('npc.flint.encounter.surprise_attack_msg')}\x1b[0m`)
   await delay(1000)
@@ -52,7 +53,7 @@ async function handleSurpriseAttack(npc: NPC, context: GameContext) {
   return true
 }
 
-async function handleAskSituation(npc: NPC, context: GameContext) {
+async function handleAskSituation(npc: GameNPC, context: GameContext) {
   const { player, drop } = context
   const necromancer = player as Necromancer
   Terminal.log(i18n.t('npc.flint.encounter.ask_reply_1'))

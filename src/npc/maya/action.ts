@@ -2,7 +2,7 @@ import { Terminal } from '~/core/Terminal'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPC } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { speak } from '~/utils'
 import { MayaService } from './service'
 
@@ -24,7 +24,7 @@ export const MayaActions = {
     events.completeEvent('maya_1')
   },
 
-  async handleAwakeGolem(player: Necromancer, npc: NPC) {
+  async handleAwakeGolem(player: Necromancer, npc: GameNPC) {
     if (player.golem) {
       Terminal.log(`\n${i18n.t('npc.maya_tech.awake.already_has')}`)
       return

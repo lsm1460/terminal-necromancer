@@ -1,5 +1,5 @@
 import { GameContext } from "~/core/types"
-import { NPC } from "~/types"
+import { GameNPC } from "~/systems/npc/GameNPC"
 
 export const KaelService = {
   /** 어린이 저항군 조우 이벤트 완료 여부 */
@@ -8,7 +8,7 @@ export const KaelService = {
   },
 
   /** 친밀도/기여도에 따른 설득 성공 여부 확인 */
-  canPersuade(npc: NPC): boolean {
+  canPersuade(npc: GameNPC): boolean {
     return npc.factionContribution >= 20
   }
 }

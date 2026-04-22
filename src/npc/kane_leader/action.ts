@@ -1,13 +1,13 @@
 import { Terminal } from '~/core/Terminal'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { NPC } from '~/types'
 import { speak } from '~/utils'
 import { KaneService } from './service'
+import { GameNPC } from '~/systems/npc/GameNPC'
 
 export const KaneActions = {
   /** 저항군 합류 대화 */
-  async handleJoin(npc: NPC, context: GameContext) {
+  async handleJoin(npc: GameNPC, context: GameContext) {
     const { npcs, events } = context
     const jax = npcs.getNPC('jax_seeker')
     const jaxSuffix = jax?.isAlive ? 'jax_alive' : 'jax_dead'
@@ -24,7 +24,7 @@ export const KaneActions = {
   },
 
   /** 기부 시스템 */
-  async handleDonation(npc: NPC, context: GameContext) {
+  async handleDonation(npc: GameNPC, context: GameContext) {
     const { player } = context
     const statusKey = KaneService.getStatusKey(npc.factionContribution)
 
@@ -61,7 +61,7 @@ export const KaneActions = {
   },
 
   /** B5 작전 브리핑 */
-  async handleBriefing(npc: NPC, context: GameContext) {
+  async handleBriefing(npc: GameNPC, context: GameContext) {
     const lines = [
       ...(i18n.t('npc.kane_leader.b5_operation.intro', { returnObjects: true }) as string[]),
       ...(i18n.t('npc.kane_leader.b5_operation.plan', { returnObjects: true }) as string[]),

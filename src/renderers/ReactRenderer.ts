@@ -3,8 +3,8 @@ import { GameContext } from '~/core/types'
 import { assetManager } from '~/core/WebAssetManager'
 import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPC, Renderer } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
+import { Renderer } from '~/types'
 
 export interface UIState {
   type: 'SELECT' | 'MULTISELECT' | 'CONFIRM' | 'PROMPT' | 'NONE'
@@ -135,7 +135,7 @@ export class ReactRenderer implements Renderer {
     this.store.addLog(log)
   }
 
-  printNpcCard(npc: NPC) {
+  printNpcCard(npc: GameNPC) {
     const greeting = npc.getScripts('greeting')
     const sprites = assetManager.getSprites(npc.id)
 

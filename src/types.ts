@@ -1,4 +1,5 @@
 import { SkeletonRarity } from './consts'
+import { BaseNPC } from './core/npc/BaseNPC'
 import { AttackType, GameContext, NpcSkill } from './core/types'
 import { Necromancer } from './systems/job/necromancer/Necromancer'
 
@@ -91,39 +92,10 @@ export interface Renderer {
   attack(message: string, prefix?: string): void
   skill(message: string, prefix?: string): void
   talk(name: string): void
-  printNpcCard(npc: NPC): void
+  printNpcCard(npc: BaseNPC): void
 }
 
 export type CommandFunction = (args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
-
-type NPCScripts = {
-  greeting: string
-  farewell: string
-}
-
-export interface NPC<T = any> extends BattleTarget {
-  id: string
-  faction: string
-  reborn: boolean
-  lines: string[]
-  relation: number
-  isNpc: true
-  isHostile: boolean
-  isBoss: boolean
-  factionHostility: number
-  factionContribution: number
-  updateHostility: (amount: number) => void
-  updateContribution: (amount: number) => void
-  dead: (options?: { karma?: number; hostile?: number }) => void
-  hasQuest: (context: T) => boolean
-  getScripts: (greetings: 'greeting' | 'farewell') => string
-  noEscape?: boolean
-  scripts?: {
-    friendly: NPCScripts
-    normal: NPCScripts
-    hostile: NPCScripts
-  }
-}
 
 export const SKILL_IDS = {
   RAISE_SKELETON: 'RAISE_SKELETON',

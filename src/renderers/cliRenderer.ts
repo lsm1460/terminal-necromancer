@@ -2,8 +2,8 @@ import enquirer from 'enquirer'
 import { printTileStatus } from '~/core/statusPrinter'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPC, Renderer } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
+import { Renderer } from '~/types'
 
 export class CLIRenderer implements Renderer {
   // --- 출력 메서드 ---
@@ -101,7 +101,7 @@ export class CLIRenderer implements Renderer {
 
   talk() {}
 
-  printNpcCard(npc: NPC) {
+  printNpcCard(npc: GameNPC) {
     const greeting = npc.getScripts('greeting')
 
     console.log(`\n──────────────────────────────────────────────────`)

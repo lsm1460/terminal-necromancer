@@ -1,4 +1,5 @@
-import { NPC, Renderer } from '../types'
+import { Renderer } from '../types'
+import { BaseNPC } from './npc/BaseNPC'
 import { Translatable } from './types'
 
 export class Terminal {
@@ -108,7 +109,7 @@ export class Terminal {
     this.renderer.talk(name)
   }
 
-  public static printNpcCard(npc: NPC) {
+  public static printNpcCard(npc: BaseNPC) {
     if (!this.renderer) throw new Error('Renderer not initialized')
 
     this.renderer.printNpcCard(npc)

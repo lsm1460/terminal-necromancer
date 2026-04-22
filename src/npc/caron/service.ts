@@ -2,7 +2,6 @@ import _ from 'lodash'
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext, Tile } from '~/core/types'
 import i18n from '~/i18n'
-import { NPC } from '~/types'
 
 // NPC 인스턴스가 아닌 서비스 레벨에서 상태 관리 (필요 시 세이브 데이터와 연동)
 let encounterCount = 0

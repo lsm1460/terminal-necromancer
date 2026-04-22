@@ -2,7 +2,7 @@ import { MAP_IDS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { NPC } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { speak } from '~/utils'
 
 export const JaxActions = {
@@ -13,7 +13,7 @@ export const JaxActions = {
   },
 
   /** 가입 이벤트 분기 처리 */
-  async handleJoin(npc: NPC, context: GameContext) {
+  async handleJoin(npc: GameNPC, context: GameContext) {
     const { events, battle, world, currentTile: tile } = context
 
     const dialogues = i18n.t('npc.jax_seeker.join.dialogues', { returnObjects: true }) as string[]
