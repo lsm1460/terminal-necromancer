@@ -1,16 +1,15 @@
-import { EventBus } from '~/core/EventBus';
-import { GameEventType } from '~/core/types';
-import { GameContext } from '~/types';
+import { EventBus } from '~/core/EventBus'
+import { GameContext, GameEventType } from '~/core/types'
 
 export class QuestManager {
   private questQue: { npcId: string; questType: string }[] = []
 
   constructor(eventBus: EventBus) {
-    eventBus.subscribe(GameEventType.NPC_IS_DEAD, ({npcId}) => this.registerDeath(npcId))
+    eventBus.subscribe(GameEventType.NPC_IS_DEAD, ({ npcId }) => this.registerDeath(npcId))
   }
 
   public registerDeath(npcId: string) {
-    this.questQue.push({ npcId, questType: 'death' });
+    this.questQue.push({ npcId, questType: 'death' })
   }
 
   public hasQuest(): boolean {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useGameContext } from '~/contexts/GameContext'
+import { GameContext } from '~/core/types'
 import { useGameStore } from '~/stores/useGameStore'
-import { GameContext } from '~/types'
 
 export const useGame = () => {
   const { engine } = useGameContext()

@@ -1,4 +1,4 @@
-import { GameContext } from '~/types'
+import { GameContext } from "~/core/types"
 
 export const JaxService = {
   /** 저항군 가입(기지 발견) 여부 확인 */

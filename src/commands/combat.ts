@@ -1,10 +1,13 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { CommandFunction } from '~/types'
 
 export const attackCommand: CommandFunction = async (args, context) => {
   const { player, map, npcs, battle, world } = context
+  const necromancer = player as Necromancer
+  
   const tile = map.getTile(player.pos)
 
   if ((tile.npcIds || [])?.length > 0) {
@@ -19,7 +22,7 @@ export const attackCommand: CommandFunction = async (args, context) => {
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []).map((m) => battle.toCombatUnit(m, 'monster')),
     ...npcs
-      .getAliveNPCInTile({ pos: player.pos, hasKnight: !!player.knight, map }, { withoutFaction: ['untouchable'] })
+      .getAliveNPCInTile({ hasKnight: !!necromancer.knight, tile }, { withoutFaction: ['untouchable'] })
       .map((n) => battle.toCombatUnit(n!, 'npc')),
   ] as CombatUnit[]
 

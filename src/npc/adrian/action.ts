@@ -1,6 +1,6 @@
-import { GameContext } from '~/types'
-import { speak } from '~/utils'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { speak } from '~/utils'
 
 export const AdrianActions = {
   async handleEvent(context: GameContext) {

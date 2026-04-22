@@ -1,18 +1,17 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { SkillManager } from '~/core/skill/SkillManager'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { CommandFunction, NPC } from '~/types'
 import { delay } from '~/utils'
 
 export const skillCommand: CommandFunction = async (args, context) => {
   const { player, map, npcs, battle, world, eventBus } = context
-  const tile = map.getTile(player.pos)
+  const necromancer = player as Necromancer
+  const tile = map.getTile(necromancer.pos)
 
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []),
-    ...npcs.getAliveNPCInTile(
-      { pos: player.pos, hasKnight: !!player.knight, map },
-      { withoutFaction: ['untouchable'] }
-    ),
+    ...npcs.getAliveNPCInTile({ tile, hasKnight: !!necromancer.knight }, { withoutFaction: ['untouchable'] }),
   ]
 
   const enemies: CombatUnit[] = battleTargets.map((target) => {
@@ -24,10 +23,10 @@ export const skillCommand: CommandFunction = async (args, context) => {
     return unit
   })
 
-  const ally: CombatUnit[] = player.minions.map((m) => battle.toCombatUnit(m, 'minion'))
+  const ally: CombatUnit[] = necromancer.minions.map((m) => battle.toCombatUnit(m, 'minion'))
 
   const { isAggressive, gross } = await SkillManager.requestAndExecuteSkill(
-    battle.toCombatUnit(player, 'player'),
+    battle.toCombatUnit(necromancer, 'player'),
     { world, eventBus },
     {
       ally,

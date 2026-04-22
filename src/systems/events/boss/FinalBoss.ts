@@ -2,8 +2,10 @@ import { Ending } from '~/core/Ending'
 import { Terminal } from '~/core/Terminal'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { BattleTarget, GameContext, NPC } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { BattleTarget, NPC } from '~/types'
 import { BossLogic } from './BossLogic'
 
 export class FinalBoss implements BossLogic {
@@ -22,7 +24,7 @@ export class FinalBoss implements BossLogic {
     return [unit]
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext) {
+  async onVictory(bossNpc: NPC, context: GameContext<Necromancer>) {
     await Ending.run(context)
 
     const _res = await Terminal.confirm('타이틀로 돌아가시겠습니까?')

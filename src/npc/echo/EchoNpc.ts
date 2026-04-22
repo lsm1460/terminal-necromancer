@@ -1,8 +1,7 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { NPCManager } from '~/systems/NpcManager'
-import { Player } from '~/core/player/Player'
+import { NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPCState } from '~/types'
+import { NPCManager } from '~/systems/NpcManager'
 
 export class EchoNPC extends BaseNPC {
   constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
@@ -13,7 +12,7 @@ export class EchoNPC extends BaseNPC {
     return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string) {
     switch (action) {
       case 'talk':
         return this.handleTalk()

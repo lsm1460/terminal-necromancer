@@ -1,10 +1,10 @@
-import { Player } from '~/core/player/Player'
-import { GameContext } from '~/types'
+
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export const MayaService = {
-  getActiveQuest(context: GameContext) {
+  getActiveQuest(context: GameContext<Necromancer>) {
     const { player, events } = context
     const isJoined = events.isCompleted('RESISTANCE_BASE')
     const isAlreadyMet = events.isCompleted('maya_1')

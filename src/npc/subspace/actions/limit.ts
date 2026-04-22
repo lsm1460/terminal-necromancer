@@ -1,9 +1,10 @@
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { SubspaceService } from '../service'
 
-export const handleIncreaseLimit = async (context: GameContext) => {
+export const handleIncreaseLimit = async (context: GameContext<Necromancer>) => {
   const { player, events } = context
   const { currentLimit, isMax, cost } = SubspaceService.getUpgradeInfo(player)
 

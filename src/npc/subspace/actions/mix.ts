@@ -1,12 +1,13 @@
 import { Terminal } from '~/core/Terminal'
-import { SKELETON_RARITIES, SkeletonFactory } from '~/systems/skill/player/necromancer/SkeletonFactory'
+import { GameContext } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { SKELETON_RARITIES, SkeletonFactory } from '~/systems/skill/player/necromancer/SkeletonFactory'
 import { speak } from '~/utils'
 import { SubspaceService } from '../service'
 
-export const handleMix = async (context: GameContext) => {
+export const handleMix = async (context: GameContext<Necromancer>) => {
   const { player, events } = context
   const isDead = events.isCompleted('caron_is_dead')
   const npcKey = isDead ? 'caron_is_dead' : 'caron_is_mine'

@@ -1,11 +1,13 @@
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { CommandFunction } from '~/types'
 import { ItemType } from '~/types/item'
 
 export const statusCommand: CommandFunction = (args, { player }) => {
-  const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
-  const { atk, def, crit, eva, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
+  const necromancer = player as Necromancer
+  const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = necromancer
+  const { atk, def, crit, eva, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = necromancer.computed
 
   Terminal.log(i18n.t('commands.look.status.title'))
   Terminal.log(i18n.t('commands.look.status.level', { level, exp }))
@@ -73,27 +75,27 @@ export const statusCommand: CommandFunction = (args, { player }) => {
 
   // 소환수 군단 상태
   Terminal.log(i18n.t('commands.look.status.legion.title'))
-  if (player.golem) {
-    const golemStatus = player.golem.isAlive
-      ? i18n.t('commands.look.status.legion.status', { hp: player.golem.hp, maxHp: player.golem.maxHp })
+  if (necromancer.golem) {
+    const golemStatus = necromancer.golem.isAlive
+      ? i18n.t('commands.look.status.legion.status', { hp: necromancer.golem.hp, maxHp: necromancer.golem.maxHp })
       : i18n.t('commands.look.status.legion.golem_destroyed')
 
-    const golemIcon = player.golem.isAlive ? '🤖' : '🛠️'
-    Terminal.log(` └ ${golemIcon} ${player.golem.name}: ${golemStatus}`)
+    const golemIcon = necromancer.golem.isAlive ? '🤖' : '🛠️'
+    Terminal.log(` └ ${golemIcon} ${necromancer.golem.name}: ${golemStatus}`)
   }
 
-  if (player.knight) {
-    const knightStatus = player.knight.isAlive
-      ? i18n.t('commands.look.status.legion.status', { hp: player.knight.hp, maxHp: player.knight.maxHp })
+  if (necromancer.knight) {
+    const knightStatus = necromancer.knight.isAlive
+      ? i18n.t('commands.look.status.legion.status', { hp: necromancer.knight.hp, maxHp: necromancer.knight.maxHp })
       : i18n.t('commands.look.status.legion.knight_dead')
 
-    const knightIcon = player.knight.isAlive ? '⚔️' : '💀'
-    Terminal.log(` └ ${knightIcon} ${player.knight.name}: ${knightStatus}`)
+    const knightIcon = necromancer.knight.isAlive ? '⚔️' : '💀'
+    Terminal.log(` └ ${knightIcon} ${necromancer.knight.name}: ${knightStatus}`)
   }
 
   Terminal.log(i18n.t('commands.look.status.legion.skeleton', { count: skeleton.length, max: maxSkeleton }))
 
-  if (player.minions.length === 0) {
+  if (necromancer.minions.length === 0) {
     Terminal.log(i18n.t('commands.look.status.legion.no_minions'))
   }
   Terminal.log(i18n.t('commands.look.status.footer'))

@@ -1,12 +1,12 @@
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { GameContext } from '~/types'
 
 export const ZedService = {
   /**
    * 퀘스트 우선순위 판별
    */
-  getActiveQuest(context: GameContext) {
+  getActiveQuest(context: GameContext<Necromancer>) {
     const { player, events } = context
     const isB2Completed = events.isCompleted('talk_death_2')
     const isB3Completed = events.isCompleted('second_boss')

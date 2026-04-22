@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { GameContext, Tile } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, Tile } from '~/types'
 import { speak } from '~/utils'
+import { Necromancer } from '../job/necromancer/Necromancer'
 import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
-  static async handle(context: GameContext) {
+  static async handle(context: GameContext<Necromancer>) {
     const { player, npcs, events, battle, map, world } = context
 
     const tile = map.getTile(player.pos)

@@ -1,7 +1,7 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { NPCManager } from '~/systems/NpcManager'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPCState } from '~/types'
+import { NPCManager } from '~/systems/NpcManager'
 import { HansenActions } from './action'
 import { HansenService } from './service'
 

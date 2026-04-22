@@ -1,12 +1,11 @@
 import { HOSTILITY_LIMIT } from '~/consts'
 import { EventBus } from '~/core/EventBus'
-import { GameEventType, PositionType } from '~/core/types'
+import { GameEventType, NPCState, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { getNPCClass } from '~/npc'
-import { NPC, NPCState } from '~/types'
+import { NPC } from '~/types'
 import { Terminal } from '../core/Terminal'
 import { BaseNPC } from '../core/npc/BaseNPC'
-import { MapManager } from './MapManager'
 
 type EventCallback = (npcId: string, params?: { karma?: number; hostile?: number }) => void
 
@@ -62,10 +61,9 @@ export class NPCManager {
   }
 
   getAliveNPCInTile(
-    { pos, hasKnight, map }: { pos: PositionType; hasKnight: boolean; map: MapManager },
+    { tile, hasKnight }: { tile: Tile, hasKnight: boolean; },
     options?: { withoutFaction?: string[] }
   ) {
-    const tile = map.getTile(pos)
     const ids = [...(tile.npcIds || [])]
 
     if (hasKnight) {

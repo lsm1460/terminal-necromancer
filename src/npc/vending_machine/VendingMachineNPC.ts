@@ -1,8 +1,7 @@
 import { MerchantNPC, ShopScripts } from '~/core/npc/MerchantNPC'
-import { NPCManager } from '~/systems/NpcManager'
-import { Player } from '~/core/player/Player'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPCState } from '~/types'
+import { NPCManager } from '~/systems/NpcManager'
 
 export class VendingMachineNPC extends MerchantNPC {
   constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {

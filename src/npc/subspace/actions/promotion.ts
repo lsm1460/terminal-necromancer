@@ -1,9 +1,10 @@
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { speak } from '~/utils'
-import { GameContext } from '~/types'
 
-export const handlePromotion = async (context: GameContext) => {
+export const handlePromotion = async (context: GameContext<Necromancer>) => {
   const { player, events } = context
   const isDead = events.isCompleted('caron_is_dead')
   const npcKey = isDead ? 'caron_is_dead' : 'caron_is_mine'

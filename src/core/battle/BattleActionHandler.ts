@@ -17,7 +17,7 @@ export class BattleActionHandler {
     private eventBus: EventBus,
     private world: World,
     private unitManager: BattleUnitManager,
-    private npcSkills: NpcSkillManager
+    private npcSkills?: NpcSkillManager
   ) {}
 
   async handleUnitDeBuff(unit: CombatUnit): Promise<boolean> {
@@ -190,28 +190,53 @@ export class BattleActionHandler {
       return
     }
 
-    const autoSkill = this.npcSkills.getRandomSkill(attacker)
-    if (autoSkill) {
-      await this.npcSkills.execute(autoSkill.id, attacker, ally, visibleTargets, battle)
-    } else {
-      let target: CombatUnit
-      if (['monster', 'npc'].includes(attacker.type)) {
-        target = visibleTargets[0]
-      } else {
-        target = [...visibleTargets].sort((a, b) => {
-          const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0
-          const bHasFocus = b.deBuff.some((b) => b.type === 'focus') ? 1 : 0
-          return bHasFocus - aHasFocus
-        })[0] as CombatUnit
-      }
+    const usedSkill = await this.tryExecuteNpcSkill(attacker, ally, visibleTargets, battle)
 
-      if (attacker.stats.atk > 0) {
-        BattleDirector.playAttack(attacker.id)
-        await target.executeHit(attacker, { attackType: attacker.attackType })
-      } else {
-        Terminal.log(i18n.t('battle.action.idle', { name: attacker.name }))
-      }
+    if (!usedSkill) {
+      await this.executeBasicAttack(attacker, visibleTargets)
     }
-    autoSkill?.buff?.type !== 'stealth' && attacker.removeStealth()
+
+    if (usedSkill?.buff?.type !== 'stealth') {
+      attacker.removeStealth()
+    }
+  }
+
+  private async tryExecuteNpcSkill(
+    attacker: CombatUnit,
+    ally: CombatUnit[],
+    targets: CombatUnit<BattleTarget>[],
+    battle: Battle
+  ) {
+    if (!this.npcSkills) return null
+
+    const skill = this.npcSkills.getRandomSkill(attacker)
+    if (skill) {
+      await this.npcSkills.execute(skill.id, attacker, ally, targets, battle)
+      return skill
+    }
+    return null
+  }
+
+  private async executeBasicAttack(attacker: CombatUnit, targets: CombatUnit[]) {
+    if (attacker.stats.atk <= 0) {
+      Terminal.log(i18n.t('battle.action.idle', { name: attacker.name }))
+      return
+    }
+
+    const target = this.selectBestTarget(attacker, targets)
+    BattleDirector.playAttack(attacker.id)
+    await target.executeHit(attacker, { attackType: attacker.attackType })
+  }
+
+  private selectBestTarget(attacker: CombatUnit, targets: CombatUnit[]): CombatUnit {
+    if (['monster', 'npc'].includes(attacker.type)) {
+      return targets[0]
+    }
+
+    return [...targets].sort((a, b) => {
+      const aHasFocus = a.deBuff.some((b) => b.type === 'focus') ? 1 : 0
+      const bHasFocus = b.deBuff.some((b) => b.type === 'focus') ? 1 : 0
+      return bHasFocus - aHasFocus
+    })[0]
   }
 }

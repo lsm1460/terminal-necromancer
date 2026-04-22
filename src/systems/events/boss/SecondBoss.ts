@@ -1,7 +1,8 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPC } from '~/types'
+import { NPC } from '~/types'
 import { BossLogic } from './BossLogic'
 
 export class SecondBoss implements BossLogic {

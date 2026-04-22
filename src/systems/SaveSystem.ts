@@ -1,7 +1,8 @@
 import fs from 'fs'
 import { Player } from '~/core/player/Player'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, LootBag, NPCState } from '~/types'
+import { LootBag } from '~/types'
 
 export type SaveData<T extends Player = Player> = {
   player: T

@@ -1,7 +1,8 @@
 import { MerchantNPC, ShopScripts } from '~/core/npc/MerchantNPC'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { NPCManager } from '~/systems/NpcManager'
-import { GameContext, NPCState } from '~/types'
 import { MayaActions } from './action'
 import { MayaService } from './service'
 
@@ -10,7 +11,7 @@ export class MayaNPC extends MerchantNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: GameContext<Necromancer>) {
     const { player, events } = context
     const quest = MayaService.getActiveQuest(context)
     if (quest) return [quest]
@@ -26,11 +27,11 @@ export class MayaNPC extends MerchantNPC {
     ]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: GameContext<Necromancer>) {
     return MayaService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: GameContext<Necromancer>) {
     const goodsId = this.factionContribution > 100 ? 'resistance_better_shop' : 'resistance_shop'
     const buyScripts = i18n.t('npc.maya_tech.buy', { returnObjects: true }) as ShopScripts
     const sellScripts = i18n.t('npc.maya_tech.sell', { returnObjects: true }) as ShopScripts

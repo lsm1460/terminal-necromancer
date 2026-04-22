@@ -1,7 +1,7 @@
-import { GameContext } from '~/types'
 import { Terminal } from '~/core/Terminal'
-import { speak } from '~/utils'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { speak } from '~/utils'
 
 export const StoryActions = {
   async handleIntro(context: GameContext) {

@@ -1,7 +1,8 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { NPCManager } from '~/systems/NpcManager'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPCState } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { NPCManager } from '~/systems/NpcManager'
 import * as SubspaceActions from './actions'
 
 export class SubspaceNPC extends BaseNPC {
@@ -9,7 +10,7 @@ export class SubspaceNPC extends BaseNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: GameContext<Necromancer>) {
     const { player, events } = context
     const isTutorialCompleted = events.isCompleted('tutorial_knight')
 
@@ -27,7 +28,7 @@ export class SubspaceNPC extends BaseNPC {
     ]
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: GameContext<Necromancer>) {
     switch (action) {
       case 'talk':
         await this.handleTalk()
@@ -51,7 +52,7 @@ export class SubspaceNPC extends BaseNPC {
     return true
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: GameContext<Necromancer>) {
     return context.player.skeleton.some((sk) => sk.maxHp >= 200) && !context.events.isCompleted('tutorial_knight')
   }
 }

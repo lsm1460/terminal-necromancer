@@ -1,6 +1,7 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Player } from '~/core/player/Player'
-import { GameContext, NPC } from '~/types'
+import { GameContext } from '~/core/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { NPC } from '~/types'
 
 export interface BossLogic {
   postTalk: string[]
@@ -8,7 +9,7 @@ export interface BossLogic {
 
   createEnemies(bossNpc: NPC, context: GameContext): Promise<CombatUnit[]>
 
-  onVictory?: (bossNpc: NPC, context: GameContext) => Promise<void | 'exit'>
+  onVictory?: (bossNpc: NPC, context: GameContext<Necromancer>) => Promise<void | 'exit'>
 
   defeatTalk?: string[]
 }

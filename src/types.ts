@@ -1,13 +1,6 @@
 import { SkeletonRarity } from './consts'
-import { Battle } from './core/battle/Battle'
-import { DropSystem } from './core/item/DropSystem'
-import { MonsterFactory } from './core/MonsterFactory'
-import { World } from './core/World'
-import { Broadcast } from './systems/Broadcast'
-import { EventLedger } from './systems/EventLedger'
-import { MapManager } from './systems/MapManager'
-import { NPCManager } from './systems/NpcManager'
-import { SaveSystem } from './systems/SaveSystem'
+import { AttackType, GameContext, NpcSkill } from './core/types'
+import { Necromancer } from './systems/job/necromancer/Necromancer'
 
 export type BattleTarget = {
   id: string
@@ -50,36 +43,12 @@ export type MonsterGroupMember = {
   encounterRate: number
 }
 
-export interface Monster extends BattleTarget {
-  drops: Drop[]
-}
 
-export interface Tile {
-  id: string
-  event: string
-  dialogue: string
-  observe: string
-  npcIds?: string[] // npc용
-  spawn_limit?: number // monster용
-  monsters?: Monster[]
-  isClear?: boolean
-  isSeen?: boolean
-}
-
-export interface MapData {
-  tiles: Tile[][]
-}
 
 export type Direction = 'up' | 'down' | 'left' | 'right'
 export type Vector = { dx: number; dy: number }
 
-import { EventBus } from './core/EventBus'
-import { Drop } from './core/item/types'
-import { NpcSkillManager } from './core/skill/npcs/NpcSkillManger'
-import { AttackType, NpcSkill, PositionType } from './core/types'
-import { ConfigSystem } from './systems/ConfigSystem'
-import { Necromancer } from './systems/job/necromancer/Necromancer'
-import { QuestManager } from './systems/QuestManager'
+
 
 export type Corpse = {
   x?: number
@@ -123,28 +92,6 @@ export interface Renderer {
   skill(message: string, prefix?: string): void
   talk(name: string): void
   printNpcCard(npc: NPC): void
-}
-
-export interface GameContext {
-  player: Necromancer
-  map: MapManager
-  npcs: NPCManager
-  world: World
-  events: EventLedger
-  eventBus: EventBus
-  drop: DropSystem
-  save: SaveSystem
-  battle: Battle
-  npcSkills: NpcSkillManager
-  broadcast: Broadcast
-  monster: MonsterFactory
-  config: ConfigSystem
-  cheats: {
-    isFullMap?: boolean
-    playerIsHide?: boolean
-  }
-  quest: QuestManager
-  pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
 }
 
 export type CommandFunction = (args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
@@ -194,13 +141,6 @@ export const SKILL_IDS = {
 // 2. 위 객체의 값들만 모아서 타입으로 추출
 export type SkillId = (typeof SKILL_IDS)[keyof typeof SKILL_IDS]
 
-export interface NPCState {
-  hp: number
-  isAlive: boolean
-  reborn: boolean
-  relation: number // 호감도 등 확장용
-}
-
 export type GameEvent = {
   id: string
   name: string
@@ -228,13 +168,5 @@ export interface UnitSprites {
   die: HTMLImageElement | null
   escape: HTMLImageElement | null
   isFallback?: boolean
-}
-
-export interface SceneData {
-  id: string
-  unlocks?: string[]
-  start_pos: PositionType
-  move_pos?: PositionType
-  tiles: Tile[][]
 }
 

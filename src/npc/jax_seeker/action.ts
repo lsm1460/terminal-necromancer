@@ -1,7 +1,8 @@
 import { MAP_IDS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPC } from '~/types'
+import { NPC } from '~/types'
 import { speak } from '~/utils'
 
 export const JaxActions = {

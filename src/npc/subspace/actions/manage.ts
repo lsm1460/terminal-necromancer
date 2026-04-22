@@ -1,10 +1,10 @@
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import SkeletonWrapper from '~/systems/job/necromancer/SkeletonWrapper'
-import { GameContext } from '~/types'
 
-export const handleManageSpace = async (context: GameContext) => {
+export const handleManageSpace = async (context: GameContext<Necromancer>) => {
   const { player, events } = context
   const caronIsDead = events.isCompleted('caron_is_dead')
 

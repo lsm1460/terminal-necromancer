@@ -1,8 +1,7 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { NPCManager } from '~/systems/NpcManager'
-import { Player } from '~/core/player/Player'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPCState } from '~/types'
+import { NPCManager } from '~/systems/NpcManager'
 import { ElevatorActions } from './action'
 
 export class ElevatorNPC extends BaseNPC {

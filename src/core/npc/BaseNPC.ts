@@ -1,6 +1,7 @@
 import i18n from '~/i18n'
-import { NPC, NPCState } from '~/types'
+import { NPC } from '~/types'
 import { Terminal } from '../Terminal'
+import { NPCState } from '../types'
 
 export interface INPCActionHandler {
   updateFactionHostility(faction: string, amount: number): void

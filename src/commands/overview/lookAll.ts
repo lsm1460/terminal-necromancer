@@ -1,7 +1,9 @@
 import { printTileStatus } from '~/core/statusPrinter'
 import { Terminal } from '~/core/Terminal'
+import { GameContext, Monster } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, Monster, NPC } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { NPC } from '~/types'
 import { GameDrop } from '~/types/item'
 import { lookCorpse } from './corpse'
 import { lookBattleTarget } from './entity'
@@ -11,7 +13,8 @@ import { getTileFromDirection, lookPath } from './path'
 export const lookAll = async (context: GameContext, items: GameDrop[], monsters?: Monster[]): Promise<void> => {
   const { player, map, npcs, world } = context
   const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
-  const minions = player.minions || []
+  const necromancer = player as Necromancer
+  const minions = necromancer.minions || []
   const tile = map.getTile(player.pos)
 
   const aliveNPCs = (tile.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as NPC[]
@@ -21,7 +24,7 @@ export const lookAll = async (context: GameContext, items: GameDrop[], monsters?
 
   const accessiblePaths = directions
     .map((direction) => {
-      const tile = getTileFromDirection(player, map, direction)
+      const tile = getTileFromDirection(player.pos, map, direction)
       if (!tile) {
         return null
       }

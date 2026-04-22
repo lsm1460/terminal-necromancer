@@ -1,4 +1,5 @@
-import { GameContext, NPC } from '~/types'
+import { GameContext } from "~/core/types"
+import { NPC } from "~/types"
 
 export const KaelService = {
   /** 어린이 저항군 조우 이벤트 완료 여부 */

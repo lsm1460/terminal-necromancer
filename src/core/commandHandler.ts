@@ -2,10 +2,14 @@ import * as Commands from '~/commands'
 import { COMMAND_GROUPS, CommandKey } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { printDirections, printTileStatus } from './statusPrinter'
+import { GameContext } from './types'
 
-type CommandFunction = (args: string[], context: GameContext) => (boolean | string) | Promise<boolean | string>
+type CommandFunction = (
+  args: string[],
+  context: GameContext
+) => (boolean | string) | Promise<boolean | string>
 
 const mapInput = (cmd: string) => {
   const trimmed = cmd.trim()

@@ -1,8 +1,8 @@
 import { Player } from '~/core/player/Player'
-import { Skill } from '~/core/types'
+import { GameContext, Skill } from '~/core/types'
 import i18n from '~/i18n'
 import { getPlayerSkills } from '~/systems/skill/player'
-import { GameContext, SkillId } from '~/types'
+import { SkillId } from '~/types'
 
 export const DeathService = {
   getActiveQuest(context: GameContext) {

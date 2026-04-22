@@ -1,9 +1,10 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import GolemWrapper from '~/systems/job/necromancer/GolemWrapper'
 import KnightWrapper from '~/systems/job/necromancer/KnightWrapper'
-import { BattleTarget, GameContext } from '~/types'
+import { BattleTarget } from '~/types'
 import { renderHpBar, selectTarget } from './utils'
 
 // 미니언 및 몬스터 정보 출력

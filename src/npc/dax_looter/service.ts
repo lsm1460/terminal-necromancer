@@ -1,4 +1,4 @@
-import { GameContext } from '~/types'
+import { GameContext } from "~/core/types"
 
 export const DaxService = {
   /**

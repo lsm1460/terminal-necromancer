@@ -1,12 +1,10 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
+import { GameContext, Tile } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, Tile } from '~/types'
 import { delay } from '~/utils'
 
 export class NpcEvent {
-  constructor() {}
-
   static async handle(tile: Tile, context: GameContext) {
     // 적대 세력은 선공한다
     const { npcs, battle, world } = context

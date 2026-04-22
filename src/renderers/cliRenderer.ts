@@ -1,7 +1,9 @@
 import enquirer from 'enquirer'
 import { printTileStatus } from '~/core/statusPrinter'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPC, Renderer } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { NPC, Renderer } from '~/types'
 
 export class CLIRenderer implements Renderer {
   // --- 출력 메서드 ---
@@ -23,7 +25,7 @@ export class CLIRenderer implements Renderer {
     console.clear()
   }
 
-  printStatus(context: GameContext): void {
+  printStatus(context: GameContext<Necromancer>): void {
     printTileStatus(context)
   }
 

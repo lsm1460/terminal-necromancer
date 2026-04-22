@@ -1,8 +1,8 @@
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { GameEquipAble } from '~/systems/item/GameEquipAble'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { GameContext } from '~/types'
 import { speak } from '~/utils'
 import { KnightService } from './service'
 

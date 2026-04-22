@@ -1,4 +1,4 @@
-import { GameContext } from '~/types'
+import { GameContext } from "~/core/types"
 
 export const KaneService = {
   /** 현재 진행 가능한 특별 액션 확인 */

@@ -1,8 +1,8 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext } from '~/types'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { CaronService } from './service'
 import { CaronActions } from './action'
+import { CaronService } from './service'
 
 export class CaronNPC extends BaseNPC {
   getChoices() {

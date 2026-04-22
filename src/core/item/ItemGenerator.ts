@@ -1,9 +1,9 @@
 
 import { generateId } from '../utils'
 import { Item } from './Item'
-import { IGameItemFactory, IGenerationPolicy } from './types'
+import { IGameItemFactory, IGenerationPolicy, IItemGenerator } from './types'
 
-export class ItemGenerator<TRarity, TAffix, TDrop> {
+export class ItemGenerator<TRarity, TAffix, TDrop> implements IItemGenerator {
   constructor(
     private readonly policy: IGenerationPolicy<TRarity, TAffix, TDrop>,
     private readonly itemFactory: IGameItemFactory

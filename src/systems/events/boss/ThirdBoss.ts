@@ -1,7 +1,8 @@
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { BattleTarget, GameContext, NPC } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { BattleTarget, NPC } from '~/types'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
 
@@ -12,7 +13,7 @@ export class ThirdBoss implements BossLogic {
     return i18n.t('npc.third_boss.postTalk', { returnObjects: true }) as string[]
   }
 
-  async createEnemies(bossNpc: NPC, context: GameContext) {
+  async createEnemies(bossNpc: NPC, context: GameContext<Necromancer>) {
     const { player, battle, monster, npcs } = context
 
     await speak(i18n.t('npc.third_boss.encounter.vip_scorn', { returnObjects: true }) as string[])
@@ -83,7 +84,7 @@ export class ThirdBoss implements BossLogic {
     }
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext) {
+  async onVictory(bossNpc: NPC, context: GameContext<Necromancer>) {
     const { player, npcs, events } = context
 
     player.removeMercenaries()

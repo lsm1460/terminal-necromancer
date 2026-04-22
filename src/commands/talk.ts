@@ -1,7 +1,9 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { CommandFunction, GameContext, NPC } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { CommandFunction, NPC } from '~/types'
 
 export const talkCommand: CommandFunction = async (...params) => {
   const [args, context] = params
@@ -17,7 +19,9 @@ export const talkCommand: CommandFunction = async (...params) => {
 
 async function selectTargetNpc(args: string[], context: GameContext): Promise<BaseNPC | null> {
   const { npcs: npcManager, player, map } = context
-  const npcs = npcManager.getAliveNPCInTile({ pos: player.pos, hasKnight: !!player.knight, map })
+  const necromancer = player as Necromancer
+  const tile = map.getTile(player.pos)
+  const npcs = npcManager.getAliveNPCInTile({ tile, hasKnight: !!necromancer.knight })
 
   if (npcs.length < 1) {
     Terminal.log(`\n${i18n.t('talk.no_one_here')}`)

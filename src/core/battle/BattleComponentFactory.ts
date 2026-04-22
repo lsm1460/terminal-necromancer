@@ -11,10 +11,10 @@ import { BattleUnitManager } from './BattleUnitManager'
 export class BattleComponentFactory {
   constructor(
     private player: Player,
-    private npcSkills: NpcSkillManager,
     private world: World,
     private dropSystem: DropSystem,
     private eventBus: EventBus,
+    private npcSkills?: NpcSkillManager,
   ) {}
 
   createUnits(battle: Battle): BattleUnitManager {

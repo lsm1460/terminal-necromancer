@@ -1,4 +1,5 @@
-import { GameContext } from '~/types'
+import { GameContext } from "~/core/types"
+
 
 export const VesperService = {
   /** 어린이 저항군 조우 이벤트 완료 여부 (카엘과 공유) */

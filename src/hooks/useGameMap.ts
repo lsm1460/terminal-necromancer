@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { FULL_VISIBLE_MAP_ID_LIST, MAP_IDS } from '~/consts'
-import { Tile } from '~/types'
+import { Tile } from '~/core/types'
 import { useGame } from './useGame'
 
 // 타일의 시각적 상태를 정의하는 유니온 타입

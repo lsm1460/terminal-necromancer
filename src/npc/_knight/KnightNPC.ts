@@ -1,7 +1,8 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { NPCManager } from '~/systems/NpcManager'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPCState } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { NPCManager } from '~/systems/NpcManager'
 import { KnightActions } from './action'
 import { KnightService } from './service'
 
@@ -10,7 +11,7 @@ export class KnightNPC extends BaseNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: GameContext<Necromancer>) {
     const quest = KnightService.getActiveQuest(context)
     if (quest) return [quest]
 
@@ -25,7 +26,7 @@ export class KnightNPC extends BaseNPC {
     return KnightService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: GameContext<Necromancer>) {
     switch (action) {
       case 'talk':
         return this.handleTalk()

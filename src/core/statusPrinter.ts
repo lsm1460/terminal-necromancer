@@ -1,8 +1,8 @@
 import { Terminal } from '~/core/Terminal'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
-import { PositionType } from './types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { GameContext, PositionType } from './types'
 
 export function printDirections(context: GameContext) {
   const { player, map } = context
@@ -20,11 +20,12 @@ export function printDirections(context: GameContext) {
 
 export function printTileStatus(context: GameContext) {
   const { player, map, npcs } = context
+  const necromancer = player as Necromancer
   const tile = map.getTile(player.pos)
 
   Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
 
-  const alive = npcs.getAliveNPCInTile({ pos: player.pos, hasKnight: !!player.knight, map })
+  const alive = npcs.getAliveNPCInTile({ tile, hasKnight: !!necromancer.knight })
 
   if (alive.length > 0) {
     const list = alive.map((_npc) => {

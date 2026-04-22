@@ -1,9 +1,9 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Player } from '~/core/player/Player'
-import { GameContext, NPC } from '~/types'
-import { BossLogic } from './BossLogic'
-import i18n from '~/i18n'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
+import i18n from '~/i18n'
+import { NPC } from '~/types'
+import { BossLogic } from './BossLogic'
 
 export class FirstBoss implements BossLogic {
   withMonsterGroup = 'monster-group-b2-boss'

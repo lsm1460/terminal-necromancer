@@ -1,8 +1,6 @@
-import { MapManager } from '~/systems/MapManager'
 import { Terminal } from '~/core/Terminal'
-import { Player } from '~/core/player/Player'
+import { IMapManager, PositionType, Tile } from '~/core/types'
 import i18n from '~/i18n'
-import { Tile } from '~/types'
 import { selectTarget } from './utils'
 
 export const printPath = (tile: Tile) => {
@@ -49,8 +47,8 @@ const DIRECTION_OFFSETS: Record<string, { dx: number; dy: number }> = {
   right: { dx: 1, dy: 0 },
 }
 
-export const getTileFromDirection = (player: Player, map: MapManager, direction: string) => {
-  const { x: originX, y: originY } = player.pos
+export const getTileFromDirection = (pos: PositionType, map: IMapManager, direction: string) => {
+  const { x: originX, y: originY } = pos
 
   const offset = DIRECTION_OFFSETS[direction]
   if (!offset) return null // 유효하지 않은 방향 예외 처리

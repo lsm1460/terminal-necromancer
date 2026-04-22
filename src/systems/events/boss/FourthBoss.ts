@@ -2,9 +2,10 @@ import { MAP_IDS } from '~/consts'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Ending } from '~/core/Ending'
 import { Terminal } from '~/core/Terminal'
-import { GameEventType } from '~/core/types'
+import { GameContext, GameEventType } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext, NPC } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { NPC } from '~/types'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
 
@@ -133,7 +134,7 @@ export class FourthBoss implements BossLogic {
     }
   }
 
-  async onVictory(bossNpc: NPC, context: GameContext) {
+  async onVictory(bossNpc: NPC, context: GameContext<Necromancer>) {
     const { player, map, npcs, events, battle, world, eventBus } = context
 
     if (this.withResistance) {

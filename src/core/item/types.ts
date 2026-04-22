@@ -1,5 +1,10 @@
 import { Item } from './Item'
 
+export interface IItemGenerator {
+  // 제네릭 없이, 가장 기본이 되는 Item 타입이나 unknown을 반환하도록 정의
+  createItem<TItem = Item>(baseItem: any): TItem;
+}
+
 export interface IGenerationPolicy<TRarity, TAffix, TDrop> {
   isEquippable(baseItem: TDrop): boolean
 

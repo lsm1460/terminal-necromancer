@@ -1,10 +1,10 @@
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { speak } from '~/utils'
 import { ZedService } from './service'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export const ZedActions = {
   handleHeal(player: Player) {
@@ -31,7 +31,7 @@ export const ZedActions = {
     events.completeEvent('HEARD_RESISTANCE')
   },
 
-  async handleAwakeGolem(context: GameContext) {
+  async handleAwakeGolem(context: GameContext<Necromancer>) {
     const { player, events } = context
     if (player.golem) {
       Terminal.log(i18n.t('npc.dr_zed.awake.already_active'))

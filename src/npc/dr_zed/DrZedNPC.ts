@@ -1,7 +1,8 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
+import { GameContext, NPCState } from '~/core/types'
 import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { NPCManager } from '~/systems/NpcManager'
-import { GameContext, NPCState } from '~/types'
 import { ZedActions } from './action'
 import { ZedService } from './service'
 
@@ -10,7 +11,7 @@ export class ZedNPC extends BaseNPC {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext) {
+  getChoices(context: GameContext<Necromancer>) {
     const quest = ZedService.getActiveQuest(context)
     const isB3Completed = context.events.isCompleted('second_boss')
 
@@ -26,11 +27,11 @@ export class ZedNPC extends BaseNPC {
     ]
   }
 
-  hasQuest(context: GameContext) {
+  hasQuest(context: GameContext<Necromancer>) {
     return ZedService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext) {
+  async handle(action: string, context: GameContext<Necromancer>) {
     switch (action) {
       case 'talk':
         return this.handleTalk() // BaseNPC의 메서드 사용

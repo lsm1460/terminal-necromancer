@@ -1,12 +1,13 @@
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { GameContext, NPC } from '~/types'
+import { NPC } from '~/types'
 import { speak } from '~/utils'
 import { MayaService } from './service'
 
 export const MayaActions = {
-  async handleJoin(context: GameContext) {
+  async handleJoin(context: GameContext<Necromancer>) {
     const { player, events, npcs } = context
     const isB3Completed = events.isCompleted('second_boss')
     const { isAlive: jaxIsAlive } = npcs.getNPC('jax_seeker') || {}

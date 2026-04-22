@@ -1,7 +1,7 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/types'
-import { delay } from '~/utils'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { delay } from '~/utils'
 
 export const ApostleActions = {
   async handleEvent(context: GameContext) {

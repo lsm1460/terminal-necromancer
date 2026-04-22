@@ -1,4 +1,5 @@
-import { GameContext, NPC } from '~/types'
+import { GameContext } from '~/core/types'
+import { NPC } from '~/types'
 import { KaelActions } from '../kael/action'
 
 export const VesperActions = {

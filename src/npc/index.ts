@@ -1,5 +1,5 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext } from '~/types'
+import { GameContext } from '~/core/types'
 import { KnightNPC } from './_knight/KnightNPC'
 import { AdrianNPC } from './adrian/AdrianNPC'
 import { ApostleNPC } from './apostle/ApostleNPC'

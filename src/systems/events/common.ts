@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
+import { Tile } from '~/core/types'
 import i18n from '~/i18n'
-import { Tile } from '~/types'
 import { delay } from '~/utils'
 import { EventHandler } from '.'
 import BossEvent from './BossEvent'

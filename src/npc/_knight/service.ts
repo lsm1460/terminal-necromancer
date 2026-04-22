@@ -1,5 +1,5 @@
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
 import { ItemType } from '~/types/item'
 
 export const KnightService = {

@@ -1,9 +1,9 @@
 import { MAP_IDS } from '~/consts'
-import { MapManager } from '~/systems/MapManager'
+import { IMapManager } from '~/core/types'
 import i18n from '~/i18n'
 
 export const ElevatorService = {
-  getAvailableDestinations(mapManager: MapManager, currentSceneId: string, completedEvents: string[]) {
+  getAvailableDestinations(mapManager: IMapManager, currentSceneId: string, completedEvents: string[]) {
     const destinations = Object.entries(MAP_IDS)
       .filter(([_, value]) => value !== currentSceneId)
       .map(([_, value]) => {

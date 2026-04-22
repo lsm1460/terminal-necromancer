@@ -1,9 +1,11 @@
 import { Terminal } from '~/core/Terminal'
-import { GameContext } from '~/types'
+import { GameContext } from '~/core/types'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
   const trimmed = rawCmd.trim()
   const { player, map } = context
+  const necromancer = player as Necromancer
   const tile = map.getTile(player.pos)
 
   switch (trimmed) {
@@ -27,7 +29,7 @@ export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
       }
       return true
     case 'make room!':
-      player._maxSkeleton += 1
+      necromancer._maxSkeleton += 1
       Terminal.log(`\n[Cheat] The legion's limit has been expanded.`)
       return true
 

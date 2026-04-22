@@ -1,6 +1,5 @@
 import { Item } from '~/core/item/Item'
-import { ItemGenerator } from '~/core/item/ItemGenerator'
-import { Drop, IGameItemFactory, IGenerationPolicy } from './types'
+import { Drop, IItemGenerator } from './types'
 
 export interface DropEntry {
   itemId: string
@@ -21,11 +20,12 @@ export interface DropResult {
 export class DropSystem {
   private items: Record<string, Drop> = {}
   private tables: Record<string, DropTable> = {}
-  private itemGenerator: ItemGenerator<string, any, Drop>
 
-  constructor(itemData: any, dropTableData: any, policy: IGenerationPolicy<string, any, Drop>, itemFactory: IGameItemFactory) {
-    this.itemGenerator = new ItemGenerator(policy, itemFactory)
-
+  constructor(
+    itemData: any,
+    dropTableData: any,
+    private itemGenerator?: IItemGenerator
+  ) {
     this.items = itemData
     this.tables = dropTableData
 
@@ -47,6 +47,8 @@ export class DropSystem {
   }
 
   public generateDrops(dropTableId: string): DropResult {
+    if (!this.itemGenerator) return { gold: 0, drops: [] }
+
     const table = this.tables[dropTableId] || this.tables['none']
 
     if (!table) return { gold: 0, drops: [] }
@@ -62,7 +64,7 @@ export class DropSystem {
           ...entry,
           quantity: entry.quantity ? this.randomRange(entry.quantity[0], entry.quantity[1]) : 1,
         }
-        return this.itemGenerator.createItem(dropData as any)
+        return this.itemGenerator!.createItem(dropData as any)
       })
 
     return { gold, drops }

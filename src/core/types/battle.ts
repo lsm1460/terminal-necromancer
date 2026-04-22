@@ -1,3 +1,6 @@
+import { BattleTarget } from "~/types"
+import { Drop } from "../item/types"
+
 export type CalcDamageReturn = {
   isEscape: boolean
   damage: number
@@ -9,3 +12,6 @@ export type TakeDamageReturn = {
   isDead: boolean
 } & CalcDamageReturn
 
+export interface Monster extends BattleTarget {
+  drops: Drop[]
+}

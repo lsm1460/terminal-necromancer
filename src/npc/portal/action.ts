@@ -1,14 +1,15 @@
-import { Terminal } from '~/core/Terminal'
-import i18n from '~/i18n'
 import { printTileStatus } from '~/core/statusPrinter'
-import { GameContext } from '~/types'
+import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
+import i18n from '~/i18n'
+import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { PortalService } from './service'
 
 export const PortalActions = {
   /**
    * 포탈 사용 확인 후 실제 이동 및 연출 수행
    */
-  async handleMove(context: GameContext) {
+  async handleMove(context: GameContext<Necromancer>) {
     const { player, map, broadcast } = context
 
     const confirm = await Terminal.confirm(i18n.t('npc.portal.confirm'))

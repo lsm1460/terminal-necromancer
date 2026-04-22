@@ -91,7 +91,7 @@ export const LogWindow: React.FC = () => {
       return { shouldConfirm: false }
     }
 
-    const tile = getTileFromDirection(player, map, directionKey)
+    const tile = getTileFromDirection(player.pos, map, directionKey)
     if (!tile) return { shouldConfirm: false }
 
     const hasDanger = !tile.isClear && tile.event && (tile.event.includes('boss') || tile.event.startsWith('monster'))

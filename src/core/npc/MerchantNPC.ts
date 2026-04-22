@@ -1,9 +1,8 @@
 // src/core/npc/MerchantNPC.ts
 import i18n from '~/i18n'
-import { GameContext } from '~/types'
-import { Item } from '../item/Item'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
+import { GameContext } from '../types'
 import { BaseNPC } from './BaseNPC'
 import { ShopService } from './ShopService'
 

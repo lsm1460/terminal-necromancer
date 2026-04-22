@@ -10,7 +10,7 @@ import { World } from '~/core/World'
 import i18n from '~/i18n'
 import { Broadcast } from '~/systems/Broadcast'
 import { ConfigSystem } from '~/systems/ConfigSystem'
-import { EventLedger } from '~/systems/EventLedger'
+import { EventLedger } from '~/core/EventLedger'
 import { MonsterEvent } from '~/systems/events/MonsterEvent'
 import { GameItemFactory } from '~/systems/item/GameItemFactory'
 import { ItemPolicy } from '~/systems/item/ItemPolicy'
@@ -21,9 +21,12 @@ import { QuestManager } from '~/systems/QuestManager'
 import { SaveData, SaveSystem } from '~/systems/SaveSystem'
 import { PASSIVE_EFFECTS } from '~/systems/skill/passiveHandlers'
 import { SpecialSkillLogics } from '~/systems/skill/SpecialSkillLogics'
-import { GameContext, Renderer } from '~/types'
+import { Renderer } from '~/types'
 import { handleCommand } from './commandHandler'
+import { ItemGenerator } from './item/ItemGenerator'
 import { printDirections } from './statusPrinter'
+import { GameContext } from './types'
+import { MapContainer } from './MapContainer'
 
 export class GameEngine {
   public context!: GameContext
@@ -37,18 +40,26 @@ export class GameEngine {
     private saveSystem: SaveSystem,
     private configSystem: ConfigSystem,
     private eventBus: EventBus
+    // itemGenerator // 주입안하면 아이템이 만들어지지 않음
+    // npcSkillManager // npc skill이 있다면 위에서 생성하여 주입하자
+    // mapManager * 필수
+    // player * 필수
   ) {}
 
-  public async init(initData: SaveData<Necromancer>): Promise<void> {
+  public async init(initData: SaveData<Necromancer>) {
     const { item, drop, monsterGroup, monster, level, npcSkills, map, npc } = this.assets
 
     const itemFactory = new GameItemFactory()
-    const dropSystem = new DropSystem(item, drop, new ItemPolicy(), itemFactory)
+    const policy = new ItemPolicy()
+    const itemGenerator = new ItemGenerator(policy, itemFactory)
+
+    const dropSystem = new DropSystem(item, drop, itemGenerator)
     const monsterFactory = new MonsterFactory(monsterGroup, monster)
 
     const eventBus = this.eventBus
     const player = new Necromancer(itemFactory, level, eventBus, initData?.player)
-    const mapManager = new MapManager(map, eventBus)
+    const mapContainer = new MapContainer(map)
+    const mapManager = new MapManager(mapContainer, eventBus)
     const world = new World(itemFactory, player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
     const npcSkillManager = new NpcSkillManager(npcSkills, eventBus)
@@ -56,7 +67,7 @@ export class GameEngine {
       passives: PASSIVE_EFFECTS,
       specials: SpecialSkillLogics,
     })
-    const battleFactory = new BattleComponentFactory(player, npcSkillManager, world, dropSystem, eventBus)
+    const battleFactory = new BattleComponentFactory(player, world, dropSystem, eventBus, npcSkillManager)
     const battle = new Battle(player, monsterFactory, battleFactory)
     const npcs = new NPCManager(npc, eventBus, initData?.npcs)
     const quest = new QuestManager(eventBus)

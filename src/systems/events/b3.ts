@@ -1,8 +1,7 @@
-import { MapManager } from '~/systems/MapManager'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
+import { Tile } from '~/core/types'
 import i18n from '~/i18n'
-import { Tile } from '~/types'
 import { delay } from '~/utils'
 import { EventHandler } from '.'
 
@@ -63,7 +62,14 @@ export const b3Handlers: Record<string, EventHandler> = {
     const proceed = await Terminal.confirm(i18n.t('events.b3.conveyor.prompt_1'))
 
     if (proceed) {
-      await transportPlayerByConveyor(context, 'event-conveyor-control-2', i18n.t('events.b3.conveyor.move_1'))
+      await transportPlayerByConveyor(
+        {
+          player: context.player,
+          tiles: context.map.currentScene.tiles,
+        },
+        'event-conveyor-control-2',
+        i18n.t('events.b3.conveyor.move_1')
+      )
     }
   },
 
@@ -71,18 +77,23 @@ export const b3Handlers: Record<string, EventHandler> = {
     const proceed = await Terminal.confirm(i18n.t('events.b3.conveyor.prompt_2'))
 
     if (proceed) {
-      await transportPlayerByConveyor(context, 'event-conveyor-control-1', i18n.t('events.b3.conveyor.move_2'))
+      await transportPlayerByConveyor(
+        {
+          player: context.player,
+          tiles: context.map.currentScene.tiles,
+        },
+        'event-conveyor-control-1',
+        i18n.t('events.b3.conveyor.move_2')
+      )
     }
   },
 }
 
 const transportPlayerByConveyor = async (
-  { player, map }: { player: Player; map: MapManager },
+  { player, tiles }: { player: Player; tiles: Tile[][] },
   targetEvent: string,
   message: string
 ) => {
-  const tiles = map.currentScene.tiles
-
   let targetX = -1
   let targetY = -1
   let destinationTile: Tile | null = null
