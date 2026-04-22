@@ -8,14 +8,14 @@ import { Necromancer } from '../job/necromancer/Necromancer'
 import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
-  static async handle(context: GameContext<Necromancer>) {
+  static async handle(context: GameContext) {
     const { npcs, events, battle, world, currentTile: tile } = context
 
     // 1. 타일 정보에서 보스 NPC 아이디 추출
     const bossId = tile.npcIds?.[0]
     if (!bossId) return
 
-    const bossNpc = npcs.getNPC(bossId)
+    const bossNpc = npcs.getNPC(bossId)!
 
     // 이미 클리어했거나 보스가 죽은 상태라면 포탈 생성 후 종료
     if (events.isCompleted(bossId) || !bossNpc || !bossNpc.isAlive) {

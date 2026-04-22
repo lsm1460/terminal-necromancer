@@ -20,6 +20,7 @@ import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { AchievementManager } from '~/systems/AchievementManager'
 import { ConfigSystem } from '~/systems/ConfigSystem'
 import { MapManager } from '~/systems/MapManager'
+import { NPCManager } from '~/systems/NpcManager'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { SkillEffectPresenter } from '~/systems/presenter/SkillEffectPresenter'
 import { ScreenRouter } from './ScreenRouter'
@@ -52,7 +53,7 @@ export const App = () => {
     openWindow()
 
     const run = async () => {
-      const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager)
+      const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager, NPCManager)
       engineRef.current = engine
 
       const achievement = new AchievementManager(eventBus, assets.achievements)

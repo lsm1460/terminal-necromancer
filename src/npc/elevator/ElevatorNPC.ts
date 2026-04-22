@@ -1,11 +1,11 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext, NPCState } from '~/core/types'
-import i18n from '~/i18n'
-import { NPCManager } from '~/systems/NpcManager'
-import { ElevatorActions } from './action'
+import { GameContext, INpcManager, NPCState } from "~/core/types"
+import i18n from "~/i18n"
+import { GameNPC } from "~/systems/npc/GameNPC"
+import { ElevatorActions } from "./action"
 
-export class ElevatorNPC extends BaseNPC {
-  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+
+export class ElevatorNPC extends GameNPC {
+  constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
     super(id, baseData, state, manager)
   }
 

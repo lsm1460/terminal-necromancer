@@ -1,66 +1,52 @@
 import { HOSTILITY_LIMIT } from '~/consts'
 import { EventBus } from '~/core/EventBus'
-import { GameEventType, NPCState, Tile } from '~/core/types'
+import { BaseNPCManager } from '~/core/npc/BaseNPCManager'
+import { NPCData } from '~/core/npc/NPCData'
+import { GameEventType, INpcManager, NPCState, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { getNPCClass } from '~/npc'
 import { NPC } from '~/types'
 import { Terminal } from '../core/Terminal'
-import { BaseNPC } from '../core/npc/BaseNPC'
+import { GameNPC } from './npc/GameNPC'
 
 type EventCallback = (npcId: string, params?: { karma?: number; hostile?: number }) => void
 
-export class NPCManager {
-  private baseData: Record<string, any>
-  private states: Record<string, NPCState> = {}
+export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
   private factionHostility: Record<string, number> = {}
   private factionContribution: Record<string, number> = {}
 
   constructor(
-    npcData: any,
-    private eventBus: EventBus,
+    data: NPCData, 
+    private eventBus: EventBus, 
     savedData?: any
   ) {
-    this.baseData = npcData
-
-    const hasValidSaveData = savedData && typeof savedData === 'object' && Object.keys(savedData).length > 0
-
-    if (hasValidSaveData) {
-      this.states = savedData.states || {}
-      this.factionHostility = savedData.factionHostility || {}
-      this.factionContribution = savedData.factionContribution || {}
+    super(data);
+    
+    // 게임 특화 데이터 복구
+    if (savedData) {
+      this.factionHostility = savedData.factionHostility || {};
+      this.factionContribution = savedData.factionContribution || {};
     }
 
-    this.initializeStates()
-
-    eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, this.reborn)
+    this.eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, this.reborn);
   }
 
-  private initializeStates() {
-    Object.entries(this.baseData).forEach(([id, data]) => {
-      if (this.states[id]) return
+  public override getNPC(id: string): any {
+    const base = this.data.getBase(id);
+    const state = this.data.getState(id);
 
-      this.states[id] = {
-        hp: data.hp ?? data.maxHp ?? 100,
-        isAlive: data.isAlive ?? true,
-        reborn: data.reborn ?? false,
-        relation: 0,
-      }
-    })
+    if (!base || !state || state.reborn) return null;
+
+    // 프로젝트 특화 클래스(예: Merchant, Guard 등)를 가져옴
+    const NpcClass = getNPCClass(id); 
+    
+    // 만약 특화 클래스가 없다면 기본 BaseNPC라도 생성
+    return NpcClass 
+      ? new NpcClass(id, base, state, this)
+      : super.getNPC(id);
   }
 
-  getNPC(id: string): BaseNPC | null {
-    const base = this.baseData[id]
-    const state = this.states[id]
-
-    if (!base || !state) return null
-    if (state.reborn) return null
-
-    const NpcClass = getNPCClass(id)
-
-    return new NpcClass(id, base, state, this)
-  }
-
-  getAliveNPCInTile(
+  public override getAliveNPCInTile(
     { tile, hasKnight }: { tile: Tile, hasKnight: boolean; },
     options?: { withoutFaction?: string[] }
   ) {
@@ -79,16 +65,8 @@ export class NPCManager {
     return _list
   }
 
-  setAlive(id: string, alive: boolean = true) {
-    if (this.states[id]) {
-      this.states[id].isAlive = alive
-    }
-  }
-
   reborn = ({ corpseId }: { corpseId: string }) => {
-    if (this.states[corpseId]) {
-      this.states[corpseId].reborn = true
-    }
+    this.data.setReborn(corpseId, true)
   }
 
   public updateFactionContribution(faction: string, delta: number) {
@@ -151,7 +129,7 @@ export class NPCManager {
   }
 
   isHostile(id: string): boolean {
-    const npc = this.baseData[id]
+    const npc = this.data.getBase(id)
     if (!npc) return false
 
     if (npc.isBoss) {
@@ -165,7 +143,7 @@ export class NPCManager {
     return false
   }
 
-  triggerDeathHandler(npc: NPC, params?: Parameters<EventCallback>[1]) {
+  triggerDeathHandler(npc: GameNPC, params?: Parameters<EventCallback>[1]) {
     const { hostile = 100, karma } = params || {}
 
     this.setAlive(npc.id, false)
@@ -179,7 +157,7 @@ export class NPCManager {
 
   getSaveData() {
     return {
-      states: this.states,
+      ...this.data.getSaveData(),
       factionHostility: this.factionHostility,
       factionContribution: this.factionContribution,
     }

@@ -1,10 +1,9 @@
-// src/core/npc/MerchantNPC.ts
+import { ShopService } from '~/core/npc/ShopService'
+import { Player } from '~/core/player/Player'
+import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { Player } from '../player/Player'
-import { Terminal } from '../Terminal'
-import { GameContext } from '../types'
-import { BaseNPC } from './BaseNPC'
-import { ShopService } from './ShopService'
+import { GameNPC } from './GameNPC'
 
 export interface ShopScripts {
   greeting?: string // 판매 메뉴 진입 시
@@ -15,7 +14,7 @@ export interface ShopScripts {
   noGold?: string
 }
 
-export abstract class MerchantNPC extends BaseNPC {
+export abstract class MerchantNPC extends GameNPC {
   protected async openBuyShop(dropTableId: string, scripts: ShopScripts, context: GameContext) {
     const { player, drop } = context
     const { drops: goods } = drop.generateDrops(dropTableId)

@@ -1,37 +1,37 @@
-import { MerchantNPC, ShopScripts } from '~/core/npc/MerchantNPC'
-import { GameContext, NPCState } from '~/core/types'
+import { GameContext, INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPCManager } from '~/systems/NpcManager'
+import { MerchantNPC, ShopScripts } from '~/systems/npc/MerchantNPC'
 import { MayaActions } from './action'
 import { MayaService } from './service'
 
 export class MayaNPC extends MerchantNPC {
-  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+  constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext<Necromancer>) {
+  getChoices(context: GameContext) {
     const { player, events } = context
+    const necromancer = player as Necromancer
     const quest = MayaService.getActiveQuest(context)
     if (quest) return [quest]
 
-    const canUpgrade = this.factionContribution > 40 && events.isCompleted('second_boss') && !!player.golem
+    const canUpgrade = this.factionContribution > 40 && events.isCompleted('second_boss') && !!necromancer.golem
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'buy', message: i18n.t('talk.buy') },
       { name: 'sell', message: i18n.t('talk.sell') },
-      ...(!player.golem ? [{ name: 'golem', message: i18n.t('npc.maya_tech.choices.golem') }] : []),
+      ...(!necromancer.golem ? [{ name: 'golem', message: i18n.t('npc.maya_tech.choices.golem') }] : []),
       ...(canUpgrade ? [{ name: 'upgrade_golem', message: i18n.t('npc.maya_tech.choices.upgrade') }] : []),
     ]
   }
 
-  hasQuest(context: GameContext<Necromancer>) {
+  hasQuest(context: GameContext) {
     return MayaService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext<Necromancer>) {
+  async handle(action: string, context: GameContext) {
     const goodsId = this.factionContribution > 100 ? 'resistance_better_shop' : 'resistance_shop'
     const buyScripts = i18n.t('npc.maya_tech.buy', { returnObjects: true }) as ShopScripts
     const sellScripts = i18n.t('npc.maya_tech.sell', { returnObjects: true }) as ShopScripts
@@ -50,10 +50,10 @@ export class MayaNPC extends MerchantNPC {
         await this.openSellShop(sellScripts, context.player)
         return true
       case 'golem':
-        await MayaActions.handleAwakeGolem(context.player, this)
+        await MayaActions.handleAwakeGolem(context.player as Necromancer, this)
         return true
       case 'upgrade_golem':
-        await MayaActions.handleUpgradeGolem(context.player)
+        await MayaActions.handleUpgradeGolem(context.player as Necromancer)
         return true
       default:
         return true

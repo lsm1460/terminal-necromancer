@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { EventBus } from '~/core/EventBus'
-import { GameEventType } from '~/core/types'
+import { GameEventType, INpcManager } from '~/core/types'
 import i18n from '~/i18n'
 import { Terminal } from '../core/Terminal'
 import { NPCManager } from './NpcManager'
@@ -13,7 +13,7 @@ export class Broadcast {
   private justFinishedEvent = false
 
   constructor(
-    private npcManager: NPCManager,
+    private npcManager: INpcManager,
     eventBus: EventBus
   ) {
     eventBus.subscribe(GameEventType.COMPLETE_EVENT, this.onEventCleared)
@@ -79,7 +79,7 @@ export class Broadcast {
     }
 
     // 4. 메인 대사 출력 (진영 적대치에 따른 분기)
-    const isHostile = this.npcManager.getFactionContribution('resistance') >= 30
+    const isHostile = (this.npcManager as NPCManager).getFactionContribution('resistance') >= 30
     const lines = isHostile ? content?.hostile : content?.normal
 
     if (Array.isArray(lines) && currentIndex < lines.length) {

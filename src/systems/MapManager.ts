@@ -19,7 +19,7 @@ export class MapManager extends BaseMapManager {
     super(data, MAP_IDS.B1_SUBWAY)
   }
 
-  public override async changeScene(targetSceneId: MapId, context: GameContext<Necromancer>) {
+  public override async changeScene(targetSceneId: MapId, context: GameContext) {
     const { player, broadcast, currentTile } = context
     const newScene = this.data.getScene(targetSceneId)
 
@@ -43,7 +43,7 @@ export class MapManager extends BaseMapManager {
     printTileStatus(context)
   }
 
-  async handleTileEvent(tile: Tile, context: GameContext<Necromancer>) {
+  async handleTileEvent(tile: Tile, context: GameContext) {
     const handler = allEventHandlers[tile.event]
     if (handler) await handler(tile, context)
 

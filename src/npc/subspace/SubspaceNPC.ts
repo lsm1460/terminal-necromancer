@@ -1,21 +1,21 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext, NPCState } from '~/core/types'
+import { GameContext, INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPCManager } from '~/systems/NpcManager'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import * as SubspaceActions from './actions'
 
-export class SubspaceNPC extends BaseNPC {
-  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+export class SubspaceNPC extends GameNPC {
+  constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
     super(id, baseData, state, manager)
   }
 
-  getChoices(context: GameContext<Necromancer>) {
+  getChoices(context: GameContext) {
     const { player, events } = context
+    const necromancer = player as Necromancer
     const isTutorialCompleted = events.isCompleted('tutorial_knight')
 
     // 강한 해골(HP 200↑)이 있는데 기사 승격 튜토리얼을 안 봤다면 퀘스트 우선 노출
-    if (player.skeleton.some((sk) => sk.maxHp >= 200) && !isTutorialCompleted) {
+    if (necromancer.skeleton.some((sk) => sk.maxHp >= 200) && !isTutorialCompleted) {
       return [{ name: 'tutorialPromotion', message: i18n.t('npc.subspace.choices.tutorial_knight') }]
     }
 
@@ -28,7 +28,7 @@ export class SubspaceNPC extends BaseNPC {
     ]
   }
 
-  async handle(action: string, context: GameContext<Necromancer>) {
+  async handle(action: string, context: GameContext) {
     switch (action) {
       case 'talk':
         await this.handleTalk()
@@ -52,7 +52,8 @@ export class SubspaceNPC extends BaseNPC {
     return true
   }
 
-  hasQuest(context: GameContext<Necromancer>) {
-    return context.player.skeleton.some((sk) => sk.maxHp >= 200) && !context.events.isCompleted('tutorial_knight')
+  hasQuest(context: GameContext) {
+    const necromancer = context.player as Necromancer
+    return necromancer.skeleton.some((sk) => sk.maxHp >= 200) && !context.events.isCompleted('tutorial_knight')
   }
 }

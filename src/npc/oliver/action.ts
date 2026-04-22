@@ -9,7 +9,7 @@ export const OliverActions = {
   /**
    * 올리버의 유언 이벤트 실행 및 사망 처리
    */
-  async handleLastWords(npc: NPC, context: GameContext<Necromancer>) {
+  async handleLastWords(npc: NPC, context: GameContext) {
     const { player, events, world } = context
 
     const dialogues = i18n.t('npc.oliver.last_words', { returnObjects: true }) as string[]

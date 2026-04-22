@@ -1,10 +1,10 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { CaronActions } from './action'
 import { CaronService } from './service'
 
-export class CaronNPC extends BaseNPC {
+export class CaronNPC extends GameNPC {
   getChoices() {
     return [
       { name: 'talk', message: i18n.t('talk.speak') },

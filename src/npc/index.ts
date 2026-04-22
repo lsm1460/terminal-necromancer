@@ -1,5 +1,6 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext } from '~/core/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { KnightNPC } from './_knight/KnightNPC'
 import { AdrianNPC } from './adrian/AdrianNPC'
 import { ApostleNPC } from './apostle/ApostleNPC'
@@ -29,8 +30,8 @@ import { VendingMachineNPC } from './vending_machine/VendingMachineNPC'
 import { VesperNPC } from './vesper/VesperNPC'
 import { VoraNPC } from './vora_observer/VoraNPC'
 
-export const getNPCClass = (id: string): typeof BaseNPC<GameContext> => {
-  const map: Record<string, typeof BaseNPC<GameContext>> = {
+export const getNPCClass = (id: string): typeof GameNPC => {
+  const map: Record<string, typeof GameNPC> = {
     _knight: KnightNPC,
     caron_alive: SubspaceNPC,
     caron_dead: SubspaceNPC,

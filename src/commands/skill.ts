@@ -1,7 +1,8 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { SkillManager } from '~/core/skill/SkillManager'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { CommandFunction, NPC } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
+import { CommandFunction } from '~/types'
 import { delay } from '~/utils'
 
 export const skillCommand: CommandFunction = async (args, context) => {
@@ -14,7 +15,7 @@ export const skillCommand: CommandFunction = async (args, context) => {
   ]
 
   const enemies: CombatUnit[] = battleTargets.map((target) => {
-    const isNpc = !!(target as NPC).faction
+    const isNpc = !!(target as GameNPC).faction
 
     const unit = battle.toCombatUnit(target, isNpc ? 'npc' : 'monster')
     battle.appendUnitDeathCallback(unit)

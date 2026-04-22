@@ -1,12 +1,11 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext, NPCState } from '~/core/types'
+import { GameContext, INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { NPCManager } from '~/systems/NpcManager'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { KaneActions } from './action'
 import { KaneService } from './service'
 
-export class KaneNPC extends BaseNPC {
-  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+export class KaneNPC extends GameNPC {
+  constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
     super(id, baseData, state, manager)
   }
 

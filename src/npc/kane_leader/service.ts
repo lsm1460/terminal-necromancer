@@ -1,4 +1,5 @@
 import { GameContext } from "~/core/types"
+import { GameNPC } from "~/systems/npc/GameNPC"
 
 export const KaneService = {
   /** 현재 진행 가능한 특별 액션 확인 */
@@ -10,7 +11,7 @@ export const KaneService = {
     const caronFinished = events.isCompleted('defeat_caron')
     const isB5Completed = events.isCompleted('third_boss')
 
-    const npc = npcs.getNPC('kane_leader')
+    const npc = npcs.getNPC('kane_leader') as GameNPC
     const isFriendly = (npc?.factionHostility ?? 0) <= 0
 
     // 1. 첫 조우/가입 이벤트

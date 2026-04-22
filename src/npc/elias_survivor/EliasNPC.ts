@@ -1,12 +1,12 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext, NPCState } from '~/core/types'
-import i18n from '~/i18n'
-import { NPCManager } from '~/systems/NpcManager'
-import { EliasActions } from './action'
-import { EliasService } from './service'
+import { GameContext, INpcManager, NPCState } from "~/core/types"
+import i18n from "~/i18n"
+import { GameNPC } from "~/systems/npc/GameNPC"
+import { EliasActions } from "./action"
+import { EliasService } from "./service"
 
-export class EliasNPC extends BaseNPC {
-  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+
+export class EliasNPC extends GameNPC {
+  constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
     super(id, baseData, state, manager)
   }
 

@@ -26,7 +26,9 @@ import { ItemGenerator } from './item/ItemGenerator'
 import { BaseMapManager } from './map/BaseMapManager'
 import { MapData } from './map/MapData'
 import { printDirections } from './statusPrinter'
-import { GameContext, IMapManager } from './types'
+import { GameContext, IMapManager, INpcManager } from './types'
+import { NPCData } from './npc/NPCData'
+import { BaseNPCManager } from './npc/BaseNPCManager'
 
 export class GameEngine {
   public context!: GameContext
@@ -40,10 +42,10 @@ export class GameEngine {
     private saveSystem: SaveSystem,
     private configSystem: ConfigSystem,
     private eventBus: EventBus,
-    private MapManagerClass?: new (data: MapData, eventBus: EventBus) => IMapManager
+    private MapManager?: new (data: MapData, eventBus: EventBus) => IMapManager,
+    private NpcManager?: new (data: NPCData, eventBus: EventBus) => INpcManager
     // itemGenerator // 주입안하면 아이템이 만들어지지 않음
     // npcSkillManager // npc skill이 있다면 위에서 생성하여 주입하자
-    // mapManager * 필수
     // player * 필수
   ) {}
 
@@ -60,8 +62,8 @@ export class GameEngine {
     const eventBus = this.eventBus
     const player = new Necromancer(itemFactory, level, eventBus, initData?.player)
     const mapData = new MapData(map)
-    const mapManager: IMapManager = this.MapManagerClass 
-      ? new this.MapManagerClass(mapData, this.eventBus) 
+    const mapManager: IMapManager = this.MapManager 
+      ? new this.MapManager(mapData, this.eventBus) 
       : new BaseMapManager(mapData)
     const world = new World(itemFactory, player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
@@ -72,7 +74,10 @@ export class GameEngine {
     })
     const battleFactory = new BattleComponentFactory(player, world, dropSystem, eventBus, npcSkillManager)
     const battle = new Battle(player, monsterFactory, battleFactory)
-    const npcs = new NPCManager(npc, eventBus, initData?.npcs)
+    const npcData = new NPCData(npc, initData?.npcs)
+    const npcs: INpcManager = this.NpcManager 
+      ? new this.NpcManager(npcData, this.eventBus) 
+      : new BaseNPCManager(npcData)
     const quest = new QuestManager(eventBus)
     new MonsterEvent(monsterFactory, eventBus, battle, world)
     const broadcastSystem = new Broadcast(npcs, eventBus)
@@ -104,7 +109,7 @@ export class GameEngine {
     } as GameContext
 
     player.onDeath = () => {
-      const hostility = npcs.getFactionContribution('resistance')
+      const hostility = (npcs as NPCManager).getFactionContribution('resistance')
       const isHostile = hostility >= 70
 
       this.renderer.print('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')

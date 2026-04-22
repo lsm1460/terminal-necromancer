@@ -1,140 +1,63 @@
-import i18n from '~/i18n'
-import { NPC } from '~/types'
-import { Terminal } from '../Terminal'
-import { NPCState } from '../types'
+import { NPCState, INpcManager } from '../types';
 
-export interface INPCActionHandler {
-  updateFactionHostility(faction: string, amount: number): void
-  updateFactionContribution(faction: string, amount: number): void
-  triggerDeathHandler(npc: any, params?: any): void
-  isHostile(id: string): boolean
-  getFactionHostility(faction: string): number
-  getFactionContribution(faction: string): number
-}
+export class BaseNPC<T = any> {
+  id: string;
+  faction: string;
+  isNpc: true = true;
+  
+  reborn: boolean;
+  relation: number;
+  hp: number;
+  isAlive: boolean;
 
-export class BaseNPC<T = any> implements NPC<T> {
-  id: string
-  faction: string
-  reborn: boolean
-  relation: number
-  isNpc: true = true
-  isHostile: boolean
-  isBoss: boolean
-  factionHostility: number
-  factionContribution: number
-
-  // BattleTarget properties
-  attackType: 'melee' | 'ranged' | 'explode'
-  maxHp: number
-  hp: number
-  atk: number
-  def: number
-  agi: number
-  exp: number
-  dropTableId: string
-  encounterRate: number
-  isAlive: boolean
-  noEscape?: boolean
-  noCorpse?: boolean
-  minRebornRarity?: any
-  orderWeight?: number
-  skills?: string[]
+  // BattleTarget 기본 스탯
+  attackType: 'melee' | 'ranged' | 'explode' = 'melee';
+  maxHp: number = 100;
+  atk: number = 0;
+  def: number = 0;
+  agi: number = 0;
+  exp: number = 0;
+  dropTableId: string = '';
+  encounterRate: number = 0;
+  isBoss: boolean = false;
+  
+  noEscape?: boolean;
+  noCorpse?: boolean;
+  skills?: string[];
+  minRebornRarity?: any;
 
   constructor(
     id: string,
     baseData: any,
     state: NPCState,
-    protected manager: INPCActionHandler
+    protected manager: INpcManager
   ) {
-    this.id = id
-    this.faction = baseData.faction || ''
-    this.reborn = state.reborn
-    this.relation = state.relation
-    this.isHostile = manager.isHostile(id)
-    this.isBoss = baseData.isBoss || false
-    this.factionHostility = manager.getFactionHostility(this.faction)
-    this.factionContribution = manager.getFactionContribution(this.faction)
+    this.id = id;
+    this.faction = baseData.faction || '';
+    this.reborn = state.reborn;
+    this.relation = state.relation;
+    this.hp = state.hp;
+    this.isAlive = state.isAlive;
 
-    // BattleTarget attributes
-    this.attackType = baseData.attackType || 'melee'
-    this.maxHp = baseData.maxHp || 100
-    this.hp = state.hp
-    this.atk = baseData.atk || 0
-    this.def = baseData.def || 0
-    this.agi = baseData.agi || 0
-    this.exp = baseData.exp || 0
-    this.dropTableId = baseData.dropTableId || ''
-    this.encounterRate = baseData.encounterRate || 0
-    this.isAlive = state.isAlive
-    this.noEscape = baseData.noEscape
-    this.noCorpse = baseData.noCorpse
-    this.skills = baseData.skills
-    this.minRebornRarity = baseData.minRebornRarity
+    // 데이터 일괄 주입
+    Object.assign(this, baseData);
   }
 
-  get name(): string {
-    return i18n.t(`npc.${this.id}.name`)
+  // 상속받는 GameNPC에서 오버라이드할 Getter들
+  get name(): string { return this.id; }
+  get deathLine(): string { return ''; }
+  get description(): string { return ''; }
+  get isHostile(): boolean { return this.manager.isHostile(this.id); }
+
+  public dead(params?: any) {
+    this.isAlive = false;
+    this.manager.triggerDeathHandler(this, params);
   }
 
-  get deathLine(): string {
-    return i18n.t(`npc.${this.id}.deathLine`)
-  }
-
-  get description(): string {
-    return i18n.t(`npc.${this.id}.description`)
-  }
-
-  get lines(): string[] {
-    return (i18n.t(`npc.${this.id}.lines`, { returnObjects: true }) || ['...']) as string[]
-  }
-
-  updateHostility(amount: number) {
-    this.manager.updateFactionHostility(this.faction, amount)
-  }
-
-  updateContribution(amount: number) {
-    this.manager.updateFactionContribution(this.faction, amount)
-  }
-
-  dead(params?: { karma?: number; hostile?: number }) {
-    this.isAlive = false
-
-    this.manager.triggerDeathHandler(this, params)
-  }
-
-  hasQuest(context: T) {
-    return false
-  }
-
-  getChoices(context: T) {
-    return [{ name: 'talk', message: i18n.t('talk.small_talk') }]
-  }
-
-  async handle(action: string, context: T): Promise<void | boolean> {}
-
-  handleTalk() {
-    if (!this.lines || this.lines.length === 0) {
-      Terminal.log(`\n💬 [${this.name}]: ...`)
-      return
-    }
-
-    const randomIndex = Math.floor(Math.random() * this.lines.length)
-    const selectedLine = this.lines[randomIndex]
-
-    Terminal.log(`\n💬 [${this.name}]: "${selectedLine}"`)
-  }
-
-  getScripts(greetings: 'greeting' | 'farewell') {
-    const hostility = this.faction === 'resistance' ? this.factionHostility : (this.relation || 0) * -1
-
-    let dialect: 'friendly' | 'hostile' | 'normal' = 'normal'
-    if (hostility <= -20) dialect = 'friendly'
-    else if (hostility >= 40) dialect = 'hostile'
-
-    const key = `npc.${this.id}.scripts.${dialect}.${greetings}`
-
-    return i18n.exists(key) ? i18n.t(key) : '...'
-  }
+  // 확장용 가상 메서드
+  public hasQuest(context: T): boolean { return false; }
+  public getChoices(context: T): any[] { return []; }
+  public async handle(action: string, context: T): Promise<void | boolean> { return false; }
 
   afterDead(context: T) {}
 }

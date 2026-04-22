@@ -25,7 +25,7 @@ export class CLIRenderer implements Renderer {
     console.clear()
   }
 
-  printStatus(context: GameContext<Necromancer>): void {
+  printStatus(context: GameContext): void {
     printTileStatus(context)
   }
 

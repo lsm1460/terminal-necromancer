@@ -34,7 +34,7 @@ export class ReactRenderer implements Renderer {
     this.store.setUI({ type: 'NONE', message: '', resolve: () => {} })
   }
 
-  printStatus(context: GameContext<Necromancer>): void {
+  printStatus(context: GameContext): void {
     printTileStatus(context)
   }
 

@@ -1,13 +1,13 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { CommandFunction, NPC } from '~/types'
+import { GameNPC } from '~/systems/npc/GameNPC'
+import { CommandFunction } from '~/types'
 
 export const talkCommand: CommandFunction = async (...params) => {
   const [args, context] = params
-  let targetNpc = await selectTargetNpc(...params)
+  let targetNpc = await selectTargetNpc(...params) as GameNPC
   if (!targetNpc) return false
 
   printNpcHeader(targetNpc)
@@ -17,7 +17,7 @@ export const talkCommand: CommandFunction = async (...params) => {
   return false
 }
 
-async function selectTargetNpc(args: string[], context: GameContext): Promise<BaseNPC | null> {
+async function selectTargetNpc(args: string[], context: GameContext) {
   const { npcs: npcManager, player, currentTile: tile } = context
   const necromancer = player as Necromancer
   const npcs = npcManager.getAliveNPCInTile({ tile, hasKnight: !!necromancer.knight })
@@ -52,13 +52,13 @@ async function selectTargetNpc(args: string[], context: GameContext): Promise<Ba
   return npcs.find((n) => n.id === selectedId) || null
 }
 
-function printNpcHeader(npc: NPC) {
+function printNpcHeader(npc: GameNPC) {
   const greeting = npc.getScripts('greeting')
 
   Terminal.printNpcCard(npc)
 }
 
-async function startTalkSession(npc: BaseNPC, context: GameContext) {
+async function startTalkSession(npc: GameNPC, context: GameContext) {
   npc.relation += 1 // 대화 시 호감도 소폭 상승
 
   try {

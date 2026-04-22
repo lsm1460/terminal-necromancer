@@ -7,15 +7,16 @@ import { speak } from '~/utils'
 import { MayaService } from './service'
 
 export const MayaActions = {
-  async handleJoin(context: GameContext<Necromancer>) {
+  async handleJoin(context: GameContext) {
     const { player, events, npcs } = context
+    const necromancer = player as Necromancer
     const isB3Completed = events.isCompleted('second_boss')
     const { isAlive: jaxIsAlive } = npcs.getNPC('jax_seeker') || {}
 
     let dialogues: string[] = i18n.t('npc.maya_tech.join.intro', { returnObjects: true }) as string[]
     dialogues.push(i18n.t(jaxIsAlive ? 'npc.maya_tech.join.jax_alive' : 'npc.maya_tech.join.jax_dead'))
 
-    const golemKey = player.golem ? 'has_golem' : isB3Completed ? 'can_make_golem' : 'cannot_make_golem'
+    const golemKey = necromancer.golem ? 'has_golem' : isB3Completed ? 'can_make_golem' : 'cannot_make_golem'
     dialogues = [...dialogues, ...(i18n.t(`npc.maya_tech.join.${golemKey}`, { returnObjects: true }) as string[])]
 
     dialogues.push(i18n.t('npc.maya_tech.join.outro'))

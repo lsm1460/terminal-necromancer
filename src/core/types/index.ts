@@ -1,7 +1,6 @@
 import { EventLedger } from '~/core/EventLedger'
 import { Broadcast } from '~/systems/Broadcast'
 import { ConfigSystem } from '~/systems/ConfigSystem'
-import { NPCManager } from '~/systems/NpcManager'
 import { QuestManager } from '~/systems/QuestManager'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { Battle } from '../battle'
@@ -13,6 +12,7 @@ import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { World } from '../World'
 import { IMapManager, Tile } from './map'
+import { INpcManager } from './npc'
 
 export type AttackType = 'melee' | 'ranged' | 'explode'
 
@@ -72,7 +72,7 @@ export type Translatable = string | TranslationInfo;
 export interface GameContext<TPlayer = Player> {
   player: TPlayer
   map: IMapManager
-  npcs: NPCManager
+  npcs: INpcManager
   world: World
   events: EventLedger
   eventBus: EventBus

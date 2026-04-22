@@ -9,7 +9,7 @@ export const PortalActions = {
   /**
    * 포탈 사용 확인 후 실제 이동 및 연출 수행
    */
-  async handleMove(context: GameContext<Necromancer>) {
+  async handleMove(context: GameContext) {
     const { map, broadcast, currentTile: tile } = context
 
     const confirm = await Terminal.confirm(i18n.t('npc.portal.confirm'))

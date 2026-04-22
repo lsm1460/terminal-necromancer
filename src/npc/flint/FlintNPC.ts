@@ -1,13 +1,13 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext, NPCState } from '~/core/types'
-import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPCManager } from '~/systems/NpcManager'
-import { FlintActions } from './action'
-import { FlintService } from './service'
+import { GameContext, INpcManager, NPCState } from "~/core/types"
+import i18n from "~/i18n"
+import { Necromancer } from "~/systems/job/necromancer/Necromancer"
+import { GameNPC } from "~/systems/npc/GameNPC"
+import { FlintActions } from "./action"
+import { FlintService } from "./service"
 
-export class FlintNPC extends BaseNPC {
-  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+
+export class FlintNPC extends GameNPC {
+  constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
     super(id, baseData, state, manager)
   }
 
@@ -25,7 +25,7 @@ export class FlintNPC extends BaseNPC {
     return !FlintService.isEventCompleted(context)
   }
 
-  async handle(action: string, context: GameContext<Necromancer>) {
+  async handle(action: string, context: GameContext) {
     switch (action) {
       case 'talk':
         this.handleTalk()

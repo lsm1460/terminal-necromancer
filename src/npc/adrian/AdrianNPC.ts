@@ -1,12 +1,11 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext, NPCState } from '~/core/types'
+import { GameContext, INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
-import { NPCManager } from '~/systems/NpcManager'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { AdrianActions } from './action'
 import { AdrianService } from './service'
 
-export class AdrianNPC extends BaseNPC {
-  constructor(id: string, baseData: any, state: NPCState, manager: NPCManager) {
+export class AdrianNPC extends GameNPC {
+  constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
     super(id, baseData, state, manager)
   }
 

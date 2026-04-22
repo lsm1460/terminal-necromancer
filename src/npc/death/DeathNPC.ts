@@ -1,12 +1,12 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import BossEvent from '~/systems/events/BossEvent'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
+import { GameNPC } from '~/systems/npc/GameNPC'
 import { DeathAction } from './actions'
 import { DeathService } from './service'
 
-export class DeathNPC extends BaseNPC {
+export class DeathNPC extends GameNPC {
   getChoices(context: GameContext) {
     const quest = DeathService.getActiveQuest(context)
     if (quest) return [quest]
@@ -23,7 +23,7 @@ export class DeathNPC extends BaseNPC {
     return DeathService.getActiveQuest(context) !== null
   }
 
-  async handle(action: string, context: GameContext<Necromancer>) {
+  async handle(action: string, context: GameContext) {
     switch (action) {
       case 'talk':
         return this.handleTalk()
@@ -34,7 +34,7 @@ export class DeathNPC extends BaseNPC {
       case 'unlock':
         return await DeathAction.handleUnlock(context)
       case 'memorize':
-        return await DeathAction.handleMemorize(context.player)
+        return await DeathAction.handleMemorize(context.player as Necromancer)
 
       // story
       case 'intro':
@@ -55,7 +55,7 @@ export class DeathNPC extends BaseNPC {
     }
   }
 
-  async afterDead(context: GameContext<Necromancer>) {
+  async afterDead(context: GameContext) {
     context.npcs.setAlive(this.id)
 
     await BossEvent.handle(context)
