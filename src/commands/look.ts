@@ -5,8 +5,7 @@ import { lookAll, lookItem, printItem } from './overview'
 export const lookCommand: CommandFunction = async (args, context) => {
   const [type, target] = args
 
-  const { player, map, world } = context
-  const tile = map.getTile(player.pos)
+  const { player, world } = context
 
   const items = world.getDropsAt<GameDrop>(player.pos)
 
@@ -21,7 +20,7 @@ export const lookCommand: CommandFunction = async (args, context) => {
     return false
   }
 
-  await lookAll(context, items, tile.monsters)
+  await lookAll(context, items)
 
   return false
 }

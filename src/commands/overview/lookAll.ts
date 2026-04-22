@@ -1,6 +1,6 @@
 import { printTileStatus } from '~/core/statusPrinter'
 import { Terminal } from '~/core/Terminal'
-import { GameContext, Monster } from '~/core/types'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { NPC } from '~/types'
@@ -10,14 +10,14 @@ import { lookBattleTarget } from './entity'
 import { lookItem } from './item'
 import { getTileFromDirection, lookPath } from './path'
 
-export const lookAll = async (context: GameContext, items: GameDrop[], monsters?: Monster[]): Promise<void> => {
-  const { player, map, npcs, world } = context
+export const lookAll = async (context: GameContext, items: GameDrop[]): Promise<void> => {
+  const { player, map, npcs, world, currentTile: tile } = context
+  const monsters = tile?.monsters || []
   const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
   const necromancer = player as Necromancer
   const minions = necromancer.minions || []
-  const tile = map.getTile(player.pos)
 
-  const aliveNPCs = (tile.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as NPC[]
+  const aliveNPCs = (tile?.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as NPC[]
   const corpse = world.getCorpsesAt(player.pos)
 
   const directions = ['up', 'down', 'left', 'right']
@@ -82,5 +82,5 @@ export const lookAll = async (context: GameContext, items: GameDrop[], monsters?
       break
   }
 
-  if (targetId === 'back') return await lookAll(context, items, monsters)
+  if (targetId === 'back') return await lookAll(context, items)
 }

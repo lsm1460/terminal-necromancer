@@ -9,9 +9,7 @@ import { BossFactory } from './boss/BossFactory'
 
 class BossEvent {
   static async handle(context: GameContext<Necromancer>) {
-    const { player, npcs, events, battle, map, world } = context
-
-    const tile = map.getTile(player.pos)
+    const { npcs, events, battle, world, currentTile: tile } = context
 
     // 1. 타일 정보에서 보스 NPC 아이디 추출
     const bossId = tile.npcIds?.[0]

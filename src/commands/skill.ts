@@ -5,9 +5,8 @@ import { CommandFunction, NPC } from '~/types'
 import { delay } from '~/utils'
 
 export const skillCommand: CommandFunction = async (args, context) => {
-  const { player, map, npcs, battle, world, eventBus } = context
+  const { player, map, npcs, battle, world, eventBus, currentTile: tile } = context
   const necromancer = player as Necromancer
-  const tile = map.getTile(necromancer.pos)
 
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []),

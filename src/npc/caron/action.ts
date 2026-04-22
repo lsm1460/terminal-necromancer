@@ -35,7 +35,7 @@ export const CaronActions = {
 
   /** 최종 대면 */
   async finalEncounter(npc: NPC, context: GameContext) {
-    const { player, events, map } = context
+    const { events, currentTile } = context
     const { first, second } = CaronService.getAnswers()
 
     if (first && !second) {
@@ -53,7 +53,7 @@ export const CaronActions = {
       events.completeEvent('caron_is_mine')
       events.completeEvent('defeat_caron')
       npc.dead({ karma: 0 })
-      BossEvent.spawnPortal(map.getTile(player.pos))
+      BossEvent.spawnPortal(currentTile)
     } else {
       await speak([i18n.t('npc.caron.encounters.final.refuse')])
       await this.handleBattle(npc, context)
@@ -62,7 +62,7 @@ export const CaronActions = {
 
   /** 전투 실행 */
   async handleBattle(npc: NPC, context: GameContext, isManual = false) {
-    const { battle, events, map, player, world } = context
+    const { battle, events, world, currentTile } = context
     if (isManual) await speak([i18n.t('npc.caron.encounters.battle.manual_start')])
 
     Terminal.log(i18n.t('npc.caron.encounters.battle.start_log'))
@@ -72,7 +72,7 @@ export const CaronActions = {
       await speak(i18n.t('npc.caron.encounters.battle.win_script', { returnObjects: true }) as string[])
       events.completeEvent('caron_is_dead')
       events.completeEvent('defeat_caron')
-      BossEvent.spawnPortal(map.getTile(player.pos))
+      BossEvent.spawnPortal(currentTile)
     }
   },
 

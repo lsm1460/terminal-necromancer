@@ -38,8 +38,7 @@ export const KaelActions = {
 
 /** 카엘 & 베스퍼 연합 전투 실행 */
 async function startAmbushBattle(npc: NPC, context: GameContext) {
-  const { battle, npcs, events, map, player, world } = context
-  const tile = map.getTile(player.pos)
+  const { battle, npcs, events, world, currentTile: tile } = context
 
   const kael = npcs.getNPC('kael')
   const vesper = npcs.getNPC('vesper')

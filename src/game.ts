@@ -14,6 +14,7 @@ import { AchievementManager } from './systems/AchievementManager'
 import { ConfigSystem } from './systems/ConfigSystem'
 import { SkillEffectPresenter } from './systems/presenter/SkillEffectPresenter'
 import { SaveSystem } from './systems/SaveSystem'
+import { MapManager } from './systems/MapManager'
 
 const loadJSON = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -55,7 +56,7 @@ const run = async () => {
     return i18n.t(info.key, info.args)
   })
 
-  const engine = new GameEngine(assets, renderer, save, config, eventBus)
+  const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager)
 
   await i18n.changeLanguage(locale)
 

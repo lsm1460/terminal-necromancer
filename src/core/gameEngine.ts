@@ -2,6 +2,7 @@ import { GameAssets } from '~/assets'
 import { MAP_IDS } from '~/consts'
 import { Battle, BattleComponentFactory } from '~/core/battle'
 import { EventBus } from '~/core/EventBus'
+import { EventLedger } from '~/core/EventLedger'
 import { DropSystem } from '~/core/item/DropSystem'
 import { LootFactory } from '~/core/LootFactory'
 import { MonsterFactory } from '~/core/MonsterFactory'
@@ -10,12 +11,10 @@ import { World } from '~/core/World'
 import i18n from '~/i18n'
 import { Broadcast } from '~/systems/Broadcast'
 import { ConfigSystem } from '~/systems/ConfigSystem'
-import { EventLedger } from '~/core/EventLedger'
 import { MonsterEvent } from '~/systems/events/MonsterEvent'
 import { GameItemFactory } from '~/systems/item/GameItemFactory'
 import { ItemPolicy } from '~/systems/item/ItemPolicy'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { MapManager } from '~/systems/MapManager'
 import { NPCManager } from '~/systems/NpcManager'
 import { QuestManager } from '~/systems/QuestManager'
 import { SaveData, SaveSystem } from '~/systems/SaveSystem'
@@ -24,9 +23,10 @@ import { SpecialSkillLogics } from '~/systems/skill/SpecialSkillLogics'
 import { Renderer } from '~/types'
 import { handleCommand } from './commandHandler'
 import { ItemGenerator } from './item/ItemGenerator'
+import { BaseMapManager } from './map/BaseMapManager'
+import { MapData } from './map/MapData'
 import { printDirections } from './statusPrinter'
-import { GameContext } from './types'
-import { MapContainer } from './MapContainer'
+import { GameContext, IMapManager } from './types'
 
 export class GameEngine {
   public context!: GameContext
@@ -39,7 +39,8 @@ export class GameEngine {
     private renderer: Renderer,
     private saveSystem: SaveSystem,
     private configSystem: ConfigSystem,
-    private eventBus: EventBus
+    private eventBus: EventBus,
+    private MapManagerClass?: new (data: MapData, eventBus: EventBus) => IMapManager
     // itemGenerator // 주입안하면 아이템이 만들어지지 않음
     // npcSkillManager // npc skill이 있다면 위에서 생성하여 주입하자
     // mapManager * 필수
@@ -58,8 +59,10 @@ export class GameEngine {
 
     const eventBus = this.eventBus
     const player = new Necromancer(itemFactory, level, eventBus, initData?.player)
-    const mapContainer = new MapContainer(map)
-    const mapManager = new MapManager(mapContainer, eventBus)
+    const mapData = new MapData(map)
+    const mapManager: IMapManager = this.MapManagerClass 
+      ? new this.MapManagerClass(mapData, this.eventBus) 
+      : new BaseMapManager(mapData)
     const world = new World(itemFactory, player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
     const npcSkillManager = new NpcSkillManager(npcSkills, eventBus)
@@ -94,6 +97,10 @@ export class GameEngine {
       config: this.configSystem,
       quest,
       cheats: {},
+
+      get currentTile() {
+        return this.map.getTile(this.player.pos)!;
+      }
     } as GameContext
 
     player.onDeath = () => {
@@ -134,10 +141,9 @@ export class GameEngine {
   }
 
   public async start(): Promise<void> {
-    const { map, player } = this.context
+    const { map, currentTile } = this.context
     this.renderer.printStatus(this.context)
 
-    const currentTile = map.getTile(player.pos)
     await map.handleTileEvent(currentTile, this.context)
 
     printDirections(this.context)

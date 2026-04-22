@@ -5,6 +5,7 @@ import { CreditScreen } from './CreditScreen'
 import { GameScreen } from './GameScreen'
 //
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { assets, initState } from '~/assets'
 import { openWindow } from '~/bridge/window'
 import { GameProvider } from '~/contexts/GameContext'
@@ -18,10 +19,10 @@ import { useShortcuts } from '~/hooks/useShortcuts'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { AchievementManager } from '~/systems/AchievementManager'
 import { ConfigSystem } from '~/systems/ConfigSystem'
+import { MapManager } from '~/systems/MapManager'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { SkillEffectPresenter } from '~/systems/presenter/SkillEffectPresenter'
 import { ScreenRouter } from './ScreenRouter'
-import { useTranslation } from 'react-i18next'
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
@@ -51,7 +52,7 @@ export const App = () => {
     openWindow()
 
     const run = async () => {
-      const engine = new GameEngine(assets, renderer, save, config, eventBus)
+      const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager)
       engineRef.current = engine
 
       const achievement = new AchievementManager(eventBus, assets.achievements)

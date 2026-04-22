@@ -1,5 +1,4 @@
 import { GameContext, Monster, PositionType } from '.'
-import { MapContainer } from '../MapContainer'
 
 export interface Tile {
   id: string
@@ -26,14 +25,12 @@ export interface SceneData {
 }
 
 export interface IMapManager {
-  readonly container: MapContainer
-
   currentSceneId: string
   currentScene: SceneData
   changeScene(targetSceneId: string, context: GameContext): Promise<void>
   handleTileEvent(tile: Tile, context: GameContext): Promise<void>
 
-  getTile(pos: PositionType): Tile
+  getTile(pos: PositionType): Tile | undefined | null
   canMove(pos: PositionType): boolean
   isUnlocked(id: string, events: string[]): boolean
   getMap(id: string): SceneData

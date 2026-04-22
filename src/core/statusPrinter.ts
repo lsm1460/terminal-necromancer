@@ -19,9 +19,8 @@ export function printDirections(context: GameContext) {
 }
 
 export function printTileStatus(context: GameContext) {
-  const { player, map, npcs } = context
+  const { player, npcs, currentTile: tile } = context
   const necromancer = player as Necromancer
-  const tile = map.getTile(player.pos)
 
   Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
 
@@ -55,10 +54,8 @@ export function printCorpses(world: World, pos: PositionType) {
   }
 }
 
-export function printLootStatus({ player, world, map }: GameContext) {
-  const tile = map.getTile(player.pos)
-
-  const bag = world.getLootBagAt(map.currentSceneId, tile.id)
+export function printLootStatus({ player, world, map, currentTile }: GameContext) {
+  const bag = world.getLootBagAt(map.currentSceneId, currentTile.id)
   if (bag) Terminal.pick('lootBag', `\n \x1b[31m[!]\x1b[0m ${i18n.t('found_soul')}`)
 
   printDrops(world, player.pos)

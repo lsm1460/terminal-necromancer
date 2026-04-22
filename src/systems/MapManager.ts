@@ -1,69 +1,44 @@
-import _ from 'lodash'
+import { compact, flatten, pullAt, random, remove, shuffle } from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import { EventBus } from '~/core/EventBus'
-import { MapContainer } from '~/core/MapContainer'
-import { printTileStatus } from '~/core/statusPrinter'
 import { Terminal } from '~/core/Terminal'
-import { GameContext, GameEventType, IMapManager, PositionType, Tile } from '~/core/types'
 import { assetManager } from '~/core/WebAssetManager'
+import { BaseMapManager } from '~/core/map/BaseMapManager'
+import { MapData } from '~/core/map/MapData'
+import { printTileStatus } from '~/core/statusPrinter'
+import { GameContext, GameEventType, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { allEventHandlers } from '~/systems/events'
 import { Necromancer } from './job/necromancer/Necromancer'
 
-export class MapManager implements IMapManager {
+export class MapManager extends BaseMapManager {
   constructor(
-    public readonly container: MapContainer,
+    data: MapData,
     private eventBus: EventBus
-  ) {}
-
-  get currentSceneId() {
-    return this.container.currentSceneId
+  ) {
+    super(data, MAP_IDS.B1_SUBWAY)
   }
 
-  set currentSceneId(_val) {
-    this.container.currentSceneId = _val
-  }
+  public override async changeScene(targetSceneId: MapId, context: GameContext<Necromancer>) {
+    const { player, broadcast, currentTile } = context
+    const newScene = this.data.getScene(targetSceneId)
 
-  get currentScene() {
-    return this.container.currentScene
-  }
-
-  public getTile(pos: PositionType): Tile {
-    return this.container.getTile(pos)
-  }
-
-  public canMove(pos: PositionType): boolean {
-    return this.container.canMove(pos)
-  }
-
-  async changeScene(targetSceneId: MapId, context: GameContext<Necromancer>) {
-    const { player, broadcast } = context
-    const newScene = this.container.getMap(targetSceneId)
-
-    if (!newScene) {
-      console.error(`[오류] 존재하지 않는 씬입니다: ${targetSceneId}`)
-      return
-    }
-
-    this.container.currentSceneId = targetSceneId
-    await assetManager.loadSceneAssets(newScene)
+    if (!newScene) return
 
     if (!this.isFixedArea(targetSceneId)) {
       this.shuffleTiles(targetSceneId)
     }
-
-    const { x, y } = newScene.move_pos || newScene.start_pos
-    player.x = x
-    player.y = y
+    
+    await assetManager.loadSceneAssets(newScene)
+    
+    await super.changeScene(targetSceneId, { player })
 
     Terminal.log(`\n------------------------------------------`)
     Terminal.log(i18n.t(`enter_new_area`) + i18n.t(`scene.${newScene.id}`))
     Terminal.log(`------------------------------------------`)
 
-    const currentTile = this.getTile(player.pos)
-    currentTile.isSeen = true
-
     await this.handleTileEvent(currentTile, context)
+
     broadcast.play()
     printTileStatus(context)
   }
@@ -86,29 +61,28 @@ export class MapManager implements IMapManager {
   }
 
   private shuffleTiles(sceneId: string) {
-    const scene = this.container.getOriginScene(sceneId)
+    const scene = this.data.getOriginScene(sceneId)
     const { width, height } = { width: scene.tiles[0].length, height: scene.tiles.length }
     const start = scene.start_pos
 
-    let allTiles = _.compact(_.flatten(scene.tiles))
+    let allTiles = compact(flatten(scene.tiles))
     const startTile = scene.tiles[start.y][start.x]
-    const bossTile = _.remove(allTiles, (t) => t.event === 'boss')[0]
-    _.remove(allTiles, (t) => t === startTile)
+    const bossTile = remove(allTiles, (t) => t.event === 'boss')[0]
+    remove(allTiles, (t) => t === startTile)
 
-    allTiles = _.shuffle(allTiles)
+    allTiles = shuffle(allTiles)
 
     const newGrid: (Tile | undefined)[][] = Array.from({ length: height }, () => Array(width).fill(undefined))
     newGrid[start.y][start.x] = startTile
 
     const candidates: string[] = []
-    const updateCandidates = (x: number, y: number) => {
+    const updateCandidates = (cx: number, cy: number) => {
       const neighbors = [
-        { x: x + 1, y },
-        { x: x - 1, y },
-        { x, y: y + 1 },
-        { x, y: y - 1 },
+        { x: cx + 1, y: cy },
+        { x: cx - 1, y: cy },
+        { x: cx, y: cy + 1 },
+        { x: cx, y: cy - 1 },
       ].filter((p) => p.x >= 0 && p.x < width && p.y >= 0 && p.y < height)
-
       neighbors.forEach((p) => {
         const key = `${p.x},${p.y}`
         if (!newGrid[p.y][p.x] && !candidates.includes(key)) candidates.push(key)
@@ -116,13 +90,12 @@ export class MapManager implements IMapManager {
     }
 
     updateCandidates(start.x, start.y)
-
     const minBossDist = Math.floor((width + height) / 2)
     let bossPlaced = !bossTile
 
     while (candidates.length > 0) {
-      const randomIndex = _.random(0, candidates.length - 1)
-      const [cx, cy] = _.pullAt(candidates, randomIndex)[0].split(',').map(Number)
+      const randomIndex = random(0, candidates.length - 1)
+      const [cx, cy] = pullAt(candidates, randomIndex)[0].split(',').map(Number)
       const dist = Math.abs(cx - start.x) + Math.abs(cy - start.y)
 
       if (!bossPlaced && bossTile && (dist >= minBossDist || allTiles.length === 0)) {
@@ -135,18 +108,10 @@ export class MapManager implements IMapManager {
       }
     }
 
-    this.container.updateSceneTiles(sceneId, newGrid as Tile[][])
+    this.data.updateTiles(sceneId, newGrid as Tile[][])
   }
 
   private isFixedArea(id: MapId): boolean {
     return ([MAP_IDS.B1_SUBWAY, MAP_IDS.B3_5_RESISTANCE_BASE, MAP_IDS.B4_Waste_Disposal_Area] as MapId[]).includes(id)
-  }
-
-  isUnlocked(mapId: string, completed: string[]) {
-    return this.container.isUnlocked(mapId, completed)
-  }
-
-  getMap(sceneId: string) {
-    return this.container.getMap(sceneId)
   }
 }

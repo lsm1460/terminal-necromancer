@@ -6,8 +6,7 @@ import { CommandFunction, LootBag } from '~/types'
 import { GameDrop } from '~/types/item'
 
 export const pickCommand: CommandFunction = async (args, context) => {
-  const { player, map, world } = context
-  const tile = map.getTile(player.pos)
+  const { player, map, world, currentTile: tile } = context
 
   const drops = world.getDropsAt<GameDrop>(player.pos)
   const lootBag = world.getLootBagAt(map.currentSceneId, tile.id)

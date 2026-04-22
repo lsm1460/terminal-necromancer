@@ -1,6 +1,6 @@
+import { EventLedger } from '~/core/EventLedger'
 import { Broadcast } from '~/systems/Broadcast'
 import { ConfigSystem } from '~/systems/ConfigSystem'
-import { EventLedger } from '~/core/EventLedger'
 import { NPCManager } from '~/systems/NpcManager'
 import { QuestManager } from '~/systems/QuestManager'
 import { SaveSystem } from '~/systems/SaveSystem'
@@ -12,7 +12,7 @@ import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { World } from '../World'
-import { IMapManager } from './map'
+import { IMapManager, Tile } from './map'
 
 export type AttackType = 'melee' | 'ranged' | 'explode'
 
@@ -89,6 +89,8 @@ export interface GameContext<TPlayer = Player> {
   }
   quest: QuestManager
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
+
+  currentTile: Tile
 }
 
 
@@ -96,7 +98,7 @@ export interface GameContext<TPlayer = Player> {
 export * from './battle'
 export * from './events'
 export * from './map'
-export * from './skill'
 export * from './npc'
+export * from './skill'
 
 

@@ -15,11 +15,10 @@ export const CaronService = {
 
   /** 카론 위치 재배치 로직 */
   relocate(npc: NPC, context: GameContext) {
-    const { player, map } = context
+    const { map, currentTile } = context
     const tiles: (Tile | null)[][] = map.currentScene.tiles
 
     // 1. 현재 타일 이벤트 제거
-    const currentTile = map.getTile(player.pos)
     if (currentTile) currentTile.event = 'none'
 
     // 2. 전체 타일 초기화

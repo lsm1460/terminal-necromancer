@@ -10,7 +10,7 @@ export const PortalActions = {
    * 포탈 사용 확인 후 실제 이동 및 연출 수행
    */
   async handleMove(context: GameContext<Necromancer>) {
-    const { player, map, broadcast } = context
+    const { map, broadcast, currentTile: tile } = context
 
     const confirm = await Terminal.confirm(i18n.t('npc.portal.confirm'))
 
@@ -22,7 +22,6 @@ export const PortalActions = {
       Terminal.log(i18n.t('npc.portal.success', { location: i18n.t(`scene.${sceneId}`) }))
 
       // 3. 이동한 타일의 이벤트 처리 및 방송 재생
-      const tile = map.getTile(player.pos)
       await map.handleTileEvent(tile, context)
       broadcast.play()
 

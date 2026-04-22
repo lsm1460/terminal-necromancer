@@ -5,10 +5,9 @@ import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { CommandFunction } from '~/types'
 
 export const attackCommand: CommandFunction = async (args, context) => {
-  const { player, map, npcs, battle, world } = context
+  const { player, npcs, battle, world, currentTile: tile } = context
   const necromancer = player as Necromancer
   
-  const tile = map.getTile(player.pos)
 
   if ((tile.npcIds || [])?.length > 0) {
     const proceed = await Terminal.confirm(i18n.t('commands.combat.confirm_kill'))

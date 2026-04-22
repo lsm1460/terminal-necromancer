@@ -14,8 +14,7 @@ export const JaxActions = {
 
   /** 가입 이벤트 분기 처리 */
   async handleJoin(npc: NPC, context: GameContext) {
-    const { map, events, battle, player, world } = context
-    const tile = map.getTile(player.pos)
+    const { events, battle, world, currentTile: tile } = context
 
     const dialogues = i18n.t('npc.jax_seeker.join.dialogues', { returnObjects: true }) as string[]
     await speak(dialogues)

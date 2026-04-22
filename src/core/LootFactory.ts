@@ -1,12 +1,12 @@
-import { Player } from '~/core/player/Player'
 import { DropSystem } from '~/core/item/DropSystem'
+import { Player } from '~/core/player/Player'
 import { BattleTarget, LootBag } from '~/types'
 import { generateId } from '~/utils'
-import { MapManager } from '../systems/MapManager'
+import { IMapManager } from './types'
 
 export class LootFactory {
-  static fromPlayer(player: Player, map: MapManager): LootBag {
-    const tile = map.getTile(player.pos)
+  static fromPlayer(player: Player, map: IMapManager): LootBag {
+    const tile = map.getTile(player.pos)!
     
     return {
       scendId: map.currentSceneId,

@@ -4,9 +4,8 @@ import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 
 export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
   const trimmed = rawCmd.trim()
-  const { player, map } = context
+  const { player, currentTile: tile } = context
   const necromancer = player as Necromancer
-  const tile = map.getTile(player.pos)
 
   switch (trimmed) {
     case 'show me the money':
