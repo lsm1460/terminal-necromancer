@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { IConfigSystem } from '~/core/types'
 
 export type ConfigData = {
   locale?: 'ko' | 'en'
@@ -6,7 +7,7 @@ export type ConfigData = {
   isAutoInputFocus?: boolean
 }
 
-export class ConfigSystem {
+export class ConfigSystem implements IConfigSystem<ConfigData> {
   private isWeb = typeof window !== 'undefined'
   private configPath: string = ''
 
@@ -16,13 +17,13 @@ export class ConfigSystem {
     }
   }
 
-  load(): ConfigData | undefined {
+  load(): ConfigData | null {
     if (this.isWeb) {
       const saved = localStorage.getItem('terminal_game_config')
       if (saved) return JSON.parse(saved)
-      return
+      return null
     } else {
-      if (!this.configPath || !fs.existsSync(this.configPath)) return
+      if (!this.configPath || !fs.existsSync(this.configPath)) return null
       return JSON.parse(fs.readFileSync(this.configPath, 'utf-8'))
     }
   }

@@ -1,9 +1,8 @@
 import sample from 'lodash/sample'
-import { Battle, DamageOptions } from '~/core/battle'
-import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { DamageOptions } from '~/core/battle'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core/Terminal'
-import { NpcSkill } from '~/core/types'
+import { SpecialSkillLogic } from '~/core/types'
 import i18n from '~/i18n'
 import { BattleTarget } from '~/types'
 import { ItemType } from '~/types/item'
@@ -12,7 +11,7 @@ const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 
 export const SpecialSkillLogics: Record<
   string,
-  (attacker: CombatUnit, targets: CombatUnit[], skill: NpcSkill, context: Battle) => Promise<void>
+  SpecialSkillLogic
 > = {
   // 자폭
   self_destruct: async (attacker, targets, skill) => {

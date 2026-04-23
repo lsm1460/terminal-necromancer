@@ -50,7 +50,7 @@ export const ElevatorActions = {
       )
 
       const saveData = SaveSystem.makeSaveData(context)
-      save.save(saveData)
+      save && save.save(saveData)
 
       return true
     }

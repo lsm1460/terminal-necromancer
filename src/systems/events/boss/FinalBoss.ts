@@ -1,4 +1,4 @@
-import { Ending } from '~/core/Ending'
+import { Ending } from '~/systems'
 import { Terminal } from '~/core/Terminal'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'

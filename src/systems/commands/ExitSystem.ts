@@ -13,10 +13,11 @@ export class ExitSystem implements ICommandSystem {
   }
 
   private async handleExit(): Promise<void> {
+    const { save, eventBus } = this.context
     Terminal.log(i18n.t('commands.system.exit.saving'))
 
     const saveData = SaveSystem.makeSaveData(this.context)
-    this.context.save.save(saveData)
+    save && save.save(saveData)
 
     Terminal.log(i18n.t('commands.system.exit.save_complete'))
     Terminal.log(i18n.t('commands.system.exit.farewell'))
@@ -24,6 +25,6 @@ export class ExitSystem implements ICommandSystem {
     await new Promise((resolve) => setTimeout(resolve, 500))
 
     // 2. 시스템 종료 이벤트 발행
-    await this.context.eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
+    await eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
   }
 }

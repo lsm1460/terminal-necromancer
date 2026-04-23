@@ -1,9 +1,7 @@
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
-import { AchievementManager } from '~/systems/AchievementManager'
-import { ConfigSystem } from '~/systems/ConfigSystem'
-import { SaveSystem } from '~/systems/SaveSystem'
+import { AchievementManager, ConfigSystem, SaveSystem } from '~/systems'
 import { speak } from '~/utils'
-import { Terminal } from './Terminal'
 
 export class Title {
   constructor(

@@ -1,14 +1,14 @@
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
+import { EventBus } from '~/core/EventBus'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { Terminal } from '~/core/Terminal'
-import { GameEventType, Tile } from '~/core/types'
+import { GameEventType, IMonsterEvent, Tile } from '~/core/types'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
 import { delay } from '~/utils'
-import { EventBus } from '../../core/EventBus'
 
-export class MonsterEvent {
+export class MonsterEvent implements IMonsterEvent {
   constructor(
     private monsterFactory: MonsterFactory,
     eventBus: EventBus,

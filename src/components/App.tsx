@@ -9,24 +9,27 @@ import { useTranslation } from 'react-i18next'
 import { assets, initState } from '~/assets'
 import { openWindow } from '~/bridge/window'
 import { GameProvider } from '~/contexts/GameContext'
-import { EventBus } from '~/core/EventBus'
-import { Terminal } from '~/core/Terminal'
-import { Title } from '~/core/Title'
-import { assetManager } from '~/core/WebAssetManager'
-import { GameEngine } from '~/core/gameEngine'
-import { GameEventType } from '~/core/types'
+import { assetManager, EventBus, GameEngine, GameEventType, ItemGenerator, Terminal } from '~/core'
 import { useShortcuts } from '~/hooks/useShortcuts'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
-import { AchievementManager } from '~/systems/AchievementManager'
-import { ConfigSystem } from '~/systems/ConfigSystem'
-import { MapManager } from '~/systems/MapManager'
-import { NPCManager } from '~/systems/NpcManager'
-import { SaveSystem } from '~/systems/SaveSystem'
-import { CheatSystem } from '~/systems/commands/CheatSystem'
-import { ExitSystem } from '~/systems/commands/ExitSystem'
-import { StatusSystem } from '~/systems/commands/StatusSystem'
-import { SkillEffectPresenter } from '~/systems/presenter/SkillEffectPresenter'
+import {
+  AchievementManager,
+  Broadcast,
+  ConfigSystem,
+  GameItemFactory,
+  ItemPolicy,
+  MapManager,
+  MonsterEvent,
+  Necromancer,
+  NPCManager,
+  QuestManager,
+  SaveSystem,
+  Title,
+} from '~/systems'
+import { CheatSystem, ExitSystem, MoveSystem, StatusSystem } from '~/systems/commands'
+import { PASSIVE_EFFECTS, SkillEffectPresenter, SpecialSkillLogics } from '~/systems/skill'
 import { ScreenRouter } from './ScreenRouter'
+
 
 export const App = () => {
   const engineRef = useRef<GameEngine | null>(null)
@@ -41,9 +44,14 @@ export const App = () => {
 
   useEffect(() => {
     const eventBus = new EventBus()
+    const itemFactory = new GameItemFactory()
+    const policy = new ItemPolicy()
+    const itemGenerator = new ItemGenerator(policy, itemFactory)
+
+    new Broadcast(eventBus)
+    new SkillEffectPresenter(eventBus)
 
     const renderer = new ReactRenderer()
-    new SkillEffectPresenter(eventBus)
 
     const save = saveSystemRef.current
     const config = configSystemRef.current
@@ -56,9 +64,6 @@ export const App = () => {
     openWindow()
 
     const run = async () => {
-      const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager, NPCManager, [CheatSystem, StatusSystem, ExitSystem])
-      engineRef.current = engine
-
       const achievement = new AchievementManager(eventBus, assets.achievements)
 
       const title = new Title(save, config, achievement)
@@ -74,6 +79,33 @@ export const App = () => {
         console.error('게임 데이터를 불러오지 못했습니다.')
         return
       }
+
+      const player = new Necromancer(itemFactory, assets.level, eventBus, playData?.player)
+
+      const engine = new GameEngine(
+        assets,
+        {
+          renderer,
+          eventBus,
+          player,
+          itemGenerator,
+        },
+        {
+          saveSystem: save,
+          configSystem: config,
+          skills: {
+            passive: PASSIVE_EFFECTS,
+            specials: SpecialSkillLogics,
+          },
+          quest: new QuestManager(eventBus),
+          MapManager: MapManager,
+          NpcManager: NPCManager,
+          MonsterEvent: MonsterEvent,
+          commandSystems: [CheatSystem, StatusSystem, ExitSystem, MoveSystem],
+        }
+      )
+
+      engineRef.current = engine
 
       const _config = config.load()
       const locale = _config?.locale || 'ko'

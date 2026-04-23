@@ -1,7 +1,7 @@
 import { EventBus } from '~/core/EventBus';
-import { GameContext, GameEventType } from '~/core/types';
+import { GameContext, GameEventType, IQuestManager } from '~/core/types';
 
-export class QuestManager {
+export class QuestManager implements IQuestManager {
   private questQue: { npcId: string; questType: string }[] = []
 
   constructor(eventBus: EventBus) {

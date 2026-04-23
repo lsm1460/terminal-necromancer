@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import { isEmpty, sample } from 'lodash'
 import { EventBus } from '~/core/EventBus'
-import { GameEventType, INpcManager } from '~/core/types'
+import { GameEventType } from '~/core/types'
 import i18n from '~/i18n'
 import { Terminal } from '../core/Terminal'
 import { NPCManager } from './NpcManager'
@@ -13,10 +13,10 @@ export class Broadcast {
   private justFinishedEvent = false
 
   constructor(
-    private npcManager: INpcManager,
     eventBus: EventBus
   ) {
     eventBus.subscribe(GameEventType.COMPLETE_EVENT, this.onEventCleared)
+    eventBus.subscribe(GameEventType.PLAYER_MOVE, ({ npcs }) => this.play(npcs))
   }
 
   private onEventCleared = (eventId: string) => {
@@ -27,15 +27,15 @@ export class Broadcast {
     }
   }
 
-  async play() {
+  async play(_npcs: NPCManager) {
     // 0. 대기열이 없으면 낮은 확률로 시스템 메시지(랜덤 멘트) 발송
-    if (_.isEmpty(this.pendingQueue)) {
+    if (isEmpty(this.pendingQueue)) {
       const BROADCAST_CHANCE = 0.15
       const terminalKey = 'broadcast.terminalMessages'
 
       if (Math.random() < BROADCAST_CHANCE && i18n.exists(terminalKey)) {
         const messages = i18n.t(terminalKey, { returnObjects: true }) as string[]
-        const message = _.sample(messages)
+        const message = sample(messages)
 
         if (message) {
           Terminal.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
@@ -68,7 +68,7 @@ export class Broadcast {
     const bridgeKey = 'broadcast.bridgeMemos'
     if (currentIndex === 0 && this.justFinishedEvent && i18n.exists(bridgeKey)) {
       const bridgeMemos = i18n.t(bridgeKey, { returnObjects: true }) as string[]
-      const randomBridge = _.sample(bridgeMemos)
+      const randomBridge = sample(bridgeMemos)
 
       if (randomBridge) {
         Terminal.log(`  ${randomBridge}`)
@@ -79,7 +79,7 @@ export class Broadcast {
     }
 
     // 4. 메인 대사 출력 (진영 적대치에 따른 분기)
-    const isHostile = (this.npcManager as NPCManager).getFactionContribution('resistance') >= 30
+    const isHostile = _npcs.getFactionContribution('resistance') >= 30
     const lines = isHostile ? content?.hostile : content?.normal
 
     if (Array.isArray(lines) && currentIndex < lines.length) {

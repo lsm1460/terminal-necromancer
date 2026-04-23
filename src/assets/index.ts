@@ -27,5 +27,7 @@ export const assets = {
 
 export { initState }
 
+export * from './locales'
+
 // 타입 정의 (필요한 경우)
 export type GameAssets = typeof assets

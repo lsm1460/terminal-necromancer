@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { Player } from '~/core/player/Player'
-import { NPCState } from '~/core/types'
+import { ISaveSystem, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { LootBag } from '~/types'
 import { AppContext } from './types'
@@ -17,7 +17,7 @@ export type SaveData<T extends Player = Player> = {
   completedEvents: string[]
 }
 
-export class SaveSystem {
+export class SaveSystem implements ISaveSystem<SaveData> {
   private isWeb = typeof window !== 'undefined'
   private filePath: string = ''
 
@@ -65,6 +65,6 @@ export class SaveSystem {
       drop: context.world.lootBags,
       config: context.config || {},
       completedEvents: context.events.getSaveData(),
-    }
+    } as SaveData
   }
 }

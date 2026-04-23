@@ -1,7 +1,5 @@
 import { EventLedger } from '~/core/EventLedger'
-import { Broadcast } from '~/systems/Broadcast'
 import { ConfigSystem } from '~/systems/ConfigSystem'
-import { QuestManager } from '~/systems/QuestManager'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { Battle } from '../battle'
 import { CombatUnit } from '../battle/unit/CombatUnit'
@@ -27,8 +25,8 @@ export type LevelData = {
 }
 
 export interface StatModifier {
-  key: string; // 'atk', 'def', 'maxHp' 등
-  value: (current: number, player: Player) => number;
+  key: string // 'atk', 'def', 'maxHp' 등
+  value: (current: number, player: Player) => number
 }
 
 export type PositionType = {
@@ -64,15 +62,15 @@ export interface Skill<T extends Player = Player> {
 }
 
 export interface TranslationInfo {
-  key: string;
-  args?: Record<string, any>;
+  key: string
+  args?: Record<string, any>
 }
 
-export type Translatable = string | TranslationInfo;
+export type Translatable = string | TranslationInfo
 
 export interface DefaultContextTypes {
-  player: Player;
-  npcs: INpcManager;
+  player: Player
+  npcs: INpcManager
 }
 
 export interface ICommandManager {
@@ -81,24 +79,22 @@ export interface ICommandManager {
 }
 
 export interface GameContext<T extends Partial<DefaultContextTypes> = DefaultContextTypes> {
-  player: 'player' extends keyof T ? T['player'] : DefaultContextTypes['player'];
+  player: 'player' extends keyof T ? T['player'] : DefaultContextTypes['player']
   map: IMapManager
-  npcs: 'npcs' extends keyof T ? T['npcs'] : DefaultContextTypes['npcs'];
+  npcs: 'npcs' extends keyof T ? T['npcs'] : DefaultContextTypes['npcs']
   world: World
   events: EventLedger
   eventBus: EventBus
   drop: DropSystem
-  save: SaveSystem
+  save?: ISaveSystem
   battle: Battle
   npcSkills: NpcSkillManager
-  broadcast: Broadcast
   monster: MonsterFactory
-  config: ConfigSystem
+  config?: IConfigSystem
   cheats: {
     isFullMap?: boolean
     playerIsHide?: boolean
   }
-  quest: QuestManager
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
   commands: ICommandManager
 
@@ -140,10 +136,40 @@ export type CommandFunction<C extends GameContext<any> = GameContext<DefaultCont
 
 export type CustomCommands = Record<string, CommandFunction<any>>
 
+export interface IQuestManager {
+  hasQuest: () => boolean
+  startQuest: (context: GameContext) => Promise<void>
+}
+
+export interface ISaveSystem<SaveData = any> {
+  load: () => SaveData | null
+  save: (data: SaveData) => void
+}
+
+export interface IConfigSystem<ConfigData = any> {
+  load: () => ConfigData | null
+  save: (data: ConfigData) => void
+}
+
+export interface IMonsterEvent {
+  handle: (params: { tile: Tile; isPassMonster: boolean }) => Promise<void>
+}
+
+export interface IAssets {
+  map: any
+  monsterGroup: any
+  monster: any
+  state: any
+  level: any
+  item: any
+  drop: any
+  npc: any
+  npcSkills: any
+  achievements: any
+}
+
 export * from './battle'
 export * from './events'
 export * from './map'
 export * from './npc'
 export * from './skill'
-
-

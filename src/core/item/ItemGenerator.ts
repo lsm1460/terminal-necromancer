@@ -3,10 +3,10 @@ import { generateId } from '../utils'
 import { Item } from './Item'
 import { IGameItemFactory, IGenerationPolicy, IItemGenerator } from './types'
 
-export class ItemGenerator<TRarity, TAffix, TDrop> implements IItemGenerator {
+export class ItemGenerator<TRarity = string, TAffix = any, TDrop = any> implements IItemGenerator {
   constructor(
     private readonly policy: IGenerationPolicy<TRarity, TAffix, TDrop>,
-    private readonly itemFactory: IGameItemFactory
+    public itemFactory: IGameItemFactory
   ) {}
 
   public createItem<TItem = Item>(baseItem: TDrop): TItem {

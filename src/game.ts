@@ -1,24 +1,25 @@
 import fs from 'fs'
 import path from 'path'
-import { GameAssets } from './assets'
-import { loadExtraLocaleBundle } from './assets/locales'
-import { createCLI } from './core/cli'
-import { EventBus } from './core/EventBus'
-import { GameEngine } from './core/gameEngine'
-import { Terminal } from './core/Terminal'
-import { Title } from './core/Title'
-import { GameEventType } from './core/types'
+import { GameAssets, loadExtraLocaleBundle } from './assets'
+import { createCLI, EventBus, GameEngine, GameEventType, ItemGenerator, Terminal } from './core'
 import i18n from './i18n'
 import { CLIRenderer } from './renderers/cliRenderer'
-import { AchievementManager } from './systems/AchievementManager'
-import { CheatSystem } from './systems/commands/CheatSystem'
-import { StatusSystem } from './systems/commands/StatusSystem'
-import { ConfigSystem } from './systems/ConfigSystem'
-import { MapManager } from './systems/MapManager'
-import { NPCManager } from './systems/NpcManager'
-import { SkillEffectPresenter } from './systems/presenter/SkillEffectPresenter'
-import { SaveSystem } from './systems/SaveSystem'
-import { ExitSystem } from './systems/commands/ExitSystem'
+import {
+  AchievementManager,
+  Broadcast,
+  ConfigSystem,
+  GameItemFactory,
+  ItemPolicy,
+  MapManager,
+  MonsterEvent,
+  Necromancer,
+  NPCManager,
+  QuestManager,
+  SaveSystem,
+  Title,
+} from './systems'
+import { CheatSystem, ExitSystem, MoveSystem, StatusSystem } from './systems/commands'
+import { PASSIVE_EFFECTS, SkillEffectPresenter, SpecialSkillLogics } from './systems/skill'
 
 const loadJSON = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -49,7 +50,11 @@ const assets: GameAssets = {
 }
 
 const eventBus = new EventBus()
+const itemFactory = new GameItemFactory()
+const policy = new ItemPolicy()
+const itemGenerator = new ItemGenerator(policy, itemFactory)
 
+new Broadcast(eventBus)
 new SkillEffectPresenter(eventBus)
 
 const run = async () => {
@@ -59,8 +64,6 @@ const run = async () => {
     if (typeof info === 'string') return info
     return i18n.t(info.key, info.args)
   })
-
-  const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager, NPCManager, [CheatSystem, StatusSystem, ExitSystem])
 
   await i18n.changeLanguage(locale)
 
@@ -77,6 +80,31 @@ const run = async () => {
     console.error('게임 데이터를 불러오지 못했습니다.')
     return
   }
+
+  const player = new Necromancer(itemFactory, assets.level, eventBus, playData?.player)
+
+  const engine = new GameEngine(
+    assets,
+    {
+      renderer,
+      eventBus,
+      player,
+      itemGenerator,
+    },
+    {
+      saveSystem: save,
+      configSystem: config,
+      skills: {
+        passive: PASSIVE_EFFECTS,
+        specials: SpecialSkillLogics,
+      },
+      quest: new QuestManager(eventBus),
+      MapManager: MapManager,
+      NpcManager: NPCManager,
+      MonsterEvent: MonsterEvent,
+      commandSystems: [CheatSystem, StatusSystem, ExitSystem, MoveSystem],
+    }
+  )
 
   const currentLocale = i18n.language as 'ko' | 'en'
   await loadExtraLocaleBundle(currentLocale)

@@ -1,10 +1,12 @@
 import { COMMAND_GROUPS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
 import { printDirections, printTileStatus } from './statusPrinter'
-import { CommandFunction, GameContext, ICommandManager } from './types'
+import { CommandFunction, GameContext, ICommandManager, IQuestManager } from './types'
 
 export class CommandManager implements ICommandManager {
   private commands: Map<string, CommandFunction<any>> = new Map()
+
+  constructor(private quests?: IQuestManager) {}
 
   register(key: string, fn: CommandFunction<any>): void {
     this.commands.set(key, fn)
@@ -60,8 +62,8 @@ export class CommandManager implements ICommandManager {
         await map.handleTileEvent(currentTile, context)
       }
 
-      if (context.quest.hasQuest()) {
-        await context.quest.startQuest(context)
+      if (this.quests && this.quests.hasQuest()) {
+        await this.quests.startQuest(context)
       } else {
         printDirections(context)
       }

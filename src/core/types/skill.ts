@@ -58,3 +58,4 @@ export interface SkillEffectResult {
   targetName: string
   payload: any
 }
+

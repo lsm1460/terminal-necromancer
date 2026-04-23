@@ -2,8 +2,8 @@ import { createStatusCommand, ItemFormatterFn, StatusExtensionFn } from '~/comma
 import { Terminal } from '~/core/Terminal'
 import { ICommandManager, ICommandSystem } from '~/core/types'
 import i18n from '~/i18n'
-import { AppContext } from '../types'
 import { GameEquipAble } from '../item/GameEquipAble'
+import { AppContext } from '../types'
 
 export class StatusSystem implements ICommandSystem {
   constructor(private context: AppContext) {}

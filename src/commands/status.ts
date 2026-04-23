@@ -4,7 +4,7 @@ import i18n from '~/i18n'
 import { ItemType } from '~/types/item'
 
 export type ItemFormatterFn = (item: any, baseText: string) => string
-export type StatusExtensionFn = (args: string[], context: GameContext) => void
+export type StatusExtensionFn = (args: string[]) => void
 
 const defaultStatusRender = (args: string[], { player }: GameContext, itemFormatter?: ItemFormatterFn) => {
   const { atk: originAtk, def: originDef } = player
@@ -66,7 +66,7 @@ export const createStatusCommand = (options?: {
 
     // 2. 주입된 확장 정보 출력 (예: 군단 상태 등)
     if (options?.extension) {
-      options.extension(args, context)
+      options.extension(args)
     }
 
     Terminal.log(i18n.t('commands.look.status.footer'))

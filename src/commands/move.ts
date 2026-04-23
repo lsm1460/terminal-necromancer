@@ -3,34 +3,33 @@ import { Terminal } from '~/core/Terminal'
 import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
 
-// --- 공통 이동 함수 ---
-export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {
+export type MoveBlockerCheckFn = () => string | null
+export type BeforeMoveCallback = () => void
+
+export const createMoveCommand = (
+  direction: keyof typeof DIRECTIONS,
+  options?: {
+    blockerCheck?: MoveBlockerCheckFn
+    beforeMove?: BeforeMoveCallback
+  }
+): CommandFunction => {
   return async (args, context) => {
-    const { player, map, npcs, cheats, currentTile: tile } = context
-    const { monsters, npcIds } = tile || {}
+    const { player, map } = context
 
-    // 1. 길을 막고 있는 몬스터 찾기
-    const blockingMonster = monsters?.find((m) => m.isAlive && m.noEscape)
-
-    // 2. 길을 막고 있는 NPC 찾기 (적대적 + 살아있음 + 도망불가)
-    const blockingNPC = (npcIds || [])
-      .map((id) => npcs.getNPC(id))
-      .find((npc) => npc && npc.isAlive && npc.isHostile && npc.noEscape)
-
-    // 3. 둘 중 하나라도 존재하면 해당 타겟을 변수에 담기
-    const blockingTarget = blockingMonster || blockingNPC
-    const cannotPass = !cheats.playerIsHide && blockingTarget
-
-    if (cannotPass) {
-      Terminal.log(i18n.t('commands.move.cannot_escape', { name: blockingTarget.name }))
-      return false
+    if (options?.blockerCheck) {
+      const blockerName = options.blockerCheck()
+      if (blockerName) {
+        Terminal.log(i18n.t('commands.move.cannot_escape', { name: blockerName }))
+        return false
+      }
     }
 
     const { dx, dy } = DIRECTIONS[direction]
     const { x, y } = player.pos
+    const nextPos = { x: x + dx, y: y + dy }
 
-    if (map.canMove({ x: x + dx, y: y + dy })) {
-      await context.broadcast.play()
+    if (map.canMove(nextPos)) {
+      if (options?.beforeMove) options.beforeMove()
       player.move(dx, dy)
       return true
     }
@@ -39,3 +38,5 @@ export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction
     return false
   }
 }
+
+export const moveCommand = (direction: keyof typeof DIRECTIONS) => createMoveCommand(direction)
