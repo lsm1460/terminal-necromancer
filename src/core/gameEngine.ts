@@ -1,4 +1,5 @@
 import { GameAssets } from '~/assets'
+import * as Commands from '~/commands'
 import { MAP_IDS } from '~/consts'
 import { Battle, BattleComponentFactory } from '~/core/battle'
 import { EventBus } from '~/core/EventBus'
@@ -20,7 +21,7 @@ import { QuestManager } from '~/systems/QuestManager'
 import { SaveData, SaveSystem } from '~/systems/SaveSystem'
 import { PASSIVE_EFFECTS } from '~/systems/skill/passiveHandlers'
 import { SpecialSkillLogics } from '~/systems/skill/SpecialSkillLogics'
-import { handleCommand } from './commandHandler'
+import { CommandManager } from './CommandManager'
 import { ItemGenerator } from './item/ItemGenerator'
 import { BaseMapManager } from './map/BaseMapManager'
 import { MapData } from './map/MapData'
@@ -28,10 +29,11 @@ import { BaseNPCManager } from './npc/BaseNPCManager'
 import { NPCData } from './npc/NPCData'
 import { Player } from './player/Player'
 import { printDirections } from './statusPrinter'
-import { GameContext, IMapManager, INpcManager, Renderer } from './types'
+import { GameContext, ICommandSystem, IMapManager, INpcManager, Renderer } from './types'
 
 export class GameEngine {
   public context!: GameContext
+  public commands: CommandManager = new CommandManager()
 
   isProcessing = false
 
@@ -43,8 +45,8 @@ export class GameEngine {
     private configSystem: ConfigSystem,
     private eventBus: EventBus,
     private MapManager?: new (data: MapData, eventBus: EventBus) => IMapManager,
-    private NpcManager?: new (data: NPCData, eventBus: EventBus) => INpcManager
-    // itemGenerator // 주입안하면 아이템이 만들어지지 않음
+    private NpcManager?: new (data: NPCData, eventBus: EventBus) => INpcManager,
+    private commandSystems?: (new <T extends GameContext<any>>(context: T) => ICommandSystem)[]
     // npcSkillManager // npc skill이 있다면 위에서 생성하여 주입하자
     // player * 필수
   ) {}
@@ -62,8 +64,8 @@ export class GameEngine {
     const eventBus = this.eventBus
     const player = new Necromancer(itemFactory, level, eventBus, initData?.player)
     const mapData = new MapData(map)
-    const mapManager: IMapManager = this.MapManager 
-      ? new this.MapManager(mapData, this.eventBus) 
+    const mapManager: IMapManager = this.MapManager
+      ? new this.MapManager(mapData, this.eventBus)
       : new BaseMapManager(mapData)
     const world = new World(itemFactory, player, eventBus)
     const eventLedger = new EventLedger(eventBus, initData?.completedEvents)
@@ -75,8 +77,8 @@ export class GameEngine {
     const battleFactory = new BattleComponentFactory(player, world, dropSystem, eventBus, npcSkillManager)
     const battle = new Battle(player, monsterFactory, battleFactory)
     const npcData = new NPCData(npc, initData?.npcs)
-    const npcs: INpcManager = this.NpcManager 
-      ? new this.NpcManager(npcData, this.eventBus) 
+    const npcs: INpcManager = this.NpcManager
+      ? new this.NpcManager(npcData, this.eventBus)
       : new BaseNPCManager(npcData)
     const quest = new QuestManager(eventBus)
     new MonsterEvent(monsterFactory, eventBus, battle, world)
@@ -87,6 +89,7 @@ export class GameEngine {
     }
 
     this.context = {
+      commands: this.commands,
       player,
       map: mapManager,
       world,
@@ -104,9 +107,11 @@ export class GameEngine {
       cheats: {},
 
       get currentTile() {
-        return this.map.getTile((this.player as Player).pos)!;
-      }
+        return this.map.getTile((this.player as Player).pos)!
+      },
     } as GameContext
+
+    this.registerCommands()
 
     player.onDeath = () => {
       const hostility = (npcs as NPCManager).getFactionContribution('resistance')
@@ -154,6 +159,38 @@ export class GameEngine {
     printDirections(this.context)
   }
 
+  private registerCommands() {
+    const handler = this.commands
+
+    // 기본 명령어 등록
+    handler.register('up', Commands.moveCommand('up'))
+    handler.register('down', Commands.moveCommand('down'))
+    handler.register('left', Commands.moveCommand('left'))
+    handler.register('right', Commands.moveCommand('right'))
+    handler.register('attack', Commands.attackCommand)
+    handler.register('equip', Commands.equipCommand)
+    handler.register('exit', Commands.exitCommand)
+    handler.register('pick', Commands.pickCommand)
+    handler.register('drop', Commands.dropCommand)
+    handler.register('help', Commands.helpCommand)
+    handler.register('inventory', Commands.inventoryCommand)
+    handler.register('clear', Commands.clearCommand)
+    handler.register('use', Commands.useCommand)
+    handler.register('map', Commands.mapCommand)
+    handler.register('talk', Commands.talkCommand)
+    //
+    handler.register('look', Commands.lookCommand)
+    handler.register('skill', Commands.skillCommand)
+    handler.register('status', Commands.statusCommand)
+
+    if (this.commandSystems) {
+      this.commandSystems.forEach((System) => {
+        const _system = new System(this.context)
+        _system.install(this.commands)
+      })
+    }
+  }
+
   public async processCommand(
     command: string,
     options?: {
@@ -166,7 +203,7 @@ export class GameEngine {
 
     this.isProcessing = true
     try {
-      await handleCommand(command, this.context)
+      await this.commands.handle(command, this.context)
     } finally {
       this.isProcessing = false
     }

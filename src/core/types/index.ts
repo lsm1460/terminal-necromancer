@@ -75,8 +75,13 @@ export interface DefaultContextTypes {
   npcs: INpcManager;
 }
 
-export interface GameContext<T extends Partial<DefaultContextTypes> = {}> {
- player: 'player' extends keyof T ? T['player'] : DefaultContextTypes['player'];
+export interface ICommandManager {
+  register(key: string, fn: CommandFunction): void
+  handle(rawCmd: string, context: GameContext): Promise<string | boolean>
+}
+
+export interface GameContext<T extends Partial<DefaultContextTypes> = DefaultContextTypes> {
+  player: 'player' extends keyof T ? T['player'] : DefaultContextTypes['player'];
   map: IMapManager
   npcs: 'npcs' extends keyof T ? T['npcs'] : DefaultContextTypes['npcs'];
   world: World
@@ -95,6 +100,7 @@ export interface GameContext<T extends Partial<DefaultContextTypes> = {}> {
   }
   quest: QuestManager
   pendingAction?: (input: string) => void // 특수 프롬프트 응답 처리용 콜백
+  commands: ICommandManager
 
   currentTile: Tile
 }
@@ -123,7 +129,16 @@ export interface Renderer<C = any> {
   printNpcCard(npc: BaseNPC): void
 }
 
-export type CommandFunction = (args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
+export interface ICommandSystem {
+  install(handler: ICommandManager): void
+}
+
+export type CommandFunction<C extends GameContext<any> = GameContext<DefaultContextTypes>> = (
+  args: string[],
+  context: C
+) => boolean | string | Promise<boolean | string>
+
+export type CustomCommands = Record<string, CommandFunction<any>>
 
 export * from './battle'
 export * from './events'

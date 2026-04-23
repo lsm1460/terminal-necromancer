@@ -58,7 +58,7 @@ async function startTalkSession(npc: GameNPC, context: GameContext) {
 
   try {
     while (true) {
-      const menuChoices = [...npc.getChoices(context), { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` }]
+      const menuChoices = [...npc.getChoices(context as any), { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` }]
 
       const action = await Terminal.select(i18n.t('talk.what_to_do'), menuChoices)
 

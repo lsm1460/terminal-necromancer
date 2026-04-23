@@ -21,7 +21,7 @@ export const skillCommand: CommandFunction = async (args, context) => {
     return unit
   })
 
-  const ally: CombatUnit[] = player.minions.map((m) => battle.toCombatUnit(m, 'minion'))
+  const ally: CombatUnit[] = player.party.map((m) => battle.toCombatUnit(m, 'party'))
 
   const { isAggressive, gross } = await SkillManager.requestAndExecuteSkill(
     battle.toCombatUnit(player, 'player'),

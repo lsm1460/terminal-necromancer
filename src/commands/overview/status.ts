@@ -1,9 +1,10 @@
 import { Terminal } from '~/core/Terminal'
 import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
+import { AppContext } from '~/systems/types'
 import { ItemType } from '~/types/item'
 
-export const statusCommand: CommandFunction = (args, { player }) => {
+export const statusCommand: CommandFunction<AppContext> = (args, { player }) => {
   const { atk: originAtk, def: originDef, skeleton, maxSkeleton } = player
   const { atk, def, crit, eva, hp, mp, maxHp, maxMp, gold, level, exp, equipped } = player.computed
 

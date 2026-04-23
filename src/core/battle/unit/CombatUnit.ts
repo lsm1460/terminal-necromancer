@@ -39,7 +39,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   constructor(
     public ref: T,
-    public type: 'player' | 'minion' | 'monster' | 'npc',
+    public type: 'player' | 'party' | 'monster' | 'npc',
     private manager: Battle
   ) {
     this.id = ref.id
@@ -51,7 +51,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   public get isPlayerSide() {
-    return this.type === 'player' || this.type === 'minion'
+    return this.type === 'player' || this.type === 'party'
   }
 
   public get isEnemySide() {

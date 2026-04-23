@@ -11,11 +11,12 @@ import { GameEventType } from './core/types'
 import i18n from './i18n'
 import { CLIRenderer } from './renderers/cliRenderer'
 import { AchievementManager } from './systems/AchievementManager'
+import { CheatSystem } from './systems/commands/CheatSystem'
 import { ConfigSystem } from './systems/ConfigSystem'
-import { SkillEffectPresenter } from './systems/presenter/SkillEffectPresenter'
-import { SaveSystem } from './systems/SaveSystem'
 import { MapManager } from './systems/MapManager'
 import { NPCManager } from './systems/NpcManager'
+import { SkillEffectPresenter } from './systems/presenter/SkillEffectPresenter'
+import { SaveSystem } from './systems/SaveSystem'
 
 const loadJSON = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
@@ -57,7 +58,7 @@ const run = async () => {
     return i18n.t(info.key, info.args)
   })
 
-  const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager, NPCManager)
+  const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager, NPCManager, [CheatSystem])
 
   await i18n.changeLanguage(locale)
 

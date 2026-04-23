@@ -32,7 +32,7 @@ export class BattleUnitManager {
     if (this.player.party) {
       this.player.party.forEach((m) => {
         if (m.isAlive) {
-          const mUnit = this.toCombatUnit(m, 'minion')
+          const mUnit = this.toCombatUnit(m, 'party')
           const _res = this.registerUnit(mUnit)
 
           if (_res) {
@@ -80,7 +80,7 @@ export class BattleUnitManager {
 
   getPlayerSide() {
     return _.chain(Array.from(this.unitCache.values()))
-      .filter((unit) => (unit.type === 'minion' || unit.type === 'player') && unit.ref.isAlive)
+      .filter((unit) => (unit.type === 'party' || unit.type === 'player') && unit.ref.isAlive)
       .sortBy((unit) => {
         if (unit.type === 'player') return Infinity
         return _.findIndex(this.player.party, { id: unit.id })
