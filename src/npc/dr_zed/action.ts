@@ -1,6 +1,6 @@
 import { EventLedger } from '~/core/EventLedger'
 import { Player } from '~/core/player/Player'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { AppContext } from '~/systems/types'

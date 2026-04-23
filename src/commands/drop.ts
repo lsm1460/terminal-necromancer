@@ -1,6 +1,5 @@
+import { CommandFunction, Terminal } from '~/core'
 import { Item } from '~/core/item/Item'
-import { Terminal } from '~/core/Terminal'
-import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
 
 export const dropCommand: CommandFunction = async (args, context) => {

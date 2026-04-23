@@ -1,5 +1,4 @@
-import { Terminal } from '~/core/Terminal'
-import { CommandFunction } from '~/core/types'
+import { CommandFunction, Terminal } from '~/core'
 import i18n from '~/i18n'
 import { ItemType } from '~/types/item'
 

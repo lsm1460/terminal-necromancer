@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { getTileFromDirection, printPath } from '~/commands'
 import { COMMAND_GROUPS, COMMAND_KEYS } from '~/consts'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { useGame } from '~/hooks/useGame'
 import { useInputLock } from '~/hooks/useInputLock'
 import i18n from '~/i18n'

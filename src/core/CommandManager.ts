@@ -1,5 +1,5 @@
 import { COMMAND_GROUPS } from '~/consts'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { printDirections, printTileStatus } from './statusPrinter'
 import { CommandFunction, GameContext, ICommandManager, IQuestManager } from './types'
 

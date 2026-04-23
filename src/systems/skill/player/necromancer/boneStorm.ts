@@ -1,6 +1,6 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Player } from '~/core/player/Player'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'

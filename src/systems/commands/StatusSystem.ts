@@ -1,5 +1,5 @@
 import { createStatusCommand, ItemFormatterFn, StatusExtensionFn } from '~/commands/status'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { ICommandManager, ICommandSystem } from '~/core/types'
 import i18n from '~/i18n'
 import { GameEquipAble } from '../item/GameEquipAble'

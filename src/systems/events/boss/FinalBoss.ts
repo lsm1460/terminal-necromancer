@@ -1,5 +1,5 @@
 import { Ending } from '~/systems'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { BaseNPC } from '~/core/npc/BaseNPC'

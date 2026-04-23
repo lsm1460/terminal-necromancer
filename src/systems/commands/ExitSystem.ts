@@ -1,5 +1,5 @@
 import { createExitCommand } from '~/commands'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { GameEventType, ICommandManager, ICommandSystem } from '~/core/types'
 import i18n from '~/i18n'
 import { SaveSystem } from '~/systems/SaveSystem'

@@ -1,7 +1,5 @@
 import { SkeletonRarity } from './consts'
-import { BaseNPC } from './core/npc/BaseNPC'
-import { AttackType, GameContext, NpcSkill } from './core/types'
-import { AppContext } from './systems/types'
+import { AttackType, NpcSkill } from './core'
 
 export type BattleTarget = {
   id: string

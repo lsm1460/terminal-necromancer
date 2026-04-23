@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { GameAmor } from '~/systems/item/GameAmor'
 import { GameWeapon } from '~/systems/item/GameWeapon'
 import { BattleTarget } from '~/types'

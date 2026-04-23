@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { Buff, BuffOptions } from '../Buff'
 import { CombatUnit } from './CombatUnit'

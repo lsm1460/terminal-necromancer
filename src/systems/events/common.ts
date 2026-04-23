@@ -1,6 +1,5 @@
-import _ from 'lodash'
-import { Terminal } from '~/core/Terminal'
-import { Tile } from '~/core/types'
+import uniq from 'lodash/uniq'
+import { Terminal, Tile } from '~/core'
 import i18n from '~/i18n'
 import { delay } from '~/utils'
 import { EventHandler } from '.'
@@ -53,7 +52,7 @@ export const commonHandlers: Record<string, EventHandler> = {
     if (!isMine && !isDead) return
 
     const caronNpcId = isDead ? 'caron_dead' : 'caron_alive'
-    tile.npcIds = _.uniq([...(tile.npcIds || []), caronNpcId])
+    tile.npcIds = uniq([...(tile.npcIds || []), caronNpcId])
 
     if (isDead) {
       Terminal.log(i18n.t('events.caron.whisper_dead'))

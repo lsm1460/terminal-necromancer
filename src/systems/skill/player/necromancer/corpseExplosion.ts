@@ -1,6 +1,4 @@
-import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Terminal } from '~/core/Terminal'
-import { ExecuteSkill } from '~/core/types'
+import { CombatUnit, ExecuteSkill, Terminal } from '~/core'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'

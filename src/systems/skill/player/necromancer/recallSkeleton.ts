@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { ExecuteSkill } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'

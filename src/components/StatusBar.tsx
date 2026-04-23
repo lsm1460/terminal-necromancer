@@ -1,6 +1,6 @@
 import { LogOut, Settings } from 'lucide-react'
 import React, { useMemo } from 'react'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { GameEventType } from '~/core/types'
 import { useGame } from '~/hooks/useGame'
 import i18n from '~/i18n'

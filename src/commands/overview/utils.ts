@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 
 // HP 바 렌더링 유틸리티

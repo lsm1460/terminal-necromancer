@@ -1,5 +1,5 @@
 import { Player } from '~/core/player/Player'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { ExecuteSkill, Skill } from '~/core/types'
 import { World } from '~/core/World'
 import i18n from '~/i18n'

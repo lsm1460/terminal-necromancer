@@ -1,6 +1,4 @@
-import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Terminal } from '~/core/Terminal'
-import { CommandFunction } from '~/core/types'
+import { CombatUnit, CommandFunction, Terminal } from '~/core'
 import i18n from '~/i18n'
 
 export const attackCommand: CommandFunction = async (args, context) => {

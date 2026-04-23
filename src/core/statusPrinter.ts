@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
 import { Player } from './player/Player'

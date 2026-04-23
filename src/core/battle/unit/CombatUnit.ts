@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
 import { AttackType, TakeDamageReturn } from '~/core/types'

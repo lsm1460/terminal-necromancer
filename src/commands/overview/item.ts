@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { Item } from '~/core/item/Item'
 import { Drop } from '~/core/item/types'
 import { Player } from '~/core/player/Player'

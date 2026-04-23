@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { GameEventType } from '~/core/types'
 import { EventBus } from './EventBus'
 

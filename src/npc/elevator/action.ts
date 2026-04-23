@@ -1,5 +1,5 @@
 import { MAP_IDS, MapId } from '~/consts'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { AppContext } from '~/systems/types'

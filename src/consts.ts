@@ -1,4 +1,4 @@
-import { AttackType } from './core/types'
+import { AttackType } from './core'
 import { Direction, Vector } from './types'
 
 export const COMMAND_KEYS = {

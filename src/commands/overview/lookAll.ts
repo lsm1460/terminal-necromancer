@@ -1,6 +1,6 @@
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import { printTileStatus } from '~/core/statusPrinter'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { GameDrop } from '~/types/item'

@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { ICommandManager, ICommandSystem } from '~/core/types'
 import { AppContext } from '../types'
 

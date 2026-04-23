@@ -1,6 +1,5 @@
+import { CommandFunction, GameContext, Terminal } from '~/core'
 import { Player } from '~/core/player/Player'
-import { Terminal } from '~/core/Terminal'
-import { CommandFunction, GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { LootBag } from '~/types'
 import { GameDrop } from '~/types/item'

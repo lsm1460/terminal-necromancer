@@ -1,6 +1,5 @@
+import { Terminal, Tile } from '~/core'
 import { Player } from '~/core/player/Player'
-import { Terminal } from '~/core/Terminal'
-import { Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { delay } from '~/utils'
 import { EventHandler } from '.'

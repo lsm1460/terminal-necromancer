@@ -1,5 +1,5 @@
 import { MAP_IDS } from '~/consts'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
 import { AppContext } from '~/systems/types'

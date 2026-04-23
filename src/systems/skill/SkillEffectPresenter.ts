@@ -1,5 +1,5 @@
 import { EventBus } from '~/core/EventBus'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { GameEventType, SkillEffectResult } from '~/core/types'
 import i18n from '~/i18n'
 

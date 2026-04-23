@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { ExecuteSkill, GameEventType } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'

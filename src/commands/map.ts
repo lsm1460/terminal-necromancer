@@ -1,6 +1,5 @@
 import { FULL_VISIBLE_MAP_ID_LIST, MAP_IDS } from '~/consts'
-import { Terminal } from '~/core/Terminal'
-import { CommandFunction } from '~/core/types'
+import { CommandFunction, Terminal } from '~/core'
 import i18n from '~/i18n'
 
 export const mapCommand: CommandFunction = async (args, context) => {

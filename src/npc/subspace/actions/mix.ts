@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { SKELETON_RARITIES, SkeletonFactory } from '~/systems/skill/player/necromancer/SkeletonFactory'

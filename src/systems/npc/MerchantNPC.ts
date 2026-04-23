@@ -1,6 +1,6 @@
 import { ShopService } from '~/core/npc/ShopService'
 import { Player } from '~/core/player/Player'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { AppContext } from '../types'
 import { GameNPC } from './GameNPC'

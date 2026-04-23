@@ -1,5 +1,5 @@
 import { DIRECTIONS } from '~/consts'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
 

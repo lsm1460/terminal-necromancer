@@ -1,5 +1,5 @@
 import { sample, without } from 'lodash'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { CaronService } from '~/npc/caron/service'

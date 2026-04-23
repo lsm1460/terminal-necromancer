@@ -1,5 +1,5 @@
 import { EventLedger } from '~/core/EventLedger'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'

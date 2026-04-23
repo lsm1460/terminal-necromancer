@@ -1,5 +1,5 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { getPlayerSkills, SkillUtils } from '~/systems/skill/player'

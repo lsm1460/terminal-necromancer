@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Tile } from '~/core/types'
 import i18n from '~/i18n'

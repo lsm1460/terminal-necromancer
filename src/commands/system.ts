@@ -1,6 +1,5 @@
 import { COMMAND_GROUPS } from '~/consts'
-import { Terminal } from '~/core/Terminal'
-import { CommandFunction } from '~/core/types'
+import { CommandFunction, Terminal } from '~/core'
 
 export type ExitHandlerFn = () => Promise<void>
 

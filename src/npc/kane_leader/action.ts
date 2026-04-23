@@ -1,4 +1,4 @@
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { speak } from '~/utils'

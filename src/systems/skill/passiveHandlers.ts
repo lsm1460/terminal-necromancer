@@ -1,6 +1,5 @@
+import { PassiveDefinition, Terminal } from '~/core'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
-import { Terminal } from '~/core/Terminal'
-import { PassiveDefinition } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { BattleTarget, PhasesShift } from '~/types'

@@ -1,6 +1,6 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { AppContext } from '~/systems/types'
 import { BossLogic } from './BossLogic'

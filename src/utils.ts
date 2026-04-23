@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { Terminal } from './core/Terminal'
+import { Terminal } from './core'
 
 export function generateId(baseId?: string, length = 8): string {
   const uniqueHash = nanoid(length)

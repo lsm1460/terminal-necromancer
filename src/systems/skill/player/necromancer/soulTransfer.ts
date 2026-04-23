@@ -1,5 +1,4 @@
-import { Terminal } from '~/core/Terminal'
-import { ExecuteSkill } from '~/core/types'
+import { ExecuteSkill, Terminal } from '~/core'
 import i18n from '~/i18n'
 import { BattleTarget } from '~/types'
 

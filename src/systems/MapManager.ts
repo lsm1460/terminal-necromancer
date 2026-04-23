@@ -1,7 +1,7 @@
 import { compact, flatten, pullAt, random, remove, shuffle } from 'lodash'
 import { MAP_IDS, MapId } from '~/consts'
 import { EventBus } from '~/core/EventBus'
-import { Terminal } from '~/core/Terminal'
+import { Terminal } from '~/core'
 import { assetManager } from '~/core/WebAssetManager'
 import { BaseMapManager } from '~/core/map/BaseMapManager'
 import { MapData } from '~/core/map/MapData'
