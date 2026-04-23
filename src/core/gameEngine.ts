@@ -20,19 +20,18 @@ import { QuestManager } from '~/systems/QuestManager'
 import { SaveData, SaveSystem } from '~/systems/SaveSystem'
 import { PASSIVE_EFFECTS } from '~/systems/skill/passiveHandlers'
 import { SpecialSkillLogics } from '~/systems/skill/SpecialSkillLogics'
-import { Renderer } from '~/types'
 import { handleCommand } from './commandHandler'
 import { ItemGenerator } from './item/ItemGenerator'
 import { BaseMapManager } from './map/BaseMapManager'
 import { MapData } from './map/MapData'
 import { BaseNPCManager } from './npc/BaseNPCManager'
 import { NPCData } from './npc/NPCData'
-import { printDirections } from './statusPrinter'
-import { DefaultContextTypes, GameContext, IMapManager, INpcManager } from './types'
 import { Player } from './player/Player'
+import { printDirections } from './statusPrinter'
+import { GameContext, IMapManager, INpcManager, Renderer } from './types'
 
-export class GameEngine<T extends Partial<DefaultContextTypes>> {
-  public context!: GameContext<T>
+export class GameEngine {
+  public context!: GameContext
 
   isProcessing = false
 
@@ -107,7 +106,7 @@ export class GameEngine<T extends Partial<DefaultContextTypes>> {
       get currentTile() {
         return this.map.getTile((this.player as Player).pos)!;
       }
-    } as GameContext<T>
+    } as GameContext
 
     player.onDeath = () => {
       const hostility = (npcs as NPCManager).getFactionContribution('resistance')

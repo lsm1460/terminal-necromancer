@@ -11,7 +11,7 @@ export interface NPCState {
 export interface INpcManager<N = BaseNPC> {
   getNPC(id: string): N | null
   getAliveNPCInTile(
-    context: { tile: Tile; hasKnight: boolean },
+    context: { tile: Tile },
     options?: {
       withoutFaction?: string[]
     }

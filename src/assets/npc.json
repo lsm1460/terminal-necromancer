@@ -395,7 +395,7 @@
     "def": 27,
     "eva": 0.03,
     "exp": 1500,
-    "isAlive": true,
+    "isAlive": false,
     "reborn": false,
     "dropTableId": "",
     "skills": []

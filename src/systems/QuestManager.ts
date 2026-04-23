@@ -1,6 +1,5 @@
 import { EventBus } from '~/core/EventBus';
-import { GameEventType } from '~/core/types';
-import { AppContext } from './types';
+import { GameContext, GameEventType } from '~/core/types';
 
 export class QuestManager {
   private questQue: { npcId: string; questType: string }[] = []
@@ -17,7 +16,7 @@ export class QuestManager {
     return this.questQue.length > 0
   }
 
-  async startQuest(context: AppContext) {
+  async startQuest(context: GameContext) {
     if (this.questQue.length === 0) return
 
     const currentQuests = this.questQue.splice(0)
@@ -27,7 +26,7 @@ export class QuestManager {
     }
   }
 
-  async processNpcDeaths(npcId: string, context: AppContext) {
+  async processNpcDeaths(npcId: string, context: GameContext) {
     const npc = context.npcs.getNPC(npcId)
 
     if (npc) await npc.afterDead(context)

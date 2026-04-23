@@ -1,4 +1,4 @@
-import { CommandFunction } from '~/types'
+import { CommandFunction } from '~/core/types'
 import { GameDrop } from '~/types/item'
 import { lookAll, lookItem, printItem } from './overview'
 

@@ -1,7 +1,7 @@
 import { DIRECTIONS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
+import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
-import { CommandFunction } from '~/types'
 
 // --- 공통 이동 함수 ---
 export const moveCommand = (direction: keyof typeof DIRECTIONS): CommandFunction => {

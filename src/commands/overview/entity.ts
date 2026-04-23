@@ -1,14 +1,14 @@
 import _ from 'lodash'
 import { Terminal } from '~/core/Terminal'
+import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import GolemWrapper from '~/systems/job/necromancer/GolemWrapper'
 import KnightWrapper from '~/systems/job/necromancer/KnightWrapper'
-import { AppContext } from '~/systems/types'
 import { BattleTarget } from '~/types'
 import { renderHpBar, selectTarget } from './utils'
 
 // 미니언 및 몬스터 정보 출력
-export const printEntity = (target: BattleTarget, context: AppContext) => {
+export const printEntity = (target: BattleTarget, context: GameContext) => {
   const { npcs, npcSkills } = context
 
   const isMinion = target.isMinion
@@ -148,7 +148,7 @@ export const printKnight = (target: BattleTarget) => {
   }
 }
 
-export const lookBattleTarget = async (targets: BattleTarget[], context: AppContext) => {
+export const lookBattleTarget = async (targets: BattleTarget[], context: GameContext) => {
   const subChoices = targets.map((t) => ({ name: t.id, message: `${t.name} (hp: ${t.hp}/${t.maxHp})` }))
 
   const selected = await selectTarget(subChoices)

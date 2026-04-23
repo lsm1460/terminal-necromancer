@@ -1,11 +1,9 @@
 import { useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { GameEngine } from '~/core/gameEngine'
+import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
 import { useInputLock } from './useInputLock'
-import i18n from '~/i18n'
-import { useTranslation } from 'react-i18next'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { NPCManager } from '~/systems/NpcManager'
 
 export const getCommandMap = (): Record<string, string> => ({
   a: i18n.t('commands.attack'),
@@ -17,7 +15,7 @@ export const getCommandMap = (): Record<string, string> => ({
   l: i18n.t('commands.look.label'),
 })
 
-export const useShortcuts = (engine: React.RefObject<GameEngine<{player: Necromancer, npcs: NPCManager}> | null>) => {
+export const useShortcuts = (engine: React.RefObject<GameEngine | null>) => {
   const { t } = useTranslation()
   const disabled = useInputLock()
   const { addLog } = useGameStore()

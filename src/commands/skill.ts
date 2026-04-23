@@ -1,7 +1,7 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { SkillManager } from '~/core/skill/SkillManager'
+import { CommandFunction } from '~/core/types'
 import { GameNPC } from '~/systems/npc/GameNPC'
-import { CommandFunction } from '~/types'
 import { delay } from '~/utils'
 
 export const skillCommand: CommandFunction = async (args, context) => {
@@ -9,7 +9,7 @@ export const skillCommand: CommandFunction = async (args, context) => {
 
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []),
-    ...npcs.getAliveNPCInTile({ tile, hasKnight: !!player.knight }, { withoutFaction: ['untouchable'] }),
+    ...npcs.getAliveNPCInTile({ tile }, { withoutFaction: ['untouchable'] }),
   ]
 
   const enemies: CombatUnit[] = battleTargets.map((target) => {

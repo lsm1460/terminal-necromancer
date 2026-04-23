@@ -1,6 +1,5 @@
-import { Renderer } from '../types'
 import { BaseNPC } from './npc/BaseNPC'
-import { Translatable } from './types'
+import { Renderer, Translatable } from './types'
 
 export class Terminal {
   private static renderer: Renderer | null = null

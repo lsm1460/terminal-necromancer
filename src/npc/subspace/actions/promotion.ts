@@ -5,7 +5,7 @@ import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 
 export const handlePromotion = async (context: AppContext) => {
-  const { player, events } = context
+  const { player, events, npcs } = context
   const isDead = events.isCompleted('caron_is_dead')
   const npcKey = isDead ? 'caron_is_dead' : 'caron_is_mine'
   const getMsg = (key: string, p?: any) => i18n.t(`npc.subspace.promotion.${npcKey}.${key}`, p) as string
@@ -23,6 +23,7 @@ export const handlePromotion = async (context: AppContext) => {
 
   const target = player.skeleton.find((sk) => sk.id === selectedId)!
   if (await Terminal.confirm(getMsg('confirm', { name: target.name }))) {
+    npcs.setAlive('_knight')
     player.unlockKnight(target)
     player.removeMinion(selectedId)
     Terminal.log(getMsg('success'))

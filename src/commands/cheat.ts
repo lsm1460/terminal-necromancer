@@ -1,7 +1,7 @@
 import { Terminal } from '~/core/Terminal'
-import { AppContext } from '~/systems/types'
+import { GameContext } from '~/core/types'
 
-export const handleCheat = (rawCmd: string, context: AppContext): boolean => {
+export const handleCheat = (rawCmd: string, context: GameContext): boolean => {
   const trimmed = rawCmd.trim()
   const { player, currentTile: tile } = context
 

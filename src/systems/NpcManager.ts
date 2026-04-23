@@ -15,43 +15,36 @@ export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
   private factionContribution: Record<string, number> = {}
 
   constructor(
-    data: NPCData, 
-    private eventBus: EventBus, 
+    data: NPCData,
+    private eventBus: EventBus,
     savedData?: any
   ) {
-    super(data);
-    
+    super(data)
+
     // 게임 특화 데이터 복구
     if (savedData) {
-      this.factionHostility = savedData.factionHostility || {};
-      this.factionContribution = savedData.factionContribution || {};
+      this.factionHostility = savedData.factionHostility || {}
+      this.factionContribution = savedData.factionContribution || {}
     }
 
-    this.eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, this.reborn);
+    this.eventBus.subscribe(GameEventType.SKILL_RAISE_SKELETON_SUCCESS, this.reborn)
   }
 
-  public override getNPC(id: string): any {
-    const base = this.data.getBase(id);
-    const state = this.data.getState(id);
+  public override getNPC(id: string): GameNPC | null {
+    const base = this.data.getBase(id)
+    const state = this.data.getState(id)
 
-    if (!base || !state || state.reborn) return null;
+    if (!base || !state || state.reborn) return null
 
-    // 프로젝트 특화 클래스(예: Merchant, Guard 등)를 가져옴
-    const NpcClass = getNPCClass(id); 
-    
-    // 만약 특화 클래스가 없다면 기본 BaseNPC라도 생성
-    return NpcClass 
-      ? new NpcClass(id, base, state, this)
-      : super.getNPC(id);
+    const NpcClass = getNPCClass(id)
+
+    return NpcClass ? new NpcClass(id, base, state, this) : super.getNPC(id)
   }
 
-  public override getAliveNPCInTile(
-    { tile, hasKnight }: { tile: Tile, hasKnight: boolean; },
-    options?: { withoutFaction?: string[] }
-  ) {
+  public override getAliveNPCInTile({ tile }: { tile: Tile }, options?: { withoutFaction?: string[] }) {
     const ids = [...(tile.npcIds || [])]
-
-    if (hasKnight) {
+    const hasKnight = this.getNPC('_knight')
+    if (hasKnight && hasKnight.isAlive) {
       ids.push('_knight')
     }
 

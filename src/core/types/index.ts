@@ -8,6 +8,7 @@ import { CombatUnit } from '../battle/unit/CombatUnit'
 import { EventBus } from '../EventBus'
 import { DropSystem } from '../item/DropSystem'
 import { MonsterFactory } from '../MonsterFactory'
+import { BaseNPC } from '../npc/BaseNPC'
 import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { World } from '../World'
@@ -98,7 +99,31 @@ export interface GameContext<T extends Partial<DefaultContextTypes> = {}> {
   currentTile: Tile
 }
 
+export interface Renderer<C = any> {
+  print(message: string): void
+  update(message: string): void
+  availableTalks(list: { name: string; hasQuest: boolean }[]): void
+  clear(): void
+  printStatus(context: C): void
+  // 입력 관련 메서드 추가
+  select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string>
+  confirm(message: string): Promise<boolean>
+  prompt(message: string): Promise<void> // 기존의 alert 역할을 prompt로 명칭 변경
+  multiselect(
+    message: string,
+    choices: { name: string; message: string }[],
+    options?: { initial?: string[]; maxChoices?: number }
+  ): Promise<string[]>
+  move(directions: string[]): void
+  look(message: string, name: string, type: string): void
+  pick(name: string, message: string): void
+  attack(message: string, prefix?: string): void
+  skill(message: string, prefix?: string): void
+  talk(name: string): void
+  printNpcCard(npc: BaseNPC): void
+}
 
+export type CommandFunction = (args: string[], context: GameContext) => boolean | string | Promise<boolean | string>
 
 export * from './battle'
 export * from './events'

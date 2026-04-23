@@ -6,11 +6,12 @@ import { assetManager } from '~/core/WebAssetManager'
 import { BaseMapManager } from '~/core/map/BaseMapManager'
 import { MapData } from '~/core/map/MapData'
 import { printTileStatus } from '~/core/statusPrinter'
-import { GameContext, GameEventType, Tile } from '~/core/types'
+import { GameEventType, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { allEventHandlers } from '~/systems/events'
+import { AppContext } from './types'
 
-export class MapManager extends BaseMapManager {
+export class MapManager extends BaseMapManager<AppContext> {
   constructor(
     data: MapData,
     private eventBus: EventBus
@@ -18,7 +19,7 @@ export class MapManager extends BaseMapManager {
     super(data, MAP_IDS.B1_SUBWAY)
   }
 
-  public override async changeScene(targetSceneId: MapId, context: GameContext) {
+  public override async changeScene(targetSceneId: MapId, context: AppContext) {
     const { player, broadcast, currentTile } = context
     const newScene = this.data.getScene(targetSceneId)
 
@@ -42,7 +43,7 @@ export class MapManager extends BaseMapManager {
     printTileStatus(context)
   }
 
-  async handleTileEvent(tile: Tile, context: GameContext) {
+  async handleTileEvent(tile: Tile, context: AppContext) {
     const handler = allEventHandlers[tile.event]
     if (handler) await handler(tile, context)
 

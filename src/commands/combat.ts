@@ -1,7 +1,7 @@
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { Terminal } from '~/core/Terminal'
+import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
-import { CommandFunction } from '~/types'
 
 export const attackCommand: CommandFunction = async (args, context) => {
   const { player, npcs, battle, world, currentTile: tile } = context
@@ -19,7 +19,7 @@ export const attackCommand: CommandFunction = async (args, context) => {
   const battleTargets = [
     ...(tile.monsters?.filter((m) => m.isAlive) || []).map((m) => battle.toCombatUnit(m, 'monster')),
     ...npcs
-      .getAliveNPCInTile({ hasKnight: !!player.knight, tile }, { withoutFaction: ['untouchable'] })
+      .getAliveNPCInTile({ tile }, { withoutFaction: ['untouchable'] })
       .map((n) => battle.toCombatUnit(n!, 'npc')),
   ] as CombatUnit[]
 

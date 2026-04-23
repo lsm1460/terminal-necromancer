@@ -71,32 +71,6 @@ export type LootBag = {
   gold: number
 }
 
-export interface Renderer {
-  print(message: string): void
-  update(message: string): void
-  availableTalks(list: { name: string; hasQuest: boolean }[]): void
-  clear(): void
-  printStatus(context: AppContext): void
-  // 입력 관련 메서드 추가
-  select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string>
-  confirm(message: string): Promise<boolean>
-  prompt(message: string): Promise<void> // 기존의 alert 역할을 prompt로 명칭 변경
-  multiselect(
-    message: string,
-    choices: { name: string; message: string }[],
-    options?: { initial?: string[]; maxChoices?: number }
-  ): Promise<string[]>
-  move(directions: string[]): void
-  look(message: string, name: string, type: string): void
-  pick(name: string, message: string): void
-  attack(message: string, prefix?: string): void
-  skill(message: string, prefix?: string): void
-  talk(name: string): void
-  printNpcCard(npc: BaseNPC): void
-}
-
-export type CommandFunction = (args: string[], context: AppContext) => boolean | string | Promise<boolean | string>
-
 export const SKILL_IDS = {
   RAISE_SKELETON: 'RAISE_SKELETON',
   RECALL_SKELETON: 'RECALL_SKELETON',

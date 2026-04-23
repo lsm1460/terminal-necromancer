@@ -1,9 +1,8 @@
 import { COMMAND_GROUPS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
-import { GameEventType } from '~/core/types'
+import { CommandFunction, GameEventType } from '~/core/types'
 import i18n from '~/i18n'
 import { SaveSystem } from '~/systems/SaveSystem'
-import { CommandFunction } from '~/types'
 import { delay } from '~/utils'
 
 // --- Exit ---

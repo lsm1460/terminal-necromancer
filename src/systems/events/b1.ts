@@ -18,7 +18,5 @@ export const b1Handlers: Record<string, EventHandler> = {
 
     context.events.completeEvent('item-tutorial')
     printLootStatus(context)
-
-    // Terminal.log('')
   },
 }

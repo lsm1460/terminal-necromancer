@@ -1,8 +1,8 @@
 import { Terminal } from '~/core/Terminal'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
-import { AppContext } from '~/systems/types'
-import { GameContext, PositionType } from './types'
+import { Player } from './player/Player'
+import { GameContext, IMapManager, INpcManager, PositionType, Tile } from './types'
 
 export function printDirections(context: GameContext) {
   const { player, map } = context
@@ -18,12 +18,16 @@ export function printDirections(context: GameContext) {
   Terminal.move(directions)
 }
 
-export function printTileStatus(context: AppContext) {
+interface TileStatusRequired extends LootStatusRequired {
+  npcs: INpcManager
+}
+
+export function printTileStatus(context: TileStatusRequired) {
   const { player, npcs, currentTile: tile } = context
 
-  Terminal.log(`\n` + i18n.t(`tiles.${tile.id}.dialogue`))
+  Terminal.log({ key: `tiles.${tile.id}.dialogue` })
 
-  const alive = npcs.getAliveNPCInTile({ tile, hasKnight: !!player.knight })
+  const alive = npcs.getAliveNPCInTile({ tile })
 
   if (alive.length > 0) {
     const list = alive.map((_npc) => {
@@ -53,7 +57,19 @@ export function printCorpses(world: World, pos: PositionType) {
   }
 }
 
-export function printLootStatus({ player, world, map, currentTile }: AppContext) {
+interface LootStatusRequired {
+  player: Player
+  world: World
+  map: IMapManager
+  currentTile: Tile
+}
+
+export function printLootStatus({
+  player,
+  world,
+  map,
+  currentTile,
+}: LootStatusRequired) {
   const bag = world.getLootBagAt(map.currentSceneId, currentTile.id)
   if (bag) Terminal.pick('lootBag', `\n \x1b[31m[!]\x1b[0m ${i18n.t('found_soul')}`)
 
@@ -63,7 +79,7 @@ export function printLootStatus({ player, world, map, currentTile }: AppContext)
 export function printDrops(world: World, pos: PositionType) {
   const drops = world.getDropsAt(pos)
   if (drops?.length) {
-    Terminal.log(`\n${i18n.t('local_drops')}`)
+    Terminal.log({ key: 'local_drops' })
     drops.forEach((d) => {
       const qtyText = !!d.quantity ? ` x ${d.quantity}` : ''
       const { name, origin } = d

@@ -1,7 +1,7 @@
 import { Item } from '~/core/item/Item'
 import { Terminal } from '~/core/Terminal'
+import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
-import { CommandFunction } from '~/types'
 
 export const dropCommand: CommandFunction = async (args, context) => {
   const { player, world } = context

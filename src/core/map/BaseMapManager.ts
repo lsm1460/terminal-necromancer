@@ -1,8 +1,8 @@
 import { Player } from '../player/Player'
-import { GameContext, IMapManager, PositionType, SceneData, Tile } from '../types'
+import { IMapManager, PositionType, SceneData, Tile } from '../types'
 import { MapData } from './MapData'
 
-export class BaseMapManager implements IMapManager {
+export class BaseMapManager<C = any> implements IMapManager {
   public currentSceneId: string
 
   constructor(
@@ -45,5 +45,5 @@ export class BaseMapManager implements IMapManager {
     return this.data.isUnlocked(mapId, completed)
   }
 
-  async handleTileEvent(tile: Tile, context: GameContext) {}
+  async handleTileEvent(tile: Tile, context: C) {}
 }

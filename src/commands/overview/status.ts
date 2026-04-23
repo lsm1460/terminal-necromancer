@@ -1,7 +1,6 @@
 import { Terminal } from '~/core/Terminal'
+import { CommandFunction } from '~/core/types'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { CommandFunction } from '~/types'
 import { ItemType } from '~/types/item'
 
 export const statusCommand: CommandFunction = (args, { player }) => {
