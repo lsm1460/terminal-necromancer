@@ -23,6 +23,8 @@ import { MapManager } from '~/systems/MapManager'
 import { NPCManager } from '~/systems/NpcManager'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { CheatSystem } from '~/systems/commands/CheatSystem'
+import { ExitSystem } from '~/systems/commands/ExitSystem'
+import { StatusSystem } from '~/systems/commands/StatusSystem'
 import { SkillEffectPresenter } from '~/systems/presenter/SkillEffectPresenter'
 import { ScreenRouter } from './ScreenRouter'
 
@@ -54,7 +56,7 @@ export const App = () => {
     openWindow()
 
     const run = async () => {
-      const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager, NPCManager, [CheatSystem])
+      const engine = new GameEngine(assets, renderer, save, config, eventBus, MapManager, NPCManager, [CheatSystem, StatusSystem, ExitSystem])
       engineRef.current = engine
 
       const achievement = new AchievementManager(eventBus, assets.achievements)

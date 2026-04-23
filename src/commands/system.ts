@@ -1,38 +1,32 @@
 import { COMMAND_GROUPS } from '~/consts'
 import { Terminal } from '~/core/Terminal'
-import { CommandFunction, GameEventType } from '~/core/types'
-import i18n from '~/i18n'
-import { SaveSystem } from '~/systems/SaveSystem'
-import { delay } from '~/utils'
+import { CommandFunction } from '~/core/types'
 
-// --- Exit ---
-export const exitCommand: CommandFunction = async (args, context) => {
-  Terminal.log(i18n.t('commands.system.exit.saving'))
+export type ExitHandlerFn = () => Promise<void>
 
-  // 1. 현재 상태 저장
-  const saveData = SaveSystem.makeSaveData(context)
-  context.save.save(saveData)
+export const createExitCommand = (onExit?: ExitHandlerFn): CommandFunction => {
+  return async () => {
+    if (onExit) {
+      await onExit()
+    }
 
-  Terminal.log(i18n.t('commands.system.exit.save_complete'))
-  Terminal.log(i18n.t('commands.system.exit.farewell'))
-
-  await delay()
-
-  await context.eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
-  
-  return 'exit'
+    return 'exit'
+  }
 }
 
+export const exitCommand = createExitCommand()
+
 export const helpCommand: CommandFunction = (args, context) => {
-  Terminal.log(i18n.t('commands.system.help.title'))
+  Terminal.log({ key: 'commands.system.help.title' })
 
   for (const [command, aliases] of Object.entries(COMMAND_GROUPS)) {
-    Terminal.log(
-      i18n.t('commands.system.help.list_item', {
+    Terminal.log({
+      key: 'commands.system.help.list_item',
+      args: {
         command,
         aliases: aliases.join(', '),
-      })
-    )
+      }
+    })
   }
 
   return false

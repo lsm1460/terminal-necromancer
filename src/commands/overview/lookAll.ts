@@ -13,7 +13,7 @@ export const lookAll = async (context: GameContext, items: GameDrop[]): Promise<
   const { player, map, npcs, world, currentTile: tile } = context
   const monsters = tile?.monsters || []
   const aliveMonsters = monsters?.filter((m) => m.isAlive) || []
-  const minions = player.minions || []
+  const minions = player.party || []
 
   const aliveNPCs = (tile?.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as BaseNPC[]
   const corpse = world.getCorpsesAt(player.pos)

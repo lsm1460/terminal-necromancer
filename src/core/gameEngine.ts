@@ -169,7 +169,6 @@ export class GameEngine {
     handler.register('right', Commands.moveCommand('right'))
     handler.register('attack', Commands.attackCommand)
     handler.register('equip', Commands.equipCommand)
-    handler.register('exit', Commands.exitCommand)
     handler.register('pick', Commands.pickCommand)
     handler.register('drop', Commands.dropCommand)
     handler.register('help', Commands.helpCommand)
@@ -178,9 +177,10 @@ export class GameEngine {
     handler.register('use', Commands.useCommand)
     handler.register('map', Commands.mapCommand)
     handler.register('talk', Commands.talkCommand)
-    //
-    handler.register('look', Commands.lookCommand)
     handler.register('skill', Commands.skillCommand)
+    //
+    handler.register('exit', Commands.exitCommand)
+    handler.register('look', Commands.lookCommand)
     handler.register('status', Commands.statusCommand)
 
     if (this.commandSystems) {

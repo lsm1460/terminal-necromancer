@@ -1,11 +1,11 @@
+import { BaseNPC } from '~/core/npc/BaseNPC'
 import { Terminal } from '~/core/Terminal'
 import { CommandFunction, GameContext } from '~/core/types'
 import i18n from '~/i18n'
-import { GameNPC } from '~/systems/npc/GameNPC'
 
 export const talkCommand: CommandFunction = async (...params) => {
   const [args, context] = params
-  let targetNpc = await selectTargetNpc(...params) as GameNPC
+  let targetNpc = await selectTargetNpc(...params) as BaseNPC
   if (!targetNpc) return false
 
   printNpcHeader(targetNpc)
@@ -49,16 +49,16 @@ async function selectTargetNpc(args: string[], context: GameContext) {
   return npcs.find((n) => n.id === selectedId) || null
 }
 
-function printNpcHeader(npc: GameNPC) {
+function printNpcHeader(npc: BaseNPC) {
   Terminal.printNpcCard(npc)
 }
 
-async function startTalkSession(npc: GameNPC, context: GameContext) {
+async function startTalkSession(npc: BaseNPC, context: GameContext) {
   npc.relation += 1 // 대화 시 호감도 소폭 상승
 
   try {
     while (true) {
-      const menuChoices = [...npc.getChoices(context as any), { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` }]
+      const menuChoices = [...npc.getChoices(context), { name: 'exit', message: `🏃 ${i18n.t('talk.leave')}` }]
 
       const action = await Terminal.select(i18n.t('talk.what_to_do'), menuChoices)
 
