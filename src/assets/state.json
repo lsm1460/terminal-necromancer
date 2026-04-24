@@ -43,7 +43,7 @@
     "knightUpgrade": [],
     "upgradeLimit": 5
   },
-  "sceneId": "B2_Transit_Area",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {

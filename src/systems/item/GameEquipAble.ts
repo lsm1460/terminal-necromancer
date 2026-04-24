@@ -1,4 +1,4 @@
-import { IEquipAble } from '~/core/item/types'
+import { IEquipAble } from '~/core/types'
 import i18n from '~/i18n'
 import { Affix, EquipAbleOptions, ItemRarity } from '~/types/item'
 import { getAffixCaution } from '../affixes'

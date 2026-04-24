@@ -1,13 +1,12 @@
-import { CommandFunction, GameContext, Terminal } from '~/core'
+import { CommandFunction, GameContext, LootBag, Terminal } from '~/core'
 import { Player } from '~/core/player/Player'
+import { Drop } from '~/core/types'
 import i18n from '~/i18n'
-import { LootBag } from '~/types'
-import { GameDrop } from '~/types/item'
 
 export const pickCommand: CommandFunction = async (args, context) => {
   const { player, map, world, currentTile: tile } = context
 
-  const drops = world.getDropsAt<GameDrop>(player.pos)
+  const drops = world.getDropsAt<Drop>(player.pos)
   const lootBag = world.getLootBagAt(map.currentSceneId, tile.id)
   const availableSpace = getAvailableSpace(player)
 
@@ -16,7 +15,7 @@ export const pickCommand: CommandFunction = async (args, context) => {
 
   const [arg] = args
 
-  let drop: GameDrop | undefined
+  let drop: Drop | undefined
 
   if (arg) {
     if (arg === 'lootBag' && lootBag) {
@@ -57,7 +56,7 @@ function getAvailableSpace(player: Player): number {
   return player.inventoryMax - currentTotal
 }
 
-function hasPickableItems(drops: GameDrop[], lootBag?: LootBag): boolean {
+function hasPickableItems(drops: Drop[], lootBag?: LootBag): boolean {
   if (!drops.length && !lootBag) {
     Terminal.log('\n' + i18n.t('pick.nothing_to_pick'))
     return false
@@ -75,7 +74,7 @@ function checkInventorySpace(space: number, player: Player): boolean {
   return true
 }
 
-const makeDropTargetOptions = (drops: GameDrop[], player: Player, lootBag?: LootBag) => [
+const makeDropTargetOptions = (drops: Drop[], player: Player, lootBag?: LootBag) => [
   ...(lootBag
     ? [
         {
@@ -98,7 +97,7 @@ function handleLootBagPick(lootBag: LootBag, context: GameContext) {
   world.removeLootBag()
 }
 
-function handleItemPick(drop: GameDrop, availableSpace: number, context: GameContext) {
+function handleItemPick(drop: Drop, availableSpace: number, context: GameContext) {
   const { player, world } = context
 
   const totalDropQty = drop.quantity || 1

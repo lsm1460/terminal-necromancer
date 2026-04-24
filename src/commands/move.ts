@@ -1,6 +1,5 @@
-import { DIRECTIONS } from '~/consts'
-import { Terminal } from '~/core'
-import { CommandFunction } from '~/core/types'
+import { CommandFunction, Terminal } from '~/core'
+import { DIRECTIONS } from '~/core/consts'
 import i18n from '~/i18n'
 
 export type MoveBlockerCheckFn = () => string | null

@@ -1,17 +1,19 @@
 import { EventLedger } from '~/core/EventLedger'
-import { ConfigSystem } from '~/systems/ConfigSystem'
-import { SaveSystem } from '~/systems/SaveSystem'
 import { Battle } from '../battle'
 import { CombatUnit } from '../battle/unit/CombatUnit'
 import { EventBus } from '../EventBus'
 import { DropSystem } from '../item/DropSystem'
+import { ItemGenerator } from '../item/ItemGenerator'
+import { MapData } from '../map/MapData'
 import { MonsterFactory } from '../MonsterFactory'
 import { BaseNPC } from '../npc/BaseNPC'
+import { NPCData } from '../npc/NPCData'
 import { Player } from '../player/Player'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { World } from '../World'
 import { IMapManager, Tile } from './map'
-import { INpcManager } from './npc'
+import { INpcManager, NPCState } from './npc'
+import { PassiveDefinition, SpecialSkillLogic } from './skill'
 
 export type AttackType = 'melee' | 'ranged' | 'explode'
 
@@ -168,8 +170,74 @@ export interface IAssets {
   achievements: any
 }
 
+export type InstallContext = Partial<GameContext> & {
+  eventBus: EventBus
+  monster: MonsterFactory
+  battle: Battle
+  world: World
+}
+
+export interface RequiredEngineDependencies {
+  renderer: Renderer
+  eventBus: EventBus
+  player: Player
+  itemGenerator: ItemGenerator
+}
+
+export interface OptionalEngineDependencies {
+  saveSystem?: ISaveSystem
+  configSystem?: IConfigSystem
+  skills?: {
+    passive?: Record<string, PassiveDefinition>
+    specials?: Record<string, SpecialSkillLogic>
+  }
+  quest?: IQuestManager
+  MapManager?: new (data: MapData, eventBus: EventBus) => IMapManager
+  NpcManager?: new (data: NPCData, eventBus: EventBus) => INpcManager
+  customCommandsMap?: Record<string, string[]>
+  commandSystems?: (new <T extends GameContext<any>>(context: T) => ICommandSystem)[]
+  MonsterEvent?: new (monsterFactory: MonsterFactory, eventBus: EventBus, battle: Battle, world: World) => IMonsterEvent
+}
+
+export interface UnitSprites {
+  idle: HTMLImageElement[]
+  attack: HTMLImageElement | null
+  hit: HTMLImageElement | null
+  die: HTMLImageElement | null
+  escape: HTMLImageElement | null
+  isFallback?: boolean
+}
+
+export type MonsterGroupMember = {
+  id: string
+  encounterRate: number
+}
+
+export type Direction = 'up' | 'down' | 'left' | 'right'
+export type Vector = { dx: number; dy: number }
+
+export type LootBag = {
+  id: string
+  scendId: string
+  tileId: string
+  exp: number
+  gold: number
+}
+
+export type SaveData<T extends Player = Player, M = Record<string, unknown>> = {
+  player: T
+  sceneId: string
+  npcs: {
+    states: Record<string, NPCState>
+  } & M
+  drop: LootBag | null
+  completedEvents: string[]
+}
+
 export * from './battle'
 export * from './events'
 export * from './map'
 export * from './npc'
 export * from './skill'
+export * from './item'
+

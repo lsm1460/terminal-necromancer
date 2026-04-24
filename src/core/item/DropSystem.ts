@@ -1,5 +1,5 @@
 import { Item } from '~/core/item/Item'
-import { Drop, IItemGenerator } from './types'
+import { Drop, IItemGenerator } from '../types'
 
 export interface DropEntry {
   itemId: string

@@ -13,7 +13,7 @@ import {
   SaveSystem,
   Title,
 } from '~/systems'
-import { CheatSystem, ExitSystem, MoveSystem, StatusSystem } from '~/systems/commands'
+import { CheatSystem, ExitSystem, HelpSystem, MoveSystem, StatusSystem } from '~/systems/commands'
 import { PASSIVE_EFFECTS, SkillEffectPresenter, SpecialSkillLogics } from '~/systems/skill'
 
 export interface BootOptions {
@@ -37,7 +37,7 @@ export class GameBootstrapper {
     this.configSystem = new ConfigSystem(path?.configPath)
   }
 
-  async run(options: BootOptions): Promise<GameEngine> {
+  async run(options: BootOptions): Promise<GameEngine | null> {
     if (this.isRunning) {
       console.warn('엔진이 이미 실행 중입니다.')
       return this.engine!
@@ -58,7 +58,10 @@ export class GameBootstrapper {
 
     const playData = await title.gameStart(initState)
     if (!playData) {
-      throw new Error('게임 데이터를 불러오지 못했습니다.')
+      this.isRunning = false
+
+      return null
+
     }
 
     const player = new Necromancer(itemFactory, assets.level, this.eventBus, playData.player)
@@ -74,7 +77,7 @@ export class GameBootstrapper {
         MapManager,
         NpcManager: NPCManager,
         MonsterEvent,
-        commandSystems: [CheatSystem, StatusSystem, ExitSystem, MoveSystem],
+        commandSystems: [CheatSystem, StatusSystem, ExitSystem, MoveSystem, HelpSystem],
       }
     )
 

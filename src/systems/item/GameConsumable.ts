@@ -1,4 +1,4 @@
-import { IConsumable } from '~/core/item/types'
+import { IConsumable } from '~/core/types'
 import i18n from '~/i18n'
 import { GameItem } from './GameItem'
 

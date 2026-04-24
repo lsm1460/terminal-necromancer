@@ -35,6 +35,10 @@ export const App = () => {
           },
         })
 
+        if (!engine) {
+          return
+        }
+
         engineRef.current = engine
 
         const locale = bootstrapper.configSystem.load()?.locale || 'ko'

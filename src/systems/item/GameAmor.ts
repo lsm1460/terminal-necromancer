@@ -1,4 +1,4 @@
-import { IArmor } from '~/core/item/types'
+import { IArmor } from '~/core/types'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { GameEquipAble } from './GameEquipAble'

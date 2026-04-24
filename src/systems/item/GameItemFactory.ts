@@ -1,7 +1,7 @@
 import { Item } from '~/core/item/Item'
 import { ItemRarity, ItemType, RaritySetting } from '~/types/item'
 import { GameItem } from './GameItem'
-import { IGameItemFactory } from '~/core/item/types'
+import { IGameItemFactory } from '~/core/types'
 import { GameWeapon } from './GameWeapon'
 import { GameAmor } from './GameAmor'
 import { GameConsumable } from './GameConsumable'

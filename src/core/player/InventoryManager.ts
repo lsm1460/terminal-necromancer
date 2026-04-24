@@ -1,8 +1,8 @@
 import i18n from '~/i18n'
 import { ItemType } from '~/types/item'
 import { Item } from '../item/Item'
-import { IArmor, IConsumable, IGameItemFactory, IWeapon } from '../item/types'
 import { Terminal } from '../Terminal'
+import { IArmor, IConsumable, IGameItemFactory, IWeapon } from '../types'
 import { Player } from './Player'
 
 export class InventoryManager {

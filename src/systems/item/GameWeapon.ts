@@ -1,4 +1,4 @@
-import { IWeapon } from '~/core/item/types'
+import { IWeapon } from '~/core/types'
 import { Player } from '~/core/player/Player'
 import { AttackType } from '~/core/types'
 import i18n from '~/i18n'

@@ -1,6 +1,6 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import { EventBus } from '~/core/EventBus'
-import { IGameItemFactory } from '~/core/item/types'
+import { IGameItemFactory } from '~/core/types'
 import { Player, PlayerSaveData } from '~/core/player/Player'
 import { StatsCalculator } from '~/core/player/StatsCalculator'
 import { GameEventType } from '~/core/types'

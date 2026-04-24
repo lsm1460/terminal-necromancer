@@ -1,4 +1,4 @@
-import { Drop as CoreDrop } from '~/core/item/types'
+import { Drop as CoreDrop } from '~/core/types'
 import { GameItem } from '~/systems/item/GameItem'
 
 export type ItemRarity = 'COMMON' | 'RARE' | 'EPIC'

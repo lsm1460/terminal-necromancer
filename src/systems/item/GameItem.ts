@@ -1,5 +1,5 @@
 import { Item } from '~/core/item/Item'
-import { IDisplayable } from '~/core/item/types'
+import { IDisplayable } from '~/core/types'
 import { Player } from '~/core/player/Player'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'

@@ -1,20 +1,24 @@
-import { COMMAND_GROUPS } from '~/consts'
 import { Terminal } from '~/core'
-import { printDirections, printTileStatus } from './statusPrinter'
-import { CommandFunction, GameContext, ICommandManager, IQuestManager } from './types'
+import { COMMAND_GROUPS } from './consts'
+import { CommandFunction, GameContext, ICommandManager } from './types'
 
 export class CommandManager implements ICommandManager {
   private commands: Map<string, CommandFunction<any>> = new Map()
+  private customGroups: Map<string, string[]> = new Map()
 
-  constructor(private quests?: IQuestManager) {}
+  constructor() {
+    this.initializeDefaultGroups()
+  }
 
-  register(key: string, fn: CommandFunction<any>): void {
-    this.commands.set(key, fn)
+  private initializeDefaultGroups() {
+    Object.entries(COMMAND_GROUPS).forEach(([key, aliases]) => {
+      this.customGroups.set(key, [...aliases])
+    })
   }
 
   private mapInput(cmd: string): string {
     const trimmed = cmd.trim()
-    const mapped = Object.entries(COMMAND_GROUPS).find(([_, arr]) => arr.includes(trimmed))?.[0] ?? trimmed
+    const mapped = Object.entries(this.customGroups).find(([_, arr]) => arr.includes(trimmed))?.[0] ?? trimmed
     return mapped
   }
 
@@ -37,6 +41,18 @@ export class CommandManager implements ICommandManager {
     return { cmd, args }
   }
 
+  add(_commands: Record<string, string[]>) {
+    Object.entries(_commands).forEach(([key, aliases]) => {
+      const existing = this.customGroups.get(key) || []
+      
+      this.customGroups.set(key, Array.from(new Set([...existing, ...aliases])))
+    })
+  }
+
+  register(key: string, fn: CommandFunction<any>): void {
+    this.commands.set(key, fn)
+  }
+
   async handle(rawCmd: string, context: GameContext): Promise<string | boolean> {
     const trimmed = rawCmd.trim()
     if (!trimmed) return false
@@ -47,28 +63,12 @@ export class CommandManager implements ICommandManager {
     const fn = this.commands.get(cmd)
 
     if (!fn) {
-      // 치트키 등 특수 핸들러는 register를 통해 등록되어야 함
-      Terminal.log({key: 'invalid_command'})
+      Terminal.log({ key: 'invalid_command' })
       return false
     }
 
     try {
-      const result = await fn(args, context)
-      if (result === 'exit') return 'exit'
-
-      if (result) {
-        const { map, currentTile } = context
-        printTileStatus(context)
-        await map.handleTileEvent(currentTile, context)
-      }
-
-      if (this.quests && this.quests.hasQuest()) {
-        await this.quests.startQuest(context)
-      } else {
-        printDirections(context)
-      }
-      
-      return result !== false
+      return await fn(args, context)
     } catch (e) {
       console.error(e)
       return false

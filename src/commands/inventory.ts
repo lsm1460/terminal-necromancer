@@ -1,5 +1,5 @@
 import { Item } from '~/core/item/Item'
-import { IConsumable } from '~/core/item/types'
+import { IConsumable } from '~/core/types'
 import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core'
 import { CommandFunction, GameContext } from '~/core/types'

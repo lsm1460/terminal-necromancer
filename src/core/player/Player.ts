@@ -1,7 +1,6 @@
 import { BattleTarget } from '~/types'
 import { Item } from '../item/Item'
-import { IArmor, IConsumable, IGameItemFactory, IWeapon } from '../item/types'
-import { LevelData, PositionType, Skill } from '../types'
+import { IArmor, IConsumable, IGameItemFactory, IWeapon, LevelData, PositionType, Skill } from '../types'
 import { InventoryManager } from './InventoryManager'
 import { StatModifier, StatsCalculator } from './StatsCalculator'
 

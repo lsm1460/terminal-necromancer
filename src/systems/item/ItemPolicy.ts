@@ -1,4 +1,4 @@
-import { IGenerationPolicy } from '~/core/item/types'
+import { IGenerationPolicy } from '~/core/types'
 import { rollFromRange } from '~/core/utils'
 import { Affix, GameDrop, ItemRarity, ItemType } from '~/types/item'
 import { getAffixList } from '../affixes'

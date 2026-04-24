@@ -1,4 +1,4 @@
-import { Drop } from '../item/types'
+import { Drop } from '../types/item'
 import { CombatUnit } from './unit/CombatUnit'
 
 export enum BattleState {

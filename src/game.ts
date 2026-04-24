@@ -10,7 +10,7 @@ const assetsDir = path.join(__dirname, 'assets')
 const bootstrapper = new GameBootstrapper({
   statePath: path.join(assetsDir, 'state.json'),
   configPath: path.join(assetsDir, 'config.json'),
-  achievementPath: path.join(assetsDir, 'archives.json')
+  achievementPath: path.join(assetsDir, 'archives.json'),
 })
 
 const start = async () => {
@@ -30,8 +30,13 @@ const start = async () => {
     },
   })
 
+  if (!engine) {
+    process.exit(0)
+    return
+  }
+
   await engine.start()
-  createCLI(engine.context)
+  createCLI(engine)
 }
 
 start()

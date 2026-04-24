@@ -37,18 +37,6 @@ export type BattleTarget = {
   orderWeight?: number
 }
 
-export type MonsterGroupMember = {
-  id: string
-  encounterRate: number
-}
-
-
-
-export type Direction = 'up' | 'down' | 'left' | 'right'
-export type Vector = { dx: number; dy: number }
-
-
-
 export type Corpse = {
   x?: number
   y?: number
@@ -59,14 +47,6 @@ export type Corpse = {
   name: string
   id: string
   minRebornRarity?: SkeletonRarity
-}
-
-export type LootBag = {
-  id: string
-  scendId: string
-  tileId: string
-  exp: number
-  gold: number
 }
 
 export const SKILL_IDS = {
@@ -85,15 +65,6 @@ export const SKILL_IDS = {
 // 2. 위 객체의 값들만 모아서 타입으로 추출
 export type SkillId = (typeof SKILL_IDS)[keyof typeof SKILL_IDS]
 
-export type GameEvent = {
-  id: string
-  name: string
-  description: string
-  withMonster?: string
-  postTalk?: string[]
-  defeatTalk?: string[]
-}
-
 export type PhasesShift = {
   skills: string[]
   chance: number
@@ -104,13 +75,3 @@ export type BroadcastScript = {
   hostile: string[]
   normal: string[]
 }
-
-export interface UnitSprites {
-  idle: HTMLImageElement[]
-  attack: HTMLImageElement | null
-  hit: HTMLImageElement | null
-  die: HTMLImageElement | null
-  escape: HTMLImageElement | null
-  isFallback?: boolean
-}
-

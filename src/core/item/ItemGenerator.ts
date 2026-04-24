@@ -1,7 +1,7 @@
 
+import { IGameItemFactory, IGenerationPolicy, IItemGenerator } from '../types/item'
 import { generateId } from '../utils'
 import { Item } from './Item'
-import { IGameItemFactory, IGenerationPolicy, IItemGenerator } from './types'
 
 export class ItemGenerator<TRarity = string, TAffix = any, TDrop = any> implements IItemGenerator {
   constructor(

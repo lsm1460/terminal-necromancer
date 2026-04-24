@@ -1,21 +1,7 @@
 import fs from 'fs'
-import { Player } from '~/core/player/Player'
-import { ISaveSystem, NPCState } from '~/core/types'
+import { ISaveSystem, SaveData } from '~/core/types'
 import i18n from '~/i18n'
-import { LootBag } from '~/types'
 import { AppContext } from './types'
-
-export type SaveData<T extends Player = Player> = {
-  player: T
-  sceneId: string
-  npcs: {
-    states: Record<string, NPCState>
-    factionHostility: Record<string, number>
-    factionContribution: Record<string, number>
-  }
-  drop: LootBag | null
-  completedEvents: string[]
-}
 
 export class SaveSystem implements ISaveSystem<SaveData> {
   private isWeb = typeof window !== 'undefined'

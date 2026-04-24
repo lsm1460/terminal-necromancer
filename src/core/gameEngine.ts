@@ -1,66 +1,29 @@
 import * as Commands from '~/commands'
 import { Battle, BattleComponentFactory } from '~/core/battle'
-import { EventBus } from '~/core/EventBus'
 import { EventLedger } from '~/core/EventLedger'
 import { DropSystem } from '~/core/item/DropSystem'
 import { MonsterFactory } from '~/core/MonsterFactory'
 import { NpcSkillManager } from '~/core/skill/npcs/NpcSkillManger'
 import { World } from '~/core/World'
-import { SaveData } from '~/systems/SaveSystem'
 import { CommandManager } from './CommandManager'
-import { ItemGenerator } from './item/ItemGenerator'
 import { BaseMapManager } from './map/BaseMapManager'
 import { MapData } from './map/MapData'
 import { BaseNPCManager } from './npc/BaseNPCManager'
 import { NPCData } from './npc/NPCData'
 import { Player } from './player/Player'
-import { printDirections } from './statusPrinter'
+import { printDirections, printTileStatus } from './statusPrinter'
 import {
   GameContext,
   IAssets,
-  ICommandSystem,
-  IConfigSystem,
-  IMapManager,
-  IMonsterEvent,
-  INpcManager,
-  IQuestManager,
-  ISaveSystem,
-  PassiveDefinition,
-  Renderer,
-  SpecialSkillLogic,
+  InstallContext,
+  OptionalEngineDependencies,
+  RequiredEngineDependencies,
+  SaveData
 } from './types'
-
-type InstallContext = Partial<GameContext> & {
-  eventBus: EventBus
-  monster: MonsterFactory
-  battle: Battle
-  world: World
-}
-
-interface RequiredEngineDependencies {
-  renderer: Renderer
-  eventBus: EventBus
-  player: Player
-  itemGenerator: ItemGenerator
-}
-
-interface OptionalEngineDependencies {
-  saveSystem?: ISaveSystem
-  configSystem?: IConfigSystem
-  skills?: {
-    passive?: Record<string, PassiveDefinition>
-    specials?: Record<string, SpecialSkillLogic>
-  }
-  quest?: IQuestManager
-  MapManager?: new (data: MapData, eventBus: EventBus) => IMapManager
-  NpcManager?: new (data: NPCData, eventBus: EventBus) => INpcManager
-  commandSystems?: (new <T extends GameContext<any>>(context: T) => ICommandSystem)[]
-  MonsterEvent?: new (monsterFactory: MonsterFactory, eventBus: EventBus, battle: Battle, world: World) => IMonsterEvent
-}
 
 export class GameEngine {
   public context!: GameContext
-  public commands: CommandManager
+  public commands = new CommandManager()
 
   private isProcessing = false
 
@@ -69,9 +32,7 @@ export class GameEngine {
     private assets: IAssets,
     private reqDependencies: RequiredEngineDependencies,
     private optDependencies?: OptionalEngineDependencies
-  ) {
-    this.commands = new CommandManager(optDependencies?.quest)
-  }
+  ) {}
 
   get renderer() {
     return this.reqDependencies.renderer
@@ -141,6 +102,8 @@ export class GameEngine {
     if (this.optDependencies?.MonsterEvent) {
       new this.optDependencies.MonsterEvent(monster, eventBus, battle, world)
     }
+
+    if (this.optDependencies?.customCommandsMap) this.commands.add(this.optDependencies.customCommandsMap)
   }
 
   public async start(): Promise<void> {
@@ -185,6 +148,23 @@ export class GameEngine {
     }
   }
 
+  private async postProcessCommand(result: string | boolean): Promise<void> {
+    if (result === 'exit') return
+
+    if (result === true) {
+      const { map, currentTile } = this.context
+      printTileStatus(this.context)
+      await map.handleTileEvent(currentTile, this.context)
+    }
+
+    const questSystem = this.optDependencies?.quest
+    if (questSystem && questSystem.hasQuest()) {
+      await questSystem.startQuest(this.context)
+    } else {
+      printDirections(this.context)
+    }
+  }
+
   public async processCommand(
     command: string,
     options?: {
@@ -197,7 +177,8 @@ export class GameEngine {
 
     this.isProcessing = true
     try {
-      await this.commands.handle(command, this.context)
+      const result = await this.commands.handle(command, this.context)
+      await this.postProcessCommand(result)
     } finally {
       this.isProcessing = false
     }

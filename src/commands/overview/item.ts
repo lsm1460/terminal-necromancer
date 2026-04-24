@@ -1,6 +1,6 @@
 import { Terminal } from '~/core'
 import { Item } from '~/core/item/Item'
-import { Drop } from '~/core/item/types'
+import { Drop } from '~/core/types'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
 import { GameEquipAble } from '~/systems/item/GameEquipAble'

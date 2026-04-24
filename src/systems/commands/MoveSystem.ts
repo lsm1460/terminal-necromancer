@@ -1,5 +1,5 @@
 import { BeforeMoveCallback, createMoveCommand, MoveBlockerCheckFn } from '~/commands/move'
-import { DIRECTIONS } from '~/consts'
+import { DIRECTIONS } from '~/core/consts'
 import { GameEventType, ICommandManager, ICommandSystem } from '~/core/types'
 import { AppContext } from '../types'
 

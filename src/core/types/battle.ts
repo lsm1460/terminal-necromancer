@@ -1,5 +1,5 @@
 import { BattleTarget } from "~/types"
-import { Drop } from "../item/types"
+import { Drop } from "./item"
 
 export type CalcDamageReturn = {
   isEscape: boolean

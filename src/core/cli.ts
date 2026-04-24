@@ -1,6 +1,6 @@
 import readline from 'readline'
 import i18n from '~/i18n'
-import { GameContext } from './types'
+import { GameEngine } from './gameEngine'
 
 async function askQuestion(query: string): Promise<string> {
   const rl = readline.createInterface({
@@ -16,10 +16,12 @@ async function askQuestion(query: string): Promise<string> {
   })
 }
 
-export async function createCLI(context: GameContext) {
+export async function createCLI(engine: GameEngine) {
   while (true) {
-    const line = await askQuestion(i18n.t('input_command'))
-    const shouldExit = await context.commands.handle(line, context)
-    if (shouldExit === 'exit') return 'exit'
+    const line = await askQuestion(i18n.t('input_command'));
+    
+    await engine.processCommand(line);
+
+    if (line.trim() === 'exit') break; 
   }
 }

@@ -1,12 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { GameEquipAble } from '~/systems/item/GameEquipAble'
-import { GameItem } from '~/systems/item/GameItem'
 import { GameItemFactory } from '~/systems/item/GameItemFactory'
 import { ItemPolicy } from '~/systems/item/ItemPolicy'
 import { Affix, GameDrop, ItemRarity, ItemType } from '~/types/item'
 import { Item } from '../item/Item'
 import { ItemGenerator } from '../item/ItemGenerator'
-import { IArmor, IWeapon } from '../item/types'
+import { IArmor, IWeapon } from '../types'
 import * as utils from '../utils'
 
 // Mock dependencies

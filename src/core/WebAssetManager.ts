@@ -3,10 +3,9 @@ import { assets } from '~/assets'
 import { loadExtraLocaleBundle } from '~/assets/locales'
 import i18n from '~/i18n'
 import { useGameStore } from '~/stores/useGameStore'
-import { UnitSprites } from '~/types'
 import { delay } from '~/utils'
 import { Terminal } from './Terminal'
-import { SceneData } from './types'
+import { SceneData, UnitSprites } from './types'
 
 interface AssetSource {
   id: string
