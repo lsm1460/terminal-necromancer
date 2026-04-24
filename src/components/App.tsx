@@ -1,139 +1,55 @@
-import '~/assets/style/App.css'
-// 하위 컴포넌트들
-import { ConfigScreen } from './ConfigScreen'
-import { CreditScreen } from './CreditScreen'
-import { GameScreen } from './GameScreen'
-//
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { assets, initState } from '~/assets'
-import { openWindow } from '~/bridge/window'
 import { GameProvider } from '~/contexts/GameContext'
-import { assetManager, EventBus, GameEngine, GameEventType, ItemGenerator, Terminal } from '~/core'
-import { useShortcuts } from '~/hooks/useShortcuts'
+import { assetManager, GameEngine, Terminal } from '~/core'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
-import {
-  AchievementManager,
-  Broadcast,
-  ConfigSystem,
-  GameItemFactory,
-  ItemPolicy,
-  MapManager,
-  MonsterEvent,
-  Necromancer,
-  NPCManager,
-  QuestManager,
-  SaveSystem,
-  Title,
-} from '~/systems'
-import { CheatSystem, ExitSystem, MoveSystem, StatusSystem } from '~/systems/commands'
-import { PASSIVE_EFFECTS, SkillEffectPresenter, SpecialSkillLogics } from '~/systems/skill'
+import { GameBootstrapper } from '~/systems/Bootstrapper'
+import { ConfigScreen } from './ConfigScreen'
+import { CreditScreen } from './CreditScreen'
+import { GameScreen } from './GameScreen'
 import { ScreenRouter } from './ScreenRouter'
 
-
 export const App = () => {
-  const engineRef = useRef<GameEngine | null>(null)
-  const saveSystemRef = useRef(new SaveSystem())
-  const configSystemRef = useRef(new ConfigSystem())
-
-  const { t } = useTranslation()
-
+  const { i18n } = useTranslation()
   const [isGameOn, setIsGameOn] = useState(false)
 
-  useShortcuts(engineRef)
+  // 부트스트래퍼 인스턴스를 유지 (새로고침 전까지 보존)
+  const bootstrapperRef = useRef(new GameBootstrapper())
+  const engineRef = useRef<GameEngine | null>(null)
 
   useEffect(() => {
-    const eventBus = new EventBus()
-    const itemFactory = new GameItemFactory()
-    const policy = new ItemPolicy()
-    const itemGenerator = new ItemGenerator(policy, itemFactory)
+    const runGame = async () => {
+      const bootstrapper = bootstrapperRef.current
 
-    new Broadcast(eventBus)
-    new SkillEffectPresenter(eventBus)
-
-    const renderer = new ReactRenderer()
-
-    const save = saveSystemRef.current
-    const config = configSystemRef.current
-    Terminal.setRenderer(renderer)
-    Terminal.setTranslator((info) => {
-      if (typeof info === 'string') return info
-      return t(info.key, info.args)
-    })
-
-    openWindow()
-
-    const run = async () => {
-      const achievement = new AchievementManager(eventBus, assets.achievements)
-
-      const title = new Title(save, config, achievement)
-      const playData = await title.gameStart(initState)
-
-      if (playData === null) {
-        //TODO: exit game
-        setIsGameOn(false)
-        return
-      }
-
-      if (!playData) {
-        console.error('게임 데이터를 불러오지 못했습니다.')
-        return
-      }
-
-      const player = new Necromancer(itemFactory, assets.level, eventBus, playData?.player)
-
-      const engine = new GameEngine(
-        assets,
-        {
-          renderer,
-          eventBus,
-          player,
-          itemGenerator,
-        },
-        {
-          saveSystem: save,
-          configSystem: config,
-          skills: {
-            passive: PASSIVE_EFFECTS,
-            specials: SpecialSkillLogics,
+      try {
+        const engine = await bootstrapper.run({
+          renderer: new ReactRenderer(),
+          translator: (info) => (typeof info === 'string' ? info : (i18n.t(info.key, info.args) as string)),
+          assets,
+          initState,
+          onExit: () => {
+            setIsGameOn(false)
+            Terminal.clear()
+            setTimeout(runGame, 0) // 게임 종료 후 타이틀로 복귀
           },
-          quest: new QuestManager(eventBus),
-          MapManager: MapManager,
-          NpcManager: NPCManager,
-          MonsterEvent: MonsterEvent,
-          commandSystems: [CheatSystem, StatusSystem, ExitSystem, MoveSystem],
-        }
-      )
-
-      engineRef.current = engine
-
-      const _config = config.load()
-      const locale = _config?.locale || 'ko'
-
-      await engine.init(playData)
-      const sceneData = engine.context.map.currentScene
-
-      await assetManager.loadInitialAssets(sceneData, locale)
-      await engine.start()
-
-      setIsGameOn(true)
-
-      const exitWait = new Promise<void>((resolve) => {
-        eventBus.subscribe(GameEventType.SYSTEM_EXIT, () => {
-          resolve()
         })
-      })
 
-      await exitWait
+        engineRef.current = engine
 
-      setIsGameOn(false)
-      Terminal.clear()
+        const locale = bootstrapper.configSystem.load()?.locale || 'ko'
+        const sceneData = engine.context.map.currentScene
+        await assetManager.loadInitialAssets(sceneData, locale)
 
-      setTimeout(run, 0)
+        await engine.start()
+        setIsGameOn(true)
+      } catch (error) {
+        console.error('Game Start Error:', error)
+      }
     }
 
-    run()
-  }, [])
+    runGame()
+  }, [i18n])
 
   return (
     <GameProvider engine={engineRef}>

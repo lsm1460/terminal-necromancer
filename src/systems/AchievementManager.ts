@@ -31,8 +31,8 @@ export class AchievementManager {
 
     this.achievements = initialData.achievements.map((a) => ({
       ...a,
-      resolved: saved[a.id] ? true : false,
-      date: saved[a.id] ?? '',
+      resolved: saved?.[a.id] ? true : false,
+      date: saved?.[a.id] ?? '',
     }))
 
     eventBus.subscribe(GameEventType.NPC_IS_DEAD, this.onNPCDead)

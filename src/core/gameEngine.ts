@@ -30,7 +30,12 @@ import {
   SpecialSkillLogic,
 } from './types'
 
-type InstallContext = Partial<GameContext> & {eventBus: EventBus, monster: MonsterFactory, battle: Battle, world: World}
+type InstallContext = Partial<GameContext> & {
+  eventBus: EventBus
+  monster: MonsterFactory
+  battle: Battle
+  world: World
+}
 
 interface RequiredEngineDependencies {
   renderer: Renderer
@@ -111,9 +116,9 @@ export class GameEngine {
 
     this.installOptionalDependencies(context, initData)
 
-    this.registerCommands()
-
     this.context = context as GameContext
+
+    this.registerCommands()
   }
 
   private installOptionalDependencies = (context: InstallContext, initData: SaveData) => {
@@ -131,7 +136,7 @@ export class GameEngine {
       : new BaseNPCManager(npcData)
 
     if (this.optDependencies?.saveSystem) context.save = this.optDependencies.saveSystem
-    if (this.optDependencies?.configSystem) context.config = this.optDependencies.configSystem 
+    if (this.optDependencies?.configSystem) context.config = this.optDependencies.configSystem
 
     if (this.optDependencies?.MonsterEvent) {
       new this.optDependencies.MonsterEvent(monster, eventBus, battle, world)
