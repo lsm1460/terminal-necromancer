@@ -3,6 +3,7 @@ import i18n from '~/i18n'
 import { GameItem } from './GameItem'
 
 export class GameConsumable extends GameItem implements IConsumable {
+  isConsumable = true as const
   hpHeal: number
   mpHeal: number
 

@@ -1,11 +1,10 @@
-import { CommandFunction, Terminal } from '~/core'
+import { CommandFunction, IEquipAble, Terminal } from '~/core'
 import i18n from '~/i18n'
-import { ItemType } from '~/types/item'
 
 export const equipCommand: CommandFunction = async (args, {player}) => {
   const inventory = player.inventory
 
-  const equipAbles = inventory.filter((_item) => [ItemType.WEAPON, ItemType.ARMOR].includes(_item.type as ItemType))
+  const equipAbles = inventory.filter((item): item is IEquipAble => (item as IEquipAble).isEquipAble)
 
   if (equipAbles.length < 1) {
     Terminal.log(i18n.t('commands.equip.no_equippables'))

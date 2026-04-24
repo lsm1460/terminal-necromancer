@@ -72,8 +72,9 @@ export interface IArmor extends IEquipAble {
 }
 
 export interface IConsumable extends Item, IDisplayable {
-  hpHeal?: number
-  mpHeal?: number
+  readonly isConsumable: true
+  readonly hpHeal?: number
+  readonly mpHeal?: number
 }
 
 export interface IGameItemFactory {

@@ -1,8 +1,7 @@
 import i18n from '~/i18n'
-import { ItemType } from '~/types/item'
 import { Item } from '../item/Item'
 import { Terminal } from '../Terminal'
-import { IArmor, IConsumable, IGameItemFactory, IWeapon } from '../types'
+import { IConsumable, IEquipAble, IGameItemFactory } from '../types'
 import { Player } from './Player'
 
 export class InventoryManager {
@@ -12,6 +11,7 @@ export class InventoryManager {
   constructor(
     private itemFactory: IGameItemFactory,
     private player: Player,
+    private slotMapping: Record<string, string>,
     saved?: Partial<Player>
   ) {
     if (saved) {
@@ -20,39 +20,29 @@ export class InventoryManager {
     }
   }
 
-  async equip(newItem: Item) {
+  async equip(newItem: IEquipAble) {
     const itemIndex = this.inventory.findIndex((i) => i.id === newItem.id)
     if (itemIndex === -1) {
-      Terminal.log(i18n.t('inventory.remove.not_found'))
+      Terminal.log({ key: 'inventory.remove.not_found' })
       return false
     }
 
-    const slotMap: Record<string, keyof typeof this.player.equipped> = {
-      [ItemType.WEAPON]: 'weapon',
-      [ItemType.ARMOR]: 'armor',
-    }
-
-    const slot = slotMap[newItem.type]
-    if (!slot) {
-      Terminal.log(i18n.t('inventory.equip.invalid_type'))
+    const slotName = this.slotMapping[newItem.type]
+    if (!slotName) {
+      Terminal.log({ key: 'inventory.equip.invalid_type' })
       return false
     }
 
-    const oldItem = this.player.equipped[slot]
+    const equipped = this.player.equipped as Record<string, IEquipAble>
+    const oldItem = equipped[slotName]
 
+    // 해제 확인 로직 (기존과 동일)
     if (oldItem && oldItem.needsUnequipConfirm) {
       const proceed = await Terminal.confirm(oldItem.unequipWarning)
-
-      if (!proceed) {
-        return false
-      }
+      if (!proceed) return false
     }
 
-    if (slot === 'weapon') {
-      this.player.equipped.weapon = newItem as IWeapon
-    } else if (slot === 'armor') {
-      this.player.equipped.armor = newItem as IArmor
-    }
+    equipped[slotName] = newItem
 
     const updatedInventory = this.inventory.filter((i) => i.id !== newItem.id)
     if (oldItem) {
@@ -114,9 +104,7 @@ export class InventoryManager {
   }
 
   async useItem(targetItem?: IConsumable) {
-    const consumables = this.inventory.filter((item): item is IConsumable =>
-      [ItemType.CONSUMABLE, ItemType.FOOD].includes(item.type as any)
-    )
+    const consumables = this.inventory.filter((item): item is IConsumable => (item as IConsumable).isConsumable)
 
     if (consumables.length === 0) {
       Terminal.log(i18n.t('inventory.use.no_consumables'))

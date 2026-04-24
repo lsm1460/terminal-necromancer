@@ -1,6 +1,7 @@
+import { ItemType } from '~/types/item'
 import { BattleTarget } from '../battle'
 import { Item } from '../item/Item'
-import { IArmor, IConsumable, IGameItemFactory, IWeapon, LevelData, PositionType, Skill } from '../types'
+import { IArmor, IConsumable, IEquipAble, IGameItemFactory, IWeapon, LevelData, PositionType, Skill } from '../types'
 import { InventoryManager } from './InventoryManager'
 import { StatModifier, StatsCalculator } from './StatsCalculator'
 
@@ -48,10 +49,17 @@ export abstract class Player {
     this.y = 0
 
     this.levelTable = levelData
-    this.inventoryManager = new InventoryManager(itemFactory, this, saved)
+    this.inventoryManager = new InventoryManager(
+      itemFactory,
+      this,
+      {
+        [ItemType.WEAPON]: 'weapon',
+        [ItemType.ARMOR]: 'armor',
+      },
+      saved
+    )
 
     if (saved?.equipped?.weapon) {
-      
       this.equipped.weapon = itemFactory.make<IWeapon>(saved.equipped.weapon)
     }
 
@@ -117,8 +125,8 @@ export abstract class Player {
   abstract get description(): string
   abstract get party(): BattleTarget[]
   //skill
-  abstract canPay(cost: number): boolean;
-  abstract pay(cost: number): void;
+  abstract canPay(cost: number): boolean
+  abstract pay(cost: number): void
   abstract getLearnedSkills(): Skill[]
   abstract getResourceStatus(): { type: string; value: number }
   //
@@ -126,7 +134,6 @@ export abstract class Player {
   abstract dismissMember(id: string): void
 
   onEquipmentChanged() {}
-
 
   get skills() {
     return [] as string[]
@@ -184,7 +191,7 @@ export abstract class Player {
     this.gold += gold
   }
 
-  async equip(newItem: Item) {
+  async equip(newItem: IEquipAble) {
     return this.inventoryManager.equip(newItem)
   }
 

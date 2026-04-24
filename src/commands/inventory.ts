@@ -1,8 +1,7 @@
-import { Item } from '~/core/item/Item'
-import { IConsumable } from '~/core/types'
-import { Player } from '~/core/player/Player'
 import { Terminal } from '~/core'
-import { CommandFunction, GameContext } from '~/core/types'
+import { Item } from '~/core/item/Item'
+import { Player } from '~/core/player/Player'
+import { CommandFunction, GameContext, IConsumable, IEquipAble } from '~/core/types'
 import i18n from '~/i18n'
 import { ItemType } from '~/types/item'
 import { printItem } from './overview'
@@ -39,7 +38,7 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
   }
 }
 
-async function handleItemAction(item: Item, args: any, context: any) {
+async function handleItemAction(item: Item, args: any, context: GameContext) {
   const label = item.name
   const action = await Terminal.select(i18n.t('inventory.what_to_do', { label }), getAvailableActions(item))
 
@@ -48,7 +47,7 @@ async function handleItemAction(item: Item, args: any, context: any) {
       printItem(item, true)
       break
     case 'equip':
-      await context.player.equip(item)
+      await context.player.equip(item as IEquipAble)
       Terminal.log(`\n✨ ${i18n.t('inventory.action_equip_done', { label })}`)
       break
     case 'use':
