@@ -79,5 +79,5 @@ export const getNPCClass = (id: string): typeof GameNPC => {
     shadowed_agent: ShadowedNPC,
   }
 
-  return map[id] || BaseNPC<GameContext>
+  return map[id]
 }

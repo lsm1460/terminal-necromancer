@@ -1,11 +1,13 @@
+import { SkeletonRarity } from '~/consts'
 import { Terminal } from '~/core'
-import { ExecuteSkill, GameEventType } from '~/core/types'
+import { Corpse, ExecuteSkill, GameEventType } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { SKELETON_RARITIES, SkeletonFactory } from '~/systems/skill/player/necromancer/SkeletonFactory'
-import { Corpse } from '~/types'
 import { SkillUtils } from '..'
+
+type GameCorpse = Corpse<{minRebornRarity: SkeletonRarity}>
 
 export const raiseSkeleton: ExecuteSkill<Necromancer> = async (player, { world, eventBus }) => {
   const failure = {
@@ -14,7 +16,7 @@ export const raiseSkeleton: ExecuteSkill<Necromancer> = async (player, { world, 
     gross: 0,
   }
 
-  const makeSkeleton = (corpse: Corpse, isMultiple?: boolean) => {
+  const makeSkeleton = (corpse: GameCorpse, isMultiple?: boolean) => {
     const minIdx = Math.min(
       SKELETON_RARITIES.indexOf(corpse?.minRebornRarity || 'common') + player.ref.minRebornRarity,
       SKELETON_RARITIES.length - 2
@@ -44,7 +46,7 @@ export const raiseSkeleton: ExecuteSkill<Necromancer> = async (player, { world, 
     return false
   }
 
-  const corpses = world.getCorpsesAt(player.ref.pos)
+  const corpses = world.getCorpsesAt(player.ref.pos) as GameCorpse[]
 
   if (corpses.length === 0) {
     Terminal.log(i18n.t('skill.RAISE_SKELETON.no_corpse'))

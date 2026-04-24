@@ -1,18 +1,19 @@
 import _ from 'lodash'
-import { Terminal } from '~/core'
+import { BattleTarget, Terminal } from '~/core'
+import { BaseNPC } from '~/core/npc/BaseNPC'
 import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import GolemWrapper from '~/systems/job/necromancer/GolemWrapper'
 import KnightWrapper from '~/systems/job/necromancer/KnightWrapper'
-import { BattleTarget } from '~/types'
+import { IGolem, IKnight, IMinion } from '~/types'
 import { renderHpBar, selectTarget } from './utils'
 
 // 미니언 및 몬스터 정보 출력
 export const printEntity = (target: BattleTarget, context: GameContext) => {
   const { npcs, npcSkills } = context
 
-  const isMinion = target.isMinion
-  const isNpc = target.isNpc
+  const isMinion = (target as IMinion).isMinion
+  const isNpc = (target as BaseNPC).isNpc
   const hpBar = renderHpBar(target.hp, target.maxHp)
 
   const typeTag = isMinion
@@ -48,11 +49,11 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
     )
   }
 
-  if (target.isGolem) {
+  if ((target as IGolem).isGolem) {
     printGolem(target)
   }
 
-  if (target.isKnight) {
+  if ((target as IKnight).isKnight) {
     printKnight(target)
   }
 
@@ -74,11 +75,12 @@ export const printEntity = (target: BattleTarget, context: GameContext) => {
   Terminal.log(` 💬 "${target.description}"`)
   Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
 
-  const canTalk = isNpc || target.isKnight
+  const knight = target as IKnight
+  const canTalk = isNpc || knight.isKnight
 
   if (canTalk) {
     let name = target.name
-    if (target.isKnight) {
+    if (knight.isKnight) {
       name = npcs.getNPC('_knight')?.name || ''
     }
 

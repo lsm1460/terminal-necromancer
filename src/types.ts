@@ -1,52 +1,47 @@
 import { SkeletonRarity } from './consts'
-import { AttackType, NpcSkill } from './core'
+import { AttackType, BattleTarget, NpcSkill } from './core'
 
-export type BattleTarget = {
+export interface IMinion extends BattleTarget {
+  isMinion: true
+}
+
+export interface IGolem extends IMinion {
+  madeBy: string
+  isGolem: true
+}
+
+export interface IKnight extends IMinion {
+  originId: string
+  isKnight: true
+}
+
+export type SkeletonBase = {
   id: string
   name: string
   attackType: AttackType
-  baseMaxHp?: number
   maxHp: number
   hp: number
-  baseAtk?: number
   atk: number
-  baseDef?: number
   def: number
   agi: number
+  eva: number
+  skills: string[]
   exp: number
-  eva?: number
-  crit?: number
   description: string
+  originId: string
+  rarity: SkeletonRarity
   dropTableId: string
-  encounterRate: number // ← 개별 몬스터 출현 확률 (%)
+  encounterRate: number
   isAlive: boolean
-  skills?: string[]
-  preemptive?: boolean
-  noEscape?: boolean
-  noCorpse?: boolean
-  isNpc?: boolean
-  isMinion?: boolean
-  isSkeleton?: boolean // only skeleton
-  originId?: string // only skeleton
-  rarity?: SkeletonRarity // only skeleton
-  isGolem?: boolean // only golem
-  madeBy?: string // only golem
-  isKnight?: boolean
-  deathLine?: string
-  minRebornRarity?: SkeletonRarity
-  orderWeight?: number
+  isMinion: boolean
+  isSkeleton: boolean
+  orderWeight: number
 }
 
-export type Corpse = {
-  x?: number
-  y?: number
-  maxHp: number
-  atk: number
-  def: number
-  agi: number
-  name: string
-  id: string
-  minRebornRarity?: SkeletonRarity
+export interface ISkeleton extends IMinion {
+  originId: string
+  rarity: SkeletonRarity
+  isSkeleton: true
 }
 
 export const SKILL_IDS = {

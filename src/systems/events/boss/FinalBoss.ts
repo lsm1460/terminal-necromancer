@@ -1,11 +1,11 @@
-import { Ending } from '~/systems'
 import { Terminal } from '~/core'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import i18n from '~/i18n'
+import { Ending } from '~/systems'
 import { AppContext } from '~/systems/types'
-import { BattleTarget } from '~/types'
+import { IMinion } from '~/types'
 import { BossLogic } from './BossLogic'
 
 export class FinalBoss implements BossLogic {
@@ -95,7 +95,7 @@ const setupFakeUnit = (unit: CombatUnit) => {
 
 const applyMinionProtection = (unit: CombatUnit) => {
   unit.onProcessHitHooks.push(async (attacker, defender, options) => {
-    if ((attacker.ref as BattleTarget).isMinion) {
+    if ((attacker.ref as IMinion).isMinion) {
       options.rawDamage = 0
       Terminal.log(`${unit.ref.name}은(는) 미니언의 공격을 받지 않습니다.`)
     }

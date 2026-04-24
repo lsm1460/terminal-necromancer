@@ -1,11 +1,11 @@
 import _ from 'lodash'
-import { CombatUnit } from './unit/CombatUnit'
+import i18n from '~/i18n'
 import { Player } from '../player/Player'
-import { BattleTarget } from '~/types'
 import { NpcSkillManager } from '../skill/npcs/NpcSkillManger'
 import { Terminal } from '../Terminal'
 import { Battle } from './Battle'
-import i18n from '~/i18n'
+import { BattleTarget } from './BattleTarget'
+import { CombatUnit } from './unit/CombatUnit'
 
 export class BattleUnitManager {
   private unitCache = new Map<any, CombatUnit>()

@@ -1,6 +1,5 @@
-import i18n from '~/i18n'
 import { printCorpses, printDrops } from '~/core/statusPrinter'
-import { BattleTarget } from '~/types'
+import i18n from '~/i18n'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
@@ -10,6 +9,7 @@ import { BattleComponentFactory } from './BattleComponentFactory'
 import { BattleDirector } from './BattleDirector'
 import { BattleEngine, BattleManager } from './BattleEngine'
 import { BattleRewardSystem } from './BattleRewardSystem'
+import { BattleTarget } from './BattleTarget'
 import { BattleUnitManager } from './BattleUnitManager'
 import { CombatService, DamageOptions } from './CombatService'
 import { BattleResult } from './types'
@@ -76,8 +76,8 @@ export class Battle implements BattleManager {
 
       const _params = [
         unit,
-        targetEnemies as CombatUnit<BattleTarget>[],
-        targetAllies as CombatUnit<BattleTarget>[],
+        targetEnemies as CombatUnit[],
+        targetAllies as CombatUnit[],
         this,
       ] as const
 

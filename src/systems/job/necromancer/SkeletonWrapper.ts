@@ -1,14 +1,15 @@
 import { SkeletonRarity } from '~/consts'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
-import { BattleTarget } from '~/types'
+import { ISkeleton, SkeletonBase } from '~/types'
 import { Necromancer } from './Necromancer'
 
-interface SkeletonWrapper extends BattleTarget {}
+class SkeletonWrapper implements ISkeleton {
+  isMinion = true as const
+  isSkeleton = true as const
 
-class SkeletonWrapper {
   constructor(
-    public raw: BattleTarget,
+    public raw: SkeletonBase,
     private player: Necromancer
   ) {}
 
@@ -19,7 +20,7 @@ class SkeletonWrapper {
   get name() {
     return SkeletonWrapper.getSkeletonName(this.raw)
   }
-  static getSkeletonName(skeleton: BattleTarget) {
+  static getSkeletonName(skeleton: SkeletonBase) {
     const originId = getOriginId(skeleton.id)
 
     const rarityColors: Record<SkeletonRarity, string> = {
@@ -58,6 +59,9 @@ class SkeletonWrapper {
   get def() {
     return this.raw.def
   }
+  get eva() {
+    return this.raw.eva
+  }
   get agi() {
     return this.raw.agi
   }
@@ -83,29 +87,8 @@ class SkeletonWrapper {
   set isAlive(v: boolean) {
     this.raw.isAlive = v
   }
-  get preemptive() {
-    return this.raw.preemptive
-  }
-  get noEscape() {
-    return this.raw.noEscape
-  }
-  get noCorpse() {
-    return this.raw.noCorpse
-  }
-  get isNpc() {
-    return this.raw.isNpc
-  }
-  get isMinion() {
-    return this.raw.isMinion
-  }
-  get isSkeleton() {
-    return this.raw.isSkeleton
-  }
   get originId() {
     return this.raw.originId
-  }
-  get deathLine() {
-    return this.raw.deathLine
   }
   get orderWeight() {
     return this.raw.orderWeight

@@ -1,6 +1,5 @@
-import { Terminal } from '~/core'
+import { Corpse, Terminal } from '~/core'
 import i18n from '~/i18n'
-import { Corpse } from '~/types'
 import { selectTarget } from './utils'
 
 export const lookCorpse = async (corpse: Corpse[]) => {

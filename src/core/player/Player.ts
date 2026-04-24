@@ -1,4 +1,4 @@
-import { BattleTarget } from '~/types'
+import { BattleTarget } from '../battle'
 import { Item } from '../item/Item'
 import { IArmor, IConsumable, IGameItemFactory, IWeapon, LevelData, PositionType, Skill } from '../types'
 import { InventoryManager } from './InventoryManager'

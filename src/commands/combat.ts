@@ -2,7 +2,7 @@ import { CombatUnit, CommandFunction, Terminal } from '~/core'
 import i18n from '~/i18n'
 
 export const attackCommand: CommandFunction = async (args, context) => {
-  const { player, npcs, battle, world, currentTile: tile } = context
+  const { npcs, battle, world, currentTile: tile } = context
   
 
   if ((tile.npcIds || [])?.length > 0) {

@@ -18,8 +18,12 @@ export class CommandManager implements ICommandManager {
 
   private mapInput(cmd: string): string {
     const trimmed = cmd.trim()
-    const mapped = Object.entries(this.customGroups).find(([_, arr]) => arr.includes(trimmed))?.[0] ?? trimmed
-    return mapped
+
+    for (const [key, aliases] of this.customGroups.entries()) {
+      if (aliases.includes(trimmed)) return key
+    }
+
+    return trimmed
   }
 
   private parseCommand(rawCmd: string) {
@@ -44,7 +48,7 @@ export class CommandManager implements ICommandManager {
   add(_commands: Record<string, string[]>) {
     Object.entries(_commands).forEach(([key, aliases]) => {
       const existing = this.customGroups.get(key) || []
-      
+
       this.customGroups.set(key, Array.from(new Set([...existing, ...aliases])))
     })
   }
@@ -59,8 +63,12 @@ export class CommandManager implements ICommandManager {
 
     const { cmd: rawCmdName, args } = this.parseCommand(trimmed)
     const cmd = this.mapInput(rawCmdName)
-
     const fn = this.commands.get(cmd)
+    const cheatFn = this.commands.get(trimmed)
+
+    if (cheatFn) {
+      return await cheatFn([], context)
+    }
 
     if (!fn) {
       Terminal.log({ key: 'invalid_command' })

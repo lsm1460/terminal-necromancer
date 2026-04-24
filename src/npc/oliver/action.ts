@@ -17,14 +17,9 @@ export const OliverActions = {
     events.completeEvent('b5_oliver')
     npc.dead({ karma: 0 })
 
+    
     world.addCorpse({
-      maxHp: npc.maxHp,
-      atk: npc.atk,
-      def: npc.def,
-      agi: npc.agi,
-      name: npc.name,
-      id: npc.id,
-      minRebornRarity: npc.minRebornRarity,
+      ...npc.getCorpse(),
       ...player.pos,
     })
 

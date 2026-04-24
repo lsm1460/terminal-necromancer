@@ -1,4 +1,7 @@
-import { EventBus, GameEngine, GameEventType, IAssets, ItemGenerator, Terminal } from '~/core'
+import { MAP_IDS } from '~/consts'
+import { EventBus, GameEngine, GameEventType, IAssets, ItemGenerator, Renderer, Terminal } from '~/core'
+import { LootFactory } from '~/core/LootFactory'
+import i18n from '~/i18n'
 import {
   AchievementManager,
   Broadcast,
@@ -17,7 +20,7 @@ import { CheatSystem, ExitSystem, HelpSystem, MoveSystem, StatusSystem } from '~
 import { PASSIVE_EFFECTS, SkillEffectPresenter, SpecialSkillLogics } from '~/systems/skill'
 
 export interface BootOptions {
-  renderer: any
+  renderer: Renderer
   translator: (info: any) => string
   assets: IAssets
   initState: any
@@ -61,7 +64,6 @@ export class GameBootstrapper {
       this.isRunning = false
 
       return null
-
     }
 
     const player = new Necromancer(itemFactory, assets.level, this.eventBus, playData.player)
@@ -84,6 +86,8 @@ export class GameBootstrapper {
     await this.engine.init(playData)
     this.isRunning = true
 
+    this.initPlayerDeath(player, renderer)
+
     const exitSubscription = this.eventBus.subscribe(GameEventType.SYSTEM_EXIT, () => {
       this.isRunning = false
       exitSubscription.unsubscribe()
@@ -91,5 +95,46 @@ export class GameBootstrapper {
     })
 
     return this.engine
+  }
+
+  initPlayerDeath(player: Necromancer, renderer: Renderer) {
+    const _context = this.engine!.context || {}
+    const { npcs, map, world } = _context
+
+    player.onDeath = () => {
+      const hostility = (npcs as NPCManager).getFactionContribution('resistance')
+      const isHostile = hostility >= 70
+
+      renderer.print('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+      renderer.print(`📡 [${i18n.t('broadcast.broadcast_echo')}]`)
+
+      if (isHostile) {
+        renderer.print(`  📢 "${i18n.t('broadcast.broadcast_player_death_hostile_1')}"`)
+        renderer.print(`  📢 "${i18n.t('broadcast.broadcast_player_death_hostile_2')}"`)
+      } else {
+        renderer.print(`  📢 "${i18n.t('broadcast.broadcast_player_death_normal_1')}"`)
+        renderer.print(`  📢 "${i18n.t('broadcast.broadcast_player_death_normal_2')}"`)
+      }
+
+      renderer.print(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+      renderer.print(`\n${i18n.t('broadcast.player_death_soul_shattered')}\n`)
+
+      const lootBag = LootFactory.fromPlayer(player, map)
+      player.exp -= lootBag.exp
+      player.gold -= lootBag.gold
+      world.addLootBag(lootBag)
+
+      if (map.currentSceneId !== MAP_IDS.B1_SUBWAY) {
+        world.clearFloor()
+      }
+
+      map.currentSceneId = MAP_IDS.B1_SUBWAY
+      player.x = 0
+      player.y = 0
+      player.hp = 1
+      ;(player as Necromancer).removeMercenaries()
+
+      renderer.printStatus(_context)
+    }
   }
 }

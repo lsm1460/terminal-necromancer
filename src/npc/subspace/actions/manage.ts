@@ -1,5 +1,4 @@
 import { Terminal } from '~/core'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import SkeletonWrapper from '~/systems/job/necromancer/SkeletonWrapper'

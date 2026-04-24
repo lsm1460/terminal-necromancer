@@ -1,7 +1,6 @@
 import { EventBus } from '~/core/EventBus'
 import i18n from '~/i18n'
-import { BattleTarget } from '~/types'
-import { Battle } from '.'
+import { Battle, BattleTarget } from '.'
 import { Terminal } from '../Terminal'
 import { World } from '../World'
 import { Player } from '../player/Player'
@@ -180,7 +179,7 @@ export class BattleActionHandler {
 
   async executeAutoAttack(
     attacker: CombatUnit,
-    targets: CombatUnit<BattleTarget>[],
+    targets: CombatUnit[],
     ally: CombatUnit[],
     battle: Battle
   ) {
@@ -204,7 +203,7 @@ export class BattleActionHandler {
   private async tryExecuteNpcSkill(
     attacker: CombatUnit,
     ally: CombatUnit[],
-    targets: CombatUnit<BattleTarget>[],
+    targets: CombatUnit[],
     battle: Battle
   ) {
     if (!this.npcSkills) return null

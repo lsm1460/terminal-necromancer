@@ -2,7 +2,6 @@ import { CombatUnit, ExecuteSkill, Terminal } from '~/core'
 import { World } from '~/core/World'
 import i18n from '~/i18n'
 import { Necromancer } from '~/systems/job/necromancer/Necromancer'
-import { BattleTarget } from '~/types'
 
 interface ExplosionTarget {
   id: string
@@ -77,7 +76,7 @@ function collectExplosionTargets(player: Necromancer, world: World, isChaining: 
   if (!isChaining) {
     const skeletons = player.skeleton
     targets.push(
-      ...skeletons.map((sk: BattleTarget) => ({
+      ...skeletons.map((sk) => ({
         id: sk.id,
         name: sk.name,
         type: 'skeleton' as const,

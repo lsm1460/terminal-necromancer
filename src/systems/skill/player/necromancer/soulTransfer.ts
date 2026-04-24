@@ -1,6 +1,6 @@
 import { ExecuteSkill, Terminal } from '~/core'
 import i18n from '~/i18n'
-import { BattleTarget } from '~/types'
+import { IMinion } from '~/types'
 
 /**
  * 영혼 전달 (Soul Transfer)
@@ -9,7 +9,7 @@ import { BattleTarget } from '~/types'
  * : [어픽스: EMPOWER_SOUL] 미니언 공격력 버프 부여 + 체력 감소
  */
 export const soulTransfer: ExecuteSkill = async (player, skillContext, { ally = [], enemies } = {}) => {
-  const minions = ally.filter((target) => (target.ref as BattleTarget).isMinion)
+  const minions = ally.filter((target) => (target.ref as IMinion).isMinion)
 
   // 1. 소환수 존재 여부 체크
   if (minions.length === 0) {

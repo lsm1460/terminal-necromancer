@@ -18,7 +18,7 @@ import {
   InstallContext,
   OptionalEngineDependencies,
   RequiredEngineDependencies,
-  SaveData
+  SaveData,
 } from './types'
 
 export class GameEngine {
@@ -33,10 +33,6 @@ export class GameEngine {
     private reqDependencies: RequiredEngineDependencies,
     private optDependencies?: OptionalEngineDependencies
   ) {}
-
-  get renderer() {
-    return this.reqDependencies.renderer
-  }
 
   public async init(initData: SaveData) {
     const { item, drop, monsterGroup, monster, npcSkills } = this.assets

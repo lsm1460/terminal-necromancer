@@ -1,11 +1,28 @@
-import { Terminal } from '~/core'
+import { SkeletonRarity } from '~/consts'
+import { INpcManager, NPCState, Terminal } from '~/core'
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext } from '~/core/types'
 import i18n from '~/i18n'
 import { NPCManager } from '../NpcManager'
 import { AppContext } from '../types'
 
 export class GameNPC extends BaseNPC {
+  minRebornRarity?: SkeletonRarity
+
+  constructor(
+    id: string,
+    baseData: any,
+    state: NPCState,
+    protected manager: INpcManager
+  ) {
+    super(id, baseData, state, manager)
+
+    this.minRebornRarity = baseData.minRebornRarity
+  }
+
+  get _manager() {
+    return this.manager as NPCManager
+  }
+
   get name(): string {
     return i18n.t(`npc.${this.id}.name`)
   }
@@ -21,19 +38,19 @@ export class GameNPC extends BaseNPC {
   }
 
   get factionHostility(): number {
-    return (this.manager as NPCManager).getFactionHostility(this.faction)
+    return this._manager.getFactionHostility(this.faction)
   }
 
   get factionContribution(): number {
-    return (this.manager as NPCManager).getFactionContribution(this.faction)
+    return this._manager.getFactionContribution(this.faction)
   }
 
   updateHostility(amount: number) {
-    ;(this.manager as NPCManager).updateFactionHostility(this.faction, amount)
+    this._manager.updateFactionHostility(this.faction, amount)
   }
 
   updateContribution(amount: number) {
-    ;(this.manager as NPCManager).updateFactionContribution(this.faction, amount)
+    this._manager.updateFactionContribution(this.faction, amount)
   }
 
   handleTalk() {
@@ -63,4 +80,16 @@ export class GameNPC extends BaseNPC {
   }
 
   override afterDead(context: AppContext) {}
+
+  getCorpse() {
+    return {
+      id: this.id,
+      maxHp: this.maxHp,
+      atk: this.atk,
+      def: this.def,
+      agi: this.agi,
+      name: this.name,
+      minRebornRarity: this.minRebornRarity
+    }
+  }
 }

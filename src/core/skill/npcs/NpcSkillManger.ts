@@ -1,17 +1,17 @@
 import cloneDeep from 'lodash/cloneDeep'
+import { BattleTarget } from '~/core/battle'
 import { Battle } from '~/core/battle/Battle'
 import { BattleDirector } from '~/core/battle/BattleDirector'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { EventBus } from '~/core/EventBus'
 import { GameEventType, NpcSkill, PassiveDefinition, SpecialSkillLogic } from '~/core/types'
-import { BattleTarget } from '~/types'
 import { SkillEffectHandlers } from './SkillEffectHandlers'
 
 type SkillExecutor<T = void> = (
   skillId: string,
   attacker: CombatUnit,
   ally: CombatUnit[],
-  enemies: CombatUnit<BattleTarget>[],
+  enemies: CombatUnit[],
   battle: Battle
 ) => T
 

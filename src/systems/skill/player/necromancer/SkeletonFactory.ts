@@ -1,13 +1,14 @@
 import { RARITY_DATA, SkeletonRarity } from '~/consts'
+import { Corpse } from '~/core'
 import i18n from '~/i18n'
-import { BattleTarget, Corpse } from '~/types'
+import { SkeletonBase } from '~/types'
 
 export const SKELETON_RARITIES: SkeletonRarity[] = ['common', 'rare', 'elite', 'epic', 'legendary']
 
 export class SkeletonFactory {
   rarities: SkeletonRarity[] = ['common', 'rare', 'elite', 'epic', 'legendary']
 
-  static createFromCorpse(corpse: Corpse, minIdx: number = 0): BattleTarget {
+  static createFromCorpse(corpse: Corpse, minIdx: number = 0): SkeletonBase {
     // 가중치 기반으로 랜덤 등급 선택
     const pool = SKELETON_RARITIES.slice(Math.min(minIdx, SKELETON_RARITIES.length - 1)) // 최소 등급 이상만 필터링
     const totalWeight = pool.reduce((sum, r) => sum + RARITY_DATA[r].weight, 0)
@@ -53,7 +54,7 @@ export class SkeletonFactory {
     const color = rarityColors[finalRarity] || rarityColors.common
     const rarityTag = `${color}[${finalRarity.toUpperCase()}]${resetColor}`
 
-    const skeleton: BattleTarget = {
+    const skeleton = {
       id: `${selectedClass.id}::${Date.now()}`,
       name: `${rarityTag} skeleton ${selectedClass.name}`,
       attackType: selectedClass.attackType,
@@ -62,6 +63,7 @@ export class SkeletonFactory {
       atk: Math.max(Math.floor(corpse.atk * m * s.atk), 8),
       def: Math.max(Math.floor(corpse.def * m * s.def), 5),
       agi: Math.floor(corpse.agi * m * s.agi),
+      eva: 0,
       skills: [...selectedClass.skills],
       exp: 0,
       description: i18n.t('npc.skeleton.description', { name: corpse.name }),

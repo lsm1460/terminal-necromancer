@@ -26,7 +26,7 @@ export const b3Handlers: Record<string, EventHandler> = {
     Terminal.log(`\x1b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\x1b[0m\n`)
 
     world.addCorpse({
-      ...monster,
+      ...monster.getCorpse(),
       ...player.pos,
     })
   },

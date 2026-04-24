@@ -234,6 +234,17 @@ export type SaveData<T extends Player = Player, M = Record<string, unknown>> = {
   completedEvents: string[]
 }
 
+export type Corpse<M = {}> = {
+  x?: number
+  y?: number
+  maxHp: number
+  atk: number
+  def: number
+  agi: number
+  name: string
+  id: string
+} & M
+
 export * from './battle'
 export * from './events'
 export * from './map'

@@ -1,8 +1,8 @@
-import { PassiveDefinition, Terminal } from '~/core'
+import { BattleTarget, PassiveDefinition, Terminal } from '~/core'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
-import { BattleTarget, PhasesShift } from '~/types'
+import { PhasesShift } from '~/types'
 
 const RED = (text: string) => `\x1b[31m${text}\x1b[0m`
 

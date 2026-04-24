@@ -1,14 +1,14 @@
 import i18n from '~/i18n'
-import { BattleTarget } from '~/types'
+import { IGolem } from '~/types'
 import { Necromancer } from './Necromancer'
 
-interface GolemWrapper extends BattleTarget {}
-
-class GolemWrapper {
+class GolemWrapper implements IGolem {
   upgradeLimit: number
+  isMinion = true as const
+  isGolem = true as const
 
   constructor(
-    public raw: BattleTarget,
+    public raw: IGolem,
     public upgrade: ('machine' | 'soul')[],
     private player: Necromancer
   ) {
@@ -28,6 +28,9 @@ class GolemWrapper {
   get exp() {
     return this.raw.exp
   }
+  get madeBy() {
+    return this.raw.madeBy
+  }
   get description() {
     return i18n.t(`npc.golem.description.${this.raw.madeBy}`)
   }
@@ -45,18 +48,6 @@ class GolemWrapper {
   }
   get noCorpse() {
     return this.raw.noCorpse
-  }
-  get isNpc() {
-    return this.raw.isNpc
-  }
-  get isMinion() {
-    return this.raw.isMinion
-  }
-  get isGolem() {
-    return this.raw.isGolem
-  }
-  get deathLine() {
-    return this.raw.deathLine
   }
   get orderWeight() {
     return this.raw.orderWeight
@@ -137,6 +128,10 @@ class GolemWrapper {
   }
   set hp(v: number) {
     this.raw.hp = v
+  }
+
+  get eva() {
+    return this.raw.eva
   }
 
   get isAlive() {

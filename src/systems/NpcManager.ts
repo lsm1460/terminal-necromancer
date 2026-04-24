@@ -38,7 +38,7 @@ export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
 
     const NpcClass = getNPCClass(id)
 
-    return NpcClass ? new NpcClass(id, base, state, this) : super.getNPC(id)
+    return NpcClass ? new NpcClass(id, base, state, this) : new GameNPC(id, base, state, this)
   }
 
   public override getAliveNPCInTile({ tile }: { tile: Tile }, options?: { withoutFaction?: string[] }) {

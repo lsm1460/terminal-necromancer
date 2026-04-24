@@ -1,9 +1,8 @@
+import { BattleTarget, Terminal } from '~/core'
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
 import { AppContext } from '~/systems/types'
-import { BattleTarget } from '~/types'
 import { speak } from '~/utils'
 import { BossLogic } from './BossLogic'
 

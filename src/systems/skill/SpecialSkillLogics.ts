@@ -3,7 +3,7 @@ import { SpecialSkillLogic, Terminal } from '~/core'
 import { DamageOptions } from '~/core/battle'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
-import { BattleTarget } from '~/types'
+import { IMinion } from '~/types'
 import { ItemType } from '~/types/item'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
@@ -111,7 +111,7 @@ export const SpecialSkillLogics: Record<
     const watcher = battle._spawnMonster('watcher')!
 
     watcher.onProcessHitHooks.push(async (attacker, defender, options) => {
-      if ((attacker.ref as BattleTarget).isMinion) {
+      if ((attacker.ref as IMinion).isMinion) {
         options.rawDamage = 0 // 대미지 무효화
 
         Terminal.log(i18n.t('skill.special.shadow_bind'))

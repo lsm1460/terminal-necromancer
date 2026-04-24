@@ -1,6 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep'
-import i18n from '~/i18n'
-import { Monster, MonsterGroupMember, Tile } from './types'
+import { Monster } from './battle/Monster'
+import { MonsterGroupMember, Tile } from './types'
 import { generateId } from './utils'
 
 export class MonsterFactory {
@@ -54,17 +54,10 @@ export class MonsterFactory {
 
     const base = cloneDeep(this.monster[monsterId])
     
-    return {
+    return new Monster({
       ...base,
       isAlive: true,
       id: generateId(base.id),
-
-      get name() {
-        return i18n.t(`npc.${base.id}.name`)
-      },
-      get description() {
-        return i18n.t(`npc.${base.id}.description`)
-      }
-    }
+    })
   }
 }

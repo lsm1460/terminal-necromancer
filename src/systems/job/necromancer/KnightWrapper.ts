@@ -1,22 +1,17 @@
 import { AttackType } from '~/core/types'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
-import { BattleTarget } from '~/types'
+import { IKnight } from '~/types'
 import { ItemRarity } from '~/types/item'
 import { Necromancer } from './Necromancer'
 
-/**
- * 1. 인터페이스 병합 (Declaration Merging)
- * 클래스와 인터페이스의 이름을 같게 선언하여,
- * 클래스가 BattleTarget의 모든 속성을 가지고 있음을 TypeScript에 알립니다.
- */
-interface KnightWrapper extends BattleTarget {}
-
-class KnightWrapper {
+class KnightWrapper implements IKnight {
   upgradeLimit: number
+  isMinion = true as const
+  isKnight = true as const
 
   constructor(
-    public raw: BattleTarget,
+    public raw: IKnight,
     public upgrade: ItemRarity[],
     private player: Necromancer
   ) {
@@ -32,6 +27,9 @@ class KnightWrapper {
   }
   get exp() {
     return this.raw.exp
+  }
+  get originId() {
+    return this.raw.originId
   }
   get description() {
     const origin = i18n.t(`npc.${getOriginId(this.raw.originId || '')}.name`)
@@ -52,15 +50,6 @@ class KnightWrapper {
   }
   get noCorpse() {
     return this.raw.noCorpse
-  }
-  get isNpc() {
-    return this.raw.isNpc
-  }
-  get isMinion() {
-    return this.raw.isMinion
-  }
-  get isKnight() {
-    return this.raw.isKnight
   }
   get orderWeight() {
     return this.raw.orderWeight
@@ -111,6 +100,10 @@ class KnightWrapper {
     })
 
     return Math.floor(base * bonus)
+  }
+
+  get eva() {
+    return this.raw.eva
   }
 
   get maxHp() {

@@ -1,9 +1,12 @@
-import { NPCState, INpcManager } from '../types'
+import { BattleTarget } from '../battle'
+import { INpcManager, NPCState } from '../types'
 
-export class BaseNPC<T = any> {
+interface INPC extends BattleTarget {}
+
+export class BaseNPC<T = any> implements INPC {
   id: string
   faction: string
-  isNpc: true = true
+  isNpc = true
 
   reborn: boolean
   relation: number
@@ -12,11 +15,12 @@ export class BaseNPC<T = any> {
 
   // BattleTarget 기본 스탯
   attackType: 'melee' | 'ranged' | 'explode' = 'melee'
-  maxHp: number = 100
-  atk: number = 0
-  def: number = 0
-  agi: number = 0
-  exp: number = 0
+  maxHp = 100
+  atk = 0
+  def = 0
+  agi = 0
+  exp = 0
+  eva = 0
   dropTableId: string = ''
   encounterRate: number = 0
   isBoss: boolean = false
@@ -24,11 +28,10 @@ export class BaseNPC<T = any> {
   noEscape?: boolean
   noCorpse?: boolean
   skills?: string[]
-  minRebornRarity?: any
 
   constructor(
     id: string,
-    baseData: any,
+    private baseData: any,
     state: NPCState,
     protected manager: INpcManager
   ) {
@@ -81,4 +84,15 @@ export class BaseNPC<T = any> {
   }
 
   afterDead(context: T) {}
+
+  getCorpse() {
+    return {
+      maxHp: this.maxHp,
+      atk: this.atk,
+      def: this.def,
+      agi: this.agi,
+      name: this.name,
+      id: this.id,
+    }
+  }
 }

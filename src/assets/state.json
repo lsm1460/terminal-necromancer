@@ -13,28 +13,101 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 0,
-    "exp": 0,
+    "gold": 586,
+    "exp": 1007,
     "level": 1,
     "unlockedSkills": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
-    "karma": 0,
+    "karma": 1,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
       "FOCUS_FIRE"
     ],
-    "_skeleton": [],
+    "_skeleton": [
+      {
+        "id": "skeleton_archer::1777011835654",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
+        "attackType": "ranged",
+        "maxHp": 89,
+        "hp": 89,
+        "atk": 9,
+        "def": 11,
+        "agi": 0,
+        "eva": 0,
+        "skills": [
+          "aim_arrow"
+        ],
+        "exp": 0,
+        "description": "기어다니는 죄악, 벨페고르의 유골로 만들어진 소환수입니다.",
+        "originId": "first_boss",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 25
+      }
+    ],
     "_mercenary": [],
-    "inventory": [],
+    "inventory": [
+      {
+        "id": "leather_armor::rfXGsrNw",
+        "type": "armor",
+        "price": 400,
+        "sellPrice": 100,
+        "quantity": 1,
+        "def": 2,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      },
+      {
+        "id": "leather_armor::o44Jk3ld",
+        "type": "armor",
+        "price": 400,
+        "sellPrice": 100,
+        "quantity": 1,
+        "def": 3,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      }
+    ],
     "inventoryMax": 15,
     "equipped": {
-      "armor": null,
-      "weapon": null
+      "armor": {
+        "id": "stolen_helmet::Y9bkUjFb",
+        "type": "armor",
+        "price": 850,
+        "sellPrice": 200,
+        "quantity": 1,
+        "def": 6,
+        "eva": 0,
+        "rarity": "RARE",
+        "perfPrefix": "",
+        "adjective": "reinforced"
+      },
+      "weapon": {
+        "id": "iron_sword::3kCy3_P-",
+        "type": "weapon",
+        "price": 500,
+        "sellPrice": 120,
+        "quantity": 1,
+        "atk": 3,
+        "crit": 0.01,
+        "attackType": "melee",
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      }
     },
     "skeletonSubspace": [],
     "subspaceLimit": 15,
@@ -43,7 +116,7 @@
     "knightUpgrade": [],
     "upgradeLimit": 5
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B2_Transit_Area",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -90,8 +163,8 @@
       },
       "first_boss": {
         "hp": 80,
-        "isAlive": true,
-        "reborn": false,
+        "isAlive": false,
+        "reborn": true,
         "relation": 0
       },
       "second_boss": {
@@ -260,13 +333,21 @@
     "factionHostility": {},
     "factionContribution": {}
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B2_Transit_Area",
+    "id": "t2hbMkha",
+    "tileId": "B2_008",
+    "exp": 10,
+    "gold": 17
+  },
   "config": {
     "locale": "ko"
   },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
-    "talk_death_1"
+    "talk_death_1",
+    "got_terminal_map",
+    "first_boss"
   ]
 }

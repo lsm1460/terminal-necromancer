@@ -1,35 +1,35 @@
 import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
+import { BattleTarget } from '~/core'
 import { EventBus } from '~/core/EventBus'
-import { IGameItemFactory } from '~/core/types'
 import { Player, PlayerSaveData } from '~/core/player/Player'
 import { StatsCalculator } from '~/core/player/StatsCalculator'
-import { GameEventType } from '~/core/types'
+import { GameEventType, IGameItemFactory } from '~/core/types'
 import i18n from '~/i18n'
+import { GameAmor } from '~/systems/item/GameAmor'
 import { GameEquipAble } from '~/systems/item/GameEquipAble'
+import { GameWeapon } from '~/systems/item/GameWeapon'
 import { getPlayerSkills } from '~/systems/skill/player'
-import { BattleTarget, SKILL_IDS, SkillId } from '~/types'
+import { IGolem, IKnight, ISkeleton, SkeletonBase, SKILL_IDS, SkillId } from '~/types'
 import { Affix, AffixId } from '~/types/item'
 import { MinionManager } from './MinionManager'
 import { necromancerModifiers } from './Modifiers'
 import SkeletonWrapper from './SkeletonWrapper'
-import { GameWeapon } from '~/systems/item/GameWeapon'
-import { GameAmor } from '~/systems/item/GameAmor'
 
 export interface NecromancerSaveData extends PlayerSaveData {
   karma: number
   memorize: SkillId[]
   unlockedSkills: SkillId[]
-  skeletonSubspace: BattleTarget[]
+  skeletonSubspace: SkeletonBase[]
   subspaceLimit: number
-  skeleton: any
+  skeleton: ISkeleton[]
   _maxSkeleton: number
   upgradeLimit: number
   golemUpgrade: any
   knightUpgrade: any
-  _skeleton?: BattleTarget[]
+  _skeleton?: SkeletonBase[]
   _mercenary?: BattleTarget[]
-  _golem?: BattleTarget
-  _knight?: BattleTarget
+  _golem?: IGolem
+  _knight?: IKnight
 }
 
 export class Necromancer extends Player {
@@ -231,10 +231,6 @@ export class Necromancer extends Player {
     return this.minionManager.skeleton
   }
 
-  set skeleton(v) {
-    this.minionManager.skeleton = v
-  }
-
   get _maxSkeleton() {
     return this.minionManager._maxSkeleton
   }
@@ -271,7 +267,7 @@ export class Necromancer extends Player {
     return this.minionManager.updateSkeletonLimit()
   }
 
-  addSkeleton(minion: BattleTarget) {
+  addSkeleton(minion: SkeletonBase) {
     return this.minionManager.addSkeleton(minion)
   }
 

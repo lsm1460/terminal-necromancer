@@ -1,11 +1,11 @@
 import { DropSystem } from '~/core/item/DropSystem'
 import i18n from '~/i18n'
-import { BattleTarget } from '~/types'
 import { LootFactory } from '../LootFactory'
 import { BaseNPC } from '../npc/BaseNPC'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
 import { World } from '../World'
+import { BattleTarget } from './BattleTarget'
 import { BattleUnitManager } from './BattleUnitManager'
 import { BattleResult } from './types'
 
@@ -25,8 +25,10 @@ export class BattleRewardSystem {
     this.unitManager.unregisterUnit(target)
 
     Terminal.log(i18n.t('battle.reward.unit_death', { name: target.name }))
-    target.deathLine && Terminal.log(target.deathLine)
-    target.isNpc && (target as BaseNPC).dead()
+    if (target instanceof BaseNPC) {
+      target.deathLine && Terminal.log(target.deathLine)
+      target.isNpc && (target as BaseNPC).dead()
+    }
 
     const { gold, drops } = LootFactory.fromTarget(target, this.dropSystem)
 
@@ -56,15 +58,9 @@ export class BattleRewardSystem {
       )
     })
 
-    if (!target.noCorpse) {
+    if (!target.noCorpse && target.getCorpse) {
       this.world.addCorpse({
-        maxHp: target.maxHp,
-        atk: target.atk,
-        def: target.def,
-        agi: target.agi,
-        name: target.name,
-        id: target.id,
-        minRebornRarity: target.minRebornRarity,
+        ...target.getCorpse(),
         x,
         y,
       })

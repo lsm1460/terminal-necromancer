@@ -1,9 +1,8 @@
 import matches from 'lodash/matches'
 import { EventBus } from '~/core/EventBus'
-import { Corpse } from '~/types'
 import { Item } from './item/Item'
 import { Player } from './player/Player'
-import { Drop, GameEventType, IGameItemFactory, LootBag, PositionType } from './types'
+import { Corpse, Drop, GameEventType, IGameItemFactory, LootBag, PositionType } from './types'
 
 export class World {
   lootBags: LootBag | null = null

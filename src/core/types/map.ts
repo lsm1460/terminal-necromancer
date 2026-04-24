@@ -1,4 +1,5 @@
-import { GameContext, Monster, PositionType } from '.'
+import { PositionType } from '.'
+import { Monster } from '../battle/Monster'
 import { Player } from '../player/Player'
 
 export interface Tile {

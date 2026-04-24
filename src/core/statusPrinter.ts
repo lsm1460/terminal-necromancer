@@ -25,6 +25,7 @@ interface TileStatusRequired extends LootStatusRequired {
 export function printTileStatus(context: TileStatusRequired) {
   const { player, npcs, currentTile: tile } = context
 
+  Terminal.log('')
   Terminal.log({ key: `tiles.${tile.id}.dialogue` })
 
   const alive = npcs.getAliveNPCInTile({ tile })

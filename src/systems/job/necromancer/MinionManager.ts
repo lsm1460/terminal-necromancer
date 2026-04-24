@@ -1,7 +1,7 @@
-import { Terminal } from '~/core'
+import { BattleTarget, Terminal } from '~/core'
 import { GameAmor } from '~/systems/item/GameAmor'
 import { GameWeapon } from '~/systems/item/GameWeapon'
-import { BattleTarget } from '~/types'
+import { IGolem, IKnight, ISkeleton, SkeletonBase } from '~/types'
 import { ItemRarity } from '~/types/item'
 import GolemWrapper from './GolemWrapper'
 import KnightWrapper from './KnightWrapper'
@@ -9,10 +9,10 @@ import { Necromancer, NecromancerSaveData } from './Necromancer'
 import SkeletonWrapper from './SkeletonWrapper'
 
 export class MinionManager {
-  skeletonSubspace: BattleTarget[] = []
+  skeletonSubspace: SkeletonBase[] = []
   subspaceLimit = 15
 
-  private _skeleton: BattleTarget[] = [] // 현재 거느리고 있는 소환수들
+  private _skeleton: SkeletonBase[] = [] // 현재 거느리고 있는 소환수들
   _maxSkeleton: number = 2 // 최대 소환 가능 수
 
   private _mercenary: BattleTarget[] = []
@@ -20,9 +20,9 @@ export class MinionManager {
 
   upgradeLimit = 5
   golemUpgrade: ('machine' | 'soul')[] = []
-  private _golem: BattleTarget | undefined = undefined
+  private _golem: IGolem | undefined = undefined
   knightUpgrade: ItemRarity[] = []
-  private _knight: BattleTarget | undefined = undefined
+  private _knight: IKnight | undefined = undefined
 
   constructor(
     private player: Necromancer,
@@ -55,10 +55,6 @@ export class MinionManager {
     return this._skeleton.map((sk) => new SkeletonWrapper(sk, this.player))
   }
 
-  set skeleton(_minions) {
-    this._skeleton = _minions
-  }
-
   get golem() {
     if (!this._golem) {
       return
@@ -75,10 +71,10 @@ export class MinionManager {
     return new KnightWrapper(this._knight, this.knightUpgrade, this.player)
   }
 
-  get minions(): BattleTarget[] {
+  get minions() {
     const _skeletons = this.skeleton.sort((a, b) => (a?.orderWeight || 0) - (b?.orderWeight || 0))
 
-    return [this.golem!, ..._skeletons, this.knight!, ...this._mercenary].filter((_minion) => !!_minion)
+    return [this.golem!, ..._skeletons, this.knight!, ...this._mercenary].filter((_minion) => !!_minion) as BattleTarget[]
   }
 
   public updateSkeletonLimit() {
@@ -96,7 +92,7 @@ export class MinionManager {
     }
   }
 
-  addSkeleton(minion: BattleTarget) {
+  addSkeleton(minion: SkeletonBase) {
     if (this.skeleton.length < this.maxSkeleton) {
       this._skeleton.push(minion)
       return true
@@ -169,6 +165,7 @@ export class MinionManager {
       def: config.def,
       agi: 3,
       exp: 0,
+      eva: 0,
       description: '',
       dropTableId: '',
       encounterRate: 0,
@@ -176,7 +173,6 @@ export class MinionManager {
       skills: ['power_smash'],
       isMinion: true,
       isGolem: true,
-      deathLine: '',
       orderWeight: -15,
       madeBy: type,
     }
@@ -203,7 +199,6 @@ export class MinionManager {
       isAlive: true,
       isMinion: true,
       isKnight: true,
-      deathLine: '',
       description: '',
       dropTableId: '',
       originId: skeleton.originId,
