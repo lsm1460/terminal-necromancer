@@ -18,10 +18,10 @@ async function askQuestion(query: string): Promise<string> {
 
 export async function createCLI(engine: GameEngine) {
   while (true) {
-    const line = await askQuestion(i18n.t('input_command'));
-    
-    await engine.processCommand(line);
+    const line = await askQuestion(i18n.t('input_command'))
 
-    if (line.trim() === 'exit') break; 
+    await engine.processCommand(line)
+
+    if (line.trim() === 'exit') break
   }
 }
