@@ -3,7 +3,6 @@ import { Item } from '~/core/item/Item'
 import { Player } from '~/core/player/Player'
 import { CommandFunction, GameContext, IConsumable, IEquipAble } from '~/core/types'
 import i18n from '~/i18n'
-import { ItemType } from '~/types/item'
 import { printItem } from './overview'
 
 export const inventoryCommand: CommandFunction = async (args, context) => {
@@ -66,9 +65,10 @@ async function handleItemAction(item: Item, args: any, context: GameContext) {
 function getAvailableActions(item: Item) {
   const actions = [{ name: 'look', message: `🔍 ${i18n.t('inventory.action_look')}` }]
 
-  if (item.type === ItemType.WEAPON || item.type === ItemType.ARMOR) {
+  if ((item as IEquipAble).isEquipAble) {
     actions.push({ name: 'equip', message: `⚔️ ${i18n.t('inventory.action_equip')}` })
-  } else if (item.type === ItemType.FOOD || item.type === ItemType.CONSUMABLE) {
+  } else if ((item as IConsumable).isConsumable
+) {
     actions.push({ name: 'use', message: `🧪 ${i18n.t('inventory.action_use')}` })
   }
 
