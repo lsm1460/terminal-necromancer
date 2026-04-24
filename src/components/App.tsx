@@ -1,3 +1,8 @@
+import '~/assets/style/App.css'
+import { ConfigScreen } from './ConfigScreen'
+import { CreditScreen } from './CreditScreen'
+import { GameScreen } from './GameScreen'
+//
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { assets, initState } from '~/assets'
@@ -5,20 +10,23 @@ import { GameProvider } from '~/contexts/GameContext'
 import { assetManager, GameEngine, Terminal } from '~/core'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { GameBootstrapper } from '~/systems/Bootstrapper'
-import { ConfigScreen } from './ConfigScreen'
-import { CreditScreen } from './CreditScreen'
-import { GameScreen } from './GameScreen'
 import { ScreenRouter } from './ScreenRouter'
+
+import { useShortcuts } from '~/hooks/useShortcuts'
+import { openWindow } from '~/bridge/window'
 
 export const App = () => {
   const { i18n } = useTranslation()
   const [isGameOn, setIsGameOn] = useState(false)
 
-  // 부트스트래퍼 인스턴스를 유지 (새로고침 전까지 보존)
   const bootstrapperRef = useRef(new GameBootstrapper())
   const engineRef = useRef<GameEngine | null>(null)
 
+  useShortcuts(engineRef)
+
   useEffect(() => {
+    openWindow()
+    
     const runGame = async () => {
       const bootstrapper = bootstrapperRef.current
 
