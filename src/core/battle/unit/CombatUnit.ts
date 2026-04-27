@@ -187,13 +187,10 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   async dead(options: DamageOptions = {}) {
-    if (!this.ref.isAlive) {
-      return
-    }
+    if (!this.ref.isAlive) return
 
     BattleDirector.playDie(this.id)
     this.ref.isAlive = false
-
     if (this.onDeath) await this.onDeath()
 
     for (const hook of this.onDeathHooks) {

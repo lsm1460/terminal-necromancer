@@ -175,6 +175,7 @@ export type InstallContext = Partial<GameContext> & {
   monster: MonsterFactory
   battle: Battle
   world: World
+  npcSkills: NpcSkillManager
 }
 
 export interface RequiredEngineDependencies {

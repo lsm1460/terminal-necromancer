@@ -59,7 +59,7 @@
     { "id": "clinging_concierge", "encounterRate": 70 }
   ],
   "monster-b5-hidden-assault": [
-    { "id": "masked_intruder_wraith", "encounterRate": 45 },
+    { "id": "masked_intruder_wraith", "encounterRate": 15 },
     { "id": "modified_fury_hound", "encounterRate": 100 },
     { "id": "clinging_concierge", "encounterRate": 60 },
     { "id": "security_guard", "encounterRate": 50 }

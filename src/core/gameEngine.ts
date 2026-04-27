@@ -100,6 +100,8 @@ export class GameEngine {
     }
 
     if (this.optDependencies?.customCommandsMap) this.commands.add(this.optDependencies.customCommandsMap)
+
+    if (this.optDependencies?.skills) context.npcSkills.registerLogics(this.optDependencies.skills)
   }
 
   public async start(): Promise<void> {

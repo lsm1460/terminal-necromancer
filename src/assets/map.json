@@ -433,7 +433,7 @@
         {
           "id": "B5_008",
           "event": "monster-b5-hidden-assault",
-          "spawn_limit": 5,
+          "spawn_limit": 4,
           "npcIds": []
         },
         {
