@@ -4,6 +4,7 @@ import i18n from '~/i18n'
 import { SaveSystem } from '~/systems/SaveSystem'
 import { AppContext } from '~/systems/types'
 import { ElevatorService } from './service'
+import { speak } from '~/utils'
 
 export const ElevatorActions = {
   async handleElevate(context: AppContext): Promise<boolean> {
@@ -20,6 +21,11 @@ export const ElevatorActions = {
     if (isAllHidden) {
       Terminal.log(i18n.t('npc.elevator.menu.no_access'))
       return true
+    }
+
+    if (!context.events.isCompleted('elevator_guide')) {
+      await speak(i18n.t('npc.elevator.guide', { returnObjects: true }) as string[])
+      context.events.completeEvent('elevator_guide')
     }
 
     choices.push({ name: 'cancel', message: i18n.t('npc.elevator.menu.cancel') })
@@ -51,9 +57,13 @@ export const ElevatorActions = {
 
       const { currentTile } = context
       currentTile.isSeen = true
-      
+
+      Terminal.log(i18n.t('commands.system.exit.saving'))
+
       const saveData = SaveSystem.makeSaveData(context)
       save && save.save(saveData)
+
+      Terminal.log(i18n.t('commands.system.exit.save_complete'))
 
       return true
     }
