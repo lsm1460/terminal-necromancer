@@ -33,11 +33,11 @@ export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
   public override getNPC(id: string): GameNPC | null {
     const base = this.data.getBase(id)
     const state = this.data.getState(id)
-
+    
     if (!base || !state || state.reborn) return null
 
     const NpcClass = getNPCClass(id)
-
+    
     return NpcClass ? new NpcClass(id, base, state, this) : new GameNPC(id, base, state, this)
   }
 
@@ -48,7 +48,10 @@ export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
       ids.push('_knight')
     }
 
-    let _list = ids.map((_id) => this.getNPC(_id)).filter((_npc) => _npc !== null)
+    let _list = ids
+      .map((_id) => this.getNPC(_id))
+      .filter((_npc) => _npc !== null)
+      .filter((_npc) => _npc.isAlive)
 
     if (options?.withoutFaction) {
       _list = _list.filter((_npc) => !(options.withoutFaction || []).includes(_npc.faction))
@@ -136,6 +139,7 @@ export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
   }
 
   triggerDeathHandler(npc: GameNPC, params?: Parameters<EventCallback>[1]) {
+    console.log('DEBUG::', npc.id)
     const { hostile = 100, karma } = params || {}
 
     this.setAlive(npc.id, false)

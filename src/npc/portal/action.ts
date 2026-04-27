@@ -10,7 +10,7 @@ export const PortalActions = {
    * 포탈 사용 확인 후 실제 이동 및 연출 수행
    */
   async handleMove(context: AppContext) {
-    const { map, currentTile: tile, eventBus, npcs } = context
+    const { map, eventBus, npcs } = context
 
     const confirm = await Terminal.confirm(i18n.t('npc.portal.confirm'))
 
@@ -21,8 +21,8 @@ export const PortalActions = {
       // 2. 이동 성공 로그 출력
       Terminal.log(i18n.t('npc.portal.success', { location: i18n.t(`scene.${sceneId}`) }))
 
-      // 3. 이동한 타일의 이벤트 처리 및 방송 재생
-      await map.handleTileEvent(tile, context)
+      const { currentTile } = context
+      await map.handleTileEvent(currentTile, context)
       eventBus.emitAsync(GameEventType.PLAYER_MOVE, { npcs })
 
       // 4. 타일 상태 출력

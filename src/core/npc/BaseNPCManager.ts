@@ -12,7 +12,6 @@ export class BaseNPCManager implements INpcManager {
     if (!base || !state) return null
     if (state.reborn) return null
 
-    // Core에서는 구체적인 로직 없이 기본 NPC 객체만 생성하여 반환
     return new BaseNPC(id, base, state, this)
   }
 

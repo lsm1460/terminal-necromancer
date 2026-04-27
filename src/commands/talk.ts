@@ -16,7 +16,7 @@ export const talkCommand: CommandFunction = async (...params) => {
 }
 
 async function selectTargetNpc(args: string[], context: GameContext) {
-  const { npcs: npcManager, player, currentTile: tile } = context
+  const { npcs: npcManager, currentTile: tile } = context
   const npcs = npcManager.getAliveNPCInTile({ tile })
 
   if (npcs.length < 1) {
