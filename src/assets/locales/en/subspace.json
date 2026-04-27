@@ -48,6 +48,7 @@
       "not_enough_selection": "Caron: \"Two vessels are required. A single soul cannot weave a new life.\"",
       "mismatch": "Caron: \"The dead of different origins cannot be mingled. Choose those of the same kind.\"",
       "success": "Caron: \"Exquisite. The essence of death has condensed, forging an even sharper blade.\"",
+      "result": "{{unit}} has joined the army.",
       "confirm": "Caron: \"Shall you offer a new sacrifice to the soul of {{hp}}/{{maxHp}} to transcend into a greater existence?\" (Success Rate: {{chance}}%)\n\n※ Upon failure, the offered sacrifice (material) will be eternally destroyed.",
       "fail": "Caron: \"Ah... The balance of souls has faltered. The primary vessel barely remains intact, but the sacrificed minion has crumbled into ash.\"",
       "max_rarity": "Caron: \"This restless soul has already reached its zenith. Further fusion is meaningless.\"",
@@ -59,6 +60,7 @@
       "mismatch": "[Void Guide]: \"The dead of different origins do not mingle. Choose those of the same kind.\"",
       "confirm": "[Void Guide]: \"Shall you offer a new sacrifice to the soul of {{hp}}/{{maxHp}} and attempt ascension? (Success Rate: {{chance}}%)\n\n※ Upon failure, the vessel offered as a sacrifice shall perish.\"",
       "success": "[Void Guide]: \"Success. The essence of death has condensed, forging an even sharper blade.\"",
+      "result": "{{unit}} has joined the army.",
       "fail": "[Void Guide]: \"The balance of souls has faltered. The primary vessel is preserved, but the sacrifice has vanished into ash.\"",
       "max_rarity": "[Void Guide]: \"This restless soul has already reached its zenith. Further fusion is meaningless.\"",
       "cancel": "[Void Guide]: \"Ceasing. Prudence is also the virtue of a monarch.\""

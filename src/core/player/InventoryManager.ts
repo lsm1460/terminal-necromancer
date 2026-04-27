@@ -79,19 +79,19 @@ export class InventoryManager {
     }
   }
 
-  removeItem(itemId: string, amount: number = 1): boolean {
+  removeItem(itemId: string, amount: number = 1): Item | void {
     const itemIndex = this.inventory.findIndex((item) => item.id === itemId)
 
     if (itemIndex === -1) {
       Terminal.log(i18n.t('inventory.remove.not_found'))
-      return false
+      return
     }
 
     const targetItem = this.inventory[itemIndex]
 
     if (!targetItem.quantity || amount === -1) {
       this.inventory.splice(itemIndex, 1)
-      return true
+      return this.itemFactory.make({...targetItem.raw, quantity: 1})
     }
 
     if (targetItem.quantity > amount) {
@@ -100,7 +100,7 @@ export class InventoryManager {
       this.inventory.splice(itemIndex, 1)
     }
 
-    return true
+    return this.itemFactory.make({...targetItem.raw, quantity: 1})
   }
 
   async useItem(targetItem?: IConsumable) {

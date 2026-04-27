@@ -139,7 +139,6 @@ export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
   }
 
   triggerDeathHandler(npc: GameNPC, params?: Parameters<EventCallback>[1]) {
-    console.log('DEBUG::', npc.id)
     const { hostile = 100, karma } = params || {}
 
     this.setAlive(npc.id, false)

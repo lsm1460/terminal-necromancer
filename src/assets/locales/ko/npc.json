@@ -72,7 +72,7 @@
   },
 
   "sell": {
-    "info_header": "[소지금: {{gold}}G{{bonus}}]",
+    "info_header": "[소지금: {{gold}}G]",
     "bonus_label": " / 보너스: +{{value}}%",
     "select_item": "판매할 물건 선택",
     "quantity_notice": "\n[알림] 현재 판매 수량 선택 기능은 지원되지 않습니다. 1개만 판매합니다. ({{total}}개 보유)",

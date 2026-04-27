@@ -223,7 +223,7 @@ export abstract class Player {
     return this.unlockedSkills.includes(skillId)
   }
 
-  removeItem(itemId: string, amount: number = 1): boolean {
+  removeItem(itemId: string, amount: number = 1): Item | void {
     return this.inventoryManager.removeItem(itemId, amount)
   }
 

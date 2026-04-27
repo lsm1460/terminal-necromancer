@@ -72,7 +72,7 @@
   },
 
   "sell": {
-    "info_header": "[Gold: {{gold}}G{{bonus}}]",
+    "info_header": "[Gold: {{gold}}G]",
     "bonus_label": " / Bonus: +{{value}}%",
     "select_item": "Select an item to sell",
     "quantity_notice": "\n[Notice] Bulk selling is not supported yet. Selling 1 unit only. (Owned: {{total}})",

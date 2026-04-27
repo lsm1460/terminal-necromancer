@@ -1,9 +1,10 @@
 import { Terminal } from '~/core'
 import { getOriginId } from '~/core/utils'
 import i18n from '~/i18n'
+import SkeletonWrapper from '~/systems/job/necromancer/SkeletonWrapper'
 import { SKELETON_RARITIES, SkeletonFactory } from '~/systems/skill/player/necromancer/SkeletonFactory'
 import { AppContext } from '~/systems/types'
-import { speak } from '~/utils'
+import { delay, speak } from '~/utils'
 import { SubspaceService } from '../service'
 
 export const handleMix = async (context: AppContext) => {
@@ -45,12 +46,16 @@ export const handleMix = async (context: AppContext) => {
       getMsg('confirm', { hp: selected[0].hp, maxHp: selected[0].maxHp, chance: Math.floor(chance * 100) })
     )
   ) {
+    await delay()
+
     if (Math.random() < chance) {
       selected.forEach((sk) => player.removeMinion(sk.id))
       const nextIdx = SKELETON_RARITIES.indexOf(selected[0].rarity || 'common') + 1
       const newSk = SkeletonFactory.createFromCorpse(selected[0], nextIdx)
       player.addSkeleton(newSk)
       Terminal.log(getMsg('success'))
+      const unit = SkeletonWrapper.getSkeletonName(newSk)
+      Terminal.log(getMsg('result', { unit }))
     } else {
       player.removeMinion(selected[1].id) // 실패 시 재료 하나 소멸
       Terminal.log(getMsg('fail'))

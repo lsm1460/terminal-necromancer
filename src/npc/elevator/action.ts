@@ -51,7 +51,7 @@ export const ElevatorActions = {
 
       const { currentTile } = context
       currentTile.isSeen = true
-
+      
       const saveData = SaveSystem.makeSaveData(context)
       save && save.save(saveData)
 

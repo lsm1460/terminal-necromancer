@@ -20,7 +20,7 @@ export class MapManager extends BaseMapManager<AppContext> {
   }
 
   public override async changeScene(targetSceneId: MapId, context: AppContext) {
-    const { player, currentTile, eventBus, npcs } = context
+    const { player, eventBus, npcs } = context
     const newScene = this.data.getScene(targetSceneId)
 
     if (!newScene) return
@@ -36,6 +36,8 @@ export class MapManager extends BaseMapManager<AppContext> {
     Terminal.log(`\n------------------------------------------`)
     Terminal.log(i18n.t(`enter_new_area`) + i18n.t(`scene.${newScene.id}`))
     Terminal.log(`------------------------------------------`)
+    
+    const { currentTile } = context
 
     await this.handleTileEvent(currentTile, context)
 

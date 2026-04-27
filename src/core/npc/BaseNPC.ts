@@ -35,15 +35,15 @@ export class BaseNPC<T = any> implements INPC {
     state: NPCState,
     protected manager: INpcManager
   ) {
+    // 데이터 일괄 주입
+    Object.assign(this, baseData)
+
     this.id = id
     this.faction = baseData.faction || ''
     this.reborn = state.reborn
     this.relation = state.relation
     this.hp = state.hp
     this.isAlive = state.isAlive
-
-    // 데이터 일괄 주입
-    Object.assign(this, baseData)
   }
 
   // 상속받는 GameNPC에서 오버라이드할 Getter들

@@ -40,9 +40,9 @@ export const dropCommand: CommandFunction = async (args, context) => {
 
   // 3. 실제 버리기 로직 처리
   if (itemToDrop) {
-    player.removeItem(itemToDrop.id)
+    const drop = player.removeItem(itemToDrop.id)
 
-    world.addDrop(itemToDrop)
+    drop && world.addDrop(drop)
 
     const qtyText = itemToDrop.quantity !== undefined ? i18n.t('commands.drop.unit') : ''
     Terminal.log(

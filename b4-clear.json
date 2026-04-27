@@ -2,8 +2,8 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
-    "y": 0,
+    "x": 3,
+    "y": 2,
     "_maxHp": 100,
     "hp": 100,
     "_maxMp": 50,
@@ -13,8 +13,8 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 509,
-    "exp": 280,
+    "gold": 1663,
+    "exp": 479,
     "level": 3,
     "unlockedSkills": [
       "RAISE_SKELETON",
@@ -32,105 +32,6 @@
       "CORPSE_EXPLOSION",
       "CURSE"
     ],
-    "_skeleton": [
-      {
-        "id": "skeleton_shield_bearer::1777265682852",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
-        "attackType": "melee",
-        "maxHp": 86,
-        "hp": 86,
-        "atk": 8,
-        "def": 36,
-        "agi": 12,
-        "eva": 0,
-        "skills": [],
-        "exp": 0,
-        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
-        "originId": "shipyard_guard::o-FBz98O",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
-      },
-      {
-        "id": "skeleton_great_shield_bearer::1777265773149",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 대형 방패병",
-        "attackType": "melee",
-        "maxHp": 109,
-        "hp": 109,
-        "atk": 13,
-        "def": 50,
-        "agi": 7,
-        "eva": 0,
-        "skills": [
-          "shield_bash"
-        ],
-        "exp": 0,
-        "description": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사의 유골로 만들어진 소환수입니다.",
-        "originId": "skeleton::1777265719382",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 5
-      },
-      {
-        "id": "skeleton_monk::1777266669460",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 수도자",
-        "attackType": "ranged",
-        "maxHp": 43,
-        "hp": 43,
-        "atk": 10,
-        "def": 16,
-        "agi": 5,
-        "eva": 0,
-        "skills": [
-          "heal"
-        ],
-        "exp": 0,
-        "description": "\u001b[37m[COMMON]\u001b[0m 스켈레톤 병사의 유골로 만들어진 소환수입니다.",
-        "originId": "skeleton::1777265720741",
-        "rarity": "elite",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 35
-      }
-    ],
-    "_mercenary": [],
-    "_golem": {
-      "id": "golem",
-      "name": "",
-      "attackType": "melee",
-      "baseMaxHp": 80,
-      "maxHp": 80,
-      "hp": 100,
-      "baseAtk": 30,
-      "atk": 30,
-      "baseDef": 20,
-      "def": 20,
-      "agi": 3,
-      "exp": 0,
-      "eva": 0,
-      "description": "",
-      "dropTableId": "",
-      "encounterRate": 0,
-      "isAlive": true,
-      "skills": [
-        "power_smash"
-      ],
-      "isMinion": true,
-      "isGolem": true,
-      "orderWeight": -15,
-      "madeBy": "zed"
-    },
     "inventory": [
       {
         "id": "mana_potion_small",
@@ -139,29 +40,17 @@
         "sellPrice": 6,
         "quantity": 4,
         "mpHeal": 20
-      },
-      {
+      }
+    ],
+    "inventoryMax": 15,
+    "equipped": {
+      "armor": {
         "id": "reaper_chain_mail::0fvY36Yi",
         "type": "armor",
         "price": 1800,
         "sellPrice": 500,
         "quantity": 1,
         "def": 10,
-        "eva": 0.01,
-        "rarity": "COMMON",
-        "perfPrefix": "",
-        "adjective": ""
-      }
-    ],
-    "inventoryMax": 15,
-    "equipped": {
-      "armor": {
-        "id": "reaper_chain_mail::xn_IZ05H",
-        "type": "armor",
-        "price": 1800,
-        "sellPrice": 500,
-        "quantity": 1,
-        "def": 11,
         "eva": 0.01,
         "rarity": "COMMON",
         "perfPrefix": "",
@@ -183,16 +72,113 @@
         "mp": 50
       }
     },
+    "_skeleton": [
+      {
+        "id": "skeleton_archer::1777264615167",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
+        "attackType": "ranged",
+        "maxHp": 50,
+        "hp": 50,
+        "atk": 20,
+        "def": 16,
+        "agi": 18,
+        "eva": 0,
+        "skills": [
+          "aim_arrow"
+        ],
+        "exp": 0,
+        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "originId": "shipyard_guard::2pUsF5Kh",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 25
+      },
+      {
+        "id": "skeleton_shield_bearer::1777264860079",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
+        "attackType": "melee",
+        "maxHp": 57,
+        "hp": 57,
+        "atk": 8,
+        "def": 18,
+        "agi": 10,
+        "eva": 0,
+        "skills": [],
+        "exp": 0,
+        "description": "하역 인부의 유골로 만들어진 소환수입니다.",
+        "originId": "shipyard_worker::q59ApSTN",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 4
+      },
+      {
+        "id": "skeleton::1777264953573",
+        "name": "\u001b[37m[COMMON]\u001b[0m skeleton 병사",
+        "attackType": "melee",
+        "maxHp": 39,
+        "hp": 39,
+        "atk": 12,
+        "def": 13,
+        "agi": 8,
+        "eva": 0,
+        "skills": [],
+        "exp": 0,
+        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "originId": "shipyard_guard_no_gain::ra2XljdT",
+        "rarity": "common",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 10
+      }
+    ],
+    "_mercenary": [],
     "skeletonSubspace": [],
     "subspaceLimit": 15,
     "_maxSkeleton": 3,
+    "_golem": {
+      "id": "golem",
+      "name": "",
+      "attackType": "melee",
+      "baseMaxHp": 80,
+      "maxHp": 80,
+      "hp": 80,
+      "baseAtk": 30,
+      "atk": 30,
+      "baseDef": 20,
+      "def": 20,
+      "agi": 3,
+      "exp": 0,
+      "eva": 0,
+      "description": "",
+      "dropTableId": "",
+      "encounterRate": 0,
+      "isAlive": true,
+      "skills": [
+        "power_smash"
+      ],
+      "isMinion": true,
+      "isGolem": true,
+      "orderWeight": -15,
+      "madeBy": "zed"
+    },
     "golemUpgrade": [
       "soul"
     ],
     "knightUpgrade": [],
     "upgradeLimit": 5
   },
-  "sceneId": "B3_Steel_Loading_Dock",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -406,16 +392,14 @@
         "relation": 0
       }
     },
-    "factionHostility": {},
-    "factionContribution": {}
+    "factionHostility": {
+      "untouchable": 100
+    },
+    "factionContribution": {
+      "untouchable": 55
+    }
   },
-  "drop": {
-    "scendId": "B5_VIP_lounge",
-    "id": "Jw1dwpnJ",
-    "tileId": "B5_008",
-    "exp": 100,
-    "gold": 460
-  },
+  "drop": null,
   "config": {
     "locale": "ko"
   },
@@ -432,7 +416,6 @@
     "golem_generation_denied_zed",
     "caron_is_mine",
     "defeat_caron",
-    "tutorial_mix",
-    "report_caron_to_death"
+    "tutorial_mix"
   ]
 }
