@@ -194,7 +194,7 @@
     "exp": 35,
     "dropTableId": "core_loot",
     "skills": ["achilles_bite"],
-    "orderWeight": 70,
+    "orderWeight": 20,
     "preemptive": true,
     "noEscape": true
   },

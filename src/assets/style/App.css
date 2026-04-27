@@ -110,11 +110,10 @@
 }
 
 .npc-profile > img {
-  /* width: 150%; */
   aspect-ratio: 1;
-  max-width: 170%;
+  max-width: 160%;
   position: absolute;
-  top: -10px;
+  top: -5px;
   left: 50%;
   transform: translateX(-50%);
 }

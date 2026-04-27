@@ -109,7 +109,6 @@ export class WebAssetManager {
     await loadExtraLocaleBundle(locale)
 
     const assetSources = this.getSceneAssetSources(sceneData)
-
     await this.loadWithProgress([...this.commonManifest.images, ...assetSources], this.commonManifest.audios)
 
     await delay(500)
@@ -139,7 +138,7 @@ export class WebAssetManager {
 
     const sources = this.buildUnitManifest(Array.from(resourceIds))
 
-    sources.push({id: sceneData.id, src: `/images/scene/${sceneData.id}.png`})
+    sources.push({ id: sceneData.id, src: `/images/scene/${sceneData.id}.png` })
 
     return sources
   }
@@ -172,6 +171,8 @@ export class WebAssetManager {
     let isFallbackUsed = false
 
     const getWithFallback = (suffix: string) => {
+      console.log(this.images)
+      console.log(`${originId}${suffix}`)
       const original = this.images.get(`${originId}${suffix}`)
       if (original) return original
 
@@ -190,6 +191,8 @@ export class WebAssetManager {
       idle: [getWithFallback('_idle_0'), getWithFallback('_idle_1')].filter(Boolean),
       isFallback: false, // 초기값
     }
+
+    console.log('DEBUG:: sprites', sprites)
 
     states.forEach((state) => {
       sprites[state] = getWithFallback(`_${state}`)
