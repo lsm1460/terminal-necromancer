@@ -34,7 +34,7 @@ export class MoveSystem implements ICommandSystem {
 
     const blockingNPC = (npcIds || [])
       .map((id) => npcs.getNPC(id))
-      .find((npc) => npc && npc.isAlive && npc.isHostile && npc.noEscape)
+      .find((npc) => npc && npc.isAlive && npc.isHostile)
 
     if (blockingNPC) {
       return blockingNPC.name

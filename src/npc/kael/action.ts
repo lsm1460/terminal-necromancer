@@ -22,6 +22,8 @@ export const KaelActions = {
     if (choice === 'flint_friend') {
       if (KaelService.canPersuade(npc)) {
         await speak(i18n.t('npc.kael.encounter.result_friend_success', { returnObjects: true }) as string[])
+
+        npc.updateHostility(-5)
       } else {
         await speak(i18n.t('npc.kael.encounter.result_friend_fail', { returnObjects: true }) as string[])
         return await startAmbushBattle(npc, context)

@@ -488,8 +488,12 @@
     "attackType": "melee",
     "description": "가장 취약한 적의 빈틈을 파고들어 치명적인 근접 공격을 가합니다.",
     "chance": 0.25,
-    "power": 2.4,
-    "targetType": "ENEMY_LOWEST_HP"
+    "power": 1.8,
+    "targetType": "ENEMY_LOWEST_HP",
+    "options": {
+      "isIgnoreDef": true,
+      "isSureCrit": true
+    }
   },
   "whirlwind": {
     "id": "whirlwind",

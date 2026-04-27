@@ -398,8 +398,8 @@
   "masked_intruder_wraith": {
     "id": "masked_intruder_wraith",
     "attackType": "melee",
-    "hp": 158,
-    "maxHp": 158,
+    "hp": 118,
+    "maxHp": 118,
     "atk": 38,
     "def": 5,
     "agi": 34,
