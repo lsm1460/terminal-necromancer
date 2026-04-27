@@ -22,7 +22,10 @@ export class BattleLogFormatter {
       attacker: attackerName,
       defender: defenderName,
       hp: currentHp,
-      labelPrefix: labelKeys.map((key) => ({ key })),
+      ...Array.from({ length: 5 }).reduce((acc: Record<string, string>, _, i) => {
+        acc[`l${i + 1}`] = labelKeys[i] || 'battle.unit.labels.none'
+        return acc
+      }, {}),
     }
 
     if (isEscape) {

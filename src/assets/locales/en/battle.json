@@ -46,17 +46,19 @@
 
   "unit": {
     "labels": {
+      "label_group": "$t({{l1}})$t({{l2}})$t({{l3}})$t({{l4}})$t({{l5}})",
       "passive": "\u001b[36m[PASSIVE]\u001b[0m",
       "sure_hit": "\u001b[33m[SURE HIT]\u001b[0m",
       "sure_crit": "\u001b[31m[GUARANTEED CRIT]\u001b[0m",
       "ignore_def": "\u001b[35m[PIERCE]\u001b[0m",
-      "fixed": "\u001b[32m[FIXED]\u001b[0m"
+      "fixed": "\u001b[32m[FIXED]\u001b[0m",
+      "none": ""
     },
     "log": {
       "hp_status": "\u001b[90m({{defender}}'s Remaining HP: {{hp}})\u001b[0m",
-      "evaded": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! 💨 \u001b[37m{{defender}}\u001b[0m evaded the attack. $t(battle.unit.log.hp_status)",
-      "no_damage": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! 🛡️ But it dealt no damage to \u001b[37m{{defender}}\u001b[0m. $t(battle.unit.log.hp_status)",
-      "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m attacks! Dealing {{damageMsg}} damage to \u001b[37m{{defender}}\u001b[0m! $t(battle.unit.log.hp_status)"
+      "evaded": "$t(battle.unit.labels.label_group) \u001b[37m{{attacker}}\u001b[0m attacks! 💨 \u001b[37m{{defender}}\u001b[0m evaded the attack. $t(battle.unit.log.hp_status)",
+      "no_damage": "$t(battle.unit.labels.label_group) \u001b[37m{{attacker}}\u001b[0m attacks! 🛡️ But it dealt no damage to \u001b[37m{{defender}}\u001b[0m. $t(battle.unit.log.hp_status)",
+      "hit": "$t(battle.unit.labels.label_group) \u001b[37m{{attacker}}\u001b[0m attacks! Dealing {{damageMsg}} damage to \u001b[37m{{defender}}\u001b[0m! $t(battle.unit.log.hp_status)"
     },
     "status_change": {
       "resisted": "{{name}} resisted {{effectName}}.",

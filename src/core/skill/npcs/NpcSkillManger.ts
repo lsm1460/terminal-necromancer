@@ -32,10 +32,10 @@ export class NpcSkillManager {
   }
 
   public registerLogics(config: {
-    passives?: Record<string, PassiveDefinition>
+    passive?: Record<string, PassiveDefinition>
     specials?: Record<string, SpecialSkillLogic>
   }) {
-    if (config.passives) this.passiveEffects = { ...this.passiveEffects, ...config.passives }
+    if (config.passive) this.passiveEffects = { ...this.passiveEffects, ...config.passive }
     if (config.specials) this.specialLogics = { ...this.specialLogics, ...config.specials }
   }
 

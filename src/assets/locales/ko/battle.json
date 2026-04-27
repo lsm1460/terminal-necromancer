@@ -46,17 +46,19 @@
 
   "unit": {
     "labels": {
+      "label_group": "$t({{l1}})$t({{l2}})$t({{l3}})$t({{l4}})$t({{l5}})",
       "passive": "\u001b[36m[패시브]\u001b[0m",
       "sure_hit": "\u001b[33m[필중]\u001b[0m",
       "sure_crit": "\u001b[31m[확정 치명]\u001b[0m",
       "ignore_def": "\u001b[35m[방어 관통]\u001b[0m",
-      "fixed": "\u001b[32m[고정 피해]\u001b[0m"
+      "fixed": "\u001b[32m[고정 피해]\u001b[0m",
+      "none": ""
     },
     "log": {
       "hp_status": "\u001b[90m({{defender}}의 남은 HP: {{hp}})\u001b[0m",
-      "evaded": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! 💨 \u001b[37m{{defender}}\u001b[0m이(가) 회피했습니다. $t(battle.unit.log.hp_status)",
-      "no_damage": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! 🛡️ 하지만 \u001b[37m{{defender}}\u001b[0m에게 피해를 주지 못했습니다. $t(battle.unit.log.hp_status)",
-      "hit": "{{labelPrefix}}\u001b[37m{{attacker}}\u001b[0m의 공격! \u001b[37m{{defender}}\u001b[0m에게 {{damageMsg}}의 피해! $t(battle.unit.log.hp_status)"
+      "evaded": "$t(battle.unit.labels.label_group) \u001b[37m{{attacker}}\u001b[0m의 공격! 💨 \u001b[37m{{defender}}\u001b[0m이(가) 회피했습니다. $t(battle.unit.log.hp_status)",
+      "no_damage": "$t(battle.unit.labels.label_group) \u001b[37m{{attacker}}\u001b[0m의 공격! 🛡️ 하지만 \u001b[37m{{defender}}\u001b[0m에게 피해를 주지 못했습니다. $t(battle.unit.log.hp_status)",
+      "hit": "$t(battle.unit.labels.label_group) \u001b[37m{{attacker}}\u001b[0m의 공격! \u001b[37m{{defender}}\u001b[0m에게 {{damageMsg}}의 피해! $t(battle.unit.log.hp_status)"
     },
     "status_change": {
       "resisted": "{{name}}은/는 {{effectName}}에 저항했다.",
