@@ -143,7 +143,7 @@ export class NPCManager extends BaseNPCManager implements INpcManager<GameNPC> {
 
     this.setAlive(npc.id, false)
 
-    if (npc.faction) {
+    if (npc.faction && npc.faction !== 'untouchable') {
       this.setFactionHostility(npc.faction, hostile)
     }
 
