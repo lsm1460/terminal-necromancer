@@ -89,7 +89,7 @@ export class GameEngine {
 
     const npcData = new NPCData(npc, initData?.npcs)
     context.npcs = this.optDependencies?.NpcManager
-      ? new this.optDependencies.NpcManager(npcData, eventBus)
+      ? new this.optDependencies.NpcManager(npcData, eventBus, initData?.npcs)
       : new BaseNPCManager(npcData)
 
     if (this.optDependencies?.saveSystem) context.save = this.optDependencies.saveSystem

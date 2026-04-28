@@ -20,7 +20,7 @@ export class GameWeapon extends GameEquipAble implements IWeapon {
   get infoTags() {
     const tags = []
     if (this.atk > 0) tags.push(i18n.t('commands.look.item.stats.atk', { val: this.atk }))
-    if (this.crit > 0) tags.push(i18n.t('commands.look.item.stats.crit', { val: `${(this.crit * 100).toFixed(2)}%` }))
+    if (this.crit > 0) tags.push(i18n.t('commands.look.item.stats.crit', { val: `${(this.crit * 100).toFixed(2)}` }))
     return tags
   }
 

@@ -194,7 +194,7 @@ export interface OptionalEngineDependencies {
   }
   quest?: IQuestManager
   MapManager?: new (data: MapData, eventBus: EventBus) => IMapManager
-  NpcManager?: new (data: NPCData, eventBus: EventBus) => INpcManager
+  NpcManager?: new (data: NPCData, eventBus: EventBus, ...rest: any) => INpcManager
   customCommandsMap?: Record<string, string[]>
   commandSystems?: (new <T extends GameContext<any>>(context: T) => ICommandSystem)[]
   MonsterEvent?: new (monsterFactory: MonsterFactory, eventBus: EventBus, battle: Battle, world: World) => IMonsterEvent

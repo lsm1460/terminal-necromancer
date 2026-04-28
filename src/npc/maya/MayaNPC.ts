@@ -15,7 +15,7 @@ export class MayaNPC extends MerchantNPC {
     const quest = MayaService.getActiveQuest(context)
     if (quest) return [quest]
 
-    const canUpgrade = this.factionContribution > 40 && events.isCompleted('second_boss') && !!player.golem
+    const canUpgrade = this.factionContribution >= 40 && events.isCompleted('second_boss') && !!player.golem
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
