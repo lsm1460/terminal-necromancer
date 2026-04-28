@@ -37,9 +37,9 @@
     "arrival": "✨ [Arrival] You have arrived at {{location}}.\n"
   },
   "guide": [
-    "[System] Use the elevator to move to different areas.",
-    "[System] Progress is only saved when traveling between areas via elevator.",
-    "[System] With some exceptions, areas may be reset or altered upon leaving.",
-    "[System] If you find the current floor too challenging, return to the Safe Zone to save."
+    "\u001b[36m[System] Use the elevator to move to different areas.\u001b[0m",
+    "\u001b[36m[System] Progress is only saved when traveling between areas via elevator.\u001b[0m",
+    "\u001b[36m[System] With some exceptions, areas may be reset or altered upon leaving.\u001b[0m",
+    "\u001b[36m[System] If you find the current floor too challenging, return to the Safe Zone to save.\u001b[0m"
 ]
 }
