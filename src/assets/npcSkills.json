@@ -123,7 +123,7 @@
     "name": "방패 밀치기",
     "attackType": "melee",
     "description": "방패로 밀쳐내어 상대방을 잠시 기절시킵니다.",
-    "chance": 0.4,
+    "chance": 0.3,
     "power": 0.8,
     "targetType": "ENEMY_SINGLE",
     "buff": {
