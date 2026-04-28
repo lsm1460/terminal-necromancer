@@ -68,6 +68,7 @@
 
   "item_not_found": "That item does not exist..",
   "inventory": {
+    "title": "Inventory {{usage}} / {{max}}",
     "exp": "Soul Fragments",
     "empty": "Your inventory is empty.",
     "select_item": "Select an item to inspect.",

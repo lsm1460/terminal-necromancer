@@ -42,7 +42,7 @@
         "mpHeal": 20
       }
     ],
-    "inventoryMax": 15,
+    "inventoryMax": 45,
     "equipped": {
       "armor": {
         "id": "reaper_chain_mail::0fvY36Yi",

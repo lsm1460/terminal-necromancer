@@ -72,6 +72,10 @@ export abstract class Player {
     return this.inventoryManager.inventory
   }
 
+  get inventoryUsage() {
+    return this.inventoryManager.usage
+  }
+
   get inventoryMax() {
     return this.inventoryManager.inventoryMax
   }

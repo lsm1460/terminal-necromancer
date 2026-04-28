@@ -20,6 +20,8 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
     return null
   }
 
+  Terminal.log(i18n.t('inventory.title', { usage: player.inventoryUsage, max: player.inventoryMax }))
+
   const itemChoices = inventory.map((item) => ({
     name: item.id,
     message: item.makeItemMessage(player),
@@ -67,8 +69,7 @@ function getAvailableActions(item: Item) {
 
   if ((item as IEquipAble).isEquipAble) {
     actions.push({ name: 'equip', message: `⚔️ ${i18n.t('inventory.action_equip')}` })
-  } else if ((item as IConsumable).isConsumable
-) {
+  } else if ((item as IConsumable).isConsumable) {
     actions.push({ name: 'use', message: `🧪 ${i18n.t('inventory.action_use')}` })
   }
 

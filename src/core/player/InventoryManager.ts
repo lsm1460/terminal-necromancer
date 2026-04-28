@@ -20,6 +20,10 @@ export class InventoryManager {
     }
   }
 
+  get usage() {
+    return this.inventory.reduce((acc, cur) => acc + (cur.quantity || 1), 0)
+  }
+
   async equip(newItem: IEquipAble) {
     const itemIndex = this.inventory.findIndex((i) => i.id === newItem.id)
     if (itemIndex === -1) {

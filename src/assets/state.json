@@ -2,20 +2,20 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
-    "y": 2,
-    "_maxHp": 138,
-    "hp": 53,
+    "x": 0,
+    "y": 0,
+    "_maxHp": 182,
+    "hp": 182,
     "_maxMp": 50,
-    "mp": 40,
-    "atk": 11,
+    "mp": 100,
+    "atk": 12,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 1159,
-    "exp": 1995,
-    "level": 4,
+    "gold": 3464,
+    "exp": 1570,
+    "level": 5,
     "unlockedSkills": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
@@ -23,7 +23,7 @@
       "CORPSE_EXPLOSION",
       "CURSE"
     ],
-    "karma": 2,
+    "karma": 3,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
@@ -38,7 +38,7 @@
         "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
         "attackType": "melee",
         "maxHp": 96,
-        "hp": 20,
+        "hp": 96,
         "atk": 9,
         "def": 45,
         "agi": 13,
@@ -54,6 +54,54 @@
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 4
+      },
+      {
+        "id": "skeleton_great_shield_bearer::1777341047266",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 대형 방패병",
+        "attackType": "melee",
+        "maxHp": 140,
+        "hp": 140,
+        "atk": 14,
+        "def": 58,
+        "agi": 15,
+        "eva": 0,
+        "skills": [
+          "shield_bash"
+        ],
+        "exp": 0,
+        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
+        "originId": "shipyard_guard::c-HSC1ZE",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 5
+      },
+      {
+        "id": "skeleton_archer::1777341161558",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
+        "attackType": "ranged",
+        "maxHp": 44,
+        "hp": 44,
+        "atk": 29,
+        "def": 11,
+        "agi": 25,
+        "eva": 0,
+        "skills": [
+          "aim_arrow"
+        ],
+        "exp": 0,
+        "description": "랫맨 주술사의 유골로 만들어진 소환수입니다.",
+        "originId": "ratman_shaman::iegmzfD-",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 25
       }
     ],
     "_mercenary": [],
@@ -63,7 +111,7 @@
       "attackType": "melee",
       "baseMaxHp": 90,
       "maxHp": 90,
-      "hp": 94,
+      "hp": 150,
       "baseAtk": 20,
       "atk": 20,
       "baseDef": 40,
@@ -83,20 +131,45 @@
       "orderWeight": -15,
       "madeBy": "maya"
     },
+    "_knight": {
+      "id": "_knight",
+      "name": "",
+      "attackType": "melee",
+      "hp": 560,
+      "baseMaxHp": 560,
+      "maxHp": 560,
+      "baseAtk": 25,
+      "atk": 25,
+      "baseDef": 31,
+      "def": 31,
+      "eva": 0,
+      "exp": 0,
+      "agi": 0,
+      "encounterRate": 0,
+      "isAlive": true,
+      "isMinion": true,
+      "isKnight": true,
+      "description": "",
+      "dropTableId": "",
+      "originId": "caron",
+      "skills": [
+        "power_smash"
+      ]
+    },
     "inventory": [
       {
         "id": "tainted_core",
         "type": "consumable",
         "price": 1,
         "sellPrice": 1,
-        "quantity": 3
+        "quantity": 4
       },
       {
         "id": "mana_potion_small",
         "type": "consumable",
         "price": 45,
         "sellPrice": 6,
-        "quantity": 1,
+        "quantity": 3,
         "mpHeal": 20
       },
       {
@@ -104,7 +177,7 @@
         "type": "consumable",
         "price": 130,
         "sellPrice": 18,
-        "quantity": 2,
+        "quantity": 3,
         "mpHeal": 40
       },
       {
@@ -123,6 +196,75 @@
         }
       },
       {
+        "id": "potion",
+        "type": "consumable",
+        "price": 100,
+        "sellPrice": 15,
+        "quantity": 1,
+        "hpHeal": 50
+      },
+      {
+        "id": "potion_small",
+        "type": "consumable",
+        "price": 20,
+        "sellPrice": 5,
+        "quantity": 1,
+        "hpHeal": 20
+      },
+      {
+        "id": "resistance_mace::y4UEwfTh",
+        "type": "weapon",
+        "price": 1800,
+        "sellPrice": 400,
+        "quantity": 1,
+        "atk": 10,
+        "crit": 0.13,
+        "attackType": "melee",
+        "rarity": "COMMON",
+        "perfPrefix": "worn",
+        "adjective": ""
+      },
+      {
+        "id": "improvised_bayonet::3T5RStAd",
+        "type": "weapon",
+        "price": 2100,
+        "sellPrice": 500,
+        "quantity": 2,
+        "atk": 13,
+        "crit": 0.19,
+        "attackType": "ranged",
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      },
+      {
+        "id": "rebel_iron_plate::-t9GpnY-",
+        "type": "armor",
+        "price": 2300,
+        "sellPrice": 600,
+        "quantity": 1,
+        "def": 20,
+        "eva": 0.01,
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      }
+    ],
+    "inventoryMax": 45,
+    "equipped": {
+      "armor": {
+        "id": "reaper_chain_mail::CWO4MqRq",
+        "type": "armor",
+        "price": 1800,
+        "sellPrice": 500,
+        "quantity": 1,
+        "def": 11,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "masterwork",
+        "adjective": ""
+      },
+      "weapon": {
         "id": "golem_core_staff::rGf-ETnv",
         "type": "weapon",
         "price": 4200,
@@ -137,33 +279,18 @@
         "maxSkeleton": 1,
         "mp": 50
       }
-    ],
-    "inventoryMax": 15,
-    "equipped": {
-      "armor": {
-        "id": "reaper_chain_mail::CWO4MqRq",
-        "type": "armor",
-        "price": 1800,
-        "sellPrice": 500,
-        "quantity": 1,
-        "def": 11,
-        "eva": 0,
-        "rarity": "COMMON",
-        "perfPrefix": "masterwork",
-        "adjective": ""
-      },
-      "weapon": null
     },
     "skeletonSubspace": [],
     "subspaceLimit": 15,
     "_maxSkeleton": 3,
     "golemUpgrade": [
-      "machine"
+      "machine",
+      "soul"
     ],
     "knightUpgrade": [],
     "upgradeLimit": 5
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B3_5_Resistance_Base",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -259,7 +386,7 @@
       "caron": {
         "hp": 500,
         "isAlive": false,
-        "reborn": false,
+        "reborn": true,
         "relation": 0
       },
       "caron_alive": {
@@ -318,7 +445,7 @@
       },
       "_knight": {
         "hp": 650,
-        "isAlive": false,
+        "isAlive": true,
         "reborn": false,
         "relation": 0
       },
@@ -378,11 +505,10 @@
       }
     },
     "factionHostility": {
-      "resistance": -3,
-      "untouchable": 100
+      "resistance": -4
     },
     "factionContribution": {
-      "resistance": 41
+      "resistance": 40
     }
   },
   "drop": null,
@@ -403,6 +529,12 @@
     "kane_1",
     "second_boss",
     "talk_death_3",
-    "golem_generation_denied_zed"
+    "golem_generation_denied_zed",
+    "caron_is_dead",
+    "defeat_caron",
+    "tutorial_knight",
+    "talk_knight",
+    "report_caron_to_death",
+    "kane_2"
   ]
 }
