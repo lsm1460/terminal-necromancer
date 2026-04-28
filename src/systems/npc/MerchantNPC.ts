@@ -68,7 +68,7 @@ export abstract class MerchantNPC extends GameNPC {
 
       if (this.faction) {
         this.updateHostility(-1)
-        this.updateContribution(5)
+        this.updateContribution(10)
       }
 
       if (actualItem) {
@@ -112,16 +112,16 @@ export abstract class MerchantNPC extends GameNPC {
 
       if (this.faction) {
         this.updateHostility(-1)
-        this.updateContribution(10)
+        this.updateContribution(2)
       }
 
       Terminal.log(`\n💰 [${this.name}]: "${scripts.success}" (+${amount}G)`)
     }
 
     if (totalEarned > 0) {
-      Terminal.log(`\n━━━━━━━━━ [ 영수증 ] ━━━━━━━━━`)
+      Terminal.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
       Terminal.log(i18n.t('npc.sell.receipt.total', { earned: totalEarned }))
-      Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+      Terminal.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
     }
   }
 }

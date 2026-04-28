@@ -8,7 +8,8 @@
     "items": [
       { "itemId": "wood_stick", "chance": 1, "quantity": [1, 1], "maxRarity": "COMMON" },
       { "itemId": "rags", "chance": 1, "quantity": [1, 1], "maxRarity": "COMMON" },
-      { "itemId": "nut", "chance": 1, "quantity": [1, 1] }
+      { "itemId": "nut", "chance": 1, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 0.3, "quantity": [0, 1] }
     ]
   },
   "b2_ratty": {
@@ -37,7 +38,8 @@
       { "itemId": "resistance_mace", "chance": 0.2, "quantity": [1, 1] },
       { "itemId": "improvised_bayonet", "chance": 0.2, "quantity": [1, 1] },
       { "itemId": "rebel_iron_plate", "chance": 0.2, "quantity": [1, 1] },
-      { "itemId": "scavenged_mantle", "chance": 0.2, "quantity": [1, 1] }
+      { "itemId": "scavenged_mantle", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 1, "quantity": [1, 1] }
     ]
   },
   "resistance_shop": {
@@ -86,7 +88,8 @@
     "items": [
       { "itemId": "iron_sword", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" },
       { "itemId": "sewer_leather_vest", "chance": 0.5, "quantity": [1, 1] },
-      { "itemId": "stolen_helmet", "chance": 0.3, "quantity": [1, 1] }
+      { "itemId": "stolen_helmet", "chance": 0.3, "quantity": [1, 1] },
+      { "itemId": "unstable_tainted_core", "chance": 1, "quantity": [1, 2] }
     ]
   },
   "boss2": {
@@ -95,7 +98,8 @@
       { "itemId": "golem_core_staff", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" },
       { "itemId": "rebel_iron_plate", "chance": 0.5, "quantity": [1, 1], "minRarity": "RARE" },
       { "itemId": "resistance_mace", "chance": 0.5, "quantity": [1, 1] },
-      { "itemId": "sharp_pipe", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" }
+      { "itemId": "sharp_pipe", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" },
+      { "itemId": "corrupted_soul_cluster", "chance": 1, "quantity": [1, 1] }
     ]
   },
   "b3_common_loot": {
@@ -105,7 +109,8 @@
       { "itemId": "mana_potion", "chance": 0.4, "quantity": [1, 1] },
       { "itemId": "sharp_pipe", "chance": 0.1, "quantity": [1, 1] },
       { "itemId": "heavy_wrench", "chance": 0.2, "quantity": [1, 1] },
-      { "itemId": "reinforced_vest", "chance": 0.1, "quantity": [1, 1] }
+      { "itemId": "reinforced_vest", "chance": 0.1, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 0.5, "quantity": [1, 1] }
     ]
   },
   "b3_equipment_loot": {
@@ -137,7 +142,8 @@
       { "itemId": "noble_seal_ring", "chance": 0.7, "quantity": [1, 1] },
       { "itemId": "phantom_cloth", "chance": 0.1, "quantity": [1, 1] },
       { "itemId": "wraith_soul_staff", "chance": 0.1, "quantity": [1, 1] },
-      { "itemId": "caron_staff", "chance": 0.3, "quantity": [1, 1], "minRarity": "EPIC" }
+      { "itemId": "caron_staff", "chance": 0.3, "quantity": [1, 1], "minRarity": "EPIC" },
+      { "itemId": "corrupted_soul_cluster", "chance": 1, "quantity": [1, 1] }
     ]
   },
   "b5_vip_melee_bio": {
@@ -145,7 +151,8 @@
     "items": [
       { "itemId": "potion_medium", "chance": 0.3, "quantity": [1, 1] },
       { "itemId": "security_kevlar_vest", "chance": 0.3, "quantity": [1, 1] },
-      { "itemId": "security_baton", "chance": 0.2, "quantity": [1, 1] }
+      { "itemId": "security_baton", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b5_vip_ranged_bio": {
@@ -153,7 +160,8 @@
     "items": [
       { "itemId": "nano_medical_kit", "chance": 0.25, "quantity": [1, 1] },
       { "itemId": "optical_carbine", "chance": 0.2, "quantity": [1, 1] },
-      { "itemId": "priest_rosary", "chance": 0.15, "quantity": [1, 1] }
+      { "itemId": "priest_rosary", "chance": 0.15, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b5_vip_mech": {
@@ -161,7 +169,8 @@
     "items": [
       { "itemId": "hard_steel_plate", "chance": 0.4, "quantity": [1, 1] },
       { "itemId": "optical_lens", "chance": 0.6, "quantity": [1, 1] },
-      { "itemId": "optical_carbine", "chance": 0.2, "quantity": [1, 1] }
+      { "itemId": "optical_carbine", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b5_vip_wraith": {
@@ -170,7 +179,8 @@
       { "itemId": "stolen_jewelry", "chance": 0.1, "quantity": [1, 1] },
       { "itemId": "cold_touch_dagger", "chance": 0.1, "quantity": [1, 1] },
       { "itemId": "phantom_cloth", "chance": 0.1, "quantity": [1, 1] },
-      { "itemId": "wraith_soul_staff", "chance": 0.1, "quantity": [1, 1] }
+      { "itemId": "wraith_soul_staff", "chance": 0.1, "quantity": [1, 1] },
+      { "itemId": "tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b5_adrian": {
@@ -199,7 +209,8 @@
     "items": [
       { "itemId": "nano_medical_kit", "chance": 0.6, "quantity": [1, 1] },
       { "itemId": "small_pistol", "chance": 1, "quantity": [1, 1] },
-      { "itemId": "arka_wand", "chance": 1, "quantity": [1, 1], "minRarity": "EPIC" }
+      { "itemId": "arka_wand", "chance": 1, "quantity": [1, 1], "minRarity": "EPIC" },
+      { "itemId": "corrupted_soul_cluster", "chance": 1, "quantity": [1, 1] }
     ]
   },
   "b5_vip_nivalis": {
@@ -215,14 +226,16 @@
     "gold": [80, 120],
     "items": [
       { "itemId": "heavy_wrench", "chance": 0.5, "quantity": [1, 1], "minRarity": "RARE" },
-      { "itemId": "industrial_oil", "chance": 0.8, "quantity": [1, 2] }
+      { "itemId": "industrial_oil", "chance": 0.8, "quantity": [1, 2] },
+      { "itemId": "unstable_tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b6_vora": {
     "gold": [100, 150],
     "items": [
       { "itemId": "divine_powder", "chance": 0.7, "quantity": [1, 3] },
-      { "itemId": "violet_pendant", "chance": 0.2, "quantity": [1, 1] }
+      { "itemId": "violet_pendant", "chance": 0.2, "quantity": [1, 1] },
+      { "itemId": "unstable_tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b6_elias": {
@@ -243,7 +256,10 @@
   },
   "b6_dax": {
     "gold": [150, 300],
-    "items": [{ "itemId": "stolen_gold_bar", "chance": 0.4, "quantity": [1, 2] }]
+    "items": [
+      { "itemId": "stolen_gold_bar", "chance": 0.4, "quantity": [1, 2] },
+      { "itemId": "unstable_tainted_core", "chance": 0.3, "quantity": [1, 1] }
+    ]
   },
   "b6_aris": {
     "gold": [3000, 5500],
@@ -257,7 +273,8 @@
     "gold": [5000, 8000],
     "items": [
       { "itemId": "reapers_touch_scythe", "chance": 1, "quantity": [1, 1], "minRarity": "EPIC" },
-      { "itemId": "contract_of_death", "chance": 0.1, "quantity": [1, 1] }
+      { "itemId": "contract_of_death", "chance": 0.1, "quantity": [1, 1] },
+      { "itemId": "unstable_tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b6_fragment_loot": {
@@ -265,7 +282,8 @@
     "items": [
       { "itemId": "deity_splinter_dagger", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" },
       { "itemId": "divine_remnant_armor", "chance": 0.1, "quantity": [1, 1], "minRarity": "EPIC" },
-      { "itemId": "divinity_dust", "chance": 0.7, "quantity": [1, 2] }
+      { "itemId": "divinity_dust", "chance": 0.7, "quantity": [1, 2] },
+      { "itemId": "unstable_tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   },
   "b6_thought_loot": {
@@ -273,7 +291,8 @@
     "items": [
       { "itemId": "split_deity_staff", "chance": 0.05, "quantity": [1, 1], "minRarity": "EPIC" },
       { "itemId": "ethereal_thought_shroud", "chance": 0.05, "quantity": [1, 1], "minRarity": "EPIC" },
-      { "itemId": "divinity_dust", "chance": 0.7, "quantity": [1, 2] }
+      { "itemId": "divinity_dust", "chance": 0.7, "quantity": [1, 2] },
+      { "itemId": "unstable_tainted_core", "chance": 0.3, "quantity": [1, 1] }
     ]
   }
 }

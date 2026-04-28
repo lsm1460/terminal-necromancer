@@ -124,6 +124,8 @@ export class GameBootstrapper {
       player.gold -= lootBag.gold
       world.addLootBag(lootBag)
 
+      this.saveSystem.save(_context)
+      
       if (map.currentSceneId !== MAP_IDS.B1_SUBWAY) {
         world.clearFloor()
       }

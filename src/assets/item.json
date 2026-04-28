@@ -45,9 +45,31 @@
   },
   "tainted_core": {
     "id": "tainted_core",
-    "type": "item",
+    "type": "consumable",
+    "exp": 5,
     "price": 1,
     "sellPrice": 1
+  },
+  "unstable_tainted_core": {
+    "id": "unstable_tainted_core",
+    "type": "consumable",
+    "exp": 150,
+    "price": 3,
+    "sellPrice": 2
+  },
+  "corrupted_soul_cluster": {
+    "id": "corrupted_soul_cluster",
+    "type": "consumable",
+    "exp": 450,
+    "price": 10,
+    "sellPrice": 5
+  },
+  "abyssal_dread_essence": {
+    "id": "abyssal_dread_essence",
+    "type": "consumable",
+    "exp": 1500,
+    "price": 25,
+    "sellPrice": 12
   },
   "potion_small": {
     "id": "potion_small",

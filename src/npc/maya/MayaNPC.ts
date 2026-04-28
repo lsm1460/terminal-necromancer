@@ -22,7 +22,15 @@ export class MayaNPC extends MerchantNPC {
       { name: 'buy', message: i18n.t('talk.buy') },
       { name: 'sell', message: i18n.t('talk.sell') },
       ...(!player.golem ? [{ name: 'golem', message: i18n.t('npc.maya_tech.choices.golem') }] : []),
-      ...(canUpgrade ? [{ name: 'upgrade_golem', message: i18n.t('npc.maya_tech.choices.upgrade') }] : []),
+      ...(canUpgrade
+        ? [{ name: 'upgrade_golem', message: i18n.t('npc.maya_tech.choices.upgrade') }]
+        : [
+            {
+              name: 'upgrade_golem',
+              message: i18n.t('npc.maya_tech.choices.upgrade_lock', { amount: this.factionContribution }),
+              disabled: true,
+            },
+          ]),
     ]
   }
 

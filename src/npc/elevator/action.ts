@@ -1,10 +1,9 @@
 import { MAP_IDS, MapId } from '~/consts'
 import { Terminal } from '~/core'
 import i18n from '~/i18n'
-import { SaveSystem } from '~/systems/SaveSystem'
 import { AppContext } from '~/systems/types'
-import { ElevatorService } from './service'
 import { speak } from '~/utils'
+import { ElevatorService } from './service'
 
 export const ElevatorActions = {
   async handleElevate(context: AppContext): Promise<boolean> {
@@ -58,12 +57,7 @@ export const ElevatorActions = {
       const { currentTile } = context
       currentTile.isSeen = true
 
-      Terminal.log(i18n.t('commands.system.exit.saving'))
-
-      const saveData = SaveSystem.makeSaveData(context)
-      save && save.save(saveData)
-
-      Terminal.log(i18n.t('commands.system.exit.save_complete'))
+      save && save.save(context)
 
       return true
     }

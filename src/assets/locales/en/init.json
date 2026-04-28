@@ -68,6 +68,7 @@
 
   "item_not_found": "That item does not exist..",
   "inventory": {
+    "exp": "Soul Fragments",
     "empty": "Your inventory is empty.",
     "select_item": "Select an item to inspect.",
     "what_to_do": "[{{label}}] What would you like to do?",
@@ -83,7 +84,8 @@
       "select_prompt": "Which item would you like to use?",
       "using": "\n Using [{{name}}]...",
       "hp_recovered": "❤️ HP restored by {{amount}}. (Current: {{current}}/{{max}})",
-      "mp_recovered": "🧪 MP restored by {{amount}}. (Current: {{current}}/{{max}})"
+      "mp_recovered": "🧪 MP restored by {{amount}}. (Current: {{current}}/{{max}})",
+      "exp_charged": "💠 {{amount}} Soul Fragments absorbed. (Current: {{current}})"
     },
 
     "remove": {

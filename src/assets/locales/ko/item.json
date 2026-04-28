@@ -55,6 +55,18 @@
     "label": "오염된 핵",
     "description": "지하에 살고있는 이형의 핵"
   },
+  "unstable_tainted_core": {
+    "label": "불안정한 오염된 핵",
+    "description": "오염이 심화되어 금방이라도 터질 듯 꿈틀거리는 핵입니다."
+  },
+  "corrupted_soul_cluster": {
+    "label": "타락한 영혼 군집",
+    "description": "여러 개의 오염된 영혼들이 기괴하게 엉겨 붙은 덩어리입니다."
+  },
+  "abyssal_dread_essence": {
+    "label": "심연의 공포 정수",
+    "description": "오염의 극치에 달해 검은 유체처럼 변해버린 정수입니다."
+  },
   "potion_small": {
     "label": "작은 체력 포션",
     "description": "작은 체력 회복 포션으로, hp 20을 보충할 수 있습니다."

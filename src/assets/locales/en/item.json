@@ -55,6 +55,18 @@
     "label": "Tainted Core",
     "description": "The core of an aberration dwelling in the depths."
   },
+  "unstable_tainted_core": {
+    "label": "Unstable Tainted Core",
+    "description": "A core throbbing with deep instability, as if it might burst from its intensifying corruption at any moment."
+  },
+  "corrupted_soul_cluster": {
+    "label": "Corrupted Soul Cluster",
+    "description": "A grotesque mass of multiple tainted souls, unnaturally fused and entwined together."
+  },
+  "abyssal_dread_essence": {
+    "label": "Abyssal Dread Essence",
+    "description": "An essence that has reached the pinnacle of corruption, transforming into a dark, viscous fluid of pure dread."
+  },
   "potion_small": {
     "label": "Small Health Potion",
     "description": "A minor recovery potion. Restores 20 HP."

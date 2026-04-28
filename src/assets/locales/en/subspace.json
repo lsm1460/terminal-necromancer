@@ -7,13 +7,13 @@
     "promotion": "🛡️ Dark Knight Promotion"
   },
   "increase_limit": {
-    "status": "Current Soul Shards: {{current}} / Required: {{cost}}",
+    "status": "Current Soul Fragments: {{current}} / Required: {{cost}}",
     "success_title": "\n[💀 Army Expansion Complete]",
     "result": "Max Skeletons: {{prev}} ➔ {{next}}",
     "caron_is_mine": {
       "max": "Caron: \"You have already reached the physical limits of this realm. The dimension itself cannot withstand a larger force.\"",
       "cost_info": "Caron: \"To broaden the Monarch's vessel, more Soul Essence is required.\"",
-      "not_enough": "Caron: \"You lack sufficient essence. Go forth and reap more soul shards.\"",
+      "not_enough": "Caron: \"You lack sufficient essence. Go forth and reap more soul fragments.\"",
       "confirm": "Caron: \"Will you unbind the shackles of souls and reclaim your past glory?\"",
       "cancel": "Caron: \"A wise and prudent choice.\"",
       "success": "Caron: \"I can feel it. Your shadow has grown deeper. More of the deceased shall follow you.\""

@@ -75,6 +75,7 @@ export interface IConsumable extends Item, IDisplayable {
   readonly isConsumable: true
   readonly hpHeal?: number
   readonly mpHeal?: number
+  readonly exp?: number
 }
 
 export interface IGameItemFactory {

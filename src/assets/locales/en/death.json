@@ -49,7 +49,7 @@
     "all_learned": "\n[Notice] You have already mastered all available techniques.",
     "locked": "??? (Unlock Req: {{hint}}) 🔒",
     "default_hint": "Achieve specific conditions",
-    "select_prompt": "Select a skill to inherit (Available Soul Shards: {{exp}})",
+    "select_prompt": "Select a skill to inherit (Available Soul Fragments: {{exp}})",
     "success": "\n💀 [Acquired] Heh... Do not forget the '{{name}}' etched into your soul..",
     "fail": "\n[Failed] You do not meet the requirements."
   },
@@ -83,7 +83,7 @@
     "Reaper: \"Tch... fine. There's no use blaming broken scrap. \nRight now, there is 'filth with a far worse stench' that needs clearing.\"",
     "Reaper: \"There was a rat who dared to deceive my eyes, trying to smuggle his own flesh and blood into sub-space. \nThat child was personally eradicated by my hand, yet it seems the father still hasn't let go of his lingering attachments.\"",
     "Reaper: \"Go down to B4 immediately. \nFind [Charon], the former low-level official who fled and is hiding deep within that derelict zone.\"",
-    "Reaper: \"Go and sever his breath. Bring his soul shards before me. \nFor a filthy traitor, the only fitting end is to return to complete 'nothingness'.\"",
+    "Reaper: \"Go and sever his breath. Bring his soul fragments before me. \nFor a filthy traitor, the only fitting end is to return to complete 'nothingness'.\"",
     "Reaper: \"Remember. If you complicate things this time... \nI will carve the very despair he felt directly into your shadow. Now, begone.\""
   ],
 
@@ -102,7 +102,7 @@
       "Reaper: \"As promised, I shall use this essence you've brought as the key to unbind your soul's shackles.\"",
       "Reaper: \"(As the tip of the scythe brushes your chest, the suppressed energy of a sovereign surges.)\"",
       "Reaper: \"That vast legion you once commanded while ruling the continent... I shall grant you back a portion of that power.\"",
-      "Reaper: \"Continue to retrieve the soul shards of those who break the laws. With each shard gathered, I shall restore the sovereign's authority you once lost, one by one.\""
+      "Reaper: \"Continue to retrieve the soul fragments of those who break the laws. With each shard gathered, I shall restore the sovereign's authority you once lost, one by one.\""
     ]
   },
 

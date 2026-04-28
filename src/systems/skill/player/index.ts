@@ -27,7 +27,7 @@ export const getPlayerSkills = () => {
     [SKILL_IDS.CORPSE_EXPLOSION]: {
       attackType: 'ranged',
       cost: 8,
-      requiredExp: 300,
+      requiredExp: 500,
       requiredLevel: 2,
       unlocks: ['first_boss'],
       execute: (p, c, u) => SkillExecutor.corpseExplosion(p, c, u),
@@ -35,7 +35,7 @@ export const getPlayerSkills = () => {
     [SKILL_IDS.SOUL_HARVEST]: {
       attackType: 'ranged',
       cost: 0,
-      requiredExp: 500,
+      requiredExp: 300,
       requiredLevel: 2,
       unlocks: ['first_boss'],
       execute: (p, c) => SkillExecutor.soulHarvest(p, c),

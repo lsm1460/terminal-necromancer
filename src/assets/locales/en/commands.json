@@ -117,8 +117,8 @@
 
     "status": {
       "title": "🛡️ Status",
-      "level": "Level: {{level}} (Soul Shards: {{exp}})",
-      "exp_next": "Soul Shards needed for next level: {{expNeeded}}",
+      "level": "Level: {{level}} (Soul Fragments: {{exp}})",
+      "exp_next": "Soul Fragments needed for next level: {{expNeeded}}",
       "max_level": "You have reached the maximum level.",
       "hp": "HP: {{hp}} / {{maxHp}}",
       "mp": "MP: {{mp}} / {{maxMp}}",

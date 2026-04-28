@@ -1,5 +1,6 @@
 import fs from 'fs'
-import { ISaveSystem, SaveData } from '~/core/types'
+import { Terminal } from '~/core'
+import { GameContext, ISaveSystem, SaveData } from '~/core/types'
 import i18n from '~/i18n'
 import { AppContext } from './types'
 
@@ -27,7 +28,11 @@ export class SaveSystem implements ISaveSystem<SaveData> {
     }
   }
 
-  save(saveData: SaveData) {
+  save(context: GameContext<any>) {
+    Terminal.log(i18n.t('commands.system.exit.saving'))
+
+    const saveData = this.makeSaveData(context)
+
     const rawData = {
       ...saveData,
       config: {
@@ -41,9 +46,11 @@ export class SaveSystem implements ISaveSystem<SaveData> {
     } else {
       fs.writeFileSync(this.filePath, JSON.stringify(rawData, null, 2))
     }
+
+    Terminal.log(i18n.t('commands.system.exit.save_complete'))
   }
 
-  static makeSaveData(context: AppContext) {
+  private makeSaveData(context: AppContext) {
     return {
       player: context.player,
       sceneId: context.map.currentSceneId,

@@ -21,7 +21,7 @@
   "choices": {
     "golem": "🤖 Create Golem",
     "upgrade": "🤖 Upgrade Golem",
-    "modify": "⚔️ Change Dark Knight Gear"
+    "upgrade_lock": "🤖 Golem Upgrade (Low Resistance Contribution {{amount}}/40)"
   },
   "buy": {
     "greeting": "Take a look if you need anything. You know nothing's free, right?\nIf you support the Resistance even more, I'll be able to supply you with much higher quality goods!",

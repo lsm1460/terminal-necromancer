@@ -91,7 +91,7 @@ export class InventoryManager {
 
     if (!targetItem.quantity || amount === -1) {
       this.inventory.splice(itemIndex, 1)
-      return this.itemFactory.make({...targetItem.raw, quantity: 1})
+      return this.itemFactory.make({ ...targetItem.raw, quantity: 1 })
     }
 
     if (targetItem.quantity > amount) {
@@ -100,7 +100,7 @@ export class InventoryManager {
       this.inventory.splice(itemIndex, 1)
     }
 
-    return this.itemFactory.make({...targetItem.raw, quantity: 1})
+    return this.itemFactory.make({ ...targetItem.raw, quantity: 1 })
   }
 
   async useItem(targetItem?: IConsumable) {
@@ -115,9 +115,9 @@ export class InventoryManager {
       const choices = [
         ...consumables.map((item) => ({
           name: item.id,
-          message: `${item.name} (x${item.quantity || 1}) ${
-            item.hpHeal ? ` [HP +${item.hpHeal}]` : ''
-          }${item.mpHeal ? ` [MP +${item.mpHeal}]` : ''}`,
+          message: `${item.name} (x${item.quantity || 1})${item.hpHeal ? ` [HP +${item.hpHeal}]` : ''}${
+            item.mpHeal ? ` [MP +${item.mpHeal}]` : ''
+          }${item.exp ? ` [${i18n.t('inventory.exp')} +${item.exp}]` : ''}`,
         })),
         { name: 'cancel', message: i18n.t('cancel') },
       ]
@@ -157,6 +157,17 @@ export class InventoryManager {
           amount: recovered,
           current: this.player.mp,
           max: this.player.maxMp,
+        })
+      )
+    }
+
+    if (targetItem.exp) {
+      this.player.gainExp(targetItem.exp)
+
+      Terminal.log(
+        i18n.t('inventory.use.exp_charged', {
+          amount: targetItem.exp,
+          current: this.player.exp,
         })
       )
     }

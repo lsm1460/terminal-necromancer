@@ -2,7 +2,6 @@ import { createExitCommand } from '~/commands'
 import { Terminal } from '~/core'
 import { GameEventType, ICommandManager, ICommandSystem } from '~/core/types'
 import i18n from '~/i18n'
-import { SaveSystem } from '~/systems/SaveSystem'
 import { AppContext } from '../types'
 
 export class ExitSystem implements ICommandSystem {
@@ -14,12 +13,9 @@ export class ExitSystem implements ICommandSystem {
 
   private async handleExit(): Promise<void> {
     const { save, eventBus } = this.context
-    Terminal.log(i18n.t('commands.system.exit.saving'))
 
-    const saveData = SaveSystem.makeSaveData(this.context)
-    save && save.save(saveData)
+    save && save.save(this.context)
 
-    Terminal.log(i18n.t('commands.system.exit.save_complete'))
     Terminal.log(i18n.t('commands.system.exit.farewell'))
 
     await new Promise((resolve) => setTimeout(resolve, 500))
