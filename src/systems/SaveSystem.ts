@@ -3,6 +3,7 @@ import { Terminal } from '~/core'
 import { GameContext, ISaveSystem, SaveData } from '~/core/types'
 import i18n from '~/i18n'
 import { AppContext } from './types'
+import { MAP_IDS } from '~/consts'
 
 export class SaveSystem implements ISaveSystem<SaveData> {
   private isWeb = typeof window !== 'undefined'
@@ -33,6 +34,12 @@ export class SaveSystem implements ISaveSystem<SaveData> {
 
     const saveData = this.makeSaveData(context)
 
+    this.performSave(saveData)
+
+    Terminal.log(i18n.t('commands.system.exit.save_complete'))
+  }
+
+  performSave(saveData: SaveData) {
     const rawData = {
       ...saveData,
       config: {
@@ -46,14 +53,12 @@ export class SaveSystem implements ISaveSystem<SaveData> {
     } else {
       fs.writeFileSync(this.filePath, JSON.stringify(rawData, null, 2))
     }
-
-    Terminal.log(i18n.t('commands.system.exit.save_complete'))
   }
 
   private makeSaveData(context: AppContext) {
     return {
       player: context.player,
-      sceneId: context.map.currentSceneId,
+      sceneId: context.map?.currentSceneId,
       npcs: context.npcs.getSaveData(),
       drop: context.world.lootBags,
       config: context.config || {},

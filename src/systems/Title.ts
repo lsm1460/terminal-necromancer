@@ -84,7 +84,7 @@ export class Title {
           await speak(dialogue)
 
           // 초기 데이터로 저장소 갱신
-          this.save.save(initState)
+          this.save.performSave(initState)
           Terminal.log(`${i18n.t('title.start_game')}\n`)
           return initState
         }
