@@ -15,6 +15,7 @@
     "noEscape": true,
     "dropTableId": "resistance",
     "minRebornRarity": "epic",
+    "orderWeight": 70,
     "skills": ["rapid_fire", "aim_arrow", "vitals_strike"]
   },
   "ren": {
