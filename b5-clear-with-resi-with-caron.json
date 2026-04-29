@@ -7,14 +7,14 @@
     "_maxHp": 138,
     "hp": 138,
     "_maxMp": 50,
-    "mp": 100,
+    "mp": 75,
     "atk": 11,
     "def": 5,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 3946,
-    "exp": 2215,
+    "gold": 6690,
+    "exp": 5095,
     "level": 4,
     "unlockedSkills": [
       "RAISE_SKELETON",
@@ -56,28 +56,6 @@
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 7
-      },
-      {
-        "id": "skeleton_shield_bearer::1777440853099",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
-        "attackType": "melee",
-        "maxHp": 144,
-        "hp": 144,
-        "atk": 15,
-        "def": 30,
-        "agi": 13,
-        "eva": 0,
-        "skills": [],
-        "exp": 0,
-        "description": "터미널 보안 가드의 유골로 만들어진 소환수입니다.",
-        "originId": "security_guard::0ArpkOqw",
-        "rarity": "rare",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 4
       },
       {
         "id": "skeleton_archer::1777441041183",
@@ -159,7 +137,7 @@
       "attackType": "melee",
       "baseMaxHp": 80,
       "maxHp": 80,
-      "hp": 120,
+      "hp": 45,
       "baseAtk": 30,
       "atk": 30,
       "baseDef": 20,
@@ -178,6 +156,31 @@
       "isGolem": true,
       "orderWeight": -15,
       "madeBy": "zed"
+    },
+    "_knight": {
+      "id": "_knight",
+      "name": "",
+      "attackType": "melee",
+      "hp": 360,
+      "baseMaxHp": 360,
+      "maxHp": 360,
+      "baseAtk": 81,
+      "atk": 81,
+      "baseDef": 25,
+      "def": 25,
+      "eva": 0,
+      "exp": 0,
+      "agi": 31,
+      "encounterRate": 0,
+      "isAlive": true,
+      "isMinion": true,
+      "isKnight": true,
+      "description": "",
+      "dropTableId": "",
+      "originId": "arka::ekZPU443",
+      "skills": [
+        "power_smash"
+      ]
     },
     "inventory": [
       {
@@ -201,7 +204,7 @@
         "type": "consumable",
         "price": 1,
         "sellPrice": 1,
-        "quantity": 7
+        "quantity": 8
       },
       {
         "id": "potion_small",
@@ -216,7 +219,7 @@
         "type": "item",
         "price": 2000,
         "sellPrice": 1000,
-        "quantity": 1
+        "quantity": 2
       },
       {
         "id": "cold_touch_dagger::mh3KQ5WN",
@@ -243,6 +246,77 @@
         "rarity": "COMMON",
         "perfPrefix": "worn",
         "adjective": ""
+      },
+      {
+        "id": "arka_wand::GUM_XV-_",
+        "type": "weapon",
+        "price": 8000,
+        "sellPrice": 500,
+        "quantity": 1,
+        "atk": 28,
+        "crit": 0.49,
+        "attackType": "ranged",
+        "rarity": "EPIC",
+        "perfPrefix": "worn",
+        "adjective": "abyssal",
+        "minRebornRarity": 2,
+        "affix": {
+          "id": "MEMORY",
+          "valueRange": [
+            1,
+            2
+          ],
+          "metadata": {
+            "needsConfirmOnUnequip": true,
+            "unEquipCaution": "장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다."
+          },
+          "value": 1
+        }
+      },
+      {
+        "id": "nivalis_blade::RadFCETq",
+        "type": "weapon",
+        "price": 4000,
+        "sellPrice": 300,
+        "quantity": 1,
+        "atk": 40,
+        "crit": 0.4,
+        "attackType": "melee",
+        "rarity": "RARE",
+        "perfPrefix": "worn",
+        "adjective": "exquisite"
+      },
+      {
+        "id": "corrupted_soul_cluster",
+        "type": "consumable",
+        "price": 10,
+        "sellPrice": 5,
+        "quantity": 1
+      },
+      {
+        "id": "small_pistol::a4mnPt-S",
+        "type": "weapon",
+        "price": 1950,
+        "sellPrice": 180,
+        "quantity": 1,
+        "atk": 6,
+        "crit": 0.12,
+        "attackType": "ranged",
+        "rarity": "COMMON",
+        "perfPrefix": "worn",
+        "adjective": ""
+      },
+      {
+        "id": "hard_steel_plate::xqRIqumh",
+        "type": "armor",
+        "price": 1900,
+        "sellPrice": 450,
+        "quantity": 1,
+        "def": 22,
+        "eva": -0.04,
+        "rarity": "RARE",
+        "perfPrefix": "worn",
+        "adjective": "exquisite"
       }
     ],
     "inventoryMax": 45,
@@ -321,35 +395,32 @@
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 10
+      },
+      {
+        "id": "skeleton_shield_bearer::1777440853099",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
+        "attackType": "melee",
+        "maxHp": 144,
+        "hp": 89,
+        "atk": 15,
+        "def": 30,
+        "agi": 13,
+        "eva": 0,
+        "skills": [],
+        "exp": 0,
+        "description": "터미널 보안 가드의 유골로 만들어진 소환수입니다.",
+        "originId": "security_guard::0ArpkOqw",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 4
       }
     ],
     "subspaceLimit": 15,
     "_maxSkeleton": 3,
-    "_knight": {
-      "id": "_knight",
-      "name": "",
-      "attackType": "melee",
-      "hp": 375,
-      "baseMaxHp": 375,
-      "maxHp": 375,
-      "baseAtk": 12,
-      "atk": 12,
-      "baseDef": 141,
-      "def": 141,
-      "eva": 0,
-      "exp": 0,
-      "agi": 9,
-      "encounterRate": 0,
-      "isAlive": true,
-      "isMinion": true,
-      "isKnight": true,
-      "description": "",
-      "dropTableId": "",
-      "originId": "skeleton_shield_bearer::1777440198712",
-      "skills": [
-        "power_smash"
-      ]
-    },
     "golemUpgrade": [
       "soul",
       "soul"
@@ -476,7 +547,7 @@
       },
       "flint": {
         "hp": 240,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -494,19 +565,19 @@
       },
       "kael": {
         "hp": 110,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
       "vesper": {
         "hp": 95,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
       "third_boss": {
         "hp": 650,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -572,7 +643,8 @@
       }
     },
     "factionHostility": {
-      "untouchable": -11
+      "untouchable": -11,
+      "resistance": 0
     },
     "factionContribution": {
       "untouchable": 77
@@ -606,6 +678,8 @@
     "elevator_guide",
     "b5_oliver",
     "tutorial_knight",
-    "talk_knight"
+    "talk_knight",
+    "third_boss",
+    "third_boss_resistance"
   ]
 }

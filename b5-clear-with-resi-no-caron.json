@@ -1,0 +1,513 @@
+{
+  "player": {
+    "id": "player",
+    "name": "player",
+    "x": 4,
+    "y": 1,
+    "_maxHp": 182,
+    "hp": 33,
+    "_maxMp": 50,
+    "mp": 66,
+    "atk": 12,
+    "def": 5,
+    "agi": 5,
+    "eva": 0,
+    "crit": 0,
+    "gold": 6019,
+    "exp": 4450,
+    "level": 5,
+    "unlockedSkills": [
+      "RAISE_SKELETON",
+      "RECALL_SKELETON",
+      "FOCUS_FIRE",
+      "CORPSE_EXPLOSION",
+      "CURSE"
+    ],
+    "karma": 3,
+    "_maxMemorize": 5,
+    "memorize": [
+      "RAISE_SKELETON",
+      "RECALL_SKELETON",
+      "FOCUS_FIRE",
+      "CORPSE_EXPLOSION",
+      "CURSE"
+    ],
+    "_skeleton": [],
+    "_mercenary": [],
+    "_golem": {
+      "id": "golem",
+      "name": "",
+      "attackType": "melee",
+      "baseMaxHp": 90,
+      "maxHp": 90,
+      "hp": 0,
+      "baseAtk": 20,
+      "atk": 20,
+      "baseDef": 40,
+      "def": 40,
+      "agi": 3,
+      "exp": 0,
+      "eva": 0,
+      "description": "",
+      "dropTableId": "",
+      "encounterRate": 0,
+      "isAlive": false,
+      "skills": [
+        "power_smash"
+      ],
+      "isMinion": true,
+      "isGolem": true,
+      "orderWeight": -15,
+      "madeBy": "maya"
+    },
+    "_knight": {
+      "id": "_knight",
+      "name": "",
+      "attackType": "melee",
+      "hp": 279,
+      "baseMaxHp": 560,
+      "maxHp": 560,
+      "baseAtk": 25,
+      "atk": 25,
+      "baseDef": 31,
+      "def": 31,
+      "eva": 0,
+      "exp": 0,
+      "agi": 0,
+      "encounterRate": 0,
+      "isAlive": true,
+      "isMinion": true,
+      "isKnight": true,
+      "description": "",
+      "dropTableId": "",
+      "originId": "caron",
+      "skills": [
+        "power_smash"
+      ]
+    },
+    "inventory": [
+      {
+        "id": "tainted_core",
+        "type": "consumable",
+        "price": 1,
+        "sellPrice": 1,
+        "quantity": 4
+      },
+      {
+        "id": "mana_potion_small",
+        "type": "consumable",
+        "price": 45,
+        "sellPrice": 6,
+        "quantity": 3,
+        "mpHeal": 20
+      },
+      {
+        "id": "mana_potion",
+        "type": "consumable",
+        "price": 130,
+        "sellPrice": 18,
+        "quantity": 3,
+        "mpHeal": 40
+      },
+      {
+        "id": "stolen_helmet::OyCYKDqv",
+        "type": "armor",
+        "price": 850,
+        "sellPrice": 200,
+        "quantity": 1,
+        "def": 10,
+        "eva": 0.01,
+        "rarity": "EPIC",
+        "perfPrefix": "masterwork",
+        "adjective": "primal",
+        "affix": {
+          "id": "LEGION"
+        }
+      },
+      {
+        "id": "resistance_mace::y4UEwfTh",
+        "type": "weapon",
+        "price": 1800,
+        "sellPrice": 400,
+        "quantity": 1,
+        "atk": 10,
+        "crit": 0.13,
+        "attackType": "melee",
+        "rarity": "COMMON",
+        "perfPrefix": "worn",
+        "adjective": ""
+      },
+      {
+        "id": "improvised_bayonet::3T5RStAd",
+        "type": "weapon",
+        "price": 2100,
+        "sellPrice": 500,
+        "quantity": 2,
+        "atk": 13,
+        "crit": 0.19,
+        "attackType": "ranged",
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      },
+      {
+        "id": "rebel_iron_plate::-t9GpnY-",
+        "type": "armor",
+        "price": 2300,
+        "sellPrice": 600,
+        "quantity": 1,
+        "def": 20,
+        "eva": 0.01,
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      },
+      {
+        "id": "arka_wand::3l2SM2dD",
+        "type": "weapon",
+        "price": 8000,
+        "sellPrice": 500,
+        "quantity": 1,
+        "atk": 33,
+        "crit": 0.26,
+        "attackType": "ranged",
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "primal",
+        "minRebornRarity": 2,
+        "affix": {
+          "id": "MEMORY",
+          "valueRange": [
+            1,
+            2
+          ],
+          "metadata": {
+            "needsConfirmOnUnequip": true,
+            "unEquipCaution": "장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다."
+          },
+          "value": 2
+        }
+      },
+      {
+        "id": "hard_steel_plate::hZiaQzuk",
+        "type": "armor",
+        "price": 1900,
+        "sellPrice": 450,
+        "quantity": 1,
+        "def": 19,
+        "eva": -0.05,
+        "rarity": "COMMON",
+        "perfPrefix": "",
+        "adjective": ""
+      },
+      {
+        "id": "stolen_jewelry",
+        "type": "item",
+        "price": 2000,
+        "sellPrice": 1000,
+        "quantity": 1
+      },
+      {
+        "id": "golem_core_staff::rGf-ETnv",
+        "type": "weapon",
+        "price": 4200,
+        "sellPrice": 1150,
+        "quantity": 1,
+        "atk": 12,
+        "crit": 0.12,
+        "attackType": "ranged",
+        "rarity": "RARE",
+        "perfPrefix": "",
+        "adjective": "keen",
+        "maxSkeleton": 1,
+        "mp": 50
+      }
+    ],
+    "inventoryMax": 45,
+    "equipped": {
+      "armor": {
+        "id": "reaper_chain_mail::CWO4MqRq",
+        "type": "armor",
+        "price": 1800,
+        "sellPrice": 500,
+        "quantity": 1,
+        "def": 11,
+        "eva": 0,
+        "rarity": "COMMON",
+        "perfPrefix": "masterwork",
+        "adjective": ""
+      },
+      "weapon": {
+        "id": "nivalis_blade::bg_mDGy9",
+        "type": "weapon",
+        "price": 4000,
+        "sellPrice": 300,
+        "quantity": 1,
+        "atk": 57,
+        "crit": 0.54,
+        "attackType": "melee",
+        "rarity": "RARE",
+        "perfPrefix": "masterwork",
+        "adjective": "exquisite"
+      }
+    },
+    "skeletonSubspace": [],
+    "subspaceLimit": 15,
+    "_maxSkeleton": 3,
+    "golemUpgrade": [
+      "machine",
+      "soul"
+    ],
+    "knightUpgrade": [],
+    "upgradeLimit": 5
+  },
+  "sceneId": "B5_VIP_lounge",
+  "npcs": {
+    "states": {
+      "kane_leader": {
+        "hp": 220,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "ren": {
+        "hp": 200,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "maya_tech": {
+        "hp": 30,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "jax_seeker": {
+        "hp": 120,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "elevator": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "portal": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "death": {
+        "hp": 3000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "first_boss": {
+        "hp": 80,
+        "isAlive": false,
+        "reborn": true,
+        "relation": 0
+      },
+      "second_boss": {
+        "hp": 500,
+        "isAlive": false,
+        "reborn": false,
+        "relation": 0
+      },
+      "dr_zed": {
+        "hp": 1500,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "echo": {
+        "hp": 999,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "ratty": {
+        "hp": 30,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "vending_machine": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "marco": {
+        "hp": 450,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "apostle": {
+        "hp": 8000,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "caron": {
+        "hp": 500,
+        "isAlive": false,
+        "reborn": true,
+        "relation": 0
+      },
+      "caron_alive": {
+        "hp": 1200,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "caron_dead": {
+        "hp": 1200,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "adrian": {
+        "hp": 20,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "flint": {
+        "hp": 240,
+        "isAlive": false,
+        "reborn": false,
+        "relation": 0
+      },
+      "julian": {
+        "hp": 25,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "oliver": {
+        "hp": 2,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "kael": {
+        "hp": 110,
+        "isAlive": false,
+        "reborn": false,
+        "relation": 0
+      },
+      "vesper": {
+        "hp": 95,
+        "isAlive": false,
+        "reborn": false,
+        "relation": 0
+      },
+      "third_boss": {
+        "hp": 650,
+        "isAlive": false,
+        "reborn": false,
+        "relation": 0
+      },
+      "_knight": {
+        "hp": 650,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "hansen_mechanic": {
+        "hp": 120,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "vora_observer": {
+        "hp": 85,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "elias_survivor": {
+        "hp": 60,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "silas_dissector": {
+        "hp": 150,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "mika_operator": {
+        "hp": 70,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "dax_looter": {
+        "hp": 90,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "aris_purifier": {
+        "hp": 400,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "shadowed_agent": {
+        "hp": 360,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      },
+      "fourth_boss": {
+        "hp": 650,
+        "isAlive": true,
+        "reborn": false,
+        "relation": 0
+      }
+    },
+    "factionHostility": {
+      "resistance": 0
+    },
+    "factionContribution": {
+      "resistance": 40
+    }
+  },
+  "drop": null,
+  "config": {
+    "locale": "ko"
+  },
+  "completedEvents": [
+    "START_GAME",
+    "item-tutorial",
+    "talk_death_1",
+    "elevator_guide",
+    "got_terminal_map",
+    "first_boss",
+    "talk_death_2",
+    "HEARD_RESISTANCE",
+    "RESISTANCE_BASE",
+    "maya_1",
+    "kane_1",
+    "second_boss",
+    "talk_death_3",
+    "golem_generation_denied_zed",
+    "caron_is_dead",
+    "defeat_caron",
+    "tutorial_knight",
+    "talk_knight",
+    "report_caron_to_death",
+    "kane_2",
+    "third_boss",
+    "third_boss_resistance"
+  ]
+}
