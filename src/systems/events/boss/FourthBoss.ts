@@ -21,7 +21,7 @@ export class FourthBoss implements BossLogic {
     const maya = npcs.getNPC('maya_tech')
     if (maya?.skills) maya.skills = [...(maya.skills || []), 'greater_heal'] // 회복 마법 추가
     const mayaIsAlive = maya?.isAlive
-    const isResistanceDead = events.isCompleted('vips_saved')
+    const isResistanceDead = !events.isCompleted('third_boss_resistance')
 
     if (!mayaIsAlive) {
       const god1 = monster.makeMonster('fallen_god_1')!
@@ -55,7 +55,7 @@ export class FourthBoss implements BossLogic {
       amorUnit.onDeathHooks.push(async () => {
         mayaUnit.removeBuff('stealth', true)
 
-        const coreExposedLogs = i18n.t('npc.fourth_boss.battle.maya_exposed', { returnObjects: true }) as string[]
+        const coreExposedLogs = i18n.t('npc.fourth_boss.maya_exposed', { returnObjects: true }) as string[]
         coreExposedLogs.forEach((_log) => Terminal.log(_log))
       })
 

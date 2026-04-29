@@ -148,7 +148,7 @@ export class BattleActionHandler {
       { world: this.world, eventBus: this.eventBus },
       {
         ally,
-        enemies: this.unitManager.getAliveEnemies(),
+        enemies: this.unitManager.getAliveEnemies().filter((u) => !u.isStealth),
       }
     )
 
