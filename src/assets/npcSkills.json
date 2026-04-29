@@ -114,6 +114,7 @@
     "type": "buff",
     "buff": {
       "id": "barrie",
+      "type": "buff",
       "duration": 3,
       "def": 20
     }

@@ -97,13 +97,13 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   public hasImmunity(d: Buff) {
     const skills = this.ref.skills ?? []
-
+    
     const immunityMap: Record<string, BuffType> = {
       resist_bind: 'bind',
       resist_confuse: 'confuse',
     }
-
-    return skills.some((skill) => immunityMap[skill] === d.type)
+    
+    return d.type && skills.some((skill) => immunityMap[skill] === d.type)
   }
 
   public get buff() {
