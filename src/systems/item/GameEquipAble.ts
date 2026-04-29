@@ -17,6 +17,7 @@ export class GameEquipAble extends GameItem implements IEquipAble {
   constructor(data: Partial<IEquipAble> & EquipAbleOptions) {
     super(data)
 
+    this.minRebornRarity = data.minRebornRarity || 0
     this.maxSkeleton = data.maxSkeleton || 0
     this.affix = data.affix
     this.perfPrefix = data.perfPrefix
