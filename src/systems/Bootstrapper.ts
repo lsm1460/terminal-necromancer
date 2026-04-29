@@ -67,7 +67,6 @@ export class GameBootstrapper {
     }
 
     const player = new Necromancer(itemFactory, assets.level, this.eventBus, playData.player)
-
     this.engine = new GameEngine(
       assets,
       { renderer, eventBus: this.eventBus, player, itemGenerator },
@@ -90,6 +89,11 @@ export class GameBootstrapper {
 
     const exitSubscription = this.eventBus.subscribe(GameEventType.SYSTEM_EXIT, () => {
       this.isRunning = false
+      if (this.engine) {
+        this.engine.cleanup()
+        this.engine = null
+      }
+      this.eventBus.clear()
       exitSubscription.unsubscribe()
       if (onExit) onExit()
     })

@@ -192,8 +192,6 @@ export class WebAssetManager {
       isFallback: false, // 초기값
     }
 
-    console.log('DEBUG:: sprites', sprites)
-
     states.forEach((state) => {
       sprites[state] = getWithFallback(`_${state}`)
     })

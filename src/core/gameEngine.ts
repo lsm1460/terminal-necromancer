@@ -181,4 +181,10 @@ export class GameEngine {
       this.isProcessing = false
     }
   }
+
+  public cleanup() {
+    this.commands.clear()
+    this.isProcessing = false
+    // 필요한 경우 context 내의 시스템들의 cleanup 호출 가능
+  }
 }

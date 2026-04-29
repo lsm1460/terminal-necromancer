@@ -82,4 +82,10 @@ export class CommandManager implements ICommandManager {
       return false
     }
   }
+
+  clear(): void {
+    this.commands.clear()
+    this.customGroups.clear()
+    this.initializeDefaultGroups()
+  }
 }
