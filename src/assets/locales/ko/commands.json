@@ -73,7 +73,8 @@
         "def": "방어력 +{{val}}",
         "eva": "회피율 +{{val}}%",
         "hpHeal": "즉시 회복 HP {{val}}",
-        "mana": " 마나 증가 : +{{val}}MP",
+        "mpHeal": "즉시 회복 MP {{val}}",
+        "exp": "영혼 조각 {{val}}개 획득",
         "maxSkeleton": " 소환수 : 최대 해골 소환수 +{{val}}",
         "minRebornRarity": " 소환수 : 최소 해골 소환수 등급 +{{val}}",
         "affix": " 축복 : [{{name}}] 효과 부여 ({{description}})"

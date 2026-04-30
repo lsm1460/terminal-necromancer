@@ -6,18 +6,21 @@ export class GameConsumable extends GameItem implements IConsumable {
   isConsumable = true as const
   hpHeal: number
   mpHeal: number
+  exp: number
 
   constructor(data: Partial<IConsumable>) {
     super(data)
 
     this.hpHeal = data.hpHeal || 0
     this.mpHeal = data.mpHeal || 0
+    this.exp = data.exp || 0
   }
 
   get infoTags() {
     const tags = []
     if (this.hpHeal > 0) tags.push(i18n.t('commands.look.item.stats.hpHeal', { val: `+${this.hpHeal}` }))
     if (this.mpHeal > 0) tags.push(i18n.t('commands.look.item.stats.mpHeal', { val: `+${this.mpHeal}` }))
+    if (this.exp > 0) tags.push(i18n.t('commands.look.item.stats.exp', { val: `+${this.exp}` }))
     return tags
   }
 

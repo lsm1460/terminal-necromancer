@@ -73,7 +73,8 @@
         "def": "DEF +{{val}}",
         "eva": "EVA +{{val}}%",
         "hpHeal": "Instant HP Heal {{val}}",
-        "mana": " Mana Increase : +{{val}}MP",
+        "mpHeal": "Instant MP Heal {{val}}",
+        "exp": "Obtained {{val}} Soul Fragments",
         "maxSkeleton": " Spirits : Max Skeletons +{{val}}",
         "minRebornRarity": " Spirits : Min Skeletons Reborn Rarity +{{val}}",
         "affix": " Blessing : Grants [{{name}}] ({{description}})"
