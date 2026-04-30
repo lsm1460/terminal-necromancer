@@ -171,8 +171,6 @@ export class WebAssetManager {
     let isFallbackUsed = false
 
     const getWithFallback = (suffix: string) => {
-      console.log(this.images)
-      console.log(`${originId}${suffix}`)
       const original = this.images.get(`${originId}${suffix}`)
       if (original) return original
 

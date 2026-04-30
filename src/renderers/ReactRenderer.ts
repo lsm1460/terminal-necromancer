@@ -140,7 +140,6 @@ export class ReactRenderer implements Renderer {
     const sprites = assetManager.getSprites(npc.id)
 
     let profileImage = ''
-    console.log(sprites, !sprites?.isFallback)
     if (sprites && !sprites.isFallback) {
       profileImage = sprites.idle[0].src
     } else {

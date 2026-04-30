@@ -79,6 +79,6 @@
   },
   "ALONE": {
     "name": "Solitude",
-    "description": "If no skeletons are present, all of your stats increase dramatically in proportion to your maximum skeleton summon capacity and granting resistance to all forms of binding."
+    "description": "If no skeletons are present, your stats increase dramatically in proportion to your maximum skeleton summon capacity and granting resistance to all forms of binding."
   }
 }
