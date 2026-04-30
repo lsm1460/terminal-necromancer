@@ -2,76 +2,128 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 2,
-    "y": 1,
-    "_maxHp": 182,
-    "hp": 182,
+    "x": 0,
+    "y": 0,
+    "_maxHp": 340,
+    "hp": 340,
     "_maxMp": 50,
-    "mp": 100,
-    "atk": 12,
-    "def": 5,
+    "mp": 38,
+    "atk": 15,
+    "def": 7,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 5396,
-    "exp": 70,
-    "level": 5,
+    "gold": 6845,
+    "exp": 11600,
+    "level": 8,
     "unlockedSkills": [
       "RAISE_SKELETON",
       "RECALL_SKELETON",
       "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
       "CURSE",
-      "BONE_SPEAR"
+      "BONE_PRISON",
+      "SOUL_TRANSFER",
+      "BONE_STORM"
     ],
     "karma": 3,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
-      "RECALL_SKELETON",
-      "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
-      "CURSE"
+      "CURSE",
+      "BONE_PRISON",
+      "SOUL_TRANSFER"
     ],
     "_skeleton": [
       {
-        "id": "skeleton_shield_bearer::1777336939973",
-        "name": "\u001b[32m[RARE]\u001b[0m skeleton 방패병",
+        "id": "skeleton_king::1777528245140",
+        "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
         "attackType": "melee",
-        "maxHp": 96,
-        "hp": 96,
-        "atk": 9,
-        "def": 45,
-        "agi": 13,
+        "maxHp": 237,
+        "hp": 237,
+        "atk": 80,
+        "def": 94,
+        "agi": 58,
         "eva": 0,
-        "skills": [],
+        "skills": [
+          "death_aura"
+        ],
         "exp": 0,
-        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
-        "originId": "shipyard_guard_no_gain::VGQo7xob",
-        "rarity": "rare",
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::0bJJdY_q",
+        "rarity": "legendary",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 4
+        "orderWeight": 55
       },
       {
-        "id": "skeleton_great_shield_bearer::1777341047266",
+        "id": "skeleton_priest::1777531425260",
+        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 사제",
+        "attackType": "ranged",
+        "maxHp": 132,
+        "hp": 132,
+        "atk": 25,
+        "def": 47,
+        "agi": 63,
+        "eva": 0,
+        "skills": [
+          "holy_radiance"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::rc9gixfE",
+        "rarity": "epic",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 45
+      },
+      {
+        "id": "skeleton_warrior::1777531537966",
+        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
+        "attackType": "melee",
+        "maxHp": 443,
+        "hp": 443,
+        "atk": 69,
+        "def": 246,
+        "agi": 61,
+        "eva": 0,
+        "skills": [
+          "whirlwind"
+        ],
+        "exp": 0,
+        "description": "\u001b[94m[ELITE]\u001b[0m 스켈레톤 대형 방패병의 유골로 만들어진 소환수입니다.",
+        "originId": "skeleton_great_shield_bearer::1777528517637",
+        "rarity": "epic",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 7
+      },
+      {
+        "id": "skeleton_great_shield_bearer::1777531568316",
         "name": "\u001b[34m[ELITE]\u001b[0m skeleton 대형 방패병",
         "attackType": "melee",
-        "maxHp": 140,
-        "hp": 140,
-        "atk": 14,
-        "def": 58,
-        "agi": 15,
+        "maxHp": 364,
+        "hp": 194,
+        "atk": 29,
+        "def": 62,
+        "agi": 9,
         "eva": 0,
         "skills": [
           "shield_bash"
         ],
         "exp": 0,
-        "description": "하역장 경비병의 유골로 만들어진 소환수입니다.",
-        "originId": "shipyard_guard::c-HSC1ZE",
+        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_mercy::SYSOnbHm",
         "rarity": "elite",
         "dropTableId": "",
         "encounterRate": 0,
@@ -81,28 +133,125 @@
         "orderWeight": 5
       },
       {
-        "id": "skeleton_archer::1777341161558",
-        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
-        "attackType": "ranged",
-        "maxHp": 44,
-        "hp": 44,
-        "atk": 29,
-        "def": 11,
-        "agi": 25,
+        "id": "skeleton_king::1777531777130",
+        "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
+        "attackType": "melee",
+        "maxHp": 237,
+        "hp": 237,
+        "atk": 80,
+        "def": 94,
+        "agi": 58,
         "eva": 0,
         "skills": [
-          "aim_arrow"
+          "death_aura"
         ],
         "exp": 0,
-        "description": "랫맨 주술사의 유골로 만들어진 소환수입니다.",
-        "originId": "ratman_shaman::iegmzfD-",
-        "rarity": "elite",
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::_1vd-y1c",
+        "rarity": "legendary",
         "dropTableId": "",
         "encounterRate": 0,
         "isAlive": true,
         "isMinion": true,
         "isSkeleton": true,
-        "orderWeight": 25
+        "orderWeight": 55
+      },
+      {
+        "id": "skeleton_electromancer::1777533011832",
+        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 전격술사",
+        "attackType": "ranged",
+        "maxHp": 120,
+        "hp": 120,
+        "atk": 63,
+        "def": 21,
+        "agi": 20,
+        "eva": 0,
+        "skills": [
+          "lightning_bolt",
+          "lightning_storm"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[지혜]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_wisdom::hd4mmwwh",
+        "rarity": "epic",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 30
+      },
+      {
+        "id": "skeleton_priest::1777536079152",
+        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 사제",
+        "attackType": "ranged",
+        "maxHp": 132,
+        "hp": 132,
+        "atk": 25,
+        "def": 47,
+        "agi": 63,
+        "eva": 0,
+        "skills": [
+          "holy_radiance"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::sUFRncZm",
+        "rarity": "epic",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 45
+      },
+      {
+        "id": "skeleton_king::1777536092454",
+        "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
+        "attackType": "melee",
+        "maxHp": 237,
+        "hp": 237,
+        "atk": 80,
+        "def": 94,
+        "agi": 58,
+        "eva": 0,
+        "skills": [
+          "death_aura"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::hLfTOtgI",
+        "rarity": "legendary",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 55
+      },
+      {
+        "id": "skeleton_warrior::1777536095073",
+        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
+        "attackType": "melee",
+        "maxHp": 158,
+        "hp": 158,
+        "atk": 63,
+        "def": 63,
+        "agi": 63,
+        "eva": 0,
+        "skills": [
+          "whirlwind"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::dCdWUYpd",
+        "rarity": "epic",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 7
       }
     ],
     "_mercenary": [],
@@ -110,156 +259,308 @@
       "id": "golem",
       "name": "",
       "attackType": "melee",
-      "baseMaxHp": 90,
-      "maxHp": 90,
-      "hp": 150,
-      "baseAtk": 20,
-      "atk": 20,
-      "baseDef": 40,
-      "def": 40,
+      "baseMaxHp": 80,
+      "maxHp": 80,
+      "hp": 132,
+      "baseAtk": 30,
+      "atk": 30,
+      "baseDef": 20,
+      "def": 20,
       "agi": 3,
       "exp": 0,
       "eva": 0,
       "description": "",
       "dropTableId": "",
       "encounterRate": 0,
-      "isAlive": true,
+      "isAlive": false,
       "skills": [
         "power_smash"
       ],
       "isMinion": true,
       "isGolem": true,
       "orderWeight": -15,
-      "madeBy": "maya"
+      "madeBy": "zed"
     },
     "_knight": {
       "id": "_knight",
       "name": "",
       "attackType": "melee",
-      "hp": 560,
-      "baseMaxHp": 560,
-      "maxHp": 560,
-      "baseAtk": 25,
-      "atk": 25,
-      "baseDef": 31,
-      "def": 31,
+      "hp": 360,
+      "baseMaxHp": 360,
+      "maxHp": 360,
+      "baseAtk": 32,
+      "atk": 32,
+      "baseDef": 25,
+      "def": 25,
       "eva": 0,
       "exp": 0,
-      "agi": 0,
+      "agi": 37,
       "encounterRate": 0,
       "isAlive": true,
       "isMinion": true,
       "isKnight": true,
       "description": "",
       "dropTableId": "",
-      "originId": "caron",
+      "originId": "arka::H75BwYHQ",
       "skills": [
         "power_smash"
       ]
     },
     "inventory": [
       {
-        "id": "tainted_core",
+        "id": "potion",
         "type": "consumable",
-        "price": 1,
-        "sellPrice": 1,
-        "quantity": 4
-      },
-      {
-        "id": "mana_potion_small",
-        "type": "consumable",
-        "price": 45,
-        "sellPrice": 6,
-        "quantity": 5,
-        "mpHeal": 20
+        "price": 100,
+        "sellPrice": 15,
+        "quantity": 16,
+        "hpHeal": 50
       },
       {
         "id": "mana_potion",
         "type": "consumable",
         "price": 130,
         "sellPrice": 18,
-        "quantity": 3,
+        "quantity": 8,
         "mpHeal": 40
       },
       {
-        "id": "stolen_helmet::OyCYKDqv",
+        "id": "potion_large",
+        "type": "consumable",
+        "price": 700,
+        "sellPrice": 45,
+        "quantity": 3,
+        "hpHeal": 250
+      },
+      {
+        "id": "divine_remnant_armor::oms06U7H",
         "type": "armor",
-        "price": 850,
-        "sellPrice": 200,
+        "price": 2400,
+        "sellPrice": 550,
         "quantity": 1,
-        "def": 10,
-        "eva": 0.01,
+        "def": 34,
+        "eva": 0.11,
         "rarity": "EPIC",
-        "perfPrefix": "masterwork",
-        "adjective": "primal",
+        "perfPrefix": "",
+        "adjective": "mortal",
         "affix": {
-          "id": "LEGION"
+          "id": "CLEANSE"
         }
       },
       {
-        "id": "potion",
-        "type": "consumable",
-        "price": 100,
-        "sellPrice": 15,
+        "id": "deity_splinter_dagger::npUJGEun",
+        "type": "weapon",
+        "price": 3500,
+        "sellPrice": 420,
         "quantity": 1,
-        "hpHeal": 50
+        "atk": 51,
+        "crit": 0.53,
+        "attackType": "melee",
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "primal",
+        "affix": {
+          "id": "CHAIN_EXPLOSION"
+        }
       },
       {
-        "id": "potion_small",
+        "id": "unstable_tainted_core",
         "type": "consumable",
-        "price": 20,
-        "sellPrice": 5,
-        "quantity": 1,
-        "hpHeal": 20
+        "price": 3,
+        "sellPrice": 2,
+        "quantity": 4,
+        "exp": 150
       }
     ],
     "inventoryMax": 45,
     "equipped": {
       "armor": {
-        "id": "reaper_chain_mail::CWO4MqRq",
+        "id": "ethereal_thought_shroud::WsAjK6xV",
         "type": "armor",
-        "price": 1800,
-        "sellPrice": 500,
+        "price": 2600,
+        "sellPrice": 520,
         "quantity": 1,
-        "def": 11,
-        "eva": 0,
-        "rarity": "COMMON",
-        "perfPrefix": "masterwork",
-        "adjective": ""
+        "def": 14,
+        "eva": 0.54,
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "mortal",
+        "minRebornRarity": 2,
+        "affix": {
+          "id": "OVERLORD",
+          "valueRange": [
+            1,
+            4
+          ],
+          "metadata": {
+            "needsConfirmOnUnequip": true,
+            "unEquipCaution": "장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다."
+          },
+          "value": 4
+        }
       },
       "weapon": {
-        "id": "golem_core_staff::rGf-ETnv",
+        "id": "deity_splinter_dagger::EO7JT6LC",
         "type": "weapon",
-        "price": 4200,
-        "sellPrice": 1150,
+        "price": 3500,
+        "sellPrice": 420,
         "quantity": 1,
-        "atk": 12,
-        "crit": 0.12,
-        "attackType": "ranged",
-        "rarity": "RARE",
+        "atk": 64,
+        "crit": 0.37,
+        "attackType": "melee",
+        "rarity": "EPIC",
         "perfPrefix": "",
-        "adjective": "keen",
-        "maxSkeleton": 1,
-        "mp": 50
+        "adjective": "mortal",
+        "affix": {
+          "id": "CLEANSE"
+        }
       }
     },
-    "skeletonSubspace": [],
+    "skeletonSubspace": [
+      {
+        "id": "skeleton_pyromancer::1777440554043",
+        "name": "\u001b[32m[RARE]\u001b[0m skeleton 화염술사",
+        "attackType": "ranged",
+        "maxHp": 62,
+        "hp": 62,
+        "atk": 18,
+        "def": 8,
+        "agi": 21,
+        "eva": 0,
+        "skills": [
+          "fire_bolt"
+        ],
+        "exp": 0,
+        "description": "터미널 보안 사수의 유골로 만들어진 소환수입니다.",
+        "originId": "security_sharpshooter::Ny1HZWJ4",
+        "rarity": "rare",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 30
+      },
+      {
+        "id": "skeleton::1777440849674",
+        "name": "\u001b[37m[COMMON]\u001b[0m skeleton 병사",
+        "attackType": "melee",
+        "maxHp": 57,
+        "hp": 57,
+        "atk": 23,
+        "def": 5,
+        "agi": 17,
+        "eva": 0,
+        "skills": [],
+        "exp": 0,
+        "description": "약물 투여된 광견의 유골로 만들어진 소환수입니다.",
+        "originId": "modified_fury_hound::VrGISnV4",
+        "rarity": "common",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 10
+      },
+      {
+        "id": "skeleton_archer::1777531460499",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 궁수",
+        "attackType": "ranged",
+        "maxHp": 123,
+        "hp": 123,
+        "atk": 50,
+        "def": 49,
+        "agi": 81,
+        "eva": 0,
+        "skills": [
+          "aim_arrow"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[전쟁]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_war::N-Xz9_cL",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 25
+      },
+      {
+        "id": "skeleton_warrior::1777530100265",
+        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
+        "attackType": "melee",
+        "maxHp": 208,
+        "hp": 208,
+        "atk": 105,
+        "def": 39,
+        "agi": 11,
+        "eva": 0,
+        "skills": [
+          "whirlwind"
+        ],
+        "exp": 0,
+        "description": "\u001b[94m[ELITE]\u001b[0m 스켈레톤 궁수의 유골로 만들어진 소환수입니다.",
+        "originId": "skeleton_archer::1777529040902",
+        "rarity": "epic",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 7
+      },
+      {
+        "id": "skeleton_monk::1777531581842",
+        "name": "\u001b[34m[ELITE]\u001b[0m skeleton 수도자",
+        "attackType": "ranged",
+        "maxHp": 145,
+        "hp": 138,
+        "atk": 21,
+        "def": 20,
+        "agi": 7,
+        "eva": 0,
+        "skills": [
+          "heal"
+        ],
+        "exp": 0,
+        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
+        "originId": "fragment_of_dead_god_mercy::cQ8kqmx_",
+        "rarity": "elite",
+        "dropTableId": "",
+        "encounterRate": 0,
+        "isAlive": true,
+        "isMinion": true,
+        "isSkeleton": true,
+        "orderWeight": 35
+      }
+    ],
     "subspaceLimit": 15,
-    "_maxSkeleton": 3,
+    "_maxSkeleton": 5,
     "golemUpgrade": [
-      "machine",
+      "soul",
+      "soul",
+      "soul",
+      "soul",
+      "soul",
       "soul"
     ],
-    "knightUpgrade": [],
+    "knightUpgrade": [
+      "EPIC",
+      "EPIC",
+      "EPIC",
+      "EPIC",
+      "EPIC"
+    ],
     "upgradeLimit": 5
   },
-  "sceneId": "B1_Subway_Entrance",
+  "sceneId": "B6_VEHICLE_DEPOT",
   "npcs": {
     "states": {
       "kane_leader": {
         "hp": 220,
-        "isAlive": true,
-        "reborn": false,
+        "isAlive": false,
+        "reborn": true,
         "relation": 0
       },
       "ren": {
@@ -349,7 +650,7 @@
       "caron": {
         "hp": 500,
         "isAlive": false,
-        "reborn": true,
+        "reborn": false,
         "relation": 0
       },
       "caron_alive": {
@@ -372,8 +673,8 @@
       },
       "flint": {
         "hp": 240,
-        "isAlive": true,
-        "reborn": false,
+        "isAlive": false,
+        "reborn": true,
         "relation": 0
       },
       "julian": {
@@ -384,25 +685,25 @@
       },
       "oliver": {
         "hp": 2,
-        "isAlive": true,
-        "reborn": false,
+        "isAlive": false,
+        "reborn": true,
         "relation": 0
       },
       "kael": {
         "hp": 110,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
       "vesper": {
         "hp": 95,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
       "third_boss": {
         "hp": 650,
-        "isAlive": true,
+        "isAlive": false,
         "reborn": false,
         "relation": 0
       },
@@ -468,38 +769,47 @@
       }
     },
     "factionHostility": {
-      "resistance": -4,
-      "untouchable": -6
+      "untouchable": -63,
+      "resistance": 100
     },
     "factionContribution": {
-      "resistance": 40,
-      "untouchable": 28
+      "untouchable": 445
     }
   },
-  "drop": null,
+  "drop": {
+    "scendId": "B6_VEHICLE_DEPOT",
+    "id": "sKnh_CMH",
+    "tileId": "B6_021",
+    "exp": 5750,
+    "gold": 4019
+  },
   "config": {
-    "locale": "en"
+    "locale": "ko"
   },
   "completedEvents": [
     "START_GAME",
     "item-tutorial",
     "talk_death_1",
-    "elevator_guide",
     "got_terminal_map",
     "first_boss",
     "talk_death_2",
     "HEARD_RESISTANCE",
-    "RESISTANCE_BASE",
-    "maya_1",
-    "kane_1",
     "second_boss",
     "talk_death_3",
     "golem_generation_denied_zed",
-    "caron_is_dead",
+    "caron_is_mine",
     "defeat_caron",
+    "tutorial_mix",
+    "report_caron_to_death",
+    "elevator_guide",
+    "b5_oliver",
     "tutorial_knight",
     "talk_knight",
-    "report_caron_to_death",
-    "kane_2"
+    "third_boss",
+    "third_boss_kill_all",
+    "vips_lost",
+    "talk_death_4",
+    "b5_elias",
+    "b5_dax"
   ]
 }
