@@ -33,6 +33,7 @@ export class GameConsumable extends GameItem implements IConsumable {
       quantity: this.quantity,
       ...(this.hpHeal ? { hpHeal: this.hpHeal } : {}),
       ...(this.mpHeal ? { mpHeal: this.mpHeal } : {}),
+      ...(this.exp ? { exp: this.exp } : {}),
     } as Record<string, any>
   }
 }
