@@ -20,8 +20,8 @@ const defaultStatusRender = (args: string[], { player }: GameContext, itemFormat
     Terminal.log(i18n.t('commands.look.status.max_level'))
   }
 
-  Terminal.log(i18n.t('commands.look.status.hp', { hp, maxHp }))
-  Terminal.log(i18n.t('commands.look.status.mp', { mp, maxMp }))
+  Terminal.log(i18n.t('commands.look.status.hp', { hp: Math.min(hp, maxHp), maxHp }))
+  Terminal.log(i18n.t('commands.look.status.mp', { mp: Math.min(mp, maxMp), maxMp }))
   Terminal.log(i18n.t('commands.look.status.atk', { atk, bonus: atk - originAtk }))
   Terminal.log(i18n.t('commands.look.status.def', { def, bonus: def - originDef }))
   Terminal.log(i18n.t('commands.look.status.gold', { gold: gold.toLocaleString() + 'G' }))
