@@ -66,4 +66,8 @@ export class MayaNPC extends MerchantNPC {
         return true
     }
   }
+
+  async afterDead(context: AppContext) {
+    
+  }
 }

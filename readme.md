@@ -1,5 +1,7 @@
 ## 0. 남은 작업 정리
 
+- FourthBoss
+  ㄴ await speak(i18n.t('npc.fourth_boss.caron_battle_start', { returnObjects: true }) as string[]).. 의 로직을 Maya의 afterDead로 옮겨보자..
 - 스킬 습득 시에도 설명 추가하기
 - death, death 2회차 스탯 작업 안했고..
 - 엔딩 로그 출력 & 엔딩 이미지 출력

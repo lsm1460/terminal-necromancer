@@ -171,7 +171,7 @@ export class FourthBoss implements BossLogic {
 
       const _res = await Terminal.confirm(i18n.t('npc.fourth_boss.system.move_confirm'))
 
-      if (_res) {
+      if (!_res) {
         await speak(i18n.t('npc.fourth_boss.caron_battle_start', { returnObjects: true }) as string[])
         const caron = npcs.getNPC('caron')
 
