@@ -95,7 +95,7 @@ class SkeletonWrapper implements ISkeleton {
   }
 
   get class() {
-    return this.raw.id.split('skeleton_')[1]
+    return getOriginId(this.raw.id).split('skeleton_')[1]
   }
 
   get skills(): string[] {
@@ -110,7 +110,6 @@ class SkeletonWrapper implements ISkeleton {
     if (this.player.hasAffix('FROSTBORNE')) {
       currentSkills.push('frostborne')
     }
-
     if (this.player.hasAffix('CLEANSE') && ['monk', 'priest'].includes(this.class)) {
       currentSkills.push('purify_essence')
     }
