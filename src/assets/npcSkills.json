@@ -35,13 +35,13 @@
     "name": "전격 화살",
     "attackType": "ranged",
     "description": "대상에게 전격을 날려 마비시킵니다.",
-    "chance": 0.6,
+    "chance": 0.3,
     "power": 1.2,
     "targetType": "ENEMY_RANDOM",
     "buff": {
       "id": "paralysis",
       "type": "bind",
-      "duration": 3
+      "duration": 2
     }
   },
   "lightning_storm": {
@@ -291,7 +291,7 @@
     "name": "성스러운 합창",
     "attackType": "ranged",
     "description": "모든 아군의 상처를 어루만집니다.",
-    "chance": 0.15,
+    "chance": 0.25,
     "power": 0.3,
     "targetType": "ALLY_ALL",
     "type": "heal"
