@@ -34,7 +34,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
     onAfterHit: async (attacker, defender, skill, battle, options) => {
       if (options?.attackType !== 'melee') return
 
-      const thornDamage = Math.max(1, Math.floor(defender.stats.atk * 0.3))
+      const thornDamage = Math.max(1, Math.floor(defender.stats.atk * 0.6))
 
       // 가시는 일반 로그로 출력
       Terminal.log(

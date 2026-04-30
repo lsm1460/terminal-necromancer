@@ -74,7 +74,7 @@ class GolemWrapper implements IGolem {
   }
 
   get maxHp(): number {
-    const bonusHp = this.machineCount * 40 + this.soulCount * 20
+    const bonusHp = this.machineCount * 90 + this.soulCount * 60
     return this.raw.maxHp + bonusHp
   }
 
