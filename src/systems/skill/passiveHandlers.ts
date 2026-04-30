@@ -13,7 +13,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       const msg = i18n.t('skill.passive.death_aura', { attacker: attacker.name })
       Terminal.log(RED(msg))
 
-      const enemies = battle.getEnemiesOf(attacker)
+      const enemies = battle.getEnemiesOf(attacker).filter((u) => !u.isStealth)
       for (const enemy of enemies) {
         if (skill.buff) enemy.applyDeBuff({ ...skill.buff })
 
