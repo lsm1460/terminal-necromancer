@@ -800,7 +800,7 @@
     "name": "명령:정지",
     "attackType": "ranged",
     "description": "모든 적군을 멈추게하는 언령을 보냅니다.",
-    "chance": 0.2,
+    "chance": 0.15,
     "power": 0.3,
     "targetType": "ENEMY_ALL",
     "buff": {
