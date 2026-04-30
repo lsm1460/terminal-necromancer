@@ -1,5 +1,4 @@
 import { printCorpses, printDrops } from '~/core/statusPrinter'
-import i18n from '~/i18n'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
@@ -56,7 +55,10 @@ export class Battle implements BattleManager {
   }
 
   async handleUnitTurn(unit: CombatUnit): Promise<boolean | void> {
-    Terminal.log(i18n.t('battle.turn_start', { name: unit.name }))
+    Terminal.log({
+      key: 'battle.turn_start',
+      args: { name: unit.name },
+    })
     unit.buffManager.updateDuration()
 
     if (await this.actions.handleUnitDeBuff(unit)) return
@@ -74,12 +76,7 @@ export class Battle implements BattleManager {
       const isConfused = unit.hasDeBuff({ type: 'confuse' })
       const [targetEnemies, targetAllies] = isConfused ? [allySide, enemiesSide] : [enemiesSide, allySide]
 
-      const _params = [
-        unit,
-        targetEnemies as CombatUnit[],
-        targetAllies as CombatUnit[],
-        this,
-      ] as const
+      const _params = [unit, targetEnemies as CombatUnit[], targetAllies as CombatUnit[], this] as const
 
       await this.actions.executeAutoAttack(..._params)
     }
@@ -108,15 +105,16 @@ export class Battle implements BattleManager {
       this.units.registerUnit(e)
     })
 
-    Terminal.log(i18n.t('battle.battle_start'))
-    Terminal.log(
-      i18n.t('battle.enemy_list', {
+    Terminal.log({ key: 'battle.battle_start' })
+    Terminal.log({
+      key: 'battle.enemy_list',
+      args: {
         names: this.units
           .getAliveEnemies()
           .map((e) => e.name)
           .join(', '),
-      })
-    )
+      },
+    })
 
     const engine = new BattleEngine(this, {
       onRoundStart: async (round) => {

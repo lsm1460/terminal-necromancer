@@ -1,5 +1,4 @@
 import { Terminal } from '~/core'
-import i18n from '~/i18n'
 import { Buff, BuffOptions } from '../Buff'
 import { CombatUnit } from './CombatUnit'
 
@@ -46,16 +45,15 @@ export class UnitBuffManager {
     const path = isBuff ? 'skill.message.buff' : 'skill.message.debuff'
     const fullPath = `${path}.${buff.id}`
 
-    if (!i18n.exists(fullPath)) {
-      return
-    }
-
-    return (name: string, hp?: number, maxHp?: number) =>
-      i18n.t(fullPath, {
+    return (name: string, hp?: number, maxHp?: number) => ({
+      key: fullPath,
+      args: {
         name,
-        hp: hp?.toString(),
-        maxHp: maxHp?.toString(),
-      })
+        ...(hp !== undefined && { hp: hp.toString() }),
+        ...(maxHp !== undefined && { maxHp: maxHp.toString() }),
+      },
+      optional: true,
+    })
   }
 
   private processEffect(effectOrOptions: BuffOptions, action: 'apply' | 'remove', force = false): void {
@@ -65,12 +63,14 @@ export class UnitBuffManager {
 
     if (action === 'apply') {
       if (this.owner.hasImmunity(effect)) {
-        Terminal.log(
-          i18n.t('battle.unit.status_change.resisted', {
+        Terminal.log({
+          key: 'battle.unit.status_change.resisted',
+          args: {
             name: this.owner.name,
             effectName: effect.name,
-          })
-        )
+          },
+        })
+
         return
       }
 
@@ -104,12 +104,13 @@ export class UnitBuffManager {
       else this.deBuffs = newArray
 
       if (newArray.length < initialLength) {
-        Terminal.log(
-          i18n.t('battle.unit.status_change.effect_removed', {
+        Terminal.log({
+          key: 'battle.unit.status_change.effect_removed',
+          args: {
             name: this.owner.name,
             effectName: effect.name,
-          })
-        )
+          },
+        })
       }
     }
   }
@@ -136,7 +137,11 @@ export class UnitBuffManager {
     if (canReveal) {
       this.buffs = this.buffs.filter((b) => b.type !== 'stealth' || b.isLocked)
 
-      Terminal.log(i18n.t('battle.unit.status_change.stealth_broken', { name: this.owner.name }))
+      Terminal.log({
+        key: 'battle.unit.status_change.stealth_broken',
+        args: { name: this.owner.name },
+      })
+
       this.applyDeBuff({
         id: 'expose',
         duration: 2,
@@ -151,12 +156,13 @@ export class UnitBuffManager {
     const randomIndex = Math.floor(Math.random() * this.deBuffs.length)
     const removed = this.deBuffs.splice(randomIndex, 1)[0]
 
-    Terminal.log(
-      i18n.t('battle.unit.status_change.recovered', {
+    Terminal.log({
+      key: 'battle.unit.status_change.recovered',
+      args: {
         name: this.owner.name,
         effectName: removed.name,
-      })
-    )
+      },
+    })
   }
 
   public removeRandomBuff(): void {
@@ -165,12 +171,13 @@ export class UnitBuffManager {
     const randomIndex = Math.floor(Math.random() * this.buffs.length)
     const removed = this.buffs.splice(randomIndex, 1)[0]
 
-    Terminal.log(
-      i18n.t('battle.unit.status_change.forced_removed', {
+    Terminal.log({
+      key: 'battle.unit.status_change.forced_removed',
+      args: {
         name: this.owner.name,
         effectName: removed.name,
-      })
-    )
+      },
+    })
   }
 
   public getStatBonus(statName: 'atk' | 'def' | 'eva' | 'agi' | 'crit'): number {
@@ -193,12 +200,13 @@ export class UnitBuffManager {
       })
 
       expired.forEach((e) => {
-        Terminal.log(
-          i18n.t(messageKey, {
+        Terminal.log({
+          key: messageKey,
+          args: {
             unitName: this.owner.name,
             effectName: e.name,
-          })
-        )
+          },
+        })
       })
 
       const remaining = array.filter((e) => e.duration > 0)
