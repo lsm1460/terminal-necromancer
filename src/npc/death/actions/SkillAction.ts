@@ -54,6 +54,10 @@ export const SkillActions = {
         }
       )
 
+      if (selectedNames.length > player.maxMemorize) {
+        return true
+      }
+
       player.memorize = selectedNames.map(name => DeathService.getSkillIdByName(name))
       Terminal.log(i18n.t('npc.death.memorize.system_complete', { count: player.memorize.length }))
     } catch {
