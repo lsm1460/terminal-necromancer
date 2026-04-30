@@ -71,35 +71,16 @@ export const printItem = (_item: Item, inInventory = false) => {
 }
 
 export const lookItem = async (dropList: Drop[], player: Player) => {
-  const items = Object.values(
-    dropList.reduce(
-      (acc, item) => {
-        const label = item.origin
-        if (!acc[label]) {
-          acc[label] = {
-            label,
-            qty: 0,
-            raw: item,
-          }
-        }
-        acc[label].qty += item.quantity || 1
-
-        return acc
-      },
-      {} as Record<string, { label: string; qty: number; raw: any }>
-    )
-  )
-
-  const subChoices = items.map((i) => ({
-    name: i.label,
-    message: i.raw.makeItemMessage(player),
+  const subChoices = dropList.map((i) => ({
+    name: i.id,
+    message: i.makeItemMessage(player),
   }))
 
   const selected = await selectTarget(subChoices)
 
   if (selected !== 'back') {
-    const target = items.find((i) => i.label === selected)
-    if (target) printItem(target.raw)
+    const target = dropList.find((i) => i.id === selected)
+    if (target) printItem(target)
   }
 
   return selected
