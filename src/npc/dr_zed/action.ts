@@ -64,7 +64,14 @@ export const ZedActions = {
     const action = await Terminal.select(
       i18n.t('npc.dr_zed.upgrade.status_label', { slots: player.golemUpgrade.join(' | ') || 'EMPTY', exp: player.exp }),
       [
-        { name: 'soul_upgrade', message: i18n.t('npc.dr_zed.upgrade.menu_soul', { cost: stats.upgradeCost }) },
+        ...(!stats.isHardLimit
+          ? [
+              {
+                name: 'soul_upgrade',
+                message: i18n.t('npc.dr_zed.upgrade.menu_soul', { cost: stats.upgradeCost }),
+              },
+            ]
+          : []),
         { name: 'remove_soul', message: i18n.t('npc.dr_zed.upgrade.menu_remove', { cost: stats.removeCost }) },
         { name: 'exit', message: i18n.t('cancel') },
       ]

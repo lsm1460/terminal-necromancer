@@ -55,17 +55,21 @@ export const MayaActions = {
         gold: player.gold,
       }),
       [
-        {
-          name: 'machine_upgrade',
-          message: i18n.t('npc.maya_tech.upgrade.choices.machine', { cost: stats.upgradeCost }),
-        },
+        ...(!stats.isFull
+          ? [
+              {
+                name: 'machine_upgrade',
+                message: i18n.t('npc.maya_tech.upgrade.choices.machine', { cost: stats.upgradeCost }),
+              },
+            ]
+          : []),
         { name: 'remove_machine', message: i18n.t('npc.maya_tech.upgrade.choices.remove', { cost: stats.removeCost }) },
         { name: 'exit', message: i18n.t('cancel') },
       ]
     )
 
     if (action === 'machine_upgrade') {
-      if (stats.totalStacks >= player.upgradeLimit) {
+      if (stats.isFull) {
         Terminal.log(i18n.t('npc.maya_tech.upgrade.full'))
       } else if (player.gold < stats.upgradeCost) {
         Terminal.log(i18n.t('npc.maya_tech.upgrade.no_gold'))

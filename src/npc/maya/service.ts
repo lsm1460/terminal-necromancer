@@ -30,6 +30,8 @@ export const MayaService = {
     const upgradeCost = Math.floor(1000 * (totalStacks + 1) * penaltyMultiplier)
     const removeCost = 3000
 
-    return { machineStacks, soulStacks, totalStacks, upgradeCost, removeCost }
+    const isFull = totalStacks >= player.upgradeLimit
+
+    return { machineStacks, soulStacks, totalStacks, upgradeCost, removeCost, isFull }
   },
 }
