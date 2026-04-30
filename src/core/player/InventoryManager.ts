@@ -107,7 +107,7 @@ export class InventoryManager {
     return this.itemFactory.make({ ...targetItem.raw, quantity: 1 })
   }
 
-  async useItem(targetItem?: IConsumable) {
+  async useItem(targetItem?: IConsumable, isUseAll?: boolean) {
     const consumables = this.inventory.filter((item): item is IConsumable => (item as IConsumable).isConsumable)
 
     if (consumables.length === 0) {
@@ -137,15 +137,24 @@ export class InventoryManager {
       return false
     }
 
+    const useCount = isUseAll ? (targetItem.quantity || 1) : 1
     const gameItem = targetItem instanceof Item ? targetItem : this.itemFactory.make(targetItem)
-    Terminal.log(i18n.t('inventory.use.using', { name: gameItem.name }))
+    
+    // 사용 로그 (전부 사용 시 수량 표시)
+    Terminal.log(i18n.t('inventory.use.using', { 
+      name: isUseAll && useCount > 1 ? `${gameItem.name} x${useCount}` : gameItem.name 
+    }))
 
+    // HP 회복 처리
     if (targetItem.hpHeal) {
-      const recovered = this.player.recoverHp(targetItem.hpHeal)
+      let totalRecovered = 0
+      for (let i = 0; i < useCount; i++) {
+        totalRecovered += this.player.recoverHp(targetItem.hpHeal)
+      }
 
       Terminal.log(
         i18n.t('inventory.use.hp_recovered', {
-          amount: recovered,
+          amount: totalRecovered,
           current: this.player.hp,
           max: this.player.maxHp,
         })
@@ -154,11 +163,14 @@ export class InventoryManager {
 
     // MP 회복 처리
     if (targetItem.mpHeal) {
-      const recovered = this.player.recoverMp(targetItem.mpHeal)
+      let totalRecovered = 0
+      for (let i = 0; i < useCount; i++) {
+        totalRecovered += this.player.recoverMp(targetItem.mpHeal)
+      }
 
       Terminal.log(
         i18n.t('inventory.use.mp_recovered', {
-          amount: recovered,
+          amount: totalRecovered,
           current: this.player.mp,
           max: this.player.maxMp,
         })
@@ -166,17 +178,18 @@ export class InventoryManager {
     }
 
     if (targetItem.exp) {
-      this.player.gainExp(targetItem.exp)
+      const totalExp = targetItem.exp * useCount
+      this.player.gainExp(totalExp)
 
       Terminal.log(
         i18n.t('inventory.use.exp_charged', {
-          amount: targetItem.exp,
+          amount: totalExp,
           current: this.player.exp,
         })
       )
     }
 
-    this.removeItem(targetItem.id, 1)
+    this.removeItem(targetItem.id, useCount)
 
     return true
   }

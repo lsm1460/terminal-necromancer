@@ -231,8 +231,8 @@ export abstract class Player {
     return this.inventoryManager.removeItem(itemId, amount)
   }
 
-  async useItem(targetItem?: IConsumable) {
-    return await this.inventoryManager.useItem(targetItem)
+  async useItem(targetItem?: IConsumable, isUseAll?: boolean) {
+    return await this.inventoryManager.useItem(targetItem, isUseAll)
   }
 
   hasItem(id: string) {

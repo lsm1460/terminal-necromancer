@@ -1,7 +1,8 @@
 import { CommandFunction } from "~/core/types"
 
 export const useCommand: CommandFunction = async (args, { player }) => {
-  await player.useItem()
+  const isUseAll = args[0] === 'all'
+  await player.useItem(undefined, isUseAll)
 
   return false
 }
