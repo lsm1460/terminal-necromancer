@@ -89,7 +89,7 @@ export class CLIRenderer implements Renderer<AppContext> {
     console.log(message)
   }
 
-  pick(origin: string, message?: string) {}
+  pick(origin: string, message: string) {}
 
   attack(message: string, prefix?: string) {
     console.log((prefix || '') + message)

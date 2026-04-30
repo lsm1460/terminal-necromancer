@@ -18,10 +18,10 @@ import {
 } from '~/systems'
 import { CheatSystem, ExitSystem, HelpSystem, MoveSystem, StatusSystem } from '~/systems/commands'
 import { PASSIVE_EFFECTS, SkillEffectPresenter, SpecialSkillLogics } from '~/systems/skill'
+import { I18nAdapter } from './I18nAdapter'
 
 export interface BootOptions {
   renderer: Renderer
-  translator: (info: any) => string
   assets: IAssets
   initState: any
   onExit?: () => void
@@ -46,15 +46,15 @@ export class GameBootstrapper {
       return this.engine!
     }
 
-    const { renderer, translator, assets, initState, onExit } = options
+    const { renderer, assets, initState, onExit } = options
 
     const itemFactory = new GameItemFactory()
     const itemGenerator = new ItemGenerator(new ItemPolicy(), itemFactory)
     new Broadcast(this.eventBus)
     new SkillEffectPresenter(this.eventBus)
 
-    Terminal.setRenderer(renderer)
-    Terminal.setTranslator(translator)
+    const _renderer = new I18nAdapter(renderer, (key, args) => i18n.t(key, args) as string, i18n.exists)
+    Terminal.setRenderer(_renderer)
 
     const achievement = new AchievementManager(this.eventBus, assets.achievements, this.path?.achievementPath)
     const title = new Title(this.saveSystem, this.configSystem, achievement)
@@ -129,7 +129,6 @@ export class GameBootstrapper {
       world.addLootBag(lootBag)
 
       this.saveSystem.save(_context)
-      
       if (map.currentSceneId !== MAP_IDS.B1_SUBWAY) {
         world.clearFloor()
       }

@@ -23,6 +23,5 @@ export const initialResources = {
 
 export const loadExtraLocaleBundle = async (lang: 'ko' | 'en') => {
   const bundle = await import(`./${lang}/index.ts`)
-
   i18n.addResourceBundle(lang, 'translation', bundle.default, true, true)
 }

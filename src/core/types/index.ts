@@ -63,12 +63,13 @@ export interface Skill<T extends Player = Player> {
   execute: ExecuteSkill<T>
 }
 
-export interface TranslationInfo {
-  key: string
-  args?: Record<string, any>
-}
-
-export type Translatable = string | TranslationInfo
+export type MessageSource = 
+  | string 
+  | { 
+      key: string; 
+      args?: Record<string, string | number>; 
+      optional?: boolean; // 번역 키가 없으면 출력을 무시할지 여부
+    };
 
 export interface DefaultContextTypes {
   player: Player
@@ -104,13 +105,13 @@ export interface GameContext<T extends Partial<DefaultContextTypes> = DefaultCon
 }
 
 export interface Renderer<C = any> {
-  print(message: string): void
+  print(message: MessageSource): void
   update(message: string): void
   availableTalks(list: { name: string; hasQuest: boolean }[]): void
   clear(): void
   printStatus(context: C): void
   // 입력 관련 메서드 추가
-  select(message: string, choices: { name: string; message: string }[], defaultValue?: string): Promise<string>
+  select(message: MessageSource, choices: { name: string; message: MessageSource }[], defaultValue?: string): Promise<string>
   confirm(message: string): Promise<boolean>
   prompt(message: string): Promise<void> // 기존의 alert 역할을 prompt로 명칭 변경
   multiselect(
@@ -119,10 +120,10 @@ export interface Renderer<C = any> {
     options?: { initial?: string[]; maxChoices?: number }
   ): Promise<string[]>
   move(directions: string[]): void
-  look(message: string, name: string, type: string): void
-  pick(name: string, message: string): void
-  attack(message: string, prefix?: string): void
-  skill(message: string, prefix?: string): void
+  look(message: MessageSource, name: string, type: string): void
+  pick(name: string, message: MessageSource): void
+  attack(message: MessageSource, prefix?: string): void
+  skill(message: MessageSource, prefix?: string): void
   talk(name: string): void
   printNpcCard(npc: BaseNPC): void
 }

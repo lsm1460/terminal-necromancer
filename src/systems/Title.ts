@@ -1,3 +1,4 @@
+import { loadExtraLocaleBundle } from '~/assets/locales'
 import { Terminal } from '~/core'
 import i18n from '~/i18n'
 import { AchievementManager, ConfigSystem, SaveSystem } from '~/systems'
@@ -19,8 +20,6 @@ export class Title {
       let hasSave = this.save.load()
 
       const locale = _config?.locale || 'ko'
-
-      await i18n.changeLanguage(locale)
 
       while (true) {
         const choices = [
@@ -62,6 +61,7 @@ export class Title {
             )
 
             await i18n.changeLanguage(lang)
+            await loadExtraLocaleBundle(lang)
             _config = {
               ...(_config || {}),
               locale: lang,

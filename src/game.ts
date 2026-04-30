@@ -21,7 +21,6 @@ const start = async () => {
 
   const engine = await bootstrapper.run({
     renderer: new CLIRenderer(),
-    translator: (info) => (typeof info === 'string' ? info : (i18n.t(info.key, info.args) as string)),
     assets,
     initState,
     onExit: () => {
