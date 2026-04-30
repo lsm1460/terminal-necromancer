@@ -29,7 +29,7 @@ export const printItem = (_item: Item, inInventory = false) => {
     }
 
     if (item?.minRebornRarity || 0 > 0) {
-      Terminal.log(i18n.t('commands.look.item.stats.minRebornRarity', { val: item.maxSkeleton }))
+      Terminal.log(i18n.t('commands.look.item.stats.minRebornRarity', { val: item.minRebornRarity }))
     }
 
     // 4. 어픽스(특수 효과) 출력 - 인터페이스나 클래스 메서드로 캡슐화 권장
