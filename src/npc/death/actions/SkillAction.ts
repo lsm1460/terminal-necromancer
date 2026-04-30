@@ -55,6 +55,7 @@ export const SkillActions = {
       )
 
       if (selectedNames.length > player.maxMemorize) {
+        Terminal.log(i18n.t('npc.death.memorize.validate_max', { max: player.memorize.length }))
         return true
       }
 
