@@ -27,6 +27,7 @@ export const soulTransfer: ExecuteSkill = async (player, skillContext, { ally = 
         maxHp: m.ref.maxHp,
       }),
       value: m.id,
+      disabled: !m.ref.isAlive
     })),
     { name: 'cancel', message: i18n.t('cancel') },
   ])
