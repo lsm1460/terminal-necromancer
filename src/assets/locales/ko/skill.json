@@ -450,6 +450,10 @@
     "overdrive": {
       "name": "폭주",
       "description": "때때로 자아를 잃고 폭주합니다."
+    },
+    "purify_essence": {
+      "name": "정화",
+      "description": "모든 아군의 디버프를 제거합니다."
     }
   }
 }

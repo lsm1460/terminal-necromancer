@@ -432,6 +432,10 @@
     "overdrive": {
       "name": "Overdrive",
       "description": "Occasionally loses control and goes into a frenzy."
+    },
+    "purify_essence": {
+      "name": "Purify",
+      "description": "Removes all debuffs from all allies."
     }
   }
 }
