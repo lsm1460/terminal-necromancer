@@ -66,12 +66,7 @@
     "no_exp": "\nDr. Zed: \"You don't have enough Soul Fragments!\"",
     "no_soul": "\nDr. Zed: \"I don't see any of my essence here.\"",
     "no_money_remove": "\nDr. Zed: \"You want me to perform an extraction without paying? Go collect more Soul Fragments.\"",
-    "success_limit": [
-      "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-      "💉 [Madness Limit Break Surgery Complete]",
-      "Dr. Zed: \"Hahaha! I shoved it in and it actually fit! Now it finally feels 'alive'!\"",
-      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    ],
+    "success_limit": "💉 [Madness Limit Break Surgery Complete] Dr. Zed: \"Hahaha! I shoved it in and it actually fit! Now it finally feels 'alive'!\"",
     "success_normal": "\n💉 [Surgery Complete] Dr. Zed: \"Hehehe! Look at that! The soul is screaming and thrashing inside the steel!\"",
     "remove_done": "\n🧪 [Extraction Complete] Dr. Zed takes the excised tissue with a satisfied smile.",
     "exit_msg": "\nDr. Zed: \"Close the door on your way out. Dust is getting in.\""
