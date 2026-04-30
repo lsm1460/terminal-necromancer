@@ -501,7 +501,7 @@
     "name": "소용돌이",
     "attackType": "melee",
     "chance": 0.25,
-    "power": 0.4,
+    "power": 0.8,
     "targetType": "ENEMY_ALL",
     "description": "무기를 크게 휘둘러 주변 모든 적을 공격하고 3턴간 출혈 상태로 만듭니다.",
     "buff": {
