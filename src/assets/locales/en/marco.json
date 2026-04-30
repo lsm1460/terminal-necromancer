@@ -26,7 +26,8 @@
     "greeting": "Oh, welcome! Everything here is a top-shelf item I've personally inspected and tuned up. Have a look around.",
     "noStock": "Ah, another customer just snatched that one up. Supplies are scarce here in the terminal, you see. How about something else?",
     "noGold": "Oof, looks like your pockets are a bit light today. My goods aren't cheap, but they're worth every bit. Come back later.",
-    "success": "An excellent choice! This will serve you well. Here you go. Safe travels."
+    "success": "An excellent choice! This will serve you well. Here you go. Safe travels.",
+    "inventoryFull": "Good grief, look at your bag! There isn't a single inch of space left in there."
   },
   "sell": {
     "greeting": "Oho, brought something useful, have you? I've got a sharp eye for value. Let me see what you've got.",

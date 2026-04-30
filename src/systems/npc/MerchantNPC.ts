@@ -11,6 +11,7 @@ export interface ShopScripts {
   success: string // 판매 성공 시 (개별 건)
   exit?: string // 판매 종료 후 나갈 때
   noStock?: string
+  inventoryFull?: string
   noGold?: string
 }
 
@@ -19,8 +20,13 @@ export abstract class MerchantNPC extends GameNPC {
     const { player, drop } = context
     const { drops: goods } = drop.generateDrops(dropTableId)
 
+    if (player.inventoryUsage > player.inventoryMax) {
+      Terminal.log(`\n[${this.name}]: "${scripts.inventoryFull || '...'}"`)
+      return
+    }
+
     if (goods.length === 0) {
-      Terminal.log(`\n[${this.name}]: "${scripts.noStock}"`)
+      Terminal.log(`\n[${this.name}]: "${scripts.noStock || '...'}"`)
       return
     }
 

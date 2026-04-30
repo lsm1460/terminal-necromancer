@@ -22,6 +22,7 @@
     "greeting": "Whirr... System online. Please enter the product number you wish to purchase.",
     "noStock": "Error: Out of stock for the selected item. Waiting for resupply...",
     "noGold": "Insufficient balance. Please check the coin slot and top up your assets.",
-    "success": "Payment authorized. Please retrieve your item from the dispenser. *Clunk*-"
+    "success": "Payment authorized. Please retrieve your item from the dispenser. *Clunk*-",
+    "inventoryFull": "Please organize your inventory and try again"
   }
 }

@@ -27,7 +27,8 @@
     "greeting": "Take a look if you need anything. You know nothing's free, right?\nIf you support the Resistance even more, I'll be able to supply you with much higher quality goods!",
     "noStock": "I'm all out of stock. Check back later.",
     "noGold": "Your balance is too low. Go pick up some more scrap from the docks.",
-    "success": "Check the goods. They'll serve you well."
+    "success": "Check the goods. They'll serve you well.",
+    "inventoryFull": "Your bag is full. Go clear some space first."
   },
   "sell": {
     "greeting": "Let's see what you scavenged. I don't take useless junk.",

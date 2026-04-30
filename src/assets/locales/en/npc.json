@@ -68,7 +68,8 @@
     "info_header": "[Gold: {{gold}}G{{contribution}}]",
     "contribution_label": " / Contribution: {{value}}",
     "select_item": "Select an item to purchase",
-    "success_default": "Purchased {{label}}."
+    "success_default": "Purchased {{label}}.",
+    "inventoryFull": "Please organize your inventory and try again"
   },
 
   "sell": {

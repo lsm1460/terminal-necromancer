@@ -68,7 +68,8 @@
     "info_header": "[소지금: {{gold}}G{{contribution}}]",
     "contribution_label": " / 기여도: {{value}}",
     "select_item": "구매할 물건 선택",
-    "success_default": "{{label}}을(를) 구매했습니다."
+    "success_default": "{{label}}을(를) 구매했습니다.",
+    "inventoryFull": "소지품을 정리한 후 다시 시도하십시오."
   },
 
   "sell": {
