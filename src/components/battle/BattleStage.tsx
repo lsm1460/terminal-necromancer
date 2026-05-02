@@ -36,7 +36,7 @@ export const BattleStage: React.FC = () => {
 
         const scaleX = targetWidth / BASE_WIDTH
         const scaleY = targetHeight / BASE_HEIGHT
-        
+
         const newScale = Math.min(scaleX, scaleY, 1)
         setScale(newScale)
       }
@@ -179,11 +179,14 @@ const Side: React.FC<{
         const stepOffset = rowIndex * OFFSET_STEP
 
         return (
-          <div key={unit.id} className="relative w-[50px] h-[25px] pointer-events-none">
+          <div
+            key={unit.id}
+            className="relative w-[50px] h-[25px] pointer-events-none"
+            style={{ zIndex: rowIndex * 10 + (isFocus === true ? 100 : 0) - i }}
+          >
             <div
               className="w-[250%] aspect-square absolute left-0 bottom-0 pointer-events-none"
               style={{
-                zIndex: rowIndex + (isFocus === true ? 100 : 0),
                 transform: `translateX(${stepOffset}px) ${isEnemy ? 'scaleX(-1)' : ''}`,
               }}
             >

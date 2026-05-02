@@ -291,7 +291,7 @@
     "exp": 50,
     "dropTableId": "",
     "skills": ["power_smash"],
-    "orderWeight": 35,
+    "orderWeight": 60,
     "noCorpse": true
   },
   "golem_right_arm": {
@@ -305,7 +305,7 @@
     "exp": 50,
     "dropTableId": "",
     "skills": ["fire_breath"],
-    "orderWeight": 30,
+    "orderWeight": 54,
     "noCorpse": true
   },
   "golem_chest_armor": {

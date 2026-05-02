@@ -129,6 +129,9 @@ export const UnitVisual: React.FC<{
           src={displayImage}
           alt={unit.name}
           className={`w-32 h-32 object-contain pixelated ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}
+          style={{
+            opacity: unit.isStealth ? 0.5 : 1,
+          }}
         />
       </div>
     </motion.div>

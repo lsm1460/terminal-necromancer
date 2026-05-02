@@ -134,6 +134,10 @@ export class WebAssetManager {
           group.forEach((m: any) => resourceIds.add(m.id))
         }
       }
+
+      if (tile.assets) {
+        tile.assets.forEach((id: string) => resourceIds.add(id))
+      }
     })
 
     const sources = this.buildUnitManifest(Array.from(resourceIds))

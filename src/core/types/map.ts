@@ -7,6 +7,7 @@ export interface Tile {
   event: string
   dialogue: string
   observe: string
+  assets?: string[]
   npcIds?: string[] // npc용
   spawn_limit?: number // monster용
   monsters?: Monster[]
@@ -27,13 +28,13 @@ export interface SceneData {
 }
 
 export interface IMinContext {
-  player: Player;
+  player: Player
 }
 
 export interface IMapManager<TContext extends IMinContext = any> {
   currentSceneId: string
   currentScene: SceneData
-  changeScene(targetId: string, context: TContext): Promise<void>;
+  changeScene(targetId: string, context: TContext): Promise<void>
   handleTileEvent(tile: Tile, context: TContext): Promise<void>
 
   getTile(pos: PositionType): Tile | undefined | null

@@ -212,6 +212,7 @@
         {
           "id": "B3_009",
           "event": "boss",
+          "assets": ["golem_chest_armor", "golem_core", "golem_left_arm", "golem_right_arm"],
           "npcIds": ["second_boss"]
         },
         {
