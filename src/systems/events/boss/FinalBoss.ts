@@ -1,4 +1,4 @@
-import { Terminal } from '~/core'
+import { GameEventType, Terminal } from '~/core'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { BaseNPC } from '~/core/npc/BaseNPC'
@@ -27,11 +27,11 @@ export class FinalBoss implements BossLogic {
   async onVictory(bossNpc: BaseNPC, context: AppContext) {
     await Ending.run(context)
 
-    const _res = await Terminal.confirm('타이틀로 돌아가시겠습니까?')
+    await Terminal.prompt('타이틀로 돌아갑니다')
 
-    if (_res) {
+    await context.eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
 
-    }
+    return 'exit' as const
   }
 }
 

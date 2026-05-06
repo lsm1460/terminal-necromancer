@@ -1,5 +1,5 @@
-import { TranslationInfo } from '~/core/types'
-import { DamageOptions } from '../Battle'
+import { MessageSource } from '~/core/types';
+import { DamageOptions } from '../Battle';
 
 export class BattleLogFormatter {
   public static formatDamageLog(
@@ -8,7 +8,7 @@ export class BattleLogFormatter {
     currentHp: number,
     result: { isEscape: boolean; damage: number; isCritical: boolean },
     options: DamageOptions = {}
-  ): TranslationInfo {
+  ): MessageSource {
     const { isEscape, damage, isCritical } = result
 
     const labelKeys: string[] = []

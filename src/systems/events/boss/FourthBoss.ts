@@ -134,7 +134,7 @@ export class FourthBoss implements BossLogic {
   }
 
   async onVictory(bossNpc: BaseNPC, context: AppContext) {
-    const { player, map, npcs, events, battle, world, eventBus } = context
+    const { player, map, npcs, events } = context
 
     if (this.withResistance) {
       events.completeEvent('join_resistance_battle')

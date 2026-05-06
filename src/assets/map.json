@@ -709,21 +709,5 @@
         }
       ]
     ]
-  },
-  "B1_Last": {
-    "id": "B1_Last",
-    "start_pos": {
-      "x": 0,
-      "y": 0
-    },
-    "tiles": [
-      [
-        {
-          "id": "B1_LAST",
-          "event": "none",
-          "npcIds": ["death"]
-        }
-      ]
-    ]
   }
 }

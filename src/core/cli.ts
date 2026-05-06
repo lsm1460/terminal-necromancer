@@ -20,8 +20,7 @@ export async function createCLI(engine: GameEngine) {
   while (true) {
     const line = await askQuestion(i18n.t('input_command'))
 
-    await engine.processCommand(line)
-
-    if (line.trim() === 'exit') break
+    const result = await engine.processCommand(line)
+    if (result === 'exit' || line.trim() === 'exit') break
   }
 }

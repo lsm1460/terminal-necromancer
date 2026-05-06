@@ -146,8 +146,8 @@ export class GameEngine {
     }
   }
 
-  private async postProcessCommand(result: string | boolean): Promise<void> {
-    if (result === 'exit') return
+  private async postProcessCommand(result: string | boolean): Promise<string | void> {
+    if (result === 'exit') return 'exit'
 
     if (result === true) {
       const { map, currentTile } = this.context
@@ -157,7 +157,8 @@ export class GameEngine {
 
     const questSystem = this.optDependencies?.quest
     if (questSystem && questSystem.hasQuest()) {
-      await questSystem.startQuest(this.context)
+      const questResult = await questSystem.startQuest(this.context)
+      if (questResult === 'exit') return 'exit'
     } else {
       printDirections(this.context)
     }
@@ -168,7 +169,7 @@ export class GameEngine {
     options?: {
       onBeforeExecute?: () => void
     }
-  ): Promise<void> {
+  ): Promise<string | void> {
     if (this.isProcessing) return
 
     options?.onBeforeExecute?.()
@@ -176,7 +177,7 @@ export class GameEngine {
     this.isProcessing = true
     try {
       const result = await this.commands.handle(command, this.context)
-      await this.postProcessCommand(result)
+      return await this.postProcessCommand(result)
     } finally {
       this.isProcessing = false
     }

@@ -141,7 +141,7 @@ export type CustomCommands = Record<string, CommandFunction<any>>
 
 export interface IQuestManager {
   hasQuest: () => boolean
-  startQuest: (context: GameContext) => Promise<void>
+  startQuest: (context: GameContext) => Promise<string | void>
 }
 
 export interface ISaveSystem<SaveData = any> {

@@ -53,7 +53,7 @@ class BossEvent {
         const _res = await bossLogic.onVictory(bossNpc, context)
 
         if (_res === 'exit') {
-          return
+          return 'exit'
         }
       }
 

@@ -26,15 +26,16 @@ export class Ending {
         return
       }
 
-      // 이곳에서 관리자가 된다.
+      console.log('ENDING 1:: 이 곳의 관리자가 된다.')
       return
     }
 
     // 2. 차원의 붕괴 (Bad Ending: Annihilation)
     // 조건: b4에서 카론을 구하지 않음, 지하 5층 vip 라운지에서 모두를 학살함
     // 모든 시스템이 정지하고 체제가 붕괴함
+    console.log(caronIsDead , killAll)
     if (caronIsDead && killAll) {
-      console.log('ENDING 2:: kill all..')
+      console.log('ENDING 2:: 모두를 죽였다.')
       // await this.playCollapseEnding()
       await Terminal.prompt(i18n.t('web.continue'))
       return
@@ -43,29 +44,23 @@ export class Ending {
     // 3. 찬탈자의 시대 (Bad Ending: Tyrant)
     // 조건: 지하 5층 vip 레지스탕스를 학살함, 진행하면서 죽인 npc 수 10명 이상
     if (isHostility && player.karma >= 8) {
-      // await this.playUsurperEnding()
+      console.log('레지스탕스의 적대 후 사신 살해')
       return
     }
 
     // 4. 영겁의 충복 (Normal Ending: Subjugation)
     // 조건: vip의 편을 들었고, 카론이 죽어 체제에 굴복함.
     if (!fightWithResistance && caronIsDead) {
-      console.log('ENDING 4:: Servant of death')
+      console.log('ENDING 4:: 사신의 수하')
       // await this.playServantEnding()
       await Terminal.prompt(i18n.t('web.continue'))
-      return
-    }
-
-    // 5. 새로운 신의 탄생 (Neutral Ending: Ascendance)
-    // 조건: VIP를 구출(질서 유지)했으나 기존 시스템에 속하지 않고 자신만의 세력을 구축함.
-    if (vipIsSafe && contribution < 100) {
-      // await this.playNewGodEnding()
       return
     }
 
     // 기본 엔딩: 방관자 (조건에 해당하지 않을 경우)
     // 카론을 살리고 레지스탕스에게 협력했으나 기여는 하지 않았다.
     // await this.playBystanderEnding()
+    console.log('노멀 엔딩')
     
     await Terminal.prompt(i18n.t('web.continue'))
   }

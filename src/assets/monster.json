@@ -2,7 +2,7 @@
   "test_man": {
     "id": "test_man",
     "attackType": "melee",
-    "hp": 5000,
+    "hp": 50,
     "maxHp": 5000,
     "atk": 1,
     "def": 3,

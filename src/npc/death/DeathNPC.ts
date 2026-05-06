@@ -57,6 +57,6 @@ export class DeathNPC extends GameNPC {
   async afterDead(context: AppContext) {
     context.npcs.setAlive(this.id)
 
-    await BossEvent.handle(context)
+    return await BossEvent.handle(context)
   }
 }
