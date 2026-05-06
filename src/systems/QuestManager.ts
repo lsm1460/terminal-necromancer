@@ -22,13 +22,13 @@ export class QuestManager implements IQuestManager {
     const currentQuests = this.questQue.splice(0)
 
     for (let quest of currentQuests) {
-      if (quest.questType === 'death') this.processNpcDeaths(quest.npcId, context)
+      if (quest.questType === 'death') await this.processNpcDeaths(quest.npcId, context)
     }
   }
 
   async processNpcDeaths(npcId: string, context: GameContext) {
     const npc = context.npcs.getNPC(npcId)
-
+    
     if (npc) await npc.afterDead(context)
   }
 }

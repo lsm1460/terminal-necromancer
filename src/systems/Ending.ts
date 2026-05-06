@@ -1,3 +1,5 @@
+import { Terminal } from "~/core"
+import i18n from "~/i18n"
 import { NPCManager } from "~/systems/NpcManager"
 import { AppContext } from "~/systems/types"
 
@@ -32,7 +34,9 @@ export class Ending {
     // 조건: b4에서 카론을 구하지 않음, 지하 5층 vip 라운지에서 모두를 학살함
     // 모든 시스템이 정지하고 체제가 붕괴함
     if (caronIsDead && killAll) {
+      console.log('ENDING 2:: kill all..')
       // await this.playCollapseEnding()
+      await Terminal.prompt(i18n.t('web.continue'))
       return
     }
 
@@ -44,9 +48,11 @@ export class Ending {
     }
 
     // 4. 영겁의 충복 (Normal Ending: Subjugation)
-    // 조건: 레지스탕스 편에 서지 않았고 카론이 죽어 체제에 굴복함.
+    // 조건: vip의 편을 들었고, 카론이 죽어 체제에 굴복함.
     if (!fightWithResistance && caronIsDead) {
+      console.log('ENDING 4:: Servant of death')
       // await this.playServantEnding()
+      await Terminal.prompt(i18n.t('web.continue'))
       return
     }
 
@@ -60,5 +66,8 @@ export class Ending {
     // 기본 엔딩: 방관자 (조건에 해당하지 않을 경우)
     // 카론을 살리고 레지스탕스에게 협력했으나 기여는 하지 않았다.
     // await this.playBystanderEnding()
+    
+    await Terminal.prompt(i18n.t('web.continue'))
   }
+
 }

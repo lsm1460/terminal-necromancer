@@ -1,5 +1,3 @@
-import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext } from '~/core/types'
 import { GameNPC } from '~/systems/npc/GameNPC'
 import { KnightNPC } from './_knight/KnightNPC'
 import { AdrianNPC } from './adrian/AdrianNPC'
@@ -12,6 +10,7 @@ import { EchoNPC } from './echo/EchoNpc'
 import { ElevatorNPC } from './elevator/ElevatorNPC'
 import { EliasNPC } from './elias_survivor/EliasNPC'
 import { FlintNPC } from './flint/FlintNPC'
+import { FourthBossNPC } from './fourth_boss/FourthBossNPC'
 import { HansenNPC } from './hansen_mechanic/HansenNPC'
 import { JaxNPC } from './jax_seeker/JaxNPC'
 import { JulianNPC } from './julian/JulianNPC'
@@ -77,6 +76,7 @@ export const getNPCClass = (id: string): typeof GameNPC => {
     vora_observer: VoraNPC,
     silas_dissector: SilasNPC,
     shadowed_agent: ShadowedNPC,
+    fourth_boss: FourthBossNPC,
   }
 
   return map[id]

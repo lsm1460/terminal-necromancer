@@ -160,45 +160,11 @@ export class FourthBoss implements BossLogic {
 
         Terminal.log(i18n.t(resEndKey))
       }
-
-      bossNpc && bossNpc.dead({ karma: 0 })
-
+  
       return
     }
 
-    if (events.isCompleted('caron_is_mine')) {
-      await speak(i18n.t('npc.fourth_boss.caron_distrust', { returnObjects: true }) as string[])
-
-      const _res = await Terminal.confirm(i18n.t('npc.fourth_boss.system.move_confirm'))
-
-      if (!_res) {
-        await speak(i18n.t('npc.fourth_boss.caron_battle_start', { returnObjects: true }) as string[])
-        const caron = npcs.getNPC('caron')
-
-        const _isWin = await battle.runCombatLoop([battle.toCombatUnit(caron!, 'npc')], world)
-
-        if (_isWin) {
-          if (bossNpc) {
-            bossNpc.hp = bossNpc.maxHp
-            bossNpc.isAlive = true
-          }
-
-          events.completeEvent('caron_is_dead')
-
-          await Ending.run(context)
-
-          await eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
-          
-          return 'exit'
-        }
-      } else {
-        await speak(i18n.t('npc.fourth_boss.caron_cooperate_after_slaughter', { returnObjects: true }) as string[])
-
-        bossNpc && bossNpc.dead({ karma: 0 })
-      }
-
-      return
-    }
+    bossNpc && bossNpc.dead({ karma: 0 })
 
     //TODO: 사신과의 마지막 싸움만이 남았다..
   }
