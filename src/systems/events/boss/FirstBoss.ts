@@ -20,7 +20,8 @@ export class FirstBoss implements BossLogic {
     const { battle, monster } = context
 
     // 1. 메인 보스 추가
-    const enemies: CombatUnit[] = [battle.toCombatUnit(bossNpc, 'npc')]
+    const boss = monster.makeMonster('first_boss')
+    const enemies: CombatUnit[] = [battle.toCombatUnit(boss!, 'monster')]
 
     // 2. 동반 몬스터가 있다면 추가
     const additional = monster.makeMonsters(this.withMonsterGroup).map((m) => battle.toCombatUnit(m, 'monster'))

@@ -163,9 +163,6 @@ export class FourthBoss implements BossLogic {
   
       return
     }
-
-    bossNpc && bossNpc.dead({ karma: 0 })
-
     //TODO: 사신과의 마지막 싸움만이 남았다..
   }
 }

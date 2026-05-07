@@ -48,7 +48,7 @@ class BossEvent {
       bossNpc.hp = 0
       bossNpc.isAlive = false
 
-      
+      bossNpc.dead({ karma: 0 })
       if (bossLogic?.onVictory) {
         const _res = await bossLogic.onVictory(bossNpc, context)
 

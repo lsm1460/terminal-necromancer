@@ -60,8 +60,6 @@ export class SecondBoss implements BossLogic {
   }
 
   async onVictory(bossNpc: BaseNPC, context: AppContext) {
-    bossNpc.dead({ karma: 0 })
-
     Terminal.log(i18n.t('events.boss.victory.log', { name: bossNpc.name }))
   }
 }
