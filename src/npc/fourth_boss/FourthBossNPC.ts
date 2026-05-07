@@ -49,10 +49,6 @@ export class FourthBossNPC extends GameNPC {
   
             if (!killAll) {
               await Ending.run(context)
-    
-              await Terminal.prompt('타이틀로 돌아갑니다')
-              
-              await eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
   
               return 'exit'
             }
@@ -62,10 +58,6 @@ export class FourthBossNPC extends GameNPC {
         }
       } else if (!killAll && isResistanceDead && caronIsDead) {
         await Ending.run(context)
-    
-        await Terminal.prompt('타이틀로 돌아갑니다')
-
-        await eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
 
         return 'exit'
       }

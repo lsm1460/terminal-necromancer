@@ -147,6 +147,7 @@ export interface IQuestManager {
 export interface ISaveSystem<SaveData = any> {
   load: () => SaveData | null
   save: (data: GameContext<any>) => void
+  remove?: () => void
 }
 
 export interface IConfigSystem<ConfigData = any> {

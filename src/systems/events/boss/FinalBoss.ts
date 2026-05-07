@@ -27,10 +27,6 @@ export class FinalBoss implements BossLogic {
   async onVictory(bossNpc: BaseNPC, context: AppContext) {
     await Ending.run(context)
 
-    await Terminal.prompt('타이틀로 돌아갑니다')
-
-    await context.eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
-
     return 'exit' as const
   }
 }

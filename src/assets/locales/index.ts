@@ -5,19 +5,21 @@ import koInit from './ko/init.json'
 import koMap from './ko/map.json'
 import koWeb from './ko/web.json'
 import koAchievement from './ko/achievement.json'
+import koEnding from './ko/ending.json'
 
 import enInit from './en/init.json'
 import enMap from './en/map.json'
 import enWeb from './en/web.json'
 import enAchievement from './en/achievement.json'
+import enEnding from './en/ending.json'
 
 // 1. 초기 리소스 설정
 export const initialResources = {
   ko: {
-    translation: { ...koInit, ...koMap, web: koWeb, achievement: koAchievement },
+    translation: { ...koInit, ...koMap, web: koWeb, achievement: koAchievement, ending: koEnding },
   },
   en: {
-    translation: { ...enInit, ...enMap, web: enWeb, achievement: enAchievement },
+    translation: { ...enInit, ...enMap, web: enWeb, achievement: enAchievement, ending: enEnding },
   },
 }
 

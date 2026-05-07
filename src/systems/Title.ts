@@ -80,12 +80,11 @@ export class Title {
           }
 
           // 인트로 시퀀스 진행
-          const dialogue = Array.from({ length: 12 }, (_, i) => i18n.t(`title.intro.dialogue_${i}`))
-          await speak(dialogue)
+          await speak(i18n.t(`title.intro`, { returnObjects: true }) as string[])
 
           // 초기 데이터로 저장소 갱신
           this.save.performSave(initState)
-          Terminal.log(`${i18n.t('title.start_game')}\n`)
+          Terminal.log(i18n.t('title.start_game') + `\n`)
           return initState
         }
         break

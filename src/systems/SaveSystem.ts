@@ -3,7 +3,6 @@ import { Terminal } from '~/core'
 import { GameContext, ISaveSystem, SaveData } from '~/core/types'
 import i18n from '~/i18n'
 import { AppContext } from './types'
-import { MAP_IDS } from '~/consts'
 
 export class SaveSystem implements ISaveSystem<SaveData> {
   private isWeb = typeof window !== 'undefined'
@@ -12,6 +11,16 @@ export class SaveSystem implements ISaveSystem<SaveData> {
   constructor(savePath?: string) {
     if (!this.isWeb && savePath) {
       this.filePath = savePath
+    }
+  }
+
+  remove() {
+    if (this.isWeb) {
+      localStorage.removeItem('terminal_game_save')
+    } else {
+      if (fs.existsSync(this.filePath)) {
+        fs.unlinkSync(this.filePath)
+      }
     }
   }
 
