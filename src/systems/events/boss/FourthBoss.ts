@@ -129,7 +129,7 @@ export class FourthBoss implements BossLogic {
         .slice(0, 4)
         .map((monster) => battle.toCombatUnit(monster, 'monster'))
       // const boss2 = npcs.getNPC('fallen_god_2')
-      return [...groupUnits, god2Unit, resistanceUnit] as CombatUnit[]
+      return [...groupUnits, god2Unit, ...resistanceUnit] as CombatUnit[]
     }
   }
 
