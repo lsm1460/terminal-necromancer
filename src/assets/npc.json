@@ -122,7 +122,7 @@
     "isAlive": true,
     "isBoss": true,
     "reborn": false,
-    "dropTableId": "boss1",
+    "dropTableId": "",
     "noEscape": true,
     "minRebornRarity": "elite",
     "skills": ["spout_out", "divide_soul"]
@@ -184,6 +184,7 @@
     "exp": 0,
     "isAlive": true,
     "reborn": false,
+    "minRebornRarity": "elite",
     "dropTableId": "b2_ratty"
   },
   "vending_machine": {

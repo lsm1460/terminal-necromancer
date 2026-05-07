@@ -123,6 +123,23 @@
     "dropTableId": "b2_equipment_loot",
     "orderWeight": 50
   },
+  "first_boss": {
+    "id": "first_boss",
+    "attackType": "melee",
+    "hp": 80,
+    "maxHp": 80,
+    "atk": 5,
+    "def": 8,
+    "eva": 0.0,
+    "exp": 1000,
+    "isAlive": true,
+    "isBoss": true,
+    "reborn": false,
+    "dropTableId": "boss1",
+    "noEscape": true,
+    "minRebornRarity": "elite",
+    "skills": ["spout_out", "divide_soul"]
+  },
   "shipyard_worker": {
     "id": "shipyard_worker",
     "attackType": "melee",
@@ -636,7 +653,7 @@
   "fallen_god_1": {
     "id": "fallen_god_1",
     "attackType": "ranged",
-    "hp": 650,
+    "hp": 65,
     "maxHp": 650,
     "atk": 62,
     "def": 36,
@@ -652,7 +669,7 @@
   "fallen_god_2": {
     "id": "fallen_god_2",
     "attackType": "ranged",
-    "hp": 420,
+    "hp": 42,
     "maxHp": 420,
     "atk": 49,
     "def": 42,
@@ -668,7 +685,7 @@
   "maya_golem": {
     "id": "maya_golem",
     "attackType": "melee",
-    "hp": 290,
+    "hp": 29,
     "maxHp": 290,
     "atk": 45,
     "def": 50,
