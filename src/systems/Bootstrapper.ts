@@ -129,9 +129,7 @@ export class GameBootstrapper {
       world.addLootBag(lootBag)
 
       this.saveSystem.save(_context)
-      if (map.currentSceneId !== MAP_IDS.B1_SUBWAY) {
-        world.clearFloor()
-      }
+      world.clearFloor()
 
       map.currentSceneId = MAP_IDS.B1_SUBWAY
       player.x = 0
