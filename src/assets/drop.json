@@ -14,7 +14,10 @@
   },
   "b2_ratty": {
     "gold": [12, 24],
-    "items": []
+    "items": [
+      { "itemId": "rebel_iron_plate", "chance": 1, "quantity": [1, 1], "minRarity": "RARE" },
+      { "itemId": "noble_seal_ring", "chance": 0.7, "quantity": [1, 1] }
+    ]
   },
   "b2_equipment_loot": {
     "gold": [4, 12],
