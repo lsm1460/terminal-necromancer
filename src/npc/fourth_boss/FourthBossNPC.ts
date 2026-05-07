@@ -24,43 +24,42 @@ export class FourthBossNPC extends GameNPC {
   }
 
   async afterDead(context: AppContext) {
-    const { eventBus, events, npcs, battle, world } = context
-    const fourthBoss = events.isCompleted('fourth_boss')
+    const { events, npcs, battle, world } = context
     const caronIsDead = events.isCompleted('caron_is_dead')
     const caronIsMine = events.isCompleted('caron_is_mine')
     const isResistanceDead = !events.isCompleted('third_boss_resistance')
     const killAll = events.isCompleted('third_boss_kill_all')
     
-    if (fourthBoss) {
-      if (isResistanceDead && caronIsMine) {
-        await speak(i18n.t('npc.fourth_boss.caron_distrust', { returnObjects: true }) as string[])
-  
-        const _res = await Terminal.confirm(i18n.t('npc.fourth_boss.system.move_confirm'))
-  
-        if (!_res) {
-          await speak(i18n.t('npc.fourth_boss.caron_battle_start', { returnObjects: true }) as string[])
-          npcs.setAlive('caron')
-          const caron = npcs.getNPC('caron')
-          const unit = battle.toCombatUnit(caron!, 'npc')
-          const _isWin = await battle.runCombatLoop([unit], world)
-          
-          if (_isWin) {
-            events.completeEvent('caron_is_dead')
-  
-            if (!killAll) {
-              await Ending.run(context)
-  
-              return 'exit'
-            }
-          }
-        } else {
-          await speak(i18n.t('npc.fourth_boss.caron_cooperate_after_slaughter', { returnObjects: true }) as string[])
-        }
-      } else if (!killAll && isResistanceDead && caronIsDead) {
-        await Ending.run(context)
+    if (isResistanceDead && caronIsMine) {
+      await speak(i18n.t('npc.fourth_boss.caron_distrust', { returnObjects: true }) as string[])
 
-        return 'exit'
+      const _res = await Terminal.confirm(i18n.t('npc.fourth_boss.system.move_confirm'))
+
+      if (!_res) {
+        await speak(i18n.t('npc.fourth_boss.caron_battle_start', { returnObjects: true }) as string[])
+        npcs.setAlive('caron')
+        const caron = npcs.getNPC('caron')
+        const unit = battle.toCombatUnit(caron!, 'npc')
+        const _isWin = await battle.runCombatLoop([unit], world)
+        
+        if (_isWin) {
+          events.completeEvent('caron_is_dead')
+
+          if (!killAll) {
+            await Ending.run(context)
+
+            return 'exit'
+          }
+        }
+      } else {
+        await speak(i18n.t('npc.fourth_boss.caron_cooperate_after_slaughter', { returnObjects: true }) as string[])
       }
+    } else if (!killAll && isResistanceDead && caronIsDead) {
+      await Ending.run(context)
+
+      return 'exit'
     }
+
+    await speak(i18n.t('npc.fourth_boss.awakening', { returnObjects: true }) as string[])
   }
 }

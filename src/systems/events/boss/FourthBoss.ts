@@ -153,6 +153,8 @@ export class FourthBoss implements BossLogic {
 
       if (_res) {
         await map.changeScene(MAP_IDS.B1_SUBWAY, context)
+        return
+
       } else {
         const resEndKey = isKaneAlive
           ? 'npc.fourth_boss.wait_resistance_battle.kane'
@@ -161,8 +163,8 @@ export class FourthBoss implements BossLogic {
         Terminal.log(i18n.t(resEndKey))
       }
   
-      return
+      await speak(i18n.t('npc.fourth_boss.awakening', {returnObjects: true}) as string[])
     }
-    //TODO: 사신과의 마지막 싸움만이 남았다..
+    
   }
 }

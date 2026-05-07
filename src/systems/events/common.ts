@@ -48,6 +48,8 @@ export const commonHandlers: Record<string, EventHandler> = {
     const { events } = context
     const isMine = events.isCompleted('caron_is_mine')
     const isDead = events.isCompleted('caron_is_dead')
+    const isVIPLost = events.isCompleted('third_boss_resistance')
+    const isAlreadyBroadCasted = events.isCompleted('broadcast_negotiation')
 
     if (!isMine && !isDead) return
 
@@ -58,6 +60,10 @@ export const commonHandlers: Record<string, EventHandler> = {
       Terminal.log(i18n.t('events.caron.whisper_dead'))
     } else {
       Terminal.log(i18n.t('events.caron.whisper_alive'))
+    }
+
+    if (isVIPLost && !isAlreadyBroadCasted) {
+      events.completeEvent('broadcast_negotiation')
     }
   },
 

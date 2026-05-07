@@ -118,14 +118,26 @@
   "report_vips_saved": [
     "Reaper: \"Ah, you've returned. Those vulgar noises from below have finally ceased.\"",
     "Reaper: \"The screams of those rebels' souls being torn apart echoed quite pleasantly up here.\"",
-    "Reaper: \"Now that the vermin have been purged, the hum of the VIP shuttle's engines will sound sweet once more. Well done.\""
+    "Reaper: \"Now that the vermin have been purged, the hum of the VIP shuttle's engines will sound sweet once more. Well done.\"",
+    "Reaper: \"But it is too early to celebrate. While you were exterminating those rats, an ominous aura began rising from the B6 Depot.\"",
+    "Reaper: \"It is a repulsive throbbing, as if things that should remain asleep have been forcibly awakened.\"",
+    "Reaper: \"Go and investigate.\"",
+    "Reaper: \"If you allow the corruption there to encroach upon the terminal's power source,\"",
+    "Reaper: \"you will suffer a punishment where your soul is shredded in the most gruesome way imaginable in this realm.\"",
+    "Reaper: \"Do not test my patience. Move. Now.\""
   ],
   "report_vips_lost": [
     "Reaper: \"...What? The VIP Lounge was raided and all the hostages are gone? How dare those lowly vermin ransack a place that is practically my own inner sanctum!\"",
     "Reaper: \"(A cold, dry chuckle escapes) So, they intend to use them as hostages for negotiation. Such audacity for those who don't know their place.\"",
     "Reaper: \"...This is no mere disturbance. That lounge was a sanctuary for those who serve as the eyes and ears of the high gods from the upper realms.\"",
     "Reaper: \"Once word of this reaches the council, those arrogant gods will surely mock my lack of control.\"",
-    "Reaper: \"Keep your mouth shut until this is handled. We must erase every trace of this and find those vermin at any cost. The price for tarnishing my name... will be anything but light.\""
+    "Reaper: \"Keep your mouth shut until this is handled. We must erase every trace of this and find those vermin at any cost. The price for tarnishing my name... will be anything but light.\"",
+    "Reaper: \"Disgraceful... As if losing the VIPs wasn't enough, an unidentified rot is now seeping up from the B6 Depot.\"",
+    "Reaper: \"Whether this is the work of those rats or a catastrophe brought on by your sheer incompetence, I shall soon find out.\"",
+    "Reaper: \"Bear this in mind: B6 is a forbidden zone linked to the very heart of this terminal.\"",
+    "Reaper: \"The moment it is contaminated, the gates of this realm will close, and your reason for existence will vanish with them.\"",
+    "Reaper: \"There is no reprieve for failure.\"",
+    "Reaper: \"If you return empty-handed again, I will turn you into fertilizer more wretched than the dead and bury you beneath the tracks.\""
   ],
 
   "reaper_mockery_final": [

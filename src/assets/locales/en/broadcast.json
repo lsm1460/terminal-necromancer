@@ -84,6 +84,20 @@
       "To restore the destroyed shuttles and the tarnished honor of the VIPs, be warned that decades of forced labor may follow."
     ]
   },
+  "broadcast_negotiation": {
+    "hostile": [
+      "Attention. The disturbance on B5 is now under the direct 'supervision' of the Reaper. While the incompetent Necromancer stood idly by, the Reaper himself began tightening the noose around the rebels' throats.",
+      "Vicious rumors are circulating about some 'proposal' made by the rioters. Do you honestly think the Reaper would listen to the incessant buzzing of insects? They are not negotiation partners; they are merely bad debts to be liquidated.",
+      "Worried about the VIPs' safety? Don't be. Since the Reaper has intervened personally, they will soon be 'recovered' from the filthy hands of the traitors—even without a useless assistant like you.",
+      "What remains for the terminal is not pathetic negotiation, but a bloody purge. If you don't want your name on that list, why don't you stay in your corner and witness the Reaper’s majesty in silence?"
+    ],
+    "normal": [
+      "As of this hour, all communications regarding the VIP Lounge have been transferred to the Reaper's Direct Judicial Department. The area is currently being perfectly isolated and protected by the Reaper's divine authority.",
+      "Rumors regarding 'negotiations' currently circulating are blatant falsehoods spread by subversive elements. The Reaper's Sector does not negotiate with criminal groups; it executes only absolute order.",
+      "We officially confirm that all honored guests are safe under the Reaper's meticulous protection strategy. The ongoing operation is not a hostage rescue, but merely a routine 'pest extermination.'",
+      "Citizens of the terminal, do not be swayed by fake news. The Reaper's control is firmer than ever, and we will soon bring you news of the total annihilation of all dissident forces."
+    ]
+  },
   "RESISTANCE_BASE": {
     "hostile": [
       "So, the hideous union has finally been consummated. News reached us that the Necromancer and the Resistance are now rolling around in the same pit.",
