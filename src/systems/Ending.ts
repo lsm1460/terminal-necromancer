@@ -9,7 +9,8 @@ export class Ending {
     const { player, events, npcs, eventBus, save } = context
 
     // 주요 변수 추출
-    const deathIsAlive = npcs.getNPC('death')?.isAlive
+    const death = npcs.getNPC('death')
+    const deathIsAlive = death?.isAlive
     const caronIsDead = events.isCompleted('caron_is_dead')
     const caronIsMine = events.isCompleted('caron_is_mine')
     const fightWithResistance = events.isCompleted('join_resistance_battle')
@@ -45,6 +46,7 @@ export class Ending {
         await delay()
         Terminal.log(i18n.t('ending.ending0.title'))
       } else {
+        events.completeEvent('true_ending_flag')
         await speak(i18n.t(`ending.ending1.dialogue`, { returnObjects: true }) as string[])
         await delay()
         Terminal.log(i18n.t('ending.ending1.title'))
@@ -81,7 +83,10 @@ export class Ending {
       Terminal.log(i18n.t('ending.ending6.title'))
     }
 
-    await Terminal.prompt(i18n.t('system.back_to_title'))
+    await delay()
+    npcs.setAlive('death')
+    save && save.save(context)
+    await Terminal.prompt(i18n.t('ending.back_to_title'))
     await eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
   }
 }
