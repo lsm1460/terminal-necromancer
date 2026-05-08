@@ -140,7 +140,7 @@
     "death_destruct": "\n[🔥 Doomsday]: {{unit}}'s corpse explodes, consuming everything around it!",
     "soul_chain": "The soul of {{unit}} dwells within {{ally}}, amplifying its power!",
     "phases_2": "\n[!] {{attacker}}'s true form is revealed.",
-    "curse_of_the_phoenix": "The flames of the {{defender}} blaze, healing their wounds. (+{{amount}})",
+    "curse_of_the_phoenix": "The flames of the {{defender}} blaze, healing their wounds. (+{{amount}} HP)",
     "overdrive": "[!] A surge of uncontrollable power! {{unit}}'s defense is weakened, and inflicting enough damage will cause Confusion.",
     "roar": "[📢 Roar]: {{unit}} lets out a deafening roar!! Everyone's gaze is fixed on {{unit}}."
   },
@@ -286,7 +286,11 @@
     },
     "greater_heal": {
       "name": "Greater Heal",
-      "description": "Greatly restores HP to the most wounded ally."
+      "description": "Nanobots deployed by Maya instantly reconstruct the body of the most heavily damaged ally, significantly restoring their HP."
+    },
+    "nanobot_repair_protocol": {
+      "name": "Nanobot Repair Protocol",
+      "description": "마야가 전개한 나노 로봇이 가장 파손이 심한 아군의 신체를 즉각적으로 재구성하여 체력을 대폭 회복시킵니다."
     },
     "volley_fire": {
       "name": "Volley Fire",
@@ -436,6 +440,10 @@
     "purify_essence": {
       "name": "Purify",
       "description": "Removes all debuffs from all allies."
+    },
+    "death_stigma": {
+      "name": "Death Stigma",
+      "description": "Applies a stigma to a random enemy; the marked target becomes a subject for harvest."
     }
   }
 }

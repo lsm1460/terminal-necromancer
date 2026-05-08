@@ -87,7 +87,7 @@ export const StoryActions = {
     if (events.isCompleted('join_resistance_battle')) {
       await speak(i18n.t('npc.death.reaper_rebellion_noticed', { returnObjects: true }) as string[])
     } else {
-      // TODO: 레지스탕스와 같이 오지 않았을 때의 대사
+      await speak(i18n.t('npc.death.reaper_player_noticed', { returnObjects: true }) as string[])
     }
 
     const npc = npcs.getNPC('death')!

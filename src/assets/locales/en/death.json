@@ -149,5 +149,12 @@
     "Reaper: \"...And what are those crude things trailing behind you? Why have you brought those insects here alive instead of exterminating them?\"",
     "Reaper: \"No... your gaze has changed. Do you truly intend to side with those lowly creatures and point your blade at me?\"",
     "Reaper: \"For a mere tool to defy its master's will and dream of rebellion... how amusing. I shall carve into your soul exactly what kind of demise such a foolish choice brings.\""
+  ],
+
+  "reaper_player_noticed": [
+    "Reaper: \"...Wait. Stay where you are. Why is there no answer?\"",
+    "Reaper: \"(Slowly rising from his seat) The shadow I bound to you... has scattered without a trace. It wasn't forced off. The power dwelling within you has devoured my mana and erased it.\"",
+    "Reaper: \"That look in your eyes, yes... It is the gaze of the so-called 'Great Necromancer' who once drenched the continent of the living in blood and commanded empires.\"",
+    "Reaper: \"Amusing. Do you dare... as a mere slave who once had a leash fastened by his master, to play the hunter again?\""
   ]
 }

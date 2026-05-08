@@ -175,8 +175,8 @@ export class NpcSkillManager {
 
       // 공통 래퍼 함수: 파라미터를 핸들러 규격에 맞게 매핑
       if (hooks.onAfterHit) {
-        unit.onAfterHitHooks.push(async (attacker, defender, options) => {
-          await hooks.onAfterHit!(attacker, defender, skillData, battle, options)
+        unit.onAfterHitHooks.push(async (attacker, defender, options, damage) => {
+          await hooks.onAfterHit!(attacker, defender, skillData, battle, options, damage)
         })
       }
 

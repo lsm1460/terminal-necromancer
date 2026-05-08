@@ -48,7 +48,7 @@
     "exp": 50,
     "isAlive": true,
     "reborn": false,
-    "orderWeight": 90,
+    "orderWeight": 79,
     "dropTableId": "resistance",
     "skills": []
   },

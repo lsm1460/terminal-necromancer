@@ -138,7 +138,7 @@
     "death_destruct": "\n[🔥 종말]: {{unit}}의 시체가 폭발하며 주변을 삼킵니다!",
     "soul_chain": "{{unit}}의 영혼이 {{ally}}에게 깃들어 힘이 증폭됩니다!",
     "phases_2": "\n[!] {{attacker}}의 본모습이 노출됩니다.",
-    "curse_of_the_phoenix": "{{unit}}의 불꽃이 타오르며 상처가 아물어갑니다. (+{{amount}})",
+    "curse_of_the_phoenix": "{{unit}}의 불꽃이 타오르며 상처가 아물어갑니다. (+{{amount}} HP)",
     "overdrive": "\n[!] 폭주하는 힘이 느껴집니다. {{unit}}의 방어가 취약해지고, 일정 이상의 피해를 입히면 혼란에 빠집니다.",
     "roar": "\n[📢 포효]: {{unit}}(은)는 굉음을 내지릅니다!! 모두의 시선이 {{unit}}에게 고정됩니다."
   },
@@ -285,6 +285,10 @@
     "greater_heal": {
       "name": "상급 치유",
       "description": "가장 부상이 심한 아군의 체력을 대폭 회복시킵니다."
+    },
+    "nanobot_repair_protocol": {
+      "name": "나노 수리 프로토콜",
+      "description": "마야가 전개한 나노 로봇이 가장 파손이 심한 아군의 신체를 즉각적으로 재구성하여 체력을 대폭 회복시킵니다."
     },
     "volley_fire": {
       "name": "일제 사격",
@@ -454,6 +458,10 @@
     "purify_essence": {
       "name": "정화",
       "description": "모든 아군의 디버프를 제거합니다."
+    },
+    "death_stigma": {
+      "name": "죽음의 낙인",
+      "description": "무작위 적군에게 낙인 부여, 낙인이 찍힌 대상은 수확 대상이 됩니다."
     }
   }
 }

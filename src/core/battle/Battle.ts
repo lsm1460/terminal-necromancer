@@ -1,4 +1,5 @@
 import { printCorpses, printDrops } from '~/core/statusPrinter'
+import { delay } from '~/utils'
 import { MonsterFactory } from '../MonsterFactory'
 import { Player } from '../player/Player'
 import { Terminal } from '../Terminal'
@@ -115,6 +116,8 @@ export class Battle implements BattleManager {
           .join(', '),
       },
     })
+
+    await delay()
 
     const engine = new BattleEngine(this, {
       onRoundStart: async (round) => {

@@ -25,8 +25,8 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   public orderWeight: number
   public phases = 1
 
-  public initBreakPoint = 200
-  public breakPoint = 200
+  public initBreakPoint = 100
+  public breakPoint = 100
 
   public onBeforeAttackHooks: UnitDamageProcessHook[] = []
   public onBeforeHitHooks: UnitDamageProcessHook[] = []
@@ -147,7 +147,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
       await this.runHooks(attacker.onAfterAttackHooks, attacker, options, result.damage)
 
       if (!result.isDead) {
-        await this.runHooks(this.onAfterHitHooks, attacker, options)
+        await this.runHooks(this.onAfterHitHooks, attacker, options, result.damage)
       }
     }
 
@@ -200,6 +200,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   private logDamage(attacker: CombatUnit, result: any, options: DamageOptions = {}) {
     const message = BattleLogFormatter.formatDamageLog(attacker.name, this.name, this.ref.hp, result, options)
+    Terminal.log('DEBUG:: '+this.name+'의 남은 브레이크 포인트: '+this.breakPoint)
     Terminal.log(message)
   }
 

@@ -140,12 +140,12 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
 
   overdrive: {
     onBeforeAttack: async (attacker, defender, skill, battle) => {
-      if (!attacker.hasBuff({ id: 'overdrive' }) && !attacker.hasDeBuff({ type: 'confuse' }) && Math.random() < 0.3) {
+      if (!attacker.hasBuff({ id: 'overdrive' }) && !attacker.hasDeBuff({ type: 'confuse' }) && Math.random() < 0.7) {
         attacker.applyBuff({
           id: 'overdrive',
           type: 'dot',
-          atk: 20,
-          def: -20,
+          atk: -40,
+          def: 20,
           dot: 10,
           duration: 3 + 1, // 행동 시작 시 차감 고려
         })
@@ -153,8 +153,8 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
         Terminal.log(i18n.t('skill.passive.overdrive', { unit: attacker.name }))
       }
     },
-    onAfterAttack: async (attacker, defender, skill, battle, options, damage) => {
-      if (defender.hasBuff({ id: 'overdrive' })) {
+    onAfterHit: async (attacker, defender, skill, battle, options, damage) => {
+      if (defender.hasDeBuff({ id: 'overdrive' })) {
         defender.breakPoint -= damage || 0
 
         if (defender.breakPoint <= 0) {

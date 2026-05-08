@@ -16,7 +16,7 @@ class BossEvent {
     if (!bossId) return
 
     const bossNpc = npcs.getNPC(bossId)!
-    
+
     // 이미 클리어했거나 보스가 죽은 상태라면 포탈 생성 후 종료
     if (events.isCompleted(bossId) || !bossNpc || !bossNpc.isAlive) {
       this.spawnPortal(tile)
@@ -30,8 +30,6 @@ class BossEvent {
     const encounterTalk =
       bossLogic?.postTalk || (i18n.t('events.boss.encounter.default_talk', { returnObjects: true }) as string[])
     await speak(encounterTalk)
-
-    Terminal.log(i18n.t('events.boss.encounter.start_battle'))
 
     let enemies: CombatUnit[] = []
     if (bossLogic) {

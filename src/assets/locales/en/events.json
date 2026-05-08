@@ -72,8 +72,7 @@
   "boss": {
     "encounter": {
       "blocking": "   [ {{name}} ] stands in your way.",
-      "default_talk": ["...So, you've come here to find your grave."],
-      "start_battle": "\n⚔️  The battle begins..."
+      "default_talk": ["...So, you've come here to find your grave."]
     },
     "victory": {
       "log": "\n🏆 You have defeated the formidable foe, {{name}}!"

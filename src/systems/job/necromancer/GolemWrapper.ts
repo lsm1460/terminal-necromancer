@@ -64,12 +64,12 @@ class GolemWrapper implements IGolem {
   }
 
   get atk(): number {
-    const bonus = this.soulCount * 20 + this.machineCount * 5
+    const bonus = this.soulCount * 10 + this.machineCount * 5
     return this.raw.atk + bonus
   }
 
   get def(): number {
-    const bonus = this.machineCount * 20 + this.soulCount * 10
+    const bonus = this.machineCount * 10 + this.soulCount * 5
     return this.raw.def + bonus
   }
 

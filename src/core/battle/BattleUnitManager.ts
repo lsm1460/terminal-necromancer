@@ -96,8 +96,7 @@ export class BattleUnitManager {
     if (attacker.isPlayerSide) {
       return this.getPlayerSide()
     } else {
-      const attackerFaction = (attacker.ref as any).faction
-      return this.getAliveEnemies().filter((u) => (u.ref as any).faction === attackerFaction)
+      return this.getAliveEnemies()
     }
   }
 }

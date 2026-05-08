@@ -277,6 +277,16 @@
     "targetType": "ALLY_LOWEST_HP",
     "type": "heal"
   },
+  "nanobot_repair_protocol": {
+    "id": "nanobot_repair_protocol",
+    "name": "나노 수리 프로토콜",
+    "attackType": "ranged",
+    "description": "마야가 전개한 나노 로봇이 가장 파손이 심한 아군의 신체를 즉각적으로 재구성하여 체력을 대폭 회복시킵니다.",
+    "chance": 1,
+    "power": 0.5,
+    "targetType": "ALLY_LOWEST_HP",
+    "type": "heal"
+  },
   "volley_fire": {
     "id": "volley_fire",
     "name": "일제 사격",
@@ -348,7 +358,7 @@
     "name": "처형",
     "attackType": "melee",
     "chance": 0.1,
-    "power": 10,
+    "power": 2.5,
     "targetType": "ENEMY_RANDOM",
     "description": "하나의 적에게 필사의 데미지를 부여합니다.",
     "options": {
@@ -735,7 +745,7 @@
     "attackType": "ranged",
     "power": 0.8,
     "description": "불특정 적군에게 혼란을 부여합니다.",
-    "chance": 0.3,
+    "chance": 0.6,
     "targetType": "ENEMY_RANDOM",
     "buff": {
       "id": "confuse",
@@ -749,7 +759,7 @@
     "attackType": "ranged",
     "power": 1.5,
     "description": "모든 적군에게 혼란을 부여합니다.",
-    "chance": 0.2,
+    "chance": 0.3,
     "targetType": "ENEMY_ALL",
     "buff": {
       "id": "confuse",

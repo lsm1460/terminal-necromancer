@@ -1,10 +1,10 @@
 import { Terminal } from '~/core'
-import { GameEventType, INpcManager, NPCState } from '~/core/types'
+import { INpcManager, NPCState } from '~/core/types'
 import i18n from '~/i18n'
 import { Ending } from '~/systems'
 import { GameNPC } from '~/systems/npc/GameNPC'
 import { AppContext } from '~/systems/types'
-import { speak } from '~/utils'
+import { delay, speak } from '~/utils'
 
 export class FourthBossNPC extends GameNPC {
   constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
@@ -60,6 +60,8 @@ export class FourthBossNPC extends GameNPC {
       return 'exit'
     }
 
+    Terminal.clear()
+    await delay()
     await speak(i18n.t('npc.fourth_boss.awakening', { returnObjects: true }) as string[])
   }
 }

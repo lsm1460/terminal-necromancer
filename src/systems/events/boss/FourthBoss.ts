@@ -1,11 +1,10 @@
 import { MAP_IDS } from '~/consts'
-import { GameEventType, Terminal } from '~/core'
+import { Terminal } from '~/core'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import i18n from '~/i18n'
-import { Ending } from '~/systems'
 import { AppContext } from '~/systems/types'
-import { speak } from '~/utils'
+import { delay, speak } from '~/utils'
 import { BossLogic } from './BossLogic'
 
 export class FourthBoss implements BossLogic {
@@ -19,7 +18,7 @@ export class FourthBoss implements BossLogic {
     const { npcs, events, battle, monster } = context
 
     const maya = npcs.getNPC('maya_tech')
-    if (maya?.skills) maya.skills = [...(maya.skills || []), 'greater_heal'] // 회복 마법 추가
+    if (maya?.skills) maya.skills = [...(maya.skills || []), 'nanobot_repair_protocol'] // 회복 마법 추가
     const mayaIsAlive = maya?.isAlive
     const isResistanceDead = !events.isCompleted('third_boss_resistance')
 
@@ -31,7 +30,7 @@ export class FourthBoss implements BossLogic {
       const groupUnits = monster
         .makeMonsters('monster-b6-fragment')
         .sort(() => Math.random() - 0.5) // 무작위 섞기
-        .slice(0, 4)
+        .slice(0, 6)
         .map((monster) => battle.toCombatUnit(monster, 'monster'))
 
       return [...groupUnits, god1Unit]
@@ -66,7 +65,7 @@ export class FourthBoss implements BossLogic {
       const groupUnits = monster
         .makeMonsters('monster-b6-fragment')
         .sort(() => Math.random() - 0.5) // 무작위 섞기
-        .slice(0, 2)
+        .slice(0, 4)
         .map((monster) => battle.toCombatUnit(monster, 'monster'))
 
       return [...groupUnits, god2Unit, amorUnit, mayaUnit]
@@ -163,6 +162,8 @@ export class FourthBoss implements BossLogic {
         Terminal.log(i18n.t(resEndKey))
       }
   
+      Terminal.clear()
+      await delay()
       await speak(i18n.t('npc.fourth_boss.awakening', {returnObjects: true}) as string[])
     }
     

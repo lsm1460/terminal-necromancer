@@ -72,8 +72,7 @@
   "boss": {
     "encounter": {
       "blocking": "   [ {{name}} ] 이(가) 앞을 가로막습니다.",
-      "default_talk": ["...네놈이 죽을 자리를 찾아왔구나."],
-      "start_battle": "\n⚔️  전투가 시작됩니다.."
+      "default_talk": ["...네놈이 죽을 자리를 찾아왔구나."]
     },
     "victory": {
       "log": "\n🏆 위협적인 적, {{name}}를 처치했습니다!"
