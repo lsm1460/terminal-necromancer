@@ -132,6 +132,7 @@
         {
           "id": "B2_010",
           "event": "boss",
+          "assets": ["ghoul"],
           "npcIds": ["first_boss"]
         }
       ]

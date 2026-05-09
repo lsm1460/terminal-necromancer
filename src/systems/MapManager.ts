@@ -28,21 +28,21 @@ export class MapManager extends BaseMapManager<AppContext> {
     if (!this.isFixedArea(targetSceneId)) {
       this.shuffleTiles(targetSceneId)
     }
-    
+
     await assetManager.loadSceneAssets(newScene)
-    
+
     await super.changeScene(targetSceneId, { player })
 
     Terminal.log(`\n------------------------------------------`)
     Terminal.log(i18n.t(`enter_new_area`) + i18n.t(`scene.${newScene.id}`))
     Terminal.log(`------------------------------------------`)
-    
+
     const { currentTile } = context
 
     await this.handleTileEvent(currentTile, context)
 
     eventBus.emitAsync(GameEventType.PLAYER_MOVE, { npcs })
-    
+
     printTileStatus(context)
   }
 

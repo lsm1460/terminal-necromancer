@@ -17,7 +17,25 @@ class GolemWrapper implements IGolem {
 
   // Delegations for BattleTarget compatibility
   get id() {
-    return this.raw.id
+    const m = this.machineCount
+    const s = this.soulCount
+    let id = this.raw.id
+
+    if (s >= 3 && m >= 3) {
+      id = 'soul_3_machine_3_' + id
+    } else if (s >= 3) {
+      id = 'soul_3_' + id
+    } else if (m >= 3) {
+      id = 'machine_3_' + id
+    } else if (s > 0 && m > 0) {
+      id = 'soul_machine_mixed_' + id
+    } else if (s > 0) {
+      id = 'soul_only_' + id
+    } else if (m > 0) {
+      id = 'machine_only_' + id
+    }
+
+    return id
   }
   get attackType() {
     return this.raw.attackType

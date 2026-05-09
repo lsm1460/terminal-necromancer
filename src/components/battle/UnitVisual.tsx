@@ -114,7 +114,7 @@ export const UnitVisual: React.FC<{
   return (
     <motion.div animate={controls} className="flex flex-col items-center relative">
       <div className="max-w-full aspect-square flex items-center justify-center relative">
-        <div className="w-9 h-1.5 bg-slate-900 border border-cyan-900 overflow-hidden absolute top-2">
+        <div className="w-9 h-1.5 bg-slate-900 border border-cyan-900 overflow-hidden absolute top-2 z-10">
           <motion.div
             initial={false}
             animate={{
@@ -128,6 +128,7 @@ export const UnitVisual: React.FC<{
         <img
           src={displayImage}
           alt={unit.name}
+          data-debug-id={unit.id}
           className={`w-32 h-32 object-contain pixelated ${isEnemy ? '-scale-x-100' : 'scale-x-100'}`}
           style={{
             opacity: unit.isStealth ? 0.5 : 1,

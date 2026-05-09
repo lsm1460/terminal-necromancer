@@ -48,9 +48,64 @@ export class WebAssetManager {
       { id: 'skeleton_healer_idle_1', src: '/images/skeleton_healer/skeleton_healer_idle_1.png' },
       { id: 'skeleton_healer_attack', src: '/images/skeleton_healer/skeleton_healer_attack.png' },
 
-      //ghoul
-      { id: 'ghoul_idle_0', src: '/images/ghoul/ghoul_idle_0.png' },
-      { id: 'ghoul_idle_1', src: '/images/ghoul/ghoul_idle_1.png' },
+      // skeleton_great_shield_bearer
+      {
+        id: 'skeleton_great_shield_bearer_idle_0',
+        src: '/images/skeleton_great_shield_bearer/skeleton_great_shield_bearer_idle_0.png',
+      },
+      {
+        id: 'skeleton_great_shield_bearer_idle_1',
+        src: '/images/skeleton_great_shield_bearer/skeleton_great_shield_bearer_idle_1.png',
+      },
+      {
+        id: 'skeleton_great_shield_bearer_attack',
+        src: '/images/skeleton_great_shield_bearer/skeleton_great_shield_bearer_attack.png',
+      },
+
+      // golem
+      { id: 'golem_idle_0', src: '/images/golem/golem_idle_0.png' },
+      { id: 'golem_idle_1', src: '/images/golem/golem_idle_1.png' },
+      { id: 'golem_attack', src: '/images/golem/golem_attack.png' },
+
+      // soul_only_golem
+      { id: 'soul_only_golem_idle_0', src: '/images/soul_only_golem/soul_only_golem_idle_0.png' },
+      { id: 'soul_only_golem_idle_1', src: '/images/soul_only_golem/soul_only_golem_idle_1.png' },
+      { id: 'soul_only_golem_attack', src: '/images/soul_only_golem/soul_only_golem_attack.png' },
+
+      // soul_3_golem
+      { id: 'soul_3_golem_idle_0', src: '/images/soul_3_golem/soul_3_golem_idle_0.png' },
+      { id: 'soul_3_golem_idle_1', src: '/images/soul_3_golem/soul_3_golem_idle_1.png' },
+      { id: 'soul_3_golem_attack', src: '/images/soul_3_golem/soul_3_golem_attack.png' },
+
+      // machine_only_golem
+      { id: 'machine_only_golem_idle_0', src: '/images/machine_only_golem/machine_only_golem_idle_0.png' },
+      { id: 'machine_only_golem_idle_1', src: '/images/machine_only_golem/machine_only_golem_idle_1.png' },
+      { id: 'machine_only_golem_attack', src: '/images/machine_only_golem/machine_only_golem_attack.png' },
+
+      // machine_3_golem
+      { id: 'machine_3_golem_idle_0', src: '/images/machine_3_golem/machine_3_golem_idle_0.png' },
+      { id: 'machine_3_golem_idle_1', src: '/images/machine_3_golem/machine_3_golem_idle_1.png' },
+      { id: 'machine_3_golem_attack', src: '/images/machine_3_golem/machine_3_golem_attack.png' },
+
+      // soul_3_machine_3_golem
+      { id: 'soul_3_machine_3_golem_idle_0', src: '/images/soul_3_machine_3_golem/soul_3_machine_3_golem_idle_0.png' },
+      { id: 'soul_3_machine_3_golem_idle_1', src: '/images/soul_3_machine_3_golem/soul_3_machine_3_golem_idle_1.png' },
+      { id: 'soul_3_machine_3_golem_attack', src: '/images/soul_3_machine_3_golem/soul_3_machine_3_golem_attack.png' },
+
+      // soul_machine_mixed_golem
+      {
+        id: 'soul_machine_mixed_golem_idle_0',
+        src: '/images/soul_machine_mixed_golem/soul_machine_mixed_golem_idle_0.png',
+      },
+      {
+        id: 'soul_machine_mixed_golem_idle_1',
+        src: '/images/soul_machine_mixed_golem/soul_machine_mixed_golem_idle_1.png',
+      },
+      {
+        id: 'soul_machine_mixed_golem_attack',
+        src: '/images/soul_machine_mixed_golem/soul_machine_mixed_golem_attack.png',
+      },
+
       // 에셋이 없을 때를 대비한 기본 이미지
       { id: 'default_idle_0', src: '/images/default_idle_0.png' },
       { id: 'default_idle_1', src: '/images/default_idle_1.png' },
@@ -172,6 +227,8 @@ export class WebAssetManager {
       return this.spriteCache.get(originId)!
     }
 
+    console.log('DEBUG::', this.images.get(`soul_only_golem_idle_0`))
+
     let isFallbackUsed = false
 
     const getWithFallback = (suffix: string) => {
@@ -254,7 +311,19 @@ export class WebAssetManager {
   }
 
   private clearMonsterAssets(): void {
-    const preserveIds = ['player', 'default', 'skeleton', 'golem', 'knight', 'ghoul']
+    const preserveIds = [
+      'player',
+      'default',
+      'skeleton',
+      'golem',
+      'knight',
+      'soul_only_golem',
+      'machine_only_golem',
+      'machine_3_golem',
+      'soul_machine_mixed_golem',
+      'soul_3_machine_3_golem',
+      'soul_3_golem',
+    ]
 
     const pattern = preserveIds.map((id) => `${id}_`).join('|')
     const preserveRegex = new RegExp(`^(${pattern})`)

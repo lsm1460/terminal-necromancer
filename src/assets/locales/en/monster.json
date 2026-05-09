@@ -91,8 +91,8 @@
     "description": "A hydraulic arm with a built-in flamethrower. Roasts approaching intruders with high-heat flames."
   },
   "golem_chest_armor": {
-    "name": "Golem's Chest Armor Plate",
-    "description": "Thick armor protecting the core power source. Only powerful explosive impacts can shake the internal structure."
+    "name": "Golem's Large Shield",
+    "description": "Thick Shield protecting the core power source. Only powerful explosive impacts can shake the internal structure."
   },
   "golem_core": {
     "name": "Golem Core",
