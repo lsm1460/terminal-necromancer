@@ -177,17 +177,14 @@ export class BattleActionHandler {
     return true
   }
 
-  async executeAutoAttack(
-    attacker: CombatUnit,
-    targets: CombatUnit[],
-    ally: CombatUnit[],
-    battle: Battle
-  ) {
+  async executeAutoAttack(attacker: CombatUnit, targets: CombatUnit[], ally: CombatUnit[], battle: Battle) {
     const visibleTargets = targets.filter((t) => !t.isStealth)
     if (visibleTargets.length === 0) {
       Terminal.log(i18n.t('battle.action.no_target', { name: attacker.name }))
       return
     }
+
+    await attacker.runHooks(attacker.onBeforeAttackHooks, attacker)
 
     const usedSkill = await this.tryExecuteNpcSkill(attacker, ally, visibleTargets, battle)
 
@@ -200,12 +197,7 @@ export class BattleActionHandler {
     }
   }
 
-  private async tryExecuteNpcSkill(
-    attacker: CombatUnit,
-    ally: CombatUnit[],
-    targets: CombatUnit[],
-    battle: Battle
-  ) {
+  private async tryExecuteNpcSkill(attacker: CombatUnit, ally: CombatUnit[], targets: CombatUnit[], battle: Battle) {
     if (!this.npcSkills) return null
 
     const skill = this.npcSkills.getRandomSkill(attacker)
@@ -217,6 +209,8 @@ export class BattleActionHandler {
   }
 
   private async executeBasicAttack(attacker: CombatUnit, targets: CombatUnit[]) {
+    if (!attacker.ref.isAlive) return
+
     if (attacker.stats.atk <= 0) {
       Terminal.log(i18n.t('battle.action.idle', { name: attacker.name }))
       return

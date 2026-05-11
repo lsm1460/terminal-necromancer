@@ -1,0 +1,10 @@
+{
+  "immunity": "Death does not bleed by its own power.",
+  "circle_of_death": {
+    "cast": "\u001b[31m[!]\u001b[0m The Death traces an ominous trajectory of death. Three tokens begin to pulsate.",
+    "countdown": "\u001b[31m[!]\u001b[0m {{name}}: After {{timer}} pulsations, the trajectory will complete and bring ruin.",
+    "fail": "The trajectory of death is complete. There is no escape.",
+    "fake": "The token shatters feebly. The trap of death was not designed for this place.",
+    "immunity": "The children of death cannot scar the trajectory drawn by their father."
+  }
+}

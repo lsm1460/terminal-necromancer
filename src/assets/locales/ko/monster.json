@@ -189,5 +189,16 @@
   "maya_golem": {
     "name": "마야의 작업용 골렘",
     "description": "레지스탕스의 일원 마야가 거대한 작업을 위하 만들어낸 골렘입니다."
+  },
+  "token_true_verdict": {
+    "name": "고동치는 증표",
+    "description": "사신이 지면에 새긴 궤적에서 피어오른 불길한 형상입니다."
+  },
+  "token_false_verdict": {
+    "name": "\u001b[38;5;244m고동치는 증표\u001b[0m",
+    "description": "사신이 지면에 새긴 궤적에서 피어오른 불길한 형상입니다."
+  },
+  "watcher": {
+    "name": "정지된 감시자"
   }
 }

@@ -138,8 +138,6 @@ export class WebAssetManager {
       return this.spriteCache.get(originId)!
     }
 
-    console.log('DEBUG::', this.images.get(`soul_only_golem_idle_0`))
-
     let isFallbackUsed = false
 
     const getWithFallback = (suffix: string) => {

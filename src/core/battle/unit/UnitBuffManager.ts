@@ -56,7 +56,7 @@ export class UnitBuffManager {
     })
   }
 
-  private processEffect(effectOrOptions: BuffOptions, action: 'apply' | 'remove', force = false): void {
+  private processEffect(effectOrOptions: BuffOptions, action: 'apply' | 'remove', force = false): boolean {
     const effect = new Buff(effectOrOptions)
     const isBuff = this.buffType.includes(effect.type)
     const targetArray = isBuff ? this.buffs : this.deBuffs
@@ -71,7 +71,7 @@ export class UnitBuffManager {
           },
         })
 
-        return
+        return false
       }
 
       const existing = targetArray.find((e) => e.id === effect.id)
@@ -113,22 +113,24 @@ export class UnitBuffManager {
         })
       }
     }
+
+    return true
   }
 
   public applyBuff(b: BuffOptions) {
-    this.processEffect(b, 'apply')
+    return this.processEffect(b, 'apply')
   }
 
   public applyDeBuff(d: BuffOptions) {
-    this.processEffect(d, 'apply')
+    return this.processEffect(d, 'apply')
   }
 
-  public removeBuff(id: BuffOptions['id'], force = false): void {
-    this.processEffect({ id, type: 'buff' } as BuffOptions, 'remove', force)
+  public removeBuff(id: BuffOptions['id'], force = false) {
+    return this.processEffect({ id, type: 'buff' } as BuffOptions, 'remove', force)
   }
 
-  public removeDeBuff(id: BuffOptions['id'], force = false): void {
-    this.processEffect({ id, type: 'deBuff' } as BuffOptions, 'remove', force)
+  public removeDeBuff(id: BuffOptions['id'], force = false) {
+    return this.processEffect({ id, type: 'deBuff' } as BuffOptions, 'remove', force)
   }
 
   public removeStealth(): void {
@@ -207,6 +209,8 @@ export class UnitBuffManager {
             effectName: e.name,
           },
         })
+
+        e?.expired && e?.expired()
       })
 
       const remaining = array.filter((e) => e.duration > 0)

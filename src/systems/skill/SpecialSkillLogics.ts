@@ -1,17 +1,15 @@
 import sample from 'lodash/sample'
 import { SpecialSkillLogic, Terminal } from '~/core'
 import { DamageOptions } from '~/core/battle'
+import { BuffOptions } from '~/core/battle/Buff'
 import { Player } from '~/core/player/Player'
 import i18n from '~/i18n'
-import { IMinion } from '~/types'
+import { IMinion, ISkeleton } from '~/types'
 import { ItemType } from '~/types/item'
 
 const HIGHLIGHT = (text: string) => `\x1b[33m${text}\x1b[0m`
 
-export const SpecialSkillLogics: Record<
-  string,
-  SpecialSkillLogic
-> = {
+export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
   // 자폭
   self_destruct: async (attacker, targets, skill) => {
     for (const target of targets) {
@@ -175,5 +173,65 @@ export const SpecialSkillLogics: Record<
 
       await target.executeHit(attacker, options)
     }
+  },
+
+  soul_detonator: async (attacker, targets, skill, context) => {
+    const strongest = targets
+      .filter((unit) => (unit.ref as ISkeleton).isSkeleton)
+      .filter((unit) => !unit.hasDeBuff({ id: 'soul_detonator' }))
+      .sort((a, b) => b.ref.maxHp - a.ref.maxHp)
+      .slice(0, 2)
+
+    strongest.forEach((unit) => {
+      Terminal.log(i18n.t('skill.npc.soul_detonator.log', { unit: unit.name }))
+
+      unit.applyDeBuff({
+        ...skill.buff,
+        expired: () => {
+          unit.dead()
+          Terminal.log(i18n.t('skill.npc.soul_detonator.explode', { unit: unit.name }))
+
+          const rawExplosionDamage = Math.floor(unit.ref.maxHp * 0.5)
+
+          targets.forEach((_unit) => {
+            _unit.executeHit(attacker, {
+              rawDamage: rawExplosionDamage,
+              attackType: 'explode',
+            })
+          })
+        },
+      } as BuffOptions)
+    })
+  },
+
+  soul_usurpation: async (attacker, targets, skill, context) => {
+    const target = targets.filter((unit) => (unit.ref as ISkeleton).isSkeleton).sort(() => Math.random() - 0.5)[0]
+
+    if (!target) {
+      Terminal.log(i18n.t('skill.npc.soul_usurpation.fail'))
+      return
+    }
+    Terminal.log(i18n.t('skill.npc.soul_usurpation.cast', { unit: target.name }))
+    // resist
+    const resistChance = 0.3
+    const isResisted = Math.random() < resistChance
+
+    if (isResisted) {
+      Terminal.log(i18n.t('skill.npc.soul_usurpation.resist', { unit: target.name }))
+      return
+    }
+
+    Terminal.log(i18n.t('skill.npc.soul_usurpation.convert', { unit: target.name }))
+
+    const agent = context._spawnMonster('shadowed_agent')!
+
+    agent.ref.maxHp = target.ref.maxHp
+    agent.ref.hp = target.ref.maxHp
+    agent.ref.atk = target.ref.atk
+    agent.ref.def = target.ref.def
+    agent.ref.agi = target.ref.agi
+    agent.ref.eva = target.ref.eva
+
+    target.dead()
   },
 }

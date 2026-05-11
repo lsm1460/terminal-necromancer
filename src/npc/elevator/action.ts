@@ -47,7 +47,11 @@ export const ElevatorActions = {
     if (targetMapData) {
       Terminal.log(i18n.t('npc.elevator.status.working'))
       world.clearFloor()
-      await map.changeScene(sceneId as MapId, context)
+      try{
+        await map.changeScene(sceneId as MapId, context)
+      } catch(_e) {
+        console.log(_e)
+      }
       Terminal.log(
         i18n.t('npc.elevator.status.arrival', {
           location: i18n.t(`scene.${targetMapData.id}`),

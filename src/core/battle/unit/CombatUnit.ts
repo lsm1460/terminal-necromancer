@@ -18,7 +18,6 @@ type UnitDamageProcessHook = (
 
 export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player> {
   public id: string
-  public name: string
   public stats: any
   public attackType: AttackType = 'melee'
   public buffManager: UnitBuffManager
@@ -42,11 +41,14 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     private manager: Battle
   ) {
     this.id = ref.id
-    this.name = ref.name
     this.buffManager = new UnitBuffManager(this)
 
     this.orderWeight = (ref as any).orderWeight || 0
     this.updateStats()
+  }
+
+  public get name() {
+    return this.ref.name
   }
 
   public get isPlayerSide() {
@@ -80,11 +82,11 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   public applyBuff(b: BuffOptions) {
-    this.buffManager.applyBuff(b)
+    return this.buffManager.applyBuff(b)
   }
 
   public applyDeBuff(d: BuffOptions) {
-    this.buffManager.applyDeBuff(d)
+    return this.buffManager.applyDeBuff(d)
   }
 
   public hasBuff(_params: BuffFilterCondition) {
@@ -137,7 +139,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     await this.runHooks(this.onProcessHitHooks, attacker, options)
 
     if (!options.isPassive) {
-      await this.runHooks(attacker.onBeforeAttackHooks, attacker, options)
       await this.runHooks(this.onBeforeHitHooks, attacker, options)
     }
 
@@ -158,7 +159,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     return result
   }
 
-  private async runHooks(hooks: Function[] = [], attacker?: CombatUnit, options: DamageOptions = {}, damage?: number) {
+  async runHooks(hooks: Function[] = [], attacker?: CombatUnit, options: DamageOptions = {}, damage?: number) {
     for (const hook of hooks) {
       // 훅의 규격에 맞춰 attacker, defender(this), options를 전달
       await hook(attacker, this, options, damage)
@@ -166,16 +167,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
   }
 
   public takeDamage(attacker: CombatUnit, options: DamageOptions = {}): TakeDamageReturn {
-    if (!this.ref.isAlive) {
-      return {
-        isEscape: false,
-        isDead: true,
-        damage: 0,
-        currentHp: 0,
-        isCritical: false,
-      }
-    }
-
     const result = Battle.calcDamage(attacker, this, options)
     if (!result.isEscape) {
       this.ref.hp = Math.max(0, this.ref.hp - result.damage)
@@ -200,7 +191,6 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
 
   private logDamage(attacker: CombatUnit, result: any, options: DamageOptions = {}) {
     const message = BattleLogFormatter.formatDamageLog(attacker.name, this.name, this.ref.hp, result, options)
-    Terminal.log('DEBUG:: '+this.name+'의 남은 브레이크 포인트: '+this.breakPoint)
     Terminal.log(message)
   }
 

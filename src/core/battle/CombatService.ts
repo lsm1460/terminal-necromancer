@@ -33,7 +33,7 @@ export class CombatService {
     // 4. 방어력 적용
     if (!options.isFixed) {
       const appliedDef = options.isIgnoreDef ? 0 : def
-      finalDamage = Math.max(1, finalDamage - Math.floor(appliedDef / 2))
+      finalDamage = Math.max(0, finalDamage - Math.floor(appliedDef / 2))
     }
 
     return { isEscape: false, damage: Math.floor(finalDamage), isCritical: isCrit }

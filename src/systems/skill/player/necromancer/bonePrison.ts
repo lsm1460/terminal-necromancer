@@ -39,13 +39,13 @@ export const bonePrison: ExecuteSkill = async (player, skillContext, { enemies =
   // 2. 디버프 부여
   const duration = 3
 
-  target.applyDeBuff({
+  const _res = target.applyDeBuff({
     id: 'bone_prison',
     type: 'bind',
     duration: duration + 1,
   })
 
-  Terminal.log(i18n.t('skill.BONE_PRISON.success_log', { target: target.name, duration }))
+  _res && Terminal.log(i18n.t('skill.BONE_PRISON.success_log', { target: target.name, duration }))
 
   return {
     isSuccess: true,

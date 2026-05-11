@@ -189,5 +189,16 @@
   "maya_golem": {
     "name": "Maya's Work Golem",
     "description": "A golem created by Maya, a member of the Resistance, for large-scale engineering tasks."
+  },
+  "token_true_verdict": {
+    "name": "Throbbing Sigil",
+    "description": "An ominous form arisen from the sinister trajectory carved into the ground by the Death."
+  },
+  "token_false_verdict": {
+    "name": "\u001b[38;5;251mThrobbing Sigil\u001b[0m",
+    "description": "An ominous form arisen from the sinister trajectory carved into the ground by the Death."
+  },
+  "watcher": {
+    "name": "Suspended Watcher"
   }
 }

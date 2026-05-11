@@ -20,7 +20,6 @@ export class BattleUnitManager {
     const cached = this.getUnit(unit.id)
     if (cached) return cached as CombatUnit<T>
     const combatUnit = new CombatUnit<T>(unit, type, this.manager)
-
     this.npcSkills && this.npcSkills.setupPassiveHook(combatUnit, this.manager)
 
     return combatUnit

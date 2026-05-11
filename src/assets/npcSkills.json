@@ -692,7 +692,7 @@
     "name": "그림자 묶기",
     "attackType": "ranged",
     "description": "가장 강한 적 3명을 묶고 이를 감시하는 파수꾼을 만들어냅니다.",
-    "chance": 0.3,
+    "chance": 0.5,
     "targetType": "ENEMY_ALL"
   },
   "return_to_ash": {
@@ -786,7 +786,7 @@
     "name": "죽음의 낙인",
     "attackType": "ranged",
     "description": "무작위 적군에게 낙인 부여, 낙인이 찍힌 대상은 수확 대상이 됩니다.",
-    "chance": 0.3,
+    "chance": 0.7,
     "power": 1.8,
     "targetType": "ENEMY_RANDOM",
     "buff": {
@@ -800,7 +800,7 @@
     "name": "수확",
     "attackType": "melee",
     "description": "모든 적군의 영혼 수확을 시도합니다. 낙인이 있다면 치명적인 피해를 입힙니다.",
-    "chance": 0.2,
+    "chance": 0.5,
     "power": 0.8,
     "targetType": "ENEMY_ALL"
   },
@@ -844,5 +844,43 @@
       "dot": 10,
       "duration": 4
     }
+  },
+  "soul_detonator": {
+    "id": "soul_detonator",
+    "name": "영혼 기폭",
+    "description": "2턴 뒤 저주받은 대상이 폭발하여 아군에게 피해를 준 뒤 사망하는 저주를 부여합니다.",
+    "chance": 1,
+    "targetType": "ENEMY_ALL",
+    "buff": {
+      "id": "soul_detonator",
+      "type": "bind",
+      "duration": 2
+    }
+  },
+  "call_agents": {
+    "id": "call_agents",
+    "name": "요원 호출: 죽음의 집행",
+    "description": "명령을 대기 중이던 요원들을 호출하여 즉각적인 사살 허가를 내립니다.",
+    "chance": 0.6,
+    "targetType": "SELF",
+    "type": "passive",
+    "options": {
+      "spawnMonsterId": "shadowed_agent"
+    }
+  },
+  "soul_usurpation": {
+    "id": "soul_usurpation",
+    "name": "영혼 찬탈",
+    "description": "영혼에 새겨진 계약을 파기하고 사신의 노예로 귀속시킵니다. 배신한 골격은 이제 주인을 향해 칼날을 겨눕니다.",
+    "chance": 1,
+    "targetType": "ENEMY_ALL"
+  },
+  "rain_of_the_deceased": {
+    "id": "rain_of_the_deceased",
+    "name": "망자의 비",
+    "description": "하늘이나 허공에서 시체들의 비가 떨어집니다.",
+    "chance": 1,
+    "targetType": "ENEMY_ALL",
+    "type": "passive"
   }
 }

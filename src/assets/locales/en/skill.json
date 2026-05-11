@@ -142,7 +142,8 @@
     "phases_2": "\n[!] {{attacker}}'s true form is revealed.",
     "curse_of_the_phoenix": "The flames of the {{defender}} blaze, healing their wounds. (+{{amount}} HP)",
     "overdrive": "[!] A surge of uncontrollable power! {{unit}}'s defense is weakened, and inflicting enough damage will cause Confusion.",
-    "roar": "[📢 Roar]: {{unit}} lets out a deafening roar!! Everyone's gaze is fixed on {{unit}}."
+    "roar": "[📢 Roar]: {{unit}} lets out a deafening roar!! Everyone's gaze is fixed on {{unit}}.",
+    "rain_of_the_deceased": "[!] A rain of corpses falls from the sky and the void."
   },
 
   "special": {
@@ -435,15 +436,41 @@
     },
     "overdrive": {
       "name": "Overdrive",
-      "description": "Occasionally loses control and goes into a frenzy."
+      "description": "Occasionally loses control and goes into a frenzy.",
+      "log": "Driven mad by its rampage, {{unit}} has lost the ability to distinguish ally from enemy."
     },
     "purify_essence": {
       "name": "Purify",
       "description": "Removes all debuffs from all allies."
     },
+    "harvest": {
+      "name": "Harvest",
+      "description": "Attempts to harvest the souls of all enemies. Deals fatal damage to those who are marked."
+    },
     "death_stigma": {
       "name": "Death Stigma",
       "description": "Applies a stigma to a random enemy; the marked target becomes a subject for harvest."
+    },
+    "soul_detonator": {
+      "name": "Soul Detonator",
+      "description": "Inflicts a curse that causes the target to explode after 2 turns, dealing damage to all allies and killing the host.",
+      "log": "\u001b[31m[!]\u001b[0m A red curse pulses on {{unit}}'s chest, signaling an imminent blast.",
+      "explode": "\u001b[31m[!]\u001b[0m {{unit}}'s body reaches its limit and detonates, spraying deadly fragments everywhere!"
+    },
+    "call_agents": {
+      "name": "Call Agents: Death Execution",
+      "description": "Calls upon waiting agents and grants immediate permission to terminate all targets."
+    },
+    "soul_usurpation": {
+      "name": "Soul Usurpation",
+      "description": "Corrupts the target unit's control, forcibly turning them into the Reaper's agent. The traitorous agent will immediately attack their former allies.",
+      "resist": "{{unit}} has successfully resisted the Soul Usurpation!",
+      "cast": "\u001b[31m[!]\u001b[0m Corrupting {{unit}}'s control!",
+      "convert": "\u001b[31m[!]\u001b[0m {{unit}} turns its blade against its master.",
+      "fail": "The dark touch finds no bones to grasp, fading into the cold air."
+    },
+    "rain_of_the_deceased": {
+      "impact": "Amidst the shower of flesh and bone, {{count}} bodies manage to hold their shape as they land."
     }
   }
 }

@@ -42,6 +42,8 @@ import silas_dissector from './silas_dissector.json'
 import vora_observer from './vora_observer.json'
 import fourth_boss from './fourth_boss.json'
 
+import final_boss from './final_boss.json'
+
 const ko = {
   item,
   affix,
@@ -87,6 +89,8 @@ const ko = {
     silas_dissector,
     vora_observer,
     fourth_boss,
+
+    final_boss
   },
   skill,
   events,

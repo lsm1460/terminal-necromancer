@@ -9,6 +9,8 @@ const RED = (text: string) => `\x1b[31m${text}\x1b[0m`
 export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
   death_aura: {
     onBeforeAttack: async (attacker, defender, skill, battle) => {
+      if (!attacker.ref.isAlive) return
+
       // 1. JSON에서 텍스트를 가져온 뒤 코드에서 빨간색을 입힙니다.
       const msg = i18n.t('skill.passive.death_aura', { attacker: attacker.name })
       Terminal.log(RED(msg))
@@ -160,6 +162,8 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
         if (defender.breakPoint <= 0) {
           defender.breakPoint = defender.initBreakPoint
 
+          Terminal.log(i18n.t('skill.npc.overdrive.log', { unit: defender.name }))
+
           defender.applyDeBuff({
             id: 'confuse',
             type: 'confuse',
@@ -180,6 +184,60 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
         def: 20,
         duration: 5,
       })
+    },
+  },
+
+  call_agents: {
+    onBeforeAttack: async (attacker, defender, skill, battle) => {
+      if (!attacker.ref.isAlive) return
+
+      if (skill.options?.spawnMonsterId) {
+        const unit = battle._spawnMonster(skill.options.spawnMonsterId)
+
+        if (unit) {
+          Terminal.log(
+            i18n.t('skill.effect.summon.call', {
+              attacker: attacker.name,
+              reinforcement: unit.name,
+            })
+          )
+        }
+      }
+    },
+  },
+
+  rain_of_the_deceased: {
+    onBeforeAttack: async (attacker, defender, skill, battle) => {
+      const msg = i18n.t('skill.passive.rain_of_the_deceased')
+      Terminal.log(RED(msg))
+
+      const enemies = battle.getEnemiesOf(attacker)
+      for (const enemy of enemies) {
+        const rawDamage = Math.floor(attacker.stats.atk * 0.25)
+        if (rawDamage > 0) {
+          await enemy.executeHit(attacker, {
+            rawDamage,
+            isPassive: true,
+            isSureHit: true,
+            isFixed: true,
+          })
+        }
+      }
+
+      const pool = ['track_ratman', 'shipyard_worker', 'security_guard', 'resistance_member', 'shadowed_agent']
+
+      const count = Math.floor(Math.random() * 3) + 1
+
+      const selectedIds = pool.sort(() => Math.random() - 0.5).slice(0, count)
+
+      selectedIds.forEach((monsterId) => {
+        const unit = battle._spawnMonster(monsterId)
+        if (unit) {
+          unit.dead()
+        }
+      })
+
+      Terminal.log(i18n.t('skill.npc.rain_of_the_deceased.impact', { count: selectedIds.length }))
     },
   },
 }

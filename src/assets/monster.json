@@ -2,15 +2,15 @@
   "test_man": {
     "id": "test_man",
     "attackType": "melee",
-    "hp": 50,
-    "maxHp": 5000,
-    "atk": 1,
+    "hp": 10,
+    "maxHp": 10,
+    "atk": 90,
     "def": 3,
     "agi": 8,
     "exp": 5,
-    "skills": ["shadow_bind"],
+    "skills": ["resist_bind", "shadow_bind", "call_agents", "soul_usurpation", "rain_of_the_deceased"],
     "dropTableId": "test_drop",
-    "orderWeight": 20,
+    "orderWeight": 10,
     "preemptive": true
   },
   "track_ratman": {
@@ -653,8 +653,8 @@
   "fallen_god_1": {
     "id": "fallen_god_1",
     "attackType": "ranged",
-    "hp": 650,
-    "maxHp": 650,
+    "hp": 750,
+    "maxHp": 750,
     "atk": 62,
     "def": 76,
     "agi": 75,
@@ -669,8 +669,8 @@
   "fallen_god_2": {
     "id": "fallen_god_2",
     "attackType": "ranged",
-    "hp": 420,
-    "maxHp": 420,
+    "hp": 620,
+    "maxHp": 620,
     "atk": 49,
     "def": 82,
     "agi": 65,
@@ -697,5 +697,42 @@
     "dropTableId": "b6_thought_loot",
     "preemptive": true,
     "noEscape": true
+  },
+  "shadowed_agent": {
+    "id": "shadowed_agent",
+    "attackType": "ranged",
+    "hp": 320,
+    "maxHp": 320,
+    "atk": 35,
+    "def": 38,
+    "eva": 0.3,
+    "exp": 0,
+    "dropTableId": "",
+    "orderWeight": 20,
+    "skills": ["cloak_active", "death_stigma", "harvest", "greater_heal"]
+  },
+  "token_true_verdict": {
+    "id": "token_true_verdict",
+    "attackType": "melee",
+    "hp": 30,
+    "maxHp": 30,
+    "atk": 0,
+    "def": 1,
+    "agi": 1,
+    "exp": 1500,
+    "orderWeight": 55,
+    "noCorpse": true
+  },
+  "token_false_verdict": {
+    "id": "token_false_verdict",
+    "attackType": "melee",
+    "hp": 30,
+    "maxHp": 30,
+    "atk": 0,
+    "def": 1,
+    "agi": 1,
+    "exp": 1500,
+    "orderWeight": 55,
+    "noCorpse": true
   }
 }

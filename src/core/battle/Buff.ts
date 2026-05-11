@@ -26,6 +26,7 @@ export interface BuffOptions {
     | 'death_stigma'
     | 'grace'
     | 'roar'
+    | 'soul_detonator'
   duration: number
   type: BuffType
   atk?: number
@@ -36,6 +37,7 @@ export interface BuffOptions {
   hp?: number
   crit?: number
   isLocked?: boolean
+  expired?: (...params: any) => void
 }
 
 export class Buff {
@@ -52,6 +54,7 @@ export class Buff {
   dot?: number
   crit?: number
   isLocked?: boolean
+  expired?: (...params: any) => void
 
   constructor(options: BuffOptions) {
     this.id = options.id || 'unknown'
@@ -65,6 +68,7 @@ export class Buff {
     this.dot = options.dot
     this.crit = options.crit
     this.isLocked = options.isLocked
+    this.expired = options.expired
   }
 
   get name(): string {

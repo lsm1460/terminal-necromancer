@@ -1,9 +1,9 @@
-import { GameEventType, Terminal } from '~/core'
+import { Terminal } from '~/core'
 import { Battle } from '~/core/battle'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { BaseNPC } from '~/core/npc/BaseNPC'
 import i18n from '~/i18n'
-import { Ending } from '~/systems'
+import { Ending, Necromancer } from '~/systems'
 import { AppContext } from '~/systems/types'
 import { IMinion } from '~/types'
 import { BossLogic } from './BossLogic'
@@ -18,6 +18,18 @@ export class FinalBoss implements BossLogic {
 
     const boss = monster.makeMonster('test_man')!
     const unit = battle.toCombatUnit(boss, 'monster')
+
+    unit.onProcessHitHooks.push(async (attacker, defender, options) => {
+      if ((attacker.ref as IMinion).isMinion) {
+        options.rawDamage = 0 // 대미지 무효화
+
+        Terminal.log(i18n.t('npc.final_boss.immunity'))
+      }
+
+      if ((attacker.ref as Necromancer).id === 'player') {
+        options.rawDamage = 1
+      }
+    })
 
     registerPhaseGimmicks(unit, battle)
 
@@ -40,13 +52,13 @@ const registerPhaseGimmicks = (boss: CombatUnit, battle: Battle) => {
     if (thresholds.length > 0 && hpRatio < thresholds[0]) {
       thresholds.shift()
 
-      Terminal.log('보스가 지원군을 호출합니다!')
+      Terminal.log(i18n.t('npc.final_boss.circle_of_death.cast'))
 
       // 1. 소환할 명단 정의 (몬스터ID, 셋업함수)
       const spawnList = [
-        { id: 'track_ratman', setup: setupRealBoomer },
-        { id: 'snare_spider', setup: setupFakeUnit },
-        { id: 'snare_spider', setup: setupFakeUnit },
+        { id: 'token_true_verdict', setup: setupRealBoomer },
+        { id: 'token_false_verdict', setup: setupFakeUnit },
+        { id: 'token_false_verdict', setup: setupFakeUnit },
       ]
 
       // 2. 반복문을 통한 일괄 소환 및 설정
@@ -66,12 +78,20 @@ const setupRealBoomer = (boomer: CombatUnit, battle: Battle) => {
 
   boomer.onBeforeAttackHooks.push(async () => {
     --timer
-    Terminal.log(`[위험] ${boomer.ref.name}: ${timer}턴 후 폭발!`)
 
     if (timer < 1) {
+      Terminal.log(i18n.t('npc.final_boss.circle_of_death.fail'))
+
       const enemies = battle.getEnemiesOf(boomer)
       enemies.forEach((u) => u.takeDamage(boomer, { rawDamage: 99999, isSureHit: true }))
       await boomer.dead()
+    } else {
+      Terminal.log(
+        i18n.t('npc.final_boss.circle_of_death.countdown', {
+          unit: boomer.ref.name,
+          timer: timer,
+        })
+      )
     }
   })
 }
@@ -83,7 +103,7 @@ const setupFakeUnit = (unit: CombatUnit) => {
   unit.onBeforeAttackHooks.push(async () => {
     --timer
     if (timer < 1) {
-      Terminal.log(`${unit.ref.name}이(가) 연기처럼 사라집니다.`)
+      Terminal.log(i18n.t('npc.final_boss.circle_of_death.fake'))
       await unit.dead()
     }
   })
@@ -93,7 +113,7 @@ const applyMinionProtection = (unit: CombatUnit) => {
   unit.onProcessHitHooks.push(async (attacker, defender, options) => {
     if ((attacker.ref as IMinion).isMinion) {
       options.rawDamage = 0
-      Terminal.log(`${unit.ref.name}은(는) 미니언의 공격을 받지 않습니다.`)
+      Terminal.log(i18n.t('npc.final_boss.circle_of_death.immunity'))
     }
   })
 }
