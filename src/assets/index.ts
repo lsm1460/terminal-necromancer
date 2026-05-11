@@ -26,4 +26,10 @@ export const assets = {
 export { initState }
 
 export * from './locales'
+export * from './manifest'
+
+import { WebAssetManager } from '~/core/WebAssetManager'
+import { commonManifest } from './manifest'
+
+export const assetManager = new WebAssetManager(commonManifest)
 

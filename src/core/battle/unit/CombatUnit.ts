@@ -1,5 +1,5 @@
+import { assetManager } from '~/assets'
 import { BattleTarget, Terminal } from '~/core'
-import { assetManager } from '~/core/WebAssetManager'
 import { Player } from '~/core/player/Player'
 import { AttackType, TakeDamageReturn, UnitSprites } from '~/core/types'
 import { getOriginId } from '~/core/utils'
