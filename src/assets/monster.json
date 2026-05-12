@@ -8,7 +8,7 @@
     "def": 3,
     "agi": 8,
     "exp": 5,
-    "skills": ["resist_bind", "shadow_bind", "soul_usurpation", "rain_of_the_deceased"],
+    "skills": ["resist_bind", "resist_dot", "shadow_bind", "soul_usurpation", "rain_of_the_deceased"],
     "dropTableId": "test_drop",
     "preemptive": true,
     "noCorpse": true

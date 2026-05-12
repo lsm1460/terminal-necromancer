@@ -101,6 +101,7 @@ export class CombatUnit<T extends BattleTarget | Player = BattleTarget | Player>
     const skills = this.ref.skills ?? []
     
     const immunityMap: Record<string, BuffType> = {
+      resist_dot: 'dot',
       resist_bind: 'bind',
       resist_confuse: 'confuse',
     }
