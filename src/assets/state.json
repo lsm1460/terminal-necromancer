@@ -2,7 +2,7 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 0,
+    "x": 4,
     "y": 0,
     "_maxHp": 340,
     "hp": 340,
@@ -347,28 +347,28 @@
         }
       },
       {
-        "id": "deity_splinter_dagger::npUJGEun",
-        "type": "weapon",
-        "price": 3500,
-        "sellPrice": 420,
-        "quantity": 1,
-        "atk": 51,
-        "crit": 0.53,
-        "attackType": "melee",
-        "rarity": "EPIC",
-        "perfPrefix": "",
-        "adjective": "primal",
-        "affix": {
-          "id": "CHAIN_EXPLOSION"
-        }
-      },
-      {
         "id": "unstable_tainted_core",
         "type": "consumable",
         "price": 3,
         "sellPrice": 2,
         "quantity": 4,
         "exp": 150
+      },
+      {
+        "id": "deity_splinter_dagger::EO7JT6LC",
+        "type": "weapon",
+        "price": 3500,
+        "sellPrice": 420,
+        "quantity": 1,
+        "atk": 64,
+        "crit": 0.37,
+        "attackType": "melee",
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "mortal",
+        "affix": {
+          "id": "CLEANSE"
+        }
       }
     ],
     "inventoryMax": 45,
@@ -399,19 +399,19 @@
         }
       },
       "weapon": {
-        "id": "deity_splinter_dagger::EO7JT6LC",
+        "id": "deity_splinter_dagger::npUJGEun",
         "type": "weapon",
         "price": 3500,
         "sellPrice": 420,
         "quantity": 1,
-        "atk": 64,
-        "crit": 0.37,
+        "atk": 51,
+        "crit": 0.53,
         "attackType": "melee",
         "rarity": "EPIC",
         "perfPrefix": "",
-        "adjective": "mortal",
+        "adjective": "primal",
         "affix": {
-          "id": "CLEANSE"
+          "id": "CHAIN_EXPLOSION"
         }
       }
     },
@@ -554,7 +554,7 @@
     ],
     "upgradeLimit": 5
   },
-  "sceneId": "B6_VEHICLE_DEPOT",
+  "sceneId": "B1_Subway_Entrance",
   "npcs": {
     "states": {
       "kane_leader": {
@@ -594,7 +594,7 @@
         "relation": 0
       },
       "death": {
-        "hp": 24,
+        "hp": 2000,
         "isAlive": true,
         "reborn": false,
         "relation": 0

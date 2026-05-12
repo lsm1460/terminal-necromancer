@@ -15,13 +15,24 @@ export class FinalBoss implements BossLogic {
   }
 
   async createEnemies(bossNpc: BaseNPC, context: AppContext) {
-    const { monster, battle, events } = context
+    const { monster, battle, events, player, npcs } = context
 
-    const isMine = events.isCompleted('caron_is_mine')
-    const isDead = events.isCompleted('caron_is_dead')
+    if (events.isCompleted('join_resistance_battle')) {
+      await speak(i18n.t('npc.final_boss.resistance', { returnObjects: true }) as string[])
 
-    if (isMine && !isDead) {
-      await speak(i18n.t('npc.final_boss.caron', {returnObjects: true}) as string[])
+      const god = monster.makeMonster('fallen_god_3')
+
+      player.addMercenary(god!)
+    }
+
+    const isCaronActiveAlly = events.isCompleted('caron_is_mine') && !events.isCompleted('caron_is_dead');
+
+    if (!player.hasMercenary('caron') && isCaronActiveAlly) {
+      await speak(i18n.t('npc.final_boss.caron', { returnObjects: true }) as string[])
+
+      const caron = npcs.getNPC('caron')
+
+      player.addMercenary(caron!)
     }
 
     const boss = monster.makeMonster('death_origin')!

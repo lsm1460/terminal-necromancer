@@ -84,5 +84,23 @@
 
   "npc": {
     "preemptive_attack": "⚠️  NPC: Preemptive attack by {{name}}!"
+  },
+
+  "final_battle": {
+    "kane_leader": [
+      "Kane: \"You've arrived safely. Thanks to you drawing their attention up front, we were able to infiltrate this far.\"",
+      "Kane: \"The 'Remnant of a God' is currently undergoing final calibrations by Maya. It will take a little more time before that massive power descends upon this place.\"",
+      "Kane: \"Until then, we must hold this monster back. The longest wait, with the fate of humanity at stake, begins now. Are you ready?\""
+    ],
+    "ren": [
+      "Ren: \"Finally here? Tsk, that hunk of metal, the 'Remnant', is still warming up. If Maya screws this up at a crucial moment...\"",
+      "Ren: \"In the end, it means it's just us against this ridiculously oversized freak until that thing arrives.\"",
+      "Ren: \"Don't get cold feet. We'll keep him distracted before he can swallow you whole. Once the Remnant gets here... that's when the Reaper's funeral really starts!\""
+    ],
+    "caron": [
+      "Caron: \"My Lord, as promised, I have stepped out from your shadow to stand here.\"",
+      "Caron: \"The pressure emanating from the Reaper—no, that deceiver called the 'Root'—is quite immense. My former master remains as arrogant as ever.\"",
+      "Caron: \"But do not fear. As you pierce through that Root, I shall be your most stalwart shield and your sharpest fracture, guarding your path.\""
+    ]
   }
 }

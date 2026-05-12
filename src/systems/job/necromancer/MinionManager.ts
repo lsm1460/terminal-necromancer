@@ -110,6 +110,10 @@ export class MinionManager {
     return false
   }
 
+  hasMercenary(id: string) {
+    return this._mercenary.some((_mercenary) => _mercenary.id === id)
+  }
+
   removeMercenaries() {
     this._mercenary = []
   }

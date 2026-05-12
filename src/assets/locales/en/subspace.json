@@ -4,7 +4,8 @@
     "space": "🌀 Subspace",
     "mix": "♻️ Skeleton Fusion",
     "tutorial_knight": "📖 Dark Knight Initiate",
-    "promotion": "🛡️ Dark Knight Promotion"
+    "promotion": "🛡️ Dark Knight Promotion",
+    "join_final_battle": "🔗 Charon Joins the Fray"
   },
   "increase_limit": {
     "status": "Current Soul Fragments: {{current}} / Required: {{cost}}",
@@ -112,5 +113,13 @@
     "msg_push": "\n✨ [Seal] {{name}} has vanished into the dimensional rift.",
     "msg_pull": "\n💀 [Release] {{name}} rises from the ground.",
     "msg_swap": "\n🔄 [Swap] The positions of {{name}} have been interchanged within the spatial distortion."
-  }
+  },
+  "join_fray": [
+    "Charon: \"My Lord, the time has finally come to put down the final period.\"",
+    "Charon: \"As promised, I shall become the shadow of this battlefield and support your blade.\"",
+    "Charon: \"However, my Lord, keep one thing in mind: the Reaper I have watched for centuries was never merely a figure wielding a scythe.\"",
+    "Charon: \"I suspect that the form we see now... may be nothing more than a false veneer woven from the fears of mortals.\"",
+    "Charon: \"If that is so, the true essence of 'Death' lurking beyond that mist will be far more loathsome than anything we can imagine.\"",
+    "Charon: \"...Let us go. It is time to prove that you are the only fracture capable of shattering those deceitful laws.\""
+  ]
 }

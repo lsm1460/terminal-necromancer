@@ -275,6 +275,10 @@ export class Necromancer extends Player {
     return this.minionManager.addMercenary(mercenary)
   }
 
+  hasMercenary(id: string) {
+    return this.minionManager.hasMercenary(id)
+  }
+
   removeMercenaries() {
     return this.minionManager.removeMercenaries()
   }

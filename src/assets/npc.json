@@ -98,8 +98,8 @@
   "death": {
     "id": "death",
     "attackType": "melee",
-    "hp": 24,
-    "maxHp": 24,
+    "hp": 2000,
+    "maxHp": 2000,
     "atk": 75,
     "def": 92,
     "agi": 60,
@@ -110,7 +110,7 @@
     "dropTableId": "",
     "noEscape": true,
     "noCorpse": true,
-    "skills": ["resist_bind", "death_stigma", "harvest", "call_agents", "soul_detonator"]
+    "skills": ["resist_bind",  "death_stigma", "soul_detonator", "harvest", "call_agents"]
   },
   "first_boss": {
     "id": "first_boss",

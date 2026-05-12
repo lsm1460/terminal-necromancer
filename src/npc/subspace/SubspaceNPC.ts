@@ -3,6 +3,7 @@ import i18n from '~/i18n'
 import { GameNPC } from '~/systems/npc/GameNPC'
 import { AppContext } from '~/systems/types'
 import * as SubspaceActions from './actions'
+import { SubspaceService } from './service'
 
 export class SubspaceNPC extends GameNPC {
   constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
@@ -10,13 +11,11 @@ export class SubspaceNPC extends GameNPC {
   }
 
   getChoices(context: AppContext) {
-    const { player, events } = context
+    const { events } = context
     const isTutorialCompleted = events.isCompleted('tutorial_knight')
 
-    // 강한 해골(HP 200↑)이 있는데 기사 승격 튜토리얼을 안 봤다면 퀘스트 우선 노출
-    if (player.skeleton.some((sk) => sk.maxHp >= 200) && !isTutorialCompleted) {
-      return [{ name: 'tutorialPromotion', message: i18n.t('npc.subspace.choices.tutorial_knight') }]
-    }
+    const quest = SubspaceService.getActiveQuest(context)
+    if (quest) return [quest]
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
@@ -47,11 +46,14 @@ export class SubspaceNPC extends GameNPC {
       case 'tutorialPromotion':
         await SubspaceActions.handleTutorialPromotion(context.events)
         break
+      case 'joinFinalBattle':
+        await SubspaceActions.handleJoinFinalBattle(context.events)
+        break
     }
     return true
   }
 
   hasQuest(context: AppContext) {
-    return context.player.skeleton.some((sk) => sk.maxHp >= 200) && !context.events.isCompleted('tutorial_knight')
+    return SubspaceService.getActiveQuest(context) !== null
   }
 }

@@ -840,7 +840,7 @@
     "id": "soul_detonator",
     "name": "영혼 기폭",
     "description": "2턴 뒤 저주받은 대상이 폭발하여 아군에게 피해를 준 뒤 사망하는 저주를 부여합니다.",
-    "chance": 1,
+    "chance": 0.5,
     "targetType": "ENEMY_ALL",
     "buff": {
       "id": "soul_detonator",

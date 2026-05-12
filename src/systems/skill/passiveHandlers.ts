@@ -191,17 +191,17 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
     onBeforeAttack: async (attacker, defender, skill, battle) => {
       if (!attacker.ref.isAlive) return
 
-      if (skill.options?.spawnMonsterId) {
-        const unit = battle._spawnMonster(skill.options.spawnMonsterId)
+      if (!skill.options?.spawnMonsterId || Math.random() >= 0.8) return
 
-        if (unit) {
-          Terminal.log(
-            i18n.t('skill.effect.summon.call', {
-              attacker: attacker.name,
-              reinforcement: unit.name,
-            })
-          )
-        }
+      const unit = battle._spawnMonster(skill.options.spawnMonsterId)
+
+      if (unit) {
+        Terminal.log(
+          i18n.t('skill.effect.summon.call', {
+            attacker: attacker.name,
+            reinforcement: unit.name,
+          })
+        )
       }
     },
   },

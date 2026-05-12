@@ -52,11 +52,13 @@
   "join_resistance_battle": {
     "kane": [
       "Kane: \"An excellent choice. With you joining us, the final piece of our revolution has fallen into place.\"",
-      "Kane: \"Men, check our ally's equipment and tend to their wounds. This is the person who will be our sharpest spear in today's operation.\""
+      "Kane: \"Men, check our ally's equipment and tend to their wounds. This is the person who will be our sharpest spear in today's operation.\"",
+      "Kane: \"Go on ahead once you're ready. I'll deploy the 'Remnant of a God' and follow right behind you. Let us meet again at the end of the road—right before the Reaper's throne.\""
     ],
     "ren": [
       "Ren: \"...Hmph, finally speaking my language. This reckless plunge into hell with us suits you much better than playing a lapdog anyway.\"",
-      "Ren: \"Tech team! Check their condition. It'll be a problem if they collapse before we can even slit the Reaper's throat.\""
+      "Ren: \"Tech team! Check their condition. It'll be a problem if they collapse before we can even slit the Reaper's throat.\"",
+      "Ren: \"See you at the front once you're patched up. I’ll be waiting right in front of that bastard Reaper's face, so don't you dare be late—or I'm leaving you behind!\""
     ]
   },
   "wait_resistance_battle": {
@@ -89,7 +91,7 @@
   "caron_cooperate_after_slaughter": [
     "Caron: \"...I see. Your blade is still aimed at the Reaper's throat. But those you just cut down were more than just obstacles in your path.\"",
     "Caron: \"There may be no one left to block your way, but there is also no one left to hold you back. Is this the ending you desired? To decapitate a god as a lonely slaughterer?\"",
-    "Caron: \"...Very well. I, too, have already stepped into the abyss that is you. I will watch until the very end—whether you take the Reaper's throne, or become a void even deeper than he ever was.\""
+    "Caron: \"...Very well. I, too, have already stepped into the abyss that is you. When the time comes, I shall join the fray.\""
   ],
 
   "maya_exposed": [

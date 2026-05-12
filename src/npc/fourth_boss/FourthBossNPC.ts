@@ -53,6 +53,7 @@ export class FourthBossNPC extends GameNPC {
         }
       } else {
         await speak(i18n.t('npc.fourth_boss.caron_cooperate_after_slaughter', { returnObjects: true }) as string[])
+        events.completeEvent('join_caron')
       }
     } else if (!killAll && isResistanceDead && caronIsDead) {
       await Ending.run(context)

@@ -1,7 +1,7 @@
 import uniq from 'lodash/uniq'
 import { Terminal, Tile } from '~/core'
 import i18n from '~/i18n'
-import { delay } from '~/utils'
+import { delay, speak } from '~/utils'
 import { EventHandler } from '.'
 import BossEvent from './BossEvent'
 import { NpcEvent } from './NpcEvent'
@@ -113,6 +113,22 @@ export const commonHandlers: Record<string, EventHandler> = {
   },
 
   'final-battle': async (tile, context) => {
-    console.log('DEBUG::')
-  }
+    const { npcs, events, player, battle } = context
+
+    if (events.isCompleted('join_resistance_battle')) {
+      let leader = npcs.getNPC('kane_leader')
+
+      const isKaneAlive = leader?.isAlive
+      if (!isKaneAlive) leader = npcs.getNPC('ren')
+
+      player.addMercenary(leader!)
+      await speak(i18n.t(`events.final_battle.${leader!.id}`, { returnObjects: true }) as string[]);
+    }
+
+    if (events.isCompleted('join_caron')) {
+      const caron = npcs.getNPC('caron')
+      player.addMercenary(caron!)
+      await speak(i18n.t('events.final_battle.caron', { returnObjects: true }) as string[])
+    }
+  },
 }

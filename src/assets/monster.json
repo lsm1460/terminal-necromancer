@@ -10,7 +10,6 @@
     "exp": 5,
     "skills": ["resist_bind", "shadow_bind", "soul_usurpation", "rain_of_the_deceased"],
     "dropTableId": "test_drop",
-    "orderWeight": 10,
     "preemptive": true,
     "noCorpse": true
   },
@@ -675,13 +674,27 @@
     "atk": 49,
     "def": 82,
     "agi": 65,
-    "skills": ["cmd_pause", "soul_slash", "spread_of_taint", "chaos","overdrive"],
+    "skills": ["cmd_pause", "soul_slash", "spread_of_taint", "chaos", "overdrive"],
     "orderWeight": 82,
     "exp": 800,
     "noCorpse": true,
     "dropTableId": "b6_thought_loot",
     "preemptive": true,
     "noEscape": true
+  },
+  "fallen_god_3": {
+    "id": "fallen_god_3",
+    "attackType": "ranged",
+    "hp": 560,
+    "maxHp": 560,
+    "atk": 46,
+    "def": 86,
+    "agi": 65,
+    "skills": ["cmd_pause", "soul_slash", "fire_breath"],
+    "orderWeight": 82,
+    "exp": 0,
+    "noCorpse": true,
+    "dropTableId": ""
   },
   "maya_golem": {
     "id": "maya_golem",
@@ -709,7 +722,6 @@
     "eva": 0.3,
     "exp": 0,
     "dropTableId": "",
-    "orderWeight": 20,
     "skills": ["cloak_active", "death_stigma", "harvest", "greater_heal"]
   },
   "token_true_verdict": {
