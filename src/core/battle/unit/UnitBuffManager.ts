@@ -153,18 +153,25 @@ export class UnitBuffManager {
   }
 
   public removeRandomDeBuff(): void {
-    if (this.deBuffs.length === 0) return
+    const removableDeBuffs = this.deBuffs.filter((deBuff) => !deBuff.isLocked)
 
-    const randomIndex = Math.floor(Math.random() * this.deBuffs.length)
-    const removed = this.deBuffs.splice(randomIndex, 1)[0]
+    if (removableDeBuffs.length === 0) return
 
-    Terminal.log({
-      key: 'battle.unit.status_change.recovered',
-      args: {
-        name: this.owner.name,
-        effectName: removed.name,
-      },
-    })
+    const randomIndex = Math.floor(Math.random() * removableDeBuffs.length)
+    const targetDeBuff = removableDeBuffs[randomIndex]
+
+    const actualIndex = this.deBuffs.indexOf(targetDeBuff)
+    if (actualIndex !== -1) {
+      const removed = this.deBuffs.splice(actualIndex, 1)[0]
+
+      Terminal.log({
+        key: 'battle.unit.status_change.recovered',
+        args: {
+          name: this.owner.name,
+          effectName: removed.name,
+        },
+      })
+    }
   }
 
   public removeRandomBuff(): void {

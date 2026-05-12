@@ -192,13 +192,18 @@
   },
   "token_true_verdict": {
     "name": "Throbbing Sigil",
-    "description": "An ominous form arisen from the sinister trajectory carved into the ground by the Death."
+    "description": "An ominous form arisen from the Reaper's trajectory. A heavy, steady pulsation resonates from within."
   },
   "token_false_verdict": {
     "name": "\u001b[38;5;251mThrobbing Sigil\u001b[0m",
-    "description": "An ominous form arisen from the sinister trajectory carved into the ground by the Death."
+    "description": "An ominous form arisen from the Reaper's trajectory. The pulse feels faintly hollow and unstable."
+  },
+  "death_agent": {
+    "name": "Shadowed Agent",
+    "description": "A fragment of darkness materialized to carry out the Reaper's will. It approaches silently to stifle the breath of the living."
   },
   "watcher": {
-    "name": "Suspended Watcher"
+    "name": "Suspended Watcher",
+    "description": "A totem of death that freezes the battlefield with its malevolent gaze instead of attacking. Minions caught in its stare find their souls bound, unable to move a single step."
   }
 }

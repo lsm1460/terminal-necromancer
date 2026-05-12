@@ -1,6 +1,6 @@
 {
-  "test_man": {
-    "id": "test_man",
+  "death_origin": {
+    "id": "death_origin",
     "attackType": "melee",
     "hp": 10,
     "maxHp": 10,
@@ -8,10 +8,11 @@
     "def": 3,
     "agi": 8,
     "exp": 5,
-    "skills": ["resist_bind", "shadow_bind", "call_agents", "soul_usurpation", "rain_of_the_deceased"],
+    "skills": ["resist_bind", "shadow_bind", "soul_usurpation", "rain_of_the_deceased"],
     "dropTableId": "test_drop",
     "orderWeight": 10,
-    "preemptive": true
+    "preemptive": true,
+    "noCorpse": true
   },
   "track_ratman": {
     "id": "track_ratman",
@@ -698,8 +699,8 @@
     "preemptive": true,
     "noEscape": true
   },
-  "shadowed_agent": {
-    "id": "shadowed_agent",
+  "death_agent": {
+    "id": "death_agent",
     "attackType": "ranged",
     "hp": 320,
     "maxHp": 320,
@@ -714,8 +715,8 @@
   "token_true_verdict": {
     "id": "token_true_verdict",
     "attackType": "melee",
-    "hp": 30,
-    "maxHp": 30,
+    "hp": 31,
+    "maxHp": 31,
     "atk": 0,
     "def": 1,
     "agi": 1,

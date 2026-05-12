@@ -111,4 +111,8 @@ export const commonHandlers: Record<string, EventHandler> = {
 
     tile.isClear = true
   },
+
+  'final-battle': async (tile, context) => {
+    console.log('DEBUG::')
+  }
 }

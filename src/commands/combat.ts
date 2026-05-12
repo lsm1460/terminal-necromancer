@@ -4,7 +4,6 @@ import i18n from '~/i18n'
 export const attackCommand: CommandFunction = async (args, context) => {
   const { npcs, battle, world, currentTile: tile } = context
   
-
   if ((tile.npcIds || [])?.length > 0) {
     const proceed = await Terminal.confirm(i18n.t('commands.combat.confirm_kill'))
 

@@ -1,5 +1,5 @@
 {
-  "name": "Shadowed Agent, Shadow",
+  "name": "Shadowed Agent, Smith",
   "lines": [
     "Maintain comms security. Target not yet secured.",
     "Too many variables. Contamination levels in this sector exceed projections.",
@@ -23,9 +23,9 @@
   "description": "An agent dispatched by an unknown organization. Their objective is to recover biological samples and classified data from the depot.",
 
   "encounter": [
-    "Shadow: (Checking a suppressed firearm) The Resistance messing with that corpse wasn't an accident. Someone broke the seal on purpose.",
-    "Shadow: I've analyzed the attack patterns. They're more sensitive to bio-signatures than sound. Holding your breath won't save you.",
-    "Shadow: Mika's comms went dark. System synchronization was inevitable. I need to extract the data before her brain completely merges with the mainframe.",
-    "Shadow: Intel suggests command is considering burying this entire depot. We're out of time. Secure the samples and find an extraction point."
+    "Smith: (Checking a suppressed firearm) The Resistance messing with that corpse wasn't an accident. Someone broke the seal on purpose.",
+    "Smith: I've analyzed the attack patterns. They're more sensitive to bio-signatures than sound. Holding your breath won't save you.",
+    "Smith: Mika's comms went dark. System synchronization was inevitable. I need to extract the data before her brain completely merges with the mainframe.",
+    "Smith: Intel suggests command is considering burying this entire depot. We're out of time. Secure the samples and find an extraction point."
   ]
 }

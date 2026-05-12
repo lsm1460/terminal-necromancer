@@ -92,17 +92,17 @@
   },
 
   "ren": {
-    "name": "Ren"
+    "name": "Ren",
+    "description": "As the vice-captain of the Resistance, she leads humanity's final stand on the brink of extinction."
   },
 
-  "test_man": {
-    "name": "테스트맨",
-    "phases": {
-      "2": "2 페이즈 시작 문구 테스트"
-    }
+  "death_origin": {
+    "name": "The Root of Mortality",
+    "description": "The primordial silence to which all life must return, and an inevitable destination that cannot be defied."
   },
 
   "fourth_boss": {
-    "name": "Divine Remnant"
+    "name": "Divine Remnant",
+    "description": "A miserable yet colossal fragment left behind by a divine being that once governed the laws of the world."
   }
 }

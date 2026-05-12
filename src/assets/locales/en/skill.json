@@ -466,8 +466,9 @@
       "description": "Corrupts the target unit's control, forcibly turning them into the Reaper's agent. The traitorous agent will immediately attack their former allies.",
       "resist": "{{unit}} has successfully resisted the Soul Usurpation!",
       "cast": "\u001b[31m[!]\u001b[0m Corrupting {{unit}}'s control!",
-      "convert": "\u001b[31m[!]\u001b[0m {{unit}} turns its blade against its master.",
-      "fail": "The dark touch finds no bones to grasp, fading into the cold air."
+      "convert": "{{unit}}'s soul has been claimed, and they have become a thrall of Death.",
+      "fail": "The dark touch finds no bones to grasp, fading into the cold air.",
+      "success": "The extracted soul twists grotesquely, crafting a pitch-black flesh. A new Death Agent has been transmuted."
     },
     "rain_of_the_deceased": {
       "impact": "Amidst the shower of flesh and bone, {{count}} bodies manage to hold their shape as they land."

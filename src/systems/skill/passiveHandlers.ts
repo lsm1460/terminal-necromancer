@@ -224,7 +224,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
         }
       }
 
-      const pool = ['track_ratman', 'shipyard_worker', 'security_guard', 'resistance_member', 'shadowed_agent']
+      const pool = ['track_ratman', 'shipyard_worker', 'security_guard', 'resistance_member', 'death_agent']
 
       const count = Math.floor(Math.random() * 3) + 1
 
@@ -233,6 +233,8 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
       selectedIds.forEach((monsterId) => {
         const unit = battle._spawnMonster(monsterId)
         if (unit) {
+          unit.ref.exp = 0
+          unit.ref.dropTableId = ''
           unit.dead()
         }
       })

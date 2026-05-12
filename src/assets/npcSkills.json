@@ -670,15 +670,6 @@
     "type": "passive",
     "skills": ["spread_of_taint"]
   },
-  "third_phases": {
-    "id": "third_phases",
-    "name": "테스트맨의 3 페이즈",
-    "description": "테스트맨의 진정한 모습",
-    "chance": 0.5,
-    "step": 3,
-    "type": "passive",
-    "skills": ["cmd_grace"]
-  },
   "purify_essence": {
     "id": "purify_essence",
     "name": "정화",
@@ -865,7 +856,7 @@
     "targetType": "SELF",
     "type": "passive",
     "options": {
-      "spawnMonsterId": "shadowed_agent"
+      "spawnMonsterId": "death_agent"
     }
   },
   "soul_usurpation": {

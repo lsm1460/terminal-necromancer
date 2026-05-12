@@ -17,6 +17,7 @@ interface ExplosionTarget {
  * : 공격자의 스탯이 아닌 '시체의 최대 생명력'에 기반한 데미지를 전달합니다.
  */
 export const corpseExplosion: ExecuteSkill<Necromancer> = async (player, { world }, { enemies = [] } = {}) => {
+  const hpRatio = 0.5
   const isChaining = player.ref.hasAffix('CHAIN_EXPLOSION')
   const targets = collectExplosionTargets(player.ref, world, isChaining)
 
@@ -29,12 +30,12 @@ export const corpseExplosion: ExecuteSkill<Necromancer> = async (player, { world
   let totalGross = 0
 
   if (isChaining) {
-    // 모든 시체/스켈레톤 연쇄 폭발
-    for (const target of targets) {
-      const result = await executeSingleExplosion(player, world, target, enemies)
-      if (result.isAggressive) isAggressive = true
-      totalGross += 70
-    }
+    // 모든 시체/스켈레톤 연쇄 폭발: 데미지를 합산하여 한 번만 폭발
+    const totalRawExplosionDamage = targets.reduce((sum, t) => sum + Math.floor(t.maxHp * hpRatio), 0)
+
+    const result = await executeExplosion(player, world, targets, enemies, totalRawExplosionDamage)
+    isAggressive = result.isAggressive
+    totalGross = 70 * targets.length
   } else {
     // 단일 대상 선택 폭발
     const selectedId = await selectTarget(targets)
@@ -45,7 +46,8 @@ export const corpseExplosion: ExecuteSkill<Necromancer> = async (player, { world
 
     const target = targets.find((t) => t.id === selectedId)
     if (target) {
-      const result = await executeSingleExplosion(player, world, target, enemies)
+      const rawExplosionDamage = Math.floor(target.maxHp * hpRatio)
+      const result = await executeExplosion(player, world, [target], enemies, rawExplosionDamage)
       isAggressive = result.isAggressive
       totalGross = 70
     }
@@ -107,16 +109,15 @@ async function selectTarget(targets: ExplosionTarget[]): Promise<string> {
 }
 
 /**
- * 단일 대상 폭발 실행
+ * 폭발 실행
  */
-async function executeSingleExplosion(
+async function executeExplosion(
   player: CombatUnit<Necromancer>,
   world: World,
-  target: ExplosionTarget,
-  enemies: CombatUnit[]
+  targets: ExplosionTarget[],
+  enemies: CombatUnit[],
+  rawExplosionDamage: number
 ): Promise<{ isAggressive: boolean }> {
-  const rawExplosionDamage = Math.floor(target.maxHp * 0.5)
-
   Terminal.log(
     i18n.t('skill.CORPSE_EXPLOSION.activation', {
       player: player.name,
@@ -142,15 +143,17 @@ async function executeSingleExplosion(
   }
 
   // 자원 소모 처리
-  if (target.type === 'corpse') {
-    world.removeCorpse(target.id)
-  } else {
-    const skeleton = player.ref.skeleton.find((sk) => sk.id === target.id)
-    if (skeleton) {
-      skeleton.hp = 0
-      skeleton.isAlive = false
+  for (const target of targets) {
+    if (target.type === 'corpse') {
+      world.removeCorpse(target.id)
+    } else {
+      const skeleton = player.ref.skeleton.find((sk) => sk.id === target.id)
+      if (skeleton) {
+        skeleton.hp = 0
+        skeleton.isAlive = false
+      }
+      player.ref.removeMinion(target.id)
     }
-    player.ref.removeMinion(target.id)
   }
 
   return { isAggressive }

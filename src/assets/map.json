@@ -44,7 +44,7 @@
         },
         {
           "id": "B1_007",
-          "event": "none",
+          "event": "final-battle",
           "npcIds": ["death"]
         },
         {

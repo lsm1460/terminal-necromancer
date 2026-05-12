@@ -97,13 +97,14 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
   shadow_bind: async (attacker, targets, skill, battle) => {
     const _targets = targets
       .filter((unit) => !unit.deBuff.some((deBuff) => deBuff.type === 'bind'))
+      .filter((unit) => (unit.ref as IMinion).isMinion)
       .sort((a, b) => b.ref.atk - a.ref.atk)
       .slice(0, 3)
 
     if (_targets.length === 0) return
 
     _targets.forEach((unit) => {
-      unit.applyDeBuff({ id: 'bind', type: 'bind', duration: Infinity })
+      unit.applyDeBuff({ id: 'bind', type: 'bind', duration: Infinity, isLocked: true })
     })
 
     const watcher = battle._spawnMonster('watcher')!
@@ -117,7 +118,7 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
     })
 
     watcher.onDeathHooks.push(async () => {
-      _targets.forEach((unit) => unit.removeDeBuff('bind'))
+      _targets.forEach((unit) => unit.removeDeBuff('bind', true))
     })
   },
 
@@ -223,7 +224,7 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
 
     Terminal.log(i18n.t('skill.npc.soul_usurpation.convert', { unit: target.name }))
 
-    const agent = context._spawnMonster('shadowed_agent')!
+    const agent = context._spawnMonster('death_agent')!
 
     agent.ref.maxHp = target.ref.maxHp
     agent.ref.hp = target.ref.maxHp
@@ -233,5 +234,7 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
     agent.ref.eva = target.ref.eva
 
     target.dead()
+
+    Terminal.log(i18n.t('skill.npc.soul_usurpation.success'))
   },
 }

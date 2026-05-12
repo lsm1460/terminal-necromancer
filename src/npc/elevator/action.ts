@@ -7,7 +7,7 @@ import { ElevatorService } from './service'
 
 export const ElevatorActions = {
   async handleElevate(context: AppContext): Promise<boolean> {
-    const { map, world, save } = context
+    const { map, world, save, player } = context
     const completed = context.events.getCompleted()
     const currentSceneId = map.currentSceneId
 
@@ -58,6 +58,7 @@ export const ElevatorActions = {
         })
       )
 
+      player.removeMercenaries()
       const { currentTile } = context
       currentTile.isSeen = true
 

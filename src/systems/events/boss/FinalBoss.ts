@@ -7,16 +7,24 @@ import { Ending, Necromancer } from '~/systems'
 import { AppContext } from '~/systems/types'
 import { IMinion } from '~/types'
 import { BossLogic } from './BossLogic'
+import { speak } from '~/utils'
 
 export class FinalBoss implements BossLogic {
   get postTalk() {
-    return i18n.t('npc.third_boss.postTalk', { returnObjects: true }) as string[]
+    return i18n.t('npc.final_boss.postTalk', { returnObjects: true }) as string[]
   }
 
   async createEnemies(bossNpc: BaseNPC, context: AppContext) {
-    const { monster, battle } = context
+    const { monster, battle, events } = context
 
-    const boss = monster.makeMonster('test_man')!
+    const isMine = events.isCompleted('caron_is_mine')
+    const isDead = events.isCompleted('caron_is_dead')
+
+    if (isMine && !isDead) {
+      await speak(i18n.t('npc.final_boss.caron', {returnObjects: true}) as string[])
+    }
+
+    const boss = monster.makeMonster('death_origin')!
     const unit = battle.toCombatUnit(boss, 'monster')
 
     unit.onProcessHitHooks.push(async (attacker, defender, options) => {
@@ -62,12 +70,14 @@ const registerPhaseGimmicks = (boss: CombatUnit, battle: Battle) => {
       ]
 
       // 2. 반복문을 통한 일괄 소환 및 설정
-      spawnList.forEach(({ id, setup }) => {
-        const minion = battle._spawnMonster(id)
-        if (minion) {
-          setup(minion, battle)
-        }
-      })
+      spawnList
+        .sort(() => Math.random() - 0.5)
+        .forEach(({ id, setup }) => {
+          const minion = battle._spawnMonster(id)
+          if (minion) {
+            setup(minion, battle)
+          }
+        })
     }
   })
 }
@@ -88,7 +98,6 @@ const setupRealBoomer = (boomer: CombatUnit, battle: Battle) => {
     } else {
       Terminal.log(
         i18n.t('npc.final_boss.circle_of_death.countdown', {
-          unit: boomer.ref.name,
           timer: timer,
         })
       )
@@ -111,7 +120,10 @@ const setupFakeUnit = (unit: CombatUnit) => {
 
 const applyMinionProtection = (unit: CombatUnit) => {
   unit.onProcessHitHooks.push(async (attacker, defender, options) => {
-    if ((attacker.ref as IMinion).isMinion) {
+    const isExplode = options.attackType === 'explode'
+    const isMinion = (attacker.ref as IMinion)?.isMinion
+
+    if (isExplode || isMinion) {
       options.rawDamage = 0
       Terminal.log(i18n.t('npc.final_boss.circle_of_death.immunity'))
     }

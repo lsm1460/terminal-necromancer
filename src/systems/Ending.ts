@@ -6,6 +6,8 @@ import { delay, speak } from '~/utils'
 
 export class Ending {
   static async run(context: AppContext): Promise<void> {
+    Terminal.clear()
+    
     const { player, events, npcs, eventBus, save } = context
 
     // 주요 변수 추출
