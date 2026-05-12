@@ -574,7 +574,8 @@
     "skills": [],
     "orderWeight": 80,
     "exp": 0,
-    "dropTableId": ""
+    "dropTableId": "",
+    "noCorpse": true
   },
 
   "fragment_of_dead_god_war": {
