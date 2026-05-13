@@ -2,7 +2,7 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 3,
+    "x": 5,
     "y": 1,
     "_maxHp": 340,
     "hp": 340,
@@ -13,7 +13,7 @@
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 2549,
+    "gold": 991,
     "exp": 9700,
     "level": 8,
     "unlockedSkills": [
@@ -248,7 +248,7 @@
         "type": "consumable",
         "price": 130,
         "sellPrice": 18,
-        "quantity": 2,
+        "quantity": 3,
         "mpHeal": 40
       },
       {
@@ -382,6 +382,14 @@
           },
           "value": 4
         }
+      },
+      {
+        "id": "potion_large",
+        "type": "consumable",
+        "price": 700,
+        "sellPrice": 45,
+        "quantity": 3,
+        "hpHeal": 250
       }
     ],
     "inventoryMax": 45,
@@ -771,11 +779,11 @@
       }
     },
     "factionHostility": {
-      "untouchable": -74,
+      "untouchable": -78,
       "resistance": 100
     },
     "factionContribution": {
-      "untouchable": 555
+      "untouchable": 595
     }
   },
   "drop": {
