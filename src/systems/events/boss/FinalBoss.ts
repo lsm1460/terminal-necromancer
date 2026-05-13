@@ -45,8 +45,9 @@ export class FinalBoss implements BossLogic {
         Terminal.log(i18n.t('npc.final_boss.immunity'))
       }
 
-      if ((attacker.ref as Necromancer).id === 'player') {
+      if (attacker.ref.id === 'player') {
         options.rawDamage = 1
+        options.isIgnoreDef = true
       }
     })
 

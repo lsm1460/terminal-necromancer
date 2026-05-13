@@ -716,14 +716,14 @@
   "death_agent": {
     "id": "death_agent",
     "attackType": "ranged",
-    "hp": 320,
-    "maxHp": 320,
+    "hp": 160,
+    "maxHp": 160,
     "atk": 35,
     "def": 38,
     "eva": 0.3,
     "exp": 0,
     "dropTableId": "",
-    "skills": ["cloak_active", "death_stigma", "harvest", "greater_heal"]
+    "skills": ["cloak_active", "death_stigma", "harvest"]
   },
   "token_true_verdict": {
     "id": "token_true_verdict",

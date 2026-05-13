@@ -99,7 +99,7 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
       .filter((unit) => !unit.deBuff.some((deBuff) => deBuff.type === 'bind'))
       .filter((unit) => (unit.ref as IMinion).isMinion)
       .sort((a, b) => b.ref.atk - a.ref.atk)
-      .slice(0, 3)
+      .slice(0, 2)
 
     if (_targets.length === 0) return
 

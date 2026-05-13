@@ -29,7 +29,7 @@ export class CombatService {
     // 3. 크리티컬 판정
     const isCrit = options.isSureCrit || Math.random() < crit
     let finalDamage = isCrit ? baseAtk * 1.2 : baseAtk
-
+    
     // 4. 방어력 적용
     if (!options.isFixed) {
       const appliedDef = options.isIgnoreDef ? 0 : def
