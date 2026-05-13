@@ -214,7 +214,7 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
     }
     Terminal.log(i18n.t('skill.npc.soul_usurpation.cast', { unit: target.name }))
     // resist
-    const resistChance = 0.3
+    const resistChance = 0.6
     const isResisted = Math.random() < resistChance
 
     if (isResisted) {

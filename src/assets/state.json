@@ -3,11 +3,11 @@
     "id": "player",
     "name": "player",
     "x": 3,
-    "y": 2,
+    "y": 1,
     "_maxHp": 340,
-    "hp": 287,
+    "hp": 340,
     "_maxMp": 50,
-    "mp": 32,
+    "mp": 50,
     "atk": 15,
     "def": 7,
     "agi": 5,
@@ -30,10 +30,10 @@
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
+      "RECALL_SKELETON",
       "FOCUS_FIRE",
       "CORPSE_EXPLOSION",
-      "BONE_PRISON",
-      "BONE_STORM"
+      "BONE_PRISON"
     ],
     "_skeleton": [
       {
@@ -156,30 +156,6 @@
         "isMinion": true,
         "isSkeleton": true,
         "orderWeight": 55
-      },
-      {
-        "id": "skeleton_warrior::1778637294547",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
-        "attackType": "melee",
-        "maxHp": 187,
-        "hp": 187,
-        "atk": 58,
-        "def": 28,
-        "agi": 9,
-        "eva": 0,
-        "skills": [
-          "whirlwind"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_mercy::GDD_tKyS",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 7
       }
     ],
     "_mercenary": [],
@@ -189,7 +165,7 @@
       "attackType": "melee",
       "baseMaxHp": 80,
       "maxHp": 80,
-      "hp": 0,
+      "hp": 380,
       "baseAtk": 30,
       "atk": 30,
       "baseDef": 20,
@@ -200,7 +176,7 @@
       "description": "",
       "dropTableId": "",
       "encounterRate": 0,
-      "isAlive": false,
+      "isAlive": true,
       "skills": [
         "power_smash"
       ],
@@ -213,7 +189,7 @@
       "id": "_knight",
       "name": "",
       "attackType": "melee",
-      "hp": 15,
+      "hp": 360,
       "baseMaxHp": 360,
       "maxHp": 360,
       "baseAtk": 32,
@@ -367,21 +343,6 @@
         }
       },
       {
-        "id": "divine_remnant_armor::oms06U7H",
-        "type": "armor",
-        "price": 2400,
-        "sellPrice": 550,
-        "quantity": 1,
-        "def": 34,
-        "eva": 0.11,
-        "rarity": "EPIC",
-        "perfPrefix": "",
-        "adjective": "mortal",
-        "affix": {
-          "id": "CLEANSE"
-        }
-      },
-      {
         "id": "deity_splinter_dagger::TIlM9Ujo",
         "type": "weapon",
         "price": 3500,
@@ -396,11 +357,8 @@
         "affix": {
           "id": "DOOMSDAY"
         }
-      }
-    ],
-    "inventoryMax": 45,
-    "equipped": {
-      "armor": {
+      },
+      {
         "id": "ethereal_thought_shroud::WsAjK6xV",
         "type": "armor",
         "price": 2600,
@@ -423,6 +381,24 @@
             "unEquipCaution": "장비 해제 시 소환된 스켈레톤 중 일부가 영혼으로 돌아갑니다."
           },
           "value": 4
+        }
+      }
+    ],
+    "inventoryMax": 45,
+    "equipped": {
+      "armor": {
+        "id": "divine_remnant_armor::oms06U7H",
+        "type": "armor",
+        "price": 2400,
+        "sellPrice": 550,
+        "quantity": 1,
+        "def": 34,
+        "eva": 0.11,
+        "rarity": "EPIC",
+        "perfPrefix": "",
+        "adjective": "mortal",
+        "affix": {
+          "id": "CLEANSE"
         }
       },
       "weapon": {

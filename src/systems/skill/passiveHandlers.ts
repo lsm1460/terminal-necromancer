@@ -191,7 +191,7 @@ export const PASSIVE_EFFECTS: Record<string, PassiveDefinition> = {
     onBeforeAttack: async (attacker, defender, skill, battle) => {
       if (!attacker.ref.isAlive) return
 
-      if (!skill.options?.spawnMonsterId || Math.random() >= 0.6) return
+      if (!skill.options?.spawnMonsterId || Math.random() >= 0.4) return
 
       const unit = battle._spawnMonster(skill.options.spawnMonsterId)
 

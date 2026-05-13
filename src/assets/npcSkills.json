@@ -683,7 +683,7 @@
     "name": "그림자 묶기",
     "attackType": "ranged",
     "description": "가장 강한 적 3명을 묶고 이를 감시하는 파수꾼을 만들어냅니다.",
-    "chance": 0.4,
+    "chance": 0.3,
     "targetType": "ENEMY_ALL"
   },
   "return_to_ash": {
@@ -778,7 +778,7 @@
     "attackType": "ranged",
     "description": "무작위 적군에게 낙인 부여, 낙인이 찍힌 대상은 수확 대상이 됩니다.",
     "chance": 0.7,
-    "power": 1.8,
+    "power": 1.2,
     "targetType": "ENEMY_RANDOM",
     "buff": {
       "id": "death_stigma",
@@ -840,12 +840,12 @@
     "id": "soul_detonator",
     "name": "영혼 기폭",
     "description": "2턴 뒤 저주받은 대상이 폭발하여 아군에게 피해를 준 뒤 사망하는 저주를 부여합니다.",
-    "chance": 0.6,
+    "chance": 0.4,
     "targetType": "ENEMY_ALL",
     "buff": {
       "id": "soul_detonator",
       "type": "bind",
-      "duration": 2
+      "duration": 3
     }
   },
   "call_agents": {
