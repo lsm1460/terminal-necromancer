@@ -44,7 +44,7 @@ class BossEvent {
 
     if (isWin) {
       bossNpc.hp = 0
-      bossNpc.isAlive = false
+      npcs.setAlive(bossNpc.id, false)
 
       bossNpc.dead({ karma: 0 })
       if (bossLogic?.onVictory) {
@@ -63,6 +63,9 @@ class BossEvent {
       if (bossLogic?.defeatTalk) {
         await speak(bossLogic.defeatTalk)
       }
+    } else {
+      bossNpc.hp = bossNpc.maxHp
+      npcs.setAlive(bossNpc.id)
     }
   }
 
