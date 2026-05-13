@@ -683,7 +683,7 @@
     "name": "그림자 묶기",
     "attackType": "ranged",
     "description": "가장 강한 적 3명을 묶고 이를 감시하는 파수꾼을 만들어냅니다.",
-    "chance": 0.5,
+    "chance": 0.4,
     "targetType": "ENEMY_ALL"
   },
   "return_to_ash": {
@@ -840,7 +840,7 @@
     "id": "soul_detonator",
     "name": "영혼 기폭",
     "description": "2턴 뒤 저주받은 대상이 폭발하여 아군에게 피해를 준 뒤 사망하는 저주를 부여합니다.",
-    "chance": 0.5,
+    "chance": 0.6,
     "targetType": "ENEMY_ALL",
     "buff": {
       "id": "soul_detonator",
@@ -852,7 +852,7 @@
     "id": "call_agents",
     "name": "요원 호출: 죽음의 집행",
     "description": "명령을 대기 중이던 요원들을 호출하여 즉각적인 사살 허가를 내립니다.",
-    "chance": 0.6,
+    "chance": 1,
     "targetType": "SELF",
     "type": "passive",
     "options": {
@@ -863,7 +863,7 @@
     "id": "soul_usurpation",
     "name": "영혼 찬탈",
     "description": "영혼에 새겨진 계약을 파기하고 사신의 노예로 귀속시킵니다. 배신한 골격은 이제 주인을 향해 칼날을 겨눕니다.",
-    "chance": 1,
+    "chance": 0.5,
     "targetType": "ENEMY_ALL"
   },
   "rain_of_the_deceased": {

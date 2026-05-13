@@ -42,7 +42,7 @@ export const boneStorm: ExecuteSkill<Necromancer> = async (player, skillContext,
 
 function calculateTotalBoneStormDamage(skeletons: any[]): number {
   const totalHp = skeletons.reduce((sum, sk) => sum + sk.hp, 0)
-  return Math.floor(totalHp * 0.3)
+  return Math.floor(totalHp * 0.8)
 }
 
 async function executeBoneStormAttack(

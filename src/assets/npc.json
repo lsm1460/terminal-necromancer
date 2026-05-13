@@ -98,8 +98,8 @@
   "death": {
     "id": "death",
     "attackType": "melee",
-    "hp": 2000,
-    "maxHp": 2000,
+    "hp": 1000,
+    "maxHp": 1000,
     "atk": 75,
     "def": 92,
     "agi": 60,
