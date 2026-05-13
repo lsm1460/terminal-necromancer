@@ -112,14 +112,26 @@
   },
   "report_caron_to_death": {
     "hostile": [
-      "Charon, the former administrator and pollutant of the underground sector, has been 'completely incinerated.' Beware of soul-fragment scattering caused by the brutal disposal method.",
+      "Caron, the former administrator and pollutant of the underground sector, has been 'completely incinerated.' Beware of soul-fragment scattering caused by the brutal disposal method.",
       "Execution of the code-violator is complete. Though the process bordered on butchery, the system records only the resulting cleanliness.",
       "The pollutant has been removed, but a 'killer intent' far more foul than his remains in the current sector. All residents are advised to avoid contact."
     ],
     "normal": [
-      "The signal for the criminal Charon—a defect in the management server—has been completely extinguished.",
+      "The signal for the criminal Caron—a defect in the management server—has been completely extinguished.",
       "The flow of souls, previously stagnant due to the defective unit, has been normalized. This execution is classified as a 'qualified disposal.'",
       "Situation concluded. All units cease agitation and return to your posts. The Reaper will perform the final inspection personally."
+    ]
+  },
+  "train_service_resumed": {
+    "hostile": [
+      "Notice: Dimensional trains from the VIP Lounge have resumed operations. Unclean entities reeking of death are strictly prohibited from approaching the boarding area.",
+      "The tracks have awakened, but there is no seat for you. This is the VIP Lounge, after all.",
+      "Notification: There is a page for a certain 'Necromancer' within the lounge."
+    ],
+    "normal": [
+      "Under the Reaper's grace, VIP Lounge train services have resumed. All shall pay homage to this marvelous order that operates on a perfect schedule.",
+      "The path to other realms has opened. Thanks to the Reaper's merciful rule, the flow has been restored; please proceed according to protocol without causing unnecessary commotion.",
+      "Notification: There is a page for a certain 'Necromancer' within the lounge."
     ]
   },
   "bridgeMemos": [

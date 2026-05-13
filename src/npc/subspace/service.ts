@@ -10,16 +10,20 @@ export const SubspaceService = {
     const hasHighHpSkeleton = player.skeleton.some((sk) => sk.maxHp >= 200)
     const isTutorialKnightPending = !events.isCompleted('tutorial_knight')
 
-    const isFourthBossDefeated = events.isCompleted('fourth_boss');
-    const isCaronActiveAlly = events.isCompleted('caron_is_mine') && !events.isCompleted('caron_is_dead');
-    const hasCaronNotJoinedYet = !events.isCompleted('join_caron');
+    const isFourthBossDefeated = events.isCompleted('fourth_boss')
+    const isCaronActiveAlly = events.isCompleted('caron_is_mine') && !events.isCompleted('caron_is_dead')
+    const hasCaronNotJoinedYet = !events.isCompleted('join_caron')
 
-    const canCaronJoinFinalBattle = isFourthBossDefeated && isCaronActiveAlly && hasCaronNotJoinedYet;
+    const canCaronJoinFinalBattle = isFourthBossDefeated && isCaronActiveAlly && hasCaronNotJoinedYet
+
+    const hasSuspicion =
+      isCaronActiveAlly && events.isCompleted('third_boss_kill_all') && !events.isCompleted('caron_has_suspicion')
 
     if (hasHighHpSkeleton && isTutorialKnightPending)
       return { name: 'tutorialPromotion', message: i18n.t('npc.subspace.choices.tutorial_knight') }
-    if (canCaronJoinFinalBattle) return { name: 'joinFinalBattle', message: i18n.t('npc.subspace.choices.join_final_battle') }
-
+    if (canCaronJoinFinalBattle)
+      return { name: 'joinFinalBattle', message: i18n.t('npc.subspace.choices.join_final_battle') }
+    if (hasSuspicion) return { name: 'suspicion', message: i18n.t('npc.subspace.choices.doubt') }
 
     return null
   },

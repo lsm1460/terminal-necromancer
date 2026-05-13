@@ -90,6 +90,10 @@ export const StoryActions = {
       await speak(i18n.t('npc.death.reaper_player_noticed', { returnObjects: true }) as string[])
     }
 
+    if (events.isCompleted('join_caron')) {
+      await speak(i18n.t('npc.death.reaper_caron_noticed', { returnObjects: true }) as string[])
+    }
+
     const npc = npcs.getNPC('death')!
     await battle.runCombatLoop([battle.toCombatUnit(npc, 'npc')], world)
 

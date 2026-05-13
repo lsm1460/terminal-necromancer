@@ -2,19 +2,19 @@
   "player": {
     "id": "player",
     "name": "player",
-    "x": 5,
+    "x": 3,
     "y": 1,
     "_maxHp": 340,
-    "hp": 340,
+    "hp": 76,
     "_maxMp": 50,
     "mp": 50,
-    "atk": 15,
-    "def": 7,
+    "atk": 1000,
+    "def": 1000,
     "agi": 5,
     "eva": 0,
     "crit": 0,
-    "gold": 991,
-    "exp": 9700,
+    "gold": 247,
+    "exp": 14005,
     "level": 8,
     "unlockedSkills": [
       "RAISE_SKELETON",
@@ -26,7 +26,7 @@
       "SOUL_TRANSFER",
       "BONE_STORM"
     ],
-    "karma": 7,
+    "karma": 11,
     "_maxMemorize": 5,
     "memorize": [
       "RAISE_SKELETON",
@@ -35,129 +35,7 @@
       "CORPSE_EXPLOSION",
       "BONE_PRISON"
     ],
-    "_skeleton": [
-      {
-        "id": "skeleton_warrior::1778637283400",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 워리어",
-        "attackType": "melee",
-        "maxHp": 144,
-        "hp": 144,
-        "atk": 63,
-        "def": 28,
-        "agi": 24,
-        "eva": 0,
-        "skills": [
-          "whirlwind"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[지혜]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_wisdom::Zxx3Y-GE",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 7
-      },
-      {
-        "id": "skeleton_priest::1778637285226",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 사제",
-        "attackType": "ranged",
-        "maxHp": 120,
-        "hp": 120,
-        "atk": 25,
-        "def": 21,
-        "agi": 24,
-        "eva": 0,
-        "skills": [
-          "holy_radiance"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[지혜]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_wisdom::RKVjybyR",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 45
-      },
-      {
-        "id": "skeleton_priest::1778637286234",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 사제",
-        "attackType": "ranged",
-        "maxHp": 120,
-        "hp": 120,
-        "atk": 25,
-        "def": 21,
-        "agi": 24,
-        "eva": 0,
-        "skills": [
-          "holy_radiance"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[지혜]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_wisdom::-UmpxtcP",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 45
-      },
-      {
-        "id": "skeleton_electromancer::1778637287194",
-        "name": "\u001b[35m[EPIC]\u001b[0m skeleton 전격술사",
-        "attackType": "ranged",
-        "maxHp": 156,
-        "hp": 156,
-        "atk": 58,
-        "def": 21,
-        "agi": 8,
-        "eva": 0,
-        "skills": [
-          "lightning_bolt",
-          "lightning_storm"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_mercy::2mxd-0ts",
-        "rarity": "epic",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 30
-      },
-      {
-        "id": "skeleton_king::1778637293074",
-        "name": "\u001b[33m[LEGENDARY]\u001b[0m skeleton 해골 왕",
-        "attackType": "melee",
-        "maxHp": 280,
-        "hp": 280,
-        "atk": 74,
-        "def": 43,
-        "agi": 9,
-        "eva": 0,
-        "skills": [
-          "death_aura"
-        ],
-        "exp": 0,
-        "description": "죽은 신의 편린[자애]의 유골로 만들어진 소환수입니다.",
-        "originId": "fragment_of_dead_god_mercy::TKswV12N",
-        "rarity": "legendary",
-        "dropTableId": "",
-        "encounterRate": 0,
-        "isAlive": true,
-        "isMinion": true,
-        "isSkeleton": true,
-        "orderWeight": 55
-      }
-    ],
+    "_skeleton": [],
     "_mercenary": [],
     "_golem": {
       "id": "golem",
@@ -165,7 +43,7 @@
       "attackType": "melee",
       "baseMaxHp": 80,
       "maxHp": 80,
-      "hp": 380,
+      "hp": 0,
       "baseAtk": 30,
       "atk": 30,
       "baseDef": 20,
@@ -176,7 +54,7 @@
       "description": "",
       "dropTableId": "",
       "encounterRate": 0,
-      "isAlive": true,
+      "isAlive": false,
       "skills": [
         "power_smash"
       ],
@@ -189,7 +67,7 @@
       "id": "_knight",
       "name": "",
       "attackType": "melee",
-      "hp": 360,
+      "hp": 0,
       "baseMaxHp": 360,
       "maxHp": 360,
       "baseAtk": 32,
@@ -200,7 +78,7 @@
       "exp": 0,
       "agi": 37,
       "encounterRate": 0,
-      "isAlive": true,
+      "isAlive": false,
       "isMinion": true,
       "isKnight": true,
       "description": "",
@@ -788,10 +666,10 @@
   },
   "drop": {
     "scendId": "B1_Subway_Entrance",
-    "id": "xrngjbyW",
+    "id": "jPEIRC6m",
     "tileId": "B1_007",
-    "exp": 6050,
-    "gold": 828
+    "exp": 19005,
+    "gold": 248
   },
   "config": {
     "locale": "ko"
@@ -822,6 +700,7 @@
     "b5_elias",
     "b5_dax",
     "fourth_boss",
-    "caron_is_dead"
+    "caron_is_dead",
+    "death"
   ]
 }

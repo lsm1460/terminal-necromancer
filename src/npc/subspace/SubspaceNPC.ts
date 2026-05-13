@@ -49,6 +49,9 @@ export class SubspaceNPC extends GameNPC {
       case 'joinFinalBattle':
         await SubspaceActions.handleJoinFinalBattle(context.events)
         break
+      case 'suspicion':
+        await SubspaceActions.handleSuspicion(context.events)
+        break
     }
     return true
   }

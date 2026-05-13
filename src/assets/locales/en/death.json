@@ -17,10 +17,11 @@
   },
   "deathLine": "The Reaper's form crumbles away and vanishes into nothingness.",
   "description": "The incarnation of demise, awaiting you at the end of the Terminal where all flows have ceased.",
-  "levelup": "✨ Level Up",
-  "report_charon": "💀 Report the traces of Charon",
-  "expand_legion": "🦴 Expand Skeleton Legion",
-  "unlock_skills": "🔮 Transcribe Skills",
+  "choice": {
+    "levelup": "✨ Level Up",
+    "report_caron": "💀 Report the traces of Caron",
+    "unlock_skills": "🔮 Transcribe Skills"
+  },
   
   "intro": {
     "still_working": "The Reaper: \"Still not finished with the cleanup? Return to me once you are done...\"",
@@ -67,7 +68,7 @@
     "Reaper: \"(Scanning you with cold eyes) Your brutish habits haven't changed a bit. \nDo you have any idea how much essence it costs to restore that Golem?\"",
     "Reaper: \"Tch... fine. There's no use blaming broken scrap. \nRight now, there is 'filth with a far worse stench' that needs clearing.\"",
     "Reaper: \"There was a rat who dared to deceive my eyes, trying to smuggle his own flesh and blood into sub-space. \nThat child was personally eradicated by my hand, yet it seems the father still hasn't let go of his lingering attachments.\"",
-    "Reaper: \"Go down to B4 immediately. \nFind [Charon], the former low-level official who fled and is hiding deep within that derelict zone.\"",
+    "Reaper: \"Go down to B4 immediately. \nFind [Caron], the former low-level official who fled and is hiding deep within that derelict zone.\"",
     "Reaper: \"Go and sever his breath. Bring his soul fragments before me. \nFor a filthy traitor, the only fitting end is to return to complete 'nothingness'.\"",
     "Reaper: \"Remember. If you complicate things this time... \nI will carve the very despair he felt directly into your shadow. Now, begone.\""
   ],
@@ -81,7 +82,7 @@
       "Reaper: \"...No matter. What's important is that the essence of the soul has been recovered here.\""
     ],
     "loyal": [
-      "Reaper: \"You've returned. I see that a final period has at last been marked over Charon's name in the ledger.\"",
+      "Reaper: \"You've returned. I see that a final period has at last been marked over Caron's name in the ledger.\"",
       "Reaper: \"(Pointing at the cold, lifeless shard) This is the end for an official who defied providence, blinded by the grief of losing a child.\"",
       "Reaper: \"You have wiped away the stain of 'personal emotion' quite thoroughly.\"",
       "Reaper: \"As promised, I shall use this essence you've brought as the key to unbind your soul's shackles.\"",
@@ -141,5 +142,11 @@
     "Reaper: \"(Slowly rising from his seat) The shadow I bound to you... has scattered without a trace. It wasn't forced off. The power dwelling within you has devoured my mana and erased it.\"",
     "Reaper: \"That look in your eyes, yes... It is the gaze of the so-called 'Great Necromancer' who once drenched the continent of the living in blood and commanded empires.\"",
     "Reaper: \"Amusing. Do you dare... as a mere slave who once had a leash fastened by his master, to play the hunter again?\""
+  ],
+
+  "reaper_caron_noticed": [
+    "Reaper: \"...And Caron, it was you. The traitor lurking like a rat behind my shadow, waiting for a chance.\"",
+    "Reaper: \"What a waste of the noble title 'Steward of the Abyss.' Was your true nature always to cling to the bones of that fallen monarch?\"",
+    "Reaper: \"There is only one fate for a hound that betrays its master. I will bury you forever in the very abyss you hold so dear.\""
   ]
 }

@@ -1,6 +1,6 @@
 {
   "caron_alive": {
-    "name": "Charon",
+    "name": "Caron",
     "lines": [
       "This is a place where the Reaper's eyes cannot reach.",
       "I shall hide in your shadow and await the moment.",
@@ -41,7 +41,7 @@
       }
     },
     "deathLine": "......My...... Child......",
-    "description": "A bizarre familiar crafted from the usurped essence of Charon. Its self-awareness has vanished, and it manipulates void space only in response to your mana."
+    "description": "A bizarre familiar crafted from the usurped essence of Caron. Its self-awareness has vanished, and it manipulates void space only in response to your mana."
   },
   "vesper": {
     "name": "Vesper the Naive",

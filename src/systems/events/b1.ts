@@ -4,7 +4,13 @@ import { EventHandler } from '.'
 
 export const b1Handlers: Record<string, EventHandler> = {
   'event-00': async (tile, context) => {
-    context.events.completeEvent('START_GAME')
+    const { events } = context
+
+    events.completeEvent('START_GAME')
+
+    if (events.isCompleted('death') && !events.isCompleted('train_service_resumed')) {
+      events.completeEvent('train_service_resumed')
+    }
   },
 
   'event-01': async (tile, context) => {

@@ -12,8 +12,8 @@ export class DeathNPC extends GameNPC {
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
-      { name: 'levelUp', message: i18n.t('npc.death.levelup') },
-      { name: 'unlock', message: i18n.t('npc.death.unlock_skills') }
+      { name: 'levelUp', message: i18n.t('npc.death.choice.levelup') },
+      { name: 'unlock', message: i18n.t('npc.death.choice.unlock_skills') }
     ]
   }
 

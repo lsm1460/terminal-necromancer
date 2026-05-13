@@ -12,3 +12,9 @@ export const handleJoinFinalBattle = async (_events: EventLedger) => {
 
   _events.completeEvent('join_caron')
 }
+
+export const handleSuspicion = async (_events: EventLedger) => {
+  await speak(i18n.t('npc.subspace.has_suspicion', { returnObjects: true }) as string[])
+
+  _events.completeEvent('caron_has_suspicion')
+}

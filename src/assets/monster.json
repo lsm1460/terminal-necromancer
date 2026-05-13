@@ -9,7 +9,7 @@
     "agi": 8,
     "exp": 5,
     "skills": ["resist_bind", "resist_dot", "shadow_bind", "soul_usurpation", "rain_of_the_deceased"],
-    "dropTableId": "test_drop",
+    "dropTableId": "origin_loot",
     "preemptive": true,
     "noCorpse": true
   },

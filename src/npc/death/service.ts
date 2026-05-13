@@ -17,7 +17,7 @@ export const DeathService = {
 
     const isB6Completed = events.isCompleted('fourth_boss')
 
-    if (caronFinished && !caronReported) return { name: 'reportCaron', message: i18n.t('npc.death.report_charon') }
+    if (caronFinished && !caronReported) return { name: 'reportCaron', message: i18n.t('npc.death.choice.report_caron') }
     if (!isB2Completed) return { name: 'intro', message: i18n.t('talk.speak') }
     if (isB2Completed && !isSecond) return { name: 'tutorialOver', message: i18n.t('talk.speak') }
     if (isB3Completed && !isThird) return { name: 'defeatGolem', message: i18n.t('talk.speak') }

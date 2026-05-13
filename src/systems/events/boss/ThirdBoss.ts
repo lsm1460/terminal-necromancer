@@ -104,7 +104,6 @@ export class ThirdBoss implements BossLogic {
       await speak(victoryLines)
     }
 
-    events.completeEvent(`third_boss`)
     events.completeEvent(`third_boss_${this.selectedSide}`)
 
     const boss = npcs.getNPC('third_boss')

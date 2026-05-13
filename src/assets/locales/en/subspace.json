@@ -5,7 +5,8 @@
     "mix": "♻️ Skeleton Fusion",
     "tutorial_knight": "📖 Dark Knight Initiate",
     "promotion": "🛡️ Dark Knight Promotion",
-    "join_final_battle": "🔗 Charon Joins the Fray"
+    "join_final_battle": "🔗 Caron Joins the Fray",
+    "doubt": "🧩 Caron's Suspicion"
   },
   "increase_limit": {
     "status": "Current Soul Fragments: {{current}} / Required: {{cost}}",
@@ -115,11 +116,17 @@
     "msg_swap": "\n🔄 [Swap] The positions of {{name}} have been interchanged within the spatial distortion."
   },
   "join_fray": [
-    "Charon: \"My Lord, the time has finally come to put down the final period.\"",
-    "Charon: \"As promised, I shall become the shadow of this battlefield and support your blade.\"",
-    "Charon: \"However, my Lord, keep one thing in mind: the Reaper I have watched for centuries was never merely a figure wielding a scythe.\"",
-    "Charon: \"I suspect that the form we see now... may be nothing more than a false veneer woven from the fears of mortals.\"",
-    "Charon: \"If that is so, the true essence of 'Death' lurking beyond that mist will be far more loathsome than anything we can imagine.\"",
-    "Charon: \"...Let us go. It is time to prove that you are the only fracture capable of shattering those deceitful laws.\""
+    "Caron: \"My Lord, the time has finally come to put down the final period.\"",
+    "Caron: \"As promised, I shall become the shadow of this battlefield and support your blade.\"",
+    "Caron: \"However, my Lord, keep one thing in mind: the Reaper I have watched for centuries was never merely a figure wielding a scythe.\"",
+    "Caron: \"I suspect that the form we see now... may be nothing more than a false veneer woven from the fears of mortals.\"",
+    "Caron: \"If that is so, the true essence of 'Death' lurking beyond that mist will be far more loathsome than anything we can imagine.\"",
+    "Caron: \"...Let us go. It is time to prove that you are the only fracture capable of shattering those deceitful laws.\""
+  ],
+  "has_suspicion": [
+    "Caron: \"...My Lord, what transpired in the VIP Lounge was far beyond my expectations.\"",
+    "Caron: \"The resistance is one thing, but you slaughtered even the trembling, innocent hostages—leaving not a single soul alive.\"",
+    "Caron: \"Looking at your blade, stained with their mingled blood, I cannot help but ask: Are you trying to dismantle the Reaper's laws, or are you merely striving to become a new Reaper, more cruel than the last?\"",
+    "Caron: \"...I begin to fear what kind of calamity my presence by your side will unleash upon this world.\""
   ]
 }

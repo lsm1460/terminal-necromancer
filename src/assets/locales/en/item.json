@@ -220,8 +220,8 @@
     "description": "A staff infused with phantom ectoplasm. Emits mana and an unpleasant scream with every swing."
   },
   "caron_staff": {
-    "label": "Charon's Staff",
-    "description": "The staff favored by Charon. You can feel a power that warps space itself."
+    "label": "Caron's Staff",
+    "description": "The staff favored by Caron. You can feel a power that warps space itself."
   },
   "luxury_shoes": {
     "label": "Blood-Stained Shoes",
@@ -319,5 +319,13 @@
   "resistance_standard_issue_blade": {
     "label": "Resistance Standard-Issue Blade",
     "description": "A standard-issue melee weapon distributed to regular forces, crafted for overwhelming raw power and durability rather than precision."
+  },
+  "true_ending_hint": {
+    "label": "Letter stamped with a Mouse paw print from the VIP Lounge",
+    "description": "A letter from 'MJ the Panda Mouse' complaining about the delay of the train heading to another dimension."
+  },
+  "true_ending_key": {
+    "label": "Cycle of Reincarnation",
+    "description": "An artifact obtained after resolving an incident in another dimension, capable of severing the cycle of rebirth."
   }
 }

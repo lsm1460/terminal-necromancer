@@ -69,7 +69,7 @@
   "system": {
     "recovery_log": "레지스탕스 기술자들이 당신의 상처를 치료하고 장비를 정비했습니다. 모든 수치가 회복되었습니다.",
     "move_confirm": "지금 바로 사신의 심장부로 진격하시겠습니까?",
-    "charon_distrust_confirm": "카론을 처단하고 그의 영혼마저 추출하시겠습니까?"
+    "caron_distrust_confirm": "카론을 처단하고 그의 영혼마저 추출하시겠습니까?"
   },
 
   "caron_distrust": [

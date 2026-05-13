@@ -1,7 +1,11 @@
 {
-  "test_drop": {
+  "death_loot": {
     "gold": [0, 0],
-    "items": [{ "itemId": "wood_stick", "chance": 1, "quantity": [1, 1], "minRarity": "EPIC" }]
+    "items": [{ "itemId": "true_ending_hint", "chance": 1, "quantity": [1, 1] }]
+  },
+  "origin_loot": {
+    "gold": [0, 0],
+    "items": [{ "itemId": "true_ending_key", "chance": 1, "quantity": [1, 1] }]
   },
   "tutorial_drop": {
     "gold": [0, 0],

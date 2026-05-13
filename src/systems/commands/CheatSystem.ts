@@ -24,6 +24,15 @@ export class CheatSystem implements ICommandSystem {
         },
       },
       {
+        key: 'power overwhelming',
+        execute: () => {
+          this.context.player.atk = 1000
+          this.context.player.def = 1000
+          Terminal.log('\n[Cheat] You have become death itself.')
+          return true
+        },
+      },
+      {
         key: 'sometimes, dead is better',
         execute: () => {
           const monster = this.context.monster.makeMonster('ghoul')

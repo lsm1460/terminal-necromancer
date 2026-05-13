@@ -320,5 +320,13 @@
   "resistance_standard_issue_blade": {
     "label": "레지스탕스 보급형 전투검",
     "description": "정규군에게 보급되는 표준 근접 병기로, 정교한 기술보다는 압도적인 파괴력과 내구성에 치중하여 제작되었습니다."
+  },
+  "true_ending_hint": {
+    "label": "VIP라운지에서 올라온 쥐 발바닥 모양 인장이 찍힌 편지",
+    "description": "MJ 더 팬더마우스가 다른 이계로 넘어가는 열차가 언제 오는지 항의하는 내용의 편지입니다."
+  },
+  "true_ending_key": {
+    "label": "윤회의 굴래",
+    "description": "다른 이계의 사건을 해결하고 받아온, 윤회를 끊어낼 수 있는 기물입니다."
   }
 }

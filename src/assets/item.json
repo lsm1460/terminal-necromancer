@@ -583,5 +583,17 @@
     "evaRange": [-0.02, 0.01],
     "price": 5750,
     "sellPrice": 1680
+  },
+  "true_ending_hint": {
+    "id": "true_ending_hint",
+    "type": "item",
+    "price": 200000,
+    "sellPrice": 100000
+  },
+  "true_ending_key": {
+    "id": "true_ending_key",
+    "type": "item",
+    "price": 200000,
+    "sellPrice": 100000
   }
 }

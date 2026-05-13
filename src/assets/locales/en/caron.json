@@ -1,5 +1,5 @@
 {
-  "name": "Charon",
+  "name": "Caron",
   "lines": ["..."],
   "scripts": {
     "friendly": { "greeting": "", "farewell": "" },
@@ -7,7 +7,7 @@
     "hostile": { "greeting": "", "farewell": "" }
   },
   "deathLine": "Ah... Ahhh... my child... ending up like this without even reaching revenge...",
-  "description": "Emerging from a tear in twisted space-time, Charon stares at you while exuding an abyssal murderous intent.",
+  "description": "Emerging from a tear in twisted space-time, Caron stares at you while exuding an abyssal murderous intent.",
   "battle": "💀 Clean up (Battle)",
   "relocate": {
     "default_observe": "...Nothing but ruins can be seen.",

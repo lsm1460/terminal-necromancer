@@ -47,6 +47,8 @@ class BossEvent {
       npcs.setAlive(bossNpc.id, false)
 
       bossNpc.dead({ karma: 0 })
+      events.completeEvent(bossId)
+
       if (bossLogic?.onVictory) {
         const _res = await bossLogic.onVictory(bossNpc, context)
 
@@ -54,8 +56,6 @@ class BossEvent {
           return 'exit'
         }
       }
-
-      events.completeEvent(bossId)
 
       this.spawnPortal(tile)
 

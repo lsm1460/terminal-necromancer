@@ -72,7 +72,7 @@
   "system": {
     "recovery_log": "The Resistance technicians have treated your wounds and tuned your gear. All stats have been fully restored.",
     "move_confirm": "Will you advance to the heart of the Reaper's domain right now?",
-    "charon_distrust_confirm": "Will you execute Charon and extract his soul?"
+    "caron_distrust_confirm": "Will you execute Caron and extract his soul?"
   },
 
   "caron_distrust": [
