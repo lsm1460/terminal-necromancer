@@ -21,8 +21,7 @@
   "report_charon": "💀 Report the traces of Charon",
   "expand_legion": "🦴 Expand Skeleton Legion",
   "unlock_skills": "🔮 Transcribe Skills",
-  "engrave_skills": "📜 Engrave Skills",
-
+  
   "intro": {
     "still_working": "The Reaper: \"Still not finished with the cleanup? Return to me once you are done...\"",
     "dialogues": [
@@ -52,20 +51,6 @@
     "select_prompt": "Select a skill to inherit (Available Soul Fragments: {{exp}})",
     "success": "\n💀 [Acquired] Heh... Do not forget the '{{name}}' etched into your soul..",
     "fail": "\n[Failed] You do not meet the requirements."
-  },
-
-  "memorize": {
-    "welcome_grown": "Reaper: \"Oho... The vessel of your soul has grown. You can now withstand more techniques.\"",
-    "welcome_default": "Reaper: \"Choose the techniques to be etched upon your soul...\"",
-    "limit_info": "(Current Memorize Limit: {{max}})",
-    "select_prompt": "Select skills to memorize (Max {{max}})",
-    "skill_format": "{{name}} | Cost: {{cost}} | {{description}}",
-    "validate_min": "You must select at least one skill.",
-    "validate_max": "You can only select up to {{max}} skills.",
-    "exit_grown": "Reaper: \"May that bloated knowledge not lead you to ruin...\"",
-    "exit_default": "Reaper: \"I hope your choice was a wise one...\"",
-    "system_complete": "[ System: {{count}} skills have been memorized. ]",
-    "cancel": "\nReaper: \"Hesitation leads only to death...\" (Selection cancelled.)"
   },
 
   "tutorial_over": [

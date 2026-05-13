@@ -1,9 +1,7 @@
-import { Player } from '~/core/player/Player'
 import { Skill } from '~/core/types'
 import i18n from '~/i18n'
 import { getPlayerSkills } from '~/systems/skill/player'
 import { AppContext } from '~/systems/types'
-import { SkillId } from '~/types'
 
 export const DeathService = {
   getActiveQuest(context: AppContext) {
@@ -49,27 +47,5 @@ export const DeathService = {
         disabled: !isUnlocked || !canAfford,
       }
     })
-  },
-
-  getMemorizeChoices(player: Player) {
-    const playerSkills = getPlayerSkills()
-
-    return player.unlockedSkills
-      .map((id) => (playerSkills as any)[id])
-      .filter(Boolean)
-      .map((s: Skill) => ({
-        name: s.name,
-        message: i18n.t('npc.death.memorize.skill_format', {
-          name: s.name.padEnd(12),
-          cost: String(s.cost).padStart(2),
-          description: s.description,
-        }),
-      }))
-  },
-
-  getSkillIdByName(name: string) {
-    const playerSkills = getPlayerSkills()
-    const entry = Object.entries(playerSkills).find(([, s]) => s.name === name)
-    return entry![0] as SkillId
   },
 }

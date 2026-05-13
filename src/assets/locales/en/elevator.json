@@ -19,7 +19,8 @@
   "description": "There are depths even deeper than this.",
 
   "choices": {
-    "elevate": "💬 Floor Selection"
+    "elevate": "💬 Floor Selection",
+    "engrave_skills": "📜 Engrave Skills"
   },
   "menu": {
     "title": "Which floor would you like to move to?",
@@ -41,5 +42,15 @@
     "\u001b[36m[System] Progress is only saved when traveling between areas via elevator.\u001b[0m",
     "\u001b[36m[System] With some exceptions, areas may be reset or altered upon leaving.\u001b[0m",
     "\u001b[36m[System] If you find the current floor too challenging, return to the Safe Zone to save.\u001b[0m"
-]
+  ],
+  "memorize": {
+    "welcome": "Necromancer (Monologue): 'Good... Time to prepare for battle.'",
+    "limit_info": "(Current Memorize Limit: {{max}})",
+    "select_prompt": "Select skills to memorize (Max {{max}})",
+    "skill_format": "{{name}} | Cost: {{cost}} | {{description}}",
+    "validate_min": "You must select at least one skill.",
+    "validate_max": "You can only select up to {{max}} skills.",
+    "complete": "{{count}} skills have been memorized.",
+    "cancel": "\nSelection cancelled."
+  }
 }

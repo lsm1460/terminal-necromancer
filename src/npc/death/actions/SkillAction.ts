@@ -1,7 +1,5 @@
-import { INIT_MAX_MEMORIZE_COUNT } from '~/consts'
 import { Terminal } from '~/core'
 import i18n from '~/i18n'
-import { Necromancer } from '~/systems/job/necromancer/Necromancer'
 import { getPlayerSkills, SkillUtils } from '~/systems/skill/player'
 import { AppContext } from '~/systems/types'
 import { SkillId } from '~/types'
@@ -34,36 +32,4 @@ export const SkillActions = {
     }
     return true
   },
-
-  async handleMemorize(player: Necromancer) {
-    const playerSkills = getPlayerSkills()
-    const isSoulGrown = player.maxMemorize > INIT_MAX_MEMORIZE_COUNT
-    const welcomeMessage = isSoulGrown ? i18n.t('npc.death.memorize.welcome_grown') : i18n.t('npc.death.memorize.welcome_default')
-    
-    Terminal.log(`\n${welcomeMessage}\n${i18n.t('npc.death.memorize.limit_info', { max: player.maxMemorize })}`)
-
-    const skillChoices = DeathService.getMemorizeChoices(player)
-
-    try {
-      const selectedNames = await Terminal.multiselect(
-        i18n.t('npc.death.memorize.select_prompt', { max: player.maxMemorize }),
-        skillChoices,
-        { 
-          initial: player.memorize.map(id => playerSkills[id].name), 
-          maxChoices: player.maxMemorize 
-        }
-      )
-
-      if (selectedNames.length > player.maxMemorize) {
-        Terminal.log(i18n.t('npc.death.memorize.validate_max', { max: player.memorize.length }))
-        return true
-      }
-
-      player.memorize = selectedNames.map(name => DeathService.getSkillIdByName(name))
-      Terminal.log(i18n.t('npc.death.memorize.system_complete', { count: player.memorize.length }))
-    } catch {
-      Terminal.log(i18n.t('npc.death.memorize.cancel'))
-    }
-    return true
-  }
 }

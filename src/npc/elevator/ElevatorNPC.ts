@@ -1,9 +1,8 @@
-import { INpcManager, NPCState } from "~/core/types"
-import i18n from "~/i18n"
-import { GameNPC } from "~/systems/npc/GameNPC"
-import { AppContext } from "~/systems/types"
-import { ElevatorActions } from "./action"
-
+import { INpcManager, NPCState } from '~/core/types'
+import i18n from '~/i18n'
+import { GameNPC } from '~/systems/npc/GameNPC'
+import { AppContext } from '~/systems/types'
+import { ElevatorActions } from './action'
 
 export class ElevatorNPC extends GameNPC {
   constructor(id: string, baseData: any, state: NPCState, manager: INpcManager) {
@@ -11,7 +10,10 @@ export class ElevatorNPC extends GameNPC {
   }
 
   getChoices() {
-    return [{ name: 'elevate', message: i18n.t('npc.elevator.choices.elevate') }]
+    return [
+      { name: 'elevate', message: i18n.t('npc.elevator.choices.elevate') },
+      { name: 'memorize', message: i18n.t('npc.elevator.choices.engrave_skills') },
+    ]
   }
 
   hasQuest() {
@@ -22,6 +24,8 @@ export class ElevatorNPC extends GameNPC {
     switch (action) {
       case 'elevate':
         return await ElevatorActions.handleElevate(context)
+      case 'memorize':
+        return await ElevatorActions.handleMemorize(context.player)
       default:
         return
     }

@@ -13,8 +13,7 @@ export class DeathNPC extends GameNPC {
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
       { name: 'levelUp', message: i18n.t('npc.death.levelup') },
-      { name: 'unlock', message: i18n.t('npc.death.unlock_skills') },
-      { name: 'memorize', message: i18n.t('npc.death.engrave_skills') },
+      { name: 'unlock', message: i18n.t('npc.death.unlock_skills') }
     ]
   }
 
@@ -32,9 +31,7 @@ export class DeathNPC extends GameNPC {
       // skill
       case 'unlock':
         return await DeathAction.handleUnlock(context)
-      case 'memorize':
-        return await DeathAction.handleMemorize(context.player)
-
+      
       // story
       case 'intro':
         return await DeathAction.handleIntro(context)
