@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { BattleDirector } from '~/core/battle/BattleDirector'
 import { CombatUnit } from '~/core/battle/unit/CombatUnit'
 import { useCombat } from '~/hooks/useCombat'
+import { useGame } from '~/hooks/useGame'
 import { WebBattleRenderer } from '~/renderers/BattleRenderer'
 import { useBattleStore } from '~/stores/useBattleStore'
 import { useGameStore } from '~/stores/useGameStore'
@@ -12,6 +13,7 @@ import { UnitState } from './UnitState'
 export const BattleStage: React.FC = () => {
   const { t } = useTranslation()
   const logs = useGameStore((state) => state.logs)
+  const { getConfig } = useGame()
   const { getCorpsesCount, getSortedPlayerSide, getSortedEnemySide } = useCombat()
   const { inBattle, playerSide: originPlayerSide, enemiesSide: originEnemiesSide } = useBattleStore()
 
@@ -23,6 +25,8 @@ export const BattleStage: React.FC = () => {
 
   const BASE_WIDTH = 800
   const BASE_HEIGHT = 350
+
+  const onBattleScene = useMemo(() => getConfig()?.visibleBattle, [getConfig])
 
   useEffect(() => {
     if (!parentRef.current) return
@@ -78,9 +82,9 @@ export const BattleStage: React.FC = () => {
   return (
     <div
       ref={parentRef}
-      className="absolute w-full h-full min-h-[400px] flex flex-col items-center overflow-hidden pointer-events-none pt-4"
+      className="absolute w-full h-full min-h-[400px] flex flex-col items-center overflow-hidden pointer-events-none pt-4 z-10"
     >
-      {inBattle && (
+      {onBattleScene && inBattle && (
         <div
           className="pointer-events-auto border border-primary bg-black/50 backdrop-blur-[3px] font-mono text-primary shadow-[0_0_20px_rgba(6,182,212,0.2)]"
           style={{

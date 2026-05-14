@@ -4,6 +4,7 @@ import { IConfigSystem } from '~/core/types'
 export type ConfigData = {
   locale?: 'ko' | 'en'
   isSearchFirst?: boolean
+  visibleBattle?: boolean
   isAutoInputFocus?: boolean
 }
 

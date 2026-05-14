@@ -17,14 +17,16 @@ export const ConfigScreen: ScreenComponent = () => {
   
   const [config, setConfig] = useState({
     isSearchFirst: false,
+    visibleBattle: true,
     isAutoInputFocus: false,
   })
 
   useEffect(() => {
     if (isOpenConfigMenu) {
-      const { isSearchFirst, isAutoInputFocus } = getConfig()
+      const { isSearchFirst, isAutoInputFocus, visibleBattle } = getConfig()
       setConfig({ 
         isSearchFirst: isSearchFirst || false,
+        visibleBattle: visibleBattle ?? true,
         isAutoInputFocus: isAutoInputFocus || false,
       })
     }
@@ -50,6 +52,11 @@ export const ConfigScreen: ScreenComponent = () => {
           key: 'isAutoInputFocus' as const,
           label: t('web.config.focus.label'),
           description: t('web.config.focus.description'),
+        },
+        {
+          key: 'visibleBattle' as const,
+          label: t('web.config.battle.label'),
+          description: t('web.config.battle.description'),
         },
       ],
     },
