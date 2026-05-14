@@ -46,11 +46,13 @@ export class Ending {
           await speak(i18n.t(`ending.ending0.stay`, { returnObjects: true }) as string[])
         }
         await delay()
+        eventBus.emitAsync(GameEventType.COMPLETE_EVENT, 'ENDING_0')
         Terminal.log(i18n.t('ending.ending0.title'))
       } else {
         events.completeEvent('true_ending_flag')
         await speak(i18n.t(`ending.ending1.dialogue`, { returnObjects: true }) as string[])
         await delay()
+        eventBus.emitAsync(GameEventType.COMPLETE_EVENT, 'ENDING_1')
         Terminal.log(i18n.t('ending.ending1.title'))
       }
     } else if (caronIsDead && killAll && player.karma >= 10) {
@@ -58,30 +60,35 @@ export class Ending {
       // 조건: b4에서 카론을 구하지 않음, 지하 5층 vip 라운지에서 모두를 학살함
       await speak(i18n.t(`ending.ending2.dialogue`, { returnObjects: true }) as string[])
       await delay()
+      eventBus.emitAsync(GameEventType.COMPLETE_EVENT, 'ENDING_2')
       Terminal.log(i18n.t('ending.ending2.title'))
     } else if (!fightWithResistance && caronIsDead && deathIsAlive) {
       // 3. 죽음의 개
       // 조건: 레지스탕스의 편을 들지 않았고(kill all or with vip), 카론이 죽어 체제에 굴복함.
       await speak(i18n.t(`ending.ending3.dialogue`, { returnObjects: true }) as string[])
       await delay()
+      eventBus.emitAsync(GameEventType.COMPLETE_EVENT, 'ENDING_3')
       Terminal.log(i18n.t('ending.ending3.title'))
     } else if (isHostility && player.karma >= 10) {
       // 4. 폭정
       // 조건: 레지스탕스를 학살함, 진행하면서 죽인 npc 수 10명 이상
       await speak(i18n.t(`ending.ending4.dialogue`, { returnObjects: true }) as string[])
       await delay()
+      eventBus.emitAsync(GameEventType.COMPLETE_EVENT, 'ENDING_4')
       Terminal.log(i18n.t('ending.ending4.title'))
     } else if (vipIsSafe && contribution < 100) {
       // 5. 새로운 질서
       // 조건: VIP를 구출(질서 유지)했으나 기존 시스템에 속하지 않고 자신만의 세력을 구축함.
       await speak(i18n.t(`ending.ending5.dialogue`, { returnObjects: true }) as string[])
       await delay()
+      eventBus.emitAsync(GameEventType.COMPLETE_EVENT, 'ENDING_5')
       Terminal.log(i18n.t('ending.ending5.title'))
     } else {
       // 기본 엔딩: 방관자 (조건에 해당하지 않을 경우)
       // 카론을 살리고 레지스탕스에게 협력했으나 기여는 하지 않았다.
       await speak(i18n.t(`ending.ending6.dialogue`, { returnObjects: true }) as string[])
       await delay()
+      eventBus.emitAsync(GameEventType.COMPLETE_EVENT, 'ENDING_6')
       Terminal.log(i18n.t('ending.ending6.title'))
     }
 

@@ -6,7 +6,12 @@
     { "id": "LEGENDARY_RAISER", "hidden": false },
     { "id": "RESISTANCE_HERO", "hidden": false },
 
+    { "id": "ENDING_0", "hidden": true },
     { "id": "ENDING_1", "hidden": true },
-    { "id": "ENDING_2", "hidden": true }
+    { "id": "ENDING_2", "hidden": true },
+    { "id": "ENDING_3", "hidden": true },
+    { "id": "ENDING_4", "hidden": true },
+    { "id": "ENDING_5", "hidden": true },
+    { "id": "ENDING_6", "hidden": true }
   ]
 }

@@ -21,12 +21,32 @@
     "title": "Vanguard of Liberation",
     "description": "Reached 200 contribution points with the Resistance."
   },
+  "ENDING_0": {
+    "title": "Nirvana",
+    "description": "Severed all causal chains and attained eternal tranquility."
+  },
   "ENDING_1": {
-    "title": "The End of Truth",
-    "description": "Witnessed the first ending."
+    "title": "Revolution",
+    "description": "Ended the Reaper's reign and brought a new light to the Terminal."
   },
   "ENDING_2": {
-    "title": "Cycle of Samsara",
-    "description": "Witnessed the second ending."
+    "title": "Collapse",
+    "description": "Vanished into a vortex of extinction where neither order nor destruction matters."
+  },
+  "ENDING_3": {
+    "title": "Hound of Death",
+    "description": "Forsook your soul to be preserved as the Reaper's eternal servant."
+  },
+  "ENDING_4": {
+    "title": "Tyranny",
+    "description": "Usurped the Reaper and became the new master of dread."
+  },
+  "ENDING_5": {
+    "title": "The New Order",
+    "description": "Chose the cold, precise gears of rule over the chaos."
+  },
+  "ENDING_6": {
+    "title": "Bystander",
+    "description": "Chose to simply watch until the very end as the world crumbled."
   }
 }

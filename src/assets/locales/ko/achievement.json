@@ -21,12 +21,32 @@
     "title": "해방의 선봉장",
     "description": "레지스탕스 공헌도 200을 달성했습니다."
   },
+  "ENDING_0": {
+    "title": "열반",
+    "description": "모든 인과를 끊어내고 완전한 안식에 도달했습니다."
+  },
   "ENDING_1": {
-    "title": "진실의 끝",
-    "description": "첫 번째 엔딩을 보았습니다."
+    "title": "혁명",
+    "description": "사신의 통치를 끝내고 터미널에 새로운 빛을 불러왔습니다."
   },
   "ENDING_2": {
-    "title": "반복되는 굴레",
-    "description": "두 번째 엔딩을 보았습니다."
+    "title": "붕괴",
+    "description": "질서도 파괴도 무의미한 소멸의 소용돌이 속으로 사라졌습니다."
+  },
+  "ENDING_3": {
+    "title": "죽음의 개",
+    "description": "자아를 버리고 사신의 영원한 충복으로 박제되었습니다."
+  },
+  "ENDING_4": {
+    "title": "폭정",
+    "description": "사신을 찬탈하고 스스로가 새로운 공포의 주인이 되었습니다."
+  },
+  "ENDING_5": {
+    "title": "새로운 질서",
+    "description": "혼돈 대신 정교하고 차가운 통치의 톱니바퀴를 선택했습니다."
+  },
+  "ENDING_6": {
+    "title": "방관",
+    "description": "무너져가는 세계를 끝까지 그저 지켜보기로 했습니다."
   }
 }

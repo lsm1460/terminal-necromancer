@@ -25,10 +25,13 @@ export class Title {
         const choices = [
           ...(hasSave ? [{ name: 'load', message: i18n.t(`title.load_game`) }] : []),
           { name: 'new', message: i18n.t(`title.new_game_start`) },
+          { name: 'achievements', message: i18n.t(`title.achievements`) },
           { name: 'config', message: i18n.t(`title.config`) },
           { name: 'exit', message: i18n.t(`title.exit`) },
         ]
 
+        Terminal.clear()
+        
         const menu = await Terminal.select(i18n.t(`title.title`), choices)
 
         if (menu === 'exit') {
@@ -69,6 +72,25 @@ export class Title {
 
             this.config.save(_config)
 
+            return this.gameStart(initState)
+          }
+        }
+
+        if (menu === 'achievements') {
+          Terminal.clear()
+          
+          this.achievement.list.forEach((ac) => {
+            const statusIcon = ac.resolved ? '✅' : '🔒'
+            const displayTitle = ac.hidden && !ac.resolved ? '????????' : ac.title
+            const displayDesc = ac.hidden && !ac.resolved ? i18n.t(`title.hidden_achievement`) : ac.description
+            const dateInfo = ac.date ? ` (${ac.date})` : ''
+
+            Terminal.log(`${statusIcon} [${displayTitle}] - ${displayDesc}${dateInfo}`)
+          })
+
+          const _res = await Terminal.select(' ', [{ name: 'cancel', message: i18n.t(`cancel`) }])
+
+          if (_res === 'cancel') {
             return this.gameStart(initState)
           }
         }

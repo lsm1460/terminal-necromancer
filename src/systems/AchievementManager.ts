@@ -97,7 +97,7 @@ export class AchievementManager {
     }
   }
 
-  get() {
+  get list() {
     return this.achievements.map((a) => ({
       ...a,
       title: a.hidden && !a.resolved ? '???' : i18n.t(`achievement.${a.id}.title`),
