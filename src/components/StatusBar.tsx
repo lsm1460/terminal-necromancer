@@ -4,12 +4,14 @@ import { Terminal } from '~/core'
 import { GameEventType } from '~/core/types'
 import { useGame } from '~/hooks/useGame'
 import i18n from '~/i18n'
+import { useBattleStore } from '~/stores/useBattleStore'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedButton } from './common/ThemedButton'
 
 export const StatusBar: React.FC<{ isGameOn: boolean }> = ({ isGameOn }) => {
   const { getPlayer, getContext } = useGame()
   const { logs, setScreen } = useGameStore((state) => state)
+  const { clear } = useBattleStore()
   const status = useMemo(() => {
     if (!isGameOn) return
 
@@ -33,12 +35,13 @@ export const StatusBar: React.FC<{ isGameOn: boolean }> = ({ isGameOn }) => {
   }, [getPlayer, getContext, logs, isGameOn])
 
   const handleExit = async () => {
-    const _res = await Terminal.confirm(i18n.t('web.save_and_exit'))
+    const _res = await Terminal.confirm(i18n.t('web.exit_to_title'))
 
     if (_res) {
       const context = getContext()
 
       if (context) {
+        clear()
         context.eventBus.emitAsync(GameEventType.SYSTEM_EXIT)
       }
     }
