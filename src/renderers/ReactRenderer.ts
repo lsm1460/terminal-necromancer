@@ -86,17 +86,22 @@ export class ReactRenderer implements Renderer {
     })
   }
 
-  private createButton(label: string, command: string, arg?: string): string {
-    const dataArg = arg ? ` data-arg="${arg}"` : ''
-    return `<button tabindex="-1" class="js-focus-ignore text-button" data-command="${command}"${dataArg}>${label}</button>`
+  private createButton(label: string, command: string, options?: { arg?: string; info?: string }): string {
+    let dataArg = ''
+    dataArg += options?.arg ? ` data-arg="${options.arg}"` : ''
+
+    return `<div class="text-button-wrap">
+      <button tabindex="-1" class="js-focus-ignore text-button" data-command="${command}"${dataArg}>${label}</button>
+      ${options?.info ? `<button class="additional-info" data-command="${options.info}">?</button>` : ''}
+    </div>`
   }
 
-  availableTalks(list: { name: string; hasQuest: boolean }[]) {
+  availableTalks(list: { name: string; hasQuest: boolean; observe: string }[]) {
     const aliveNames = list
-      .map(({ hasQuest, name }) => {
+      .map(({ hasQuest, name, observe }) => {
         const label = `${hasQuest ? '<span style="color: #00cc00">[!] </span>' : ''}${name}`
 
-        return this.createButton(label, 'talk', name)
+        return this.createButton(label, 'talk', { arg: name, info: observe })
       })
       .join(', ')
 
@@ -105,8 +110,10 @@ export class ReactRenderer implements Renderer {
     this.store.addLog(message)
   }
 
-  move(directions: string[]) {
-    const pathButtons = directions.map((path) => this.createButton(path, path)).join(', ')
+  move(directions: { direction: string; observe: string }[]) {
+    const pathButtons = directions
+      .map((path) => this.createButton(path.direction, path.direction, { info: path.observe }))
+      .join(', ')
 
     const message = `${i18n.t('paths_ahead')} ${pathButtons}`
 
@@ -114,11 +121,11 @@ export class ReactRenderer implements Renderer {
   }
 
   look(message: string, name: string, type: string) {
-    this.store.addLog(this.createButton(message, 'look', `${type} --${name}`))
+    this.store.addLog(this.createButton(message, 'look', { arg: `${type} --${name}` }))
   }
 
-  pick(origin: string, message: string) {
-    this.store.addLog(this.createButton(message || i18n.t('commands.pick'), 'pick', origin))
+  pick(origin: string, message: string, observe?: string) {
+    this.store.addLog(this.createButton(message || i18n.t('commands.pick'), 'pick', { arg: origin, info: observe }))
   }
 
   attack(message: string, prefix?: string) {
@@ -130,7 +137,7 @@ export class ReactRenderer implements Renderer {
   }
 
   talk(name: string) {
-    const log = this.createButton(i18n.t('web.talk_to', { name }), 'talk', name)
+    const log = this.createButton(i18n.t('web.talk_to', { name }), 'talk', { arg: name })
 
     this.store.addLog(log)
   }

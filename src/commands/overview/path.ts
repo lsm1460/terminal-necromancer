@@ -3,7 +3,12 @@ import { IMapManager, PositionType, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import { selectTarget } from './utils'
 
-export const printPath = (tile: Tile) => {
+export const printPath = (tile: Tile | null) => {
+  if (!tile) {
+    Terminal.log(i18n.t('commands.move.you_cannot_pass'))
+    return
+  }
+
   Terminal.log(i18n.t(`tiles.${tile?.id}.observe`))
   if (!tile?.isClear && tile?.event) {
     const eventId = tile.event
@@ -29,12 +34,12 @@ export const lookPath = async (
 
   const selected = await selectTarget(subChoices)
 
-  if (selected !== 'back') {
-    const target = paths.find((p) => p.label === selected)
+  if (selected === 'back') return selected
 
-    if (target && target.tile) {
-      printPath(target.tile)
-    }
+  const target = paths.find((p) => p.label === selected)
+
+  if (target && target.tile) {
+    printPath(target.tile)
   }
 
   return selected
@@ -59,4 +64,29 @@ export const getTileFromDirection = (pos: PositionType, map: IMapManager, direct
   const tile = map.getTile({ x, y }) as Tile | null
 
   return tile
+}
+
+export type AccessiblePath = {
+  direction: string
+  label: string
+  tile: Tile
+}
+
+export const getAccessiblePaths = (pos: PositionType, map: IMapManager): AccessiblePath[] => {
+  const directions = ['up', 'down', 'left', 'right']
+
+  return directions
+    .map((direction) => {
+      const tile = getTileFromDirection(pos, map, direction)
+      if (!tile) {
+        return null
+      }
+
+      return {
+        direction,
+        label: i18n.t(direction),
+        tile,
+      }
+    })
+    .filter((result): result is AccessiblePath => Boolean(result && result.tile))
 }

@@ -16,8 +16,12 @@
     "focus": {
       "label": "Auto-Input Focus",
       "description": "Immediately focuses the terminal input line after combat or events end."
+    },
+    "battle": {
+     "label": "Enable Battle Scene",
+      "description": "Displays a high-level overview of the battle status at the top of the screen."
     }
   },
 
-  "save_and_exit": "Save and return to title?"
+  "save_and_exit": "Unsaved progress will be lost. Return to title?"
 }

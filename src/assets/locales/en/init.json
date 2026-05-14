@@ -23,6 +23,8 @@
     "exit": "Exit",
     "load": "Entering the Twilight Realm...",
     "language": "Language",
+    "achievements": "Achievements",
+    "hidden_achievement": "This achievement is hidden.",
     "save_data_already_exists": "Save data already exists. Overwrite?",
     "start_game": "A new destiny begins...",
 

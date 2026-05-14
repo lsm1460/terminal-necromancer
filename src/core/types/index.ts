@@ -119,9 +119,9 @@ export interface Renderer<C = any> {
     choices: { name: string; message: string }[],
     options?: { initial?: string[]; maxChoices?: number }
   ): Promise<string[]>
-  move(directions: string[]): void
+  move(directions: {direction: string, observe: string}[]): void
   look(message: MessageSource, name: string, type: string): void
-  pick(name: string, message: MessageSource): void
+  pick(name: string, message: MessageSource, observe?: string): void
   attack(message: MessageSource, prefix?: string): void
   skill(message: MessageSource, prefix?: string): void
   talk(name: string): void

@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { BattleTarget, Terminal } from '~/core'
 import { BaseNPC } from '~/core/npc/BaseNPC'
-import { GameContext } from '~/core/types'
+import { GameContext, INpcManager, Tile } from '~/core/types'
 import i18n from '~/i18n'
 import GolemWrapper from '~/systems/job/necromancer/GolemWrapper'
 import KnightWrapper from '~/systems/job/necromancer/KnightWrapper'
@@ -9,7 +9,12 @@ import { IGolem, IKnight, IMinion } from '~/types'
 import { renderHpBar, selectTarget } from './utils'
 
 // 미니언 및 몬스터 정보 출력
-export const printEntity = (target: BattleTarget, context: GameContext) => {
+export const printEntity = (target: BattleTarget | undefined, context: GameContext) => {
+  if (!target) {
+    Terminal.log(i18n.t('commands.look.entity.not_found'))
+    return
+  }
+
   const { npcs, npcSkills } = context
 
   const isMinion = (target as IMinion).isMinion
@@ -162,3 +167,6 @@ export const lookBattleTarget = async (targets: BattleTarget[], context: GameCon
 
   return selected
 }
+
+export const getEntities = (tile: Tile | null, npcs: INpcManager) =>
+  (tile?.npcIds || []).map((id) => npcs.getNPC(id)).filter((npc) => npc?.isAlive) as BaseNPC[]

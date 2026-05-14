@@ -23,6 +23,8 @@
     "exit": "종료",
     "load": "황혼의 땅으로 진입합니다...",
     "language": "언어",
+    "achievements": "업적",
+    "hidden_achievement": "이 업적은 숨겨져 있습니다.",
     "save_data_already_exists": "이미 존재하는 저장 데이터가 있습니다. 덮어씌우시겠습니까?",
     "start_game": "새로운 운명이 시작됩니다...",
 

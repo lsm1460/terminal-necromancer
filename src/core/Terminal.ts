@@ -29,7 +29,7 @@ export class Terminal {
     return (await this.activeRenderer.select(title, choices, defaultValue)) as T
   }
 
-  public static availableTalks(list: { name: string; hasQuest: boolean }[]): void {
+  public static availableTalks(list: { name: string; hasQuest: boolean, observe: string }[]): void {
     this.activeRenderer.availableTalks(list)
   }
 
@@ -57,7 +57,7 @@ export class Terminal {
     return await this.activeRenderer.multiselect(message, choices, options)
   }
 
-  public static move(directions: string[]) {
+  public static move(directions: {direction: string, observe: string}[]) {
     this.activeRenderer.move(directions)
   }
 
@@ -65,8 +65,8 @@ export class Terminal {
     this.activeRenderer.look(message, name, type)
   }
 
-  public static pick(name: string, message: MessageSource) {
-    this.activeRenderer.pick(name, message)
+  public static pick(name: string, message: MessageSource, observe?: string) {
+    this.activeRenderer.pick(name, message, observe)
   }
 
   public static attack(message: MessageSource, prefix?: string) {

@@ -113,7 +113,8 @@
       "skills": {
         "label": " Skills:",
         "item": " • [{{name}}]: {{description}}"
-      }
+      },
+      "not_found": "Could not find the target."
     },
 
     "status": {

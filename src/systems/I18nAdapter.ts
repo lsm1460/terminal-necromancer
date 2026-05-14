@@ -50,9 +50,9 @@ export class I18nAdapter implements Renderer {
     if (parsed !== null) this.baseRenderer.look(parsed, name, type)
   }
 
-  pick(name: string, message: MessageSource): void {
+  pick(name: string, message: MessageSource, observe?: string): void {
     const parsed = this.parse(message)
-    if (parsed !== null) this.baseRenderer.pick(name, parsed)
+    if (parsed !== null) this.baseRenderer.pick(name, parsed, observe)
   }
 
   attack(message: MessageSource, prefix?: string): void {
@@ -91,7 +91,7 @@ export class I18nAdapter implements Renderer {
     return await this.baseRenderer.multiselect(message, choices, options)
   }
 
-  move(directions: string[]): void {
+  move(directions: {direction: string, observe: string}[]): void {
     this.baseRenderer.move(directions)
   }
 

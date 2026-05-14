@@ -47,9 +47,11 @@ export const LogWindow: React.FC = () => {
 
   const handleLogCommand = async (event: any) => {
     if (disabled) return
-    
+
     let { command, arg } = event.target.dataset
-    if (!command) return
+    if (!command) {
+      return
+    }
 
     if (arg) {
       command += ` --${arg}`
@@ -110,11 +112,27 @@ export const LogWindow: React.FC = () => {
       ref={scrollRef}
       onClick={handleLogCommand}
     >
-      {logs.map((log, i) => (
-        <div key={i} className="mb-1">
-          <AnsiHtml message={log} className="pointer-events-auto select-none" />
-        </div>
-      ))}
+      {logs.map((log, i) => {
+        let opacity = 1
+        const distanceFromLast = logs.length - 1 - i
+
+        if (distanceFromLast >= 18) {
+          opacity = Math.max(0.2, 1 - (distanceFromLast - 9) * 0.1)
+        }
+
+        return (
+          <div
+            key={i}
+            className="mb-1"
+            style={{
+              opacity,
+              transition: 'opacity 0.3s ease', // 새 로그가 올라올 때 부드럽게 흐려짐
+            }}
+          >
+            <AnsiHtml message={log} className="pointer-events-auto select-none flex flex-wrap items-center" />
+          </div>
+        )
+      })}
 
       <DecisionBox uiState={uiState} resolveUI={resolveUI} />
     </div>

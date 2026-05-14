@@ -81,8 +81,8 @@ export class CLIRenderer implements Renderer<AppContext> {
     return result
   }
 
-  move(directions: string[]) {
-    console.log(i18n.t('paths_ahead') + directions.join(', '))
+  move(directions: { direction: string; observe: string }[]) {
+    console.log(i18n.t('paths_ahead') + directions.map((d) => d.direction).join(', '))
   }
 
   look(message: string) {

@@ -31,7 +31,7 @@
     "footer": "---------------------------------------"
   },
   "move": {
-    "you_cannot_pass": "지나갈 수 없다.",
+    "you_cannot_pass": "지나갈 수 없습니다.",
     "cannot_escape": "\n🚫 {{name}}이(가) 주시하고 있어 도망칠 수 없다."
   },
   "look": {
@@ -113,7 +113,8 @@
       "skills": {
         "label": " 보유 기술:",
         "item": " • [{{name}}]: {{description}}"
-      }
+      },
+      "not_found": "대상을 찾을 수 없습니다."
     },
 
     "status": {

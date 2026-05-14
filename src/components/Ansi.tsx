@@ -15,13 +15,11 @@ const convert = new Convert({
 export const AnsiHtml: React.FC<AnsiHtmlProps> = ({ message, className = '' }) => {
   const htmlContent = useMemo(() => {
     if (!message) return ''
-    return convert.toHtml(message)
+    
+    return convert.toHtml(message.replace(/>\s+</g, '><').trim())
   }, [message])
 
   return (
-    <p
-      className={`break-keep whitespace-pre-wrap ${className}`}
-      dangerouslySetInnerHTML={{ __html: htmlContent }}
-    />
+    <p className={`break-keep whitespace-pre-wrap ${className}`} dangerouslySetInnerHTML={{ __html: htmlContent }} />
   )
 }

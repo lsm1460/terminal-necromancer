@@ -6,7 +6,6 @@ export interface Tile {
   id: string
   event: string
   dialogue: string
-  observe: string
   assets?: string[]
   npcIds?: string[] // npc용
   spawn_limit?: number // monster용

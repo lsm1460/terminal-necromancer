@@ -28,18 +28,16 @@ export const b4Handlers: Record<string, EventHandler> = {
     }
   },
   'event-b4-reset': (tile, context) => {
-    const { player, map, events, npcs } = context
+    const { map, events, npcs } = context
     const isCaronEventFinished = events.isCompleted('defeat_caron')
 
     if (isCaronEventFinished) {
       const tiles = map.currentScene.tiles
-      const defaultObserve = i18n.t('events.b4.reset.observe_default')
 
       tiles.forEach((row) => {
         row?.forEach((t) => {
           if (t) {
             t.npcIds = without(t.npcIds, 'caron')
-            t.observe = defaultObserve
           }
         })
       })

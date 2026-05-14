@@ -32,8 +32,6 @@ export const ButtonList: React.FC = () => {
 
   return (
     <ButtonWrapper>
-      {disabled && <div className='absolute inset-0 flex items-center justify-center bg-black/90'>
-      {i18n.t('web.button_disabled')}</div>}
       {commandList.map((cmd) => (
         <ThemedButton
           key={cmd.name}
@@ -42,8 +40,8 @@ export const ButtonList: React.FC = () => {
           tabIndex={-1}
           className={`
             w-full flex items-center justify-center
-            text-xs no-underline! py-3 transition-colors 
-            active:bg-black/80
+            text-xs no-underline! py-3! transition-colors 
+            active:bg-black/80!
             xl:border-primary xl:border xl:py-2 xl:text-sm xl:text-primary! 
             before:content-none!
           `}
@@ -102,36 +100,44 @@ const useShowShortcut = () => {
 
 const ButtonWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isOpenButtonMenu } = useGameStore()
+  const disabled = useInputLock()
 
   return (
-    <div className="xl:mt-auto xl:pb-5">
-      <div
-        className={`
+    <div className="relative overflow-hidden">
+      {disabled && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/70 z-10">
+          {i18n.t('web.button_disabled')}
+        </div>
+      )}
+      <div className="xl:mt-auto xl:pb-5">
+        <div
+          className={`
           grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
           ${isOpenButtonMenu ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}
           
           xl:transition-none xl:grid-rows-[1fr] xl:opacity-100
         `}
-      >
-        <div
-          className={`
+        >
+          <div
+            className={`
             overflow-hidden transition-all duration-300
             ${isOpenButtonMenu ? 'translate-y-0' : 'translate-y-4'}
             
             xl:transition-none xl:translate-y-0
           `}
-        >
-          <div className='xl:px-3'>
-          <div
-            className={`
+          >
+            <div className="xl:px-3">
+              <div
+                className={`
               relative
               w-full bg-grey-800 pb-4 flex-1
               grid grid-cols-3 grid-rows-2
               xl:flex! xl:flex-col xl:items-stretch xl:grid-cols-none xl:grid-rows-none xl:pb-0 xl:gap-x-0 xl:gap-y-2
             `}
-          >
-            {children}
-          </div>
+              >
+                {children}
+              </div>
+            </div>
           </div>
         </div>
       </div>

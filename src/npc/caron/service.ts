@@ -27,7 +27,6 @@ export const CaronService = {
       row?.forEach((tile) => {
         if (tile) {
           tile.npcIds = _.without(tile.npcIds, 'caron')
-          tile.observe = i18n.t('npc.caron.relocate.default_observe')
         }
       })
     })
@@ -55,7 +54,6 @@ export const CaronService = {
       ]
       directions.forEach((dir) => {
         const neighbor = tiles[y + dir.dy]?.[x + dir.dx]
-        if (neighbor) neighbor.observe = i18n.t('npc.caron.relocate.proximity_hint')
       })
     }
   },
