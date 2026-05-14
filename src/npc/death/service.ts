@@ -40,7 +40,7 @@ export const DeathService = {
       return {
         name: s.id,
         message: isUnlocked
-          ? `${s.name} (LV: ${s.requiredLevel}, SOUL: ${s.requiredExp})`
+          ? `${s.name} (LV: ${s.requiredLevel}, SOUL: ${s.requiredExp}): ${s.description}`
           : i18n.t('npc.death.skill_transfer.locked', {
               hint: s.unlockHint || i18n.t('npc.death.skill_transfer.default_hint'),
             }),
