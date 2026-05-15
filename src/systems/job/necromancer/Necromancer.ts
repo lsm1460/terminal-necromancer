@@ -3,7 +3,7 @@ import { BattleTarget } from '~/core'
 import { EventBus } from '~/core/EventBus'
 import { Player, PlayerSaveData } from '~/core/player/Player'
 import { StatsCalculator } from '~/core/player/StatsCalculator'
-import { GameEventType, IGameItemFactory } from '~/core/types'
+import { GameEventType, IGameItemFactory, StatModifier } from '~/core/types'
 import i18n from '~/i18n'
 import { GameAmor } from '~/systems/item/GameAmor'
 import { GameEquipAble } from '~/systems/item/GameEquipAble'
@@ -30,6 +30,7 @@ export interface NecromancerSaveData extends PlayerSaveData {
   _mercenary?: BattleTarget[]
   _golem?: IGolem
   _knight?: IKnight
+  modifiers?: StatModifier[]
 }
 
 export class Necromancer extends Player {

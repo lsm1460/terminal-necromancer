@@ -32,7 +32,7 @@ export class Ending {
       contribution >= 100 &&
       player.karma <= 1
     ) {
-      if (player.hasItem('true_ending_key')) {
+      if (player.inventory.hasItem('true_ending_key')) {
         await speak(i18n.t(`ending.ending0.dialogue`, { returnObjects: true }) as string[])
         const _res = await Terminal.confirm(i18n.t('ending.ending0.confirm'))
 

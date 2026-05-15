@@ -13,16 +13,18 @@ export const inventoryCommand: CommandFunction = async (args, context) => {
 }
 
 async function selectItemFromInventory(player: Player): Promise<Item | null> {
-  const { inventory } = player
+  const {
+    inventory: { list, inventoryMax, usage },
+  } = player
 
-  if (inventory.length === 0) {
+  if (list.length === 0) {
     Terminal.log('\n> ' + i18n.t('inventory.empty'))
     return null
   }
 
-  Terminal.log(i18n.t('inventory.title', { usage: player.inventoryUsage, max: player.inventoryMax }))
+  Terminal.log(i18n.t('inventory.title', { usage, max: inventoryMax }))
 
-  const itemChoices = inventory.map((item) => ({
+  const itemChoices = list.map((item) => ({
     name: item.id,
     message: item.makeItemMessage(player),
   }))
@@ -33,7 +35,7 @@ async function selectItemFromInventory(player: Player): Promise<Item | null> {
     const itemId = await Terminal.select(i18n.t('inventory.select_item'), itemChoices)
     if (itemId === 'cancel') return null
 
-    return inventory.find((i) => i.id === itemId) || null
+    return list.find((i) => i.id === itemId) || null
   } catch (error) {
     return null
   }
@@ -52,7 +54,7 @@ async function handleItemAction(item: Item, args: any, context: GameContext) {
       Terminal.log(`\n✨ ${i18n.t('inventory.action_equip_done', { label })}`)
       break
     case 'use':
-      await context.player.useItem(item as IConsumable)
+      await context.player.inventory.useItem(item as IConsumable)
       break
     case 'drop':
       handleDropAction(item, context)
@@ -85,7 +87,7 @@ function getAvailableActions(item: Item) {
 function handleDropAction(item: Item, context: GameContext) {
   const { player, world } = context
 
-  if (player.removeItem(item.id)) {
+  if (player.inventory.removeItem(item.id)) {
     world.addDrop(item)
     Terminal.log(`📦 ${i18n.t('inventory.action_drop_done', { label: item.name, count: 1 })}`)
   }

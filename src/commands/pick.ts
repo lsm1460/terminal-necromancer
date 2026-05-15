@@ -1,4 +1,5 @@
 import { CommandFunction, GameContext, LootBag, Terminal } from '~/core'
+import { InventoryManager } from '~/core/player/InventoryManager'
 import { Player } from '~/core/player/Player'
 import { Drop } from '~/core/types'
 import i18n from '~/i18n'
@@ -8,10 +9,10 @@ export const pickCommand: CommandFunction = async (args, context) => {
 
   const drops = world.getDropsAt<Drop>(player.pos)
   const lootBag = world.getLootBagAt(map.currentSceneId, tile.id)
-  const availableSpace = getAvailableSpace(player)
+  const availableSpace = getAvailableSpace(player.inventory)
 
   if (!hasPickableItems(drops, lootBag)) return false
-  if (!checkInventorySpace(availableSpace, player)) return false
+  if (!checkInventorySpace(availableSpace, player.inventory.inventoryMax)) return false
 
   const [arg] = args
 
@@ -51,9 +52,9 @@ export const pickCommand: CommandFunction = async (args, context) => {
   return false
 }
 
-function getAvailableSpace(player: Player): number {
-  const currentTotal = player.inventory.reduce((sum, item) => sum + (item.quantity || 1), 0)
-  return player.inventoryMax - currentTotal
+function getAvailableSpace(inventory: InventoryManager): number {
+  const currentTotal = inventory.list.reduce((sum, item) => sum + (item.quantity || 1), 0)
+  return inventory.inventoryMax - currentTotal
 }
 
 function hasPickableItems(drops: Drop[], lootBag?: LootBag): boolean {
@@ -64,10 +65,10 @@ function hasPickableItems(drops: Drop[], lootBag?: LootBag): boolean {
   return true
 }
 
-function checkInventorySpace(space: number, player: Player): boolean {
+function checkInventorySpace(space: number, inventoryMax: number): boolean {
   if (space <= 0) {
-    const current = player.inventoryMax - space // 혹은 위에서 계산된 값 전달
-    Terminal.log(`\n🎒 ${i18n.t('pick.inventory_full', { current, max: player.inventoryMax })}`)
+    const current = inventoryMax - space // 혹은 위에서 계산된 값 전달
+    Terminal.log(`\n🎒 ${i18n.t('pick.inventory_full', { current, max: inventoryMax })}`)
     Terminal.log(i18n.t('pick.inventory_full_tip'))
     return false
   }
@@ -105,7 +106,7 @@ function handleItemPick(drop: Drop, availableSpace: number, context: GameContext
   const remainQty = totalDropQty - pickQty
 
   drop.quantity = pickQty
-  player.addItem(drop)
+  player.inventory.addItem(drop)
 
   Terminal.log(`\n✨ ${i18n.t('pick.obtained_msg', { label: drop.name, count: pickQty })}`)
 

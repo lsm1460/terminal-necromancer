@@ -58,7 +58,7 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
 
       const player = target.ref as Player
       const isGoldSteal = Math.random() < 0.5
-      const stealableCandidates = player.inventory.filter((item) => item.type !== ItemType.QUEST) || []
+      const stealableCandidates = player.inventory.list.filter((item) => item.type !== ItemType.QUEST) || []
 
       if (isGoldSteal && player.gold > 0) {
         const stealAmount = Math.min(player.gold, Math.floor(10 + player.gold * 0.05))
@@ -73,7 +73,7 @@ export const SpecialSkillLogics: Record<string, SpecialSkillLogic> = {
         )
       } else if (stealableCandidates.length > 0) {
         const targetItem = sample(stealableCandidates)
-        if (targetItem && player.removeItem(targetItem.id, 1)) {
+        if (targetItem && player.inventory.removeItem(targetItem.id, 1)) {
           Terminal.log(
             HIGHLIGHT(
               i18n.t('skill.special.item_steal.item', {

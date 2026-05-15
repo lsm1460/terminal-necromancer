@@ -21,7 +21,7 @@ export const KnightActions = {
       return true
     }
 
-    const choices = KnightService.getUpgradeCandidates(player.inventory)
+    const choices = KnightService.getUpgradeCandidates(player.inventory.list)
     choices.push({ name: 'cancel', message: i18n.t('cancel') })
 
     const selected = await Terminal.select(i18n.t('npc._knight.upgrade.select_title'), choices)
@@ -33,10 +33,10 @@ export const KnightActions = {
       return true
     }
 
-    const targetItem = player.inventory.find((item) => item.id === selected) as GameEquipAble
+    const targetItem = player.inventory.list.find((item) => item.id === selected) as GameEquipAble
     if (targetItem) {
       player.knightUpgrade.push(targetItem.rarity || 'COMMON')
-      player.removeItem(targetItem.id)
+      player.inventory.removeItem(targetItem.id)
       Terminal.log(i18n.t('npc._knight.upgrade.success'))
     }
     return true

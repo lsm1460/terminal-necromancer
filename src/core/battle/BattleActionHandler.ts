@@ -163,7 +163,7 @@ export class BattleActionHandler {
   }
 
   private async handlePlayerItemAction(playerUnit: CombatUnit<Player>): Promise<boolean> {
-    return await playerUnit.ref.useItem()
+    return await playerUnit.ref.inventory.useItem()
   }
 
   private async handlePlayerEscapeAction(): Promise<boolean> {

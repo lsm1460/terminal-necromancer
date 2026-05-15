@@ -66,7 +66,7 @@ async function handleAskSituation(npc: GameNPC, context: AppContext) {
     Terminal.log(i18n.t('npc.flint.encounter.result_join'))
     const { drops: goods } = drop.generateDrops('b5_flint_medical_kit')
     npc.updateContribution(25)
-    player.addItem(goods[0])
+    player.inventory.addItem(goods[0])
     player.karma += 5
   } else {
     Terminal.log(i18n.t('npc.flint.encounter.result_refuse'))

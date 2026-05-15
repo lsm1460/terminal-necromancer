@@ -4,7 +4,7 @@ import i18n from '~/i18n'
 
 export const dropCommand: CommandFunction = async (args, context) => {
   const { player, world } = context
-  const inventory = player.inventory
+  const inventory = player.inventory.list
 
   if (inventory.length === 0) {
     Terminal.log(i18n.t('commands.drop.no_items'))
@@ -40,7 +40,7 @@ export const dropCommand: CommandFunction = async (args, context) => {
 
   // 3. 실제 버리기 로직 처리
   if (itemToDrop) {
-    const drop = player.removeItem(itemToDrop.id)
+    const drop = player.inventory.removeItem(itemToDrop.id)
 
     drop && world.addDrop(drop)
 

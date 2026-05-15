@@ -2,22 +2,26 @@ import i18n from '~/i18n'
 import { Item } from '../item/Item'
 import { Terminal } from '../Terminal'
 import { IConsumable, IEquipAble, IGameItemFactory } from '../types'
-import { Player } from './Player'
+import { Player, PlayerSaveData } from './Player'
 
 export class InventoryManager {
-  inventoryMax = 15
-  inventory: Item[] = []
+  inventoryMax = 45
+  private inventory: Item[] = []
 
   constructor(
     private itemFactory: IGameItemFactory,
     private player: Player,
     private slotMapping: Record<string, string>,
-    saved?: Partial<Player>
+    saved?: PlayerSaveData
   ) {
     if (saved) {
-      this.inventoryMax = saved.inventoryMax || 15
+      this.inventoryMax = saved.inventoryMax || 45
       this.inventory = (saved.inventory || []).map((item) => itemFactory.make(item))
     }
+  }
+
+  get list() {
+    return this.inventory
   }
 
   get usage() {
@@ -137,13 +141,15 @@ export class InventoryManager {
       return false
     }
 
-    const useCount = isUseAll ? (targetItem.quantity || 1) : 1
+    const useCount = isUseAll ? targetItem.quantity || 1 : 1
     const gameItem = targetItem instanceof Item ? targetItem : this.itemFactory.make(targetItem)
-    
+
     // 사용 로그 (전부 사용 시 수량 표시)
-    Terminal.log(i18n.t('inventory.use.using', { 
-      name: isUseAll && useCount > 1 ? `${gameItem.name} x${useCount}` : gameItem.name 
-    }))
+    Terminal.log(
+      i18n.t('inventory.use.using', {
+        name: isUseAll && useCount > 1 ? `${gameItem.name} x${useCount}` : gameItem.name,
+      })
+    )
 
     // HP 회복 처리
     if (targetItem.hpHeal) {

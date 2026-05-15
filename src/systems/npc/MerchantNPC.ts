@@ -20,7 +20,7 @@ export abstract class MerchantNPC extends GameNPC {
     const { player, drop } = context
     const { drops: goods } = drop.generateDrops(dropTableId)
 
-    if (player.inventoryUsage > player.inventoryMax) {
+    if (player.inventory.usage > player.inventory.inventoryMax) {
       Terminal.log(`\n[${this.name}]: "${scripts.inventoryFull || '...'}"`)
       return
     }
@@ -78,7 +78,7 @@ export abstract class MerchantNPC extends GameNPC {
       }
 
       if (actualItem) {
-        player.addItem(actualItem)
+        player.inventory.addItem(actualItem)
         Terminal.log(`\n✨ [${this.name}]: "${scripts.success}" (-${selected.price}G)`)
       }
     }
@@ -90,13 +90,13 @@ export abstract class MerchantNPC extends GameNPC {
     Terminal.log(`\n[${this.name}]: "${scripts.greeting}"`)
 
     while (true) {
-      if (player.inventory.length === 0) {
+      if (player.inventory.list.length === 0) {
         Terminal.log(`\n[${this.name}]: "${scripts.noItems}"`)
         break
       }
 
       const bonusRate = ShopService.calculateSellBonusRate(this.factionContribution)
-      const choices = player.inventory.map((item, index) => ({
+      const choices = player.inventory.list.map((item, index) => ({
         name: `${index}`,
         id: item.id,
         message: item.makeItemMessage(player, { withPrice: true, isSell: true }),
@@ -114,7 +114,7 @@ export abstract class MerchantNPC extends GameNPC {
 
       player.gold += amount
       totalEarned += amount
-      player.removeItem(selected.id!, 1)
+      player.inventory.removeItem(selected.id!, 1)
 
       if (this.faction) {
         this.updateHostility(-1)

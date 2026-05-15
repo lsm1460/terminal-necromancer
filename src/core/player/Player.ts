@@ -1,11 +1,18 @@
 import { ItemType } from '~/types/item'
 import { BattleTarget } from '../battle'
 import { Item } from '../item/Item'
-import { IArmor, IConsumable, IEquipAble, IGameItemFactory, IWeapon, LevelData, PositionType, Skill } from '../types'
+import { IArmor, IEquipAble, IGameItemFactory, IWeapon, LevelData, PositionType, Skill } from '../types'
 import { InventoryManager } from './InventoryManager'
 import { StatModifier, StatsCalculator } from './StatsCalculator'
 
-export interface PlayerSaveData extends Partial<Player> {}
+export interface PlayerSaveData {
+  equipped?: {
+    weapon: IWeapon | null;
+    armor: IArmor | null;
+  }
+  inventory?: Item[]
+  inventoryMax?: number
+}
 
 export abstract class Player {
   id = 'player'
@@ -33,7 +40,7 @@ export abstract class Player {
   onDeath?: () => void
 
   private levelTable: LevelData[]
-  private inventoryManager: InventoryManager
+  public inventory: InventoryManager
 
   /**
    * @param levelData - 이제 경로 문자열이 아닌 JSON 객체 데이터를 직접 받습니다.
@@ -49,7 +56,7 @@ export abstract class Player {
     this.y = 0
 
     this.levelTable = levelData
-    this.inventoryManager = new InventoryManager(
+    this.inventory = new InventoryManager(
       itemFactory,
       this,
       {
@@ -68,26 +75,14 @@ export abstract class Player {
     }
   }
 
-  get inventory() {
-    return this.inventoryManager.inventory
-  }
-
-  get inventoryUsage() {
-    return this.inventoryManager.usage
-  }
-
-  get inventoryMax() {
-    return this.inventoryManager.inventoryMax
-  }
-
   get pos() {
     return { x: this.x, y: this.y } as PositionType
   }
 
   get raw() {
-    const { levelTable, onDeath, inventoryManager, equipped, ...rest } = this
+    const { levelTable, onDeath, inventory, equipped, ...rest } = this
 
-    const inventoryData = this.inventoryManager.toJSON()
+    const inventoryData = this.inventory.toJSON()
 
     return {
       ...rest,
@@ -196,15 +191,11 @@ export abstract class Player {
   }
 
   async equip(newItem: IEquipAble) {
-    return this.inventoryManager.equip(newItem)
+    return this.inventory.equip(newItem)
   }
 
   unEquip(slot: keyof typeof this.equipped): boolean {
-    return this.inventoryManager.unEquip(slot)
-  }
-
-  addItem(newItem: Item) {
-    this.inventoryManager.addItem(newItem)
+    return this.inventory.unEquip(slot)
   }
 
   expToNextLevel(): { required: number; toNext: number } {
@@ -225,18 +216,6 @@ export abstract class Player {
 
   hasSkill(skillId: string): boolean {
     return this.unlockedSkills.includes(skillId)
-  }
-
-  removeItem(itemId: string, amount: number = 1): Item | void {
-    return this.inventoryManager.removeItem(itemId, amount)
-  }
-
-  async useItem(targetItem?: IConsumable, isUseAll?: boolean) {
-    return await this.inventoryManager.useItem(targetItem, isUseAll)
-  }
-
-  hasItem(id: string) {
-    return this.inventoryManager.hasItem(id)
   }
 
   public recoverHp(amount: number): number {

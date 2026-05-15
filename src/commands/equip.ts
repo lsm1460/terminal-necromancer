@@ -2,7 +2,7 @@ import { CommandFunction, IEquipAble, Terminal } from '~/core'
 import i18n from '~/i18n'
 
 export const equipCommand: CommandFunction = async (args, {player}) => {
-  const inventory = player.inventory
+  const inventory = player.inventory.list
 
   const equipAbles = inventory.filter((item): item is IEquipAble => (item as IEquipAble).isEquipAble)
 
