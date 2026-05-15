@@ -1,10 +1,10 @@
-import { ChevronRight, Info } from 'lucide-react'; // 아이콘 추가
+import { Info } from 'lucide-react' // 아이콘 추가
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGame } from '~/hooks/useGame'
 import { useGameStore } from '~/stores/useGameStore'
 import { ThemedHeader } from './common/ThemedHeader'
-import { ConfigItem } from './config/ConfigItem'
+import { ConfigField } from './config/ConfigField'
 import { ScreenComponent } from './lib/types'
 
 export const ConfigScreen: ScreenComponent = () => {
@@ -14,46 +14,51 @@ export const ConfigScreen: ScreenComponent = () => {
 
   const currentScreen = screenHistory[screenHistory.length - 1]
   const isOpenConfigMenu = currentScreen === 'CONFIG'
-  
+
   const [config, setConfig] = useState({
     isSearchFirst: false,
     visibleBattle: true,
     isAutoInputFocus: false,
+    volume: 0.5,
+    isMute: false,
   })
 
   useEffect(() => {
     if (isOpenConfigMenu) {
-      const { isSearchFirst, isAutoInputFocus, visibleBattle } = getConfig()
-      setConfig({ 
-        isSearchFirst: isSearchFirst || false,
-        visibleBattle: visibleBattle ?? true,
-        isAutoInputFocus: isAutoInputFocus || false,
+      const saved = getConfig()
+      setConfig({
+        isSearchFirst: saved.isSearchFirst || false,
+        visibleBattle: saved.visibleBattle ?? true,
+        isAutoInputFocus: saved.isAutoInputFocus || false,
+        volume: saved.volume ?? 0.5,
+        isMute: saved.isMute || false,
       })
     }
   }, [isOpenConfigMenu, getConfig])
 
-  const handleToggle = (key: keyof typeof config) => (checked: boolean) => {
-    const nextConfig = { ...config, [key]: checked }
+  const handleUpdate = (nextConfig: typeof config) => {
     setConfig(nextConfig)
     updateConfig(nextConfig)
   }
 
   const configSections = [
     {
-      subtitle: 'Interface & Control',
-      type: 'toggle',
+      subtitle: 'System Configuration',
       items: [
         {
+          type: 'toggle' as const,
           key: 'isSearchFirst' as const,
           label: t('web.config.move.label'),
           description: t('web.config.move.description'),
         },
         {
+          type: 'toggle' as const,
           key: 'isAutoInputFocus' as const,
           label: t('web.config.focus.label'),
           description: t('web.config.focus.description'),
         },
         {
+          type: 'toggle' as const,
           key: 'visibleBattle' as const,
           label: t('web.config.battle.label'),
           description: t('web.config.battle.description'),
@@ -61,10 +66,22 @@ export const ConfigScreen: ScreenComponent = () => {
       ],
     },
     {
-      subtitle: 'Information',
-      type: 'menu',
+      subtitle: 'Audio Systems',
       items: [
         {
+          type: 'slider' as const,
+          key: 'volume' as const,
+          muteKey: 'isMute' as const,
+          label: t('web.config.audio.label') || 'Master Volume',
+          description: t('web.config.audio.description'),
+        },
+      ],
+    },
+    {
+      subtitle: 'Information',
+      items: [
+        {
+          type: 'menu' as const,
           key: 'credits',
           label: 'Credits',
           description: 'Developers, Assets, and Licenses',
@@ -73,7 +90,7 @@ export const ConfigScreen: ScreenComponent = () => {
         },
       ],
     },
-  ] as const
+  ]
 
   const handleFullscreenClick = () => {
     const isTauri = !!(window as any).__TAURI_INTERNALS__
@@ -91,7 +108,7 @@ export const ConfigScreen: ScreenComponent = () => {
   }
 
   return (
-    <div className="flex h-full flex-col bg-grey-900 text-primary select-none">
+    <div className="flex h-full flex-col bg-grey-900 text-primary select-none font-mono">
       <ThemedHeader title="CONFIG" onBack={backScreen} />
 
       <div className="lg:border lg:border-primary/50 lg:rounded-2xl lg:max-w-[480px] w-full mx-auto flex-1 overflow-hidden flex flex-col">
@@ -103,34 +120,9 @@ export const ConfigScreen: ScreenComponent = () => {
               </h3>
 
               <div className="space-y-6">
-                {section.type === 'toggle' ? (
-                  // 기존 토글 아이템
-                  section.items.map((item) => (
-                    <ConfigItem
-                      key={item.key}
-                      label={item.label}
-                      description={item.description}
-                      checked={config[item.key as keyof typeof config]}
-                      onToggle={handleToggle(item.key as keyof typeof config)}
-                    />
-                  ))
-                ) : (
-                  section.items.map((item) => (
-                    <button
-                      key={item.key}
-                      onClick={item.onClick}
-                      className="w-full flex items-center justify-between group px-1 py-2 hover:bg-primary/5 rounded-lg transition-colors text-left"
-                    >
-                      <div className="flex flex-col gap-0.5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-primary font-medium">{item.label}</span>
-                        </div>
-                        <p className="text-[12px] text-primary/50">{item.description}</p>
-                      </div>
-                      <ChevronRight size={18} className="text-primary/30 group-hover:text-primary transition-colors" />
-                    </button>
-                  ))
-                )}
+                {section.items.map((item) => (
+                  <ConfigField key={item.key} item={item} config={config} onUpdate={handleUpdate} />
+                ))}
               </div>
             </section>
           ))}
@@ -141,7 +133,7 @@ export const ConfigScreen: ScreenComponent = () => {
         onClick={handleFullscreenClick}
         className="mt-auto px-5 py-4 text-[10px] text-primary/20 text-right font-mono uppercase cursor-pointer hover:text-primary/40 transition-colors"
       >
-        Terminal-Tester v1.0.4 // Build 2026.03
+        Terminal-Tester v1.0.0 // Build 2026.03
       </footer>
     </div>
   )

@@ -103,7 +103,8 @@ export const commonManifest: AssetManifest = {
     { id: 'default_attack', src: '/images/default_attack.png' },
   ],
   audios: [
-    { id: 'sfx_hit', src: '/audio/sfx/hit.wav' },
-    { id: 'sfx_die', src: '/audio/sfx/die.wav' },
+    { id: 'sfx_move', src: '/audios/footsteps.mp3' },
+    { id: 'sfx_attack', src: '/audios/attack.mp3' },
+    // { id: 'sfx_die', src: '/audio/sfx/die.wav' },
   ],
 }

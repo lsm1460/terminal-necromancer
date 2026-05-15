@@ -1,3 +1,4 @@
+import { SoundManager } from '../SoundManager'
 import { CombatUnit } from './unit/CombatUnit'
 
 export interface BattleRenderer {
@@ -34,6 +35,8 @@ export class BattleDirector {
 
   public static async playAttack(id: string, skillId?: string) {
     if (!this.renderer) return
+
+    SoundManager.getInstance().playEffect(skillId ?? 'sfx_attack')
     await this.renderer.playAttack(id, skillId)
   }
 

@@ -1,5 +1,6 @@
 import { CommandFunction, Terminal } from '~/core'
 import { DIRECTIONS } from '~/core/consts'
+import { SoundManager } from '~/core/SoundManager'
 import i18n from '~/i18n'
 
 export type MoveBlockerCheckFn = () => string | null
@@ -29,6 +30,7 @@ export const createMoveCommand = (
 
     if (map.canMove(nextPos)) {
       if (options?.beforeMove) options.beforeMove()
+      SoundManager.getInstance().playEffect('sfx_move')
       player.move(dx, dy)
       return true
     }

@@ -1,11 +1,14 @@
 import fs from 'fs'
 import { IConfigSystem } from '~/core/types'
+import i18n from '~/i18n'
 
 export type ConfigData = {
   locale?: 'ko' | 'en'
   isSearchFirst?: boolean
   visibleBattle?: boolean
   isAutoInputFocus?: boolean
+  isMute?: boolean
+  volume?: number
 }
 
 export class ConfigSystem implements IConfigSystem<ConfigData> {
@@ -27,6 +30,10 @@ export class ConfigSystem implements IConfigSystem<ConfigData> {
       if (!this.configPath || !fs.existsSync(this.configPath)) return null
       return JSON.parse(fs.readFileSync(this.configPath, 'utf-8'))
     }
+  }
+
+  get locale() {
+    return this.load()?.locale || (i18n.language as 'ko' | 'en')
   }
 
   save(config: ConfigData) {

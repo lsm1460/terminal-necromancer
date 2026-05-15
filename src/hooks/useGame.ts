@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useGameContext } from '~/contexts/GameContext'
+import { SoundManager } from '~/core/SoundManager'
 import { GameContext } from '~/core/types'
 import { useGameStore } from '~/stores/useGameStore'
 
@@ -35,8 +36,18 @@ export const useGame = () => {
       const { context } = engine.current
       if (context.config) {
         const _config = context.config.load()
+        const nextConfig = { ..._config, ...newConfig }
 
-        context.config.save({ ..._config, ...newConfig })
+        context.config.save(nextConfig)
+
+        try {
+          const sm = SoundManager.getInstance()
+
+          if (newConfig.volume !== undefined) sm.setVolume(newConfig.volume)
+          if (newConfig.isMute !== undefined) sm.setMute(newConfig.isMute)
+        } catch (error) {
+          console.warn('SoundManager 동기화 실패:', error)
+        }
       }
     },
     [engine]

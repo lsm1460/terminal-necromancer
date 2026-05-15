@@ -20,6 +20,10 @@
     "battle": {
      "label": "Enable Battle Scene",
       "description": "Displays a high-level overview of the battle status at the top of the screen."
+    },
+    "audio": {
+      "label": "Master Volume",
+      "description": "Adjusts the overall volume level for all in-game music (BGM) and sound effects (SFX)."
     }
   },
 

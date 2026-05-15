@@ -5,15 +5,16 @@ import { GameScreen } from './GameScreen'
 //
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { assets, assetManager, initState } from '~/assets'
+import { assetManager, assets, initState } from '~/assets'
 import { GameProvider } from '~/contexts/GameContext'
 import { GameEngine, Terminal } from '~/core'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { GameBootstrapper } from '~/systems/Bootstrapper'
 import { ScreenRouter } from './ScreenRouter'
 
-import { useShortcuts } from '~/hooks/useShortcuts'
 import { openWindow } from '~/bridge/window'
+import { SoundManager } from '~/core/SoundManager'
+import { useShortcuts } from '~/hooks/useShortcuts'
 
 export const App = () => {
   const { i18n } = useTranslation()
@@ -26,9 +27,14 @@ export const App = () => {
 
   useEffect(() => {
     openWindow()
-    
+
     const runGame = async () => {
       const bootstrapper = bootstrapperRef.current
+      const config = bootstrapper.configSystem.load()
+      SoundManager.init(assetManager)
+      const sm = SoundManager.getInstance()
+      sm.setMute(config?.isMute || false)
+      sm.setVolume(config?.volume || 0.5)
 
       try {
         const engine = await bootstrapper.run({
@@ -48,7 +54,7 @@ export const App = () => {
 
         engineRef.current = engine
 
-        const locale = bootstrapper.configSystem.load()?.locale || 'ko'
+        const locale = bootstrapper.configSystem.locale
         const sceneData = engine.context.map.currentScene
         await assetManager.loadInitialAssets(sceneData, locale)
 

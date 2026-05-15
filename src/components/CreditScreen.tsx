@@ -54,14 +54,12 @@ export const CreditScreen: ScreenComponent = () => {
         {
           icon: <Music size={16} />,
           role: 'Sound Effects',
-          name: 'Sonniss GDC Packs',
-          description: 'Royalty-Free Assets',
+          name: '400 Sounds Pack - Chequered Ink'
         },
         {
           icon: <Music size={16} />,
-          role: 'Ambient Music',
-          name: '[Artist Name] via FreeSound.org',
-          description: 'Licensed under CC BY 4.0',
+          role: 'Sound Effects',
+          name: 'running sounds - zombiechaser3 (Freesound)'
         },
       ],
     },

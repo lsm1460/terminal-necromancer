@@ -156,7 +156,7 @@ export class BattleActionHandler {
       await this.unitManager.refreshPlayerSide()
 
       BattleDirector.updateUnits({ playerSide: this.unitManager.getPlayerSide() })
-      BattleDirector.playAttack(playerUnit.id)
+      BattleDirector.playAttack(playerUnit.id, skillId)
     }
 
     return isSuccess

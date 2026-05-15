@@ -171,13 +171,8 @@ export class WebAssetManager {
     return sprites as UnitSprites
   }
 
-  public playSound(id: string, volume: number = 0.5): void {
-    const audio = this.audios.get(id)
-    if (audio) {
-      const sound = audio.cloneNode() as HTMLAudioElement
-      sound.volume = volume
-      sound.play().catch(() => {}) // 브라우저 정책 방어
-    }
+  public getAudioSource(id: string): HTMLAudioElement | void {
+    return this.audios.get(id)
   }
 
   private buildUnitManifest(originIds: string[]): AssetSource[] {

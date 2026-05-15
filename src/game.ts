@@ -14,8 +14,7 @@ const bootstrapper = new GameBootstrapper({
 })
 
 const start = async () => {
-  const config = bootstrapper.configSystem.load()
-  const locale = config?.locale || 'ko'
+  const locale = bootstrapper.configSystem.locale
   await i18n.changeLanguage(locale)
   await loadExtraLocaleBundle(locale as 'ko' | 'en')
 

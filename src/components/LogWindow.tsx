@@ -10,6 +10,7 @@ import { AnsiHtml } from './Ansi'
 import { DecisionBox } from './DecisionBox'
 
 const DIRECTION_MAP: Record<string, string> = {}
+const LINE_OPACITY_LIMIT = 18
 
 Object.entries({
   up: COMMAND_GROUPS[COMMAND_KEYS.UP],
@@ -116,8 +117,8 @@ export const LogWindow: React.FC = () => {
         let opacity = 1
         const distanceFromLast = logs.length - 1 - i
 
-        if (distanceFromLast >= 18) {
-          opacity = Math.max(0.2, 1 - (distanceFromLast - 9) * 0.1)
+        if (distanceFromLast >= LINE_OPACITY_LIMIT) {
+          opacity = Math.max(0.2, 1 - (distanceFromLast - LINE_OPACITY_LIMIT - 1) * 0.1)
         }
 
         return (
