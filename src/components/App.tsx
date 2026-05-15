@@ -4,20 +4,18 @@ import { CreditScreen } from './CreditScreen'
 import { GameScreen } from './GameScreen'
 //
 import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { assetManager, assets, initState } from '~/assets'
+import { openWindow } from '~/bridge/window'
 import { GameProvider } from '~/contexts/GameContext'
 import { GameEngine, Terminal } from '~/core'
+import { SoundManager } from '~/core/SoundManager'
+import { useShortcuts } from '~/hooks/useShortcuts'
+import i18n from '~/i18n'
 import { ReactRenderer } from '~/renderers/ReactRenderer'
 import { GameBootstrapper } from '~/systems/Bootstrapper'
 import { ScreenRouter } from './ScreenRouter'
 
-import { openWindow } from '~/bridge/window'
-import { SoundManager } from '~/core/SoundManager'
-import { useShortcuts } from '~/hooks/useShortcuts'
-
 export const App = () => {
-  const { i18n } = useTranslation()
   const [isGameOn, setIsGameOn] = useState(false)
 
   const bootstrapperRef = useRef(new GameBootstrapper())
@@ -32,6 +30,7 @@ export const App = () => {
       const bootstrapper = bootstrapperRef.current
       const config = bootstrapper.configSystem.load()
       SoundManager.init(assetManager)
+
       const sm = SoundManager.getInstance()
       sm.setMute(config?.isMute || false)
       sm.setVolume(config?.volume || 0.5)
@@ -65,8 +64,11 @@ export const App = () => {
       }
     }
 
-    runGame()
-  }, [i18n])
+    const locale = bootstrapperRef.current.configSystem.locale
+    i18n.changeLanguage(locale).then(() => {
+      runGame()
+    })
+  }, [])
 
   return (
     <GameProvider engine={engineRef}>
