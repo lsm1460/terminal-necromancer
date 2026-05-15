@@ -26,7 +26,7 @@ export const BattleStage: React.FC = () => {
   const BASE_WIDTH = 800
   const BASE_HEIGHT = 350
 
-  const onBattleScene = useMemo(() => getConfig()?.visibleBattle, [getConfig])
+  const onBattleScene = useMemo(() => getConfig()?.visibleBattle, [getConfig, inBattle])
 
   useEffect(() => {
     if (!parentRef.current) return
@@ -78,7 +78,7 @@ export const BattleStage: React.FC = () => {
     () => getSortedEnemySide(originEnemiesSide),
     [originEnemiesSide, getSortedEnemySide]
   )
-
+  
   return (
     <div
       ref={parentRef}
