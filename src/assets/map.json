@@ -522,6 +522,7 @@
         {
           "id": "B5_022",
           "event": "boss",
+          "assets": ["kane_leader", "ren", "resistance_member", "resistance_priest"],
           "npcIds": ["third_boss"]
         },
         {
