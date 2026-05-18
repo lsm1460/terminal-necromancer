@@ -21,5 +21,74 @@
   },
   "deathLine": "This tedious broadcasting... is finally over... Ha...",
   "description": "A female announcer holed up in the terminal's broadcast room, spitting out all sorts of venomous remarks. In reality, she might be enjoying this chaos more than anyone.",
-  "talk1": []
+  "talk1": [
+    "Oh my, are you the new Necromancer?",
+    "Nice to meet you. Welcome to hell.",
+    "As you can see, this dreadful Terminal is bursting at the seams with phantoms again today.",
+    "I'm already looking forward to seeing what kind of absurd, ridiculous orders our almighty Reaper will drag us into next.",
+    "Man, both of us are just terribly cursed with bad luck.",
+    "Landing a job in a complete train wreck of a workplace like this.",
+    "But hey, what can you do? We're just grunts who have to do what we're told.",
+    "Since we're working together now, I'd prefer if we kept things pleasant between us.",
+    "So please, don't go dying on me. Hang in there like a stubborn weed, okay?"
+  ],
+  "talk2": [
+    "…Wow. I honestly didn't think you'd make it back alive. On top of that, you completely wiped out those disgusting 'Belphegor' flesh heaps?",
+    "I thought the Reaper just sent you on a suicide mission, so I was silently praying for your soul. Guess I severely underestimated your abilities. Managing a whole corpse swarm like that? Pretty impressive.",
+    "Congratulations, rookie Necromancer. Thanks to you, I've got some juicy breaking news for today's Terminal broadcast. Keep up the good work; I'd love to see more of those spectacular skills."
+  ],
+  "talk3": [
+    "Oh, right.",
+    "Watch your back while you're out there, Necromancer.",
+    "I've been getting reports that those pesky Resistance rats are skittering around the corners of the Terminal lately.",
+    "Honestly, I couldn't care less whether they're crying for justice or throwing a revolution.",
+    "But what if, by some miracle, they actually pull it off and flip the script?",
+    "I've been blasting propaganda as the Reaper's puppet all this time, meaning my neck is officially on the chopping line if things go south.",
+    "My life and this cozy broadcast chair are literally at stake here.",
+    "So if you happen to run into them, don't get all caught up in some self-righteous drama. Just crush them quietly.",
+    "Unless you want to see me get fired… or rather, see my head rolling on the floor, that is."
+  ],
+  "talk4": [
+    "Ahaha! Judging by the look on your face, the Reaper just chewed you out for something, didn't he?",
+    "Let me guess—whining about why you smashed up his precious cargo bay Golem?",
+    "Unbelievable. The Golem charges at you to crack your skull open, and he expects you to just stand there and die nicely? Right.",
+    "Don't worry, I completely get where you're coming from. It was pure self-defense.",
+    "Besides, the Resistance has been messing things up everywhere lately, and the Terminal's control system is completely fried. Nothing works properly anymore.",
+    "Anyway, it sucks, but what can you do? That's the life of a powerless grunt. Next time you smash something, just do it quietly so the noise doesn't bleed into my studio."
+  ],
+  "talk5": [
+    "…There you are. So old Charon finally got cleaned out by your hands, huh?",
+    "I knew he'd cross the line eventually since he broke the Terminal rules, but… actually seeing him go feels a bit strange.",
+    "He was a stubborn old fool who never listened, but he was still an old colleague who'd occasionally buy me coffee.",
+    "I'm not blaming you. It just goes to show how damn hard it is to stay sane in this godforsaken Terminal.",
+    "Sigh… Once I wrap up the broadcast today, I'm going to smoke a heavy cigarette for him. You ruined my mood, so just leave me be."
+  ],
+  "talk6_1": [
+    "Oh, wow. I heard you rescued those high-and-mighty VIPs from the Resistance's hands?",
+    "The people lounging there are rolling in cash but completely rotten to the core. I usually trash-talk them all the time.",
+    "Still, I'm glad you stopped them before they got ransacked. If they actually got kidnapped, my head would've exploded before I could even air the broadcast.",
+    "I wonder if management threw a fat bonus your way for saving those precious lives?",
+    "Anyway, good job. You basically saved my life this time, so I'll give you a proper thank you."
+  ],
+  "talk6_2": [
+    "Oh dear, what's with the long face? Don't tell me you let the Resistance snatch those precious VIPs right from under your nose?",
+    "Hey, don't beat yourself up over it. It's not like you let them go on purpose. Those rats are just vicious.",
+    "Then again, they messed with the VIPs… so those poor Resistance fools are officially out of time.",
+    "I can already feel the shivers just imagining what kind of living hell the furious Reaper is going to show them.",
+    "They practically walked into their own graves, so I almost feel bad for them. As for you, go write an apology letter before your own head gets cracked."
+  ],
+  "talk7_1": [
+    "Incredible. You absolutely pulverized the main weapon the Resistance was so proud of?",
+    "At this rate, the Reaper should be touched enough to hand over some shares of the Terminal to you.",
+    "Now that those troublemakers took a fatal blow, our workplace should be peaceful for a while.",
+    "…But why the face? You won the battle, so why do you look like someone who's about to go tear the whole world apart?",
+    "Well, you're probably just exhausted. Go wipe the blood off your face before you head off to bask in the glorious Reaper's favor."
+  ],
+  "talk7_2": [
+    "…Haha. Of all things, this is how that miracle rolls. To think you were a mole for those Resistance bastards all along.",
+    "How stupid of me to warn *you* not to get involved with those rats. Talk about a blind spot; I played myself beautifully.",
+    "Now that the Reaper is dead and the tables are turned, my life as the propaganda announcer who parroted his words is practically over.",
+    "And here I thought we actually became decent friends, sharing cigarettes in this messed-up Terminal… I guess I was the only one who was genuine.",
+    "I don't blame you, so just go. Whether you chop off that mighty Reaper's head or not, I'll just be here packing up my studio for the last time."
+  ]
 }

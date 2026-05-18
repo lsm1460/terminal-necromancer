@@ -44,7 +44,7 @@ export const EchoActions = {
   async handleSeventh(context: AppContext) {
     const join = context.events.isCompleted('join_resistance_battle')
     await speak(i18n.t(`npc.echo.${join?  'talk7_2' : 'talk7_1'}`, { returnObjects: true }) as string[])
-    completeEvents(context, 6)
+    completeEvents(context, 7)
     return true
   },
 }
