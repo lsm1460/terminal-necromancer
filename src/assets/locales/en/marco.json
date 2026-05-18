@@ -34,5 +34,64 @@
     "noItems": "Are you pulling my leg? You've got nothing but dust in your pockets. Come back when you've got real gear.",
     "success": "Hmm... condition isn't bad. Alright, I'll give you a fair price for this. Here's your share. *Clink*-",
     "exit": "Leaving already? That's a shame. I'm always here in the corner of the waiting room, so stop by whenever you need something."
-  }
+  },
+  "talk1": [
+    "Oh! You must be the new necromancer Miss Echo was talking about over the waiting room speakers! She openly said she expects you to brighten up the mood in Hell, so I was really curious to see what kind of person you'd be.",
+    "Life is just like a machine—you've got to keep the body properly oiled, or it'll start creaking and grind to a halt in no time... and looking at you, you seem pretty starved, don't you?",
+    "If you're gonna work yourself to the bone under the Great Grim Reaper, who toils day and night for this Terminal, shouldn't you make sure you're well-fed and hydrated first?",
+    "Our convenience store is packed to the brim with precious potions and snacks whose expiration dates have 'just passed'... I mean, items that their previous owners 'temporarily abandoned'!",
+    "Browsing is absolutely free, so take your time looking around. For the Grim Reaper's sake, don't go stealing too many of our seniors' souls, eat well, and stay safe out there, hahaha!"
+  ],
+  "talk2": [
+    "Oh wow! You finally cleared out that massive pile of corpses that was completely blocking the transit route on B2! Miss Echo just announced over the broadcast that the path is open, and man, what a relief!",
+    "Because of that Belphegor thing—or whatever that cluster of wraiths was called—our logistics completely dried up. Fresh potions and snacks weren't coming into our store at all, and business was an absolute disaster.",
+    "That's our Grim Reaper for you! He definitely solved the Terminal's welfare system once and for all by hiring such an incredibly talented newcomer this time.",
+    "To think such a hideous monstrosity was growing bigger and bigger in this peaceful Hell ruled by the Great Grim Reaper... man, the Grim Reaper must have had such a massive headache over it.",
+    "Anyway, now that the path is open, premium snacks that their previous owners 'temporarily abandoned' will be rolling in soon! You worked hard, so how about I give you a special discount on potions today?"
+  ],
+  "talk3": [
+    "Whoa, did you hear Miss Echo's broadcast just now? It looks like those reckless Resistance bastards are causing trouble again, eating away at the Terminal's budget.",
+    "I mean, what is their problem with this peaceful Hell that the Great Grim Reaper watches over day and night? Why do they keep making those bizarre contraptions and making the citizens anxious?",
+    "The broadcast asked people to move around only at night if possible, so you better be extremely careful not to run into those subversives when you're out doing the Grim Reaper's business.",
+    "Seriously, whenever times get tough, people close their wallets and our store's revenue starts to creak, too. I'm worried sick, honestly.",
+    "The messier the world gets, the more you have to look out for your own body. So, grab a few health potions from the display stand over there and stay sharp."
+  ],
+  "talk4": [
+    "Oh dear, my friend! I just heard Miss Echo's broadcast! Did you seriously go down to the B3 loading dock and give that golem a 'precision demolition' instead of a precision inspection?",
+    "They say that giant golem stopped working, so the staff will have to load things manually for the time being. The Terminal's logistics are already slow enough, and now they're going to be completely jammed. My heart is burning just thinking about it.",
+    "If you were gonna handle it anyway, you should've broken it nicely so it wouldn't cost so much to clean up... Putting the workers' resentment aside, they said the Great Grim Reaper is absolutely furious!"
+  ],
+  "talk5": [
+    "Oh, you're back... I just heard Miss Echo's broadcast. To think that strict Supervisor Charon was a defective unit and a criminal... man, you really can never tell what's on a person's mind.",
+    "I guess he brought the incineration upon himself by breaking the Grim Reaper's rules, but it still makes my heart a bit heavy to see a face I used to run into in the waiting room vanish in the blink of an eye.",
+    "By the way, the broadcast told everyone to stay away because a terrible 'executor's bloodlust' lingers in the area... and looking into your eyes right now, I think I instantly know what that bloodlust means.",
+    "A-Ah, no! I'm absolutely not blaming you for perfectly carrying out the Grim Reaper's orders! You cleaned up a source of contamination for the peace of Hell, so you did a truly magnificent job, of course, yes!"
+  ],
+  "talk6_1": [
+    "Ah, you're back! I just saw a fancy, high-class shuttle for the upper-class VIPs zooming out of the platform downstairs. I heard you completely cleared out the disaster zone down there?",
+    "How dare they try to take those high and mighty VIPs hostage. Those Resistance subversives must have completely lost their minds. They turned into cold corpses piled up in a corner, so justice has been served.",
+    "That being said, I heard a ton of equipment got smashed and the floor is practically flooded with blood and marrow from the suppression... It's harsh that they're docking those expensive cleanup costs from the local managers' bounties.",
+    "Still, seeing guards swarming the waiting room and the security level going up makes me feel incredibly safe. As a humble stall owner tucked away in a corner, I can finally stretch my legs and do business in peace.",
+    "Maintaining the order of Hell is a duty for all of us, after all! You went through a lot dealing with such a huge mess, so take some sweet snacks from the counter, relax, and shake off that fatigue, haha!"
+  ],
+  "talk6_2": [
+    "Oh dear, looking at the state of you, it seems you got beaten to an absolute pulp... I heard those Resistance bastards actually pulled off the VIP waiting room raid and vanished into thin air?",
+    "It's satisfying to think of those hypocritical upper-class folks trembling in fear as hostages, but I never expected those reckless subversives to blow things up this big just to force a negotiation with the Grim Reaper.",
+    "The Grim Reaper isn't the soft-hearted type to meekly sit at a table just for the sake of a few hostages... A real bloodbath is coming now, and I just hope the price those foolish friends have to pay won't be too horrific.",
+    "But man, this is a disaster. They say the loading dock operations are completely paralyzed because of the waiting room incident. Our store's precious inventory is going to be cut off for a long time again, so my business is practically finished."
+  ],
+  "talk7_1": [
+    "Oh, you're back! For a while there, the waiting room floor was rattling and vibrating like the tracks were broken down toward the depot, but it just came to a sudden stop.",
+    "Those high-ranking guards were acting incredibly hostile, muttering about something amazing being hidden deep within the depot... but seeing your face, it looks like whatever it was has been taken care of safely.",
+    "No matter what kind of bizarre thing popped out down there, it was bound to end up as a pile of scrap metal anyway in this Hell where the Great Grim Reaper reigns, of course, yes!",
+    "Now that the major nuisances threatening the Terminal seem to be cleared out, the Grim Reaper, who has been toiling day and night, can finally stretch his legs and get some rest in his office.",
+    "But why is your expression so heavy for someone who just finished a massive job? Was it that exhausting?"
+  ],
+  "talk7_2": [
+    "W-What... You?! I heard gunshots and chaos echoing from the other side of the waiting room, and when I looked, you were standing right at the very front of those Resistance subversives!",
+    "I thought you were the top contributor serving the Great Grim Reaper, but to think you weren't the Reaper's hound, but the rebel leader coming to choke the life out of the Terminal... man, you really can never tell what's on a person's mind.",
+    "To overthrow this peaceful Hell and defy the Grim Reaper... what kind of madness are you trying to pull off, blinded by the delusions of those rats?!",
+    "B-But... seeing how things have already turned out, and with that look in your eyes that looks ready to swallow the Grim Reaper whole... what can a mere stall owner like me even do?",
+    "I-I just want to keep doing business in this corner for a long time, so please, please don't smash our store counter! Whether you're going to take the Grim Reaper's head or whatever, I didn't see a single thing!"
+  ]
 }

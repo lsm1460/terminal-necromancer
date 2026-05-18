@@ -1,16 +1,16 @@
 import i18n from '~/i18n'
 import { AppContext } from '~/systems/types'
 
-export const EchoService = {
+export const MarcoService = {
   getActiveQuest(context: AppContext) {
     const { events } = context
-    const talk1 = !events.isCompleted('talk_echo_1')
-    const talk2 = events.isCompleted('first_boss') && !events.isCompleted('talk_echo_2')
-    const talk3 = events.isCompleted('RESISTANCE_BASE') && !events.isCompleted('talk_echo_3')
-    const talk4 = events.isCompleted('second_boss') && !events.isCompleted('talk_echo_4')
-    const talk5 = events.isCompleted('report_caron_to_death') && !events.isCompleted('talk_echo_5')
-    const talk6 = events.isCompleted('talk_death_4') && !events.isCompleted('talk_echo_6')
-    const talk7 = events.isCompleted('fourth_boss') && !events.isCompleted('talk_echo_7')
+    const talk1 = !events.isCompleted('talk_marco_1')
+    const talk2 = events.isCompleted('first_boss') && !events.isCompleted('talk_marco_2')
+    const talk3 = events.isCompleted('RESISTANCE_BASE') && !events.isCompleted('talk_marco_3')
+    const talk4 = events.isCompleted('second_boss') && !events.isCompleted('talk_marco_4')
+    const talk5 = events.isCompleted('report_caron_to_death') && !events.isCompleted('talk_marco_5')
+    const talk6 = events.isCompleted('talk_death_4') && !events.isCompleted('talk_marco_6')
+    const talk7 = events.isCompleted('fourth_boss') && !events.isCompleted('talk_marco_7')
 
     if (talk7) {
       return { name: 'talk7', message: i18n.t('talk.speak') }
