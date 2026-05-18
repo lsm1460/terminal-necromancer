@@ -20,5 +20,6 @@
     }
   },
   "deathLine": "This tedious broadcasting... is finally over... Ha...",
-  "description": "A female announcer holed up in the terminal's broadcast room, spitting out all sorts of venomous remarks. In reality, she might be enjoying this chaos more than anyone."
+  "description": "A female announcer holed up in the terminal's broadcast room, spitting out all sorts of venomous remarks. In reality, she might be enjoying this chaos more than anyone.",
+  "talk1": []
 }

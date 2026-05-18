@@ -106,7 +106,6 @@ export class ThirdBoss implements BossLogic {
 
     events.completeEvent(`third_boss_${this.selectedSide}`)
 
-    const boss = npcs.getNPC('third_boss')
     const kael = npcs.getNPC('kael')
     const vesper = npcs.getNPC('vesper')
     const flint = npcs.getNPC('flint')

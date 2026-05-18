@@ -95,7 +95,6 @@ export class FourthBoss implements BossLogic {
       const resistanceUnit = [
         npcs.getNPC('kane_leader'),
         npcs.getNPC('ren'),
-        npcs.getNPC('flint'),
         npcs.getNPC('jax_seeker'),
       ]
         .filter((npc) => npc?.isAlive)
