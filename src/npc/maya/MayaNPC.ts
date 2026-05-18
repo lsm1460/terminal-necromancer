@@ -62,6 +62,12 @@ export class MayaNPC extends MerchantNPC {
       case 'upgrade_golem':
         await MayaActions.handleUpgradeGolem(context.player)
         return true
+      case 'talk1':
+        await MayaActions.handleFirst(context)
+        return true
+      case 'talk2':
+        await MayaActions.handleSecond(context)
+        return true
       default:
         return true
     }

@@ -6,6 +6,12 @@ import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 import { MayaService } from './service'
 
+const completeEvents = (context: AppContext, count: number) => {
+  for (let i = 1; i <= count; i++) {
+    context.events.completeEvent(`talk_maya_${i}`)
+  }
+}
+
 export const MayaActions = {
   async handleJoin(context: AppContext) {
     const { player, events, npcs } = context
@@ -88,5 +94,17 @@ export const MayaActions = {
         Terminal.log(i18n.t('npc.maya_tech.upgrade.remove_log'))
       }
     }
+  },
+
+  async handleFirst(context: AppContext) {
+    await speak(i18n.t('npc.maya_tech.talk1', { returnObjects: true }) as string[])
+    completeEvents(context, 1)
+    return true
+  },
+
+  async handleSecond(context: AppContext) {
+    await speak(i18n.t('npc.maya_tech.talk2', { returnObjects: true }) as string[])
+    completeEvents(context, 2)
+    return true
   },
 }

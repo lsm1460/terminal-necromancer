@@ -94,5 +94,17 @@
     "remove_log": "\n🔧 [Removal Complete] Maya packs the neatly removed parts with a look of regret.",
     "remove_msg": "Maya: \"Tsk, I don't know why you're throwing away such good parts... I'm selling these as used!\"",
     "exit_msg": "\nMaya: \"See ya later! Don't forget to keep things oiled!\""
-  }
+  },
+  "talk1": [
+    "Oh, hey, you're here... Did you hear the announcement over the waiting room speakers just now? They said a supervisor named Charon died, though I don't actually know who he was.",
+    "Still, hearing the news that someone was just coldly wiped out like that in an instant made my heart feel so heavy and achy. I don't even know the guy, but I don't know why it makes me feel so sad.",
+    "The Grim Reaper definitely treats human lives like nothing more than disposable parts to use and throw away. It's honestly chilling and terrifying to see them broadcast someone's death so casually.",
+    "If even the people working under them get discarded without a second thought, imagine how it is for the powerless residents. To stop these tragedies from keeping happening in this Terminal, I'm going to resist until the very end as a member of the Resistance."
+  ],
+  "talk2": [
+    "Wow, you seriously pulled it off! Honestly, ever since I heard the operation started down in the B5 waiting room, I was so nervous that I spent the whole day just fidgeting with my wrench.",
+    "Seeing those arrogant upper-class bastards getting taken hostage and dragged away trembling... wow, it felt so incredibly satisfying, like washing away ten years of built-up grease!",
+    "They said our squad managed to pull out cleanly without a single injury, all thanks to you completely clearing the path for them out there.",
+    "To be honest, the security over there by the Grim Reaper's lackeys was so tight that I was worried sick, so I never expected you to step up and help us on the spot like that. Seriously, thank you so much!"
+  ]
 }
