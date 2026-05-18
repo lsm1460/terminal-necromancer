@@ -87,5 +87,47 @@
       "Zed: \"From now on, this scrap heap will follow your shadow and crush anything that stands in your way.\"",
       "Zed: \"If you wish, there may be a way to further enhance it...\""
     ]
-  }
+  },
+  "talk1": [
+    "Oh… so you’re the new Necromancer everyone’s talking about. Pleasure to meet you.",
+    "A moving corpse that reeks of death… medically speaking, I’ve been dying to get you on my dissection table.",
+    "Knowing how roughly the Reaper runs his lackeys, it won’t be long before you come limping into my clinic with a missing limb or two.",
+    "But don’t you worry. My scalpel skills are second to none, so I’ll stitch you back together before your 'materials' spoil.",
+    "Until then, do try not to get your brain or heart completely ripped out out there. Hee-hee-hee!"
+  ],
+  "talk2": [
+    "…What? Charon, that stubborn old fool, finally got purged?",
+    "He was impossible to talk to, but he was the only manager who’d turn a blind eye to my eccentric chemical experiments… with him gone, this clinic feels rather empty.",
+    "No, what’s even more tragic is that I lost my final chance to experiment on that unyielding soul of his!",
+    "The Reaper is truly merciless—reducing such magnificent biological tissue into ashes without leaving a trace… as his long-time colleague, it’s a waste of resources so heartbreaking it brings tears to my eyes.",
+    "I’m not blaming you, of course, but next time you clear out a familiar face, at least salvage the corpse intact. I’d gladly show my respects by resurrecting them into a spectacular killing machine."
+  ],
+  "talk3_1": [
+    "Oh, I see you successfully rescued the VIPs those Resistance rats were targeting?",
+    "Those reckless fools… they actually thought they could take hostages, hold the Reaper by the throat, and force a negotiation. Their little plan collapsed beautifully right from the start.",
+    "The Reaper isn’t the gentle type to sit down at a bargaining table over a few hostages anyway. I don’t know why they had to be so utterly foolish and naive.",
+    "To be frank, I did briefly find myself hoping that reckless gamble would somehow work out… Ah, never mind. Just an old doctor talking to himself.",
+    "Well, the board is already set, so what can we do? If you’re not hurt, go tend to those high and mighty nobles—their blood pressure must have plummeted from all that screaming."
+  ],
+  "talk3_2": [
+    "Oof, looking at your miserable state, you must have been completely torn to shreds by the Reaper’s wrath, huh?",
+    "Letting the Resistance snatch those precious VIPs right out from under you… just imagining the fury that absolute being unleashed makes even my scalpel tremble.",
+    "It’s hilarious to think of those hypocritical VIPs shaking in terror as hostages, but… I never expected those reckless Resistance fools to actually pull off a stunt this massive.",
+    "…The Reaper will never negotiate, so a bloody storm is coming. I only hope the price those foolish friends of mine have to pay won’t be too gruesome.",
+    "Ah, look at me, this is no time to be worrying about others… Before you get completely dismantled by the Reaper yourself, sit down over here so I can stitch up those nasty tears."
+  ],
+  "talk4_1": [
+    "…So, you’ve returned. I don’t even need to ask what kind of 'monstrosity' you destroyed deep within that vehicle depot; I can already feel it.",
+    "To think that reckless legacy—the one meant to challenge the realm of the gods—was actually completed and breathing… As someone who once caught a glimpse of its blueprints at the very beginning, I feel quite strange.",
+    "The madness that I left unfinished and abandoned… I suppose some obsessed technician left behind actually succeeded in awakening it completely.",
+    "To think that grand leap forward was turned into nothing but a heap of scrap metal by the Reaper's favorite hound… As a doctor, a bizarre sense of futility washes over me, cutting straight to my heart.",
+    "…Ah, forget what I just said. I must have gotten too caught up in the delusions of those rats. The Reaper is summoning you, so off you go. You're tracking dust everywhere."
+  ],
+  "talk4_2": [
+    "…Ha, HAHAHAHA! Do you see it?! That magnificent pulsation! In the end, my design, my scalpel… I wasn't wrong!",
+    "I thought you were the Reaper's most loyal hound, yet here you are, leading the vanguard of the rebellion—bringing back that grand legacy I left unfinished when I fled this place, fully operational!",
+    "To think the price of turning my back on my past and living like the Reaper’s dog would catch up to me… in the form of such a breathtaking, flawless scientific triumph right before my eyes!",
+    "Once this rebellion succeeds and the master of the Terminal changes, a traitorous doctor like me who abandoned his comrades will be the first to be executed and laid out on a cold dissection table.",
+    "But I don’t care! There is no better sacrificial lamb than the Reaper to test-run my ultimate masterpiece! Now go, take that absolute being's head, and prove my theory to the world!"
+  ]
 }

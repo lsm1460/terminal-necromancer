@@ -7,6 +7,12 @@ import { AppContext } from '~/systems/types'
 import { speak } from '~/utils'
 import { ZedService } from './service'
 
+const completeEvents = (context: AppContext, count: number) => {
+  for (let i = 1; i <= count; i++) {
+    context.events.completeEvent(`talk_zed_${i}`)
+  }
+}
+
 export const ZedActions = {
   handleHeal(player: Player) {
     player.restoreAll()
@@ -104,5 +110,31 @@ export const ZedActions = {
         Terminal.log(i18n.t('npc.dr_zed.upgrade.remove_done'))
       }
     }
+  },
+
+  async handleFirst(context: AppContext) {
+    await speak(i18n.t('npc.dr_zed.talk1', { returnObjects: true }) as string[])
+    completeEvents(context, 1)
+    return true
+  },
+
+  async handleSecond(context: AppContext) {
+    await speak(i18n.t('npc.dr_zed.talk2', { returnObjects: true }) as string[])
+    completeEvents(context, 2)
+    return true
+  },
+
+  async handleThird(context: AppContext) {
+    const isVIPLost = context.events.isCompleted('vips_lost')
+    await speak(i18n.t(`npc.dr_zed.${isVIPLost?  'talk3_2' : 'talk3_1'}`, { returnObjects: true }) as string[])
+    completeEvents(context, 3)
+    return true
+  },
+
+  async handleFourth(context: AppContext) {
+    const join = context.events.isCompleted('join_resistance_battle')
+    await speak(i18n.t(`npc.dr_zed.${join?  'talk4_2' : 'talk4_1'}`, { returnObjects: true }) as string[])
+    completeEvents(context, 7)
+    return true
   },
 }

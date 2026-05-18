@@ -18,7 +18,9 @@ export class ZedNPC extends GameNPC {
 
     return [
       { name: 'talk', message: i18n.t('talk.small_talk') },
-      ...(isB3Completed && !context.player.golem ? [{ name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }] : []),
+      ...(isB3Completed && !context.player.golem
+        ? [{ name: 'golem', message: i18n.t('npc.dr_zed.choices.awake_golem') }]
+        : []),
       ...(isB3Completed && context.player.golem
         ? [{ name: 'upgrade_golem', message: i18n.t('npc.dr_zed.choices.upgrade_golem') }]
         : []),
@@ -42,8 +44,14 @@ export class ZedNPC extends GameNPC {
         return await ZedActions.handleAwakeGolem(context.player, context.events)
       case 'upgrade_golem':
         return await ZedActions.handleUpgradeGolem(context.player)
+      case 'talk1':
+        return await ZedActions.handleFirst(context)
+      case 'talk2':
+        return await ZedActions.handleSecond(context)
+      case 'talk3':
+        return await ZedActions.handleThird(context)
       default:
-        return 
+        return
     }
   }
 }

@@ -9,6 +9,11 @@ export const ZedService = {
   getActiveQuest(context: AppContext) {
     const { player, events } = context
 
+    const talk1 = !events.isCompleted('talk_zed_1')
+    const talk2 = events.isCompleted('report_caron_to_death') && !events.isCompleted('talk_zed_2')
+    const talk3 = events.isCompleted('talk_death_4') && !events.isCompleted('talk_zed_3')
+    const talk4 = events.isCompleted('fourth_boss') && !events.isCompleted('talk_zed_4')
+
     const isB2Completed = events.isCompleted('talk_death_2')
     const isB3Completed = events.isCompleted('second_boss')
     const alreadyHeard = events.isCompleted('HEARD_RESISTANCE')
@@ -20,6 +25,22 @@ export const ZedService = {
 
     if (isB2Completed && !alreadyHeard) {
       return { name: 'resistance', message: i18n.t('talk.speak') }
+    }
+
+    if (talk4) {
+      return { name: 'talk4', message: i18n.t('talk.speak') }
+    }
+
+    if (talk3) {
+      return { name: 'talk3', message: i18n.t('talk.speak') }
+    }
+    
+    if (talk2) {
+      return { name: 'talk2', message: i18n.t('talk.speak') }
+    }
+
+    if (talk1) {
+      return { name: 'talk1', message: i18n.t('talk.speak') }
     }
 
     return null
